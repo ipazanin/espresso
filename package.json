@@ -1,0 +1,19 @@
+{
+  "name": "espresso",
+  "version": "1.3.2",
+  "description": "Espresso",
+  "scripts": {
+    "compose-database:up": "docker-compose -f compose/docker-compose-database.yml down && docker-compose -f compose/docker-compose-database.yml up --build",
+    "compose-database:down": "docker-compose -f compose/docker-compose-database.yml down",
+    "compose-local:up": "docker-compose -f compose/docker-compose-local.yml down && docker-compose -f compose/docker-compose-local.yml up --build",
+    "compose-local:down": "docker-compose -f compose/docker-compose-local.yml down",
+    "compose-development:up": "docker-compose -f compose/docker-development-local.yml down && docker-compose -f compose/docker-development-local.yml up --build",
+    "compose-development:down": "docker-compose -f compose/docker-development-local.yml down",
+    "update-packages": "./scripts/update-packages-script.sh"
+  },
+  "keywords": [
+    "espresso"
+  ],
+  "author": "ipazanin",
+  "license": "MIT"
+}

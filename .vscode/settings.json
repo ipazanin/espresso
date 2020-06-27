@@ -1,0 +1,16 @@
+{
+  "workbench.sideBar.location": "right",
+  "workbench.colorTheme": "Visual Studio 2019 Dark",
+  "window.zoomLevel": 0,
+  "files.autoSave": "afterDelay",
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "editor.formatOnSave": true,
+  "csharp.maxProjectFileCountForDiagnosticAnalysis": 0,
+  "csharp.semanticHighlighting.enabled": true,
+  "omnisharp.enableRoslynAnalyzers": true,
+  "omnisharp.enableMsBuildLoadProjectsOnDemand": true,
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+}

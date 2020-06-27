@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Configurations>Development;Release;Local</Configurations>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="8.6.2" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.24" />
+    <PackageReference Include="MediatR" Version="8.0.1" />
+    <PackageReference Include="System.ServiceModel.Syndication" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Espresso.DataAccessLayer\Espresso.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\Espresso.Domain\Espresso.Domain.csproj" />
+    <ProjectReference Include="..\Espresso.Persistence\Espresso.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

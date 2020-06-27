@@ -1,0 +1,439 @@
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Net.Http;
+using System.ServiceModel.Syndication;
+using Espresso.Application.DataTransferObjects;
+using System.Threading.Tasks;
+using System.Xml;
+using Espresso.Common.Constants;
+using Espresso.DataAccessLayer.IRepository;
+using System.Threading;
+using Espresso.Domain.Enums.NewsPortalEnums;
+using Espresso.Persistence.Database;
+using Espresso.Domain.Entities;
+using Espresso.Domain.IServices;
+using MediatR;
+using Microsoft.Extensions.Caching.Memory;
+using Espresso.Common.Enums;
+using Espresso.Common.Configuration;
+using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.Domain.Extensions;
+
+namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
+{
+    public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand, ParseRssFeedsCommandResponse>
+    {
+        #region Fields
+        private readonly ILoggerService _loggerService;
+        private readonly IMemoryCache _memoryCache;
+        private readonly IEspressoDatabaseContext _context;
+        private readonly IArticleRepository _articleRepository;
+        private readonly IArticleCategoryRepository _articleCategoryRepository;
+        private readonly IArticleParserService _articleParserService;
+        private readonly ICommonConfiguration _commonConfiguration;
+        private readonly HttpClient _httpClient;
+        #endregion
+
+        #region Constructors
+        public ParseRssFeedsCommandHandler(
+            IHttpClientFactory httpClientFactory,
+            ILoggerService loggerService,
+            IMemoryCache memoryCache,
+            IEspressoDatabaseContext context,
+            IArticleRepository articleRepository,
+            IArticleCategoryRepository articleCategoryRepository,
+            IArticleParserService articleParserService,
+            ICommonConfiguration commonConfiguration
+        )
+        {
+            _loggerService = loggerService;
+            _memoryCache = memoryCache;
+            _context = context;
+            _articleRepository = articleRepository;
+            _articleCategoryRepository = articleCategoryRepository;
+            _articleParserService = articleParserService;
+            _commonConfiguration = commonConfiguration;
+            _httpClient = httpClientFactory.CreateClient();
+        }
+        #endregion
+
+        #region Methods
+
+        #region Public Methods
+        public async Task<ParseRssFeedsCommandResponse> Handle(
+            ParseRssFeedsCommand request,
+            CancellationToken cancellationToken
+        )
+        {
+            var categories = _memoryCache.Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey);
+
+            var rssFeeds = _memoryCache.Get<IEnumerable<RssFeed>>(key: MemoryCacheConstants.RssFeedKey);
+            var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
+
+            var feeds = await ParseRssFeeds(
+                rssFeeds: rssFeeds,
+                cancellationToken: cancellationToken
+            ).ConfigureAwait(false);
+
+            // To Save SkipParseConfiguration.CurrentSkip
+            _memoryCache.Set(
+                key: MemoryCacheConstants.RssFeedKey,
+                value: rssFeeds.ToList()
+            );
+
+            var articles = await GetArticlesFromLoadedRssFeeds(
+                feeds: feeds,
+                categories: categories,
+                cancellationToken: cancellationToken
+            ).ConfigureAwait(false);
+
+            var (createdArticles, updatedArticles) = CreateOrUpdateArticles(
+                articles: articles,
+                newsPortals: newsPortals,
+                categories: categories
+            );
+
+            return new ParseRssFeedsCommandResponse(createdArticles, updatedArticles);
+        }
+        #endregion
+
+        #region Private Methods
+        private async Task<IEnumerable<(SyndicationFeed SyndicationFeed, RssFeed rssFeed)>> ParseRssFeeds(
+            IEnumerable<RssFeed> rssFeeds,
+            CancellationToken cancellationToken
+        )
+        {
+            _memoryCache.Set(
+                key: MemoryCacheConstants.DeadLockLogKey,
+                value: $"Started {nameof(ParseRssFeeds)}"
+            );
+            var parsedArticles = new ConcurrentQueue<(SyndicationFeed SyndicationFeed, RssFeed rssFeed)>();
+
+            var getRssFeedRequestTasks = new List<Task>();
+
+            foreach (var rssFeed in rssFeeds)
+            {
+                var closureRssFeed = rssFeed;
+                if (!closureRssFeed.ShouldParse())
+                {
+                    continue;
+                }
+
+                getRssFeedRequestTasks.Add(Task.Run(async () =>
+                {
+                    try
+                    {
+                        SyndicationFeed feed;
+                        // TODO refactor this so it is not hardcoded for this portal
+                        if (
+                            closureRssFeed.NewsPortalId == (int)NewsPortalId.SportskeNovosti ||
+                            closureRssFeed.NewsPortalId == (int)NewsPortalId.JutarnjiList ||
+                            closureRssFeed.NewsPortalId == (int)NewsPortalId.NarodHr
+                        )
+                        {
+                            using var request = new HttpRequestMessage(HttpMethod.Get, closureRssFeed.Url);
+                            request.Headers.TryAddWithoutValidation("Accept", "text/html,application/xhtml+xml,application/xml");
+                            request.Headers.TryAddWithoutValidation("Accept-Encoding", "gzip, deflate");
+                            request.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:19.0) Gecko/20100101 Firefox/19.0");
+                            request.Headers.TryAddWithoutValidation("Accept-Charset", "ISO-8859-1");
+
+                            using var response = await _httpClient
+                                .SendAsync(request, cancellationToken)
+                                .ConfigureAwait(false);
+                            response.EnsureSuccessStatusCode();
+                            using var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                            using var decompressedStream = new GZipStream(responseStream, CompressionMode.Decompress);
+                            using var streamReader = new StreamReader(decompressedStream);
+                            var stringContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
+                            var reader = XmlReader.Create(new StringReader(stringContent.Replace("version=\"2.0\" version=\"2.0\"", "version=\"2.0\"")));
+                            feed = SyndicationFeed.Load(reader);
+                        }
+                        else
+                        {
+                            using var reader = XmlReader.Create(closureRssFeed.Url);
+                            feed = SyndicationFeed.Load(reader);
+                        }
+
+                        parsedArticles.Enqueue((feed, closureRssFeed));
+                    }
+                    catch (Exception exception)
+                    {
+                        var rssFeedUrl = closureRssFeed.Url;
+                        var exceptionMessage = exception.Message;
+
+                        await _loggerService.LogWarning(
+                            eventId: (int)Event.RssFeedLoading,
+                            eventName: Event.RssFeedLoading.GetDisplayName(),
+                            version: _commonConfiguration.Version,
+                            message: $"RssFeedUrl: {rssFeedUrl}",
+                            exception: exception,
+                            cancellationToken: cancellationToken
+                        ).ConfigureAwait(false);
+                    }
+                }, cancellationToken));
+            }
+
+            await Task.WhenAll(getRssFeedRequestTasks).ConfigureAwait(false);
+
+            _memoryCache.Set(
+                key: MemoryCacheConstants.DeadLockLogKey,
+                        value: $"Ended {nameof(ParseRssFeeds)}"
+                    );
+
+            return parsedArticles;
+        }
+
+        private (IEnumerable<ArticleDto> createdArticles, IEnumerable<ArticleDto> updatedArticles) CreateOrUpdateArticles(
+            IEnumerable<Article> articles,
+            IEnumerable<NewsPortal> newsPortals,
+            IEnumerable<Category> categories
+        )
+        {
+            _memoryCache.Set(
+                key: MemoryCacheConstants.DeadLockLogKey,
+                value: $"Started {nameof(CreateOrUpdateArticles)}"
+            );
+            var createArticles = new List<Article>();
+            var updateArticles = new List<Article>();
+            var savedArticles = _memoryCache.Get<IEnumerable<Article>>(
+                key: MemoryCacheConstants.ArticleKey
+            );
+
+            var savedArticlesIdDictionary = savedArticles.ToDictionary(
+                keySelector: article => article.Id
+            );
+
+            var savedArticlesArticleIdDictionary = new Dictionary<(int newsPortalId, string articleId), Guid>();
+            var savedArticlesTitleDictionary = new Dictionary<(int newsPortalId, string title), Guid>();
+            var savedArticlesSummaryDictionary = new Dictionary<(int newsPortalId, string summary), Guid>();
+
+            foreach (var article in savedArticles)
+            {
+                savedArticlesArticleIdDictionary.TryAdd((article.NewsPortalId, article.ArticleId), article.Id);
+                savedArticlesTitleDictionary.TryAdd((article.NewsPortalId, article.Title), article.Id);
+                savedArticlesSummaryDictionary.TryAdd((article.NewsPortalId, article.Summary), article.Id);
+            }
+
+            foreach (var article in articles)
+            {
+                if (savedArticlesArticleIdDictionary.TryGetValue((article.NewsPortalId, article.ArticleId), out var savedArticleId) ||
+                    savedArticlesTitleDictionary.TryGetValue((article.NewsPortalId, article.Title), out savedArticleId) ||
+                    savedArticlesSummaryDictionary.TryGetValue((article.NewsPortalId, article.Summary), out savedArticleId)
+                )
+                {
+                    var savedArticle = savedArticlesIdDictionary[savedArticleId];
+
+                    if (savedArticle.Update(article))
+                    {
+                        updateArticles.Add(savedArticle);
+                    }
+                }
+                else
+                {
+                    createArticles.Add(article);
+                }
+            }
+
+            CreateArticles(articles: createArticles);
+
+            UpdateArticles(articles: updateArticles);
+
+            var createdArticleDtos = createArticles.Select(ArticleDto.Projection.Compile());
+            var updatedArticleDtos = updateArticles.Select(ArticleDto.Projection.Compile());
+
+            _memoryCache.Set(
+                key: MemoryCacheConstants.DeadLockLogKey,
+                value: $"Ended {nameof(CreateOrUpdateArticles)}"
+            );
+
+            return (createdArticleDtos, updatedArticleDtos);
+        }
+
+        private void CreateArticles(
+            IEnumerable<Article> articles
+        )
+        {
+            if (articles.Count() == 0)
+            {
+                return;
+            }
+            _memoryCache.Set(
+                key: MemoryCacheConstants.DeadLockLogKey,
+                value: $"Started {nameof(CreateArticles)}"
+            );
+
+            var savedArticles = _memoryCache
+                .Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey)
+                .ToDictionary(article => article.Id);
+
+            var articlesToCreate = new List<Article>();
+            var articleCategoriesToCreate = new List<ArticleCategory>();
+
+            foreach (var article in articles)
+            {
+                if (savedArticles.ContainsKey(article.Id))
+                {
+                    continue;
+                }
+                savedArticles.Add(article.Id, article);
+
+                articlesToCreate.Add(article);
+                articleCategoriesToCreate.AddRange(article.ArticleCategories);
+            }
+
+            _articleRepository.InsertArticles(articlesToCreate);
+            _articleCategoryRepository.InsertArticleCategories(articleCategoriesToCreate);
+
+            _memoryCache.Set(
+                key: MemoryCacheConstants.ArticleKey,
+                value: savedArticles.Values.ToList()
+            );
+            _memoryCache.Set(
+                key: MemoryCacheConstants.DeadLockLogKey,
+                value: $"Ended {nameof(CreateArticles)}"
+            );
+        }
+
+        private void UpdateArticles(
+            IEnumerable<Article> articles
+        )
+        {
+            if (articles.Count() == 0)
+            {
+                return;
+            }
+            _memoryCache.Set(
+                key: MemoryCacheConstants.DeadLockLogKey,
+                value: $"Started {nameof(UpdateArticles)}"
+            );
+
+            var savedArticles = _memoryCache
+                .Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey)
+                .ToDictionary(article => article.Id);
+
+            var articlesToUpdate = new List<Article>();
+
+            foreach (var article in articles)
+            {
+                if (savedArticles.ContainsKey(article.Id))
+                {
+                    savedArticles.Remove(article.Id);
+                    savedArticles.Add(article.Id, article);
+                    articlesToUpdate.Add(article);
+                }
+            }
+
+            _articleRepository.UpdateArticles(articles);
+
+            _memoryCache.Set(
+                key: MemoryCacheConstants.ArticleKey,
+                value: savedArticles.Values.ToList()
+            );
+            _memoryCache.Set(
+                key: MemoryCacheConstants.DeadLockLogKey,
+                value: $"Ended {nameof(UpdateArticles)}"
+            );
+        }
+
+        public async Task<IEnumerable<Article>> GetArticlesFromLoadedRssFeeds(
+            IEnumerable<(SyndicationFeed syndicationFeed, RssFeed rssFeed)> feeds,
+            IEnumerable<Category> categories,
+            CancellationToken cancellationToken
+        )
+        {
+            var initialCapacity = feeds.Count();
+            var parsedArticles = new ConcurrentDictionary<Guid, Article>();
+            var articleIdArticleDictionary = new Dictionary<(int newsPortalId, string articleId), Guid>(initialCapacity);
+            var titleArticleDictionary = new Dictionary<(int newsPortalId, string title), Guid>(initialCapacity);
+            var summaryArticleDictionary = new Dictionary<(int newsPortalId, string summary), Guid>(initialCapacity);
+
+            var tasks = new List<Task>();
+            var random = new Random();
+
+            foreach (var (syndicationFeed, rssFeed) in feeds)
+            {
+                foreach (var syndicationItem in syndicationFeed.Items)
+                {
+                    if (syndicationItem is null)
+                    {
+                        continue;
+                    }
+
+                    tasks.Add(Task.Run(async () =>
+                    {
+                        var initialNumberOfClicks = random.Next(0, 15);
+                        try
+                        {
+                            var article = await _articleParserService.CreateArticleAsync(
+                                rssFeed: rssFeed,
+                                categories: categories,
+                                itemId: syndicationItem.Id,
+                                itemLinks: syndicationItem.Links?.Select(syndicationLink => syndicationLink.Uri),
+                                itemTitle: syndicationItem.Title?.Text,
+                                summary: syndicationItem.Summary?.Text,
+                                itemContent: (syndicationItem.Content as TextSyndicationContent)?.Text,
+                                publishDateTime: syndicationItem.PublishDate,
+                                cancellationToken: cancellationToken
+                            ).ConfigureAwait(false);
+
+                            parsedArticles.TryAdd(article.Id, article);
+                        }
+                        catch (Exception exception)
+                        {
+                            var rssFeedUrl = rssFeed.Url;
+                            var exceptionMessage = exception.Message;
+
+                            if (!exception.Message.Equals("articleCategories must not be empty! (Parameter 'articleCategories')"))
+                            {
+                                await _loggerService.LogWarning(
+                                    eventId: (int)Event.ArticleParsing,
+                                    eventName: Event.ArticleParsing.GetDisplayName(),
+                                    version: _commonConfiguration.Version,
+                                    message: $"RssFeedUrl: {rssFeedUrl}",
+                                    exception: exception,
+                                    cancellationToken: cancellationToken
+                                ).ConfigureAwait(false);
+                            }
+                        }
+                    }));
+                }
+            }
+
+            await Task.WhenAll(tasks)
+                .ConfigureAwait(false);
+
+            var uniqueArticles = new Dictionary<Guid, Article>(parsedArticles.Count);
+
+            foreach (var article in parsedArticles.Values)
+            {
+                if (articleIdArticleDictionary.TryGetValue((article.NewsPortalId, article.ArticleId), out var alreadyParsedArticleId) ||
+                    titleArticleDictionary.TryGetValue((article.NewsPortalId, article.Title), out alreadyParsedArticleId) ||
+                    summaryArticleDictionary.TryGetValue((article.NewsPortalId, article.Summary), out alreadyParsedArticleId)
+                )
+                {
+                    if (uniqueArticles.TryGetValue(alreadyParsedArticleId, out var parsedArticle))
+                    {
+                        parsedArticle.UpdateArticleCategories(article.ArticleCategories);
+                    }
+                }
+                else
+                {
+                    uniqueArticles.TryAdd(article.Id, article);
+                    articleIdArticleDictionary.TryAdd((article.NewsPortalId, article.ArticleId), article.Id);
+                    titleArticleDictionary.TryAdd((article.NewsPortalId, article.Title), article.Id);
+                    summaryArticleDictionary.TryAdd((article.NewsPortalId, article.Summary), article.Id);
+                }
+            }
+
+            return uniqueArticles.Values;
+        }
+        #endregion
+
+        #endregion
+    }
+}
+

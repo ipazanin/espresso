@@ -1,0 +1,23 @@
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+WORKDIR /src
+COPY ["Espresso.ParserDeleter/Espresso.ParserDeleter.csproj", "Espresso.ParserDeleter/"]
+COPY ["Espresso.Common/Espresso.Common.csproj", "Espresso.Common/"]
+COPY ["Espresso.Application/Espresso.Application.csproj", "Espresso.Application/"]
+COPY ["Espresso.DataAccessLayer/Espresso.DataAccessLayer.csproj", "Espresso.DataAccessLayer/"]
+COPY ["Espresso.Domain/Espresso.Domain.csproj", "Espresso.Domain/"]
+COPY ["Espresso.Persistence/Espresso.Persistence.csproj", "Espresso.Persistence/"]
+RUN dotnet restore "Espresso.ParserDeleter/Espresso.ParserDeleter.csproj"
+COPY . .
+WORKDIR "/src/Espresso.ParserDeleter"
+RUN dotnet build "Espresso.ParserDeleter.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "Espresso.ParserDeleter.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "Espresso.ParserDeleter.dll"]
