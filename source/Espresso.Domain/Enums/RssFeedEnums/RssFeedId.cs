@@ -73,5 +73,14 @@
         Hrt_Glazba = 70,
         StoPosto = 71,
         Dnevno = 72,
+        AutomobiliHr = 73,
+        DirektnoHr_Direkt = 74,
+        DirektnoHr_Domovina = 75,
+        DirektnoHr_EuSvijet = 76,
+        DirektnoHr_Razvoj = 77,
+        DirektnoHr_Sport = 78,
+        DirektnoHr_Zivot = 79,
+        DirektnoHr_Kolumne = 80,
+        DirektnoHr_Direktno = 81,
     }
 }

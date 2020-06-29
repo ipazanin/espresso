@@ -21,7 +21,7 @@ namespace Espresso.Common.Tests.Utilities
             #endregion
 
             #region Assert
-            Assert.True(isConversionSuccessfull);
+            Assert.False(isConversionSuccessfull);
             #endregion
         }
 

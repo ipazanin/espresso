@@ -376,6 +376,27 @@ namespace Espresso.Application.DomainServices
 
             };
         }
+
+        public Task LogMissingCategoriesError(
+            string version,
+            string rssFeedUrl,
+            string articleUrl,
+            string urlCategories,
+            CancellationToken cancellationToken
+        )
+        {
+            return _commonConfiguration.AppEnvironment switch
+            {
+                _ => _slackService.LogMissingCategoriesError(
+                    version: version,
+                    rssFeedUrl: rssFeedUrl,
+                    articleUrl: articleUrl,
+                    urlCategories: urlCategories,
+                    cancellationToken: cancellationToken
+                ),
+                // _ => Task.CompletedTask,
+            };
+        }
         #endregion
     }
 }

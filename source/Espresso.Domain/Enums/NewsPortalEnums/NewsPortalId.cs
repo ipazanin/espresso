@@ -70,5 +70,9 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         StoPosto = 32,
         [Display(Name = "Dnevno.Hr")]
         Dnevno = 33,
+        [Display(Name = "Automobili.hr")]
+        AutomobiliHr = 34,
+        [Display(Name = "Direktno")]
+        DirektnoHr = 35,
     }
 }

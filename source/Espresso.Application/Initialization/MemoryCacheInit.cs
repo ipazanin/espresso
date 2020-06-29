@@ -243,6 +243,7 @@ namespace Espresso.Application.Initialization
                 .Include(rssFeed => rssFeed.Category)
                 .Include(rssFeed => rssFeed.NewsPortal)
                 .Include(rssFeed => rssFeed.RssFeedCategories)
+                .ThenInclude(rssFeedCategory => rssFeedCategory.Category)
                 .AsNoTracking()
                 .ToListAsync();
 

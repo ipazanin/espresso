@@ -264,6 +264,66 @@ namespace Espresso.Persistence.Configuration
                     categoryId: (int)CategoryId.Vijesti
                 ),
                 #endregion
+
+                #region AutomobiliHr
+                // new RssFeed(
+                //     id: (int)RssFeedId.AutomobiliHr,
+                //     url: "https://klik.hr/rss",
+                //     newsPortalId: (int)NewsPortalId.AutomobiliHr,
+                //     categoryId: (int)CategoryId.AutoMoto
+                // ),
+                #endregion
+
+                #region DirektnoHr
+                new RssFeed(
+                    id: (int)RssFeedId.DirektnoHr_Direkt,
+                    url: "https://direktno.hr/rss/publish/latest/direkt-50/",
+                    newsPortalId: (int)NewsPortalId.DirektnoHr,
+                    categoryId: (int)CategoryId.Vijesti
+                ),
+                new RssFeed(
+                    id: (int)RssFeedId.DirektnoHr_Domovina,
+                    url: "https://direktno.hr/rss/publish/latest/domovina-10/",
+                    newsPortalId: (int)NewsPortalId.DirektnoHr,
+                    categoryId: (int)CategoryId.Vijesti
+                ),
+                new RssFeed(
+                    id: (int)RssFeedId.DirektnoHr_EuSvijet,
+                    url: "https://direktno.hr/rss/publish/latest/eu_svijet/",
+                    newsPortalId: (int)NewsPortalId.DirektnoHr,
+                    categoryId: (int)CategoryId.Vijesti
+                ),
+                new RssFeed(
+                    id: (int)RssFeedId.DirektnoHr_Razvoj,
+                    url: "https://direktno.hr/rss/publish/latest/razvoj-110/",
+                    newsPortalId: (int)NewsPortalId.DirektnoHr,
+                    categoryId: (int)CategoryId.Biznis
+                ),
+                new RssFeed(
+                    id: (int)RssFeedId.DirektnoHr_Sport,
+                    url: "https://direktno.hr/rss/publish/latest/sport-60/",
+                    newsPortalId: (int)NewsPortalId.DirektnoHr,
+                    categoryId: (int)CategoryId.Sport
+                ),
+                new RssFeed(
+                    id: (int)RssFeedId.DirektnoHr_Zivot,
+                    url: "https://direktno.hr/rss/publish/latest/zivot-70/",
+                    newsPortalId: (int)NewsPortalId.DirektnoHr,
+                    categoryId: (int)CategoryId.Show
+                ),
+                new RssFeed(
+                    id: (int)RssFeedId.DirektnoHr_Kolumne,
+                    url: "https://direktno.hr/rss/publish/latest/kolumne-80/",
+                    newsPortalId: (int)NewsPortalId.DirektnoHr,
+                    categoryId: (int)CategoryId.Vijesti
+                ),
+                new RssFeed(
+                    id: (int)RssFeedId.DirektnoHr_Direktno,
+                    url: "https://direktno.hr/rss/publish/latest/direktnotv-100/",
+                    newsPortalId: (int)NewsPortalId.DirektnoHr,
+                    categoryId: (int)CategoryId.Vijesti
+                ),                                                                                
+                #endregion
             };
 
             builder.HasData(rssFeeds);
@@ -343,7 +403,21 @@ namespace Espresso.Persistence.Configuration
             #endregion
 
             #region Poslovni Puls
-            skipParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.PoslovniPuls, NumberOfSkips = 10, CurrentSkip = 0 });
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.PoslovniPuls,
+                NumberOfSkips = 10,
+                CurrentSkip = 0
+            });
+            #endregion
+
+            #region 100posto
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.StoPosto,
+                NumberOfSkips = 5,
+                CurrentSkip = 0
+            });
             #endregion
         }
 
@@ -524,6 +598,66 @@ namespace Espresso.Persistence.Configuration
                 RssFeedId = (int)RssFeedId.Dnevno,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
                 UrlSegmentIndex = (int?)1,
+            });
+            #endregion
+
+            #region AutomobiliHr
+            // categoryParseConfigurationBuilder.HasData(new
+            // {
+            //     RssFeedId = (int)RssFeedId.Dnevno,
+            //     CategoryParseStrategy = CategoryParseStrategy.FromUrl,
+            //     UrlSegmentIndex = (int?)1,
+            // });
+            #endregion
+
+            #region DirektHr
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DirektnoHr_Direkt,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+                UrlSegmentIndex = (int?)null,
+            });
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DirektnoHr_Direktno,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+                UrlSegmentIndex = (int?)null,
+            });
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DirektnoHr_Domovina,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+                UrlSegmentIndex = (int?)null,
+            });
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DirektnoHr_EuSvijet,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+                UrlSegmentIndex = (int?)null,
+            });
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DirektnoHr_Kolumne,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+                UrlSegmentIndex = (int?)null,
+            });
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DirektnoHr_Razvoj,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+                UrlSegmentIndex = (int?)null,
+            });
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DirektnoHr_Sport,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+                UrlSegmentIndex = (int?)null,
+            });
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DirektnoHr_Zivot,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+                UrlSegmentIndex = (int?)null,
             });
             #endregion
         }
@@ -740,6 +874,81 @@ namespace Espresso.Persistence.Configuration
                 RssFeedId = (int)RssFeedId.Dnevno,
                 ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
                 ImgElementXPath = "//div[contains(@class, 'img-holder inner')]//img",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
+            #region DirektHr
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DirektnoHr_Direkt,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DirektnoHr_Direktno,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DirektnoHr_Domovina,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DirektnoHr_EuSvijet,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DirektnoHr_Kolumne,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DirektnoHr_Razvoj,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DirektnoHr_Sport,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DirektnoHr_Zivot,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
                 ShouldImageUrlBeWebScraped = false,
                 ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
                 JsonWebScrapePropertyNames = (string?)null

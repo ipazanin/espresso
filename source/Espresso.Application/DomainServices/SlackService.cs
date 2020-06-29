@@ -31,6 +31,10 @@ namespace Espresso.Application.DomainServices
         public const string AppDownloadsBotIconEmoji = ":tada:";
         public const string AppDownloadsBotUsername = "app-downloads-bot";
         public const string AppDownloadsChannel = "#marketing-bot";
+
+        public const string MissingCategoriesErrorsBotIconEmoji = ":warning:";
+        public const string MissingCategoriesErrorsBotUsername = "warning-bot";
+        public const string MissingCategoriesErrorsChannel = "missing-categories-errors-bot";
         #endregion
 
         #region Fields
@@ -185,6 +189,31 @@ namespace Espresso.Application.DomainServices
                     cancellationToken: cancellationToken
                 ).ConfigureAwait(false);
             }
+        }
+
+        public Task LogMissingCategoriesError(
+            string version,
+            string rssFeedUrl,
+            string articleUrl,
+            string urlCategories,
+            CancellationToken cancellationToken
+        )
+        {
+            var text = $":blue_book: Request Name: Missing Categories\n" +
+                $":label: Version: {version}\n" +
+                $":email: Rss Feed Url: {rssFeedUrl}\n" +
+                $":email: Article Url: {articleUrl}\n" +
+                $":email: Url-Category Map: {urlCategories}\n";
+
+            return Log(
+                data: new SlackWebHookDto(
+                    userName: MissingCategoriesErrorsBotUsername,
+                    iconEmoji: MissingCategoriesErrorsBotIconEmoji,
+                    text: text,
+                    channel: MissingCategoriesErrorsChannel
+                ),
+                cancellationToken: cancellationToken
+            );
         }
         #endregion
 

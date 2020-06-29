@@ -250,6 +250,22 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                                     cancellationToken: cancellationToken
                                 ).ConfigureAwait(false);
                             }
+                            else
+                            {
+                                // var urlcategories = string.Join(
+                                //     separator: ", ",
+                                //     values: rssFeed.RssFeedCategories?
+                                //         .Select(rssFeedCategory => $"{rssFeedCategory.UrlRegex}:{rssFeedCategory.Category?.Name ?? ""}")
+                                //         ?? new string[] { }
+                                // );
+                                // await _loggerService.LogMissingCategoriesError(
+                                //     version: _commonConfiguration.Version,
+                                //     rssFeedUrl: rssFeedUrl,
+                                //     articleUrl: syndicationItem?.Links?.FirstOrDefault()?.Uri?.ToString() ?? "",
+                                //     urlCategories: urlcategories,
+                                //     cancellationToken: cancellationToken
+                                // );
+                            }
                         }
                     }));
                 }

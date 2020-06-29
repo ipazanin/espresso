@@ -84,5 +84,12 @@ namespace Espresso.Domain.IServices
             CancellationToken cancellationToken
         );
 
+        public Task LogMissingCategoriesError(
+            string version,
+            string rssFeedUrl,
+            string articleUrl,
+            string urlCategories,
+            CancellationToken cancellationToken
+        );
     }
 }

@@ -102,6 +102,10 @@ namespace Espresso.Persistence.Configuration
                 new RssFeedCategory(43, "magazin", (int)CategoryId.Show, (int)RssFeedId.Dnevno),
                 new RssFeedCategory(44, "zdravlje", (int)CategoryId.Lifestyle, (int)RssFeedId.Dnevno),
                 #endregion
+
+                #region AutomobiliHr
+                // new RssFeedCategory(45, "automobili.klik.hr", (int)CategoryId.AutoMoto, (int)RssFeedId.AutomobiliHr),
+                #endregion
             };
 
             builder.HasData(rssFeedCategories);

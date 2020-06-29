@@ -89,6 +89,20 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.dnevno.hr/",
                     iconUrl: $"Icons/{NewsPortalId.Dnevno}{FileExtensionConstants.Png}"
                 ),
+
+                // new NewsPortal(
+                //     id: (int)NewsPortalId.AutomobiliHr,
+                //     name: NewsPortalId.AutomobiliHr.GetDisplayName(),
+                //     baseUrl: "https://automobili.klik.hr/",
+                //     iconUrl: $"Icons/{NewsPortalId.AutomobiliHr}{FileExtensionConstants.Png}"
+                // ),
+
+                new NewsPortal(
+                    id: (int)NewsPortalId.DirektnoHr,
+                    name: NewsPortalId.DirektnoHr.GetDisplayName(),
+                    baseUrl: "https://direktno.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.DirektnoHr}{FileExtensionConstants.Png}"
+                ),
             };
 
             builder.HasData(newsPortals);
