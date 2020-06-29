@@ -20,7 +20,6 @@ using Espresso.Workers.ParserDeleter.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Caching.Memory;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Espresso.Workers.ParserDeleter
@@ -111,10 +110,14 @@ namespace Espresso.Workers.ParserDeleter
             CancellationToken cancellationToken
         )
         {
-            if (parseRssFeedsResponse.CreatedArticles.Count() == 0 && parseRssFeedsResponse.UpdatedArticles.Count() == 0)
+            if (
+                parseRssFeedsResponse.CreatedArticles.Count() == 0
+                && parseRssFeedsResponse.UpdatedArticles.Count() == 0
+            )
             {
                 return;
             }
+
             var numberOfTries = 5;
 
             while (numberOfTries-- > 0)

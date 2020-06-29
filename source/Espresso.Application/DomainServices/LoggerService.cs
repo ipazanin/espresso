@@ -76,21 +76,11 @@ namespace Espresso.Application.DomainServices
                 responseData
             };
 
-            switch (_commonConfiguration.AppEnvironment)
-            {
-                case AppEnvironment.Undefined:
-                default:
-                    break;
-                case AppEnvironment.Local:
-                case AppEnvironment.Development:
-                case AppEnvironment.Production:
-                    _logger.LogInformation(
-                        eventId: new EventId(id: requestId, name: requestName),
-                        message: message,
-                        args: args
-                    );
-                    break;
-            }
+            _logger.LogInformation(
+                eventId: new EventId(id: requestId, name: requestName),
+                message: message,
+                args: args
+            );
         }
 
         public Task LogRequestError(

@@ -9,6 +9,7 @@ appsettings.local-local-db.json
 docker-compose-local.yml
 docker-compose-development.yml
 docker-compose-database.yml
+TestReports
 
 # User-specific files
 *.rsuser

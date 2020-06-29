@@ -68,5 +68,7 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         Hrt = 31,
         [Display(Name = "100posto")]
         StoPosto = 32,
+        [Display(Name = "Dnevno.Hr")]
+        Dnevno = 33,
     }
 }

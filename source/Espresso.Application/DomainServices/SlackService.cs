@@ -62,16 +62,12 @@ namespace Espresso.Application.DomainServices
         {
             var exceptionMessage = exception.Message;
             var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
-            var exceptionStackTrace = exception.StackTrace;
-            var innerExceptionStackTrace = exception.InnerException?.StackTrace ?? FormatConstants.EmptyValue;
 
             var text = $":blue_book: Request Name: {eventName}\n" +
                 $":label: Version: {version}\n" +
                 $":email: Message: {message}\n" +
                 $":exclamation: Exception Message: {exceptionMessage}\n" +
-                $":chart: Stack Trace: {exceptionStackTrace}\n" +
-                $":exclamation: Inner Exception Message: {innerExceptionMessage}\n" +
-                $":chart: Inner Stack Trace: {innerExceptionStackTrace}\n";
+                $":exclamation: Inner Exception Message: {innerExceptionMessage}";
 
             await Log(
                 data: new SlackWebHookDto(

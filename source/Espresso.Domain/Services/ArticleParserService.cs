@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Espresso.Domain.Entities;
+using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.IServices;
 using Espresso.Domain.IValidators;
@@ -219,7 +220,7 @@ namespace Espresso.Domain.Services
             if (
                 !string.IsNullOrEmpty(imageUrl) &&
                 !string.IsNullOrEmpty(baseUrl) &&
-                !imageUrl.StartsWith("http")
+                !imageUrl.StartsWith("http") // covers https also
             )
             {
                 return $"{baseUrl}{imageUrl.Remove(0, 1)}";
@@ -325,7 +326,20 @@ namespace Espresso.Domain.Services
         )
         {
             var articleCategories = new HashSet<ArticleCategory>();
-            var secondUrlSegment = itemUrl?.Segments[1].Replace("/", "").ToLower();
+
+            if (
+                rssFeed.CategoryParseConfiguration.UrlSegmentIndex is null ||
+                itemUrl?.Segments is null ||
+                itemUrl.Segments.Length <= rssFeed.CategoryParseConfiguration.UrlSegmentIndex
+            )
+            {
+                return articleCategories;
+            }
+
+            var secondUrlSegment = itemUrl?
+                .Segments[rssFeed.CategoryParseConfiguration.UrlSegmentIndex.Value]
+                .Replace("/", "")
+                .ToLower();
 
             if (secondUrlSegment is null)
             {

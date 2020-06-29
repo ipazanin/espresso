@@ -72,7 +72,7 @@ namespace Espresso.Persistence.Configuration
                 new NewsPortal(
                     id: (int)NewsPortalId.Hrt,
                     name: NewsPortalId.Hrt.GetDisplayName(),
-                    baseUrl: "https://www.hrt.hr",
+                    baseUrl: "https://www.hrt.hr/",
                     iconUrl: $"Icons/{NewsPortalId.Hrt}{FileExtensionConstants.Png}"
                 ),
 
@@ -81,6 +81,13 @@ namespace Espresso.Persistence.Configuration
                     name: NewsPortalId.StoPosto.GetDisplayName(),
                     baseUrl: "https://100posto.jutarnji.hr/",
                     iconUrl: $"Icons/{NewsPortalId.StoPosto}{FileExtensionConstants.Png}"
+                ),
+
+                new NewsPortal(
+                    id: (int)NewsPortalId.Dnevno,
+                    name: NewsPortalId.Dnevno.GetDisplayName(),
+                    baseUrl: "https://www.dnevno.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.Dnevno}{FileExtensionConstants.Png}"
                 ),
             };
 

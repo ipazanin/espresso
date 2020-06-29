@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(EspressoDatabaseContext))]
-    partial class EspressoDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200628141930_AddedDnevno")]
+    partial class AddedDnevno
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1439,9 +1441,6 @@ namespace Espresso.Persistence.Migrations
                             b1.Property<int>("CategoryParseStrategy")
                                 .HasColumnType("int");
 
-                            b1.Property<int?>("UrlSegmentIndex")
-                                .HasColumnType("int");
-
                             b1.HasKey("RssFeedId");
 
                             b1.ToTable("RssFeeds");
@@ -1513,8 +1512,7 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 13,
-                                    CategoryParseStrategy = 2,
-                                    UrlSegmentIndex = 1
+                                    CategoryParseStrategy = 2
                                 },
                                 new
                                 {
@@ -1634,14 +1632,12 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 37,
-                                    CategoryParseStrategy = 2,
-                                    UrlSegmentIndex = 1
+                                    CategoryParseStrategy = 2
                                 },
                                 new
                                 {
                                     RssFeedId = 39,
-                                    CategoryParseStrategy = 2,
-                                    UrlSegmentIndex = 1
+                                    CategoryParseStrategy = 2
                                 },
                                 new
                                 {
@@ -1651,14 +1647,12 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 41,
-                                    CategoryParseStrategy = 2,
-                                    UrlSegmentIndex = 1
+                                    CategoryParseStrategy = 2
                                 },
                                 new
                                 {
                                     RssFeedId = 42,
-                                    CategoryParseStrategy = 2,
-                                    UrlSegmentIndex = 1
+                                    CategoryParseStrategy = 2
                                 },
                                 new
                                 {
@@ -1743,14 +1737,12 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 65,
-                                    CategoryParseStrategy = 2,
-                                    UrlSegmentIndex = 1
+                                    CategoryParseStrategy = 2
                                 },
                                 new
                                 {
                                     RssFeedId = 66,
-                                    CategoryParseStrategy = 2,
-                                    UrlSegmentIndex = 1
+                                    CategoryParseStrategy = 2
                                 },
                                 new
                                 {
@@ -1775,14 +1767,12 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 71,
-                                    CategoryParseStrategy = 2,
-                                    UrlSegmentIndex = 1
+                                    CategoryParseStrategy = 2
                                 },
                                 new
                                 {
                                     RssFeedId = 72,
-                                    CategoryParseStrategy = 2,
-                                    UrlSegmentIndex = 1
+                                    CategoryParseStrategy = 2
                                 });
                         });
 

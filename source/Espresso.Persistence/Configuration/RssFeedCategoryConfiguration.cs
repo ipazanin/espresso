@@ -57,7 +57,7 @@ namespace Espresso.Persistence.Configuration
                 new RssFeedCategory(11, "kultura", (int)CategoryId.Kultura, (int)RssFeedId.VecernjiList),
                 #endregion
 
-                #region Dnevniuk
+                #region Dnevnik
                 new RssFeedCategory(12, "vijest", (int)CategoryId.Vijesti, (int)RssFeedId.Dnevnik),
                 #endregion
 
@@ -93,6 +93,14 @@ namespace Espresso.Persistence.Configuration
                 new RssFeedCategory(37, "news", (int)CategoryId.Vijesti, (int)RssFeedId.StoPosto),
                 new RssFeedCategory(38, "scena", (int)CategoryId.Show, (int)RssFeedId.StoPosto),
                 new RssFeedCategory(39, "bubble", (int)CategoryId.Lifestyle, (int)RssFeedId.StoPosto),
+                #endregion
+
+                #region Dnevno
+                new RssFeedCategory(40, "vijesti", (int)CategoryId.Vijesti, (int)RssFeedId.Dnevno),
+                new RssFeedCategory(41, "sport", (int)CategoryId.Sport, (int)RssFeedId.Dnevno),
+                new RssFeedCategory(42, "domovina", (int)CategoryId.Vijesti, (int)RssFeedId.Dnevno),
+                new RssFeedCategory(43, "magazin", (int)CategoryId.Show, (int)RssFeedId.Dnevno),
+                new RssFeedCategory(44, "zdravlje", (int)CategoryId.Lifestyle, (int)RssFeedId.Dnevno),
                 #endregion
             };
 

@@ -22,6 +22,7 @@ using Espresso.Common.Enums;
 using Espresso.Common.Configuration;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.Extensions;
+using Espresso.Domain.Enums.RssFeedEnums;
 
 namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
 {
@@ -132,7 +133,10 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                         if (
                             closureRssFeed.NewsPortalId == (int)NewsPortalId.SportskeNovosti ||
                             closureRssFeed.NewsPortalId == (int)NewsPortalId.JutarnjiList ||
-                            closureRssFeed.NewsPortalId == (int)NewsPortalId.NarodHr
+                            closureRssFeed.NewsPortalId == (int)NewsPortalId.NarodHr ||
+                            closureRssFeed.NewsPortalId == (int)NewsPortalId.StoPosto ||
+                            closureRssFeed.NewsPortalId == (int)NewsPortalId.PoslovniPuls ||
+                            closureRssFeed.NewsPortalId == (int)NewsPortalId.SlobodnaDalmacija
                         )
                         {
                             using var request = new HttpRequestMessage(HttpMethod.Get, closureRssFeed.Url);
@@ -185,6 +189,99 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                     );
 
             return parsedArticles;
+        }
+
+        public async Task<IEnumerable<Article>> GetArticlesFromLoadedRssFeeds(
+            IEnumerable<(SyndicationFeed syndicationFeed, RssFeed rssFeed)> feeds,
+            IEnumerable<Category> categories,
+            CancellationToken cancellationToken
+        )
+        {
+            var initialCapacity = feeds.Count();
+            var parsedArticles = new ConcurrentDictionary<Guid, Article>();
+            var articleIdArticleDictionary = new Dictionary<(int newsPortalId, string articleId), Guid>(initialCapacity);
+            var titleArticleDictionary = new Dictionary<(int newsPortalId, string title), Guid>(initialCapacity);
+            var summaryArticleDictionary = new Dictionary<(int newsPortalId, string summary), Guid>(initialCapacity);
+
+            var tasks = new List<Task>();
+            var random = new Random();
+
+            foreach (var (syndicationFeed, rssFeed) in feeds)
+            {
+                foreach (var syndicationItem in syndicationFeed.Items)
+                {
+                    if (syndicationItem is null)
+                    {
+                        continue;
+                    }
+
+                    tasks.Add(Task.Run(async () =>
+                    {
+                        var initialNumberOfClicks = random.Next(0, 15);
+                        try
+                        {
+                            var article = await _articleParserService.CreateArticleAsync(
+                                rssFeed: rssFeed,
+                                categories: categories,
+                                itemId: syndicationItem.Id,
+                                itemLinks: syndicationItem.Links?.Select(syndicationLink => syndicationLink.Uri),
+                                itemTitle: syndicationItem.Title?.Text,
+                                summary: syndicationItem.Summary?.Text,
+                                itemContent: (syndicationItem.Content as TextSyndicationContent)?.Text,
+                                publishDateTime: syndicationItem.PublishDate,
+                                cancellationToken: cancellationToken
+                            ).ConfigureAwait(false);
+
+                            parsedArticles.TryAdd(article.Id, article);
+                        }
+                        catch (Exception exception)
+                        {
+                            var rssFeedUrl = rssFeed.Url;
+                            var exceptionMessage = exception.Message;
+
+                            if (!exception.Message.Equals("articleCategories must not be empty! (Parameter 'articleCategories')"))
+                            {
+                                await _loggerService.LogWarning(
+                                    eventId: (int)Event.ArticleParsing,
+                                    eventName: Event.ArticleParsing.GetDisplayName(),
+                                    version: _commonConfiguration.Version,
+                                    message: $"RssFeedUrl: {rssFeedUrl}",
+                                    exception: exception,
+                                    cancellationToken: cancellationToken
+                                ).ConfigureAwait(false);
+                            }
+                        }
+                    }));
+                }
+            }
+
+            await Task.WhenAll(tasks)
+                .ConfigureAwait(false);
+
+            var uniqueArticles = new Dictionary<Guid, Article>(parsedArticles.Count);
+
+            foreach (var article in parsedArticles.Values)
+            {
+                if (articleIdArticleDictionary.TryGetValue((article.NewsPortalId, article.ArticleId), out var alreadyParsedArticleId) ||
+                    titleArticleDictionary.TryGetValue((article.NewsPortalId, article.Title), out alreadyParsedArticleId) ||
+                    summaryArticleDictionary.TryGetValue((article.NewsPortalId, article.Summary), out alreadyParsedArticleId)
+                )
+                {
+                    if (uniqueArticles.TryGetValue(alreadyParsedArticleId, out var parsedArticle))
+                    {
+                        parsedArticle.UpdateArticleCategories(article.ArticleCategories);
+                    }
+                }
+                else
+                {
+                    uniqueArticles.TryAdd(article.Id, article);
+                    articleIdArticleDictionary.TryAdd((article.NewsPortalId, article.ArticleId), article.Id);
+                    titleArticleDictionary.TryAdd((article.NewsPortalId, article.Title), article.Id);
+                    summaryArticleDictionary.TryAdd((article.NewsPortalId, article.Summary), article.Id);
+                }
+            }
+
+            return uniqueArticles.Values;
         }
 
         private (IEnumerable<ArticleDto> createdArticles, IEnumerable<ArticleDto> updatedArticles) CreateOrUpdateArticles(
@@ -337,99 +434,6 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                 key: MemoryCacheConstants.DeadLockLogKey,
                 value: $"Ended {nameof(UpdateArticles)}"
             );
-        }
-
-        public async Task<IEnumerable<Article>> GetArticlesFromLoadedRssFeeds(
-            IEnumerable<(SyndicationFeed syndicationFeed, RssFeed rssFeed)> feeds,
-            IEnumerable<Category> categories,
-            CancellationToken cancellationToken
-        )
-        {
-            var initialCapacity = feeds.Count();
-            var parsedArticles = new ConcurrentDictionary<Guid, Article>();
-            var articleIdArticleDictionary = new Dictionary<(int newsPortalId, string articleId), Guid>(initialCapacity);
-            var titleArticleDictionary = new Dictionary<(int newsPortalId, string title), Guid>(initialCapacity);
-            var summaryArticleDictionary = new Dictionary<(int newsPortalId, string summary), Guid>(initialCapacity);
-
-            var tasks = new List<Task>();
-            var random = new Random();
-
-            foreach (var (syndicationFeed, rssFeed) in feeds)
-            {
-                foreach (var syndicationItem in syndicationFeed.Items)
-                {
-                    if (syndicationItem is null)
-                    {
-                        continue;
-                    }
-
-                    tasks.Add(Task.Run(async () =>
-                    {
-                        var initialNumberOfClicks = random.Next(0, 15);
-                        try
-                        {
-                            var article = await _articleParserService.CreateArticleAsync(
-                                rssFeed: rssFeed,
-                                categories: categories,
-                                itemId: syndicationItem.Id,
-                                itemLinks: syndicationItem.Links?.Select(syndicationLink => syndicationLink.Uri),
-                                itemTitle: syndicationItem.Title?.Text,
-                                summary: syndicationItem.Summary?.Text,
-                                itemContent: (syndicationItem.Content as TextSyndicationContent)?.Text,
-                                publishDateTime: syndicationItem.PublishDate,
-                                cancellationToken: cancellationToken
-                            ).ConfigureAwait(false);
-
-                            parsedArticles.TryAdd(article.Id, article);
-                        }
-                        catch (Exception exception)
-                        {
-                            var rssFeedUrl = rssFeed.Url;
-                            var exceptionMessage = exception.Message;
-
-                            if (!exception.Message.Equals("articleCategories must not be empty! (Parameter 'articleCategories')"))
-                            {
-                                await _loggerService.LogWarning(
-                                    eventId: (int)Event.ArticleParsing,
-                                    eventName: Event.ArticleParsing.GetDisplayName(),
-                                    version: _commonConfiguration.Version,
-                                    message: $"RssFeedUrl: {rssFeedUrl}",
-                                    exception: exception,
-                                    cancellationToken: cancellationToken
-                                ).ConfigureAwait(false);
-                            }
-                        }
-                    }));
-                }
-            }
-
-            await Task.WhenAll(tasks)
-                .ConfigureAwait(false);
-
-            var uniqueArticles = new Dictionary<Guid, Article>(parsedArticles.Count);
-
-            foreach (var article in parsedArticles.Values)
-            {
-                if (articleIdArticleDictionary.TryGetValue((article.NewsPortalId, article.ArticleId), out var alreadyParsedArticleId) ||
-                    titleArticleDictionary.TryGetValue((article.NewsPortalId, article.Title), out alreadyParsedArticleId) ||
-                    summaryArticleDictionary.TryGetValue((article.NewsPortalId, article.Summary), out alreadyParsedArticleId)
-                )
-                {
-                    if (uniqueArticles.TryGetValue(alreadyParsedArticleId, out var parsedArticle))
-                    {
-                        parsedArticle.UpdateArticleCategories(article.ArticleCategories);
-                    }
-                }
-                else
-                {
-                    uniqueArticles.TryAdd(article.Id, article);
-                    articleIdArticleDictionary.TryAdd((article.NewsPortalId, article.ArticleId), article.Id);
-                    titleArticleDictionary.TryAdd((article.NewsPortalId, article.Title), article.Id);
-                    summaryArticleDictionary.TryAdd((article.NewsPortalId, article.Summary), article.Id);
-                }
-            }
-
-            return uniqueArticles.Values;
         }
         #endregion
 

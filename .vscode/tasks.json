@@ -32,10 +32,12 @@
       "args": [
         "watch",
         "run",
-        "${workspaceFolder}/source/Espresso.WebApi/Espresso.WebApi.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
+      "options": {
+        "cwd": "${workspaceFolder}/source/Espresso.WebApi"
+      },
       "problemMatcher": "$msCompile"
     },
     {
@@ -73,7 +75,27 @@
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
+      "options": {
+        "cwd": "${workspaceFolder}/source/Espresso.ParserDeleter"
+      },
       "problemMatcher": "$msCompile"
-    }
+    },
+    {
+      "label": "Espresso Tests",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "test",
+        "/p:CollectCoverage=true",
+        "/p:CoverletOutputFormat=lcov",
+        "/p:CoverletOutput=./lcov.info",
+        "${workspaceFolder}/tests/UnitTests/UnitTests.sln"
+      ],
+      "problemMatcher": "$msCompile",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
   ]
 }

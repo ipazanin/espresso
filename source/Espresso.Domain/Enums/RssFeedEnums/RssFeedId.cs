@@ -72,5 +72,6 @@
         Hrt_Magazin = 69,
         Hrt_Glazba = 70,
         StoPosto = 71,
+        Dnevno = 72,
     }
 }

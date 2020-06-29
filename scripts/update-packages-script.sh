@@ -69,23 +69,23 @@ function dotnet_update_packages() {
 }
 
 function dotnet_restore_espresso(){
-    dotnet restore ~/Projects/Espresso/espresso-webapi/source/Espresso.Application/Espresso.Application.csproj
-    dotnet restore ~/Projects/Espresso/espresso-webapi/source/Espresso.DataAcessLayer/Espresso.DataAcessLayer.csproj
-    dotnet restore ~/Projects/Espresso/espresso-webapi/source/Espresso.Common/Espresso.Common.csproj
-    dotnet restore ~/Projects/Espresso/espresso-webapi/source/Espresso.Domain/Espresso.Domain.csproj
-    dotnet restore ~/Projects/Espresso/espresso-webapi/source/Espresso.Persistence/Espresso.Persistence.csproj
-    dotnet restore ~/Projects/Espresso/espresso-webapi/source/Espresso.WebApi/Espresso.WebApi.csproj
-    dotnet restore ~/Projects/Espresso/espresso-webapi/source/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj
+    dotnet restore ./source/Espresso.Application/Espresso.Application.csproj
+    dotnet restore ./source/Espresso.DataAccessLayer/Espresso.DataAccessLayer.csproj
+    dotnet restore ./source/Espresso.Common/Espresso.Common.csproj
+    dotnet restore ./source/Espresso.Domain/Espresso.Domain.csproj
+    dotnet restore ./source/Espresso.Persistence/Espresso.Persistence.csproj
+    dotnet restore ./source/Espresso.WebApi/Espresso.WebApi.csproj
+    dotnet restore ./source/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj
 }
 
 function dotnet_update_packages_espresso(){
-    dotnet_update_packages ~/Projects/Espresso/espresso-webapi/source/Espresso.Application/Espresso.Application.csproj
-    dotnet_update_packages ~/Projects/Espresso/espresso-webapi/source/Espresso.DataAcessLayer/Espresso.DataAcessLayer.csproj
-    dotnet_update_packages ~/Projects/Espresso/espresso-webapi/source/Espresso.Common/Espresso.Common.csproj
-    dotnet_update_packages ~/Projects/Espresso/espresso-webapi/source/Espresso.Domain/Espresso.Domain.csproj
-    dotnet_update_packages ~/Projects/Espresso/espresso-webapi/source/Espresso.Persistence/Espresso.Persistence.csproj
-    dotnet_update_packages ~/Projects/Espresso/espresso-webapi/source/Espresso.WebApi/Espresso.WebApi.csproj
-    dotnet_update_packages ~/Projects/Espresso/espresso-webapi/source/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj
+    dotnet_update_packages ./source/Espresso.Application/Espresso.Application.csproj
+    dotnet_update_packages ./source/Espresso.DataAccessLayer/Espresso.DataAccessLayer.csproj
+    dotnet_update_packages ./source/Espresso.Common/Espresso.Common.csproj
+    dotnet_update_packages ./source/Espresso.Domain/Espresso.Domain.csproj
+    dotnet_update_packages ./source/Espresso.Persistence/Espresso.Persistence.csproj
+    dotnet_update_packages ./source/Espresso.WebApi/Espresso.WebApi.csproj
+    dotnet_update_packages ./source/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj
 }
 
 # restore
