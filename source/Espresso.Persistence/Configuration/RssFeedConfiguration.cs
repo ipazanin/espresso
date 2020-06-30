@@ -120,8 +120,9 @@ namespace Espresso.Persistence.Configuration
                 // Jutarnji
                 new RssFeed((int)RssFeedId.JutarnjiList, "https://www.jutarnji.hr/feed", (int)NewsPortalId.JutarnjiList, (int)CategoryId.Vijesti),
 
-                // Net.hr
+                #region Net.hr
                 new RssFeed((int)RssFeedId.NetHr, "https://net.hr/feed/", (int)NewsPortalId.NetHr, (int)CategoryId.Vijesti),
+                #endregion
 
                 #region Slobodna Dalmacija
                 new RssFeed((int)RssFeedId.SlobodnaDalmacija_Novosti, "https://www.slobodnadalmacija.hr/feed/category/119", (int)NewsPortalId.SlobodnaDalmacija, (int)CategoryId.Vijesti),
@@ -155,9 +156,8 @@ namespace Espresso.Persistence.Configuration
                 new RssFeed((int)RssFeedId.VecernjiList, "https://www.vecernji.hr/feeds/latest", (int)NewsPortalId.VecernjiList, (int)CategoryId.Vijesti),
 
                 #region Telegram
-                new RssFeed((int)RssFeedId.Telegram_PolitikaIKriminal,"https://www.telegram.hr/feed/", (int)NewsPortalId.Telegram, (int)CategoryId.Vijesti),
+                new RssFeed((int)RssFeedId.Telegram,"https://www.telegram.hr/feed/", (int)NewsPortalId.Telegram, (int)CategoryId.Vijesti),
                 new RssFeed((int)RssFeedId.Telegram_Telesport, "https://telesport.telegram.hr/feed/", (int)NewsPortalId.Telegram, (int)CategoryId.Sport),
-                new RssFeed((int)RssFeedId.Telegram_Zivot, "https://www.telegram.hr/feed/", (int)NewsPortalId.Telegram, (int)CategoryId.Lifestyle),
                 #endregion
 
                 // Dnevnik
@@ -424,136 +424,140 @@ namespace Espresso.Persistence.Configuration
         private void SeedCategoryParseConfiguration(OwnedNavigationBuilder<RssFeed, CategoryParseConfiguration> categoryParseConfigurationBuilder)
         {
             #region Index
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Vijesti, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Sport, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Magazin, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Rogue, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Auto, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Vijesti, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Sport, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Magazin, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Rogue, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Auto, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
             #endregion
 
             #region 24 sata
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Vijesti, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Show, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Sport, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Lifestyle, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Tech, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Viral, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Vijesti, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Show, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Sport, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Lifestyle, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Tech, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Viral, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
             #endregion
 
             #region Sportske Novosti
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SportskeNovosti_Sport, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SportskeNovosti_Sport, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
             #endregion
 
             #region  Jutarnji
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.JutarnjiList,
-                CategoryParseStrategy = CategoryParseStrategy.FromUrl,
-                UrlSegmentIndex = (int?)1
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl
+
             });
             #endregion
 
             #region  Net.hr
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.NetHr, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.NetHr,
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl
+
+            });
             #endregion
 
             #region Slobodna Dalmacija
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Novosti, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Sport, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Showbiz, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Trend, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_DrustvenaMreza, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Zivot, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Zdravlje, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Moda, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Ljepota, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Putovanja, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Gastro, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Dom, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Tehnologija, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Viral, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Novosti, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Sport, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Showbiz, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Trend, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_DrustvenaMreza, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Zivot, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Zdravlje, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Moda, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Ljepota, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Putovanja, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Gastro, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Dom, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Tehnologija, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Viral, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
             #endregion
 
             #region TPortal
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Vijesti, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Biznis, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Sport, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Tehno, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Showtime, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Lifestyle, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_FunBox, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Kultura, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Vijesti, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Biznis, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Sport, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Tehno, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Showtime, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Lifestyle, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_FunBox, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Kultura, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
             #endregion
 
             #region Večernji List
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.VecernjiList,
-                CategoryParseStrategy = CategoryParseStrategy.FromUrl,
-                UrlSegmentIndex = (int?)1
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl
+
             });
             #endregion
 
             #region Telegram
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Telegram_PolitikaIKriminal, CategoryParseStrategy = CategoryParseStrategy.FromUrl, UrlSegmentIndex = (int?)1 });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Telegram_Telesport, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Telegram_Zivot, CategoryParseStrategy = CategoryParseStrategy.FromUrl, UrlSegmentIndex = (int?)1 });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Telegram, CategoryParseStrategy = CategoryParseStrategy.FromUrl });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Telegram_Telesport, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
             #endregion
 
             // Dnevnik
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Dnevnik, CategoryParseStrategy = CategoryParseStrategy.FromUrl, UrlSegmentIndex = (int?)1 });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Dnevnik, CategoryParseStrategy = CategoryParseStrategy.FromUrl });
 
             // Gol
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Gol_Sport, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Gol_Sport, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
 
             // Rtl Vijesti
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.RtlVijesti_Sport, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.RtlVijesti_Sport, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
 
             // Nogometni Plus
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.NogometPlus_Nogomet, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.NogometPlus_Nogomet, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
 
             // Lider
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Lider_BiznisIPolitikaHrvatska, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Lider_BiznisIPolitikaSvijet, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Lider_Trziste, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Lider_BiznisIPolitikaHrvatska, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Lider_BiznisIPolitikaSvijet, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Lider_Trziste, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
 
             // Bug
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Bug_TechVijesti, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Bug_TechVijesti, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
 
             // Vidi.Hr
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.VidiHr_TechVijesti, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.VidiHr_TechVijesti, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
 
             // Zimo
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Zimo_TechVijesti, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Zimo_TechVijesti, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
 
             // Netokracija
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Netokracija, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Netokracija, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
 
             // Poslovni Plus
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.PoslovniPuls, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.PoslovniPuls, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
 
             // PCChip
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.PcChip, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.PcChip, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
 
             // Cosmopolitan
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Cosmopolitan, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Cosmopolitan, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
 
             // Wall.hr
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.WallHr, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.WallHr, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
 
             // Ljepota i zdravlje
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.LjepotaIZdravlje, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.LjepotaIZdravlje, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
 
             #region Autonet
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.AutoNet, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed, UrlSegmentIndex = (int?)null });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.AutoNet, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
             #endregion
 
             #region N1
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.N1, CategoryParseStrategy = CategoryParseStrategy.FromUrl, UrlSegmentIndex = (int?)1 });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.N1, CategoryParseStrategy = CategoryParseStrategy.FromUrl });
             #endregion
 
             #region NarodHr
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.NarodHr, CategoryParseStrategy = CategoryParseStrategy.FromUrl, UrlSegmentIndex = (int?)1 });
+            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.NarodHr, CategoryParseStrategy = CategoryParseStrategy.FromUrl });
             #endregion
 
             #region Hrt
@@ -587,8 +591,8 @@ namespace Espresso.Persistence.Configuration
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.StoPosto,
-                CategoryParseStrategy = CategoryParseStrategy.FromUrl,
-                UrlSegmentIndex = (int?)1,
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl
+
             });
             #endregion
 
@@ -596,8 +600,8 @@ namespace Espresso.Persistence.Configuration
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Dnevno,
-                CategoryParseStrategy = CategoryParseStrategy.FromUrl,
-                UrlSegmentIndex = (int?)1,
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl
+
             });
             #endregion
 
@@ -605,8 +609,8 @@ namespace Espresso.Persistence.Configuration
             // categoryParseConfigurationBuilder.HasData(new
             // {
             //     RssFeedId = (int)RssFeedId.Dnevno,
-            //     CategoryParseStrategy = CategoryParseStrategy.FromUrl,
-            //     UrlSegmentIndex = (int?)1,
+            //     CategoryParseStrategy = CategoryParseStrategy.FromUrl
+            //     
             // });
             #endregion
 
@@ -726,9 +730,8 @@ namespace Espresso.Persistence.Configuration
             #endregion
 
             #region  Telegram
-            imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Telegram_PolitikaIKriminal, ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary, ImgElementXPath = "//div[contains(@class, 'thumb')]//img", ShouldImageUrlBeWebScraped = false, ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute, JsonWebScrapePropertyNames = (string?)null });
+            imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Telegram, ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary, ImgElementXPath = "//div[contains(@class, 'thumb')]//img", ShouldImageUrlBeWebScraped = false, ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute, JsonWebScrapePropertyNames = (string?)null });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Telegram_Telesport, ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary, ImgElementXPath = "//div[contains(@class, 'featured-img')]//img", ShouldImageUrlBeWebScraped = false, ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute, JsonWebScrapePropertyNames = (string?)null });
-            imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Telegram_Zivot, ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary, ImgElementXPath = "//div[contains(@class, 'thumb')]//img", ShouldImageUrlBeWebScraped = false, ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute, JsonWebScrapePropertyNames = (string?)null });
             #endregion
 
             #region Dnevnik

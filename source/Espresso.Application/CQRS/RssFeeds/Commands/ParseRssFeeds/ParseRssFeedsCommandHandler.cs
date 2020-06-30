@@ -252,19 +252,19 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                             }
                             else
                             {
-                                // var urlcategories = string.Join(
-                                //     separator: ", ",
-                                //     values: rssFeed.RssFeedCategories?
-                                //         .Select(rssFeedCategory => $"{rssFeedCategory.UrlRegex}:{rssFeedCategory.Category?.Name ?? ""}")
-                                //         ?? new string[] { }
-                                // );
-                                // await _loggerService.LogMissingCategoriesError(
-                                //     version: _commonConfiguration.Version,
-                                //     rssFeedUrl: rssFeedUrl,
-                                //     articleUrl: syndicationItem?.Links?.FirstOrDefault()?.Uri?.ToString() ?? "",
-                                //     urlCategories: urlcategories,
-                                //     cancellationToken: cancellationToken
-                                // );
+                                var urlcategories = string.Join(
+                                    separator: ", ",
+                                    values: rssFeed.RssFeedCategories?
+                                        .Select(rssFeedCategory => $"{rssFeedCategory.UrlRegex}-{rssFeedCategory.UrlSegmentIndex}:{rssFeedCategory.Category?.Name ?? ""}")
+                                        ?? new string[] { }
+                                );
+                                await _loggerService.LogMissingCategoriesError(
+                                    version: _commonConfiguration.Version,
+                                    rssFeedUrl: rssFeedUrl,
+                                    articleUrl: syndicationItem?.Links?.FirstOrDefault()?.Uri?.ToString() ?? "",
+                                    urlCategories: urlcategories,
+                                    cancellationToken: cancellationToken
+                                );
                             }
                         }
                     }));

@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(EspressoDatabaseContext))]
-    partial class EspressoDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200630063533_Ipazanin_FixedNetHrCategoryParsing")]
+    partial class Ipazanin_FixedNetHrCategoryParsing
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1002,9 +1004,6 @@ namespace Espresso.Persistence.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<int>("UrlSegmentIndex")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -1019,552 +1018,483 @@ namespace Espresso.Persistence.Migrations
                             Id = 1,
                             CategoryId = 1,
                             RssFeedId = 13,
-                            UrlRegex = "vijesti",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "vijesti"
                         },
                         new
                         {
                             Id = 2,
                             CategoryId = 8,
                             RssFeedId = 13,
-                            UrlRegex = "autoklub",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "autoklub"
                         },
                         new
                         {
                             Id = 3,
                             CategoryId = 9,
                             RssFeedId = 13,
-                            UrlRegex = "kultura",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "kultura"
                         },
                         new
                         {
                             Id = 13,
                             CategoryId = 1,
                             RssFeedId = 13,
-                            UrlRegex = "globus",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "globus"
                         },
                         new
                         {
                             Id = 14,
                             CategoryId = 4,
                             RssFeedId = 13,
-                            UrlRegex = "domidizajn",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "domidizajn"
                         },
                         new
                         {
                             Id = 15,
                             CategoryId = 6,
                             RssFeedId = 13,
-                            UrlRegex = "viral",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "viral"
                         },
                         new
                         {
                             Id = 16,
                             CategoryId = 3,
                             RssFeedId = 13,
-                            UrlRegex = "spektakli",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "spektakli"
                         },
                         new
                         {
                             Id = 17,
                             CategoryId = 4,
                             RssFeedId = 13,
-                            UrlRegex = "life",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "life"
                         },
                         new
                         {
                             Id = 4,
                             CategoryId = 1,
                             RssFeedId = 37,
-                            UrlRegex = "vijesti",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "vijesti"
                         },
                         new
                         {
                             Id = 5,
                             CategoryId = 2,
                             RssFeedId = 37,
-                            UrlRegex = "sport",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "sport"
                         },
                         new
                         {
                             Id = 6,
                             CategoryId = 3,
                             RssFeedId = 37,
-                            UrlRegex = "showbiz",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "showbiz"
                         },
                         new
                         {
                             Id = 7,
                             CategoryId = 4,
                             RssFeedId = 37,
-                            UrlRegex = "lifestyle",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "lifestyle"
                         },
                         new
                         {
                             Id = 8,
                             CategoryId = 7,
                             RssFeedId = 37,
-                            UrlRegex = "biznis",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "biznis"
                         },
                         new
                         {
                             Id = 9,
                             CategoryId = 5,
                             RssFeedId = 37,
-                            UrlRegex = "techsci",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "techsci"
                         },
                         new
                         {
                             Id = 10,
                             CategoryId = 8,
                             RssFeedId = 37,
-                            UrlRegex = "automoto",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "automoto"
                         },
                         new
                         {
                             Id = 11,
                             CategoryId = 9,
                             RssFeedId = 37,
-                            UrlRegex = "kultura",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "kultura"
                         },
                         new
                         {
                             Id = 12,
                             CategoryId = 1,
                             RssFeedId = 42,
-                            UrlRegex = "vijesti",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "vijesti"
                         },
                         new
                         {
                             Id = 18,
                             CategoryId = 1,
                             RssFeedId = 39,
-                            UrlRegex = "politika-kriminal",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "politika-kriminal"
                         },
                         new
                         {
                             Id = 19,
                             CategoryId = 4,
                             RssFeedId = 39,
-                            UrlRegex = "zivot",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "zivot"
                         },
                         new
                         {
                             Id = 20,
                             CategoryId = 1,
                             RssFeedId = 65,
-                            UrlRegex = "Vijesti",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "Vijesti"
                         },
                         new
                         {
                             Id = 21,
                             CategoryId = 1,
                             RssFeedId = 65,
-                            UrlRegex = "Svijet",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "Svijet"
                         },
                         new
                         {
                             Id = 22,
                             CategoryId = 1,
                             RssFeedId = 65,
-                            UrlRegex = "Znanost",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "Znanost"
                         },
                         new
                         {
                             Id = 23,
                             CategoryId = 1,
                             RssFeedId = 65,
-                            UrlRegex = "Regija",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "Regija"
                         },
                         new
                         {
                             Id = 24,
                             CategoryId = 1,
                             RssFeedId = 65,
-                            UrlRegex = "Dnevnik",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "Dnevnik"
                         },
                         new
                         {
                             Id = 25,
                             CategoryId = 1,
                             RssFeedId = 65,
-                            UrlRegex = "Info",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "Info"
                         },
                         new
                         {
                             Id = 26,
                             CategoryId = 7,
                             RssFeedId = 65,
-                            UrlRegex = "Biznis",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "Biznis"
                         },
                         new
                         {
                             Id = 27,
                             CategoryId = 4,
                             RssFeedId = 65,
-                            UrlRegex = "Lifestyle",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "Lifestyle"
                         },
                         new
                         {
                             Id = 28,
                             CategoryId = 4,
                             RssFeedId = 65,
-                            UrlRegex = "Zdravlje",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "Zdravlje"
                         },
                         new
                         {
                             Id = 29,
                             CategoryId = 2,
                             RssFeedId = 65,
-                            UrlRegex = "Sport-Klub",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "Sport-Klub"
                         },
                         new
                         {
                             Id = 30,
                             CategoryId = 3,
                             RssFeedId = 65,
-                            UrlRegex = "Showbiz",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "Showbiz"
                         },
                         new
                         {
                             Id = 31,
                             CategoryId = 5,
                             RssFeedId = 65,
-                            UrlRegex = "Tehnologija",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "Tehnologija"
                         },
                         new
                         {
                             Id = 32,
                             CategoryId = 9,
                             RssFeedId = 65,
-                            UrlRegex = "Kultura",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "Kultura"
                         },
                         new
                         {
                             Id = 33,
                             CategoryId = 1,
                             RssFeedId = 66,
-                            UrlRegex = "Hrvatska",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "Hrvatska"
                         },
                         new
                         {
                             Id = 34,
                             CategoryId = 2,
                             RssFeedId = 66,
-                            UrlRegex = "Sport",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "Sport"
                         },
                         new
                         {
                             Id = 35,
                             CategoryId = 9,
                             RssFeedId = 66,
-                            UrlRegex = "Kultura",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "Kultura"
                         },
                         new
                         {
                             Id = 36,
                             CategoryId = 4,
                             RssFeedId = 71,
-                            UrlRegex = "zivot",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "zivot"
                         },
                         new
                         {
                             Id = 37,
                             CategoryId = 1,
                             RssFeedId = 71,
-                            UrlRegex = "news",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "news"
                         },
                         new
                         {
                             Id = 38,
                             CategoryId = 3,
                             RssFeedId = 71,
-                            UrlRegex = "scena",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "scena"
                         },
                         new
                         {
                             Id = 39,
                             CategoryId = 4,
                             RssFeedId = 71,
-                            UrlRegex = "bubble",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "bubble"
                         },
                         new
                         {
                             Id = 40,
                             CategoryId = 1,
                             RssFeedId = 72,
-                            UrlRegex = "vijesti",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "vijesti"
                         },
                         new
                         {
                             Id = 41,
                             CategoryId = 2,
                             RssFeedId = 72,
-                            UrlRegex = "sport",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "sport"
                         },
                         new
                         {
                             Id = 42,
                             CategoryId = 1,
                             RssFeedId = 72,
-                            UrlRegex = "domovina",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "domovina"
                         },
                         new
                         {
                             Id = 43,
                             CategoryId = 3,
                             RssFeedId = 72,
-                            UrlRegex = "magazin",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "magazin"
                         },
                         new
                         {
                             Id = 44,
                             CategoryId = 4,
                             RssFeedId = 72,
-                            UrlRegex = "zdravlje",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "zdravlje"
                         },
                         new
                         {
                             Id = 46,
                             CategoryId = 1,
                             RssFeedId = 14,
-                            UrlRegex = "hrvatska",
-                            UrlSegmentIndex = 2
+                            UrlRegex = "hrvatska"
                         },
                         new
                         {
                             Id = 47,
                             CategoryId = 1,
                             RssFeedId = 14,
-                            UrlRegex = "crna-kronika",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "crna-kronika"
                         },
                         new
                         {
                             Id = 48,
                             CategoryId = 1,
                             RssFeedId = 14,
-                            UrlRegex = "svijet",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "svijet"
                         },
                         new
                         {
                             Id = 49,
                             CategoryId = 9,
                             RssFeedId = 14,
-                            UrlRegex = "kultura",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "kultura"
                         },
                         new
                         {
                             Id = 50,
                             CategoryId = 7,
                             RssFeedId = 14,
-                            UrlRegex = "novac",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "novac"
                         },
                         new
                         {
                             Id = 51,
                             CategoryId = 5,
                             RssFeedId = 14,
-                            UrlRegex = "znanost",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "znanost"
                         },
                         new
                         {
                             Id = 52,
                             CategoryId = 2,
                             RssFeedId = 14,
-                            UrlRegex = "sport",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "sport"
                         },
                         new
                         {
                             Id = 53,
                             CategoryId = 6,
                             RssFeedId = 14,
-                            UrlRegex = "vic-dana",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "vic-dana"
                         },
                         new
                         {
                             Id = 54,
                             CategoryId = 5,
                             RssFeedId = 14,
-                            UrlRegex = "planet-x",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "planet-x"
                         },
                         new
                         {
                             Id = 55,
                             CategoryId = 6,
                             RssFeedId = 14,
-                            UrlRegex = "fora-dana",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "fora-dana"
                         },
                         new
                         {
                             Id = 56,
                             CategoryId = 3,
                             RssFeedId = 14,
-                            UrlRegex = "hot",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "hot"
                         },
                         new
                         {
                             Id = 57,
                             CategoryId = 4,
                             RssFeedId = 14,
-                            UrlRegex = "magazin",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "magazin"
                         },
                         new
                         {
                             Id = 58,
                             CategoryId = 5,
                             RssFeedId = 14,
-                            UrlRegex = "tehnoklik",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "tehnoklik"
                         },
                         new
                         {
                             Id = 59,
                             CategoryId = 8,
                             RssFeedId = 14,
-                            UrlRegex = "auto",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "auto"
                         },
                         new
                         {
                             Id = 60,
                             CategoryId = 1,
                             RssFeedId = 65,
-                            UrlRegex = "Crna-Kronika",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "Crna-Kronika"
                         },
                         new
                         {
                             Id = 61,
                             CategoryId = 1,
                             RssFeedId = 65,
-                            UrlRegex = "Video",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "Video"
                         },
                         new
                         {
                             Id = 62,
                             CategoryId = 3,
                             RssFeedId = 42,
-                            UrlRegex = "showbuzz",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "showbuzz"
                         },
                         new
                         {
                             Id = 63,
                             CategoryId = 1,
                             RssFeedId = 66,
-                            UrlRegex = "koronovirus",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "koronovirus"
                         },
                         new
                         {
                             Id = 64,
                             CategoryId = 1,
                             RssFeedId = 66,
-                            UrlRegex = "svijet",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "svijet"
                         },
                         new
                         {
                             Id = 65,
                             CategoryId = 1,
                             RssFeedId = 72,
-                            UrlRegex = "korona-virus",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "korona-virus"
                         },
                         new
                         {
                             Id = 66,
                             CategoryId = 8,
                             RssFeedId = 72,
-                            UrlRegex = "auto-moto",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "auto-moto"
                         },
                         new
                         {
                             Id = 67,
                             CategoryId = 3,
                             RssFeedId = 13,
-                            UrlRegex = "scena",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "scena"
                         },
                         new
                         {
                             Id = 68,
                             CategoryId = 3,
                             RssFeedId = 13,
-                            UrlRegex = "spektakli",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "spektakli"
                         },
                         new
                         {
                             Id = 69,
                             CategoryId = 9,
                             RssFeedId = 39,
-                            UrlRegex = "kultura",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "kultura"
                         },
                         new
                         {
                             Id = 70,
                             CategoryId = 1,
                             RssFeedId = 66,
-                            UrlRegex = "svijet",
-                            UrlSegmentIndex = 1
+                            UrlRegex = "svijet"
                         });
                 });
 
@@ -1742,6 +1672,9 @@ namespace Espresso.Persistence.Migrations
                             b1.Property<int>("CategoryParseStrategy")
                                 .HasColumnType("int");
 
+                            b1.Property<int?>("UrlSegmentIndex")
+                                .HasColumnType("int");
+
                             b1.HasKey("RssFeedId");
 
                             b1.ToTable("RssFeeds");
@@ -1813,7 +1746,8 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 13,
-                                    CategoryParseStrategy = 2
+                                    CategoryParseStrategy = 2,
+                                    UrlSegmentIndex = 1
                                 },
                                 new
                                 {
@@ -1933,12 +1867,14 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 37,
-                                    CategoryParseStrategy = 2
+                                    CategoryParseStrategy = 2,
+                                    UrlSegmentIndex = 1
                                 },
                                 new
                                 {
                                     RssFeedId = 39,
-                                    CategoryParseStrategy = 2
+                                    CategoryParseStrategy = 2,
+                                    UrlSegmentIndex = 1
                                 },
                                 new
                                 {
@@ -1948,7 +1884,8 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 42,
-                                    CategoryParseStrategy = 2
+                                    CategoryParseStrategy = 2,
+                                    UrlSegmentIndex = 1
                                 },
                                 new
                                 {
@@ -2033,12 +1970,14 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 65,
-                                    CategoryParseStrategy = 2
+                                    CategoryParseStrategy = 2,
+                                    UrlSegmentIndex = 1
                                 },
                                 new
                                 {
                                     RssFeedId = 66,
-                                    CategoryParseStrategy = 2
+                                    CategoryParseStrategy = 2,
+                                    UrlSegmentIndex = 1
                                 },
                                 new
                                 {
@@ -2063,12 +2002,14 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 71,
-                                    CategoryParseStrategy = 2
+                                    CategoryParseStrategy = 2,
+                                    UrlSegmentIndex = 1
                                 },
                                 new
                                 {
                                     RssFeedId = 72,
-                                    CategoryParseStrategy = 2
+                                    CategoryParseStrategy = 2,
+                                    UrlSegmentIndex = 1
                                 },
                                 new
                                 {

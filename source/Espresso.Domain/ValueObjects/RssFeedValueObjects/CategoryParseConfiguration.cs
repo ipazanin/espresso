@@ -9,8 +9,6 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
     {
         #region Properties
         public CategoryParseStrategy CategoryParseStrategy { get; private set; }
-
-        public int? UrlSegmentIndex { get; private set; }
         #endregion
 
         #region Constructors
@@ -21,10 +19,9 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         {
         }
 
-        public CategoryParseConfiguration(CategoryParseStrategy categoryParseStrategy, int? urlSegmentIndex)
+        public CategoryParseConfiguration(CategoryParseStrategy categoryParseStrategy)
         {
             CategoryParseStrategy = categoryParseStrategy;
-            UrlSegmentIndex = urlSegmentIndex;
         }
         #endregion
 

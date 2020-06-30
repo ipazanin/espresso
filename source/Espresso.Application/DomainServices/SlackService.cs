@@ -203,7 +203,7 @@ namespace Espresso.Application.DomainServices
                 $":label: Version: {version}\n" +
                 $":email: Rss Feed Url: {rssFeedUrl}\n" +
                 $":email: Article Url: {articleUrl}\n" +
-                $":email: Url-Category Map: {urlCategories}\n";
+                $":email: Url-SegmentIndex:Category Map: {urlCategories}\n";
 
             return Log(
                 data: new SlackWebHookDto(

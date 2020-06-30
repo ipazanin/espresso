@@ -327,39 +327,30 @@ namespace Espresso.Domain.Services
         {
             var articleCategories = new HashSet<ArticleCategory>();
 
-            if (
-                rssFeed.CategoryParseConfiguration.UrlSegmentIndex is null ||
-                itemUrl?.Segments is null ||
-                itemUrl.Segments.Length <= rssFeed.CategoryParseConfiguration.UrlSegmentIndex
-            )
-            {
-                return articleCategories;
-            }
-
-            var secondUrlSegment = itemUrl?
-                .Segments[rssFeed.CategoryParseConfiguration.UrlSegmentIndex.Value]
-                .Replace("/", "")
-                .ToLower();
-
-            if (secondUrlSegment is null)
-            {
-                return articleCategories;
-            }
-
             foreach (var rssFeedCategory in rssFeed.RssFeedCategories)
             {
                 if (
-                    !string.IsNullOrEmpty(rssFeedCategory.UrlRegex) &&
-                    Regex.IsMatch(secondUrlSegment, rssFeedCategory.UrlRegex, RegexOptions.IgnoreCase)
+                    itemUrl?.Segments != null &&
+                    itemUrl.Segments.Length > rssFeedCategory.UrlSegmentIndex
                 )
                 {
-                    articleCategories.Add(new ArticleCategory(
-                        id: Guid.NewGuid(),
-                        articleId: articleId,
-                        categoryId: rssFeedCategory.CategoryId,
-                        article: null,
-                        category: rssFeed.Category
-                    ));
+                    var secondUrlSegment = itemUrl?
+                        .Segments[rssFeedCategory.UrlSegmentIndex]
+                        .Replace("/", "").ToLower();
+
+                    if (
+                        !string.IsNullOrEmpty(rssFeedCategory.UrlRegex) &&
+                        Regex.IsMatch(secondUrlSegment, rssFeedCategory.UrlRegex, RegexOptions.IgnoreCase)
+                    )
+                    {
+                        articleCategories.Add(new ArticleCategory(
+                            id: Guid.NewGuid(),
+                            articleId: articleId,
+                            categoryId: rssFeedCategory.CategoryId,
+                            article: null,
+                            category: rssFeed.Category
+                        ));
+                    }
                 }
             }
 

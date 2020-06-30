@@ -9,6 +9,8 @@ namespace Espresso.Domain.Entities
 
         public string UrlRegex { get; private set; }
 
+        public int UrlSegmentIndex { get; private set; }
+
         #region Relations
         public int CategoryId { get; private set; }
 
@@ -32,10 +34,11 @@ namespace Espresso.Domain.Entities
             UrlRegex = null!;
         }
 
-        public RssFeedCategory(int id, string urlRegex, int categoryId, int rssFeedId)
+        public RssFeedCategory(int id, string urlRegex, int urlSegmentIndex, int categoryId, int rssFeedId)
         {
             Id = id;
             UrlRegex = urlRegex;
+            UrlSegmentIndex = urlSegmentIndex;
             RssFeedId = rssFeedId;
             CategoryId = categoryId;
         }
