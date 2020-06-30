@@ -387,14 +387,14 @@ namespace Espresso.Application.DomainServices
         {
             return _commonConfiguration.AppEnvironment switch
             {
-                _ => _slackService.LogMissingCategoriesError(
+                AppEnvironment.Production => _slackService.LogMissingCategoriesError(
                     version: version,
                     rssFeedUrl: rssFeedUrl,
                     articleUrl: articleUrl,
                     urlCategories: urlCategories,
                     cancellationToken: cancellationToken
                 ),
-                // _ => Task.CompletedTask,
+                _ => Task.CompletedTask,
             };
         }
         #endregion
