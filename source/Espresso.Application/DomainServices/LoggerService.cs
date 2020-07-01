@@ -136,7 +136,7 @@ namespace Espresso.Application.DomainServices
 
             return _commonConfiguration.AppEnvironment switch
             {
-                AppEnvironment.Production => _slackService.LogRequestError(
+                AppEnvironment.Prod => _slackService.LogRequestError(
                     requestName: requestName,
                     webApiVersion: webApiVersion,
                     targetedWebApiVersion: targetedWebApiVersion,
@@ -184,14 +184,14 @@ namespace Espresso.Application.DomainServices
                 case AppEnvironment.Undefined:
                 default:
                 case AppEnvironment.Local:
-                case AppEnvironment.Development:
+                case AppEnvironment.Dev:
                     _logger.LogWarning(
                         eventId: new EventId(id: eventId, name: eventName),
                         message: formattedMessage,
                         args: args
                     );
                     return Task.CompletedTask;
-                case AppEnvironment.Production:
+                case AppEnvironment.Prod:
                     return _slackService.LogWarning(
                         eventName: eventName,
                         version: version,
@@ -243,7 +243,7 @@ namespace Espresso.Application.DomainServices
 
             return _commonConfiguration.AppEnvironment switch
             {
-                AppEnvironment.Production => _slackService.LogError(
+                AppEnvironment.Prod => _slackService.LogError(
                     eventName: eventName,
                     version: version,
                     message: message,
@@ -364,7 +364,7 @@ namespace Espresso.Application.DomainServices
 
             return _commonConfiguration.AppEnvironment switch
             {
-                AppEnvironment.Production => _slackService.LogAppDownload(
+                AppEnvironment.Prod => _slackService.LogAppDownload(
                     mobileDeviceType: mobileDeviceType,
                     todayAndroidCount: todayAndroidCount,
                     todayIosCount: todayIosCount,
@@ -385,9 +385,18 @@ namespace Espresso.Application.DomainServices
             CancellationToken cancellationToken
         )
         {
+            if (
+                articleUrl.Contains("hr.n1info.com/English/", StringComparison.InvariantCultureIgnoreCase) ||
+                articleUrl.Contains("www.jutarnji.hr/video/", StringComparison.InvariantCultureIgnoreCase) ||
+                articleUrl.Contains("www.jutarnji.hr/promo/", StringComparison.InvariantCultureIgnoreCase)
+            )
+            {
+                return Task.CompletedTask;
+            }
+
             return _commonConfiguration.AppEnvironment switch
             {
-                AppEnvironment.Production => _slackService.LogMissingCategoriesError(
+                AppEnvironment.Prod => _slackService.LogMissingCategoriesError(
                     version: version,
                     rssFeedUrl: rssFeedUrl,
                     articleUrl: articleUrl,

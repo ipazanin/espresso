@@ -123,11 +123,6 @@ namespace Espresso.WebApi
             services.AddSignalR();
             #endregion
 
-            #region Service Provider
-            var serviceProvider = services.BuildServiceProvider();
-            var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
-            #endregion
-
             #region Swagger
             services.AddSwaggerGen(ConfigureSwagger);
             #endregion
@@ -140,12 +135,16 @@ namespace Espresso.WebApi
                 {
                     case AppEnvironment.Undefined:
                     case AppEnvironment.Local:
-                    case AppEnvironment.Development:
+                    case AppEnvironment.Dev:
                     default:
-                        options.UseLoggerFactory(loggerFactory);
+                        options.EnableDetailedErrors();
+                        options.UseLoggerFactory(LoggerFactory.Create(builder =>
+                        {
+                            builder.AddConsole();
+                        }));
                         options.EnableSensitiveDataLogging(true);
                         break;
-                    case AppEnvironment.Production:
+                    case AppEnvironment.Prod:
                         break;
                 }
             });

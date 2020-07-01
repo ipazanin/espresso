@@ -239,18 +239,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                             var rssFeedUrl = rssFeed.Url;
                             var exceptionMessage = exception.Message;
 
-                            if (!exception.Message.Equals("articleCategories must not be empty! (Parameter 'articleCategories')"))
-                            {
-                                await _loggerService.LogWarning(
-                                    eventId: (int)Event.ArticleParsing,
-                                    eventName: Event.ArticleParsing.GetDisplayName(),
-                                    version: _commonConfiguration.Version,
-                                    message: $"RssFeedUrl: {rssFeedUrl}",
-                                    exception: exception,
-                                    cancellationToken: cancellationToken
-                                ).ConfigureAwait(false);
-                            }
-                            else
+                            if (exception.Message.Equals("articleCategories must not be empty! (Parameter 'articleCategories')"))
                             {
                                 var urlcategories = string.Join(
                                     separator: ", ",
@@ -265,6 +254,23 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                                     urlCategories: urlcategories,
                                     cancellationToken: cancellationToken
                                 );
+
+                            }
+                            else if (exception.Message.Equals("publishDateTime must not be empty! (Parameter 'publishDateTime')"))
+                            {
+
+                            }
+                            else
+                            {
+
+                                await _loggerService.LogWarning(
+                                    eventId: (int)Event.ArticleParsing,
+                                    eventName: Event.ArticleParsing.GetDisplayName(),
+                                    version: _commonConfiguration.Version,
+                                    message: $"RssFeedUrl: {rssFeedUrl}",
+                                    exception: exception,
+                                    cancellationToken: cancellationToken
+                                ).ConfigureAwait(false);
                             }
                         }
                     }));
@@ -370,7 +376,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             IEnumerable<Article> articles
         )
         {
-            if (articles.Count() == 0)
+            if (!articles.Any())
             {
                 return;
             }
@@ -415,7 +421,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             IEnumerable<Article> articles
         )
         {
-            if (articles.Count() == 0)
+            if (!articles.Any())
             {
                 return;
             }
@@ -439,8 +445,17 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                     articlesToUpdate.Add(article);
                 }
             }
+            var createArticleCategories = articlesToUpdate.SelectMany(article => article.CreateArticleCategories);
+            var deleteArticleCategoryIds = articlesToUpdate
+                .SelectMany(
+                    article => article
+                        .DeleteArticleCategories
+                        .Select(deleteArticleCategory => deleteArticleCategory.Id)
+                );
 
-            _articleRepository.UpdateArticles(articles);
+            _articleRepository.UpdateArticles(articlesToUpdate);
+            _articleCategoryRepository.InsertArticleCategories(createArticleCategories);
+            _articleCategoryRepository.DeleteArticleCategories(deleteArticleCategoryIds);
 
             _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,

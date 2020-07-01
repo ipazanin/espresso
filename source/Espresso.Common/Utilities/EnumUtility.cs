@@ -122,14 +122,14 @@ namespace Espresso.Domain.Utilities
             return defaultValue;
         }
 
-        public static IEnumerable<T> GetAllValuesExcept<T>(IEnumerable<T> values) where T : struct, IConvertible
-        {
-            return values == null || values.Count() == 0 ? GetAllValues<T>() : GetAllValues<T>().Except(values);
-        }
-
         public static IEnumerable<T> GetAllValues<T>() where T : struct, IConvertible
         {
             return Enum.GetValues(typeof(T)).Cast<T>();
+        }
+
+        public static IEnumerable<T> GetAllValuesExcept<T>(IEnumerable<T>? values) where T : struct, IConvertible
+        {
+            return values == null || values.Any() ? GetAllValues<T>().Except(values) : GetAllValues<T>();
         }
     }
 }

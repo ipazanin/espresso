@@ -19,7 +19,7 @@ namespace Espresso.Domain.Validators
 
         protected void NotEmpty<T>(IEnumerable<T> values, string parameterName, string? errorMessage = null)
         {
-            if (values.Count() == default)
+            if (!values.Any())
             {
                 throw new ArgumentException(
                     message: errorMessage ?? $"{parameterName} must not be empty!",

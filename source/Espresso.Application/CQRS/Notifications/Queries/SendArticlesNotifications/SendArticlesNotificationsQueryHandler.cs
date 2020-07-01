@@ -29,7 +29,7 @@ namespace Espresso.Application.CQRS.Notifications.Queries.SendArticlesNotificati
         #region Methods
         public async Task<Unit> Handle(SendArticlesNotificationsQuery request, CancellationToken cancellationToken)
         {
-            if (request.CreatedArticles.Count() == 0)
+            if (!request.CreatedArticles.Any())
             {
                 return Unit.Value;
             }

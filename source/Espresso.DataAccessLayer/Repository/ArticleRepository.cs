@@ -69,6 +69,11 @@ namespace Espresso.DataAccessLayer.Repository
 
         public void InsertArticles(IEnumerable<Article> articles)
         {
+            if (!articles.Any())
+            {
+                return;
+            }
+
             var commandText = $"INSERT INTO {TableName} " +
                 $"({string.Join(", ", _columnNames)}) " +
                 $"VALUES " +
@@ -110,6 +115,10 @@ namespace Espresso.DataAccessLayer.Repository
 
         public void UpdateArticles(IEnumerable<Article> articles)
         {
+            if (!articles.Any())
+            {
+                return;
+            }
             var commandText = $"UPDATE {TableName} SET " +
                 $"{string.Join(", ", _updateColumnNames.Select(articleColumnName => $"{articleColumnName} = @{articleColumnName}"))} " +
                 $"WHERE {IdColumnName} = @{IdColumnName}";

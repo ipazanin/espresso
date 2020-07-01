@@ -46,7 +46,7 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         public AppEnvironment AppEnvironment => EnumUtility.GetEnumOrDefault(
             enumValue: _configuration["AppConfiguration:Environment"],
-            defaultValue: AppEnvironment.Production
+            defaultValue: AppEnvironment.Prod
         );
 
         /// <summary>

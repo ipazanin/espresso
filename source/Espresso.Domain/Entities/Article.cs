@@ -61,6 +61,12 @@ namespace Espresso.Domain.Entities
         public ICollection<ArticleCategory> ArticleCategories { get; private set; } = new List<ArticleCategory>();
 
         public static Expression<Func<Article, Article>> Projection => article => article;
+
+        #region NotMapped In Database
+        public IEnumerable<ArticleCategory> CreateArticleCategories { get; private set; } = new List<ArticleCategory>();
+        public IEnumerable<ArticleCategory> DeleteArticleCategories { get; private set; } = new List<ArticleCategory>();
+        #endregion
+
         #endregion
 
         #region Constructors
@@ -152,6 +158,45 @@ namespace Espresso.Domain.Entities
                 ImageUrl = other.ImageUrl;
                 shouldUpdate = true;
             }
+
+            foreach (var articleCategory in ArticleCategories)
+            {
+                if (
+                    !other.ArticleCategories.Any(otherArticleCategory => otherArticleCategory.CategoryId.Equals(articleCategory.CategoryId))
+                )
+                {
+                    DeleteArticleCategories = DeleteArticleCategories.Append(articleCategory);
+                    shouldUpdate = true;
+                }
+            }
+
+            foreach (var otherArticleCategory in other.ArticleCategories)
+            {
+                if (
+                    !ArticleCategories.Any(articleCategory => articleCategory.CategoryId.Equals(otherArticleCategory.CategoryId))
+                )
+                {
+                    CreateArticleCategories = CreateArticleCategories.Append(new ArticleCategory(
+                        id: otherArticleCategory.Id,
+                        articleId: Id,
+                        categoryId: otherArticleCategory.CategoryId,
+                        article: null,
+                        category: otherArticleCategory.Category
+                    ));
+                    shouldUpdate = true;
+                }
+            }
+
+            ArticleCategories = other
+                .ArticleCategories
+                .Select(otherArticleCategory => new ArticleCategory(
+                    id: otherArticleCategory.Id,
+                    articleId: Id,
+                    categoryId: otherArticleCategory.CategoryId,
+                    article: null,
+                    category: otherArticleCategory.Category
+                ))
+                .ToList();
 
             return shouldUpdate;
         }

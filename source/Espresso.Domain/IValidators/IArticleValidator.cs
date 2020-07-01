@@ -16,7 +16,7 @@ namespace Espresso.Domain.IValidators
             string? imageUrl,
             DateTime createDateTime,
             DateTime updateDateTime,
-            DateTime publishDateTime,
+            DateTime? publishDateTime,
             int numberOfClicks,
             decimal trendingScore,
             int newsPortalId,

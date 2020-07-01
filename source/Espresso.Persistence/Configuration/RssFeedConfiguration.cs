@@ -114,11 +114,13 @@ namespace Espresso.Persistence.Configuration
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Viral, "https://www.24sata.hr/feeds/fun.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Viral),
                 #endregion
 
-                // Sportske Novosti
+                #region Sportske Novosti
                 new RssFeed((int)RssFeedId.SportskeNovosti_Sport, "http://sportske.jutarnji.hr/sn/feed", (int)NewsPortalId.SportskeNovosti, (int)CategoryId.Sport),
+                #endregion
 
-                // Jutarnji
+                #region Jutarnji
                 new RssFeed((int)RssFeedId.JutarnjiList, "https://www.jutarnji.hr/feed", (int)NewsPortalId.JutarnjiList, (int)CategoryId.Vijesti),
+                #endregion
 
                 #region Net.hr
                 new RssFeed((int)RssFeedId.NetHr, "https://net.hr/feed/", (int)NewsPortalId.NetHr, (int)CategoryId.Vijesti),
@@ -152,8 +154,9 @@ namespace Espresso.Persistence.Configuration
                 new RssFeed((int)RssFeedId.TPortal_Kultura, "https://www.tportal.hr/rss-kultura.xml", (int)NewsPortalId.TPortal, (int)CategoryId.Kultura),
                 #endregion
 
-                // Večernji List
+                #region Večernji List
                 new RssFeed((int)RssFeedId.VecernjiList, "https://www.vecernji.hr/feeds/latest", (int)NewsPortalId.VecernjiList, (int)CategoryId.Vijesti),
+                #endregion
 
                 #region Telegram
                 new RssFeed((int)RssFeedId.Telegram,"https://www.telegram.hr/feed/", (int)NewsPortalId.Telegram, (int)CategoryId.Vijesti),
@@ -201,9 +204,10 @@ namespace Espresso.Persistence.Configuration
                 // Cosmopolitan
                 new RssFeed((int)RssFeedId.Cosmopolitan, "http://www.cosmopolitan.hr/feed", (int)NewsPortalId.Cosmopolitan, (int)CategoryId.Lifestyle),
                 
-                // Wall.hr
+                #region Wall.hr
                 new RssFeed((int)RssFeedId.WallHr, "http://wall.hr/cdn/feed.xml", (int)NewsPortalId.WallHr, (int)CategoryId.Lifestyle),
-
+                #endregion
+                
                 #region Ljepota i zdravlje
                 new RssFeed((int)RssFeedId.LjepotaIZdravlje, "http://www.ljepotaizdravlje.hr/feed", (int)NewsPortalId.LjepotaIZdravlje, (int)CategoryId.Lifestyle),
                 #endregion

@@ -109,8 +109,8 @@ namespace Espresso.Persistence.Configuration
 
                 #region Nethr
                 new RssFeedCategory(46, "hrvatska", urlSegmentIndex: 2, (int)CategoryId.Vijesti, (int)RssFeedId.NetHr),
-                new RssFeedCategory(47, "crna-kronika", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.NetHr),
-                new RssFeedCategory(48, "svijet", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.NetHr),
+                new RssFeedCategory(47, "crna-kronika", urlSegmentIndex: 2, (int)CategoryId.Vijesti, (int)RssFeedId.NetHr),
+                new RssFeedCategory(48, "svijet", urlSegmentIndex: 2, (int)CategoryId.Vijesti, (int)RssFeedId.NetHr),
                 new RssFeedCategory(49, "kultura", urlSegmentIndex: 1, (int)CategoryId.Kultura, (int)RssFeedId.NetHr),
                 new RssFeedCategory(50, "novac", urlSegmentIndex: 1, (int)CategoryId.Biznis, (int)RssFeedId.NetHr),
                 new RssFeedCategory(51, "znanost", urlSegmentIndex: 1, (int)CategoryId.Tech, (int)RssFeedId.NetHr),

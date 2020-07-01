@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
@@ -47,6 +48,10 @@ namespace Espresso.DataAccessLayer.Repository
 
         public void InsertArticleCategories(IEnumerable<ArticleCategory> articleCategories)
         {
+            if (!articleCategories.Any())
+            {
+                return;
+            }
             var commandText = $"INSERT INTO {TableName} " +
                 $"({string.Join(", ", _articleCategoryNames)}) " +
                 $"VALUES " +
@@ -68,6 +73,38 @@ namespace Espresso.DataAccessLayer.Repository
 
             connection.Close();
         }
+
+        public void DeleteArticleCategories(IEnumerable<Guid> articleCategoryIds)
+        {
+            if (!articleCategoryIds.Any())
+            {
+                return;
+            }
+
+            var i = 0;
+            using var connection = _databaseConnectionFactory.CreateDatabaseConnection();
+            using var command = connection.CreateCommand();
+
+            var articleCategoryIdParameterNames = new List<string>();
+
+            foreach (var articleCategoryId in articleCategoryIds)
+            {
+                var parameterName = $"@{nameof(ArticleCategory.Id)}{i}";
+                articleCategoryIdParameterNames.Add(parameterName);
+                command.Parameters.Add(new SqlParameter(parameterName, articleCategoryId));
+                i++;
+            }
+
+            var articleCategoryIdsCommaDelimited = string.Join(", ", articleCategoryIdParameterNames);
+            var commandText = $"DELETE FROM {TableName} WHERE {nameof(ArticleCategory.Id)} IN({articleCategoryIdsCommaDelimited})";
+
+            command.CommandText = commandText;
+
+            connection.Open();
+            var numberOfDeletedRows = command.ExecuteNonQuery();
+            connection.Close();
+        }
+
         #endregion
     }
 }

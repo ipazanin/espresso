@@ -18,7 +18,8 @@
     "start-webapi:watch": "dotnet watch --project source/Espresso.WebApi/Espresso.WebApi.csproj run",
     "start-parserdeleter": "dotnet run --project source/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj",
     "start-parserdeleter:watch": "dotnet watch --project source/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj run",
-    "test": "sudo dotnet test --logger 'trx;LogFileName=TestResults.trx' --logger 'xunit;LogFileName=TestResults.xml' --results-directory ./tests/UnitTests/TestReports/UnitTests /p:CollectCoverage=true /p:CoverletOutput=TestReports/Coverage/ /p:CoverletOutputFormat=cobertura tests/UnitTests/UnitTests.sln",
+    "test": "dotnet test tests/UnitTests/UnitTests.sln",
+    "test-code-coverage": "sudo dotnet test --logger 'trx;LogFileName=TestResults.trx' --logger 'xunit;LogFileName=TestResults.xml' --results-directory ./tests/UnitTests/TestReports/UnitTests /p:CollectCoverage=true /p:CoverletOutput=TestReports/Coverage/ /p:CoverletOutputFormat=cobertura tests/UnitTests/UnitTests.sln",
     "test:watch": "dotnet watch --project tests/UnitTests/Espresso.Common.Tests/Espresso.Common.Tests.csproj test --logger 'trx;LogFileName=TestResults.trx' --logger 'xunit;LogFileName=TestResults.xml' --results-directory ./tests/UnitTests/TestReports/UnitTests /p:CollectCoverage=true /p:CoverletOutput=TestReports/Coverage/ /p:CoverletOutputFormat=cobertura",
     "update-packages": "./scripts/update-packages-script.sh"
   },

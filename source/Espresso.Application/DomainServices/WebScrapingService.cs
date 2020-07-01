@@ -26,6 +26,7 @@ namespace Espresso.Application.DomainServices
         public WebScrapingService(IHttpClientFactory httpClientFactory)
         {
             _httpClient = httpClientFactory.CreateClient();
+            _httpClient.Timeout = TimeSpan.FromSeconds(30);
         }
         #endregion
 
@@ -44,7 +45,6 @@ namespace Espresso.Application.DomainServices
             {
                 return null;
             }
-
             var response = await _httpClient.GetAsync(articleUrl, cancellationToken).ConfigureAwait(false);
             var htmlString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
@@ -65,6 +65,7 @@ namespace Espresso.Application.DomainServices
                 ).ConfigureAwait(false),
                 _ => GetImageUrlFromSrcAttribute(elementTags),
             };
+
         }
 
         public string? GetSrcAttributeFromFirstImgElement(string? html)

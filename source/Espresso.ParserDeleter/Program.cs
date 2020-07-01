@@ -87,7 +87,6 @@ namespace Espresso.Workers.ParserDeleter
 
                     var serviceProvider = services.BuildServiceProvider();
                     var configuration = serviceProvider.GetService<IParserDeleterConfiguration>();
-                    var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
 
                     #region Database
                     services.AddDbContext<IEspressoDatabaseContext, EspressoDatabaseContext>(options =>
@@ -97,12 +96,16 @@ namespace Espresso.Workers.ParserDeleter
                          {
                              case AppEnvironment.Undefined:
                              case AppEnvironment.Local:
-                             case AppEnvironment.Development:
+                             case AppEnvironment.Dev:
                              default:
-                                 options.UseLoggerFactory(loggerFactory);
+                                 options.EnableDetailedErrors();
+                                 options.UseLoggerFactory(LoggerFactory.Create(builder =>
+                                 {
+                                     builder.AddConsole();
+                                 }));
                                  options.EnableSensitiveDataLogging(true);
                                  break;
-                             case AppEnvironment.Production:
+                             case AppEnvironment.Prod:
                                  break;
                          }
                      });

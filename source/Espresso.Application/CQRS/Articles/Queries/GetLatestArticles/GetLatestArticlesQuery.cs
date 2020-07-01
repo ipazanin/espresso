@@ -46,7 +46,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
                 ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
                 ?.Where(newsPortalId => newsPortalId != default);
 
-            NewsPortalIds = newsPortalIds is null || newsPortalIds.Count() == 0 ? null : newsPortalIds;
+            NewsPortalIds = newsPortalIds is null || newsPortalIds.Any() ? newsPortalIds : null;
 
             var categoryIds = categoryIdsString
                 ?.Replace(" ", "")
@@ -54,7 +54,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
                 ?.Select(categoryIdString => int.TryParse(categoryIdString, out var newsPortalId) ? newsPortalId : default)
                 ?.Where(categoryId => categoryId != default);
 
-            CategoryIds = categoryIds == null || categoryIds.Count() == 0 ? null : categoryIds;
+            CategoryIds = categoryIds == null || categoryIds.Any() ? categoryIds : null;
         }
         #endregion
 

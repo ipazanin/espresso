@@ -111,8 +111,8 @@ namespace Espresso.Workers.ParserDeleter
         )
         {
             if (
-                parseRssFeedsResponse.CreatedArticles.Count() == 0
-                && parseRssFeedsResponse.UpdatedArticles.Count() == 0
+                !parseRssFeedsResponse.CreatedArticles.Any() &&
+                !parseRssFeedsResponse.UpdatedArticles.Any()
             )
             {
                 return;

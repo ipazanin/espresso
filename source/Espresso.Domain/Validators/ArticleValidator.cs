@@ -18,7 +18,7 @@ namespace Espresso.Domain.Validators
             string? imageUrl,
             DateTime createDateTime,
             DateTime updateDateTime,
-            DateTime publishDateTime,
+            DateTime? publishDateTime,
             int numberOfClicks,
             decimal trendingScore,
             int newsPortalId,
@@ -50,6 +50,8 @@ namespace Espresso.Domain.Validators
                 MustBeUrl(imageUrl, nameof(Article.ImageUrl));
             }
 
+            NotEmpty(publishDateTime, nameof(publishDateTime));
+
             NotEmpty(newsPortalId, nameof(newsPortalId));
 
             NotEmpty(rssFeedId, nameof(rssFeedId));
@@ -67,7 +69,7 @@ namespace Espresso.Domain.Validators
                 imageUrl: imageUrl,
                 createDateTime: createDateTime,
                 updateDateTime: updateDateTime,
-                publishDateTime: publishDateTime,
+                publishDateTime: publishDateTime!.Value,
                 numberOfClicks: numberOfClicks,
                 trendingScore: trendingScore,
                 newsPortalId: newsPortalId,

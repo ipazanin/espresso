@@ -69,7 +69,7 @@ namespace Espresso.WebApi.Filters
 
             var unhandledExceptionModel = _webApiConfiguration.AppEnvironment switch
             {
-                AppEnvironment.Production => new UnhandledExceptionDto(
+                AppEnvironment.Prod => new UnhandledExceptionDto(
                     exceptionMessage: FormatConstants.UnhandledExceptionMessage,
                     innerExceptionMessage: null,
                     exceptionStackTrace: null,

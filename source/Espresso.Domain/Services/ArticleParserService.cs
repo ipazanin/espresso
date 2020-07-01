@@ -233,15 +233,21 @@ namespace Espresso.Domain.Services
         #endregion
 
         #region PublishDateTime
-        private DateTime GetPublishDateTime(DateTimeOffset itemPublishDateTime, DateTime utcNow)
+        private DateTime? GetPublishDateTime(DateTimeOffset itemPublishDateTime, DateTime utcNow)
         {
-            var minimumPublishDateTime = utcNow.AddHours(-6);
+            var invalidPublishdateTimeMinimum = utcNow.AddDays(-7);
+            var minimumPublishDateTime = utcNow.AddDays(-1);
             var maximumPublishDateTime = utcNow;
             var rssFeedPublishDateTime = itemPublishDateTime.UtcDateTime;
 
+            if (rssFeedPublishDateTime < invalidPublishdateTimeMinimum)
+            {
+                return null;
+            }
+
             if (rssFeedPublishDateTime > maximumPublishDateTime || rssFeedPublishDateTime < minimumPublishDateTime)
             {
-                return maximumPublishDateTime;
+                return utcNow;
             }
 
             return rssFeedPublishDateTime;
@@ -348,7 +354,7 @@ namespace Espresso.Domain.Services
                             articleId: articleId,
                             categoryId: rssFeedCategory.CategoryId,
                             article: null,
-                            category: rssFeed.Category
+                            category: rssFeedCategory.Category
                         ));
                     }
                 }

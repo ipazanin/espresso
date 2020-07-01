@@ -47,7 +47,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
                 ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
                 ?.Where(newsPortalId => newsPortalId != default);
 
-            NewsPortalIds = newsPortalIds == null || newsPortalIds.Count() == 0 ? null : newsPortalIds;
+            NewsPortalIds = newsPortalIds == null || newsPortalIds.Any() ? newsPortalIds : null;
         }
         #endregion
 
