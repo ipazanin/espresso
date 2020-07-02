@@ -39,7 +39,7 @@ namespace Espresso.WebApi.Configuration
         /// <summary>
         /// 
         /// </summary>
-        public ApiVersion EspressoWebApiVersion_1_3 => new ApiVersion(1, 3);
+        public ApiVersion EspressoWebApiCurrentVersion => new ApiVersion(ApiVersionConstants.CurrentMajorVersion, ApiVersionConstants.CurrentMinorVersion);
 
         /// <summary>
         /// 

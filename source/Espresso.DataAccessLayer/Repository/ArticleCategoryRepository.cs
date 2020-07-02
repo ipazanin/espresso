@@ -17,7 +17,7 @@ namespace Espresso.DataAccessLayer.Repository
         #endregion
 
         #region Fields
-        private readonly IEnumerable<string> _articleCategoryNames = new[]
+        private readonly IEnumerable<string> _articleCategoryColumnNames = new[]
         {
                 nameof(ArticleCategory.Id),
                 nameof(ArticleCategory.CategoryId),
@@ -53,9 +53,10 @@ namespace Espresso.DataAccessLayer.Repository
                 return;
             }
             var commandText = $"INSERT INTO {TableName} " +
-                $"({string.Join(", ", _articleCategoryNames)}) " +
+                $"({string.Join(", ", _articleCategoryColumnNames)}) " +
                 $"VALUES " +
-                $"({string.Join(", ", _articleCategoryNames.Select(articleCategoryName => $"@{articleCategoryName}"))})";
+                $"({string.Join(", ", _articleCategoryColumnNames.Select(articleCategoryName => $"@{articleCategoryName}"))})";
+
             using var connection = _databaseConnectionFactory.CreateDatabaseConnection();
             using var command = connection.CreateCommand();
             connection.Open();

@@ -159,15 +159,25 @@ namespace Espresso.Domain.Entities
                 shouldUpdate = true;
             }
 
+            CreateArticleCategories = new List<ArticleCategory>();
+            DeleteArticleCategories = new List<ArticleCategory>();
+            var articleCategoriesToDelete = new List<ArticleCategory>();
+
             foreach (var articleCategory in ArticleCategories)
             {
                 if (
                     !other.ArticleCategories.Any(otherArticleCategory => otherArticleCategory.CategoryId.Equals(articleCategory.CategoryId))
                 )
                 {
+                    articleCategoriesToDelete.Add(articleCategory);
                     DeleteArticleCategories = DeleteArticleCategories.Append(articleCategory);
                     shouldUpdate = true;
                 }
+            }
+
+            foreach (var articleCategory in articleCategoriesToDelete)
+            {
+                ArticleCategories.Remove(articleCategory);
             }
 
             foreach (var otherArticleCategory in other.ArticleCategories)
@@ -176,27 +186,18 @@ namespace Espresso.Domain.Entities
                     !ArticleCategories.Any(articleCategory => articleCategory.CategoryId.Equals(otherArticleCategory.CategoryId))
                 )
                 {
-                    CreateArticleCategories = CreateArticleCategories.Append(new ArticleCategory(
-                        id: otherArticleCategory.Id,
+                    var newArticleCategory = new ArticleCategory(
+                        id: Guid.NewGuid(),
                         articleId: Id,
                         categoryId: otherArticleCategory.CategoryId,
                         article: null,
                         category: otherArticleCategory.Category
-                    ));
+                    );
+                    CreateArticleCategories = CreateArticleCategories.Append(newArticleCategory);
+                    ArticleCategories.Add(newArticleCategory);
                     shouldUpdate = true;
                 }
             }
-
-            ArticleCategories = other
-                .ArticleCategories
-                .Select(otherArticleCategory => new ArticleCategory(
-                    id: otherArticleCategory.Id,
-                    articleId: Id,
-                    categoryId: otherArticleCategory.CategoryId,
-                    article: null,
-                    category: otherArticleCategory.Category
-                ))
-                .ToList();
 
             return shouldUpdate;
         }

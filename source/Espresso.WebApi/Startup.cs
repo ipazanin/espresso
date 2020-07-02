@@ -177,8 +177,8 @@ namespace Espresso.WebApi
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint(
-                    url: $"/swagger/{_configuration.EspressoWebApiVersion_1_3}/swagger.json",
-                    name: $"Espresso API {_configuration.EspressoWebApiVersion_1_3}"
+                    url: $"/swagger/{_configuration.EspressoWebApiCurrentVersion}/swagger.json",
+                    name: $"Espresso API {_configuration.EspressoWebApiCurrentVersion}"
                 );
                 options.SwaggerEndpoint(
                     url: $"/swagger/{_configuration.EspressoWebApiVersion_1_2}/swagger.json",
@@ -203,10 +203,10 @@ namespace Espresso.WebApi
 
         private void ConfigureSwagger(SwaggerGenOptions options)
         {
-            options.SwaggerDoc(_configuration.EspressoWebApiVersion_1_3.ToString(), new OpenApiInfo
+            options.SwaggerDoc(_configuration.EspressoWebApiCurrentVersion.ToString(), new OpenApiInfo
             {
                 Title = $"Espresso API",
-                Version = _configuration.EspressoWebApiVersion_1_3.ToString(),
+                Version = _configuration.EspressoWebApiCurrentVersion.ToString(),
                 Description = "Espresso APP Web Api"
             });
 
@@ -280,7 +280,7 @@ namespace Espresso.WebApi
                 .Controller<ApplicationDownloadsController>()
                 .Action(typeof(ApplicationDownloadsController)
                 .GetMethod(nameof(ApplicationDownloadsController.CreateApplicationDownload))!)
-                .HasApiVersion(_configuration.EspressoWebApiVersion_1_3);
+                .HasApiVersion(_configuration.EspressoWebApiCurrentVersion);
             apiVersioningOptions
                 .Conventions
                 .Controller<ApplicationDownloadsController>()
@@ -293,7 +293,7 @@ namespace Espresso.WebApi
                 .Controller<ApplicationDownloadsController>()
                 .Action(typeof(ApplicationDownloadsController)
                 .GetMethod(nameof(ApplicationDownloadsController.GetApplicationDownloadsStatistics))!)
-                .HasApiVersion(_configuration.EspressoWebApiVersion_1_3);
+                .HasApiVersion(_configuration.EspressoWebApiCurrentVersion);
             apiVersioningOptions
                 .Conventions
                 .Controller<ApplicationDownloadsController>()
@@ -308,7 +308,7 @@ namespace Espresso.WebApi
                 .Controller<ArticlesController>()
                 .Action(typeof(ArticlesController)
                 .GetMethod(nameof(ArticlesController.GetCategoryArticles))!)
-                .HasApiVersion(_configuration.EspressoWebApiVersion_1_3);
+                .HasApiVersion(_configuration.EspressoWebApiCurrentVersion);
             apiVersioningOptions
                 .Conventions
                 .Controller<ArticlesController>()
@@ -321,7 +321,7 @@ namespace Espresso.WebApi
                 .Controller<ArticlesController>()
                 .Action(typeof(ArticlesController)
                 .GetMethod(nameof(ArticlesController.GetLatestArticles))!)
-                .HasApiVersion(_configuration.EspressoWebApiVersion_1_3);
+                .HasApiVersion(_configuration.EspressoWebApiCurrentVersion);
             apiVersioningOptions
                 .Conventions
                 .Controller<ArticlesController>()
@@ -334,7 +334,7 @@ namespace Espresso.WebApi
                 .Controller<ArticlesController>()
                 .Action(typeof(ArticlesController)
                 .GetMethod(nameof(ArticlesController.GetTrendingArticles))!)
-                .HasApiVersion(_configuration.EspressoWebApiVersion_1_3);
+                .HasApiVersion(_configuration.EspressoWebApiCurrentVersion);
             apiVersioningOptions
                 .Conventions
                 .Controller<ArticlesController>()
@@ -347,7 +347,7 @@ namespace Espresso.WebApi
                 .Controller<ArticlesController>()
                 .Action(typeof(ArticlesController)
                 .GetMethod(nameof(ArticlesController.IncrementArticleScore))!)
-                .HasApiVersion(_configuration.EspressoWebApiVersion_1_3);
+                .HasApiVersion(_configuration.EspressoWebApiCurrentVersion);
             apiVersioningOptions
                 .Conventions
                 .Controller<ArticlesController>()
@@ -362,7 +362,7 @@ namespace Espresso.WebApi
                 .Controller<ArticlesNotificationTrigerController>()
                 .Action(typeof(ArticlesNotificationTrigerController)
                 .GetMethod(nameof(ArticlesNotificationTrigerController.SendLatestArticlesNotificition))!)
-                .HasApiVersion(_configuration.EspressoWebApiVersion_1_3);
+                .HasApiVersion(_configuration.EspressoWebApiCurrentVersion);
             apiVersioningOptions
                 .Conventions
                 .Controller<ArticlesNotificationTrigerController>()
@@ -377,7 +377,7 @@ namespace Espresso.WebApi
                 .Controller<CategoriesController>()
                 .Action(typeof(CategoriesController)
                 .GetMethod(nameof(CategoriesController.GetCategories))!)
-                .HasApiVersion(_configuration.EspressoWebApiVersion_1_3);
+                .HasApiVersion(_configuration.EspressoWebApiCurrentVersion);
             apiVersioningOptions
                 .Conventions
                 .Controller<CategoriesController>()
@@ -392,7 +392,7 @@ namespace Espresso.WebApi
                 .Controller<ConfigurationController>()
                 .Action(typeof(ConfigurationController)
                 .GetMethod(nameof(ConfigurationController.GetConfiguration))!)
-                .HasApiVersion(_configuration.EspressoWebApiVersion_1_3);
+                .HasApiVersion(_configuration.EspressoWebApiCurrentVersion);
             apiVersioningOptions
                 .Conventions
                 .Controller<ConfigurationController>()
@@ -407,7 +407,7 @@ namespace Espresso.WebApi
                 .Controller<NewsPortalsController>()
                 .Action(typeof(NewsPortalsController)
                 .GetMethod(nameof(NewsPortalsController.GetNewsPortals))!)
-                .HasApiVersion(_configuration.EspressoWebApiVersion_1_3);
+                .HasApiVersion(_configuration.EspressoWebApiCurrentVersion);
             apiVersioningOptions
                 .Conventions
                 .Controller<NewsPortalsController>()

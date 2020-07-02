@@ -22,10 +22,11 @@ namespace Espresso.Application.DomainServices
 
         public const string ErrorsBotIconEmoji = ":no_entry:";
         public const string ErrorBotUsername = "error-bot";
-        public const string ErrorsChannel = "#backend-bot";
+        public const string ErrorsChannel = "#errors-backend-bot";
 
         public const string WarningBotIconEmoji = ":warning:";
         public const string WarningBotUsername = "warning-bot";
+        public const string WarningsChannel = "#warnings-backend-bot";
         public const string IvanPazaninUserName = "@ipazanin";
 
         public const string AppDownloadsBotIconEmoji = ":tada:";
@@ -78,7 +79,7 @@ namespace Espresso.Application.DomainServices
                     userName: WarningBotUsername,
                     iconEmoji: WarningBotIconEmoji,
                     text: text,
-                    channel: IvanPazaninUserName
+                    channel: WarningsChannel
                 ),
                 cancellationToken: cancellationToken
             ).ConfigureAwait(false);

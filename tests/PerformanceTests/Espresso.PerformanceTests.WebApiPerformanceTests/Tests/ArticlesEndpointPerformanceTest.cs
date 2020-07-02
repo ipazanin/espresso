@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Espresso.Common.Constants;
 
 namespace Espresso.PerformanceTests.WebApiPerformanceTests.Tests
 {
@@ -17,7 +16,7 @@ namespace Espresso.PerformanceTests.WebApiPerformanceTests.Tests
             {
 
                 using var httpClient = new HttpClient();
-                httpClient.DefaultRequestHeaders.Add(HttpHeaderConstants.HeaderName, HttpHeaderConstants.AndroidApiKeyValue);
+                // httpClient.DefaultRequestHeaders.Add(HttpHeaderConstants.HeaderName, HttpHeaderConstants.AndroidApiKeyValue);
 
                 var durations = new ConcurrentQueue<TimeSpan>();
 

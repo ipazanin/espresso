@@ -26,6 +26,6 @@ namespace Espresso.WebApi.Configuration
         /// <summary>
         /// 
         /// </summary>
-        public ApiVersion EspressoWebApiVersion_1_3 { get; }
+        public ApiVersion EspressoWebApiCurrentVersion { get; }
     }
 }
