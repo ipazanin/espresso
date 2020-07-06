@@ -19,7 +19,7 @@ namespace Espresso.Domain.Utilities
         /// <summary>
         /// Returns Current Miliseconds in Unix UTC format
         /// </summary>
-        public static long CurrentMiliseconds => (long)(DateTime.UtcNow - DateTimeConstants.UnixEpochStartTime).TotalMilliseconds;
+        public static long CurrentMiliseconds => GetMiliseconds(DateTime.UtcNow);
 
         /// <summary>
         /// Gets miliseconds in Unix UTC format from DateTime
@@ -38,7 +38,7 @@ namespace Espresso.Domain.Utilities
         /// <returns></returns>
         public static long TruncateMilisecondsToDate(long miliseconds)
         {
-            return miliseconds - (miliseconds % TimeSpan.FromDays(1).Milliseconds);
+            return miliseconds - (miliseconds % (long)TimeSpan.FromDays(1).TotalMilliseconds);
         }
     }
 }

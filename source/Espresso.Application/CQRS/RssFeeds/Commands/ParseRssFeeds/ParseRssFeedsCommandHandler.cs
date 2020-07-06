@@ -284,7 +284,8 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
 
             foreach (var article in parsedArticles.Values)
             {
-                if (articleIdArticleDictionary.TryGetValue((article.NewsPortalId, article.ArticleId), out var alreadyParsedArticleId) ||
+                if (
+                    articleIdArticleDictionary.TryGetValue((article.NewsPortalId, article.ArticleId), out var alreadyParsedArticleId) ||
                     titleArticleDictionary.TryGetValue((article.NewsPortalId, article.Title), out alreadyParsedArticleId) ||
                     summaryArticleDictionary.TryGetValue((article.NewsPortalId, article.Summary), out alreadyParsedArticleId)
                 )
@@ -339,7 +340,8 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
 
             foreach (var article in articles)
             {
-                if (savedArticlesArticleIdDictionary.TryGetValue((article.NewsPortalId, article.ArticleId), out var savedArticleId) ||
+                if (
+                    savedArticlesArticleIdDictionary.TryGetValue((article.NewsPortalId, article.ArticleId), out var savedArticleId) ||
                     savedArticlesTitleDictionary.TryGetValue((article.NewsPortalId, article.Title), out savedArticleId) ||
                     savedArticlesSummaryDictionary.TryGetValue((article.NewsPortalId, article.Summary), out savedArticleId)
                 )
@@ -445,7 +447,9 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                     articlesToUpdate.Add(article);
                 }
             }
-            var createArticleCategories = articlesToUpdate.SelectMany(article => article.CreateArticleCategories);
+            var createArticleCategories = articlesToUpdate
+                .SelectMany(article => article.CreateArticleCategories);
+
             var deleteArticleCategoryIds = articlesToUpdate
                 .SelectMany(
                     article => article

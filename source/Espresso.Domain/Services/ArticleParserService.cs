@@ -6,9 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Espresso.Domain.Entities;
-using Espresso.Domain.Enums.NewsPortalEnums;
-using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.IServices;
+using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.IValidators;
 
 namespace Espresso.Domain.Services

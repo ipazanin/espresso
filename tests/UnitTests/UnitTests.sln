@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.Common.Tests", "Espresso.Common.Tests\Espresso.Common.Tests.csproj", "{A33E725D-3B7A-4421-A478-52DE206AB455}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.Domain.Tests", "Espresso.Domain.Tests\Espresso.Domain.Tests.csproj", "{C9DA1438-19EA-4C80-B478-5588E5881BBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,17 @@ Global
 		{A33E725D-3B7A-4421-A478-52DE206AB455}.Release|x64.Build.0 = Release|Any CPU
 		{A33E725D-3B7A-4421-A478-52DE206AB455}.Release|x86.ActiveCfg = Release|Any CPU
 		{A33E725D-3B7A-4421-A478-52DE206AB455}.Release|x86.Build.0 = Release|Any CPU
+		{C9DA1438-19EA-4C80-B478-5588E5881BBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9DA1438-19EA-4C80-B478-5588E5881BBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9DA1438-19EA-4C80-B478-5588E5881BBB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C9DA1438-19EA-4C80-B478-5588E5881BBB}.Debug|x64.Build.0 = Debug|Any CPU
+		{C9DA1438-19EA-4C80-B478-5588E5881BBB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C9DA1438-19EA-4C80-B478-5588E5881BBB}.Debug|x86.Build.0 = Debug|Any CPU
+		{C9DA1438-19EA-4C80-B478-5588E5881BBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9DA1438-19EA-4C80-B478-5588E5881BBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9DA1438-19EA-4C80-B478-5588E5881BBB}.Release|x64.ActiveCfg = Release|Any CPU
+		{C9DA1438-19EA-4C80-B478-5588E5881BBB}.Release|x64.Build.0 = Release|Any CPU
+		{C9DA1438-19EA-4C80-B478-5588E5881BBB}.Release|x86.ActiveCfg = Release|Any CPU
+		{C9DA1438-19EA-4C80-B478-5588E5881BBB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

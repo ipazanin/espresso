@@ -129,7 +129,7 @@ namespace Espresso.Domain.Utilities
 
         public static IEnumerable<T> GetAllValuesExcept<T>(IEnumerable<T>? values) where T : struct, IConvertible
         {
-            return values == null || values.Any() ? GetAllValues<T>().Except(values) : GetAllValues<T>();
+            return values == null || !values.Any() ? GetAllValues<T>() : GetAllValues<T>().Except(values);
         }
     }
 }

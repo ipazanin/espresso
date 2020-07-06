@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Espresso.Common.Enums;
 using Espresso.Domain.Extensions;
 using Espresso.Domain.Utilities;
@@ -352,6 +353,112 @@ namespace Espresso.Common.Tests.Utilities
         #endregion
 
         #region GetAllValues
+        [Fact]
+        public void GetAllValues__ReturnsAllEnumValues()
+        {
+            #region Arrange
+            var allExpectedAppEnvironmentEnumValues = new List<AppEnvironment>
+            {
+                AppEnvironment.Dev,
+                AppEnvironment.Local,
+                AppEnvironment.Prod,
+                AppEnvironment.Undefined,
+            };
+            #endregion
+
+            #region  Act
+            var allAppEnvironmentEnumValues = EnumUtility.GetAllValues<AppEnvironment>();
+            #endregion
+
+            #region Assert
+            Assert.All(
+                collection: allAppEnvironmentEnumValues,
+                appEnvironment => allExpectedAppEnvironmentEnumValues.Contains(appEnvironment)
+            );
+            #endregion
+        }
+        #endregion
+
+        #region GetAllValuesExcept
+        [Fact]
+        public void GetAllValuesExcept_WithNullListOfEnums_ReturnsAllEnumValues()
+        {
+            #region Arrange
+            var expectedAppEnvironmentEnumValues = new List<AppEnvironment>
+            {
+                AppEnvironment.Dev,
+                AppEnvironment.Local,
+                AppEnvironment.Prod,
+                AppEnvironment.Undefined,
+            };
+            #endregion
+
+            #region  Act
+            var appEnvironmentEnumValues = EnumUtility.GetAllValuesExcept<AppEnvironment>(null);
+            #endregion
+
+            #region Assert
+            Assert.All(
+                collection: appEnvironmentEnumValues,
+                appEnvironment => expectedAppEnvironmentEnumValues.Contains(appEnvironment)
+            );
+        }
+
+        [Fact]
+        public void GetAllValuesExcept_WithEmptyListOfEnums_ReturnsAllEnumValues()
+        {
+            #region Arrange
+            var expectedAppEnvironmentEnumValues = new List<AppEnvironment>
+            {
+                AppEnvironment.Dev,
+                AppEnvironment.Local,
+                AppEnvironment.Prod,
+                AppEnvironment.Undefined,
+            };
+            var emptyAppEnvironmentEnumList = new List<AppEnvironment>();
+            #endregion
+
+            #region  Act
+            var appEnvironmentEnumValues = EnumUtility.GetAllValuesExcept(emptyAppEnvironmentEnumList);
+            #endregion
+
+            #region Assert
+            Assert.All(
+                collection: appEnvironmentEnumValues,
+                appEnvironment => expectedAppEnvironmentEnumValues.Contains(appEnvironment)
+            );
+            #endregion
+        }
+
+        [Fact]
+        public void GetAllValuesExcept_WithSomeListOfEnums_ReturnsAllEnumValuesExceptEnumsDefinedInListOfEnums()
+        {
+            #region Arrange
+            var expectedAppEnvironmentEnumValues = new List<AppEnvironment>
+            {
+                AppEnvironment.Dev,
+                AppEnvironment.Prod,
+                AppEnvironment.Undefined,
+            };
+            var emptyAppEnvironmentEnumList = new List<AppEnvironment>
+            {
+                AppEnvironment.Local,
+            };
+            #endregion
+
+            #region  Act
+            var appEnvironmentEnumValues = EnumUtility.GetAllValuesExcept(emptyAppEnvironmentEnumList);
+            #endregion
+
+            #region Assert
+            Assert.All(
+                collection: appEnvironmentEnumValues,
+                appEnvironment => expectedAppEnvironmentEnumValues.Contains(appEnvironment)
+            );
+            #endregion
+        }
+        #endregion
+
         #endregion
     }
 }

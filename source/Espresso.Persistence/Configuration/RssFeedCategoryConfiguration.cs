@@ -155,6 +155,10 @@ namespace Espresso.Persistence.Configuration
                 #region NarodHr
                 new RssFeedCategory(70, "svijet", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.NarodHr),
                 #endregion
+
+                #region  Telegram
+                new RssFeedCategory(71, "na-prvu", urlSegmentIndex: 1, (int)CategoryId.Sport, (int)RssFeedId.Telegram),
+                #endregion 
             };
 
             builder.HasData(rssFeedCategories);
