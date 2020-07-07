@@ -28,6 +28,8 @@ namespace Espresso.Domain.Enums.CategoryEnums
         [Display(Name = "Kultura")]
         Kultura = 9,
         [Display(Name = "Koronavirus")]
-        Koronavirus = 10
+        Koronavirus = 10,
+        [Display(Name = "Generalno")]
+        General = 11,
     }
 }

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +36,11 @@ namespace Espresso.Persistence.Configuration
                 .HasForeignKey(article => article.NewsPortalId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasOne(newsPortal => newsPortal.Category)
+                .WithMany(category => category!.NewsPortals)
+                .HasForeignKey(newsPortal => newsPortal.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             SeedData(builder);
         }
 
@@ -41,67 +48,285 @@ namespace Espresso.Persistence.Configuration
         {
             var newsPortals = new List<NewsPortal>
             {
-                new NewsPortal((int)NewsPortalId.Index, NewsPortalId.Index.GetDisplayName(), "https://www.index.hr/", $"Icons/{NewsPortalId.Index}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.DvadesetCetiriSata, NewsPortalId.DvadesetCetiriSata.GetDisplayName(), "https://www.24sata.hr/", $"Icons/{NewsPortalId.DvadesetCetiriSata}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.SportskeNovosti, NewsPortalId.SportskeNovosti.GetDisplayName(), "https://sportske.jutarnji.hr/", $"Icons/{NewsPortalId.SportskeNovosti}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.JutarnjiList, NewsPortalId.JutarnjiList.GetDisplayName(), "https://sportske.jutarnji.hr/", $"Icons/{NewsPortalId.JutarnjiList}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.NetHr, NewsPortalId.NetHr.GetDisplayName(), "https://net.hr/", $"Icons/{NewsPortalId.NetHr}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.SlobodnaDalmacija, NewsPortalId.SlobodnaDalmacija.GetDisplayName(), "https://slobodnadalmacija.hr/", $"Icons/{NewsPortalId.SlobodnaDalmacija}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.TPortal, NewsPortalId.TPortal.GetDisplayName(), "https://www.tportal.hr/", $"Icons/{NewsPortalId.TPortal}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.VecernjiList, NewsPortalId.VecernjiList.GetDisplayName(), "https://www.vecernji.hr/", $"Icons/{NewsPortalId.VecernjiList}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.Telegram, NewsPortalId.Telegram.GetDisplayName(), "https://www.telegram.hr/", $"Icons/{NewsPortalId.Telegram}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.Dnevnik, NewsPortalId.Dnevnik.GetDisplayName(), "https://dnevnik.hr/", $"Icons/{NewsPortalId.Dnevnik}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.Gol, NewsPortalId.Gol.GetDisplayName(), "https://gol.dnevnik.hr/", $"Icons/{NewsPortalId.Gol}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.RtlVijesti, NewsPortalId.RtlVijesti.GetDisplayName(), "https://sportnet.rtl.hr/", $"Icons/{NewsPortalId.RtlVijesti}{FileExtensionConstants.Png}"),
-                //new NewsPortal((int)NewsPortalId.Sprdex, NewsPortalId.Sprdex.GetDisplayName(), "https://sprdex.com/", $"Icons/{NewsPortalId.Sprdex}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.NogometPlus, NewsPortalId.NogometPlus.GetDisplayName(), "http://www.nogometplus.net/", $"Icons/{NewsPortalId.NogometPlus}{FileExtensionConstants.Png}"), // Nemaju SLS LUL
-                new NewsPortal((int)NewsPortalId.Lider, NewsPortalId.Lider.GetDisplayName(), "https://lider.media/", $"Icons/{NewsPortalId.Lider}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.Bug, NewsPortalId.Bug.GetDisplayName(), "https://www.bug.hr/", $"Icons/{NewsPortalId.Bug}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.VidiHr, NewsPortalId.VidiHr.GetDisplayName(), "https://www.vidi.hr/", $"Icons/{NewsPortalId.VidiHr}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.Zimo, NewsPortalId.Zimo.GetDisplayName(), "https://zimo.dnevnik.hr/", $"Icons/{NewsPortalId.Zimo}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.Netokracija, NewsPortalId.Netokracija.GetDisplayName(), "https://www.netokracija.com/", $"Icons/{NewsPortalId.Netokracija}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.PoslovniPuls, NewsPortalId.PoslovniPuls.GetDisplayName(), "https://poslovnipuls.com/", $"Icons/{NewsPortalId.PoslovniPuls}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.PcChip, NewsPortalId.PcChip.GetDisplayName(), "https://pcchip.hr/", $"Icons/{NewsPortalId.PcChip}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.Cosmopolitan, NewsPortalId.Cosmopolitan.GetDisplayName(), "http://www.cosmopolitan.hr/", $"Icons/{NewsPortalId.Cosmopolitan}{FileExtensionConstants.Png}"), // Nemaju SLS LUL
-                new NewsPortal((int)NewsPortalId.WallHr, NewsPortalId.WallHr.GetDisplayName(), "https://wall.hr/", $"Icons/{NewsPortalId.WallHr}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.LjepotaIZdravlje, NewsPortalId.LjepotaIZdravlje.GetDisplayName(), "http://www.ljepotaizdravlje.hr/", $"Icons/{NewsPortalId.LjepotaIZdravlje}{FileExtensionConstants.Png}"), // Nemaju SLS LUL
-                new NewsPortal((int)NewsPortalId.Autonet, NewsPortalId.Autonet.GetDisplayName(), "https://www.autonet.hr/", $"Icons/{NewsPortalId.Autonet}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.N1, NewsPortalId.N1.GetDisplayName(), "https://hr.n1info.com/", $"Icons/{NewsPortalId.N1}{FileExtensionConstants.Png}"),
-                new NewsPortal((int)NewsPortalId.NarodHr, NewsPortalId.NarodHr.GetDisplayName(), "https://narod.hr/", $"Icons/{NewsPortalId.NarodHr}{FileExtensionConstants.Png}"),
+                new NewsPortal(
+                    id:(int)NewsPortalId.Index,
+                    name: NewsPortalId.Index.GetDisplayName(),
+                    baseUrl: "https://www.index.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.Index}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.General
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.DvadesetCetiriSata,
+                    name: NewsPortalId.DvadesetCetiriSata.GetDisplayName(),
+                    baseUrl: "https://www.24sata.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.DvadesetCetiriSata}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.General
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.SportskeNovosti,
+                    name: NewsPortalId.SportskeNovosti.GetDisplayName(),
+                    baseUrl: "https://sportske.jutarnji.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.SportskeNovosti}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.Sport),
+                new NewsPortal(
+                    id:(int)NewsPortalId.JutarnjiList,
+                    name: NewsPortalId.JutarnjiList.GetDisplayName(),
+                    baseUrl: "https://sportske.jutarnji.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.JutarnjiList}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.General
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.NetHr,
+                    name: NewsPortalId.NetHr.GetDisplayName(),
+                    baseUrl: "https://net.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.NetHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.General
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.SlobodnaDalmacija,
+                    name: NewsPortalId.SlobodnaDalmacija.GetDisplayName(),
+                    baseUrl: "https://slobodnadalmacija.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.SlobodnaDalmacija}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.General
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.TPortal,
+                    name: NewsPortalId.TPortal.GetDisplayName(),
+                    baseUrl: "https://www.tportal.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.TPortal}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.General
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.VecernjiList,
+                    name: NewsPortalId.VecernjiList.GetDisplayName(),
+                    baseUrl: "https://www.vecernji.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.VecernjiList}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.General
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.Telegram,
+                    name: NewsPortalId.Telegram.GetDisplayName(),
+                    baseUrl: "https://www.telegram.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.Telegram}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.General
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.Dnevnik,
+                    name: NewsPortalId.Dnevnik.GetDisplayName(),
+                    baseUrl: "https://dnevnik.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.Dnevnik}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.General
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.Gol,
+                    name: NewsPortalId.Gol.GetDisplayName(),
+                    baseUrl: "https://gol.dnevnik.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.Gol}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.Sport
+                ),
+
+                new NewsPortal(
+                    id:(int)NewsPortalId.RtlVijesti,
+                    name: NewsPortalId.RtlVijesti.GetDisplayName(),
+                    baseUrl: "https://sportnet.rtl.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.RtlVijesti}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.General
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.NogometPlus,
+                    name: NewsPortalId.NogometPlus.GetDisplayName(),
+                    baseUrl: "http://www.nogometplus.net/",
+                    iconUrl: $"Icons/{NewsPortalId.NogometPlus}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.Sport
+                ), // Nemaju SLS LUL
+                new NewsPortal(
+                    id:(int)NewsPortalId.Lider,
+                    name: NewsPortalId.Lider.GetDisplayName(),
+                    baseUrl: "https://lider.media/",
+                    iconUrl: $"Icons/{NewsPortalId.Lider}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1), categoryId: (int)CategoryId.Biznis),
+                new NewsPortal(
+                    id:(int)NewsPortalId.Bug,
+                    name: NewsPortalId.Bug.GetDisplayName(),
+                    baseUrl: "https://www.bug.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.Bug}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.Tech
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.VidiHr,
+                    name: NewsPortalId.VidiHr.GetDisplayName(),
+                    baseUrl: "https://www.vidi.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.VidiHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.Tech
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.Zimo,
+                    name: NewsPortalId.Zimo.GetDisplayName(),
+                    baseUrl: "https://zimo.dnevnik.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.Zimo}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.Tech
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.Netokracija,
+                    name: NewsPortalId.Netokracija.GetDisplayName(),
+                    baseUrl: "https://www.netokracija.com/",
+                    iconUrl: $"Icons/{NewsPortalId.Netokracija}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.Tech
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.PoslovniPuls,
+                    name: NewsPortalId.PoslovniPuls.GetDisplayName(),
+                    baseUrl: "https://poslovnipuls.com/",
+                    iconUrl: $"Icons/{NewsPortalId.PoslovniPuls}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.Biznis
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.PcChip,
+                    name: NewsPortalId.PcChip.GetDisplayName(),
+                    baseUrl: "https://pcchip.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.PcChip}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.Tech
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.Cosmopolitan,
+                    name: NewsPortalId.Cosmopolitan.GetDisplayName(),
+                    baseUrl: "http://www.cosmopolitan.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.Cosmopolitan}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.Lifestyle
+                ), // Nemaju SLS LUL
+                new NewsPortal(
+                    id:(int)NewsPortalId.WallHr,
+                    name: NewsPortalId.WallHr.GetDisplayName(),
+                    baseUrl: "https://wall.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.WallHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.Lifestyle
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.LjepotaIZdravlje,
+                    name: NewsPortalId.LjepotaIZdravlje.GetDisplayName(),
+                    baseUrl: "http://www.ljepotaizdravlje.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.LjepotaIZdravlje}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.Lifestyle
+                ), // Nemaju SLS LUL
+                new NewsPortal(
+                    id:(int)NewsPortalId.Autonet,
+                    name: NewsPortalId.Autonet.GetDisplayName(),
+                    baseUrl: "https://www.autonet.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.Autonet}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.AutoMoto
+                ),
+
+                new NewsPortal(
+                    id:(int)NewsPortalId.N1,
+                    name:NewsPortalId.N1.GetDisplayName(),
+                    baseUrl:"https://hr.n1info.com/",
+                    iconUrl:$"Icons/{NewsPortalId.N1}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.Vijesti
+                ),
+
+                new NewsPortal(
+                    id:(int)NewsPortalId.NarodHr,
+                    name:NewsPortalId.NarodHr.GetDisplayName(),
+                    baseUrl:"https://narod.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.NarodHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt:new DateTime(2020, 5, 1),
+                    categoryId:(int)CategoryId.Vijesti
+                ),
 
                 new NewsPortal(
                     id: (int)NewsPortalId.Hrt,
                     name: NewsPortalId.Hrt.GetDisplayName(),
                     baseUrl: "https://www.hrt.hr/",
-                    iconUrl: $"Icons/{NewsPortalId.Hrt}{FileExtensionConstants.Png}"
+                    iconUrl: $"Icons/{NewsPortalId.Hrt}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.Vijesti
                 ),
 
                 new NewsPortal(
                     id: (int)NewsPortalId.StoPosto,
                     name: NewsPortalId.StoPosto.GetDisplayName(),
                     baseUrl: "https://100posto.jutarnji.hr/",
-                    iconUrl: $"Icons/{NewsPortalId.StoPosto}{FileExtensionConstants.Png}"
+                    iconUrl: $"Icons/{NewsPortalId.StoPosto}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.Vijesti
                 ),
 
                 new NewsPortal(
                     id: (int)NewsPortalId.Dnevno,
                     name: NewsPortalId.Dnevno.GetDisplayName(),
                     baseUrl: "https://www.dnevno.hr/",
-                    iconUrl: $"Icons/{NewsPortalId.Dnevno}{FileExtensionConstants.Png}"
+                    iconUrl: $"Icons/{NewsPortalId.Dnevno}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1),
+                    categoryId: (int)CategoryId.Vijesti
                 ),
 
                 // new NewsPortal(
                 //     id: (int)NewsPortalId.AutomobiliHr,
                 //     name: NewsPortalId.AutomobiliHr.GetDisplayName(),
                 //     baseUrl: "https://automobili.klik.hr/",
-                //     iconUrl: $"Icons/{NewsPortalId.AutomobiliHr}{FileExtensionConstants.Png}"
+                //     iconUrl: $"Icons/{NewsPortalId.AutomobiliHr}{FileExtensionConstants.Png}", isNewOverride: null, createdAt: new DateTime(2020, 5, 1), categoryId: (int)CategoryId.General
                 // ),
 
                 new NewsPortal(
                     id: (int)NewsPortalId.DirektnoHr,
                     name: NewsPortalId.DirektnoHr.GetDisplayName(),
                     baseUrl: "https://direktno.hr/",
-                    iconUrl: $"Icons/{NewsPortalId.DirektnoHr}{FileExtensionConstants.Png}"
+                    iconUrl: $"Icons/{NewsPortalId.DirektnoHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 5, 1), categoryId: (int)CategoryId.Vijesti
                 ),
             };
 

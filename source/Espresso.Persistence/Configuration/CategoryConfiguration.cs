@@ -34,6 +34,11 @@ namespace Espresso.Persistence.Configuration
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasForeignKey(articleCategory => articleCategory.CategoryId);
 
+            builder.HasMany(category => category.NewsPortals)
+                .WithOne(newsPortal => newsPortal.Category!)
+                .HasForeignKey(newsPortal => newsPortal.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             Seed(builder);
         }
 
@@ -49,7 +54,8 @@ namespace Espresso.Persistence.Configuration
                 new Category((int)CategoryId.Viral, CategoryId.Viral.GetDisplayName(), "#9055A2", null),
                 new Category((int)CategoryId.Biznis, CategoryId.Biznis.GetDisplayName(), "#3185FC", null),
                 new Category((int)CategoryId.AutoMoto, CategoryId.AutoMoto.GetDisplayName(), "#FC814A", null),
-                new Category((int)CategoryId.Kultura, CategoryId.Kultura.GetDisplayName(), "#AC80A0", null)
+                new Category((int)CategoryId.Kultura, CategoryId.Kultura.GetDisplayName(), "#AC80A0", null),
+                new Category((int)CategoryId.General, CategoryId.General.GetDisplayName(), "#AC80A0", null),
             };
 
             builder.HasData(categories);

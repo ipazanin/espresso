@@ -58,7 +58,7 @@ namespace Espresso.WebApi.Controllers
                 request: new UpdateInMemoryArticlesCommand(
                     articlesRequest.CreatedArticles,
                     articlesRequest.UpdatedArticles,
-                    currentEspressoWebApiVersion: WebApiConfiguration.EspressoWebApiVersion,
+                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     version: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType
@@ -68,7 +68,7 @@ namespace Espresso.WebApi.Controllers
 
             await Mediator.Send(
                 request: new CalculateTrendingScoreCommand(
-                    currentEspressoWebApiVersion: WebApiConfiguration.EspressoWebApiVersion,
+                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     version: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType
@@ -80,7 +80,7 @@ namespace Espresso.WebApi.Controllers
                 request: new SendArticlesNotificationsQuery(
                     articlesRequest.CreatedArticles,
                     articlesRequest.UpdatedArticles,
-                    currentEspressoWebApiVersion: WebApiConfiguration.EspressoWebApiVersion,
+                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     version: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType

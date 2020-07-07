@@ -149,8 +149,11 @@ namespace Espresso.Application.DataTransferObjects
             var newsPortal = new NewsPortal(
                 id: article.NewsPortal.Id,
                 name: article.NewsPortal.Name,
-                baseUrl: "",
-                iconUrl: article.NewsPortal.IconUrl
+                baseUrl: article.NewsPortal.BaseUrl,
+                iconUrl: article.NewsPortal.IconUrl,
+                isNewOverride: article.NewsPortal.IsNewOverride,
+                createdAt: article.NewsPortal.CreatedAt,
+                categoryId: article.NewsPortal.CategoryId
             );
 
             var createdArticle = new Article(
@@ -207,24 +210,32 @@ namespace Espresso.Application.DataTransferObjects
                     )
                 )).ToList();
 
-            var newsPortal = new NewsPortal(NewsPortal.Id, NewsPortal.Name, "", NewsPortal.IconUrl);
+            var newsPortal = new NewsPortal(
+                id: NewsPortal.Id,
+                name: NewsPortal.Name,
+                baseUrl: NewsPortal.BaseUrl,
+                iconUrl: NewsPortal.IconUrl,
+                isNewOverride: NewsPortal.IsNewOverride,
+                createdAt: NewsPortal.CreatedAt,
+                categoryId: NewsPortal.CategoryId
+            );
 
             return new Article(
-                Id,
-                ArticleId,
-                Url,
-                Summary,
-                Title,
-                ImageUrl,
-                CreateDateTime,
-                UpdateDateTime,
-                PublishDateTime,
-                NumberOfClicks,
-                TrendingScore,
-                NewsPortal.Id,
-                RssFeedId,
-                articleCategories,
-                newsPortal,
+                id: Id,
+                articleId: ArticleId,
+                url: Url,
+                summary: Summary,
+                title: Title,
+                imageUrl: ImageUrl,
+                createDateTime: CreateDateTime,
+                updateDateTime: UpdateDateTime,
+                publishDateTime: PublishDateTime,
+                numberOfClicks: NumberOfClicks,
+                trendingScore: TrendingScore,
+                newsPortalId: NewsPortal.Id,
+                rssFeedId: RssFeedId,
+                articleCategories: articleCategories,
+                newsPortal: newsPortal,
                 rssFeed: null
             );
         }
@@ -245,24 +256,32 @@ namespace Espresso.Application.DataTransferObjects
                     )
                 )).ToList();
 
-            var newsPortal = new NewsPortal(NewsPortal.Id, NewsPortal.Name, "", NewsPortal.IconUrl);
+            var newsPortal = new NewsPortal(
+                id: NewsPortal.Id,
+                name: NewsPortal.Name,
+                baseUrl: NewsPortal.BaseUrl,
+                iconUrl: NewsPortal.IconUrl,
+                isNewOverride: NewsPortal.IsNewOverride,
+                createdAt: NewsPortal.CreatedAt,
+                categoryId: NewsPortal.CategoryId
+            );
 
             return new Article(
-                Id,
-                ArticleId,
-                Url,
-                Summary,
-                Title,
-                ImageUrl,
-                CreateDateTime,
-                UpdateDateTime,
-                PublishDateTime,
-                NumberOfClicks,
-                TrendingScore,
-                NewsPortal.Id,
-                RssFeedId,
-                articleCategories,
-                newsPortal,
+                id: Id,
+                articleId: ArticleId,
+                url: Url,
+                summary: Summary,
+                title: Title,
+                imageUrl: ImageUrl,
+                createDateTime: CreateDateTime,
+                updateDateTime: UpdateDateTime,
+                publishDateTime: PublishDateTime,
+                numberOfClicks: NumberOfClicks,
+                trendingScore: TrendingScore,
+                newsPortalId: NewsPortal.Id,
+                rssFeedId: RssFeedId,
+                articleCategories: articleCategories,
+                newsPortal: newsPortal,
                 rssFeed: null
             );
         }

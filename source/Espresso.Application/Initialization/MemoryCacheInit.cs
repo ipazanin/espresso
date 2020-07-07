@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Espresso.Common.Configuration;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
-using Espresso.Common.Utilities;
 using Espresso.DataAccessLayer.IRepository;
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Logging;
 
 namespace Espresso.Application.Initialization
 {
@@ -74,7 +71,11 @@ namespace Espresso.Application.Initialization
             #endregion
 
             #region NewsPortals
-            var newsPortals = await _context.NewsPortals.ToListAsync();
+            var newsPortals = await _context
+                .NewsPortals
+                .AsNoTracking()
+                .ToListAsync();
+
             var newsPortalsDictionary = newsPortals.ToDictionary(newsPortal => newsPortal.Id);
 
             _memoryCache.Set(
@@ -84,7 +85,11 @@ namespace Espresso.Application.Initialization
             #endregion
 
             #region Categories
-            var categories = await _context.Categories.ToListAsync();
+            var categories = await _context
+                .Categories
+                .AsNoTracking()
+                .ToListAsync();
+
             var categoryDictionary = categories.ToDictionary(category => category.Id);
 
             _memoryCache.Set(
@@ -174,7 +179,10 @@ namespace Espresso.Application.Initialization
             #endregion
 
             #region NewsPortals
-            var newsPortals = await _context.NewsPortals.ToListAsync();
+            var newsPortals = await _context
+                .NewsPortals
+                .AsNoTracking()
+                .ToListAsync();
             var newsPortalsDictionary = newsPortals.ToDictionary(newsPortal => newsPortal.Id);
 
             _memoryCache.Set(
@@ -184,7 +192,11 @@ namespace Espresso.Application.Initialization
             #endregion
 
             #region Categories
-            var categories = await _context.Categories.ToListAsync();
+            var categories = await _context
+                .Categories
+                .AsNoTracking()
+                .ToListAsync();
+
             var categoryDictionary = categories.ToDictionary(category => category.Id);
 
             _memoryCache.Set(

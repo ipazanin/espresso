@@ -53,7 +53,7 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var command = new CreateApplicationDownloadCommand(
-                currentEspressoWebApiVersion: WebApiConfiguration.EspressoWebApiVersion,
+                currentEspressoWebApiVersion: WebApiConfiguration.Version,
                 espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                 version: basicInformationsHeaderParameters.Version,
                 deviceType: basicInformationsHeaderParameters.DeviceType
@@ -92,7 +92,7 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var command = new CreateApplicationDownloadCommand(
-                currentEspressoWebApiVersion: WebApiConfiguration.EspressoWebApiVersion,
+                currentEspressoWebApiVersion: WebApiConfiguration.Version,
                 espressoWebApiVersion: WebApiConfiguration.EspressoWebApiVersion_1_2.ToString(),
                 version: mobileAppVersion,
                 deviceType: mobileDeviceType
@@ -128,7 +128,7 @@ namespace Espresso.WebApi.Controllers
         {
             var response = await Mediator.Send(
                 request: new GetApplicationDownloadStatisticsQuery(
-                    currentEspressoWebApiVersion: WebApiConfiguration.EspressoWebApiVersion,
+                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     version: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType

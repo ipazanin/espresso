@@ -26,7 +26,7 @@ namespace Espresso.WebApi.Configuration
         /// <summary>
         /// 
         /// </summary>
-        public string EspressoWebApiVersion =>
+        public string Version =>
             $"{ApiVersionConstants.CurrentMajorVersion}." +
             $"{ApiVersionConstants.CurrentMinorVersion}." +
             $"{ApiVersionConstants.CurrentFixVersion}";
@@ -35,6 +35,11 @@ namespace Espresso.WebApi.Configuration
         /// 
         /// </summary>
         public ApiVersion EspressoWebApiVersion_1_2 => new ApiVersion(1, 2);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ApiVersion EspressoWebApiVersion_1_3 => new ApiVersion(1, 3);
 
         /// <summary>
         /// 
@@ -48,11 +53,6 @@ namespace Espresso.WebApi.Configuration
             enumValue: _configuration["AppConfiguration:Environment"],
             defaultValue: AppEnvironment.Prod
         );
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Version => EspressoWebApiVersion;
 
         /// <summary>
         /// 

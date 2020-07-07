@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(EspressoDatabaseContext))]
-    partial class EspressoDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200707160107_IPazanin_AddedIsNewOverrideAndCreatedAtToNewsPortals")]
+    partial class IPazanin_AddedIsNewOverrideAndCreatedAtToNewsPortals
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,7 +243,7 @@ namespace Espresso.Persistence.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<bool?>("IsNewOverride")
+                    b.Property<bool>("IsNewOverride")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -263,6 +265,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Index.png",
+                            IsNewOverride = false,
                             Name = "Index.hr"
                         },
                         new
@@ -272,6 +275,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/DvadesetCetiriSata.png",
+                            IsNewOverride = false,
                             Name = "24 sata"
                         },
                         new
@@ -281,6 +285,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 2,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/SportskeNovosti.png",
+                            IsNewOverride = false,
                             Name = "Sportske Novosti"
                         },
                         new
@@ -290,6 +295,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/JutarnjiList.png",
+                            IsNewOverride = false,
                             Name = "Jutarnji List"
                         },
                         new
@@ -299,6 +305,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/NetHr.png",
+                            IsNewOverride = false,
                             Name = "Net.hr"
                         },
                         new
@@ -308,6 +315,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/SlobodnaDalmacija.png",
+                            IsNewOverride = false,
                             Name = "Slobodna Dalmacija"
                         },
                         new
@@ -317,6 +325,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/TPortal.png",
+                            IsNewOverride = false,
                             Name = "tportal"
                         },
                         new
@@ -326,6 +335,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/VecernjiList.png",
+                            IsNewOverride = false,
                             Name = "Večernji List"
                         },
                         new
@@ -335,6 +345,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Telegram.png",
+                            IsNewOverride = false,
                             Name = "Telegram"
                         },
                         new
@@ -344,6 +355,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Dnevnik.png",
+                            IsNewOverride = false,
                             Name = "Dnevnik"
                         },
                         new
@@ -353,6 +365,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 2,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Gol.png",
+                            IsNewOverride = false,
                             Name = "Gol"
                         },
                         new
@@ -362,6 +375,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/RtlVijesti.png",
+                            IsNewOverride = false,
                             Name = "RTL Vijesti"
                         },
                         new
@@ -371,6 +385,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 2,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/NogometPlus.png",
+                            IsNewOverride = false,
                             Name = "Nogomet Plus"
                         },
                         new
@@ -380,6 +395,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 7,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Lider.png",
+                            IsNewOverride = false,
                             Name = "Lider"
                         },
                         new
@@ -389,6 +405,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Bug.png",
+                            IsNewOverride = false,
                             Name = "Bug"
                         },
                         new
@@ -398,6 +415,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/VidiHr.png",
+                            IsNewOverride = false,
                             Name = "Vidi.hr"
                         },
                         new
@@ -407,6 +425,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Zimo.png",
+                            IsNewOverride = false,
                             Name = "Zimo"
                         },
                         new
@@ -416,6 +435,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Netokracija.png",
+                            IsNewOverride = false,
                             Name = "Netokracija"
                         },
                         new
@@ -425,6 +445,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 7,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/PoslovniPuls.png",
+                            IsNewOverride = false,
                             Name = "Poslovni Puls"
                         },
                         new
@@ -434,6 +455,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/PcChip.png",
+                            IsNewOverride = false,
                             Name = "PCchip"
                         },
                         new
@@ -443,6 +465,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 4,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Cosmopolitan.png",
+                            IsNewOverride = false,
                             Name = "Cosmopolitan"
                         },
                         new
@@ -452,6 +475,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 4,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/WallHr.png",
+                            IsNewOverride = false,
                             Name = "Wall.hr"
                         },
                         new
@@ -461,6 +485,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 4,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/LjepotaIZdravlje.png",
+                            IsNewOverride = false,
                             Name = "Ljepota i zdravlje"
                         },
                         new
@@ -470,6 +495,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 8,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Autonet.png",
+                            IsNewOverride = false,
                             Name = "Autonet"
                         },
                         new
@@ -479,6 +505,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/N1.png",
+                            IsNewOverride = false,
                             Name = "N1"
                         },
                         new
@@ -488,6 +515,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/NarodHr.png",
+                            IsNewOverride = false,
                             Name = "Narod HR"
                         },
                         new
@@ -497,6 +525,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Hrt.png",
+                            IsNewOverride = false,
                             Name = "HRT"
                         },
                         new
@@ -506,6 +535,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/StoPosto.png",
+                            IsNewOverride = false,
                             Name = "100posto"
                         },
                         new
@@ -515,6 +545,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Dnevno.png",
+                            IsNewOverride = false,
                             Name = "Dnevno.Hr"
                         },
                         new
@@ -524,6 +555,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/DirektnoHr.png",
+                            IsNewOverride = false,
                             Name = "Direktno"
                         });
                 });

@@ -92,7 +92,7 @@ namespace Espresso.WebApi.Filters
             return _loggerService.LogError(
                 eventId: (int)Event.CustomExceptionFilterAttribute,
                 eventName: Event.CustomExceptionFilterAttribute.GetDisplayName(),
-                version: _webApiConfiguration.EspressoWebApiVersion,
+                version: _webApiConfiguration.Version,
                 message: context.Exception.Message,
                 exception: context.Exception,
                 cancellationToken: default

@@ -14,14 +14,16 @@ namespace Espresso.WebApi.Configuration
         public string ConnectionString { get; }
 
         /// <summary>
-        /// Espresso Web API version
+        /// 
         /// </summary>
-        public string EspressoWebApiVersion { get; }
+        public ApiVersion EspressoWebApiVersion_1_2 { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        public ApiVersion EspressoWebApiVersion_1_2 { get; }
+        /// <returns></returns>
+        public ApiVersion EspressoWebApiVersion_1_3 { get; }
+
 
         /// <summary>
         /// 

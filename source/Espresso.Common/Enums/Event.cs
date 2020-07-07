@@ -23,5 +23,6 @@ namespace Espresso.Common.Enums
         RssFeedLoading = 19,
         ArticleParsing = 20,
         ParserDeleterNewArticlesRequest = 21,
+        GetNewNewsPortalsQuery = 22,
     }
 }

@@ -52,7 +52,7 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var request = new GetConfigurationQuery(
-                currentEspressoWebApiVersion: WebApiConfiguration.EspressoWebApiVersion,
+                currentEspressoWebApiVersion: WebApiConfiguration.Version,
                 espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                 version: basicInformationsHeaderParameters.Version,
                 deviceType: basicInformationsHeaderParameters.DeviceType
@@ -91,7 +91,7 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var request = new GetConfigurationQuery(
-                currentEspressoWebApiVersion: WebApiConfiguration.EspressoWebApiVersion,
+                currentEspressoWebApiVersion: WebApiConfiguration.Version,
                 espressoWebApiVersion: WebApiConfiguration.EspressoWebApiVersion_1_2.ToString(),
                 version: mobileAppVersion,
                 deviceType: mobileDeviceType

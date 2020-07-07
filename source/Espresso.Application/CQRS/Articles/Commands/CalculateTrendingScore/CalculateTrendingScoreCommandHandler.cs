@@ -40,21 +40,21 @@ namespace Espresso.Application.CQRS.Articles.Commands.CalculateTrendingScore
             var trendingScoreUtility = new TrendingScoreUtility(clicksPerArticle);
 
             var articlesWithUpdatedTrendingScore = articles.Select(article => new Article(
-                article.Id,
-                article.ArticleId,
-                article.Url,
-                article.Summary,
-                article.Title,
-                article.ImageUrl,
-                article.CreateDateTime,
-                article.UpdateDateTime,
-                article.PublishDateTime,
-                article.NumberOfClicks,
-                trendingScoreUtility.CalculateTrendingScore(article.NumberOfClicks, article.PublishDateTime),
-                article.NewsPortalId,
-                article.RssFeedId,
-                article.ArticleCategories,
-                article.NewsPortal,
+                id: article.Id,
+                articleId: article.ArticleId,
+                url: article.Url,
+                summary: article.Summary,
+                title: article.Title,
+                imageUrl: article.ImageUrl,
+                createDateTime: article.CreateDateTime,
+                updateDateTime: article.UpdateDateTime,
+                publishDateTime: article.PublishDateTime,
+                numberOfClicks: article.NumberOfClicks,
+                trendingScore: trendingScoreUtility.CalculateTrendingScore(article.NumberOfClicks, article.PublishDateTime),
+                newsPortalId: article.NewsPortalId,
+                rssFeedId: article.RssFeedId,
+                articleCategories: article.ArticleCategories,
+                newsPortal: article.NewsPortal,
                 rssFeed: null
             )).ToList();
 
