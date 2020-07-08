@@ -31,7 +31,7 @@ namespace Espresso.Workers.ParserDeleter
         private readonly IParserDeleterConfiguration _configuration;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILoggerService _loggerService;
-        private readonly string _apiKey;
+        private readonly IMemoryCache _memoryCache;
         #endregion
 
         #region Constructors
@@ -39,7 +39,6 @@ namespace Espresso.Workers.ParserDeleter
             IServiceScopeFactory serviceScopeFactory,
             IParserDeleterConfiguration configuration,
             IHttpClientFactory httpClientFactory,
-            IMemoryCacheInit memoryCacheInit,
             ILoggerService loggerService,
             IMemoryCache memoryCache
         )
@@ -48,8 +47,7 @@ namespace Espresso.Workers.ParserDeleter
             _configuration = configuration;
             _httpClientFactory = httpClientFactory;
             _loggerService = loggerService;
-            memoryCacheInit.InitParserDeleter().GetAwaiter().GetResult();
-            _apiKey = memoryCache.Get<IEnumerable<string>>(key: MemoryCacheConstants.ApiKeysKey).First();
+            _memoryCache = memoryCache;
         }
         #endregion
 
@@ -57,6 +55,9 @@ namespace Espresso.Workers.ParserDeleter
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await Task.Yield();
+
+            await InitializeParser();
+
             while (!stoppingToken.IsCancellationRequested)
             {
                 try
@@ -105,6 +106,13 @@ namespace Espresso.Workers.ParserDeleter
             }
         }
 
+        private async Task InitializeParser()
+        {
+            using var scope = _serviceScopeFactory.CreateScope();
+            var memoryCacheInit = scope.ServiceProvider.GetRequiredService<IMemoryCacheInit>();
+            await memoryCacheInit.InitParserDeleter();
+        }
+
         private async Task CallWebServer(
             ParseRssFeedsCommandResponse parseRssFeedsResponse,
             CancellationToken cancellationToken
@@ -119,6 +127,7 @@ namespace Espresso.Workers.ParserDeleter
             }
 
             var numberOfTries = 5;
+            var apiKey = _memoryCache.Get<IEnumerable<string>>(key: MemoryCacheConstants.ApiKeysKey).First();
 
             while (numberOfTries-- > 0)
             {
@@ -130,7 +139,7 @@ namespace Espresso.Workers.ParserDeleter
                     ).ConfigureAwait(continueOnCapturedContext: false);
 
                     using var client = _httpClientFactory.CreateClient();
-                    client.DefaultRequestHeaders.Add(HttpHeaderConstants.HeaderName, _apiKey);
+                    client.DefaultRequestHeaders.Add(HttpHeaderConstants.HeaderName, apiKey);
                     client.DefaultRequestHeaders.Add(HttpHeaderConstants.EspressoApiHeaderName, _configuration.RssFeedParserMajorMinorVersion);
                     client.DefaultRequestHeaders.Add(HttpHeaderConstants.VersionHeaderName, _configuration.RssFeedParserVersion);
                     client.DefaultRequestHeaders.Add(HttpHeaderConstants.DeviceTypeHeaderName, ((int)DeviceType.RssFeedParser).ToString());
