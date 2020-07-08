@@ -22,6 +22,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Espresso.Common.Enums;
+using Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds;
+using Espresso.Application.CQRS.Articles.Commands.DeleteOldArticles;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Espresso.Workers.ParserDeleter
 {
@@ -76,6 +79,10 @@ namespace Espresso.Workers.ParserDeleter
 
                     #region Http
                     services.AddHttpClient();
+                    #endregion
+
+                    #region WebSockets
+                    services.AddSignalR();
                     #endregion
 
                     #region MediatR
