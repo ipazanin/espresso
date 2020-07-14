@@ -37,11 +37,11 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
             var articleDtos = articles
                 .OrderByDescending(article => article.PublishDateTime)
                 .Where(
-                    predicate: article =>
-                        article
-                            .ArticleCategories
-                            .Any(articleCategory => articleCategory.CategoryId.Equals(request.CategoryId)) &&
-                        (request.NewsPortalIds is null || request.NewsPortalIds.Contains(article.NewsPortalId))
+                    predicate: Article.GetCategoryArticleExpression(
+                        categoryId: request.CategoryId,
+                        newsPortalIds: request.NewsPortalIds
+                    ).
+                    Compile()
                 )
                 .Skip(request.Skip)
                 .Take(request.Take)

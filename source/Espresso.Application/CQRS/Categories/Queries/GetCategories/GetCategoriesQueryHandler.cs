@@ -28,7 +28,9 @@ namespace Espresso.Application.CQRS.Categories.Queries.GetCategories
         public Task<GetCategoriesQueryResponse> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
         {
             var categories = _memoryCache.Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey);
-            var categoryDtos = categories.Select(CategoryViewModel.Projection.Compile());
+            var categoryDtos = categories
+                .Where(predicate: Category.GetAllCategoriesExceptGeneralExpression().Compile())
+                .Select(CategoryViewModel.Projection.Compile());
 
             var response = new GetCategoriesQueryResponse(categoryDtos);
 

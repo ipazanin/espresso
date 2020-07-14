@@ -220,6 +220,30 @@ namespace Espresso.Domain.Entities
                 )))
                 .ToList();
         }
+
+        public static Expression<Func<Article, bool>> GetLatestArticleExpression(
+            IEnumerable<int>? categoryIds,
+            IEnumerable<int>? newsPortalIds
+        )
+        {
+            return article =>
+                (categoryIds == null || article
+                    .ArticleCategories
+                    .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
+                (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId));
+        }
+
+        public static Expression<Func<Article, bool>> GetCategoryArticleExpression(
+            int categoryId,
+            IEnumerable<int>? newsPortalIds
+        )
+        {
+            return article =>
+                        article
+                            .ArticleCategories
+                            .Any(articleCategory => articleCategory.CategoryId.Equals(categoryId)) &&
+                        (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId));
+        }
         #endregion
     }
 }

@@ -69,8 +69,8 @@ namespace Espresso.Domain.Entities
         )
         {
             return newsPortal =>
-                (newsPortalIds == null || !newsPortalIds.Contains(newsPortal.Id)) &&
-                (categoryIds == null || !categoryIds.Contains(newsPortal.CategoryId)) &&
+                newsPortalIds != null && !newsPortalIds.Contains(newsPortal.Id) &&
+                categoryIds != null && !categoryIds.Contains(newsPortal.CategoryId) &&
                 (newsPortal.IsNewOverride != null ?
                     newsPortal.IsNewOverride.Value :
                     newsPortal.CreatedAt > (DateTime.UtcNow - DateTimeConstants.MaxAgeOfNewNewsPortal)

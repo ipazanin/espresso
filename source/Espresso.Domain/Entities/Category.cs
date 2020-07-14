@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-
+using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Infrastructure;
 
 namespace Espresso.Domain.Entities
@@ -47,6 +47,13 @@ namespace Espresso.Domain.Entities
             Name = name;
             Color = color;
             KeyWordsRegexPattern = keyWordsRegexPattern;
+        }
+        #endregion
+
+        #region Methods
+        public static Expression<Func<Category, bool>> GetAllCategoriesExceptGeneralExpression()
+        {
+            return category => !category.Id.Equals((int)CategoryId.General);
         }
         #endregion
     }

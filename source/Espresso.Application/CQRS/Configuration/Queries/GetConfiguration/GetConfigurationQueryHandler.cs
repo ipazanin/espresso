@@ -35,7 +35,9 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
                 .OrderBy(keySelector: newsPortal => newsPortal.Name)
                 .Select(selector: GetConfigurationQueryNewsPortalViewModel.Projection.Compile());
 
-            var categoryDtos = categories.Select(selector: CategoryViewModel.Projection.Compile());
+            var categoryDtos = categories
+                .Where(predicate: Category.GetAllCategoriesExceptGeneralExpression().Compile())
+                .Select(selector: CategoryViewModel.Projection.Compile());
 
             var response = new GetConfigurationQueryResponse(
                 categories: categoryDtos,
