@@ -61,9 +61,9 @@ namespace Espresso.Workers.ParserDeleter
                     #region Services
                     services.AddSingleton<ILoggerService, LoggerService>();
                     services.AddSingleton<ISlackService, SlackService>();
+                    services.AddSingleton<IHttpService, HttpService>();
                     services.AddScoped<IArticleParserService, ArticleParserService>();
                     services.AddScoped<IWebScrapingService, WebScrapingService>();
-                    services.AddScoped<IHttpService, HttpService>();
                     #endregion
 
                     #region Validators
