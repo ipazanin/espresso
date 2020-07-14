@@ -49,7 +49,13 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
 
             var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
             var newsPortalDtos = newsPortals
-                .Where(NewsPortal.GetIsNewExpression(request.NewsPortalIds, new List<int> { request.CategoryId }).Compile())
+                .Where(
+                    NewsPortal.GetIsNewExpression(
+                        newsPortalIds: request.NewsPortalIds,
+                        categoryIds: new List<int> { request.CategoryId }
+                    )
+                    .Compile()
+                )
                 .OrderBy(keySelector: newsPortal => newsPortal.Name)
                 .Select(selector: NewsPortalViewModel.Projection.Compile());
 
