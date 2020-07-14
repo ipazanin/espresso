@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.CQRS.Articles.Queries.Common;
+using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using MediatR;
@@ -47,7 +48,18 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
                 .Take(request.Take)
                 .Select(ArticleViewModel.Projection.Compile());
 
-            var response = new GetLatestArticlesQueryResponse(articleDtos);
+            var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
+            var newsPortalDtos = newsPortals
+                .Where(NewsPortal.GetIsNewExpression(request.NewsPortalIds, request.CategoryIds).Compile())
+                .OrderBy(keySelector: newsPortal => newsPortal.Name)
+                .Select(selector: NewsPortalViewModel.Projection.Compile());
+
+
+            var response = new GetLatestArticlesQueryResponse(
+                articles: articleDtos,
+                newNewsPortals: newsPortalDtos,
+                newNewsPortalsPosition: DefaultValueConstants.NewNewsPortalsPosition
+            );
 
             return Task.FromResult(result: response);
         }

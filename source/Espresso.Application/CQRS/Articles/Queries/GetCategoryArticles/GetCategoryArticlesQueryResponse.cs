@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Espresso.Application.CQRS.Articles.Queries.Common;
+using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
 
 namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
 {
@@ -8,14 +9,26 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
     {
         public IEnumerable<ArticleViewModel> Articles { get; } = new List<ArticleViewModel>();
 
-        public GetCategoryArticlesQueryResponse(IEnumerable<ArticleViewModel> articles)
+        public IEnumerable<NewsPortalViewModel> NewNewsPortals { get; set; }
+
+        public int NewNewsPortalsPosition { get; }
+
+        public GetCategoryArticlesQueryResponse(
+            IEnumerable<ArticleViewModel> articles,
+            IEnumerable<NewsPortalViewModel> newNewsPortals,
+            int newNewsPortalsPosition
+        )
         {
             Articles = articles;
+            NewNewsPortals = newNewsPortals;
+            NewNewsPortalsPosition = newNewsPortalsPosition;
         }
 
         public override string ToString()
         {
-            return $"{nameof(Articles)}:{Articles.Count()}";
+            return $"{nameof(Articles)}:{Articles.Count()}" +
+            $"{nameof(NewNewsPortals)}:{NewNewsPortals.Count()}, " +
+            $"{nameof(NewNewsPortalsPosition)}:{NewNewsPortalsPosition}";
         }
     }
 }

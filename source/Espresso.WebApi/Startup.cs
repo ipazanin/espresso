@@ -473,15 +473,6 @@ namespace Espresso.WebApi
 
             #region NewsPortalsController
 
-            #region GetNewNewsPortals
-            apiVersioningOptions
-                .Conventions
-                .Controller<NewsPortalsController>()
-                .Action(typeof(NewsPortalsController)
-                .GetMethod(nameof(NewsPortalsController.GetNewNewsPortals))!)
-                .HasApiVersion(_configuration.EspressoWebApiCurrentVersion);
-            #endregion
-
             #region GetNewsPortals
             apiVersioningOptions
                 .Conventions
