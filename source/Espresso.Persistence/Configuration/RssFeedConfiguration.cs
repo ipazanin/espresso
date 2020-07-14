@@ -328,6 +328,15 @@ namespace Espresso.Persistence.Configuration
                     categoryId: (int)CategoryId.Vijesti
                 ),                                                                                
                 #endregion
+
+                #region Scena
+                new RssFeed(
+                    id: (int)RssFeedId.Scena,
+                    url: "https://www.scena.hr/feed/",
+                    newsPortalId: (int)NewsPortalId.Scena,
+                    categoryId: (int)CategoryId.Vijesti
+                ),
+                #endregion
             };
 
             builder.HasData(rssFeeds);
@@ -668,6 +677,15 @@ namespace Espresso.Persistence.Configuration
                 UrlSegmentIndex = (int?)null,
             });
             #endregion
+
+            #region Scena
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Scena,
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl,
+                UrlSegmentIndex = 1
+            });
+            #endregion
         }
 
         private void SeedImageUrlParseConfiguration(OwnedNavigationBuilder<RssFeed, ImageUrlParseConfiguration> imageUrlParseConfigurationBuilder)
@@ -956,6 +974,18 @@ namespace Espresso.Persistence.Configuration
                 RssFeedId = (int)RssFeedId.DirektnoHr_Zivot,
                 ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
                 ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
+            #region Scena
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Scena,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "//div[contains(@class, 'mycontent')]//img",
                 ShouldImageUrlBeWebScraped = false,
                 ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
                 JsonWebScrapePropertyNames = (string?)null

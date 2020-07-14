@@ -156,8 +156,16 @@ namespace Espresso.Persistence.Configuration
                 new RssFeedCategory(70, "svijet", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.NarodHr),
                 #endregion
 
-                #region  Telegram
+                #region Telegram
                 new RssFeedCategory(71, "na-prvu", urlSegmentIndex: 1, (int)CategoryId.Sport, (int)RssFeedId.Telegram),
+                #endregion 
+
+                #region Scena
+                new RssFeedCategory(72, "lifestyle", urlSegmentIndex: 1, (int)CategoryId.Lifestyle, (int)RssFeedId.Scena),
+                new RssFeedCategory(73, "vijesti", urlSegmentIndex: 1, (int)CategoryId.Show, (int)RssFeedId.Scena),
+                new RssFeedCategory(74, "kultura", urlSegmentIndex: 1, (int)CategoryId.Kultura, (int)RssFeedId.Scena),
+                new RssFeedCategory(75, "televizija", urlSegmentIndex: 1, (int)CategoryId.Show, (int)RssFeedId.Scena),
+                new RssFeedCategory(76, "dogadjanja", urlSegmentIndex: 1, (int)CategoryId.Lifestyle, (int)RssFeedId.Scena),
                 #endregion 
             };
 

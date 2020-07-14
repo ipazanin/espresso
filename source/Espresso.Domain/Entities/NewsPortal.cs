@@ -62,7 +62,7 @@ namespace Espresso.Domain.Entities
         }
         #endregion
 
-        #region Methods
+        #region Methods        
         public static Expression<Func<NewsPortal, bool>> GetIsNewExpression(
             IEnumerable<int>? newsPortalIds,
             IEnumerable<int>? categoryIds

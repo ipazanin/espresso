@@ -196,6 +196,11 @@ namespace Espresso.Domain.Services
                     }
             }
 
+            if (rssFeed.Id == (int)RssFeedId.Scena)
+            {
+
+            }
+
             if (string.IsNullOrEmpty(imageUrl) || rssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped)
             {
                 var articleUrl = itemLinks.FirstOrDefault()?.ToString();

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.CQRS.Configuration.Query.GetConfiguration;
+using Espresso.Application.CQRS.Configuration.Queries.GetConfiguration;
 using Espresso.Common.Constants;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Configuration;

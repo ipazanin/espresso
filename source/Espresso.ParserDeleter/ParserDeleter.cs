@@ -1,9 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
 using Espresso.Common.Enums;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,25 +25,25 @@ namespace Espresso.Workers.ParserDeleter
         #region Fields
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IParserDeleterConfiguration _configuration;
-        private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILoggerService _loggerService;
         private readonly IMemoryCache _memoryCache;
+        private readonly IHttpService _httpService;
         #endregion
 
         #region Constructors
         public ParserDeleter(
             IServiceScopeFactory serviceScopeFactory,
             IParserDeleterConfiguration configuration,
-            IHttpClientFactory httpClientFactory,
             ILoggerService loggerService,
-            IMemoryCache memoryCache
+            IMemoryCache memoryCache,
+            IHttpService httpService
         )
         {
             _serviceScopeFactory = serviceScopeFactory;
             _configuration = configuration;
-            _httpClientFactory = httpClientFactory;
             _loggerService = loggerService;
             _memoryCache = memoryCache;
+            _httpService = httpService;
         }
         #endregion
 
@@ -55,6 +51,7 @@ namespace Espresso.Workers.ParserDeleter
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await Task.Yield();
+            await Task.Delay(TimeSpan.FromSeconds(40));
 
             await InitializeParser();
 
@@ -128,34 +125,31 @@ namespace Espresso.Workers.ParserDeleter
 
             var numberOfTries = 5;
             var apiKey = _memoryCache.Get<IEnumerable<string>>(key: MemoryCacheConstants.ApiKeysKey).First();
+            var httpHeaders = new List<(string headerKey, string headerValue)>
+            {
+                (headerKey: HttpHeaderConstants.HeaderName, headerValue: apiKey),
+                (headerKey: HttpHeaderConstants.EspressoApiHeaderName, headerValue: _configuration.RssFeedParserMajorMinorVersion),
+                (headerKey: HttpHeaderConstants.VersionHeaderName, headerValue: _configuration.RssFeedParserVersion),
+                (headerKey: HttpHeaderConstants.DeviceTypeHeaderName, headerValue: ((int)DeviceType.RssFeedParser).ToString()),
+            };
 
             while (numberOfTries-- > 0)
             {
                 try
                 {
-                    var content = await CreateWebServerContent(
-                        parseRssFeedsResponse: parseRssFeedsResponse,
+                    await _httpService.PostJsonAsync(
+                        url: $"{_configuration.ServerUrl}/api/notifications",
+                        data: new ArticlesRequestObjectDto
+                        {
+                            CreatedArticles = parseRssFeedsResponse.CreatedArticles,
+                            UpdatedArticles = parseRssFeedsResponse.UpdatedArticles
+                        },
+                        httpHeaders: httpHeaders,
+                        httpClientTimeout: TimeSpan.FromSeconds(30),
                         cancellationToken: cancellationToken
-                    ).ConfigureAwait(continueOnCapturedContext: false);
+                    );
 
-                    using var client = _httpClientFactory.CreateClient();
-                    client.DefaultRequestHeaders.Add(HttpHeaderConstants.HeaderName, apiKey);
-                    client.DefaultRequestHeaders.Add(HttpHeaderConstants.EspressoApiHeaderName, _configuration.RssFeedParserMajorMinorVersion);
-                    client.DefaultRequestHeaders.Add(HttpHeaderConstants.VersionHeaderName, _configuration.RssFeedParserVersion);
-                    client.DefaultRequestHeaders.Add(HttpHeaderConstants.DeviceTypeHeaderName, ((int)DeviceType.RssFeedParser).ToString());
-                    client.Timeout = TimeSpan.FromMinutes(3);
-
-                    var response = await client
-                        .PostAsync(requestUri: $"{_configuration.ServerUrl}/api/notifications", content: content)
-                        .ConfigureAwait(false);
-                    var resMessage = await response.Content.ReadAsStringAsync();
-                    var status = response.StatusCode;
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        break;
-                    }
-                    await Task.Delay(_configuration.WaitDurationAfterWebServerRequestError).ConfigureAwait(false);
+                    return;
                 }
                 catch (Exception exception)
                 {
@@ -172,25 +166,6 @@ namespace Espresso.Workers.ParserDeleter
             }
         }
 
-        private async Task<HttpContent> CreateWebServerContent(
-            ParseRssFeedsCommandResponse parseRssFeedsResponse,
-            CancellationToken cancellationToken
-        )
-        {
-            var stream = new MemoryStream();
-            await JsonSerializer.SerializeAsync(stream, new ArticlesRequestObjectDto
-            {
-                CreatedArticles = parseRssFeedsResponse.CreatedArticles,
-                UpdatedArticles = parseRssFeedsResponse.UpdatedArticles
-            }, cancellationToken: cancellationToken).ConfigureAwait(false);
-
-            stream.Position = 0;
-            using var reader = new StreamReader(stream);
-            var jsonString = await reader.ReadToEndAsync().ConfigureAwait(false);
-
-            var content = new StringContent(jsonString, Encoding.UTF8, MimeTypeConstants.Json);
-            return content;
-        }
 
         private CancellationToken GetCancellationToken()
         {

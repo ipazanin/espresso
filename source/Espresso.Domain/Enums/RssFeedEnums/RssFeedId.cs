@@ -82,5 +82,6 @@
         DirektnoHr_Zivot = 79,
         DirektnoHr_Kolumne = 80,
         DirektnoHr_Direktno = 81,
+        Scena = 82,
     }
 }

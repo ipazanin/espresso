@@ -289,7 +289,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.hrt.hr/",
                     iconUrl: $"Icons/{NewsPortalId.Hrt}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 6, 25),
                     categoryId: (int)CategoryId.Vijesti
                 ),
 
@@ -299,7 +299,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://100posto.jutarnji.hr/",
                     iconUrl: $"Icons/{NewsPortalId.StoPosto}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 6, 28),
                     categoryId: (int)CategoryId.Vijesti
                 ),
 
@@ -309,7 +309,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.dnevno.hr/",
                     iconUrl: $"Icons/{NewsPortalId.Dnevno}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 6, 28),
                     categoryId: (int)CategoryId.Vijesti
                 ),
 
@@ -326,7 +326,17 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://direktno.hr/",
                     iconUrl: $"Icons/{NewsPortalId.DirektnoHr}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1), categoryId: (int)CategoryId.Vijesti
+                    createdAt: new DateTime(2020, 7, 1),
+                    categoryId: (int)CategoryId.Vijesti
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.Scena,
+                    name: NewsPortalId.Scena.GetDisplayName(),
+                    baseUrl: "https://www.scena.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.Scena}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 7, 13),
+                    categoryId: (int)CategoryId.Show
                 ),
             };
 

@@ -73,6 +73,7 @@ namespace Espresso.WebApi
             services.AddScoped<ISlackService, SlackService>();
             services.AddScoped<IArticleParserService, ArticleParserService>();
             services.AddScoped<IWebScrapingService, WebScrapingService>();
+            services.AddScoped<IHttpService, HttpService>();
             #endregion
 
             #region MemoryCache

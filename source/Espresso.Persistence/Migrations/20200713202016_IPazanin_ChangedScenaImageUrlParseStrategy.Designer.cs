@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(EspressoDatabaseContext))]
-    partial class EspressoDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200713202016_IPazanin_ChangedScenaImageUrlParseStrategy")]
+    partial class IPazanin_ChangedScenaImageUrlParseStrategy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -495,7 +497,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 31,
                             BaseUrl = "https://www.hrt.hr/",
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2020, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Hrt.png",
                             Name = "HRT"
                         },
@@ -504,7 +506,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 32,
                             BaseUrl = "https://100posto.jutarnji.hr/",
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2020, 6, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/StoPosto.png",
                             Name = "100posto"
                         },
@@ -513,7 +515,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 33,
                             BaseUrl = "https://www.dnevno.hr/",
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2020, 6, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Dnevno.png",
                             Name = "Dnevno.Hr"
                         },
@@ -522,7 +524,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 35,
                             BaseUrl = "https://direktno.hr/",
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2020, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/DirektnoHr.png",
                             Name = "Direktno"
                         },
@@ -2881,7 +2883,7 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 82,
-                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlParseStrategy = 2,
                                     ImageUrlWebScrapeType = 1,
                                     ImgElementXPath = "//div[contains(@class, 'mycontent')]//img",
                                     ShouldImageUrlBeWebScraped = false

@@ -3,13 +3,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.CQRS.Categories.Queries.GetCategories;
-using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Espresso.Application.CQRS.Configuration.Query.GetConfiguration
+namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
 {
     public class GetConfigurationQueryHandler : IRequestHandler<GetConfigurationQuery, GetConfigurationQueryResponse>
     {
@@ -34,7 +33,7 @@ namespace Espresso.Application.CQRS.Configuration.Query.GetConfiguration
 
             var newsPortalDtos = newsPortals
                 .OrderBy(keySelector: newsPortal => newsPortal.Name)
-                .Select(selector: NewsPortalViewModel.Projection.Compile());
+                .Select(selector: GetConfigurationQueryNewsPortalViewModel.Projection.Compile());
 
             var categoryDtos = categories.Select(selector: CategoryViewModel.Projection.Compile());
 

@@ -74,5 +74,7 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         AutomobiliHr = 34,
         [Display(Name = "Direktno")]
         DirektnoHr = 35,
+        [Display(Name = "Scena")]
+        Scena = 36,
     }
 }

@@ -2,7 +2,7 @@
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Common.Enums;
 
-namespace Espresso.Application.CQRS.Configuration.Query.GetConfiguration
+namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
 {
     public class GetConfigurationQuery : Request<GetConfigurationQueryResponse>
     {

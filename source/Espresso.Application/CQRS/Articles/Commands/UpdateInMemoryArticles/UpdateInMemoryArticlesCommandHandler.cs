@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -35,6 +36,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.UpdateInMemoryArticles
         {
             CreateArticles(request.CreatedArticles);
             UpdateArticles(request.UpdatedArticles);
+
             RemoveOldArticles();
             var response = new UpdateInMemoryArticlesCommandResponse(request.UpdatedArticles.Count(), request.CreatedArticles.Count());
 
@@ -43,7 +45,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.UpdateInMemoryArticles
 
         private void CreateArticles(IEnumerable<ArticleDto> createArticles)
         {
-            var articlesToCreate = createArticles
+            var createArticlesDictionary = createArticles
                 .Select(ArticleDto.ToArticleProjection)
                 .ToDictionary(article => article.Id);
 
@@ -52,7 +54,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.UpdateInMemoryArticles
                 .ToDictionary(article => article.Id);
 
             var articlesToSave = savedArticles
-                .Union(articlesToCreate)
+                .Union(createArticlesDictionary)
                 .Select(articleKeyValuePair => articleKeyValuePair.Value)
                 .ToList();
 
