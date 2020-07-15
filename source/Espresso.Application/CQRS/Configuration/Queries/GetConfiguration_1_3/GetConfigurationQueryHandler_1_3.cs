@@ -8,9 +8,9 @@ using Espresso.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
+namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration_1_3
 {
-    public class GetConfigurationQueryHandler : IRequestHandler<GetConfigurationQuery, GetConfigurationQueryResponse>
+    public class GetConfigurationQueryHandler : IRequestHandler<GetConfigurationQuery_1_3, GetConfigurationQueryResponse_1_3>
     {
         #region Fields
         private readonly IMemoryCache _memoryCache;
@@ -26,25 +26,22 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
         #endregion
 
         #region Methods
-        public Task<GetConfigurationQueryResponse> Handle(GetConfigurationQuery request, CancellationToken cancellationToken)
+        public Task<GetConfigurationQueryResponse_1_3> Handle(GetConfigurationQuery_1_3 request, CancellationToken cancellationToken)
         {
             var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
             var categories = _memoryCache.Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey);
 
             var newsPortalDtos = newsPortals
                 .OrderBy(keySelector: newsPortal => newsPortal.Name)
-                .Select(selector: GetConfigurationQueryNewsPortalViewModel.Projection.Compile());
+                .Select(selector: GetConfigurationQueryNewsPortalViewModel_1_3.Projection.Compile());
 
             var categoryDtos = categories
                 .Where(predicate: Category.GetAllCategoriesExceptGeneralExpression().Compile())
-                .Select(selector: CategoryViewModel.Projection.Compile());
+                .Select(selector: GetConfigurationQueryCategoryViewModel_1_3.GetProjection().Compile());
 
-            var groupedNewsPortals = categories
-                .Select(selector: GetConfigurationQueryNewsPortalCategoryGroupingViewModel.GetProjection(newsPortalDtos).Compile());
-
-            var response = new GetConfigurationQueryResponse(
-                groupedNewsPortals: groupedNewsPortals,
-                categories: categoryDtos
+            var response = new GetConfigurationQueryResponse_1_3(
+                categories: categoryDtos,
+                newsPortals: newsPortalDtos
             );
 
             return Task.FromResult(result: response);

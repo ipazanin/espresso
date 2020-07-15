@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Enums.CategoryEnums;
 
 namespace Espresso.Application.CQRS.Categories.Queries.GetCategories
 {
@@ -35,7 +36,5 @@ namespace Espresso.Application.CQRS.Categories.Queries.GetCategories
         }
         #endregion
 
-        #region Methods
-        #endregion
     }
 }

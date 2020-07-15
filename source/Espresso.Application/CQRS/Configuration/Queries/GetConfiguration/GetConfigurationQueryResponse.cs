@@ -6,19 +6,22 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
 {
     public class GetConfigurationQueryResponse
     {
+        public IEnumerable<GetConfigurationQueryNewsPortalCategoryGroupingViewModel> GroupedNewsPortals { get; }
+
         public IEnumerable<CategoryViewModel> Categories { get; }
 
-        public IEnumerable<GetConfigurationQueryNewsPortalViewModel> NewsPortals { get; }
-
-        public GetConfigurationQueryResponse(IEnumerable<CategoryViewModel> categories, IEnumerable<GetConfigurationQueryNewsPortalViewModel> newsPortals)
+        public GetConfigurationQueryResponse(
+            IEnumerable<GetConfigurationQueryNewsPortalCategoryGroupingViewModel> groupedNewsPortals,
+            IEnumerable<CategoryViewModel> categories
+        )
         {
+            GroupedNewsPortals = groupedNewsPortals;
             Categories = categories;
-            NewsPortals = newsPortals;
         }
 
         public override string ToString()
         {
-            return $"{nameof(Categories)}:{Categories.Count()}, {nameof(NewsPortals)}:{NewsPortals.Count()}";
+            return $"{nameof(Categories)}:{Categories.Count()}";
         }
     }
 }

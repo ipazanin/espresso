@@ -459,7 +459,7 @@ namespace Espresso.WebApi
                 .Conventions
                 .Controller<ConfigurationController>()
                 .Action(typeof(ConfigurationController)
-                .GetMethod(nameof(ConfigurationController.GetConfiguration))!)
+                .GetMethod(nameof(ConfigurationController.GetConfiguration_1_3))!)
                 .HasApiVersion(_configuration.EspressoWebApiVersion_1_3);
             apiVersioningOptions
                 .Conventions

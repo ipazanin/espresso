@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.CQRS.Configuration.Queries.GetConfiguration;
+using Espresso.Application.CQRS.Configuration.Queries.GetConfiguration_1_3;
 using Espresso.Common.Constants;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Configuration;
@@ -52,6 +53,42 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var request = new GetConfigurationQuery(
+                currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                version: basicInformationsHeaderParameters.Version,
+                deviceType: basicInformationsHeaderParameters.DeviceType
+            );
+            var getNewsPortalsQueryResponse = await Mediator.Send(
+                request: request,
+                cancellationToken: cancellationToken
+            ).ConfigureAwait(false);
+
+            return Ok(getNewsPortalsQueryResponse);
+        }
+
+        /// <summary>
+        /// Get App Configuration
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///     Get /api/configuration
+        /// </remarks>
+        /// <param name="cancellationToken"></param>
+        /// <param name="basicInformationsHeaderParameters"></param>
+        /// <returns>Response object containing app configuration</returns>
+        /// <response code="200">Response object containing app configuration</response>
+        /// <response code="401">If API Key is invalid or missing</response>
+        /// <response code="500">If unhandled exception occurred</response>
+        [Produces(MimeTypeConstants.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetConfigurationQueryResponse_1_3))]
+        [HttpGet]
+        [Route("api/configuration")]
+        public async Task<IActionResult> GetConfiguration_1_3(
+            [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
+            CancellationToken cancellationToken
+        )
+        {
+            var request = new GetConfigurationQuery_1_3(
                 currentEspressoWebApiVersion: WebApiConfiguration.Version,
                 espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                 version: basicInformationsHeaderParameters.Version,
