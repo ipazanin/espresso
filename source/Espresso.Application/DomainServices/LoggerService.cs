@@ -416,6 +416,12 @@ namespace Espresso.Application.DomainServices
         {
             return _commonConfiguration.AppEnvironment switch
             {
+                AppEnvironment.Dev => _slackService.LogNewNewsPortalRequest(
+                    newsPortalName: newsPortalName,
+                    email: email,
+                    url: url,
+                    cancellationToken: cancellationToken
+                ),
                 AppEnvironment.Prod => _slackService.LogNewNewsPortalRequest(
                     newsPortalName: newsPortalName,
                     email: email,
