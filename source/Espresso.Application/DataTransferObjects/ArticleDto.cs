@@ -142,7 +142,8 @@ namespace Espresso.Application.DataTransferObjects
                     id: category.Id,
                     name: category.Name,
                     color: category.Color,
-                    keyWordsRegexPattern: category.KeyWordsRegexPattern
+                    keyWordsRegexPattern: category.KeyWordsRegexPattern,
+                    sortIndex: category.SortIndex
                 )
             )).ToList();
 
@@ -206,7 +207,8 @@ namespace Espresso.Application.DataTransferObjects
                         id: category.Id,
                         name: category.Name,
                         color: category.Color,
-                        keyWordsRegexPattern: category.KeyWordsRegexPattern
+                        keyWordsRegexPattern: category.KeyWordsRegexPattern,
+                        sortIndex: category.SortIndex
                     )
                 )).ToList();
 
@@ -252,7 +254,8 @@ namespace Espresso.Application.DataTransferObjects
                         id: category.Id,
                         name: category.Name,
                         color: category.Color,
-                        keyWordsRegexPattern: category.KeyWordsRegexPattern
+                        keyWordsRegexPattern: category.KeyWordsRegexPattern,
+                        sortIndex: category.SortIndex
                     )
                 )).ToList();
 

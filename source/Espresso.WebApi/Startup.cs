@@ -494,6 +494,15 @@ namespace Espresso.WebApi
                 .HasApiVersion(_configuration.EspressoWebApiVersion_1_2);
             #endregion
 
+            #region RequestNewsPortal
+            apiVersioningOptions
+                .Conventions
+                .Controller<NewsPortalsController>()
+                .Action(typeof(NewsPortalsController)
+                .GetMethod(nameof(NewsPortalsController.RequestNewsPortal))!)
+                .HasApiVersion(_configuration.EspressoWebApiCurrentVersion);
+            #endregion
+
             #endregion
         }
         #endregion
