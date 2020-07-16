@@ -39,7 +39,7 @@ namespace Espresso.Application.CQRS.NewsPortals.Commands.NewSourcesRequest
             );
             client.Authenticate(
                 userName: "ivan.pazanin1996@gmail.com",
-                password: "Jh72078N"
+                password: ""
             );
 
             await client.SendAsync(
