@@ -17,6 +17,8 @@ namespace Espresso.Domain.Entities
 
         public string? KeyWordsRegexPattern { get; private set; }
 
+        public int SortIndex { get; private set; }
+
         public ICollection<ArticleCategory> ArticleCategories { get; private set; } = new List<ArticleCategory>();
 
         public ICollection<RssFeed> RssFeeds { get; private set; } = new List<RssFeed>();
@@ -40,13 +42,15 @@ namespace Espresso.Domain.Entities
             int id,
             string name,
             string color,
-            string? keyWordsRegexPattern
+            string? keyWordsRegexPattern,
+            int sortIndex
         )
         {
             Id = id;
             Name = name;
             Color = color;
             KeyWordsRegexPattern = keyWordsRegexPattern;
+            SortIndex = sortIndex;
         }
         #endregion
 

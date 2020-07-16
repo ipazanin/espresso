@@ -37,10 +37,13 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
 
             var categoryDtos = categories
                 .Where(predicate: Category.GetAllCategoriesExceptGeneralExpression().Compile())
+
                 .Select(selector: CategoryViewModel.Projection.Compile());
 
             var groupedNewsPortals = categories
-                .Select(selector: GetConfigurationQueryNewsPortalCategoryGroupingViewModel.GetProjection(newsPortalDtos).Compile());
+                .OrderBy(category => category.SortIndex)
+                .Select(selector: GetConfigurationQueryNewsPortalCategoryGroupingViewModel.GetProjection(newsPortalDtos).Compile())
+                .Where(grouping => grouping.NewsPortals.Count() != 0);
 
             var response = new GetConfigurationQueryResponse(
                 groupedNewsPortals: groupedNewsPortals,

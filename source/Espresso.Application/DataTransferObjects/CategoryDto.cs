@@ -15,12 +15,15 @@ namespace Espresso.Application.DataTransferObjects
 
         public string? KeyWordsRegexPattern { get; set; }
 
+        public int SortIndex { get; set; }
+
         public static Expression<Func<Category, CategoryDto>> Projection => category => new CategoryDto
         {
             Id = category.Id,
             Name = category.Name,
             Color = category.Color,
-            KeyWordsRegexPattern = category.KeyWordsRegexPattern
+            KeyWordsRegexPattern = category.KeyWordsRegexPattern,
+            SortIndex = category.SortIndex
         };
         #endregion
 
@@ -34,17 +37,6 @@ namespace Espresso.Application.DataTransferObjects
             Color = null!;
             KeyWordsRegexPattern = null!;
         }
-
-        public CategoryDto(int id, string name, string color, string keyWordsRegexPattern)
-        {
-            Id = id;
-            Name = name;
-            Color = color;
-            KeyWordsRegexPattern = keyWordsRegexPattern;
-        }
-        #endregion
-
-        #region Methods
         #endregion
     }
 }
