@@ -91,5 +91,12 @@ namespace Espresso.Domain.IServices
             string urlCategories,
             CancellationToken cancellationToken
         );
+
+        public Task LogNewNewsPortalRequest(
+            string newsPortalName,
+            string email,
+            string? url,
+            CancellationToken cancellationToken
+        );
     }
 }
