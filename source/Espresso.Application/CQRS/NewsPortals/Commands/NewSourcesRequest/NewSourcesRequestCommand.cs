@@ -33,5 +33,10 @@ namespace Espresso.Application.CQRS.NewsPortals.Commands.NewSourcesRequest
             Email = email;
             Url = url;
         }
+
+        public override string ToString()
+        {
+            return $"{nameof(NewsPortalName)}:{NewsPortalName}, {nameof(Email)}:{Email}, {nameof(Url)}:{Url}";
+        }
     }
 }

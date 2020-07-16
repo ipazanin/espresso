@@ -406,6 +406,25 @@ namespace Espresso.Application.DomainServices
                 _ => Task.CompletedTask,
             };
         }
+
+        public Task LogNewNewsPortalRequest(
+            string newsPortalName,
+            string email,
+            string? url,
+            CancellationToken cancellationToken
+        )
+        {
+            return _commonConfiguration.AppEnvironment switch
+            {
+                AppEnvironment.Prod => _slackService.LogNewNewsPortalRequest(
+                    newsPortalName: newsPortalName,
+                    email: email,
+                    url: url,
+                    cancellationToken: cancellationToken
+                ),
+                _ => Task.CompletedTask,
+            };
+        }
         #endregion
     }
 }

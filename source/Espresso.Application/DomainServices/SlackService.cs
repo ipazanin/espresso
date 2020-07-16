@@ -35,7 +35,12 @@ namespace Espresso.Application.DomainServices
 
         public const string MissingCategoriesErrorsBotIconEmoji = ":warning:";
         public const string MissingCategoriesErrorsBotUsername = "warning-bot";
-        public const string MissingCategoriesErrorsChannel = "missing-categories-errors-bot";
+        public const string MissingCategoriesErrorsChannel = "#missing-categories-errors-bot";
+
+
+        public const string NewNewsPortalRequestBotIconEmoji = ":email:";
+        public const string NewNewsPortalRequestBotUsername = "new-source-bot";
+        public const string NewNewsPortalRequestChannel = "#new-source-requests-bot";
         #endregion
 
         #region Fields
@@ -212,6 +217,29 @@ namespace Espresso.Application.DomainServices
                     iconEmoji: MissingCategoriesErrorsBotIconEmoji,
                     text: text,
                     channel: MissingCategoriesErrorsChannel
+                ),
+                cancellationToken: cancellationToken
+            );
+        }
+
+        public Task LogNewNewsPortalRequest(
+            string newsPortalName,
+            string email,
+            string? url,
+            CancellationToken cancellationToken
+        )
+        {
+            var text = $"There’s a request for new source\n" +
+                $"Source Name: {newsPortalName}\n" +
+                $"Email: {email}\n" +
+                $"Url: {url}";
+
+            return Log(
+                data: new SlackWebHookDto(
+                    userName: NewNewsPortalRequestBotUsername,
+                    iconEmoji: NewNewsPortalRequestBotIconEmoji,
+                    text: text,
+                    channel: NewNewsPortalRequestChannel
                 ),
                 cancellationToken: cancellationToken
             );

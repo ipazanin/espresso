@@ -1,16 +1,19 @@
 using System.Threading;
 using System.Threading.Tasks;
-using MailKit.Net.Smtp;
+using Espresso.Domain.IServices;
 using MediatR;
-using MimeKit;
 
 namespace Espresso.Application.CQRS.NewsPortals.Commands.NewSourcesRequest
 {
     public class NewSourcesRequestCommandHandler : IRequestHandler<NewsSourcesRequestCommand>
     {
+        private readonly ILoggerService _loggerService;
 
-        public NewSourcesRequestCommandHandler()
+        public NewSourcesRequestCommandHandler(
+            ILoggerService loggerService
+        )
         {
+            _loggerService = loggerService;
         }
 
         public async Task<Unit> Handle(
@@ -18,37 +21,10 @@ namespace Espresso.Application.CQRS.NewsPortals.Commands.NewSourcesRequest
             CancellationToken cancellationToken
         )
         {
-
-
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Ivan", "ivan.pazanin1996@gmail.com"));
-            message.To.Add(new MailboxAddress("Ivan", "iferencak@profico.hr"));
-            message.Subject = "Hajduk 1950";
-            message.Body = new TextPart("plain")
-            {
-                Text = "Test123"
-            };
-
-            using var client = new SmtpClient();
-
-            await client.ConnectAsync(
-                host: "smtp.gmail.com",
-                port: 587,
-                useSsl: false,
-                cancellationToken: cancellationToken
-            );
-            client.Authenticate(
-                userName: "ivan.pazanin1996@gmail.com",
-                password: ""
-            );
-
-            await client.SendAsync(
-                message: message,
-                cancellationToken: cancellationToken
-            );
-
-            await client.DisconnectAsync(
-                quit: true,
+            await _loggerService.LogNewNewsPortalRequest(
+                newsPortalName: request.NewsPortalName,
+                email: request.Email,
+                url: request.Url,
                 cancellationToken: cancellationToken
             );
 
