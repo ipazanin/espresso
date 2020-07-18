@@ -15,6 +15,7 @@ namespace Espresso.Persistence.Database
         public DbSet<ArticleCategory> ArticleCategories { get; set; } = null!;
         public DbSet<ApplicationDownload> ApplicationDownload { get; set; } = null!;
         public DbSet<RssFeedCategory> RssFeedCategory { get; set; } = null!;
+        public DbSet<PushNotification> PushNotifications { get; set; } = null!;
         #endregion
 
         #region Constructors

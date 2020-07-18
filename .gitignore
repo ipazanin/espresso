@@ -10,6 +10,7 @@ docker-compose-local.yml
 docker-compose-development.yml
 docker-compose-database.yml
 TestReports
+firebase-key.json
 
 # User-specific files
 *.rsuser

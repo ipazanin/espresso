@@ -404,25 +404,48 @@ namespace Espresso.WebApi
                 .HasApiVersion(_configuration.EspressoWebApiVersion_1_2);
             #endregion
 
-            #region ArticlesNotificationTrigger Controller
+            #region Notifictions Controller
+
+            #region SendLatestArticlesNotificition
             apiVersioningOptions
                 .Conventions
-                .Controller<ArticlesNotificationTrigerController>()
-                .Action(typeof(ArticlesNotificationTrigerController)
-                .GetMethod(nameof(ArticlesNotificationTrigerController.SendLatestArticlesNotificition))!)
+                .Controller<NotificationsController>()
+                .Action(typeof(NotificationsController)
+                .GetMethod(nameof(NotificationsController.SendLatestArticlesNotificition))!)
                 .HasApiVersion(_configuration.EspressoWebApiCurrentVersion);
             apiVersioningOptions
                 .Conventions
-                .Controller<ArticlesNotificationTrigerController>()
-                .Action(typeof(ArticlesNotificationTrigerController)
-                .GetMethod(nameof(ArticlesNotificationTrigerController.SendLatestArticlesNotificition))!)
+                .Controller<NotificationsController>()
+                .Action(typeof(NotificationsController)
+                .GetMethod(nameof(NotificationsController.SendLatestArticlesNotificition))!)
                 .HasApiVersion(_configuration.EspressoWebApiVersion_1_3);
             apiVersioningOptions
                 .Conventions
-                .Controller<ArticlesNotificationTrigerController>()
-                .Action(typeof(ArticlesNotificationTrigerController)
-                .GetMethod(nameof(ArticlesNotificationTrigerController.SendLatestArticlesNotificition))!)
+                .Controller<NotificationsController>()
+                .Action(typeof(NotificationsController)
+                .GetMethod(nameof(NotificationsController.SendLatestArticlesNotificition))!)
                 .HasApiVersion(_configuration.EspressoWebApiVersion_1_2);
+
+            #endregion
+
+            #region SendPushNotification   
+            apiVersioningOptions
+                .Conventions
+                .Controller<NotificationsController>()
+                .Action(typeof(NotificationsController)
+                .GetMethod(nameof(NotificationsController.SendPushNotificition))!)
+                .HasApiVersion(_configuration.EspressoWebApiCurrentVersion);
+            #endregion
+
+            #region GetPushNotifications
+            apiVersioningOptions
+                .Conventions
+                .Controller<NotificationsController>()
+                .Action(typeof(NotificationsController)
+                .GetMethod(nameof(NotificationsController.GetPushNotificition))!)
+                .HasApiVersion(_configuration.EspressoWebApiCurrentVersion);
+            #endregion
+
             #endregion
 
             #region Categories Controller

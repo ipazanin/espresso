@@ -25,5 +25,7 @@ namespace Espresso.Common.Enums
         ParserDeleterNewArticlesRequest = 21,
         GetNewNewsPortalsQuery = 22,
         NewSourcesRequest = 23,
+        SendPushNotification = 24,
+        GetPushNotifications = 25
     }
 }
