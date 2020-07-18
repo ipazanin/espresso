@@ -26,6 +26,7 @@ namespace Espresso.Common.Enums
         GetNewNewsPortalsQuery = 22,
         NewSourcesRequest = 23,
         SendPushNotification = 24,
-        GetPushNotifications = 25
+        GetPushNotifications = 25,
+        HideArticle = 26,
     }
 }

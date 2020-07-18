@@ -76,6 +76,11 @@ namespace Espresso.Domain.Entities
                     newsPortal.CreatedAt > (DateTime.UtcNow - DateTimeConstants.MaxAgeOfNewNewsPortal)
                 );
         }
+
+        public static Expression<Func<NewsPortal, object>> GetOrderByExpression()
+        {
+            return newsPortal => newsPortal.Name;
+        }
         #endregion
     }
 }

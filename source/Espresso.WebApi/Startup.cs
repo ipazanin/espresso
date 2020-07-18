@@ -327,6 +327,8 @@ namespace Espresso.WebApi
             #endregion
 
             #region Articles Controller
+
+            #region GetCategoryArticles
             apiVersioningOptions
                 .Conventions
                 .Controller<ArticlesController>()
@@ -345,7 +347,9 @@ namespace Espresso.WebApi
                 .Action(typeof(ArticlesController)
                 .GetMethod(nameof(ArticlesController.GetCategoryArticles))!)
                 .HasApiVersion(_configuration.EspressoWebApiVersion_1_2);
+            #endregion
 
+            #region GetLatestArticles
             apiVersioningOptions
                 .Conventions
                 .Controller<ArticlesController>()
@@ -364,7 +368,9 @@ namespace Espresso.WebApi
                 .Action(typeof(ArticlesController)
                 .GetMethod(nameof(ArticlesController.GetLatestArticles))!)
                 .HasApiVersion(_configuration.EspressoWebApiVersion_1_2);
+            #endregion
 
+            #region GetTrendingArticles
             apiVersioningOptions
                 .Conventions
                 .Controller<ArticlesController>()
@@ -383,7 +389,9 @@ namespace Espresso.WebApi
                 .Action(typeof(ArticlesController)
                 .GetMethod(nameof(ArticlesController.GetTrendingArticles))!)
                 .HasApiVersion(_configuration.EspressoWebApiVersion_1_2);
+            #endregion
 
+            #region IncrementArticleScore
             apiVersioningOptions
                 .Conventions
                 .Controller<ArticlesController>()
@@ -404,7 +412,18 @@ namespace Espresso.WebApi
                 .HasApiVersion(_configuration.EspressoWebApiVersion_1_2);
             #endregion
 
-            #region Notifictions Controller
+            #region HideArticles
+            apiVersioningOptions
+                .Conventions
+                .Controller<ArticlesController>()
+                .Action(typeof(ArticlesController)
+                .GetMethod(nameof(ArticlesController.HideArticle))!)
+                .HasApiVersion(_configuration.EspressoWebApiCurrentVersion);
+            #endregion
+
+            #endregion
+
+            #region Notifications Controller
 
             #region SendLatestArticlesNotificition
             apiVersioningOptions

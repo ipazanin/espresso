@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.CQRS.Articles.Commands.CalculateTrendingScore;
+using Espresso.Application.CQRS.Articles.Commands.HideArticle;
 using Espresso.Application.CQRS.Articles.Commands.IncrementTrendingArticleScore;
 using Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles;
 using Espresso.Application.CQRS.Articles.Queries.GetLatestArticles;
@@ -27,7 +28,12 @@ namespace Espresso.WebApi.Controllers
         /// </summary>
         /// <param name="mediator"></param>
         /// <param name="webApiConfiguration"></param>
-        public ArticlesController(IMediator mediator, IWebApiConfiguration webApiConfiguration) : base(mediator, webApiConfiguration)
+        public ArticlesController(
+            IMediator mediator,
+            IWebApiConfiguration webApiConfiguration
+        ) : base(
+            mediator, webApiConfiguration
+        )
         {
         }
 
@@ -45,8 +51,8 @@ namespace Espresso.WebApi.Controllers
         /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
         /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored</param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <returns>Response object containing articles from provided category</returns>
-        /// <response code="200">Response object containing articles from popular news portals</response>
+        /// <returns>Response object containing articles</returns>
+        /// <response code="200">Response object containing articles</response>
         /// <response code="400">If <paramref name="take"/> is not between 0 and 100 or <paramref name="skip"/> is lower than 0</response>
         /// <response code="401">If API Key is invalid or missing</response>
         /// <response code="500">If unhandled exception occurred</response>
@@ -96,8 +102,8 @@ namespace Espresso.WebApi.Controllers
         /// <param name="categoryId">Category Id</param>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
-        /// <returns>Response object containing articles from provided category</returns>
-        /// <response code="200">Response object containing articles from provided category</response>
+        /// <returns>Response object containing articles</returns>
+        /// <response code="200">Response object containing articles</response>
         /// <response code="400">If <paramref name="take"/> is not between and 100 or <paramref name="skip"/> is lower than 0 or <paramref name="categoryId"/> is not valid category id</response>
         /// <response code="401">If API Key is invalid or missing</response>
         /// <response code="500">If unhandled exception occurred</response>
@@ -145,8 +151,8 @@ namespace Espresso.WebApi.Controllers
         /// <param name="take">Number of articles</param>
         /// <param name="skip">Number of skipped articles</param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <returns>Response object containing articles from provided category</returns>
-        /// <response code="200">Response object containing articles from popular news portals</response>
+        /// <returns>Response object containing articles</returns>
+        /// <response code="200">Response object containing articles</response>
         /// <response code="400">If <paramref name="take"/> is not between 0 and 100 or <paramref name="skip"/> is lower than 0</response>
         /// <response code="401">If API Key is invalid or missing</response>
         /// <response code="500">If unhandled exception occurred</response>
@@ -190,7 +196,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="articleId">Article Id</param>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <returns></returns>
-        /// <response code="200">Response object containing articles from provided category</response>
+        /// <response code="200">When operation is sucessfull</response>
         /// <response code="400">If <paramref name="articleId"/> is not valid Guid</response>
         /// <response code="401">If API Key is invalid or missing</response>
         /// <response code="500">If unhandled exception occurred</response>
@@ -209,7 +215,7 @@ namespace Espresso.WebApi.Controllers
         {
             await Mediator.Send(
                 request: new IncrementNumberOfClicksCommand(
-                    articleId,
+                    id: articleId,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     version: basicInformationsHeaderParameters.Version,
@@ -225,7 +231,46 @@ namespace Espresso.WebApi.Controllers
                     version: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType
                 ),
-                cancellationToken: cancellationToken).ConfigureAwait(false);
+                cancellationToken: cancellationToken
+            ).ConfigureAwait(false);
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Hide article with <paramref name="articleId"/>
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <param name="articleId">Article Id</param>
+        /// <param name="basicInformationsHeaderParameters">Basic App Informations</param>
+        /// <returns></returns>
+        /// <response code="200">When operation is sucessfull</response>
+        /// <response code="400">If <paramref name="articleId"/> is not valid Guid</response>
+        /// <response code="401">If API Key is invalid or missing</response>
+        /// <response code="500">If unhandled exception occurred</response>
+        [Produces(MimeTypeConstants.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpDelete]
+        [Route("api/articles/{articleId}")]
+        public async Task<IActionResult> HideArticle(
+            [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
+            [Required] Guid articleId,
+            CancellationToken cancellationToken
+        )
+        {
+            await Mediator.Send(
+                request: new HideArticleCommand(
+                    articleId: articleId,
+                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    version: basicInformationsHeaderParameters.Version,
+                    deviceType: basicInformationsHeaderParameters.DeviceType
+                ),
+                cancellationToken: cancellationToken
+            ).ConfigureAwait(false);
 
             return Ok();
         }

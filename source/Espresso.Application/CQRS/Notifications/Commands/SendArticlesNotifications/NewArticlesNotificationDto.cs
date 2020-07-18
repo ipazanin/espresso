@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Espresso.Application.CQRS.Notifications.Queries.SendArticlesNotifications
+namespace Espresso.Application.CQRS.Notifications.Commands.SendArticlesNotifications
 {
     public class NewArticlesNotificationDto
     {

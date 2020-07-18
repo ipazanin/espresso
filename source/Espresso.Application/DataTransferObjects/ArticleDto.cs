@@ -49,6 +49,8 @@ namespace Espresso.Application.DataTransferObjects
 
         public int RssFeedId { get; set; }
 
+        public bool IsHidden { get; set; }
+
         /// <summary>
         /// News Portal ID
         /// </summary>
@@ -86,6 +88,7 @@ namespace Espresso.Application.DataTransferObjects
             int numberOfClicks,
             string articleId,
             string summary,
+            bool isHidden,
             int rssFeedId,
             NewsPortalDto newsPortal,
             IEnumerable<CategoryDto> categories
@@ -102,6 +105,7 @@ namespace Espresso.Application.DataTransferObjects
             NumberOfClicks = numberOfClicks;
             ArticleId = articleId;
             Summary = summary;
+            IsHidden = isHidden;
             RssFeedId = rssFeedId;
             NewsPortal = newsPortal;
             Categories = categories;
@@ -128,7 +132,8 @@ namespace Espresso.Application.DataTransferObjects
             NumberOfClicks = article.NumberOfClicks,
             ArticleId = article.ArticleId,
             Summary = article.Summary,
-            RssFeedId = article.RssFeedId
+            RssFeedId = article.RssFeedId,
+            IsHidden = article.IsHidden,
         };
 
         public static Func<ArticleDto, Article> ToArticleProjection => article =>
@@ -169,6 +174,7 @@ namespace Espresso.Application.DataTransferObjects
                 publishDateTime: article.PublishDateTime,
                 numberOfClicks: article.NumberOfClicks,
                 trendingScore: article.TrendingScore,
+                isHidden: article.IsHidden,
                 newsPortalId: article.NewsPortal.Id,
                 rssFeedId: article.RssFeedId,
                 articleCategories: articleCategories,
@@ -234,6 +240,7 @@ namespace Espresso.Application.DataTransferObjects
                 publishDateTime: PublishDateTime,
                 numberOfClicks: NumberOfClicks,
                 trendingScore: TrendingScore,
+                isHidden: IsHidden,
                 newsPortalId: NewsPortal.Id,
                 rssFeedId: RssFeedId,
                 articleCategories: articleCategories,
@@ -281,6 +288,7 @@ namespace Espresso.Application.DataTransferObjects
                 publishDateTime: PublishDateTime,
                 numberOfClicks: NumberOfClicks,
                 trendingScore: TrendingScore,
+                isHidden: IsHidden,
                 newsPortalId: NewsPortal.Id,
                 rssFeedId: RssFeedId,
                 articleCategories: articleCategories,
