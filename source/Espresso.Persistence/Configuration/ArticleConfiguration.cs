@@ -14,6 +14,7 @@ namespace Espresso.Persistence.Configuration
             builder.Property(article => article.Title).HasMaxLength(Article.TitleMaxLength).IsRequired(Article.TitleIsRequired);
             builder.Property(article => article.Url).HasMaxLength(Article.UrlMaxLength).IsRequired(Article.UrlIsRequired);
             builder.Property(article => article.Title).HasMaxLength(Article.ImageUrlMaxLength).IsRequired(Article.ImageUrlIsRequired);
+            builder.Property(article => article.IsHidden).HasDefaultValue(Article.IsHiddenDefaultValue);
 
             builder.Ignore(article => article.CreateArticleCategories);
             builder.Ignore(article => article.DeleteArticleCategories);

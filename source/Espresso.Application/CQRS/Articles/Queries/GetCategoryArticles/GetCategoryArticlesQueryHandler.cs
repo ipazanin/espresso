@@ -12,14 +12,14 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
 {
-    public class GetCategoryArticleQueryHandler : IRequestHandler<GetCategoryArticlesQuery, GetCategoryArticlesQueryResponse>
+    public class GetCategoryArticlesQueryHandler : IRequestHandler<GetCategoryArticlesQuery, GetCategoryArticlesQueryResponse>
     {
         #region Fields
         private readonly IMemoryCache _memoryCache;
         #endregion
 
         #region Contructors
-        public GetCategoryArticleQueryHandler(
+        public GetCategoryArticlesQueryHandler(
             IMemoryCache memoryCache
         )
         {
@@ -35,19 +35,21 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
             );
 
             var articleDtos = articles
-                .OrderByDescending(article => article.PublishDateTime)
+                .OrderByDescending(keySelector: Article.GetArticleOrderByDescendingExpression().Compile())
                 .Where(
-                    predicate: Article.GetCategoryArticleExpression(
+                    predicate: Article.GetCategoryArticlePredicate(
                         categoryId: request.CategoryId,
                         newsPortalIds: request.NewsPortalIds
-                    ).
-                    Compile()
+                    ).Compile()
                 )
                 .Skip(request.Skip)
                 .Take(request.Take)
                 .Select(ArticleViewModel.Projection.Compile());
 
-            var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
+            var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
+                key: MemoryCacheConstants.NewsPortalKey
+            );
+
             var newsPortalDtos = newsPortals
                 .Where(
                     NewsPortal.GetIsNewExpression(
@@ -56,7 +58,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
                     )
                     .Compile()
                 )
-                .OrderBy(keySelector: newsPortal => newsPortal.Name)
+                .OrderBy(keySelector: NewsPortal.GetOrderByExpression().Compile())
                 .Select(selector: NewsPortalViewModel.Projection.Compile());
 
             var response = new GetCategoryArticlesQueryResponse(

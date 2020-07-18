@@ -5,9 +5,9 @@ using Espresso.Application.Hubs;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 
-namespace Espresso.Application.CQRS.Notifications.Queries.SendArticlesNotifications
+namespace Espresso.Application.CQRS.Notifications.Commands.SendArticlesNotifications
 {
-    public class SendArticlesNotificationsQueryHandler : IRequestHandler<SendArticlesNotificationsQuery>
+    public class SendArticlesNotificationsCommandHandler : IRequestHandler<SendArticlesNotificationsCommand>
     {
         #region Constants
         public const string LatestArticlesClientMethodName = "GetNewArticles";
@@ -18,7 +18,7 @@ namespace Espresso.Application.CQRS.Notifications.Queries.SendArticlesNotificati
         #endregion
 
         #region Constructors
-        public SendArticlesNotificationsQueryHandler(
+        public SendArticlesNotificationsCommandHandler(
             IHubContext<ArticlesNotificationHub> hubContext
         )
         {
@@ -27,7 +27,7 @@ namespace Espresso.Application.CQRS.Notifications.Queries.SendArticlesNotificati
         #endregion
 
         #region Methods
-        public async Task<Unit> Handle(SendArticlesNotificationsQuery request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(SendArticlesNotificationsCommand request, CancellationToken cancellationToken)
         {
             if (!request.CreatedArticles.Any())
             {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-
+using Espresso.Common.Constants;
 using Espresso.Domain.Infrastructure;
 
 namespace Espresso.Domain.Entities
@@ -22,6 +22,8 @@ namespace Espresso.Domain.Entities
         public const bool TitleIsRequired = true;
         public const bool UrlIsRequired = true;
         public const bool ImageUrlIsRequired = false;
+
+        public const bool IsHiddenDefaultValue = false;
         #endregion
 
         #region Properties
@@ -39,7 +41,7 @@ namespace Espresso.Domain.Entities
 
         /// <summary>
         /// Date Time when article was created in Espresso App
-        /// </summary>
+        /// </summary> 
         public DateTime CreateDateTime { get; private set; }
 
         public DateTime UpdateDateTime { get; private set; }
@@ -50,6 +52,8 @@ namespace Espresso.Domain.Entities
 
         public decimal TrendingScore { get; private set; }
 
+        public bool IsHidden { get; private set; }
+
         public int NewsPortalId { get; private set; }
 
         public NewsPortal? NewsPortal { get; private set; }
@@ -59,9 +63,6 @@ namespace Espresso.Domain.Entities
         public RssFeed? RssFeed { get; private set; }
 
         public ICollection<ArticleCategory> ArticleCategories { get; private set; } = new List<ArticleCategory>();
-
-        public static Expression<Func<Article, Article>> Projection => article => article;
-
         #region NotMapped In Database
         public IEnumerable<ArticleCategory> CreateArticleCategories { get; private set; } = new List<ArticleCategory>();
         public IEnumerable<ArticleCategory> DeleteArticleCategories { get; private set; } = new List<ArticleCategory>();
@@ -93,6 +94,7 @@ namespace Espresso.Domain.Entities
             DateTime publishDateTime,
             int numberOfClicks,
             decimal trendingScore,
+            bool isHidden,
             int newsPortalId,
             int rssFeedId,
             IEnumerable<ArticleCategory>? articleCategories,
@@ -111,6 +113,7 @@ namespace Espresso.Domain.Entities
             PublishDateTime = publishDateTime;
             NumberOfClicks = numberOfClicks;
             TrendingScore = trendingScore;
+            IsHidden = isHidden;
             NewsPortalId = newsPortalId;
             RssFeedId = rssFeedId;
             ArticleCategories = articleCategories?.ToList() ?? ArticleCategories;
@@ -120,9 +123,20 @@ namespace Espresso.Domain.Entities
         #endregion
 
         #region Methods
+        /// <summary>
+        /// 
+        /// </summary>
         public void IncrementNumberOfClicks()
         {
             NumberOfClicks++;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void HideArticle()
+        {
+            IsHidden = true;
         }
 
         /// <summary>
@@ -202,13 +216,18 @@ namespace Espresso.Domain.Entities
             return shouldUpdate;
         }
 
-        public void UpdateNewsPortalAndArticlecategories(NewsPortal newsPortal, IEnumerable<ArticleCategory> articleCategories)
+        public void UpdateNewsPortalAndArticlecategories(
+            NewsPortal newsPortal,
+            IEnumerable<ArticleCategory> articleCategories
+        )
         {
             NewsPortal = newsPortal;
             ArticleCategories = articleCategories.ToList();
         }
 
-        public void UpdateArticleCategories(IEnumerable<ArticleCategory> articleCategories)
+        public void UpdateArticleCategories(
+            IEnumerable<ArticleCategory> articleCategories
+        )
         {
             ArticleCategories = ArticleCategories
                 .Union(articleCategories.Select(articleCategory => new ArticleCategory(
@@ -221,29 +240,48 @@ namespace Espresso.Domain.Entities
                 .ToList();
         }
 
-        public static Expression<Func<Article, bool>> GetLatestArticleExpression(
+        #region Expressions
+        public static Expression<Func<Article, bool>> GetLatestArticlePredicate(
             IEnumerable<int>? categoryIds,
             IEnumerable<int>? newsPortalIds
         )
         {
-            return article =>
+            return article => !article.IsHidden &&
                 (categoryIds == null || article
                     .ArticleCategories
                     .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
                 (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId));
         }
 
-        public static Expression<Func<Article, bool>> GetCategoryArticleExpression(
+        public static Expression<Func<Article, bool>> GetCategoryArticlePredicate(
             int categoryId,
             IEnumerable<int>? newsPortalIds
         )
         {
-            return article =>
-                        article
-                            .ArticleCategories
+            return article => !article.IsHidden &&
+                        article.ArticleCategories
                             .Any(articleCategory => articleCategory.CategoryId.Equals(categoryId)) &&
                         (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId));
         }
+
+        public static Expression<Func<Article, bool>> GetTrendingArticlePredicate()
+        {
+            var maxTrendingDateTime = DateTime.UtcNow - DateTimeConstants.MaxAgeOfTrendingArticle;
+
+            return article => !article.IsHidden && article.PublishDateTime > maxTrendingDateTime;
+        }
+
+        public static Expression<Func<Article, object>> GetTrendingArticleOrderByDescendingExpression()
+        {
+            return article => article.TrendingScore;
+        }
+
+        public static Expression<Func<Article, object>> GetArticleOrderByDescendingExpression()
+        {
+            return article => article.PublishDateTime;
+        }
+        #endregion
+
         #endregion
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Common.Configuration;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using MediatR;
@@ -29,15 +28,14 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
         #region Methods
         public Task<GetTrendingArticlesQueryResponse> Handle(GetTrendingArticlesQuery request, CancellationToken cancellationToken)
         {
-            var maxTrendingDateTime = DateTime.UtcNow - DateTimeConstants.MaxAgeOfTrendingArticle;
 
             var articles = _memoryCache.Get<IEnumerable<Article>>(
                 key: MemoryCacheConstants.ArticleKey
             );
 
             var articleDtos = articles
-                .Where(predicate: article => article.PublishDateTime > maxTrendingDateTime)
-                .OrderByDescending(article => article.TrendingScore)
+                .Where(predicate: Article.GetTrendingArticlePredicate().Compile())
+                .OrderByDescending(keySelector: Article.GetTrendingArticleOrderByDescendingExpression().Compile())
                 .Skip(request.Skip)
                 .Take(request.Take)
                 .Select(ArticleTrendingViewModel.Projection.Compile());

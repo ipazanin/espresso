@@ -36,19 +36,21 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
             );
 
             var articleDtos = articles
-                .OrderByDescending(article => article.PublishDateTime)
+                .OrderByDescending(keySelector: Article.GetArticleOrderByDescendingExpression().Compile())
                 .Where(
-                    predicate: Article.GetLatestArticleExpression(
+                    predicate: Article.GetLatestArticlePredicate(
                         categoryIds: request.CategoryIds,
                         newsPortalIds: request.NewsPortalIds
-                    )
-                    .Compile()
+                    ).Compile()
                 )
                 .Skip(request.Skip)
                 .Take(request.Take)
                 .Select(ArticleViewModel.Projection.Compile());
 
-            var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
+            var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
+                key: MemoryCacheConstants.NewsPortalKey
+            );
+
             var newsPortalDtos = newsPortals
                 .Where(
                     NewsPortal.GetIsNewExpression(
@@ -57,7 +59,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
                     )
                     .Compile()
                 )
-                .OrderBy(keySelector: newsPortal => newsPortal.Name)
+                .OrderBy(keySelector: NewsPortal.GetOrderByExpression().Compile())
                 .Select(selector: NewsPortalViewModel.Projection.Compile());
 
             var response = new GetLatestArticlesQueryResponse(

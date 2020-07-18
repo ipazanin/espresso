@@ -51,6 +51,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.CalculateTrendingScore
                 publishDateTime: article.PublishDateTime,
                 numberOfClicks: article.NumberOfClicks,
                 trendingScore: trendingScoreUtility.CalculateTrendingScore(article.NumberOfClicks, article.PublishDateTime),
+                isHidden: article.IsHidden,
                 newsPortalId: article.NewsPortalId,
                 rssFeedId: article.RssFeedId,
                 articleCategories: article.ArticleCategories,

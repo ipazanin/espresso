@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Espresso.Application.CQRS.Articles.Commands.CalculateTrendingScore;
 using Espresso.Application.CQRS.Articles.Commands.UpdateInMemoryArticles;
-using Espresso.Application.CQRS.Notifications.Queries.SendArticlesNotifications;
+using Espresso.Application.CQRS.Notifications.Commands.SendArticlesNotifications;
 using Espresso.Application.DataTransferObjects;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Configuration;
@@ -11,11 +11,6 @@ using Espresso.WebApi.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using FirebaseAdmin;
-using FirebaseAdmin.Messaging;
-using Google.Apis.Auth.OAuth2;
-using System;
-using System.IO;
 using Espresso.WebApi.RequestObject;
 using Espresso.Application.CQRS.Notifications.Commands.SendPushNotification;
 using Espresso.Application.CQRS.Notifications.Queries.GetPushNotifications;
@@ -80,7 +75,7 @@ namespace Espresso.WebApi.Controllers
             ).ConfigureAwait(false);
 
             await Mediator.Send(
-                request: new SendArticlesNotificationsQuery(
+                request: new SendArticlesNotificationsCommand(
                     articlesRequest.CreatedArticles,
                     articlesRequest.UpdatedArticles,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,

@@ -6,11 +6,11 @@ using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using MediatR;
 using Espresso.Common.Enums;
 
-namespace Espresso.Application.CQRS.Notifications.Queries.SendArticlesNotifications
+namespace Espresso.Application.CQRS.Notifications.Commands.SendArticlesNotifications
 {
-    public class SendArticlesNotificationsQuery : Request<Unit>
+    public class SendArticlesNotificationsCommand : Request<Unit>
     {
-        public SendArticlesNotificationsQuery(
+        public SendArticlesNotificationsCommand(
             IEnumerable<ArticleDto> createdArticles,
             IEnumerable<ArticleDto> updatedArticles,
             string currentEspressoWebApiVersion,
