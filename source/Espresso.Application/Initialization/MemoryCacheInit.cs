@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Espresso.Common.Configuration;
@@ -9,6 +11,8 @@ using Espresso.DataAccessLayer.IRepository;
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -19,6 +23,11 @@ namespace Espresso.Application.Initialization
     /// </summary>
     public class MemoryCacheInit : IMemoryCacheInit
     {
+        #region Constants
+        private const string ConfigurationFileName = "firebase-key.json";
+
+        #endregion
+
         #region Fileds
         private readonly IMemoryCache _memoryCache;
         private readonly IArticleCategoryRepository _articleCategoryRepository;
@@ -56,9 +65,11 @@ namespace Espresso.Application.Initialization
         }
         #endregion
 
-        #region Methods
+        #region Public Methods
         public async Task InitWebApi()
         {
+            InitializeFireBase();
+
             await _context.Database.MigrateAsync();
 
             var stopwatch = Stopwatch.StartNew();
@@ -276,6 +287,21 @@ namespace Espresso.Application.Initialization
                 articlesCount: articlesToAdd.Count(),
                 rssFeedCount: rssFeeds.Count
             );
+        }
+        #endregion
+
+        #region Private Methods
+        private void InitializeFireBase()
+        {
+            FirebaseApp.Create(new AppOptions()
+            {
+                Credential = GoogleCredential.FromFile(
+                path: Path.Combine(
+                    path1: AppDomain.CurrentDomain.BaseDirectory ?? "",
+                    path2: ConfigurationFileName
+                )
+            ),
+            });
         }
         #endregion
     }
