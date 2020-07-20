@@ -25,7 +25,7 @@ namespace Espresso.Application.CQRS.Notifications.Queries.GetPushNotifications
         {
             var pushNotifications = await _espressoDatabaseContext
                 .PushNotifications
-                .OrderBy(keySelector: PushNotification.GetOrderByDescendingExpression())
+                .OrderByDescending(keySelector: PushNotification.GetOrderByDescendingExpression())
                 .Skip(count: request.Skip)
                 .Take(count: request.Take)
                 .Select(selector: PushNotificationDto.GetProjection())
