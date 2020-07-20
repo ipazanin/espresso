@@ -1,6 +1,7 @@
 
 using System;
 using System.Linq.Expressions;
+using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 
 namespace Espresso.Application.CQRS.Notifications.Queries.GetPushNotifications
@@ -13,7 +14,7 @@ namespace Espresso.Application.CQRS.Notifications.Queries.GetPushNotifications
         public string Topic { get; private set; }
         public string ArticleUrl { get; private set; }
         public bool IsSoundEnabled { get; private set; }
-        public DateTime CreatedAt { get; private set; }
+        public string CreatedAt { get; private set; }
 
         private PushNotificationDto()
         {
@@ -22,6 +23,7 @@ namespace Espresso.Application.CQRS.Notifications.Queries.GetPushNotifications
             Message = null!;
             Topic = null!;
             ArticleUrl = null!;
+            CreatedAt = null!;
         }
 
         public static Expression<Func<PushNotification, PushNotificationDto>> GetProjection()
@@ -34,7 +36,7 @@ namespace Espresso.Application.CQRS.Notifications.Queries.GetPushNotifications
                 Topic = pushNotification.Topic,
                 ArticleUrl = pushNotification.ArticleUrl,
                 IsSoundEnabled = pushNotification.IsSoundEnabled,
-                CreatedAt = pushNotification.CreatedAt
+                CreatedAt = pushNotification.CreatedAt.ToString(DateTimeConstants.MobileAppDateTimeFormat)
             };
         }
     }
