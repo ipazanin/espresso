@@ -9,7 +9,8 @@ using MediatR;
 
 namespace Espresso.Application.Infrastructure
 {
-    public class LoggerPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public class LoggerPipelineBehavior<TRequest, TResponse> :
+        IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
     {
         #region Fields
         private readonly Stopwatch _stopWatch;

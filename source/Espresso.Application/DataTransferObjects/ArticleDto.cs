@@ -113,79 +113,82 @@ namespace Espresso.Application.DataTransferObjects
 
         #endregion
 
-        #region Projections
-        public static Expression<Func<Article, ArticleDto>> Projection => article => new ArticleDto
-        {
-            Id = article.Id,
-            Title = article.Title,
-            ImageUrl = article.ImageUrl,
-            Url = article.Url,
-            PublishDateTime = article.PublishDateTime,
-            CreateDateTime = article.CreateDateTime,
-            UpdateDateTime = article.UpdateDateTime,
-            NewsPortal = NewsPortalDto.Projection.Compile().Invoke(article.NewsPortal!),
-            Categories = article.ArticleCategories
-                .AsQueryable()
-                .Select(articleCategory => articleCategory.Category)
-                .Select(CategoryDto.Projection!),
-            TrendingScore = article.TrendingScore,
-            NumberOfClicks = article.NumberOfClicks,
-            ArticleId = article.ArticleId,
-            Summary = article.Summary,
-            RssFeedId = article.RssFeedId,
-            IsHidden = article.IsHidden,
-        };
-
-        public static Func<ArticleDto, Article> ToArticleProjection => article =>
-        {
-            var articleCategories = article.Categories.Select(category => new ArticleCategory(
-                id: new Guid(),
-                articleId: article.Id,
-                categoryId: category.Id,
-                article: null,
-                category: new Category(
-                    id: category.Id,
-                    name: category.Name,
-                    color: category.Color,
-                    keyWordsRegexPattern: category.KeyWordsRegexPattern,
-                    sortIndex: category.SortIndex
-                )
-            )).ToList();
-
-            var newsPortal = new NewsPortal(
-                id: article.NewsPortal.Id,
-                name: article.NewsPortal.Name,
-                baseUrl: article.NewsPortal.BaseUrl,
-                iconUrl: article.NewsPortal.IconUrl,
-                isNewOverride: article.NewsPortal.IsNewOverride,
-                createdAt: article.NewsPortal.CreatedAt,
-                categoryId: article.NewsPortal.CategoryId
-            );
-
-            var createdArticle = new Article(
-                id: article.Id,
-                articleId: article.ArticleId,
-                url: article.Url,
-                summary: article.Summary,
-                title: article.Title,
-                imageUrl: article.ImageUrl,
-                createDateTime: article.CreateDateTime,
-                updateDateTime: article.UpdateDateTime,
-                publishDateTime: article.PublishDateTime,
-                numberOfClicks: article.NumberOfClicks,
-                trendingScore: article.TrendingScore,
-                isHidden: article.IsHidden,
-                newsPortalId: article.NewsPortal.Id,
-                rssFeedId: article.RssFeedId,
-                articleCategories: articleCategories,
-                newsPortal: newsPortal,
-                rssFeed: null
-            );
-            return createdArticle;
-        };
-        #endregion
-
         #region Methods
+        public static Expression<Func<Article, ArticleDto>> GetProjection()
+        {
+            return article => new ArticleDto
+            {
+                Id = article.Id,
+                Title = article.Title,
+                ImageUrl = article.ImageUrl,
+                Url = article.Url,
+                PublishDateTime = article.PublishDateTime,
+                CreateDateTime = article.CreateDateTime,
+                UpdateDateTime = article.UpdateDateTime,
+                NewsPortal = NewsPortalDto.GetProjection().Compile().Invoke(article.NewsPortal!),
+                Categories = article.ArticleCategories
+                    .Select(articleCategory => articleCategory.Category)
+                    .Select(CategoryDto.GetProjection().Compile()!),
+                TrendingScore = article.TrendingScore,
+                NumberOfClicks = article.NumberOfClicks,
+                ArticleId = article.ArticleId,
+                Summary = article.Summary,
+                RssFeedId = article.RssFeedId,
+                IsHidden = article.IsHidden,
+            };
+        }
+
+        public static Func<ArticleDto, Article> GetToArticleProjection()
+        {
+            return article =>
+            {
+                var articleCategories = article.Categories.Select(category => new ArticleCategory(
+                    id: new Guid(),
+                    articleId: article.Id,
+                    categoryId: category.Id,
+                    article: null,
+                    category: new Category(
+                        id: category.Id,
+                        name: category.Name,
+                        color: category.Color,
+                        keyWordsRegexPattern: category.KeyWordsRegexPattern,
+                        sortIndex: category.SortIndex
+                    )
+                )).ToList();
+
+                var newsPortal = new NewsPortal(
+                    id: article.NewsPortal.Id,
+                    name: article.NewsPortal.Name,
+                    baseUrl: article.NewsPortal.BaseUrl,
+                    iconUrl: article.NewsPortal.IconUrl,
+                    isNewOverride: article.NewsPortal.IsNewOverride,
+                    createdAt: article.NewsPortal.CreatedAt,
+                    categoryId: article.NewsPortal.CategoryId
+                );
+
+                var createdArticle = new Article(
+                    id: article.Id,
+                    articleId: article.ArticleId,
+                    url: article.Url,
+                    summary: article.Summary,
+                    title: article.Title,
+                    imageUrl: article.ImageUrl,
+                    createDateTime: article.CreateDateTime,
+                    updateDateTime: article.UpdateDateTime,
+                    publishDateTime: article.PublishDateTime,
+                    numberOfClicks: article.NumberOfClicks,
+                    trendingScore: article.TrendingScore,
+                    isHidden: article.IsHidden,
+                    newsPortalId: article.NewsPortal.Id,
+                    rssFeedId: article.RssFeedId,
+                    articleCategories: articleCategories,
+                    newsPortal: newsPortal,
+                    rssFeed: null
+                );
+                return createdArticle;
+            };
+        }
+
         public override bool Equals(object? obj)
         {
             if (!(obj is ArticleDto other))

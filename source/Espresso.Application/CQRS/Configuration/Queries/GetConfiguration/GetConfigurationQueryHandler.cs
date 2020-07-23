@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.CQRS.Categories.Queries.GetCategories;
+using Espresso.Application.ViewModels.CategoryViewModels;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using MediatR;
@@ -33,12 +33,12 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
 
             var newsPortalDtos = newsPortals
                 .OrderBy(keySelector: newsPortal => newsPortal.Name)
-                .Select(selector: GetConfigurationQueryNewsPortalViewModel.Projection.Compile());
+                .Select(selector: GetConfigurationQueryNewsPortalViewModel.GetProjection().Compile());
 
             var categoryDtos = categories
                 .Where(predicate: Category.GetAllCategoriesExceptGeneralExpression().Compile())
 
-                .Select(selector: CategoryViewModel.Projection.Compile());
+                .Select(selector: CategoryViewModel.GetProjection().Compile());
 
             var groupedNewsPortals = categories
                 .OrderBy(category => category.SortIndex)

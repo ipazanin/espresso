@@ -24,8 +24,6 @@ namespace Espresso.Domain.Entities
         public ICollection<RssFeed> RssFeeds { get; private set; } = new List<RssFeed>();
 
         public ICollection<NewsPortal> NewsPortals { get; private set; } = new List<NewsPortal>();
-
-        public static Expression<Func<Category, Category>> Projection => category => category;
         #endregion
 
         #region Constructors

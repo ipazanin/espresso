@@ -20,17 +20,6 @@ namespace Espresso.Application.DataTransferObjects
         public DateTime CreatedAt { get; set; }
 
         public int CategoryId { get; set; }
-
-        public static Expression<Func<NewsPortal, NewsPortalDto>> Projection => newsPortal => new NewsPortalDto
-        {
-            Id = newsPortal.Id,
-            Name = newsPortal.Name,
-            IconUrl = newsPortal.IconUrl,
-            BaseUrl = newsPortal.BaseUrl,
-            IsNewOverride = newsPortal.IsNewOverride,
-            CreatedAt = newsPortal.CreatedAt,
-            CategoryId = newsPortal.CategoryId,
-        };
         #endregion
 
         #region Constructors
@@ -46,6 +35,20 @@ namespace Espresso.Application.DataTransferObjects
         #endregion
 
         #region Methods
+
+        public static Expression<Func<NewsPortal, NewsPortalDto>> GetProjection()
+        {
+            return newsPortal => new NewsPortalDto
+            {
+                Id = newsPortal.Id,
+                Name = newsPortal.Name,
+                IconUrl = newsPortal.IconUrl,
+                BaseUrl = newsPortal.BaseUrl,
+                IsNewOverride = newsPortal.IsNewOverride,
+                CreatedAt = newsPortal.CreatedAt,
+                CategoryId = newsPortal.CategoryId,
+            };
+        }
         #endregion
     }
 }

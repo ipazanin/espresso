@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Espresso.Application.ViewModels.CategoryViewModels;
+using Espresso.Application.ViewModels.NewsPortalViewModels;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 
-namespace Espresso.Application.CQRS.Articles.Queries.Common
+namespace Espresso.Application.ViewModels.ArticleViewModels
 {
     public class ArticleViewModel
     {
@@ -57,22 +59,25 @@ namespace Espresso.Application.CQRS.Articles.Queries.Common
         }
         #endregion
 
-        #region Projections
-        public static Expression<Func<Article, ArticleViewModel>> Projection => article => new ArticleViewModel
+        #region Methods
+        public static Expression<Func<Article, ArticleViewModel>> GetProjection()
         {
-            Id = article.Id,
-            Title = article.Title,
-            ImageUrl = article.ImageUrl,
-            Url = article.Url,
-            PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.MobileAppDateTimeFormat),
-            NewsPortal = NewsPortalArticleItem.Projection
-                .Compile()
-                .Invoke(article.NewsPortal!),
-            Categories = article.ArticleCategories
-                .AsQueryable()
-                .Select(articleCategory => articleCategory.Category)
-                .Select(CategoryArticleListItem.Projection!)
-        };
+            return article => new ArticleViewModel
+            {
+                Id = article.Id,
+                Title = article.Title,
+                ImageUrl = article.ImageUrl,
+                Url = article.Url,
+                PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.MobileAppDateTimeFormat),
+                NewsPortal = NewsPortalArticleItem.GetProjection()
+                    .Compile()
+                    .Invoke(article.NewsPortal!),
+                Categories = article.ArticleCategories
+                    .AsQueryable()
+                    .Select(articleCategory => articleCategory.Category)
+                    .Select(CategoryArticleListItem.GetProjection()!)
+            };
+        }
         #endregion
     }
 }

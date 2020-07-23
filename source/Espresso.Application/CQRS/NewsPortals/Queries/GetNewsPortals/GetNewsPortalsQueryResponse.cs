@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Espresso.Application.ViewModels.NewsPortalViewModels;
 
 namespace Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals
 {

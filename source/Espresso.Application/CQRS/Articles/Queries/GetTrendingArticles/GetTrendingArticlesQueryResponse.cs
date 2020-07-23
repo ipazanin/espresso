@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Espresso.Application.ViewModels.ArticleViewModels;
 
 namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
 {

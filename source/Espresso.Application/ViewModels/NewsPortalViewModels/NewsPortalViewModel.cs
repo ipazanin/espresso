@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using Espresso.Domain.Entities;
 
-namespace Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals
+namespace Espresso.Application.ViewModels.NewsPortalViewModels
 {
     public class NewsPortalViewModel
     {
@@ -18,13 +18,6 @@ namespace Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals
         public string Name { get; private set; }
 
         public string IconUrl { get; private set; }
-
-        public static Expression<Func<NewsPortal, NewsPortalViewModel>> Projection => newsPortal => new NewsPortalViewModel
-        {
-            Id = newsPortal.Id,
-            Name = newsPortal.Name,
-            IconUrl = newsPortal.IconUrl
-        };
         #endregion
 
         #region Constructors
@@ -36,6 +29,15 @@ namespace Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals
         #endregion
 
         #region Methods
+        public static Expression<Func<NewsPortal, NewsPortalViewModel>> GetProjection()
+        {
+            return newsPortal => new NewsPortalViewModel
+            {
+                Id = newsPortal.Id,
+                Name = newsPortal.Name,
+                IconUrl = newsPortal.IconUrl
+            };
+        }
         #endregion
     }
 }

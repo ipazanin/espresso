@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Espresso.Application.CQRS.Categories.Queries.GetCategories;
+using Espresso.Application.ViewModels.CategoryViewModels;
 
 namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
 {

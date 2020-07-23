@@ -21,8 +21,6 @@ namespace Espresso.Domain.Entities
         public DateTime DownloadedTime { get; private set; }
 
         public DeviceType MobileDeviceType { get; private set; }
-
-        public static Expression<Func<ApplicationDownload, ApplicationDownload>> Projection => applicationDownload => applicationDownload;
         #endregion
 
         #region Constructors

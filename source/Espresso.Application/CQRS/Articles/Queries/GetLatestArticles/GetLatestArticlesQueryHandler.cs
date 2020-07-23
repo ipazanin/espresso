@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.CQRS.Articles.Queries.Common;
-using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
+using Espresso.Application.ViewModels.ArticleViewModels;
+using Espresso.Application.ViewModels.NewsPortalViewModels;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using MediatR;
@@ -45,7 +45,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
                 )
                 .Skip(request.Skip)
                 .Take(request.Take)
-                .Select(ArticleViewModel.Projection.Compile());
+                .Select(ArticleViewModel.GetProjection().Compile());
 
             var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
                 key: MemoryCacheConstants.NewsPortalKey
@@ -60,7 +60,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
                     .Compile()
                 )
                 .OrderBy(keySelector: NewsPortal.GetOrderByExpression().Compile())
-                .Select(selector: NewsPortalViewModel.Projection.Compile());
+                .Select(selector: NewsPortalViewModel.GetProjection().Compile());
 
             var response = new GetLatestArticlesQueryResponse(
                 articles: articleDtos,

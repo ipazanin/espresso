@@ -8,11 +8,11 @@ using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.IServices;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Logging;
 
 namespace Espresso.Application.Infrastructure
 {
-    public class ApplicationLifeTimePipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public class ApplicationLifeTimePipelineBehavior<TRequest, TResponse> :
+        IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
     {
         #region Constants
         private static TimeSpan DeadLockThreshold => TimeSpan.FromMinutes(10);

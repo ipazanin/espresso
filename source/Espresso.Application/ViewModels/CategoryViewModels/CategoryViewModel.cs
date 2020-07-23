@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
 
-namespace Espresso.Application.CQRS.Categories.Queries.GetCategories
+namespace Espresso.Application.ViewModels.CategoryViewModels
 {
     public class CategoryViewModel
     {
@@ -20,12 +20,15 @@ namespace Espresso.Application.CQRS.Categories.Queries.GetCategories
 
         public string Color { get; private set; }
 
-        public static Expression<Func<Category, CategoryViewModel>> Projection => category => new CategoryViewModel
+        public static Expression<Func<Category, CategoryViewModel>> GetProjection()
         {
-            Id = category.Id,
-            Name = category.Name,
-            Color = category.Color
-        };
+            return category => new CategoryViewModel
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Color = category.Color
+            };
+        }
         #endregion
 
         #region Constructors

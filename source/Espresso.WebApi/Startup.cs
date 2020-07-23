@@ -173,6 +173,15 @@ namespace Espresso.WebApi
 
             app.UseHsts();
 
+            // #region  GraphQL
+            // app.UseGraphiQLServer(new GraphQL.Server.Ui.GraphiQL.GraphiQLOptions
+            // {
+            //     GraphiQLPath = "graphql",
+            //     GraphQLEndPoint = "graphql"
+            // });
+            // #endregion
+
+            #region Swagger
             app.UseSwagger();
 
             app.UseSwaggerUI(options =>
@@ -191,6 +200,7 @@ namespace Espresso.WebApi
                 );
                 options.RoutePrefix = "docs";
             });
+            #endregion
 
             app.UseRouting();
             app.UseAuthentication();

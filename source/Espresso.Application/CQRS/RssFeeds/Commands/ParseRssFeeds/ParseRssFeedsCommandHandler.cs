@@ -363,8 +363,8 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
 
             UpdateArticles(articles: updateArticles);
 
-            var createdArticleDtos = createArticles.Select(ArticleDto.Projection.Compile());
-            var updatedArticleDtos = updateArticles.Select(ArticleDto.Projection.Compile());
+            var createdArticleDtos = createArticles.Select(ArticleDto.GetProjection().Compile());
+            var updatedArticleDtos = updateArticles.Select(ArticleDto.GetProjection().Compile());
 
             _memoryCache.Set(
                 key: MemoryCacheConstants.DeadLockLogKey,

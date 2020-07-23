@@ -2,18 +2,16 @@
 using System.Linq.Expressions;
 using Espresso.Domain.Entities;
 
-namespace Espresso.Application.CQRS.Articles.Queries.Common
+namespace Espresso.Application.ViewModels.CategoryViewModels
 {
     public class CategoryArticleListItem
     {
         #region Properties
-
         public int Id { get; private set; }
 
         public string Name { get; private set; }
 
         public string Color { get; private set; }
-
         #endregion
 
         #region Constructors
@@ -34,12 +32,15 @@ namespace Espresso.Application.CQRS.Articles.Queries.Common
         #endregion
 
         #region Projections
-        public static Expression<Func<Category, CategoryArticleListItem>> Projection => category => new CategoryArticleListItem
+        public static Expression<Func<Category, CategoryArticleListItem>> GetProjection()
         {
-            Id = category.Id,
-            Name = category.Name,
-            Color = category.Color
-        };
+            return category => new CategoryArticleListItem
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Color = category.Color
+            };
+        }
         #endregion
 
     }

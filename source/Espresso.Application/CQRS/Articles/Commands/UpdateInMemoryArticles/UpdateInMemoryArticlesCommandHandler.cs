@@ -46,7 +46,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.UpdateInMemoryArticles
         private void CreateArticles(IEnumerable<ArticleDto> createArticles)
         {
             var createArticlesDictionary = createArticles
-                .Select(ArticleDto.ToArticleProjection)
+                .Select(ArticleDto.GetToArticleProjection())
                 .ToDictionary(article => article.Id);
 
             var savedArticles = _memoryCache
@@ -67,7 +67,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.UpdateInMemoryArticles
         private void UpdateArticles(IEnumerable<ArticleDto> updateArticles)
         {
             var articlesToUpdate = updateArticles
-                .Select(ArticleDto.ToArticleProjection);
+                .Select(ArticleDto.GetToArticleProjection());
 
             var savedArticles = _memoryCache
                 .Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey)

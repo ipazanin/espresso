@@ -1,7 +1,6 @@
 {
   "workbench.sideBar.location": "right",
   "workbench.colorTheme": "Visual Studio 2019 Dark",
-  "window.zoomLevel": 0,
   "files.autoSave": "afterDelay",
   "editor.formatOnPaste": true,
   "editor.formatOnType": true,

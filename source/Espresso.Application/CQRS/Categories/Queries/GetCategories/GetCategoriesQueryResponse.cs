@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Espresso.Application.ViewModels.CategoryViewModels;
 
 namespace Espresso.Application.CQRS.Categories.Queries.GetCategories
 {
