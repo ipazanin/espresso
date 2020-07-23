@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Espresso.Application.CQRS.Articles.Queries.Common;
+using Espresso.Application.ViewModels.CategoryViewModels;
+using Espresso.Application.ViewModels.NewsPortalViewModels;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 
-namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
+namespace Espresso.Application.ViewModels.ArticleViewModels
 {
     public class ArticleTrendingViewModel
     {
@@ -65,25 +66,25 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
 
         #endregion
 
-        #region Projections
-
-        public static Expression<Func<Article, ArticleTrendingViewModel>> Projection => article => new ArticleTrendingViewModel
+        #region Methods
+        public static Expression<Func<Article, ArticleTrendingViewModel>> GetProjection()
         {
-            Id = article.Id,
-            Title = article.Title,
-            ImageUrl = article.ImageUrl,
-            Url = article.Url,
-            PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.MobileAppDateTimeFormat),
-            NewsPortal = NewsPortalArticleItem.Projection
-                .Compile()
-                .Invoke(article.NewsPortal!),
-            Categories = article.ArticleCategories
-                .AsQueryable()
-                .Select(articleCategory => articleCategory.Category)
-                .Select(CategoryArticleListItem.Projection!),
-            TrendingScore = (int)article.TrendingScore
-        };
-
+            return article => new ArticleTrendingViewModel
+            {
+                Id = article.Id,
+                Title = article.Title,
+                ImageUrl = article.ImageUrl,
+                Url = article.Url,
+                PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.MobileAppDateTimeFormat),
+                NewsPortal = NewsPortalArticleItem.GetProjection()
+                    .Compile()
+                    .Invoke(article.NewsPortal!),
+                Categories = article.ArticleCategories
+                    .Select(articleCategory => articleCategory.Category)
+                    .Select(CategoryArticleListItem.GetProjection().Compile()!),
+                TrendingScore = (int)article.TrendingScore
+            };
+        }
         #endregion
     }
 }

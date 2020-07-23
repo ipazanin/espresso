@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Espresso.Application.CQRS.Categories.Queries.GetCategories;
+using Espresso.Application.ViewModels.CategoryViewModels;
 using Espresso.Domain.Entities;
 
 namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
@@ -29,7 +29,7 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
         {
             return category => new GetConfigurationQueryNewsPortalCategoryGroupingViewModel
             {
-                Category = CategoryViewModel.Projection.Compile().Invoke(category),
+                Category = CategoryViewModel.GetProjection().Compile().Invoke(category),
                 NewsPortals = newsPortals.Where(newsPortal => newsPortal.CategoryId.Equals(category.Id))
             };
         }

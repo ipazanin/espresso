@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Espresso.Application.CQRS.Articles.Queries.Common;
-using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
+using Espresso.Application.ViewModels.ArticleViewModels;
+using Espresso.Application.ViewModels.NewsPortalViewModels;
 
 namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
 {

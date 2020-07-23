@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using Espresso.Domain.Entities;
 
-namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration_1_3
+namespace Espresso.Application.ViewModels.CategoryViewModels
 {
     public class GetConfigurationQueryCategoryViewModel_1_3
     {

@@ -1,9 +1,8 @@
 using System;
 using System.Linq.Expressions;
-using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 
-namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration_1_3
+namespace Espresso.Application.ViewModels.NewsPortalViewModels
 {
     public class GetConfigurationQueryNewsPortalViewModel_1_3
     {
@@ -20,12 +19,15 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration_1_3
 
         public string IconUrl { get; private set; }
 
-        public static Expression<Func<NewsPortal, GetConfigurationQueryNewsPortalViewModel_1_3>> Projection => newsPortal => new GetConfigurationQueryNewsPortalViewModel_1_3
+        public static Expression<Func<NewsPortal, GetConfigurationQueryNewsPortalViewModel_1_3>> GetProjection()
         {
-            Id = newsPortal.Id,
-            Name = newsPortal.Name,
-            IconUrl = newsPortal.IconUrl,
-        };
+            return newsPortal => new GetConfigurationQueryNewsPortalViewModel_1_3
+            {
+                Id = newsPortal.Id,
+                Name = newsPortal.Name,
+                IconUrl = newsPortal.IconUrl,
+            };
+        }
         #endregion
 
         #region Constructors

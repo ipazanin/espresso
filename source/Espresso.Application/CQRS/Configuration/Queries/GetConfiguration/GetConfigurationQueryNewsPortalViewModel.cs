@@ -24,16 +24,19 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
 
         public int CategoryId { get; private set; }
 
-        public static Expression<Func<NewsPortal, GetConfigurationQueryNewsPortalViewModel>> Projection => newsPortal => new GetConfigurationQueryNewsPortalViewModel
+        public static Expression<Func<NewsPortal, GetConfigurationQueryNewsPortalViewModel>> GetProjection()
         {
-            Id = newsPortal.Id,
-            Name = newsPortal.Name,
-            IconUrl = newsPortal.IconUrl,
-            IsNew = newsPortal.IsNewOverride != null ?
-                newsPortal.IsNewOverride.Value :
-                (newsPortal.CreatedAt > (DateTime.UtcNow - DateTimeConstants.MaxAgeOfNewNewsPortal)),
-            CategoryId = newsPortal.CategoryId,
-        };
+            return newsPortal => new GetConfigurationQueryNewsPortalViewModel
+            {
+                Id = newsPortal.Id,
+                Name = newsPortal.Name,
+                IconUrl = newsPortal.IconUrl,
+                IsNew = newsPortal.IsNewOverride != null ?
+                    newsPortal.IsNewOverride.Value :
+                    (newsPortal.CreatedAt > (DateTime.UtcNow - DateTimeConstants.MaxAgeOfNewNewsPortal)),
+                CategoryId = newsPortal.CategoryId,
+            };
+        }
         #endregion
 
         #region Constructors

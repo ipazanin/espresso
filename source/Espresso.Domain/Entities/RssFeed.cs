@@ -69,8 +69,6 @@ namespace Espresso.Domain.Entities
         #endregion
 
         #region Methods
-        public static Expression<Func<RssFeed, RssFeed>> Projection => rssFeed => rssFeed;
-
         public bool ShouldParse()
         {
             return SkipParseConfiguration?.ShouldParse() != false;
