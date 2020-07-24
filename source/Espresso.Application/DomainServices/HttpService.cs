@@ -1,7 +1,4 @@
-using Espresso.Application.Extensions;
-using Espresso.Common.Constants;
-using Espresso.Domain.IServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -9,6 +6,9 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Espresso.Application.Extensions;
+using Espresso.Common.Constants;
+using Espresso.Domain.IServices;
 
 namespace Espresso.Application.DomainServices
 {

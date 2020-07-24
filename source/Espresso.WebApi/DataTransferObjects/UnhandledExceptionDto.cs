@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Espresso.Common.Constants;
 
 namespace Espresso.WebApi.DataTransferObjects

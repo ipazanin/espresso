@@ -57,6 +57,25 @@ namespace Espresso.Application.ViewModels.ArticleViewModels
             PublishDateTime = null!;
             NewsPortal = null!;
         }
+
+        public ArticleViewModel(
+            Guid id,
+            string url,
+            string title,
+            string? imageUrl,
+            string publishDateTime,
+            NewsPortalArticleItem newsPortal,
+            IEnumerable<CategoryArticleListItem> categories
+        )
+        {
+            Id = id;
+            Url = url;
+            Title = title;
+            ImageUrl = imageUrl;
+            PublishDateTime = publishDateTime;
+            NewsPortal = newsPortal;
+            Categories = categories;
+        }
         #endregion
 
         #region Methods

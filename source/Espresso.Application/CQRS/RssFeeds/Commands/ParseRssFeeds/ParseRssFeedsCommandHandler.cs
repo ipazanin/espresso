@@ -6,23 +6,23 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
 using System.ServiceModel.Syndication;
-using Espresso.Application.DataTransferObjects;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
+using Espresso.Application.DataTransferObjects;
+using Espresso.Common.Configuration;
 using Espresso.Common.Constants;
+using Espresso.Common.Enums;
 using Espresso.DataAccessLayer.IRepository;
-using System.Threading;
-using Espresso.Domain.Enums.NewsPortalEnums;
-using Espresso.Persistence.Database;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.Domain.Enums.NewsPortalEnums;
+using Espresso.Domain.Enums.RssFeedEnums;
+using Espresso.Domain.Extensions;
 using Espresso.Domain.IServices;
+using Espresso.Persistence.Database;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
-using Espresso.Common.Enums;
-using Espresso.Common.Configuration;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
-using Espresso.Domain.Extensions;
-using Espresso.Domain.Enums.RssFeedEnums;
 
 namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
 {

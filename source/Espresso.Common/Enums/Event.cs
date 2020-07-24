@@ -1,4 +1,4 @@
-namespace Espresso.Common.Enums
+﻿namespace Espresso.Common.Enums
 {
     public enum Event
     {

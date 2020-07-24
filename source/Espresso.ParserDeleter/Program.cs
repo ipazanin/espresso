@@ -6,6 +6,7 @@ using Espresso.Application.Infrastructure;
 using Espresso.Application.Initialization;
 using Espresso.Common.Configuration;
 using Espresso.Common.Constants;
+using Espresso.Common.Enums;
 using Espresso.DataAccessLayer.IRepository;
 using Espresso.DataAccessLayer.Repository;
 using Espresso.Domain.IServices;
@@ -21,7 +22,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Espresso.Common.Enums;
 
 namespace Espresso.Workers.ParserDeleter
 {

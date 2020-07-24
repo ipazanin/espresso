@@ -13,6 +13,7 @@
     "docker-build:latest": "docker build --force-rm --no-cache -f ~/Projects/Espresso/espresso-backend/source/Espresso.WebApi/Dockerfile -t ipazanin/espresso-webapi:latest ~/Projects/Espresso/espresso-backend/source && docker push ipazanin/espresso-webapi:latest && docker build --force-rm --no-cache -f ~/Projects/Espresso/espresso-backend/source/Espresso.ParserDeleter/Dockerfile -t ipazanin/espresso-parserdeleter:latest ~/Projects/Espresso/espresso-backend/source && docker push ipazanin/espresso-parserdeleter:latest",
     "migration-add": "export ASPNETCORE_ENVIRONMENT=local-local-db && dotnet ef migrations add -p source/Espresso.Persistence/Espresso.Persistence.csproj -v",
     "migration-remove": "export ASPNETCORE_ENVIRONMENT=local-local-db && dotnet ef migrations remove -p source/Espresso.Persistence/Espresso.Persistence.csproj -v",
+    "refactor": "",
     "restore": "dotnet restore source/Espresso.sln",
     "start-webapi": "dotnet run --project source/Espresso.WebApi/Espresso.WebApi.csproj",
     "start-webapi:watch": "dotnet watch --project source/Espresso.WebApi/Espresso.WebApi.csproj run",

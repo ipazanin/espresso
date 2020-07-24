@@ -1,4 +1,4 @@
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace Espresso.Application.CQRS.Articles.Commands.HideArticle
 {
