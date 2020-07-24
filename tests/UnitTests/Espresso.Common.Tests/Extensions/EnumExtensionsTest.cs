@@ -11,7 +11,7 @@ namespace Espresso.Common.Tests.Extensions
         #region  Methods
 
         #region GetDisplayName
-        [Fact]  
+        [Fact]
         public void GetDisplayName_WithUndefinedEnum_ReturnsUndefinedString()
         {
             #region Arrange
