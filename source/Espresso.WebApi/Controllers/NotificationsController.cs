@@ -3,17 +3,17 @@ using System.Threading.Tasks;
 using Espresso.Application.CQRS.Articles.Commands.CalculateTrendingScore;
 using Espresso.Application.CQRS.Articles.Commands.UpdateInMemoryArticles;
 using Espresso.Application.CQRS.Notifications.Commands.SendArticlesNotifications;
+using Espresso.Application.CQRS.Notifications.Commands.SendPushNotification;
+using Espresso.Application.CQRS.Notifications.Queries.GetPushNotifications;
 using Espresso.Application.DataTransferObjects;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.HeaderParameters;
 using Espresso.WebApi.Infrastructure;
+using Espresso.WebApi.RequestObject;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Espresso.WebApi.RequestObject;
-using Espresso.Application.CQRS.Notifications.Commands.SendPushNotification;
-using Espresso.Application.CQRS.Notifications.Queries.GetPushNotifications;
 
 namespace Espresso.WebApi.Controllers
 {

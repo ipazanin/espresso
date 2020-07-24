@@ -2,8 +2,8 @@
 using System.Linq;
 using Espresso.Application.DataTransferObjects;
 using Espresso.Application.Infrastructure;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Common.Enums;
+using Espresso.Domain.Enums.ApplicationDownloadEnums;
 
 namespace Espresso.Application.CQRS.Articles.Commands.UpdateInMemoryArticles
 {

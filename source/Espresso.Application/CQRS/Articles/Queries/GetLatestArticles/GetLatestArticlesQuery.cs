@@ -2,8 +2,8 @@
 using System.Linq;
 using Espresso.Application.Infrastructure;
 using Espresso.Common.Constants;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Common.Enums;
+using Espresso.Domain.Enums.ApplicationDownloadEnums;
 
 namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
 {

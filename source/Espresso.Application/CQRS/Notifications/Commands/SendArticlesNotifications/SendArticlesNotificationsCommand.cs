@@ -2,9 +2,9 @@
 using System.Linq;
 using Espresso.Application.DataTransferObjects;
 using Espresso.Application.Infrastructure;
+using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using MediatR;
-using Espresso.Common.Enums;
 
 namespace Espresso.Application.CQRS.Notifications.Commands.SendArticlesNotifications
 {

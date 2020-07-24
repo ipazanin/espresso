@@ -8,7 +8,7 @@ NC='\033[0m' # No Color
 
 echo -e "${YELLOW}Running pre commit check...${NC}"
 
-echo -e "${YELLOW}Trying to build tests project...${NC}"
+echo -e "${YELLOW}Building tests project...${NC}"
     
 #Let's speed things up a little bit
 DOTNET_CLI_TELEMETRY_OPTOUT=1
@@ -20,7 +20,7 @@ dotnet build source/Espresso.sln
 # $? is a shell variable which stores the return code from what we just ran
 rc=$?
 if [[ $rc != 0 ]] ; then
-    echo -e "${RED}Failed to build the project, please fix this and push again${NC}"
+    echo -e "${RED}Failed to build the project, please fix this and commit again${NC}"
     echo ""
     exit $rc
 fi
@@ -42,9 +42,25 @@ if [[ $rc != 0 ]] ; then
     exit $rc
 fi
 
+echo -e "${YELLOW}Running formatter...${NC}"
+echo ""
+
+# check formating
+dotnet format --check source/Espresso.sln
+
+# $? is a shell variable which stores the return code from what we just ran
+rc=$?
+if [[ $rc != 0 ]] ; then
+    echo -e "${RED}Invalid formatting, please format and push again${NC}"
+    echo ""
+    exit $rc
+fi
+
 # Everything went OK so we can exit with a zero
 echo -e "${GREEN}Pre commit check passed!${NC}"
 echo ""
+
+
 
 
 exit 0

@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Linq;
-using Espresso.Common.Enums;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.CQRS.Articles.Commands.DeleteOldArticles;
@@ -8,15 +7,16 @@ using Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds;
 using Espresso.Application.DataTransferObjects;
 using Espresso.Application.Initialization;
 using Espresso.Common.Constants;
+using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
-using MediatR;
 using Espresso.Domain.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.Workers.ParserDeleter.Infrastructure;
+using MediatR;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Caching.Memory;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace Espresso.Workers.ParserDeleter
 {

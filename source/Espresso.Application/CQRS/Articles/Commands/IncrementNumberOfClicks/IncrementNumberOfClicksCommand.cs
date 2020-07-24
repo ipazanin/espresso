@@ -1,8 +1,8 @@
 ﻿using System;
 using Espresso.Application.Infrastructure;
+using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using MediatR;
-using Espresso.Common.Enums;
 
 namespace Espresso.Application.CQRS.Articles.Commands.IncrementTrendingArticleScore
 {
