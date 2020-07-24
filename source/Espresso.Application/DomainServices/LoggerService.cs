@@ -1,14 +1,14 @@
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Configuration;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
-using Espresso.Domain.IServices;
 using Espresso.Common.Constants;
-using Espresso.Common.Utilities;
-using Espresso.Domain.Extensions;
 using Espresso.Common.Enums;
+using Espresso.Common.Utilities;
+using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.Domain.Extensions;
+using Espresso.Domain.IServices;
+using Microsoft.Extensions.Logging;
 
 namespace Espresso.Application.DomainServices
 {

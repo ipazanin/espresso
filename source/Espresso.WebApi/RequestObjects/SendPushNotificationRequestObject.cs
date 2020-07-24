@@ -1,4 +1,4 @@
-namespace Espresso.WebApi.RequestObject
+﻿namespace Espresso.WebApi.RequestObject
 {
     /// <summary>
     /// 

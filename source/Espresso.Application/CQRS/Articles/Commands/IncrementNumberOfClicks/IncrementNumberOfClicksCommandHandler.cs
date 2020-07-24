@@ -41,15 +41,15 @@ namespace Espresso.Application.CQRS.Articles.Commands.IncrementTrendingArticleSc
 
             var databaseArticle = await _context.Articles.FindAsync(
                 keyValues: new object?[] { request.Id },
-                cancellationToken: cancellationToken
+                cancellationToken: default
             );
 
             if (databaseArticle != null)
             {
                 databaseArticle.IncrementNumberOfClicks();
                 await _context
-                    .SaveChangesAsync(cancellationToken)
-                    .ConfigureAwait(false);
+                    .SaveChangesAsync(cancellationToken: default)
+                    .ConfigureAwait(continueOnCapturedContext: false);
             }
             else
             {
