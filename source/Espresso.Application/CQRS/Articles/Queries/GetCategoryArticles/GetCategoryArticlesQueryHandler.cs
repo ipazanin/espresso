@@ -51,9 +51,10 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
 
             var newsPortalDtos = newsPortals
                 .Where(
-                    NewsPortal.GetIsNewExpression(
+                    NewsPortal.GetSugestedNewsPortalsPredicate(
                         newsPortalIds: request.NewsPortalIds,
-                        categoryIds: new List<int> { request.CategoryId }
+                        categoryIds: new List<int> { request.CategoryId },
+                        regionId: request.RegionId
                     )
                     .Compile()
                 )

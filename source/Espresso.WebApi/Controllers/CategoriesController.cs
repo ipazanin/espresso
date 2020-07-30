@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using Espresso.Application.CQRS.Categories.Queries.GetCategories;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Configuration;
-using Espresso.WebApi.HeaderParameters;
 using Espresso.WebApi.Infrastructure;
+using Espresso.WebApi.Parameters.HeaderParameters;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -51,8 +51,8 @@ namespace Espresso.WebApi.Controllers
             var categories = await Mediator.Send(
                 request: new GetCategoriesQuery(
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                    espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    version: basicInformationsHeaderParameters.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType
                 ),
                 cancellationToken: cancellationToken

@@ -20,6 +20,8 @@ namespace Espresso.Application.DataTransferObjects
         public DateTime CreatedAt { get; set; }
 
         public int CategoryId { get; set; }
+
+        public int RegionId { get; set; }
         #endregion
 
         #region Constructors
@@ -47,6 +49,7 @@ namespace Espresso.Application.DataTransferObjects
                 IsNewOverride = newsPortal.IsNewOverride,
                 CreatedAt = newsPortal.CreatedAt,
                 CategoryId = newsPortal.CategoryId,
+                RegionId = newsPortal.RegionId
             };
         }
         #endregion

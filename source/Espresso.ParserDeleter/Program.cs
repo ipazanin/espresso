@@ -72,7 +72,7 @@ namespace Espresso.Workers.ParserDeleter
 
                     #region MemoryCache
                     services.AddMemoryCache();
-                    services.AddTransient<IMemoryCacheInit, MemoryCacheInit>();
+                    services.AddTransient<IApplicationInit, ApplicationInit>();
                     #endregion
 
                     #region Http

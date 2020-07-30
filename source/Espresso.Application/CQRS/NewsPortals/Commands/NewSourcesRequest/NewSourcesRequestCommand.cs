@@ -15,17 +15,17 @@ namespace Espresso.Application.CQRS.NewsPortals.Commands.NewSourcesRequest
 
         public NewsSourcesRequestCommand(
             string currentEspressoWebApiVersion,
-            string espressoWebApiVersion,
-            string version,
+            string targetedEspressoWebApiVersion,
+            string consumerVersion,
             DeviceType deviceType,
             string newsPortalName,
             string email,
             string? url
         ) : base(
-            currentEspressoWebApiVersion,
-            espressoWebApiVersion,
-            version,
-            deviceType,
+            currentEspressoWebApiVersion: currentEspressoWebApiVersion,
+            targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
+          consumerVersion: consumerVersion,
+            deviceType: deviceType,
             Event.NewSourcesRequest
         )
         {

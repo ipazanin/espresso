@@ -166,7 +166,7 @@ namespace Espresso.Persistence.Configuration
                 new RssFeedCategory(74, "kultura", urlSegmentIndex: 1, (int)CategoryId.Kultura, (int)RssFeedId.Scena),
                 new RssFeedCategory(75, "televizija", urlSegmentIndex: 1, (int)CategoryId.Show, (int)RssFeedId.Scena),
                 new RssFeedCategory(76, "dogadjanja", urlSegmentIndex: 1, (int)CategoryId.Lifestyle, (int)RssFeedId.Scena),
-                #endregion 
+                #endregion
             };
 
             builder.HasData(rssFeedCategories);

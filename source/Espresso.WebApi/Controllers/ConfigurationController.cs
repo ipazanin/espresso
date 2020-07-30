@@ -6,8 +6,8 @@ using Espresso.Application.CQRS.Configuration.Queries.GetConfiguration_1_3;
 using Espresso.Common.Constants;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Configuration;
-using Espresso.WebApi.HeaderParameters;
 using Espresso.WebApi.Infrastructure;
+using Espresso.WebApi.Parameters.HeaderParameters;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -54,8 +54,8 @@ namespace Espresso.WebApi.Controllers
         {
             var request = new GetConfigurationQuery(
                 currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                version: basicInformationsHeaderParameters.Version,
+                targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                consumerVersion: basicInformationsHeaderParameters.Version,
                 deviceType: basicInformationsHeaderParameters.DeviceType
             );
             var getNewsPortalsQueryResponse = await Mediator.Send(
@@ -90,8 +90,8 @@ namespace Espresso.WebApi.Controllers
         {
             var request = new GetConfigurationQuery_1_3(
                 currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                version: basicInformationsHeaderParameters.Version,
+                targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                consumerVersion: basicInformationsHeaderParameters.Version,
                 deviceType: basicInformationsHeaderParameters.DeviceType
             );
             var getNewsPortalsQueryResponse = await Mediator.Send(
@@ -129,8 +129,8 @@ namespace Espresso.WebApi.Controllers
         {
             var request = new GetConfigurationQuery(
                 currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                espressoWebApiVersion: WebApiConfiguration.EspressoWebApiVersion_1_2.ToString(),
-                version: mobileAppVersion,
+                targetedEspressoWebApiVersion: WebApiConfiguration.EspressoWebApiVersion_1_2.ToString(),
+                consumerVersion: mobileAppVersion,
                 deviceType: mobileDeviceType
             );
 

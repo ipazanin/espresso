@@ -340,6 +340,21 @@ namespace Espresso.Persistence.Configuration
             };
 
             builder.HasData(rssFeeds);
+
+            var localRssFeeds = new List<RssFeed>
+            {
+                #region Dalmacija Danas
+                new RssFeed(
+                    id: (int)RssFeedId.DalmacijaDanas,
+                    url: "https://www.dalmacijadanas.hr/feed/",
+                    newsPortalId: (int)NewsPortalId.DalmacijaDanas,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion
+            };
+
+            builder.HasData(localRssFeeds);
+
         }
 
         private void SeedAmpConfigurations(OwnedNavigationBuilder<RssFeed, AmpConfiguration> ampConfigurationBuilder)
@@ -686,6 +701,15 @@ namespace Espresso.Persistence.Configuration
                 UrlSegmentIndex = 1
             });
             #endregion
+
+            #region Dalmacija Danas
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DalmacijaDanas,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+                UrlSegmentIndex = (int?)null
+            });
+            #endregion
         }
 
         private void SeedImageUrlParseConfiguration(OwnedNavigationBuilder<RssFeed, ImageUrlParseConfiguration> imageUrlParseConfigurationBuilder)
@@ -986,6 +1010,18 @@ namespace Espresso.Persistence.Configuration
                 RssFeedId = (int)RssFeedId.Scena,
                 ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
                 ImgElementXPath = "//div[contains(@class, 'mycontent')]//img",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
+            #region Dalmacija Danas
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DalmacijaDanas,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img",
                 ShouldImageUrlBeWebScraped = false,
                 ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
                 JsonWebScrapePropertyNames = (string?)null

@@ -16,6 +16,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
 
         public int CategoryId { get; }
 
+        public int? RegionId { get; }
+
         public IEnumerable<int>? NewsPortalIds { get; }
         #endregion
 
@@ -25,22 +27,23 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
             int? skip,
             int categoryId,
             string? newsPortalIdsString,
+            int? regionId,
             string currentEspressoWebApiVersion,
-            string espressoWebApiVersion,
-            string version,
+            string targetedEspressoWebApiVersion,
+            string consumerVersion,
             DeviceType deviceType
         ) : base(
-            currentEspressoWebApiVersion,
-            espressoWebApiVersion,
-            version,
-            deviceType,
+            currentEspressoWebApiVersion: currentEspressoWebApiVersion,
+            targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
+            consumerVersion: consumerVersion,
+            deviceType: deviceType,
             Event.GetCategoryArticlesQuery
         )
         {
             Take = take ?? DefaultValueConstants.DefaultTake;
             Skip = skip ?? DefaultValueConstants.DefaultSkip;
             CategoryId = categoryId;
-
+            RegionId = regionId;
             var newsPortalIds = newsPortalIdsString
                 ?.Replace(" ", "")
                 ?.Split(',')

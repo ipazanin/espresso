@@ -6,8 +6,8 @@ using Espresso.Application.CQRS.ApplicationDownloads.Queries.GetApplicationDownl
 using Espresso.Common.Constants;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Configuration;
-using Espresso.WebApi.HeaderParameters;
 using Espresso.WebApi.Infrastructure;
+using Espresso.WebApi.Parameters.HeaderParameters;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -54,8 +54,8 @@ namespace Espresso.WebApi.Controllers
         {
             var command = new CreateApplicationDownloadCommand(
                 currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                version: basicInformationsHeaderParameters.Version,
+                targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                consumerVersion: basicInformationsHeaderParameters.Version,
                 deviceType: basicInformationsHeaderParameters.DeviceType
             );
 
@@ -93,8 +93,8 @@ namespace Espresso.WebApi.Controllers
         {
             var command = new CreateApplicationDownloadCommand(
                 currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                espressoWebApiVersion: WebApiConfiguration.EspressoWebApiVersion_1_2.ToString(),
-                version: mobileAppVersion,
+                targetedEspressoWebApiVersion: WebApiConfiguration.EspressoWebApiVersion_1_2.ToString(),
+                consumerVersion: mobileAppVersion,
                 deviceType: mobileDeviceType
             );
             await Mediator.Send(
@@ -129,8 +129,8 @@ namespace Espresso.WebApi.Controllers
             var response = await Mediator.Send(
                 request: new GetApplicationDownloadStatisticsQuery(
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                    espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    version: basicInformationsHeaderParameters.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType
                 ),
                 cancellationToken: cancellationToken

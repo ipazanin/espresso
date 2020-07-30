@@ -6,12 +6,13 @@ using Espresso.Application.CQRS.Articles.Commands.CalculateTrendingScore;
 using Espresso.Application.CQRS.Articles.Commands.HideArticle;
 using Espresso.Application.CQRS.Articles.Commands.IncrementTrendingArticleScore;
 using Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles;
+using Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles_1_3;
 using Espresso.Application.CQRS.Articles.Queries.GetLatestArticles;
 using Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Configuration;
-using Espresso.WebApi.HeaderParameters;
 using Espresso.WebApi.Infrastructure;
+using Espresso.WebApi.Parameters.HeaderParameters;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -79,14 +80,68 @@ namespace Espresso.WebApi.Controllers
                     newsPortalIdsString: newsPortalIds,
                     categoryIdsString: categoryIds,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                    espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    version: basicInformationsHeaderParameters.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType
                 ),
                 cancellationToken: cancellationToken
             ).ConfigureAwait(false);
 
             return Ok(response);
+        }
+
+        /// <summary>
+        /// Get articles from provided <paramref name="categoryId"/>
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///     Get /api/articles/category?<paramref name="take"/>=1&amp;<paramref name="skip"/>=0
+        /// </remarks>
+        /// <param name="cancellationToken"></param>
+        /// <param name="take">Number of articles</param>
+        /// <param name="skip">Number of skipped articles</param>
+        /// <param name="categoryId">Category Id</param>
+        /// <param name="basicInformationsHeaderParameters"></param>
+        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
+        /// <param name="regionId">Region ID</param>
+        /// <returns>Response object containing articles</returns>
+        /// <response code="200">Response object containing articles</response>
+        /// <response code="400">If <paramref name="take"/> is not between and 100 or <paramref name="skip"/> is lower than 0 or <paramref name="categoryId"/> is not valid category id</response>
+        /// <response code="401">If API Key is invalid or missing</response>
+        /// <response code="500">If unhandled exception occurred</response>
+        [Produces(MimeTypeConstants.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetCategoryArticlesQueryResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpGet]
+        [Route("api/articles/category")]
+        public async Task<IActionResult> GetCategoryArticles(
+            [Required] int categoryId,
+            [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
+            CancellationToken cancellationToken,
+            int take = DefaultValueConstants.DefaultTake,
+            int skip = DefaultValueConstants.DefaultSkip,
+            string? newsPortalIds = null,
+            int? regionId = null
+        )
+        {
+            var articles = await Mediator.Send(
+                request: new GetCategoryArticlesQuery(
+                    take: take,
+                    skip: skip,
+                    categoryId: categoryId,
+                    newsPortalIdsString: newsPortalIds,
+                    regionId: regionId,
+                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
+                    deviceType: basicInformationsHeaderParameters.DeviceType
+                ),
+                cancellationToken: cancellationToken
+            ).ConfigureAwait(false);
+
+            return Ok(articles);
         }
 
         /// <summary>
@@ -114,7 +169,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
         [Route("api/articles/category")]
-        public async Task<IActionResult> GetCategoryArticles(
+        public async Task<IActionResult> GetCategoryArticles_1_3(
             [Required] int categoryId,
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             CancellationToken cancellationToken,
@@ -124,14 +179,14 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var articles = await Mediator.Send(
-                request: new GetCategoryArticlesQuery(
+                request: new GetCategoryArticlesQuery_1_3(
                     take: take,
                     skip: skip,
                     categoryId: categoryId,
                     newsPortalIdsString: newsPortalIds,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                    espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    version: basicInformationsHeaderParameters.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType
                 ),
                 cancellationToken: cancellationToken
@@ -175,8 +230,8 @@ namespace Espresso.WebApi.Controllers
                     take: take,
                     skip: skip,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                    espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    version: basicInformationsHeaderParameters.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType
                 ),
                 cancellationToken: cancellationToken
@@ -217,8 +272,8 @@ namespace Espresso.WebApi.Controllers
                 request: new IncrementNumberOfClicksCommand(
                     id: articleId,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                    espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    version: basicInformationsHeaderParameters.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType
                 ),
                 cancellationToken: cancellationToken
@@ -227,8 +282,8 @@ namespace Espresso.WebApi.Controllers
             await Mediator.Send(
                 request: new CalculateTrendingScoreCommand(
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                    espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    version: basicInformationsHeaderParameters.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType
                 ),
                 cancellationToken: cancellationToken
@@ -265,8 +320,8 @@ namespace Espresso.WebApi.Controllers
                 request: new HideArticleCommand(
                     articleId: articleId,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                    espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    version: basicInformationsHeaderParameters.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType
                 ),
                 cancellationToken: cancellationToken

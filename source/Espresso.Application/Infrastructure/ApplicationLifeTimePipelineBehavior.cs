@@ -62,8 +62,8 @@ namespace Espresso.Application.Infrastructure
             RequestId = (int)(requestBase?.EventIdEnum ?? Event.Undefined);
             RequestParameters = request?.ToString() ?? "";
             WebApiVersion = requestBase?.CurrentEspressoWebApiVersion ?? "";
-            TargetedWebApiVersion = requestBase?.EspressoWebApiVersion ?? "";
-            ConsumerVersion = requestBase?.Version ?? "";
+            TargetedWebApiVersion = requestBase?.TargetedEspressoWebApiVersion ?? "";
+            ConsumerVersion = requestBase?.ConsumerVersion ?? "";
             DeviceType = requestBase?.DeviceType ?? DeviceType.Undefined;
 
             using var timer = new System.Timers.Timer(DeadLockThreshold.TotalMilliseconds);

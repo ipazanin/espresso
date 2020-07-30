@@ -4,6 +4,12 @@ using System.Linq;
 using System.Reflection;
 using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
 using Espresso.Application.DomainServices;
+using Espresso.Application.GraphQl.ApplicationQueries;
+using Espresso.Application.GraphQl.ApplicationQueries.ArticlesQueries;
+using Espresso.Application.GraphQl.ApplicationQueries.ConfigurationQueries;
+using Espresso.Application.GraphQl.ApplicationSchema;
+using Espresso.Application.GraphQl.ApplicationTypes.ArticleTypes;
+using Espresso.Application.GraphQl.ApplicationTypes.ConfigurationTypes;
 using Espresso.Application.Hubs;
 using Espresso.Application.Infrastructure;
 using Espresso.Application.Initialization;
@@ -23,8 +29,12 @@ using Espresso.WebApi.Controllers;
 using Espresso.WebApi.Filters;
 using Espresso.WebApi.Middleware;
 using FluentValidation.AspNetCore;
+using GraphQL;
+using GraphQL.Http;
+using GraphQL.Types;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -78,7 +88,7 @@ namespace Espresso.WebApi
 
             #region MemoryCache
             services.AddMemoryCache();
-            services.AddTransient<IMemoryCacheInit, MemoryCacheInit>();
+            services.AddTransient<IApplicationInit, ApplicationInit>();
             #endregion
 
             #region Validators
@@ -92,11 +102,25 @@ namespace Espresso.WebApi
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ApplicationLifeTimePipelineBehavior<,>));
             #endregion
 
-            #region Web Api
+            #region Web Server
             services.AddHttpClient();
             services.AddControllers();
 
             services.AddApiVersioning(ConfigureApiVersioning);
+
+            services
+                .AddMvc(options =>
+                {
+                    options.Filters.Add(typeof(CustomExceptionFilterAttribute));
+                    options.EnableEndpointRouting = false;
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddFluentValidation(fluentValidatorConfiguration => fluentValidatorConfiguration.RegisterValidatorsFromAssemblyContaining<GetNewsPortalsQueryValidator>());
+
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/build";
+            });
             #endregion
 
             #region Authentification
@@ -113,15 +137,43 @@ namespace Espresso.WebApi
             services.AddHealthChecks();
             #endregion
 
-            #region Fluent Validation
-            services
-                .AddMvc(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-                .AddFluentValidation(fluentValidatorConfiguration => fluentValidatorConfiguration.RegisterValidatorsFromAssemblyContaining<GetNewsPortalsQueryValidator>());
-            #endregion
 
             #region WebSockets
             services.AddSignalR();
+            #endregion
+
+            #region GraphQL
+            services.AddScoped<ISchema, GraphQlSchema>();
+            services.AddScoped<IDependencyResolver>(
+                serviceProvider => new FuncDependencyResolver(serviceProvider.GetRequiredService)
+            );
+            services.AddScoped<IDocumentExecuter, DocumentExecuter>();
+            services.AddScoped<IDocumentWriter, DocumentWriter>();
+
+            services.AddScoped<RootGraphQlQuery>();
+
+            services.AddScoped<GetLatestArticlesGraphQlQuery>();
+            services.AddScoped<GetCategoryArticlesGraphQlQuery>();
+            services.AddScoped<GetTrendingArticlesGraphQlQuery>();
+            services.AddScoped<GetConfigurationGraphQlQuery>();
+            services.AddScoped<IncrementNumberOfClicksGraphQlMutation>();
+
+            services.AddScoped<IGraphQlQuery, GetLatestArticlesGraphQlQuery>();
+            services.AddScoped<IGraphQlQuery, GetCategoryArticlesGraphQlQuery>();
+            services.AddScoped<IGraphQlQuery, GetTrendingArticlesGraphQlQuery>();
+            services.AddScoped<IGraphQlQuery, GetConfigurationGraphQlQuery>();
+            services.AddScoped<IGraphQlQuery, IncrementNumberOfClicksGraphQlMutation>();
+
+            services.AddScoped<GetLatestArticlesQueryResponseType>();
+            services.AddScoped<GetCategoryArticlesQueryResponseType>();
+            services.AddScoped<GetTrendingArticlesQueryResponseType>();
+            services.AddScoped<GetConfigurationQueryResponseType>();
+
+            services.AddScoped<CategoryViewModelWithNewsPortalsType>();
+            services.AddScoped<ArticleViewModelType>();
+            services.AddScoped<ArticleTrendingViewModelType>();
+            services.AddScoped<CategoryViewModelType>();
+            services.AddScoped<NewsPortalViewModelType>();
             #endregion
 
             #region Swagger
@@ -162,7 +214,12 @@ namespace Espresso.WebApi
         /// </summary>
         /// <param name="app"></param>
         /// <param name="memoryCacheInit"></param>
-        public void Configure(IApplicationBuilder app, IMemoryCacheInit memoryCacheInit)
+        /// <param name="env"></param>
+        public void Configure(
+            IApplicationBuilder app,
+            IApplicationInit memoryCacheInit,
+            IWebHostEnvironment env
+        )
         {
             memoryCacheInit.InitWebApi().GetAwaiter().GetResult();
 
@@ -172,14 +229,6 @@ namespace Espresso.WebApi
             });
 
             app.UseHsts();
-
-            #region  GraphQL
-            app.UseGraphiQLServer(new GraphQL.Server.Ui.GraphiQL.GraphiQLOptions
-            {
-                GraphiQLPath = "graphql",
-                GraphQLEndPoint = "graphql"
-            });
-            #endregion
 
             #region Swagger
             app.UseSwagger();
@@ -207,6 +256,24 @@ namespace Espresso.WebApi
             app.UseAuthorization();
 
             app.UseStaticFiles();
+            app.UseSpaStaticFiles();
+            app.UseMvc();
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = Path.Join(env.ContentRootPath, "ClientApp");
+
+                // switch (_configuration.AppEnvironment)
+                // {
+                //     case AppEnvironment.Undefined:
+                //     case AppEnvironment.Dev:
+                //     case AppEnvironment.Prod:
+                //     default:
+                //         break;
+                //     case AppEnvironment.Local:
+                //         spa.UseReactDevelopmentServer(npmScript: "start");
+                //         break;
+                // }
+            });
 
             app.UseEndpoints(endpoints =>
             {
@@ -349,13 +416,13 @@ namespace Espresso.WebApi
                 .Conventions
                 .Controller<ArticlesController>()
                 .Action(typeof(ArticlesController)
-                .GetMethod(nameof(ArticlesController.GetCategoryArticles))!)
+                .GetMethod(nameof(ArticlesController.GetCategoryArticles_1_3))!)
                 .HasApiVersion(_configuration.EspressoWebApiVersion_1_3);
             apiVersioningOptions
                 .Conventions
                 .Controller<ArticlesController>()
                 .Action(typeof(ArticlesController)
-                .GetMethod(nameof(ArticlesController.GetCategoryArticles))!)
+                .GetMethod(nameof(ArticlesController.GetCategoryArticles_1_3))!)
                 .HasApiVersion(_configuration.EspressoWebApiVersion_1_2);
             #endregion
 
@@ -552,6 +619,19 @@ namespace Espresso.WebApi
                 .Controller<NewsPortalsController>()
                 .Action(typeof(NewsPortalsController)
                 .GetMethod(nameof(NewsPortalsController.RequestNewsPortal))!)
+                .HasApiVersion(_configuration.EspressoWebApiCurrentVersion);
+            #endregion
+
+            #endregion
+
+            #region GraphQlController
+
+            #region Post
+            apiVersioningOptions
+                .Conventions
+                .Controller<GraphQlController>()
+                .Action(typeof(GraphQlController)
+                .GetMethod(nameof(GraphQlController.Post))!)
                 .HasApiVersion(_configuration.EspressoWebApiCurrentVersion);
             #endregion
 

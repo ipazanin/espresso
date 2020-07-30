@@ -8,14 +8,14 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration_1_3
     {
         public GetConfigurationQuery_1_3(
             string currentEspressoWebApiVersion,
-            string espressoWebApiVersion,
-            string version,
+            string targetedEspressoWebApiVersion,
+            string consumerVersion,
             DeviceType deviceType
         ) : base(
-            currentEspressoWebApiVersion,
-            espressoWebApiVersion,
-            version,
-            deviceType,
+            currentEspressoWebApiVersion: currentEspressoWebApiVersion,
+            targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
+            consumerVersion: consumerVersion,
+            deviceType: deviceType,
             Event.GetConfigurationQuery
         )
         {

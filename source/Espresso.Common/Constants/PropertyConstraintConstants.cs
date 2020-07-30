@@ -61,5 +61,10 @@
         public const int RssFeedCategoryUrlRegexHasMaxLength = 100;
         public const bool RssFeedCategoryUrlRegexIsRequired = true;
         #endregion
+
+        #region Region
+        public const int RegionNameHasMaxLength = 100;
+        public const bool RegionNameIsRequired = true;
+        #endregion
     }
 }

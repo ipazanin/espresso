@@ -17,7 +17,11 @@ namespace Espresso.Domain.Entities
 
         public string? KeyWordsRegexPattern { get; private set; }
 
-        public int SortIndex { get; private set; }
+        public int? SortIndex { get; private set; }
+
+        public int? Position { get; private set; }
+
+        public CategoryType CategoryType { get; private set; }
 
         public ICollection<ArticleCategory> ArticleCategories { get; private set; } = new List<ArticleCategory>();
 
@@ -41,7 +45,9 @@ namespace Espresso.Domain.Entities
             string name,
             string color,
             string? keyWordsRegexPattern,
-            int sortIndex
+            int? sortIndex,
+            int? position,
+            CategoryType categoryType
         )
         {
             Id = id;
@@ -49,6 +55,8 @@ namespace Espresso.Domain.Entities
             Color = color;
             KeyWordsRegexPattern = keyWordsRegexPattern;
             SortIndex = sortIndex;
+            Position = position;
+            CategoryType = categoryType;
         }
         #endregion
 
@@ -56,6 +64,11 @@ namespace Espresso.Domain.Entities
         public static Expression<Func<Category, bool>> GetAllCategoriesExceptGeneralExpression()
         {
             return category => !category.Id.Equals((int)CategoryId.General);
+        }
+
+        public static Expression<Func<Category, bool>> GetAllCategoriesExceptLocalExpression()
+        {
+            return category => !category.Id.Equals((int)CategoryId.Local);
         }
         #endregion
     }

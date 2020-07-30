@@ -40,7 +40,7 @@ namespace Espresso.Application.CQRS.ApplicationDownloads.Commands.CreateApplicat
         {
             var applicationDownload = new ApplicationDownload(
                 webApiVersion: request.CurrentEspressoWebApiVersion,
-                mobileAppVersion: request.Version,
+                mobileAppVersion: request.ConsumerVersion,
                 downloadedTime: DateTime.UtcNow,
                 mobileDeviceType: request.DeviceType
             );
