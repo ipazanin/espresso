@@ -31,5 +31,7 @@ namespace Espresso.Domain.Enums.CategoryEnums
         Koronavirus = 10,
         [Display(Name = "Generalno")]
         General = 11,
+        [Display(Name = "Lokalno")]
+        Local = 12,
     }
 }

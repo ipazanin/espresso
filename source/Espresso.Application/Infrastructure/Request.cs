@@ -9,9 +9,9 @@ namespace Espresso.Application.Infrastructure
         #region Properties
         public string CurrentEspressoWebApiVersion { get; }
 
-        public string EspressoWebApiVersion { get; }
+        public string TargetedEspressoWebApiVersion { get; }
 
-        public string Version { get; }
+        public string ConsumerVersion { get; }
 
         public DeviceType DeviceType { get; }
 
@@ -21,15 +21,15 @@ namespace Espresso.Application.Infrastructure
         #region Constructors
         protected Request(
             string currentEspressoWebApiVersion,
-            string espressoWebApiVersion,
-            string version,
+            string targetedEspressoWebApiVersion,
+            string consumerVersion,
             DeviceType deviceType,
             Event eventIdEnum
         )
         {
             CurrentEspressoWebApiVersion = currentEspressoWebApiVersion;
-            EspressoWebApiVersion = espressoWebApiVersion;
-            Version = version;
+            TargetedEspressoWebApiVersion = targetedEspressoWebApiVersion;
+            ConsumerVersion = consumerVersion;
             DeviceType = deviceType;
             EventIdEnum = eventIdEnum;
         }

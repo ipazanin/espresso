@@ -46,12 +46,12 @@ namespace Espresso.Application.ViewModels.ArticleViewModels
         /// <summary>
         /// News Portal
         /// </summary>
-        public NewsPortalArticleItem NewsPortal { get; private set; }
+        public NewsPortalViewModel NewsPortal { get; private set; }
 
         /// <summary>
         /// List Of Categories article belongs to
         /// </summary>
-        public IEnumerable<CategoryArticleListItem> Categories { get; private set; } = new List<CategoryArticleListItem>();
+        public IEnumerable<CategoryViewModel> Categories { get; private set; } = new List<CategoryViewModel>();
         #endregion
 
         #region Constructors
@@ -76,12 +76,12 @@ namespace Espresso.Application.ViewModels.ArticleViewModels
                 ImageUrl = article.ImageUrl,
                 Url = article.Url,
                 PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.MobileAppDateTimeFormat),
-                NewsPortal = NewsPortalArticleItem.GetProjection()
+                NewsPortal = NewsPortalViewModel.GetProjection()
                     .Compile()
                     .Invoke(article.NewsPortal!),
                 Categories = article.ArticleCategories
                     .Select(articleCategory => articleCategory.Category)
-                    .Select(CategoryArticleListItem.GetProjection().Compile()!),
+                    .Select(CategoryViewModel.GetProjection().Compile()!),
                 TrendingScore = (int)article.TrendingScore
             };
         }

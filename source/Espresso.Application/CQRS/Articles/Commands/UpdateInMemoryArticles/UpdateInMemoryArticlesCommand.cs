@@ -16,14 +16,14 @@ namespace Espresso.Application.CQRS.Articles.Commands.UpdateInMemoryArticles
             IEnumerable<ArticleDto> createdArticles,
             IEnumerable<ArticleDto> updatedArticles,
             string currentEspressoWebApiVersion,
-            string espressoWebApiVersion,
-            string version,
+            string targetedEspressoWebApiVersion,
+            string consumerVersion,
             DeviceType deviceType
         ) : base(
-            currentEspressoWebApiVersion,
-            espressoWebApiVersion,
-            version,
-            deviceType,
+            currentEspressoWebApiVersion: currentEspressoWebApiVersion,
+            targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
+          consumerVersion: consumerVersion,
+            deviceType: deviceType,
             Event.UpdateInMemoryArticlesCommand
         )
         {

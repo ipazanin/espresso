@@ -22,14 +22,14 @@ namespace Espresso.Application.CQRS.Notifications.Commands.SendPushNotification
             string? articleUrl,
             bool isSoundEnabled,
             string currentEspressoWebApiVersion,
-            string espressoWebApiVersion,
-            string version,
+            string targetedEspressoWebApiVersion,
+            string consumerVersion,
             DeviceType deviceType
         ) : base(
-            currentEspressoWebApiVersion,
-            espressoWebApiVersion,
-            version,
-            deviceType,
+            currentEspressoWebApiVersion: currentEspressoWebApiVersion,
+            targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
+          consumerVersion: consumerVersion,
+            deviceType: deviceType,
             Event.SendPushNotification
         )
         {

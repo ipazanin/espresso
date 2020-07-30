@@ -4,6 +4,7 @@ using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Enums.NewsPortalEnums;
+using Espresso.Domain.Enums.RegionEnums;
 using Espresso.Domain.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -41,6 +42,11 @@ namespace Espresso.Persistence.Configuration
                 .HasForeignKey(newsPortal => newsPortal.CategoryId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.HasOne(newsPortal => newsPortal.Region)
+                .WithMany(region => region!.NewsPortals)
+                .HasForeignKey(newsPortal => newsPortal.RegionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             SeedData(builder);
         }
 
@@ -55,7 +61,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.Index}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.General
+                    categoryId: (int)CategoryId.General,
+                    regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.DvadesetCetiriSata,
@@ -64,7 +71,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.DvadesetCetiriSata}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.General
+                    categoryId: (int)CategoryId.General,
+                    regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.SportskeNovosti,
@@ -73,7 +81,9 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.SportskeNovosti}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.Sport),
+                    categoryId: (int)CategoryId.Sport,
+                    regionId: (int)RegionId.Global
+                ),
                 new NewsPortal(
                     id:(int)NewsPortalId.JutarnjiList,
                     name: NewsPortalId.JutarnjiList.GetDisplayName(),
@@ -81,7 +91,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.JutarnjiList}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.General
+                    categoryId: (int)CategoryId.General,
+                    regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.NetHr,
@@ -90,7 +101,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.NetHr}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.General
+                    categoryId: (int)CategoryId.General,
+                    regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.SlobodnaDalmacija,
@@ -99,7 +111,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.SlobodnaDalmacija}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.General
+                    categoryId: (int)CategoryId.General,
+                    regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.TPortal,
@@ -108,7 +121,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.TPortal}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.General
+                    categoryId: (int)CategoryId.General,
+                    regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.VecernjiList,
@@ -117,7 +131,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.VecernjiList}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.General
+                    categoryId: (int)CategoryId.General,
+                    regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.Telegram,
@@ -126,7 +141,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.Telegram}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.General
+                    categoryId: (int)CategoryId.General,
+                    regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.Dnevnik,
@@ -135,7 +151,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.Dnevnik}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.General
+                    categoryId: (int)CategoryId.General,
+                    regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.Gol,
@@ -144,7 +161,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.Gol}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.Sport
+                    categoryId: (int)CategoryId.Sport,
+                    regionId: (int)RegionId.Global
                 ),
 
                 new NewsPortal(
@@ -154,7 +172,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.RtlVijesti}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.General
+                    categoryId: (int)CategoryId.General,
+                    regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.NogometPlus,
@@ -163,7 +182,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.NogometPlus}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.Sport
+                    categoryId: (int)CategoryId.Sport,
+                    regionId: (int)RegionId.Global
                 ), // Nemaju SLS LUL
                 new NewsPortal(
                     id:(int)NewsPortalId.Lider,
@@ -171,7 +191,9 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://lider.media/",
                     iconUrl: $"Icons/{NewsPortalId.Lider}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1), categoryId: (int)CategoryId.Biznis),
+                    createdAt: new DateTime(2020, 5, 1), categoryId: (int)CategoryId.Biznis,
+                    regionId: (int)RegionId.Global
+                ),
                 new NewsPortal(
                     id:(int)NewsPortalId.Bug,
                     name: NewsPortalId.Bug.GetDisplayName(),
@@ -179,7 +201,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.Bug}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.Tech
+                    categoryId: (int)CategoryId.Tech,
+                    regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.VidiHr,
@@ -188,7 +211,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.VidiHr}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.Tech
+                    categoryId: (int)CategoryId.Tech,
+                    regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.Zimo,
@@ -197,7 +221,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.Zimo}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.Tech
+                    categoryId: (int)CategoryId.Tech,
+                    regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.Netokracija,
@@ -206,7 +231,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.Netokracija}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.Tech
+                    categoryId: (int)CategoryId.Tech,
+                    regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.PoslovniPuls,
@@ -215,7 +241,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.PoslovniPuls}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.Biznis
+                    categoryId: (int)CategoryId.Biznis,
+                    regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.PcChip,
@@ -224,7 +251,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.PcChip}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.Tech
+                    categoryId: (int)CategoryId.Tech,
+                    regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.Cosmopolitan,
@@ -233,8 +261,9 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.Cosmopolitan}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.Lifestyle
-                ), // Nemaju SLS LUL
+                    categoryId: (int)CategoryId.Lifestyle,
+                    regionId: (int)RegionId.Global
+                ),
                 new NewsPortal(
                     id:(int)NewsPortalId.WallHr,
                     name: NewsPortalId.WallHr.GetDisplayName(),
@@ -242,7 +271,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.WallHr}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.Lifestyle
+                    categoryId: (int)CategoryId.Lifestyle,
+                    regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.LjepotaIZdravlje,
@@ -251,7 +281,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.LjepotaIZdravlje}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.Lifestyle
+                    categoryId: (int)CategoryId.Lifestyle,
+                    regionId: (int)RegionId.Global
                 ), // Nemaju SLS LUL
                 new NewsPortal(
                     id:(int)NewsPortalId.Autonet,
@@ -260,9 +291,9 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.Autonet}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.AutoMoto
+                    categoryId: (int)CategoryId.AutoMoto,
+                    regionId: (int)RegionId.Global
                 ),
-
                 new NewsPortal(
                     id:(int)NewsPortalId.N1,
                     name:NewsPortalId.N1.GetDisplayName(),
@@ -270,9 +301,9 @@ namespace Espresso.Persistence.Configuration
                     iconUrl:$"Icons/{NewsPortalId.N1}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1),
-                    categoryId: (int)CategoryId.Vijesti
+                    categoryId: (int)CategoryId.Vijesti,
+                    regionId: (int)RegionId.Global
                 ),
-
                 new NewsPortal(
                     id:(int)NewsPortalId.NarodHr,
                     name:NewsPortalId.NarodHr.GetDisplayName(),
@@ -280,9 +311,9 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.NarodHr}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt:new DateTime(2020, 5, 1),
-                    categoryId:(int)CategoryId.Vijesti
+                    categoryId:(int)CategoryId.Vijesti,
+                    regionId: (int)RegionId.Global
                 ),
-
                 new NewsPortal(
                     id: (int)NewsPortalId.Hrt,
                     name: NewsPortalId.Hrt.GetDisplayName(),
@@ -290,9 +321,9 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.Hrt}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 6, 25),
-                    categoryId: (int)CategoryId.Vijesti
+                    categoryId: (int)CategoryId.Vijesti,
+                    regionId: (int)RegionId.Global
                 ),
-
                 new NewsPortal(
                     id: (int)NewsPortalId.StoPosto,
                     name: NewsPortalId.StoPosto.GetDisplayName(),
@@ -300,9 +331,9 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.StoPosto}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 6, 28),
-                    categoryId: (int)CategoryId.Vijesti
+                    categoryId: (int)CategoryId.Vijesti,
+                    regionId: (int)RegionId.Global
                 ),
-
                 new NewsPortal(
                     id: (int)NewsPortalId.Dnevno,
                     name: NewsPortalId.Dnevno.GetDisplayName(),
@@ -310,9 +341,9 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.Dnevno}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 6, 28),
-                    categoryId: (int)CategoryId.Vijesti
+                    categoryId: (int)CategoryId.Vijesti,
+                    regionId: (int)RegionId.Global
                 ),
-
                 // new NewsPortal(
                 //     id: (int)NewsPortalId.AutomobiliHr,
                 //     name: NewsPortalId.AutomobiliHr.GetDisplayName(),
@@ -327,7 +358,8 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.DirektnoHr}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 7, 1),
-                    categoryId: (int)CategoryId.Vijesti
+                    categoryId: (int)CategoryId.Vijesti,
+                    regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
                     id: (int)NewsPortalId.Scena,
@@ -336,11 +368,29 @@ namespace Espresso.Persistence.Configuration
                     iconUrl: $"Icons/{NewsPortalId.Scena}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 7, 13),
-                    categoryId: (int)CategoryId.Show
+                    categoryId: (int)CategoryId.Show,
+                    regionId: (int)RegionId.Global
                 ),
             };
 
             builder.HasData(newsPortals);
+
+
+            var localNewsPortals = new List<NewsPortal>
+            {
+                new NewsPortal(
+                    id:(int)NewsPortalId.DalmacijaDanas,
+                    name: NewsPortalId.DalmacijaDanas.GetDisplayName(),
+                    baseUrl: "https://www.dalmacijadanas.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.DalmacijaDanas}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 8, 1),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Dalmacija
+                ),
+            };
+
+            builder.HasData(localNewsPortals);
         }
     }
 }

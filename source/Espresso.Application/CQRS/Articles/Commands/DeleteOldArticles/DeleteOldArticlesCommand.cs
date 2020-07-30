@@ -15,14 +15,14 @@ namespace Espresso.Application.CQRS.Articles.Commands.DeleteOldArticles
         public DeleteOldArticlesCommand(
             TimeSpan maxAgeOfOldArticles,
             string currentEspressoWebApiVersion,
-            string espressoWebApiVersion,
-            string version,
+            string targetedEspressoWebApiVersion,
+            string consumerVersion,
             DeviceType deviceType
         ) : base(
-            currentEspressoWebApiVersion,
-            espressoWebApiVersion,
-            version,
-            deviceType,
+            currentEspressoWebApiVersion: currentEspressoWebApiVersion,
+            targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
+          consumerVersion: consumerVersion,
+            deviceType: deviceType,
             Event.CalculateTrendingScoreCommand
         )
         {

@@ -22,6 +22,10 @@ namespace Espresso.Domain.Entities
 
         public DateTime CreatedAt { get; private set; }
 
+        public int RegionId { get; private set; }
+
+        public Region? Region { get; private set; }
+
         public int CategoryId { get; private set; }
 
         public Category? Category { get; private set; }
@@ -49,7 +53,8 @@ namespace Espresso.Domain.Entities
             string iconUrl,
             bool? isNewOverride,
             DateTime createdAt,
-            int categoryId
+            int categoryId,
+            int regionId
         )
         {
             Id = id;
@@ -59,19 +64,23 @@ namespace Espresso.Domain.Entities
             IsNewOverride = isNewOverride;
             CreatedAt = createdAt;
             CategoryId = categoryId;
+            RegionId = regionId;
         }
         #endregion
 
         #region Methods        
-        public static Expression<Func<NewsPortal, bool>> GetIsNewExpression(
+        public static Expression<Func<NewsPortal, bool>> GetSugestedNewsPortalsPredicate(
             IEnumerable<int>? newsPortalIds,
-            IEnumerable<int>? categoryIds
+            IEnumerable<int>? categoryIds,
+            int? regionId
         )
         {
             return newsPortal =>
                 newsPortalIds != null && !newsPortalIds.Contains(newsPortal.Id) &&
                 (categoryIds == null || categoryIds.Contains(newsPortal.CategoryId)) &&
-                (newsPortal.IsNewOverride != null ?
+                (regionId == null || newsPortal.RegionId == regionId) &&
+                (
+                    newsPortal.IsNewOverride != null ?
                     newsPortal.IsNewOverride.Value :
                     newsPortal.CreatedAt > (DateTime.UtcNow - DateTimeConstants.MaxAgeOfNewNewsPortal)
                 );

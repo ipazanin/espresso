@@ -31,7 +31,7 @@ echo -e "${YELLOW}Running unit tests...${NC}"
 echo ""
 
 # run the unit tests
-dotnet test tests/UnitTests/UnitTests.sln
+dotnet test source/Espresso.sln
 
 # $? is a shell variable which stores the return code from what we just ran
 rc=$?
@@ -59,8 +59,5 @@ fi
 # Everything went OK so we can exit with a zero
 echo -e "${GREEN}Pre commit check passed!${NC}"
 echo ""
-
-
-
 
 exit 0

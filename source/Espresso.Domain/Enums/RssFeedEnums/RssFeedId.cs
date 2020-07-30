@@ -83,5 +83,6 @@
         DirektnoHr_Kolumne = 80,
         DirektnoHr_Direktno = 81,
         Scena = 82,
+        DalmacijaDanas = 83,
     }
 }

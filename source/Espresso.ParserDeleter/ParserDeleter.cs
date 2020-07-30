@@ -66,8 +66,8 @@ namespace Espresso.Workers.ParserDeleter
                     var parseRssFeedsCommandResponse = await mediator.Send(
                         request: new ParseRssFeedsCommand(
                             currentEspressoWebApiVersion: _configuration.RssFeedParserVersion,
-                            espressoWebApiVersion: _configuration.RssFeedParserMajorMinorVersion,
-                            version: _configuration.RssFeedParserVersion,
+                            targetedEspressoWebApiVersion: _configuration.RssFeedParserMajorMinorVersion,
+                            consumerVersion: _configuration.RssFeedParserVersion,
                             deviceType: DeviceType.RssFeedParser
                         ),
                         cancellationToken: cancellationToken
@@ -79,8 +79,8 @@ namespace Espresso.Workers.ParserDeleter
                         request: new DeleteOldArticlesCommand(
                             maxAgeOfOldArticles: _configuration.MaxAgeOfOldArticles,
                             currentEspressoWebApiVersion: _configuration.RssFeedParserVersion,
-                            espressoWebApiVersion: _configuration.RssFeedParserMajorMinorVersion,
-                            version: _configuration.RssFeedParserVersion,
+                            targetedEspressoWebApiVersion: _configuration.RssFeedParserMajorMinorVersion,
+                            consumerVersion: _configuration.RssFeedParserVersion,
                             deviceType: DeviceType.RssFeedParser
                         ),
                         cancellationToken: cancellationToken
@@ -106,7 +106,7 @@ namespace Espresso.Workers.ParserDeleter
         private async Task InitializeParser()
         {
             using var scope = _serviceScopeFactory.CreateScope();
-            var memoryCacheInit = scope.ServiceProvider.GetRequiredService<IMemoryCacheInit>();
+            var memoryCacheInit = scope.ServiceProvider.GetRequiredService<IApplicationInit>();
             await memoryCacheInit.InitParserDeleter();
         }
 

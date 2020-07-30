@@ -4,8 +4,8 @@ using Espresso.Application.CQRS.NewsPortals.Commands.NewSourcesRequest;
 using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Configuration;
-using Espresso.WebApi.HeaderParameters;
 using Espresso.WebApi.Infrastructure;
+using Espresso.WebApi.Parameters.HeaderParameters;
 using Espresso.WebApi.RequestObject;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -58,8 +58,8 @@ namespace Espresso.WebApi.Controllers
             var getNewsPortalsQueryResponse = await Mediator.Send(
                 request: new GetNewsPortalsQuery(
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                    espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    version: basicInformationsHeaderParameters.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType
                 ),
                 cancellationToken: cancellationToken
@@ -99,8 +99,8 @@ namespace Espresso.WebApi.Controllers
             var getNewsPortalsQueryResponse = await Mediator.Send(
                 request: new NewsSourcesRequestCommand(
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                    espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    version: basicInformationsHeaderParameters.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,
                     newsPortalName: requestNewsPortalRequestObject.NewsPortalName ?? "",
                     email: requestNewsPortalRequestObject.Email ?? "",

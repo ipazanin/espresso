@@ -8,8 +8,8 @@ using Espresso.Application.CQRS.Notifications.Queries.GetPushNotifications;
 using Espresso.Application.DataTransferObjects;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Configuration;
-using Espresso.WebApi.HeaderParameters;
 using Espresso.WebApi.Infrastructure;
+using Espresso.WebApi.Parameters.HeaderParameters;
 using Espresso.WebApi.RequestObject;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -57,8 +57,8 @@ namespace Espresso.WebApi.Controllers
                     articlesRequest.CreatedArticles,
                     articlesRequest.UpdatedArticles,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                    espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    version: basicInformationsHeaderParameters.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType
                 ),
                 cancellationToken: cancellationToken
@@ -67,8 +67,8 @@ namespace Espresso.WebApi.Controllers
             await Mediator.Send(
                 request: new CalculateTrendingScoreCommand(
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                    espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    version: basicInformationsHeaderParameters.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType
                 ),
                 cancellationToken: cancellationToken
@@ -79,8 +79,8 @@ namespace Espresso.WebApi.Controllers
                     articlesRequest.CreatedArticles,
                     articlesRequest.UpdatedArticles,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                    espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    version: basicInformationsHeaderParameters.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType
                 ),
                 cancellationToken: cancellationToken
@@ -123,8 +123,8 @@ namespace Espresso.WebApi.Controllers
                     articleUrl: sendPushNotificationRequestObject.ArticleUrl,
                     isSoundEnabled: sendPushNotificationRequestObject.IsSoundEnabled,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                    espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    version: basicInformationsHeaderParameters.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType
                 ),
                 cancellationToken: cancellationToken
@@ -164,8 +164,8 @@ namespace Espresso.WebApi.Controllers
                     take: take,
                     skip: skip,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                    espressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    version: basicInformationsHeaderParameters.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType
                 ),
                 cancellationToken: cancellationToken

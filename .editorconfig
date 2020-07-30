@@ -8,11 +8,25 @@ root = true
 indent_style = space
 # (Please don't specify an indent_size here; that has too many unintended consequences.)
 
+# Tab indentation (no size specified)
+[Makefile]
+indent_style = tab
+
+# Unix-style newlines with a newline ending every file
+[*]
+end_of_line = lf
+insert_final_newline = true
+
 # Code files
 [*.{cs,csx,vb,vbx}]
 indent_size = 4
 insert_final_newline = true
 charset = utf-8-bom
+
+[*.{js,ts,tsx}]
+charset = utf-8
+indent_style = space
+indent_size = 2
 
 # XML project files
 [*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]

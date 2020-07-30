@@ -1,16 +1,35 @@
 {
+  "files.exclude": {
+    "**/.git": false,
+    "**/obj": true,
+    "**/bin": true
+  },
+  "window.zoomLevel": 0.8,
   "workbench.sideBar.location": "right",
   "workbench.colorTheme": "Visual Studio 2019 Dark",
   "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1700,
   "editor.formatOnPaste": true,
   "editor.formatOnType": true,
   "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
   "csharp.maxProjectFileCountForDiagnosticAnalysis": 0,
   "csharp.semanticHighlighting.enabled": true,
-  "omnisharp.enableRoslynAnalyzers": true,
-  "omnisharp.enableMsBuildLoadProjectsOnDemand": true,
   "[csharp]": {
     "editor.defaultFormatter": "ms-dotnettools.csharp"
   },
-  "dotnet-test-explorer.testProjectPath": "**/*Tests.@(csproj|vbproj|fsproj)"
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "omnisharp.enableRoslynAnalyzers": true,
+  "omnisharp.enableMsBuildLoadProjectsOnDemand": false,
+  "omnisharp.defaultLaunchSolution": "Espresso.sln",
+  "dotnet-test-explorer.testProjectPath": "**/*Tests.@(csproj|vbproj|fsproj)",
+  "eslint.alwaysShowStatus": true,
+  "eslint.format.enable": true,
+  "eslint.validate": ["javascript", "typescript"],
+  "eslint.packageManager": "yarn"
 }

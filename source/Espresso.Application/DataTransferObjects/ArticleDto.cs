@@ -152,7 +152,9 @@ namespace Espresso.Application.DataTransferObjects
                         name: category.Name,
                         color: category.Color,
                         keyWordsRegexPattern: category.KeyWordsRegexPattern,
-                        sortIndex: category.SortIndex
+                        sortIndex: category.SortIndex,
+                        position: category.Position,
+                        categoryType: category.CategoryType
                     )
                 )).ToList();
 
@@ -163,7 +165,8 @@ namespace Espresso.Application.DataTransferObjects
                     iconUrl: article.NewsPortal.IconUrl,
                     isNewOverride: article.NewsPortal.IsNewOverride,
                     createdAt: article.NewsPortal.CreatedAt,
-                    categoryId: article.NewsPortal.CategoryId
+                    categoryId: article.NewsPortal.CategoryId,
+                    regionId: article.NewsPortal.RegionId
                 );
 
                 var createdArticle = new Article(
@@ -217,7 +220,9 @@ namespace Espresso.Application.DataTransferObjects
                         name: category.Name,
                         color: category.Color,
                         keyWordsRegexPattern: category.KeyWordsRegexPattern,
-                        sortIndex: category.SortIndex
+                        sortIndex: category.SortIndex,
+                        position: category.Position,
+                        categoryType: category.CategoryType
                     )
                 )).ToList();
 
@@ -228,7 +233,8 @@ namespace Espresso.Application.DataTransferObjects
                 iconUrl: NewsPortal.IconUrl,
                 isNewOverride: NewsPortal.IsNewOverride,
                 createdAt: NewsPortal.CreatedAt,
-                categoryId: NewsPortal.CategoryId
+                categoryId: NewsPortal.CategoryId,
+                regionId: NewsPortal.RegionId
             );
 
             return new Article(
@@ -265,7 +271,9 @@ namespace Espresso.Application.DataTransferObjects
                         name: category.Name,
                         color: category.Color,
                         keyWordsRegexPattern: category.KeyWordsRegexPattern,
-                        sortIndex: category.SortIndex
+                        sortIndex: category.SortIndex,
+                        position: category.Position,
+                        categoryType: category.CategoryType
                     )
                 )).ToList();
 
@@ -276,7 +284,8 @@ namespace Espresso.Application.DataTransferObjects
                 iconUrl: NewsPortal.IconUrl,
                 isNewOverride: NewsPortal.IsNewOverride,
                 createdAt: NewsPortal.CreatedAt,
-                categoryId: NewsPortal.CategoryId
+                categoryId: NewsPortal.CategoryId,
+                regionId: NewsPortal.RegionId
             );
 
             return new Article(

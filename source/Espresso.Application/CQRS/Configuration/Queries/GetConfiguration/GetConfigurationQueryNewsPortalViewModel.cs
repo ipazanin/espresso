@@ -24,6 +24,8 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
 
         public int CategoryId { get; private set; }
 
+        public int RegionId { get; private set; }
+
         public static Expression<Func<NewsPortal, GetConfigurationQueryNewsPortalViewModel>> GetProjection()
         {
             return newsPortal => new GetConfigurationQueryNewsPortalViewModel
@@ -35,6 +37,7 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
                     newsPortal.IsNewOverride.Value :
                     (newsPortal.CreatedAt > (DateTime.UtcNow - DateTimeConstants.MaxAgeOfNewNewsPortal)),
                 CategoryId = newsPortal.CategoryId,
+                RegionId = newsPortal.RegionId
             };
         }
         #endregion

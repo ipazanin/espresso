@@ -8,14 +8,14 @@ namespace Espresso.Application.CQRS.ApplicationDownloads.Queries.GetApplicationD
     {
         public GetApplicationDownloadStatisticsQuery(
             string currentEspressoWebApiVersion,
-            string espressoWebApiVersion,
-            string version,
+            string targetedEspressoWebApiVersion,
+            string consumerVersion,
             DeviceType deviceType
         ) : base(
-            currentEspressoWebApiVersion,
-            espressoWebApiVersion,
-            version,
-            deviceType,
+            currentEspressoWebApiVersion: currentEspressoWebApiVersion,
+            targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
+            consumerVersion: consumerVersion,
+            deviceType: deviceType,
             Event.GetApplicationDownloadStatisticsQuery
         )
         {

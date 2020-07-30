@@ -51,70 +51,99 @@ namespace Espresso.Persistence.Configuration
                     name: CategoryId.Vijesti.GetDisplayName(),
                     color: "#E84855",
                     keyWordsRegexPattern: null,
-                    sortIndex: 2
+                    sortIndex: 2,
+                    position: null,
+                    categoryType: CategoryType.Normal
                 ),
                 new Category(
                     id:(int)CategoryId.Sport,
                     name: CategoryId.Sport.GetDisplayName(),
                     color: "#4CB944",
                     keyWordsRegexPattern: null,
-                    sortIndex: 3
+                    sortIndex: 3,
+                    position: null,
+                    categoryType: CategoryType.Normal
                 ),
                 new Category(
                     id:(int)CategoryId.Show,
                     name: CategoryId.Show.GetDisplayName(),
                     color:"#F4B100",
                     keyWordsRegexPattern: null,
-                    sortIndex: 4
+                    sortIndex: 4,
+                    position: null,
+                    categoryType: CategoryType.Normal
                 ),
                 new Category(
                     id:(int)CategoryId.Lifestyle,
                     name: CategoryId.Lifestyle.GetDisplayName(),
                     color: "#32936F",
                     keyWordsRegexPattern: null,
-                    sortIndex: 5
+                    sortIndex: 5,
+                    position: null,
+                    categoryType: CategoryType.Normal
                 ),
                 new Category(
                     id:(int)CategoryId.Tech,
                     name: CategoryId.Tech.GetDisplayName(),
                     color: "#2E86AB",
                     keyWordsRegexPattern: null,
-                    sortIndex: 6
+                    sortIndex: 6,
+                    position: null,
+                    categoryType: CategoryType.Normal
                 ),
                 new Category(
                     id:(int)CategoryId.Viral,
                     name: CategoryId.Viral.GetDisplayName(),
                     color: "#9055A2",
                     keyWordsRegexPattern: null,
-                    sortIndex: 7
+                    sortIndex: 7,
+                    position: null,
+                    categoryType: CategoryType.Normal
                 ),
                 new Category(
                     id:(int)CategoryId.Biznis,
                     name: CategoryId.Biznis.GetDisplayName(),
                     color: "#3185FC",
                     keyWordsRegexPattern: null,
-                    sortIndex: 8
+                    sortIndex: 8,
+                    position: null,
+                    categoryType: CategoryType.Normal
                 ),
                 new Category(
                     id:(int)CategoryId.AutoMoto,
                     name: CategoryId.AutoMoto.GetDisplayName(),
                     color: "#FC814A",
                     keyWordsRegexPattern: null,
-                    sortIndex: 9
+                    sortIndex: 9,
+                    position: null,
+                    categoryType: CategoryType.Normal
                 ),
                 new Category(
                     id:(int)CategoryId.Kultura,
                     name: CategoryId.Kultura.GetDisplayName(),
                     color: "#AC80A0",
                     keyWordsRegexPattern: null,
-                    sortIndex: 10
+                    sortIndex: 10,
+                    position: null,
+                    categoryType: CategoryType.Normal
                 ),
                 new Category(
                     id:(int)CategoryId.General,
                     name: CategoryId.General.GetDisplayName(),
                     color: "#AC80A0",
                     keyWordsRegexPattern: null,
-                    sortIndex: 1
+                    sortIndex: 1,
+                    position: null,
+                    categoryType: CategoryType.General
+                ),
+                new Category(
+                    id:(int)CategoryId.Local,
+                    name: CategoryId.Local.GetDisplayName(),
+                    color: "#AC80A0",
+                    keyWordsRegexPattern: null,
+                    sortIndex: null,
+                    position: 3,
+                    categoryType: CategoryType.Local
                 ),
             };
 

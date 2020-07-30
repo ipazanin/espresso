@@ -28,12 +28,16 @@ namespace Espresso.Application.Infrastructure
         #endregion
 
         #region Methods
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(
+            TRequest request,
+            CancellationToken cancellationToken,
+            RequestHandlerDelegate<TResponse> next
+        )
         {
             var requestBase = request switch
             {
                 Request<TResponse> baseType => baseType,
-                _ => null
+                _ => throw new Exception($"Request:{typeof(TRequest).Name} does not implement Request abstract class!")
             };
 
             try
@@ -45,8 +49,8 @@ namespace Espresso.Application.Infrastructure
                     requestId: (int)(requestBase?.EventIdEnum ?? Event.Undefined),
                     requestName: typeof(TRequest).Name,
                     webApiVersion: requestBase?.CurrentEspressoWebApiVersion ?? "",
-                    targetedWebApiVersion: requestBase?.EspressoWebApiVersion ?? "",
-                    consumerVersion: requestBase?.Version ?? "",
+                    targetedWebApiVersion: requestBase?.TargetedEspressoWebApiVersion ?? "",
+                    consumerVersion: requestBase?.ConsumerVersion ?? "",
                     deviceType: requestBase?.DeviceType ?? DeviceType.Undefined,
                     requestParameters: request?.ToString() ?? "",
                     duration: _stopWatch.Elapsed,
@@ -61,8 +65,8 @@ namespace Espresso.Application.Infrastructure
                     requestId: (int)(requestBase?.EventIdEnum ?? Event.Undefined),
                     requestName: typeof(TRequest).Name,
                     webApiVersion: requestBase?.CurrentEspressoWebApiVersion ?? "",
-                    targetedWebApiVersion: requestBase?.EspressoWebApiVersion ?? "",
-                    consumerVersion: requestBase?.Version ?? "",
+                    targetedWebApiVersion: requestBase?.TargetedEspressoWebApiVersion ?? "",
+                    consumerVersion: requestBase?.ConsumerVersion ?? "",
                     deviceType: requestBase?.DeviceType ?? DeviceType.Undefined,
                     requestParameters: request?.ToString() ?? "",
                     exception: exception,

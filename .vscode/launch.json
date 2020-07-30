@@ -11,10 +11,7 @@
       "preLaunchTask": "build web-api",
       // If you have changed target frameworks, make sure to update the program path.
       "program": "${workspaceFolder}/source/Espresso.WebApi/bin/Debug/netcoreapp3.1/Espresso.WebApi.dll",
-      "args": [
-        "--urls",
-        "http://localhost:8000/"
-      ],
+      "args": ["--urls", "http://localhost:8000/"],
       "cwd": "${workspaceFolder}/source/Espresso.WebApi",
       "stopAtEntry": false,
       // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
@@ -33,7 +30,7 @@
         "moduleLoad": false,
         "exceptions": false,
         "browserStdOut": false
-      },
+      }
     },
     {
       "name": "Parser",
@@ -61,7 +58,7 @@
         "moduleLoad": false,
         "exceptions": false,
         "browserStdOut": false
-      },
+      }
     }
   ]
 }
