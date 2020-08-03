@@ -15,7 +15,7 @@ const Article: React.FC<ArticleProps> = ({
     <a href={url} style={{ display: 'block' }}>
       {title}
     </a>
-    <img src={imageUrl} />
+    <img src={imageUrl} alt="" />
     <hr />
   </>
 );

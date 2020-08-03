@@ -1,3 +1,6 @@
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { Environment } from './environment';
 import { Configuration } from './configuration';
 
@@ -24,9 +27,15 @@ class ConfigurationBuilder {
    */
   public static buildConfiguration(): void {
     const environment = process.env.REACT_APP_ENVIRONMENT as Environment;
-    const appSettingsEnvironmentFileName = this.getAppSettingsFileName(environment);
+    const appSettingsEnvironmentFileName = this.getAppSettingsFileName(
+      environment
+    );
     const appSettingsEnvironment = require(`./Settings/${appSettingsEnvironmentFileName}`);
-    const config = new Configuration(appSettings, appSettingsEnvironment, environment);
+    const config = new Configuration(
+      appSettings,
+      appSettingsEnvironment,
+      environment
+    );
 
     this.configuration = config;
   }
