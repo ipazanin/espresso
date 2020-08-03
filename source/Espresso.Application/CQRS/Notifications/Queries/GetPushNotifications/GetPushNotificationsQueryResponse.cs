@@ -5,10 +5,10 @@ namespace Espresso.Application.CQRS.Notifications.Queries.GetPushNotifications
 {
     public class GetPushNotificationsQueryResponse
     {
-        public IEnumerable<PushNotificationDto> PushNotifications { get; }
+        public IEnumerable<GetPushNotificationsPushNotification> PushNotifications { get; }
 
         public GetPushNotificationsQueryResponse(
-            IEnumerable<PushNotificationDto> pushNotifications
+            IEnumerable<GetPushNotificationsPushNotification> pushNotifications
         )
         {
             PushNotifications = pushNotifications;

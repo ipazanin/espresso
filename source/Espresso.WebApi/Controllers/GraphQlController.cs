@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.GraphQl.UserContext;
+using Espresso.Application.GraphQl.Infrastructure;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Infrastructure;
 using Espresso.WebApi.Parameters.BodyParameters;

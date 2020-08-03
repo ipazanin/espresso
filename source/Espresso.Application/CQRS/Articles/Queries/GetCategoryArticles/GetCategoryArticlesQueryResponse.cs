@@ -1,21 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Espresso.Application.ViewModels.ArticleViewModels;
-using Espresso.Application.ViewModels.NewsPortalViewModels;
 
 namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
 {
     public class GetCategoryArticlesQueryResponse
     {
-        public IEnumerable<ArticleViewModel> Articles { get; } = new List<ArticleViewModel>();
+        public IEnumerable<GetCategoryArticlesArticle> Articles { get; } = new List<GetCategoryArticlesArticle>();
 
-        public IEnumerable<NewsPortalViewModel> NewNewsPortals { get; set; }
+        public IEnumerable<GetCategoryArticlesNewsPortal> NewNewsPortals { get; set; }
 
         public int NewNewsPortalsPosition { get; }
 
         public GetCategoryArticlesQueryResponse(
-            IEnumerable<ArticleViewModel> articles,
-            IEnumerable<NewsPortalViewModel> newNewsPortals,
+            IEnumerable<GetCategoryArticlesArticle> articles,
+            IEnumerable<GetCategoryArticlesNewsPortal> newNewsPortals,
             int newNewsPortalsPosition
         )
         {

@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Espresso.Application.ViewModels.ArticleViewModels;
 
 namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
 {
     public class GetTrendingArticlesQueryResponse
     {
-        public IEnumerable<ArticleTrendingViewModel> Articles { get; } = new List<ArticleTrendingViewModel>();
+        public IEnumerable<GetTrendingArticlesArticle> Articles { get; } = new List<GetTrendingArticlesArticle>();
 
-        public GetTrendingArticlesQueryResponse(IEnumerable<ArticleTrendingViewModel> articles)
+        public GetTrendingArticlesQueryResponse(IEnumerable<GetTrendingArticlesArticle> articles)
         {
             Articles = articles;
         }

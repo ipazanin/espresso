@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.ViewModels.ArticleViewModels;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using MediatR;
@@ -42,7 +41,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles_1_3
                 )
                 .Skip(request.Skip)
                 .Take(request.Take)
-                .Select(ArticleViewModel.GetProjection().Compile());
+                .Select(GetCategoryArticlesArticle_1_3.GetProjection().Compile());
 
             var response = new GetCategoryArticlesQueryResponse_1_3(
                 articles: articleDtos

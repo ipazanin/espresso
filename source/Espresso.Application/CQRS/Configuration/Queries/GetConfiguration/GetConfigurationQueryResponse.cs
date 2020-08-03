@@ -1,27 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Espresso.Application.ViewModels.CategoryViewModels;
-using Espresso.Application.ViewModels.NewsPortalViewModels;
-using Espresso.Application.ViewModels.RegionViewModels;
 
 namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
 {
     public class GetConfigurationQueryResponse
     {
-        public IEnumerable<CategoryViewModelWithNewsPortals> CategoryViewModelWithNewsPortals { get; }
+        public IEnumerable<GetConfigurationCategoryWithNewsPortals> CategoriesWithNewsPortals { get; }
 
-        public IEnumerable<CategoryViewModel> Categories { get; }
+        public IEnumerable<GetConfigurationCategory> Categories { get; }
 
-        public IEnumerable<RegionViewModel> Regions { get; set; }
+        public IEnumerable<GetConfigurationRegion> Regions { get; set; }
 
         public GetConfigurationQueryResponse(
-            IEnumerable<CategoryViewModelWithNewsPortals> categoryViewModelWithNewsPortals,
-            IEnumerable<CategoryViewModel> categories,
-            IEnumerable<RegionViewModel> regions
+            IEnumerable<GetConfigurationCategoryWithNewsPortals> categoriesWithNewsPortals,
+            IEnumerable<GetConfigurationCategory> categories,
+            IEnumerable<GetConfigurationRegion> regions
         )
         {
-            this.CategoryViewModelWithNewsPortals = categoryViewModelWithNewsPortals;
+            this.CategoriesWithNewsPortals = categoriesWithNewsPortals;
             Categories = categories;
             Regions = regions;
         }
@@ -29,7 +26,7 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
         public override string ToString()
         {
             return $"{nameof(Categories)}:{Categories.Count()}, " +
-                $"{nameof(CategoryViewModelWithNewsPortals)}:{CategoryViewModelWithNewsPortals.Count()}, " +
+                $"{nameof(CategoriesWithNewsPortals)}:{CategoriesWithNewsPortals.Count()}, " +
                 $"{nameof(Regions)}:{Regions.Count()}";
         }
     }

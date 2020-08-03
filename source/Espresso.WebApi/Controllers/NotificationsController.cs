@@ -45,7 +45,7 @@ namespace Espresso.WebApi.Controllers
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPost]
-        [Route("api/notifications")]
+        [Route("api/notifications/articles")]
         public async Task<IActionResult> SendLatestArticlesNotificition(
             [FromBody] ArticlesRequestObjectDto articlesRequest,
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
@@ -107,7 +107,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost]
-        [Route("api/notifications/push")]
+        [Route("api/notifications")]
         public async Task<IActionResult> SendPushNotificition(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             [FromBody] SendPushNotificationRequestObject sendPushNotificationRequestObject,
@@ -151,7 +151,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
-        [Route("api/notifications/push")]
+        [Route("api/notifications")]
         public async Task<IActionResult> GetPushNotificition(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             [FromQuery] int take,

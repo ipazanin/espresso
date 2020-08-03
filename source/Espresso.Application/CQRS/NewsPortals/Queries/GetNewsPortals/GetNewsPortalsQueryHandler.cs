@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.ViewModels.NewsPortalViewModels;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using MediatR;
@@ -31,7 +30,7 @@ namespace Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals
             var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
             var newsPortalDtos = newsPortals
                 .OrderBy(keySelector: newsPortal => newsPortal.Name)
-                .Select(selector: NewsPortalViewModel.GetProjection().Compile());
+                .Select(selector: GetNewsPortalsNewsPortal.GetProjection().Compile());
 
             var response = new GetNewsPortalsQueryResponse(newsPortalDtos);
 

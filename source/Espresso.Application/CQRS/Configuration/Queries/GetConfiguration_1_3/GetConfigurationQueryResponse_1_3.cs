@@ -1,19 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Espresso.Application.ViewModels.CategoryViewModels;
-using Espresso.Application.ViewModels.NewsPortalViewModels;
 
 namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration_1_3
 {
     public class GetConfigurationQueryResponse_1_3
     {
-        public IEnumerable<GetConfigurationQueryCategoryViewModel_1_3> Categories { get; }
+        public IEnumerable<GetConfigurationCategory_1_3> Categories { get; }
 
-        public IEnumerable<GetConfigurationQueryNewsPortalViewModel_1_3> NewsPortals { get; }
+        public IEnumerable<GetConfigurationNewsPortal_1_3> NewsPortals { get; }
 
         public GetConfigurationQueryResponse_1_3(
-            IEnumerable<GetConfigurationQueryCategoryViewModel_1_3> categories,
-            IEnumerable<GetConfigurationQueryNewsPortalViewModel_1_3> newsPortals
+            IEnumerable<GetConfigurationCategory_1_3> categories,
+            IEnumerable<GetConfigurationNewsPortal_1_3> newsPortals
         )
         {
             Categories = categories;

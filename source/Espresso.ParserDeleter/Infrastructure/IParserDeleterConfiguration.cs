@@ -5,9 +5,6 @@ namespace Espresso.Workers.ParserDeleter.Infrastructure
 {
     public interface IParserDeleterConfiguration : ICommonConfiguration
     {
-
-        public string ConnectionString { get; }
-
         public string RssFeedParserVersion { get; }
 
         public string RssFeedParserMajorMinorVersion { get; }
