@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Espresso.Application.ViewModels.ArticleViewModels;
 
 namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles_1_3
 {
     public class GetCategoryArticlesQueryResponse_1_3
     {
-        public IEnumerable<ArticleViewModel> Articles { get; } = new List<ArticleViewModel>();
+        public IEnumerable<GetCategoryArticlesArticle_1_3> Articles { get; } = new List<GetCategoryArticlesArticle_1_3>();
 
         public GetCategoryArticlesQueryResponse_1_3(
-            IEnumerable<ArticleViewModel> articles
+            IEnumerable<GetCategoryArticlesArticle_1_3> articles
         )
         {
             Articles = articles;

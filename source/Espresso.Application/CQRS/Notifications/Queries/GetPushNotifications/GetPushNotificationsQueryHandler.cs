@@ -28,7 +28,7 @@ namespace Espresso.Application.CQRS.Notifications.Queries.GetPushNotifications
                 .OrderByDescending(keySelector: PushNotification.GetOrderByDescendingExpression())
                 .Skip(count: request.Skip)
                 .Take(count: request.Take)
-                .Select(selector: PushNotificationDto.GetProjection())
+                .Select(selector: GetPushNotificationsPushNotification.GetProjection())
                 .ToListAsync(cancellationToken: cancellationToken);
 
             return new GetPushNotificationsQueryResponse(pushNotifications: pushNotifications);

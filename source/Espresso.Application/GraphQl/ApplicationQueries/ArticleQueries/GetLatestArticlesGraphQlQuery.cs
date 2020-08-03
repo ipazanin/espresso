@@ -1,8 +1,7 @@
 ﻿using Espresso.Application.CQRS.Articles.Queries.GetLatestArticles;
-using Espresso.Application.GraphQl.ApplicationTypes.ArticleTypes;
-using Espresso.Application.GraphQl.UserContext;
+using Espresso.Application.GraphQl.ApplicationTypes.ArticleTypes.GetLatestArticlesTypes;
+using Espresso.Application.GraphQl.Infrastructure;
 using Espresso.Common.Constants;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using FluentValidation;
 using GraphQL.Types;
 using MediatR;

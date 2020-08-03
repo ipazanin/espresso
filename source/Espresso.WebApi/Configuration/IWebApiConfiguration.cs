@@ -9,11 +9,6 @@ namespace Espresso.WebApi.Configuration
     public interface IWebApiConfiguration : ICommonConfiguration
     {
         /// <summary>
-        /// Connection string
-        /// </summary>
-        public string ConnectionString { get; }
-
-        /// <summary>
         /// 
         /// </summary>
         public ApiVersion EspressoWebApiVersion_1_2 { get; }

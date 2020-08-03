@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.ViewModels.CategoryViewModels;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using MediatR;
@@ -31,7 +30,7 @@ namespace Espresso.Application.CQRS.Categories.Queries.GetCategories
             var categories = _memoryCache.Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey);
             var categoryDtos = categories
                 .Where(predicate: Category.GetAllCategoriesExceptGeneralExpression().Compile())
-                .Select(CategoryViewModel.GetProjection().Compile());
+                .Select(GetCategoriesCategory.GetProjection().Compile());
 
             var response = new GetCategoriesQueryResponse(categoryDtos);
 

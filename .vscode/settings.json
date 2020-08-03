@@ -4,7 +4,7 @@
     "**/obj": true,
     "**/bin": true
   },
-  "window.zoomLevel": 0.8,
+  "window.zoomLevel": 1,
   "workbench.sideBar.location": "right",
   "workbench.colorTheme": "Visual Studio 2019 Dark",
   "files.autoSave": "afterDelay",

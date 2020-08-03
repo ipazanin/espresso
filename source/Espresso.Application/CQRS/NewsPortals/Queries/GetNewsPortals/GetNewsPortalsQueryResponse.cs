@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Espresso.Application.ViewModels.NewsPortalViewModels;
 
 namespace Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals
 {
     public class GetNewsPortalsQueryResponse
     {
-        public IEnumerable<NewsPortalViewModel> NewsPortals { get; } = new List<NewsPortalViewModel>();
+        public IEnumerable<GetNewsPortalsNewsPortal> NewsPortals { get; } = new List<GetNewsPortalsNewsPortal>();
 
-        public GetNewsPortalsQueryResponse(IEnumerable<NewsPortalViewModel> newsPortals)
+        public GetNewsPortalsQueryResponse(IEnumerable<GetNewsPortalsNewsPortal> newsPortals)
         {
             NewsPortals = newsPortals;
         }

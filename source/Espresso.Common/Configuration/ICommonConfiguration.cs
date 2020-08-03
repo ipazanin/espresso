@@ -10,5 +10,7 @@ namespace Espresso.Common.Configuration
         public string Version { get; }
 
         public IEnumerable<string> ApiKeys { get; }
+
+        public string ConnectionString { get; }
     }
 }

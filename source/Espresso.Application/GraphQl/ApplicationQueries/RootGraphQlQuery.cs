@@ -1,13 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles;
-using Espresso.Application.GraphQl.ApplicationTypes.ArticleTypes;
-using Espresso.Application.GraphQl.UserContext;
-using Espresso.Common.Constants;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
-using FluentValidation;
+﻿using System.Collections.Generic;
 using GraphQL.Types;
-using MediatR;
 
 namespace Espresso.Application.GraphQl.ApplicationQueries
 {

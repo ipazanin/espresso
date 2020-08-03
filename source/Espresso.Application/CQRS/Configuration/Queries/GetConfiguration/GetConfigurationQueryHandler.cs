@@ -2,9 +2,6 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.ViewModels.CategoryViewModels;
-using Espresso.Application.ViewModels.NewsPortalViewModels;
-using Espresso.Application.ViewModels.RegionViewModels;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using MediatR;
@@ -36,23 +33,23 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
 
             var newsPortalDtos = newsPortals
                 .OrderBy(keySelector: newsPortal => newsPortal.Name)
-                .Select(selector: GetConfigurationQueryNewsPortalViewModel.GetProjection().Compile());
+                .Select(selector: GetConfigurationNewsPortal.GetProjection().Compile());
 
             var categoryDtos = categories
                 .Where(predicate: Category.GetAllCategoriesExceptGeneralExpression().Compile())
-                .Select(selector: CategoryViewModel.GetProjection().Compile());
+                .Select(selector: GetConfigurationCategory.GetProjection().Compile());
 
-            var categoryGroupedNewsPortals = categories
+            var categoriesWithNewsPortals = categories
                 .OrderBy(category => category.SortIndex)
                 .Where(predicate: Category.GetAllCategoriesExceptLocalExpression().Compile())
-                .Select(selector: CategoryViewModelWithNewsPortals.GetProjection().Compile())
+                .Select(selector: GetConfigurationCategoryWithNewsPortals.GetProjection().Compile())
                 .Where(grouping => grouping.NewsPortals.Count() != 0);
 
             var regionGroupedNewsPortals = regions
-                .Select(selector: RegionViewModel.GetProjection().Compile());
+                .Select(selector: GetConfigurationRegion.GetProjection().Compile());
 
             var response = new GetConfigurationQueryResponse(
-                categoryViewModelWithNewsPortals: categoryGroupedNewsPortals,
+                categoriesWithNewsPortals: categoriesWithNewsPortals,
                 categories: categoryDtos,
                 regions: regionGroupedNewsPortals
             );

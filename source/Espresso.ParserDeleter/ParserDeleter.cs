@@ -138,7 +138,7 @@ namespace Espresso.Workers.ParserDeleter
                 try
                 {
                     await _httpService.PostJsonAsync(
-                        url: $"{_configuration.ServerUrl}/api/notifications",
+                        url: $"{_configuration.ServerUrl}/api/notifications/articles",
                         data: new ArticlesRequestObjectDto
                         {
                             CreatedArticles = parseRssFeedsResponse.CreatedArticles,

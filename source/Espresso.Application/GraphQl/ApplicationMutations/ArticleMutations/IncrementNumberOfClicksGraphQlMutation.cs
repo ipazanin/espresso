@@ -1,7 +1,6 @@
 ﻿using System;
 using Espresso.Application.CQRS.Articles.Commands.IncrementTrendingArticleScore;
-using Espresso.Application.GraphQl.ApplicationTypes.ArticleTypes;
-using Espresso.Application.GraphQl.UserContext;
+using Espresso.Application.GraphQl.Infrastructure;
 using FluentValidation;
 using GraphQL.Types;
 using MediatR;

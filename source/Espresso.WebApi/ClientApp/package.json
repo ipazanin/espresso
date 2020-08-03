@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.9.0",
+    "axios": "^0.19.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "react": "^16.13.1",
@@ -17,7 +18,7 @@
     "start": "REACT_APP_ENVIRONMENT=local react-scripts start",
     "start:local": "react-scripts start --env=local",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "REACT_APP_ENVIRONMENT=test react-scripts test",
     "test:cov": "yarn test -- --coverage",
     "test:ci": "CI=true yarn test",
     "lint:base": "eslint --ext .ts,.tsx src/",
@@ -66,8 +67,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && yarn lint",
-      "pre-push": "yarn test:ci"
+      "pre-commit": "pretty-quick --staged && yarn lint && yarn test:ci "
     }
   },
   "jest": {

@@ -1,10 +1,6 @@
-﻿using Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles;
-using Espresso.Application.CQRS.Configuration.Queries.GetConfiguration;
-using Espresso.Application.GraphQl.ApplicationTypes.ArticleTypes;
+﻿using Espresso.Application.CQRS.Configuration.Queries.GetConfiguration;
 using Espresso.Application.GraphQl.ApplicationTypes.ConfigurationTypes;
-using Espresso.Application.GraphQl.UserContext;
-using Espresso.Common.Constants;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.Application.GraphQl.Infrastructure;
 using FluentValidation;
 using GraphQL.Types;
 using MediatR;

@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Espresso.Application.ViewModels.CategoryViewModels;
 
 namespace Espresso.Application.CQRS.Categories.Queries.GetCategories
 {
     public class GetCategoriesQueryResponse
     {
         #region Properties
-        public IEnumerable<CategoryViewModel> Categories { get; }
+        public IEnumerable<GetCategoriesCategory> Categories { get; }
         #endregion
 
         #region Constructors
-        public GetCategoriesQueryResponse(IEnumerable<CategoryViewModel> categories)
+        public GetCategoriesQueryResponse(IEnumerable<GetCategoriesCategory> categories)
         {
             Categories = categories;
         }

@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.ViewModels.ArticleViewModels;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using MediatR;
@@ -38,7 +37,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
                 .OrderByDescending(keySelector: Article.GetTrendingArticleOrderByDescendingExpression().Compile())
                 .Skip(request.Skip)
                 .Take(request.Take)
-                .Select(ArticleTrendingViewModel.GetProjection().Compile());
+                .Select(GetTrendingArticlesArticle.GetProjection().Compile());
 
             var response = new GetTrendingArticlesQueryResponse(articleDtos);
 

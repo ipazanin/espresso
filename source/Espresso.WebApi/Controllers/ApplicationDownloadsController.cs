@@ -31,6 +31,43 @@ namespace Espresso.WebApi.Controllers
         {
         }
 
+
+        /// <summary>
+        /// Creates New Application Download
+        /// </summary>
+        /// <param name="basicInformationsHeaderParameters"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <response code="200">Response object containing articles from provided category</response>
+        /// <response code="401">If API Key is invalid or missing</response>
+        /// <response code="500">If unhandled exception occurred</response>
+        [Produces(MimeTypeConstants.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpPost]
+        [Route("api/application-downloads")]
+        public async Task<IActionResult> CreateApplicationDownload(
+            [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
+            CancellationToken cancellationToken
+        )
+        {
+            var command = new CreateApplicationDownloadCommand(
+                currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                consumerVersion: basicInformationsHeaderParameters.Version,
+                deviceType: basicInformationsHeaderParameters.DeviceType
+            );
+
+            await Mediator.Send(
+                request: command,
+                cancellationToken: cancellationToken
+            ).ConfigureAwait(false);
+
+            return Ok();
+        }
+
         /// <summary>
         /// Creates New Application Download
         /// </summary>
@@ -47,7 +84,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost]
         [Route("api/applicationDownloads/create")]
-        public async Task<IActionResult> CreateApplicationDownload(
+        public async Task<IActionResult> CreateApplicationDownload_1_3(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             CancellationToken cancellationToken
         )
@@ -120,8 +157,43 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
-        [Route("api/applicationDownloads/statistics")]
+        [Route("api/application-downloads")]
         public async Task<IActionResult> GetApplicationDownloadsStatistics(
+            [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
+            CancellationToken cancellationToken
+        )
+        {
+            var response = await Mediator.Send(
+                request: new GetApplicationDownloadStatisticsQuery(
+                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
+                    deviceType: basicInformationsHeaderParameters.DeviceType
+                ),
+                cancellationToken: cancellationToken
+            ).ConfigureAwait(false);
+
+            return Ok(response);
+        }
+
+
+        /// <summary>
+        /// Gets App Downloads Statistics
+        /// </summary>
+        /// <param name="basicInformationsHeaderParameters"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Response object containing articles from provided category</returns>
+        /// <response code="200">Response object containing articles from popular news portals</response>
+        /// <response code="401">If API Key is invalid or missing</response>
+        /// <response code="500">If unhandled exception occurred</response>
+        [Produces(MimeTypeConstants.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetApplicationDownloadStatisticsQueryResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpGet]
+        [Route("api/applicationDownloads/statistics")]
+        public async Task<IActionResult> GetApplicationDownloadsStatistics_1_3(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             CancellationToken cancellationToken
         )

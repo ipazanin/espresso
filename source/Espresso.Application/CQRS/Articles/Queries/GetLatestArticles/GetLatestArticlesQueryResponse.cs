@@ -1,24 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Espresso.Application.ViewModels.ArticleViewModels;
-using Espresso.Application.ViewModels.NewsPortalViewModels;
 
 namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
 {
     public class GetLatestArticlesQueryResponse
     {
         #region Properties
-        public IEnumerable<ArticleViewModel> Articles { get; }
+        public IEnumerable<GetLatestArticlesArticle> Articles { get; }
 
-        public IEnumerable<NewsPortalViewModel> NewNewsPortals { get; set; }
+        public IEnumerable<GetLatestArticlesNewsPortal> NewNewsPortals { get; set; }
 
         public int NewNewsPortalsPosition { get; }
         #endregion
 
         #region Constructors
         public GetLatestArticlesQueryResponse(
-            IEnumerable<ArticleViewModel> articles,
-            IEnumerable<NewsPortalViewModel> newNewsPortals,
+            IEnumerable<GetLatestArticlesArticle> articles,
+            IEnumerable<GetLatestArticlesNewsPortal> newNewsPortals,
             int newNewsPortalsPosition
         )
         {

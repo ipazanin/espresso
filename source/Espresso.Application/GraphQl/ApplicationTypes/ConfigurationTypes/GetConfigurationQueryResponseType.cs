@@ -1,6 +1,4 @@
-﻿using Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles;
-using Espresso.Application.CQRS.Configuration.Queries.GetConfiguration;
-using Espresso.Application.GraphQl.ApplicationTypes.ArticleTypes;
+﻿using Espresso.Application.CQRS.Configuration.Queries.GetConfiguration;
 using GraphQL.Types;
 
 namespace Espresso.Application.GraphQl.ApplicationTypes.ConfigurationTypes
@@ -11,11 +9,14 @@ namespace Espresso.Application.GraphQl.ApplicationTypes.ConfigurationTypes
         public GetConfigurationQueryResponseType()
         {
             Name = nameof(GetConfigurationQueryResponse);
-            Field<NonNullGraphType<ListGraphType<NonNullGraphType<CategoryViewModelType>>>>(
+            Field<NonNullGraphType<ListGraphType<NonNullGraphType<GetConfigurationCategoryType>>>>(
                 name: nameof(GetConfigurationQueryResponse.Categories)
             );
-            Field<NonNullGraphType<ListGraphType<NonNullGraphType<CategoryViewModelWithNewsPortalsType>>>>(
-                name: nameof(GetConfigurationQueryResponse.CategoryViewModelWithNewsPortals)
+            Field<NonNullGraphType<ListGraphType<NonNullGraphType<GetConfigurationCategoryWithNewsPortalsType>>>>(
+                name: nameof(GetConfigurationQueryResponse.CategoriesWithNewsPortals)
+            );
+            Field<NonNullGraphType<ListGraphType<NonNullGraphType<GetConfigurationRegionType>>>>(
+                name: nameof(GetConfigurationQueryResponse.Regions)
             );
         }
     }
