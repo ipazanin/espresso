@@ -5,9 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Espresso.Common.Constants;
-using Espresso.DataAccessLayer.IRepository;
-using Espresso.Domain.Entities;
 
+using Espresso.Domain.Entities;
+using Espresso.Persistence.IRepository;
 using MediatR;
 
 using Microsoft.Extensions.Caching.Memory;

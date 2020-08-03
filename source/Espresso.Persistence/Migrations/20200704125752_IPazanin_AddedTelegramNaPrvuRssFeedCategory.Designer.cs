@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
-    [DbContext(typeof(EspressoDatabaseContext))]
+    [DbContext(typeof(ApplicationDatabaseContext))]
     [Migration("20200704125752_IPazanin_AddedTelegramNaPrvuRssFeedCategory")]
     partial class IPazanin_AddedTelegramNaPrvuRssFeedCategory
     {

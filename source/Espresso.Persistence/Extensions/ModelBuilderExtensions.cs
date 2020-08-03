@@ -17,7 +17,7 @@ namespace Espresso.Persistence.Extensions
                 .GetMethods(BindingFlags.Instance | BindingFlags.Public)
                 .First(m => m.Name.Equals(ApplyConfigurationMethodName, StringComparison.OrdinalIgnoreCase));
 
-            var ret = typeof(EspressoDatabaseContext).Assembly
+            var ret = typeof(ApplicationDatabaseContext).Assembly
                 .GetTypes()
                 .Select(t => (t, i: t.GetInterfaces().FirstOrDefault(i => i.Name.Equals(typeof(IEntityTypeConfiguration<>).Name, StringComparison.Ordinal))))
                 .Where(it => it.i != null)

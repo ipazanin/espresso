@@ -1,8 +1,23 @@
 import React from 'react';
 
-const Article: React.FC = () => (
-  <div>
-  </div>
+interface ArticleProps {
+  title: string;
+  url: string;
+  imageUrl: string;
+}
+
+const Article: React.FC<ArticleProps> = ({
+  title,
+  url,
+  imageUrl,
+}: ArticleProps) => (
+  <>
+    <a href={url} style={{ display: 'block' }}>
+      {title}
+    </a>
+    <img src={imageUrl} />
+    <hr />
+  </>
 );
 
 export default Article;

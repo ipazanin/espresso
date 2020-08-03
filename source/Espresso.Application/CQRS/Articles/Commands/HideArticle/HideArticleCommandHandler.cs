@@ -13,11 +13,11 @@ namespace Espresso.Application.CQRS.Articles.Commands.HideArticle
 {
     public class HideArticleCommandHandler : IRequestHandler<HideArticleCommand>
     {
-        private readonly IEspressoDatabaseContext _espressoDatabaseContext;
+        private readonly IApplicationDatabaseContext _espressoDatabaseContext;
         private readonly IMemoryCache _memoryCache;
 
         public HideArticleCommandHandler(
-            IEspressoDatabaseContext espressoDatabaseContext,
+            IApplicationDatabaseContext espressoDatabaseContext,
             IMemoryCache memoryCache
         )
         {

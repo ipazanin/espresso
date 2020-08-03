@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
-    [DbContext(typeof(EspressoDatabaseContext))]
+    [DbContext(typeof(ApplicationDatabaseContext))]
     [Migration("20200713202016_IPazanin_ChangedScenaImageUrlParseStrategy")]
     partial class IPazanin_ChangedScenaImageUrlParseStrategy
     {

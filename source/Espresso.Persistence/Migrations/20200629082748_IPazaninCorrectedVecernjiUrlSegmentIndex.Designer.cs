@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
-    [DbContext(typeof(EspressoDatabaseContext))]
+    [DbContext(typeof(ApplicationDatabaseContext))]
     [Migration("20200629082748_IPazaninCorrectedVecernjiUrlSegmentIndex")]
     partial class IPazaninCorrectedVecernjiUrlSegmentIndex
     {

@@ -1,7 +1,8 @@
 ﻿using Espresso.Common.Enums;
-using Espresso.DataAccessLayer.IRepository;
-using Espresso.DataAccessLayer.Repository;
+
 using Espresso.Persistence.Database;
+using Espresso.Persistence.IRepository;
+using Espresso.Persistence.Repository;
 using Espresso.WebApi.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +31,7 @@ namespace Espresso.WebApi.Extensions
 
         private static IServiceCollection AddPersistenceConfiguration(this IServiceCollection services, IWebApiConfiguration configuration)
         {
-            services.AddDbContext<IEspressoDatabaseContext, EspressoDatabaseContext>(options =>
+            services.AddDbContext<IApplicationDatabaseContext, ApplicationDatabaseContext>(options =>
             {
                 options.UseSqlServer(configuration.ConnectionString);
                 switch (configuration.AppEnvironment)

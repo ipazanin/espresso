@@ -32,20 +32,37 @@ class Configuration {
     });
   }
 
-  /**
-   * throw new Error is not expression and cannot be used in combination with ?? operator
-   * @param message exception message
-   */
-  private static throwErrorExpression(message: string) {
-    throw new Error(message);
-  }
-
   public getProperty(property: string): unknown {
     if (!Object.prototype.hasOwnProperty.call(this.settings, property)) {
-      Configuration.throwErrorExpression('Missing key.');
+      throw new Error('Missing key.');
     }
 
     return this.settings[property];
+  }
+
+  public getServerUrl(): string {
+    const serverUrlPropertyName = 'serverUrl';
+    if (
+      !Object.prototype.hasOwnProperty.call(
+        this.settings,
+        serverUrlPropertyName
+      )
+    ) {
+      throw new Error(`Missing key ${serverUrlPropertyName}`);
+    }
+
+    return this.settings[serverUrlPropertyName] as string;
+  }
+
+  public getHeaders(): Record<string, string> {
+    const headersPropertyName = 'headers';
+    if (
+      !Object.prototype.hasOwnProperty.call(this.settings, headersPropertyName)
+    ) {
+      throw new Error(`Missing key ${headersPropertyName}`);
+    }
+
+    return this.settings[headersPropertyName] as Record<string, string>;
   }
 }
 export { Configuration };

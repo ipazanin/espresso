@@ -7,6 +7,7 @@
 appsettings.local-production-db.json
 appsettings.local-local-db.json
 docker-compose-local.yml
+docker-compose-parser.yml
 docker-compose-development.yml
 docker-compose-database.yml
 TestReports

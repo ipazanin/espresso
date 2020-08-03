@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
-    [DbContext(typeof(EspressoDatabaseContext))]
+    [DbContext(typeof(ApplicationDatabaseContext))]
     [Migration("20200720082422_IPazanin_IncreasedPushNotificationMaxLengts")]
     partial class IPazanin_IncreasedPushNotificationMaxLengts
     {

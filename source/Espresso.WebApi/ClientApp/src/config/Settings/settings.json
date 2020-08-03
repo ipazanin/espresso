@@ -1,1 +1,9 @@
-{}
+{
+  "headers": {
+    "espresso-api-key": "b8b9cc0a-90f6-4aa3-96b6-c1d9bc7b15dd",
+    "espresso-api-version": "1.4",
+    "version": "1.4.0",
+    "name": "",
+    "device-type": "7"
+  }
+}

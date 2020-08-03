@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dapper;
-using Espresso.DataAccessLayer.IRepository;
+
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
+using Espresso.Persistence.IRepository;
 
-namespace Espresso.DataAccessLayer.Repository
+namespace Espresso.Persistence.Repository
 {
     public class ApplicationDownloadRepository : IApplicationDownloadRepository
     {

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
-    [DbContext(typeof(EspressoDatabaseContext))]
+    [DbContext(typeof(ApplicationDatabaseContext))]
     [Migration("20200707202809_IPazanin_ChangedIsNewOverrideToBeNullable")]
     partial class IPazanin_ChangedIsNewOverrideToBeNullable
     {
