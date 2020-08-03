@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { ConfigurationBuilder } from 'config';
-import Article from 'components/Article/Article';
-import { ArticleModel } from '../../models/article.model';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { ConfigurationBuilder } from '../../config/index';
+import Article from '../Article/Article';
+
+interface ArticleModel {
+  id: string;
+  title: string;
+  url: string;
+  imageUrl: string;
+}
 
 const ArticleList: React.FC = () => {
   const [state, setState] = useState({
@@ -15,8 +21,9 @@ const ArticleList: React.FC = () => {
   const fetchData = () => {
     axios
       .get(
-        configuration.getServerUrl() +
-          `/api/articles?take=20&skip=${state.skip}`,
+        `${configuration.getServerUrl()}/api/articles?take=20&skip=${
+          state.skip
+        }`,
         {
           headers: configuration.getHeaders(),
         }
@@ -43,12 +50,12 @@ const ArticleList: React.FC = () => {
   return (
     <>
       <InfiniteScroll
-        dataLength={state.articles.length} //This is important field to render the next data
+        dataLength={state.articles.length} // This is important field to render the next data
         next={fetchData}
-        hasMore={true}
+        hasMore
         loader={<h4>Loading...</h4>}
         refreshFunction={refresh}
-        pullDownToRefresh={true}
+        pullDownToRefresh
         pullDownToRefreshContent={
           <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
         }
