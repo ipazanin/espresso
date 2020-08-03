@@ -18,13 +18,13 @@ namespace Espresso.Application.CQRS.Articles.Commands.IncrementTrendingArticleSc
     {
         #region Fields
         private readonly IMemoryCache _memoryCache;
-        private readonly IEspressoDatabaseContext _context;
+        private readonly IApplicationDatabaseContext _context;
         #endregion
 
         #region Constructors
         public IncrementNumberOfClicksCommandHandler(
             IMemoryCache memoryCache,
-            IEspressoDatabaseContext context
+            IApplicationDatabaseContext context
         )
         {
             _memoryCache = memoryCache;

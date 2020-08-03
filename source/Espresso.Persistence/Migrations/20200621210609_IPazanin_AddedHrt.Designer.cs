@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
-    [DbContext(typeof(EspressoDatabaseContext))]
+    [DbContext(typeof(ApplicationDatabaseContext))]
     [Migration("20200621210609_IPazanin_AddedHrt")]
     partial class IPazanin_AddedHrt
     {

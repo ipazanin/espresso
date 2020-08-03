@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
-    [DbContext(typeof(EspressoDatabaseContext))]
+    [DbContext(typeof(ApplicationDatabaseContext))]
     [Migration("20200701163859_IPazanin_ChangedNethrSvijetUrlSegmentIndex")]
     partial class IPazanin_ChangedNethrSvijetUrlSegmentIndex
     {

@@ -75,6 +75,8 @@ namespace Espresso.WebApi
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
+
+
             });
 
             services.AddAuthServices();
@@ -90,18 +92,6 @@ namespace Espresso.WebApi
             services.AddSwaggerServices(_configuration);
 
             services.AddPersistentServices(_configuration);
-
-            if (_configuration.AppEnvironment.Equals(AppEnvironment.Local))
-            {
-                services.AddCors(options =>
-                {
-                    options.AddPolicy("AllowOrigin", o =>
-                    {
-                        o.AllowAnyOrigin();
-                        // o.WithOrigins("*", "http://localhost:3000");
-                    });
-                });
-            }
         }
 
         /// <summary>
@@ -119,22 +109,10 @@ namespace Espresso.WebApi
         )
         {
             memoryCacheInit.InitWebApi().GetAwaiter().GetResult();
-
-            if (!configuration.AppEnvironment.Equals(AppEnvironment.Local))
+            app.UseSecurityHeadersMiddleware(securityHeadersBuilder =>
             {
-                app.UseSecurityHeadersMiddleware(securityHeadersBuilder =>
-                {
-                    securityHeadersBuilder.AddDefaultSecurePolicy();
-                });
-                app.UseCors();
-                app.UseCors(o =>
-                {
-                    // o.WithOrigins("http://localhost:3000", "*");
-                    o.AllowAnyOrigin();
-
-                });
-            }
-
+                securityHeadersBuilder.AddDefaultSecurePolicy();
+            });
 
             app.UseHsts();
 
@@ -150,6 +128,11 @@ namespace Espresso.WebApi
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = Path.Join(env.ContentRootPath, "ClientApp");
+
+                if (_configuration.AppEnvironment.Equals(AppEnvironment.Local))
+                {
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:3000");
+                }
             });
 
             app.UseEndpoints(endpoints =>

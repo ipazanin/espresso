@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Espresso.Persistence.Database
 {
-    public interface IEspressoDatabaseContext
+    public interface IApplicationDatabaseContext
     {
         #region Properties
         public DbSet<NewsPortal> NewsPortals { get; }

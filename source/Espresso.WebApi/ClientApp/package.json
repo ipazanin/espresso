@@ -12,6 +12,8 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-infinite": "^0.13.0",
+    "react-infinite-scroll-component": "^5.0.5",
     "react-scripts": "3.4.1"
   },
   "scripts": {

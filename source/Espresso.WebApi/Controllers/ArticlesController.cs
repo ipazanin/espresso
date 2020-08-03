@@ -14,6 +14,7 @@ using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Infrastructure;
 using Espresso.WebApi.Parameters.HeaderParameters;
 using MediatR;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

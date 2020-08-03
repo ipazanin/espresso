@@ -6,7 +6,6 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /source
 COPY ["Espresso.WebApi/Espresso.WebApi.csproj", "Espresso.WebApi/"]
-COPY ["Espresso.DataAccessLayer/Espresso.DataAccessLayer.csproj", "Espresso.DataAccessLayer/"]
 COPY ["Espresso.Domain/Espresso.Domain.csproj", "Espresso.Domain/"]
 COPY ["Espresso.Common/Espresso.Common.csproj", "Espresso.Common/"]
 COPY ["Espresso.Persistence/Espresso.Persistence.csproj", "Espresso.Persistence/"]

@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.Application", "Espresso.Application\Espresso.Application.csproj", "{1150F256-1B12-4E9E-AC18-51603A88F7B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.DataAccessLayer", "Espresso.DataAccessLayer\Espresso.DataAccessLayer.csproj", "{B0016529-0CB7-4663-AFE1-CC43A2E5FB82}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.ParserDeleter", "Espresso.ParserDeleter\Espresso.ParserDeleter.csproj", "{62ACF471-66FF-4F0D-A5A1-6FADF2E27D7E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.WebApi", "Espresso.WebApi\Espresso.WebApi.csproj", "{1F2994DC-47A9-456B-A28D-E85427587D13}"
@@ -46,18 +44,6 @@ Global
 		{1150F256-1B12-4E9E-AC18-51603A88F7B6}.Release|x64.Build.0 = Release|Any CPU
 		{1150F256-1B12-4E9E-AC18-51603A88F7B6}.Release|x86.ActiveCfg = Release|Any CPU
 		{1150F256-1B12-4E9E-AC18-51603A88F7B6}.Release|x86.Build.0 = Release|Any CPU
-		{B0016529-0CB7-4663-AFE1-CC43A2E5FB82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B0016529-0CB7-4663-AFE1-CC43A2E5FB82}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B0016529-0CB7-4663-AFE1-CC43A2E5FB82}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{B0016529-0CB7-4663-AFE1-CC43A2E5FB82}.Debug|x64.Build.0 = Debug|Any CPU
-		{B0016529-0CB7-4663-AFE1-CC43A2E5FB82}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B0016529-0CB7-4663-AFE1-CC43A2E5FB82}.Debug|x86.Build.0 = Debug|Any CPU
-		{B0016529-0CB7-4663-AFE1-CC43A2E5FB82}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B0016529-0CB7-4663-AFE1-CC43A2E5FB82}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B0016529-0CB7-4663-AFE1-CC43A2E5FB82}.Release|x64.ActiveCfg = Release|Any CPU
-		{B0016529-0CB7-4663-AFE1-CC43A2E5FB82}.Release|x64.Build.0 = Release|Any CPU
-		{B0016529-0CB7-4663-AFE1-CC43A2E5FB82}.Release|x86.ActiveCfg = Release|Any CPU
-		{B0016529-0CB7-4663-AFE1-CC43A2E5FB82}.Release|x86.Build.0 = Release|Any CPU
 		{62ACF471-66FF-4F0D-A5A1-6FADF2E27D7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{62ACF471-66FF-4F0D-A5A1-6FADF2E27D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62ACF471-66FF-4F0D-A5A1-6FADF2E27D7E}.Debug|x64.ActiveCfg = Debug|Any CPU

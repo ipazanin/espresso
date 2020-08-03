@@ -12,10 +12,10 @@ namespace Espresso.Application.CQRS.Notifications.Commands.SendPushNotification
     public class SendPushNotificationCommandHandler : IRequestHandler<SendPushNotificationCommand>
     {
         private const string DefaultSoundName = "default";
-        private readonly IEspressoDatabaseContext _espressoDatabaseContext;
+        private readonly IApplicationDatabaseContext _espressoDatabaseContext;
 
         public SendPushNotificationCommandHandler(
-            IEspressoDatabaseContext espressoDatabaseContext
+            IApplicationDatabaseContext espressoDatabaseContext
         )
         {
             _espressoDatabaseContext = espressoDatabaseContext;

@@ -6,7 +6,6 @@ WORKDIR /source
 COPY ["Espresso.ParserDeleter/Espresso.ParserDeleter.csproj", "Espresso.ParserDeleter/"]
 COPY ["Espresso.Common/Espresso.Common.csproj", "Espresso.Common/"]
 COPY ["Espresso.Application/Espresso.Application.csproj", "Espresso.Application/"]
-COPY ["Espresso.DataAccessLayer/Espresso.DataAccessLayer.csproj", "Espresso.DataAccessLayer/"]
 COPY ["Espresso.Domain/Espresso.Domain.csproj", "Espresso.Domain/"]
 COPY ["Espresso.Persistence/Espresso.Persistence.csproj", "Espresso.Persistence/"]
 RUN dotnet restore "Espresso.ParserDeleter/Espresso.ParserDeleter.csproj"

@@ -6,10 +6,10 @@
     "build": "dotnet build source/Espresso.sln",
     "compose-database:up": "docker-compose -f compose/docker-compose-database.yml down && docker-compose -f compose/docker-compose-database.yml up --build",
     "compose-database:down": "docker-compose -f compose/docker-compose-database.yml down",
-    "compose-local:up": "docker-compose -f compose/docker-compose-local.yml down && docker-compose -f compose/docker-compose-local.yml up --build",
-    "compose-local:down": "docker-compose -f compose/docker-compose-local.yml down",
     "compose-development:up": "sudo docker-compose -f compose/docker-compose-development.yml down && sudo docker-compose -f compose/docker-compose-development.yml up --build",
     "compose-development:down": "sudo docker-compose -f compose/docker-compose-development.yml down",
+    "compose-local:up": "docker-compose -f compose/docker-compose-local.yml down && docker-compose -f compose/docker-compose-local.yml up --build",
+    "compose-local:down": "docker-compose -f compose/docker-compose-local.yml down",
     "docker-build:latest": "docker build --force-rm --no-cache -f ~/Projects/Espresso/espresso-backend/source/Espresso.WebApi/Dockerfile -t ipazanin/espresso-webapi:latest --build-arg REACT_APP_ENVIRONMENT=\"production\" ~/Projects/Espresso/espresso-backend/source && docker push ipazanin/espresso-webapi:latest && docker build --force-rm --no-cache -f ~/Projects/Espresso/espresso-backend/source/Espresso.ParserDeleter/Dockerfile -t ipazanin/espresso-parserdeleter:latest ~/Projects/Espresso/espresso-backend/source && docker push ipazanin/espresso-parserdeleter:latest",
     "format": "dotnet format source/Espresso.sln",
     "migration-add": "export ASPNETCORE_ENVIRONMENT=local-local-db && dotnet ef migrations add -p source/Espresso.Persistence/Espresso.Persistence.csproj -v",
@@ -27,5 +27,13 @@
     "espresso"
   ],
   "author": "ipazanin",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^4.2.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "cd source/Espresso.WebApi/ClientApp && pretty-quick --staged && yarn lint && yarn test:ci "
+    }
+  }
 }

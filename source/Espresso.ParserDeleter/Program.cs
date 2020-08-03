@@ -7,13 +7,14 @@ using Espresso.Application.Initialization;
 using Espresso.Common.Configuration;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
-using Espresso.DataAccessLayer.IRepository;
-using Espresso.DataAccessLayer.Repository;
+
 using Espresso.Domain.IServices;
 using Espresso.Domain.IValidators;
 using Espresso.Domain.Services;
 using Espresso.Domain.Validators;
 using Espresso.Persistence.Database;
+using Espresso.Persistence.IRepository;
+using Espresso.Persistence.Repository;
 using Espresso.Workers.ParserDeleter.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
@@ -94,7 +95,7 @@ namespace Espresso.Workers.ParserDeleter
                     var configuration = serviceProvider.GetService<IParserDeleterConfiguration>();
 
                     #region Database
-                    services.AddDbContext<IEspressoDatabaseContext, EspressoDatabaseContext>(options =>
+                    services.AddDbContext<IApplicationDatabaseContext, ApplicationDatabaseContext>(options =>
                      {
                          options.UseSqlServer(hostContext.Configuration.GetConnectionString(ConfigurationKeyNameConstants.DefaultConnectionStringKeyName));
                          switch (configuration.AppEnvironment)

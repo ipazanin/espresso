@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Espresso.Persistence.Database
 {
-    public class EspressoDatabaseContext : DbContext, IEspressoDatabaseContext
+    public class ApplicationDatabaseContext : DbContext, IApplicationDatabaseContext
     {
         #region Properties
         public DbSet<NewsPortal> NewsPortals { get; set; } = null!;
@@ -20,7 +20,7 @@ namespace Espresso.Persistence.Database
         #endregion
 
         #region Constructors
-        public EspressoDatabaseContext(DbContextOptions<EspressoDatabaseContext> options)
+        public ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseContext> options)
             : base(options)
         {
             ChangeTracker.LazyLoadingEnabled = false;
@@ -33,8 +33,8 @@ namespace Espresso.Persistence.Database
         #region Methods
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyAllConfigurations();
+            base.OnModelCreating(modelBuilder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

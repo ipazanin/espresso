@@ -70,7 +70,6 @@ function dotnet_update_packages() {
 
 function dotnet_restore_espresso(){
     dotnet restore ./source/Espresso.Application/Espresso.Application.csproj
-    dotnet restore ./source/Espresso.DataAccessLayer/Espresso.DataAccessLayer.csproj
     dotnet restore ./source/Espresso.Common/Espresso.Common.csproj
     dotnet restore ./source/Espresso.Domain/Espresso.Domain.csproj
     dotnet restore ./source/Espresso.Persistence/Espresso.Persistence.csproj
@@ -80,7 +79,6 @@ function dotnet_restore_espresso(){
 
 function dotnet_update_packages_espresso(){
     dotnet_update_packages ./source/Espresso.Application/Espresso.Application.csproj
-    dotnet_update_packages ./source/Espresso.DataAccessLayer/Espresso.DataAccessLayer.csproj
     dotnet_update_packages ./source/Espresso.Common/Espresso.Common.csproj
     dotnet_update_packages ./source/Espresso.Domain/Espresso.Domain.csproj
     dotnet_update_packages ./source/Espresso.Persistence/Espresso.Persistence.csproj

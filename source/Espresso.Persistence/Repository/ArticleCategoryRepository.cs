@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
-using Espresso.DataAccessLayer.IRepository;
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
+using Espresso.Persistence.IRepository;
 using Microsoft.Data.SqlClient;
 
-namespace Espresso.DataAccessLayer.Repository
+namespace Espresso.Persistence.Repository
 {
     public class ArticleCategoryRepository : IArticleCategoryRepository
     {

@@ -13,7 +13,7 @@ using Espresso.Application.DataTransferObjects;
 using Espresso.Common.Configuration;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
-using Espresso.DataAccessLayer.IRepository;
+
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.Enums.NewsPortalEnums;
@@ -21,6 +21,7 @@ using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
+using Espresso.Persistence.IRepository;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -31,7 +32,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
         #region Fields
         private readonly ILoggerService _loggerService;
         private readonly IMemoryCache _memoryCache;
-        private readonly IEspressoDatabaseContext _context;
+        private readonly IApplicationDatabaseContext _context;
         private readonly IArticleRepository _articleRepository;
         private readonly IArticleCategoryRepository _articleCategoryRepository;
         private readonly IArticleParserService _articleParserService;
@@ -44,7 +45,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             IHttpClientFactory httpClientFactory,
             ILoggerService loggerService,
             IMemoryCache memoryCache,
-            IEspressoDatabaseContext context,
+            IApplicationDatabaseContext context,
             IArticleRepository articleRepository,
             IArticleCategoryRepository articleCategoryRepository,
             IArticleParserService articleParserService,

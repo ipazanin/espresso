@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using Espresso.Common.Configuration;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
-using Espresso.DataAccessLayer.IRepository;
+
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
+using Espresso.Persistence.IRepository;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,7 @@ namespace Espresso.Application.Initialization
         private readonly IArticleCategoryRepository _articleCategoryRepository;
         private readonly IArticleRepository _articleRepository;
         private readonly IApplicationDownloadRepository _applicationDownloadRepository;
-        private readonly IEspressoDatabaseContext _context;
+        private readonly IApplicationDatabaseContext _context;
         private readonly ICommonConfiguration _commonConfiguration;
         private readonly ILoggerService _loggerService;
         #endregion
@@ -50,7 +51,7 @@ namespace Espresso.Application.Initialization
             IApplicationDownloadRepository applicationDownloadRepository,
             IArticleCategoryRepository articleCategoryRepository,
             IArticleRepository articleRepository,
-            IEspressoDatabaseContext context,
+            IApplicationDatabaseContext context,
             ICommonConfiguration commonConfiguration,
             ILoggerService loggerService
         )

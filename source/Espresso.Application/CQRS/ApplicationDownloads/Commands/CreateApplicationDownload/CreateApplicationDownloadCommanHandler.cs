@@ -17,14 +17,14 @@ namespace Espresso.Application.CQRS.ApplicationDownloads.Commands.CreateApplicat
     public class CreateApplicationDownloadCommanHandler : IRequestHandler<CreateApplicationDownloadCommand>
     {
         #region Fields
-        private readonly IEspressoDatabaseContext _context;
+        private readonly IApplicationDatabaseContext _context;
         private readonly ILoggerService _loggerService;
         private readonly IMemoryCache _memoryCache;
         #endregion
 
         #region Constructors
         public CreateApplicationDownloadCommanHandler(
-            IEspressoDatabaseContext context,
+            IApplicationDatabaseContext context,
             ILoggerService loggerService,
             IMemoryCache memoryCache
             )

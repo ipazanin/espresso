@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Espresso.Domain.Entities;
 
-namespace Espresso.DataAccessLayer.IRepository
+namespace Espresso.Persistence.IRepository
 {
     public interface IArticleCategoryRepository
     {
