@@ -2,7 +2,9 @@
   "files.exclude": {
     "**/.git": false,
     "**/obj": true,
-    "**/bin": true
+    "**/bin": true,
+    "**/node_modules": true,
+    "**/ClientApp/build": true
   },
   "window.zoomLevel": 1,
   "workbench.sideBar.location": "right",
@@ -27,9 +29,15 @@
   "omnisharp.enableRoslynAnalyzers": true,
   "omnisharp.enableMsBuildLoadProjectsOnDemand": false,
   "omnisharp.defaultLaunchSolution": "Espresso.sln",
-  "dotnet-test-explorer.testProjectPath": "**/*Tests.@(csproj|vbproj|fsproj)",
   "eslint.alwaysShowStatus": true,
   "eslint.format.enable": true,
   "eslint.validate": ["javascript", "typescript"],
-  "eslint.packageManager": "yarn"
+  "eslint.packageManager": "yarn",
+  "eslint.workingDirectories": ["./source/Espresso.WebApi/ClientApp"],
+  "eslint.options": {
+    "configFile": ".eslintrc"
+  },
+  "eslint.lintTask.enable": true,
+  "eslint.nodePath": "./source/Espresso.WebApi/ClientApp/node_modules",
+  "prettier.configPath": "./source/Espresso.WebApi/ClientApp/.prettierrc"
 }

@@ -18,7 +18,7 @@ RUN dotnet build "Espresso.WebApi.csproj" -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish "Espresso.WebApi.csproj" -c Release -o /app/publish
 
-#Angular build
+#React build
 FROM node AS nodebuilder
 ARG REACT_APP_ENVIRONMENT
 
@@ -32,16 +32,13 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 # install and cache app dependencies
 COPY Espresso.WebApi/ClientApp/package.json /usr/src/app/package.json
 RUN npm install
-# RUN npm install -g @angular/cli@1.7.0 --unsafe
 
 # add app
-
 COPY Espresso.WebApi/ClientApp/. /usr/src/app
 RUN echo IPAZANIN $REACT_APP_ENVIRONMENT
 ENV REACT_APP_ENVIRONMENT=$REACT_APP_ENVIRONMENT
-RUN npm run build
-
-#End Angular build
+RUN npm run build-frontend
+#End React build
 
 
 FROM base AS final
