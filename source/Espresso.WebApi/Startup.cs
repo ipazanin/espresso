@@ -132,6 +132,7 @@ namespace Espresso.WebApi
                 if (_configuration.AppEnvironment.Equals(AppEnvironment.Local))
                 {
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:3000");
+                    // spa.UseProxyToSpaDevelopmentServer("http://docker.for.mac.localhost:3000");
                 }
             });
 
