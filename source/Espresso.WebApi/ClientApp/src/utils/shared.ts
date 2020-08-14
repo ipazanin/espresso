@@ -1,4 +1,6 @@
-export const Breakpoints: { [key in 'XXS' | 'XS' | 'SM' | 'MD' | 'LG' | 'XL' | 'XXL']: number } = {
+export const Breakpoints: {
+  [key in 'XXS' | 'XS' | 'SM' | 'MD' | 'LG' | 'XL' | 'XXL']: number;
+} = {
   XXS: 375,
   XS: 475,
   SM: 576,

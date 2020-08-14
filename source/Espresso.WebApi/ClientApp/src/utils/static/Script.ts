@@ -9,7 +9,10 @@ class Script {
         // @ts-ignore
         script.onreadystatechange = () => {
           // @ts-ignore
-          if (script.readyState === 'loaded' || script.readyState === 'complete') {
+          if (
+            script.readyState === 'loaded' ||
+            script.readyState === 'complete'
+          ) {
             // @ts-ignore
             script.onreadystatechange = null;
             callback();
@@ -25,7 +28,8 @@ class Script {
     document.head.appendChild(script);
   };
 
-  static exists = (src: string) => Boolean(document.querySelector(`script[src="${src}"]`));
+  static exists = (src: string) =>
+    Boolean(document.querySelector(`script[src="${src}"]`));
 }
 
 export default Script;

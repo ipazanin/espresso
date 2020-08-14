@@ -1,79 +1,62 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { ConfigurationBuilder } from '../../config/index';
-import Article from '../Article/Article';
+import { useInView } from 'react-intersection-observer';
+import { ArticleModel } from 'models';
+import { FixedSizeList, ListChildComponentProps } from 'react-window';
+import { articleService } from 'services';
+import Article from './Article/Article';
 
-interface ArticleModel {
-  id: string;
-  title: string;
-  url: string;
-  imageUrl: string;
+interface FixedSizeListRenderFnProps extends ListChildComponentProps {
+  data: ArticleModel[];
 }
 
 const ArticleList: React.FC = () => {
-  const [state, setState] = useState({
-    articles: [] as ArticleModel[],
-    skip: 0,
-  });
-  const configuration = ConfigurationBuilder.getConfiguration();
+  const [articles, setArticles] = useState<ArticleModel[]>([]);
+  const [articleRef, inView] = useInView();
 
-  const fetchData = () => {
-    axios
-      .get(
-        `${configuration.getServerUrl()}/api/articles?take=20&skip=${
-          state.skip
-        }`,
-        {
-          headers: configuration.getHeaders(),
-        }
-      )
-      .then((res) => {
-        const articles = state.articles.concat(res.data.articles);
-        setState({ ...res.data, articles, skip: state.skip + 20 });
-        console.log('state:', state);
-      })
-      .catch((error) => console.log(error));
-    console.log('fetch data');
-  };
+  const loadMoreArticles = React.useCallback(async () => {
+    const response = await articleService.getLatestArticles();
 
-  const refresh = () => {
-    setState({ ...state, skip: 0 });
-    fetchData();
-    console.log('refresh');
-  };
-
-  useEffect(() => {
-    fetchData();
+    setArticles(prevArticles => [...prevArticles, ...response.articles]);
   }, []);
 
+  useEffect(() => {
+    loadMoreArticles();
+  }, [loadMoreArticles]);
+
+  useEffect(() => {
+    if (inView) {
+      loadMoreArticles();
+    }
+  }, [inView, loadMoreArticles]);
+
   return (
-    <>
-      <InfiniteScroll
-        dataLength={state.articles.length} // This is important field to render the next data
-        next={fetchData}
-        hasMore
-        loader={<h4>Loading...</h4>}
-        refreshFunction={refresh}
-        pullDownToRefresh
-        pullDownToRefreshContent={
-          <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
+    <FixedSizeList
+      height={800}
+      itemData={articles}
+      itemCount={articles.length}
+      itemSize={80}
+      overscanCount={5}
+      width="100%"
+    >
+      {({ data, index, style }: FixedSizeListRenderFnProps) => {
+        const item = data[index];
+
+        if (!item) {
+          return null;
         }
-        releaseToRefreshContent={
-          <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
-        }
-        pullDownToRefreshThreshold={20}
-      >
-        {state.articles.map((article) => (
+
+        const { id } = item;
+
+        return (
           <Article
-            key={article.id}
-            title={article.title}
-            url={article.url}
-            imageUrl={article.imageUrl}
+            key={id}
+            id={id}
+            style={style}
+            ref={articles.length - index === 5 ? articleRef : undefined}
           />
-        ))}
-      </InfiniteScroll>
-    </>
+        );
+      }}
+    </FixedSizeList>
   );
 };
 
