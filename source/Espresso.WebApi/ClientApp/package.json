@@ -1,0 +1,102 @@
+{
+  "name": "espresso",
+  "version": "1.3.2",
+  "description": "Espresso",
+  "private": true,
+  "author": {
+    "name": "Ivan Pažanin"
+  },
+  "scripts": {
+    "start-frontend": "REACT_APP_ENVIRONMENT=local react-scripts start",
+    "start-frontend:local": "react-scripts start --env=local",
+    "build-frontend": "react-scripts build",
+    "test-frontend": "REACT_APP_ENVIRONMENT=test react-scripts test",
+    "test-frontend:cov": "yarn test-frontend -- --coverage",
+    "test-frontend:ci": "CI=true yarn test-frontend",
+    "lint-frontend:base": "eslint --ext .ts,.tsx src/",
+    "lint-frontend": "yarn lint-frontend:base --fix --cache --cache-location=./node_modules/.cache/",
+    "upgrade-frontend": "yarn upgrade",
+    "build": "dotnet build ../../../source/Espresso.sln",
+    "compose-database:up": "docker-compose -f ../../../compose/docker-compose-database.yml down && docker-compose -f ../../../compose/docker-compose-database.yml up --build",
+    "compose-database:down": "docker-compose -f ../../../compose/docker-compose-database.yml down",
+    "compose-development:up": "sudo docker-compose -f ../../../compose/docker-compose-development.yml down && sudo docker-compose -f ../../../compose/docker-compose-development.yml up --build",
+    "compose-development:down": "sudo docker-compose -f ../../../compose/docker-compose-development.yml down",
+    "compose-local:up": "docker-compose -f ../../../compose/docker-compose-local.yml down && docker-compose -f ../../../compose/docker-compose-local.yml up --build",
+    "compose-local:down": "docker-compose -f ../../../compose/docker-compose-local.yml down",
+    "docker-build:latest": "docker build --force-rm --no-cache -f ../../../source/Espresso.WebApi/Dockerfile -t ipazanin/espresso-webapi:latest --build-arg REACT_APP_ENVIRONMENT=\"production\" ../../../source && docker push ipazanin/espresso-webapi:latest && docker build --force-rm --no-cache -f ../../../source/Espresso.ParserDeleter/Dockerfile -t ipazanin/espresso-parserdeleter:latest ../../../source && docker push ipazanin/espresso-parserdeleter:latest",
+    "format": "dotnet format ../../../source/Espresso.sln",
+    "migration-add": "export ASPNETCORE_ENVIRONMENT=local-local-db && dotnet ef migrations add -p ../../../source/Espresso.Persistence/Espresso.Persistence.csproj -v",
+    "migration-remove": "export ASPNETCORE_ENVIRONMENT=local-local-db && dotnet ef migrations remove -p ../../../source/Espresso.Persistence/Espresso.Persistence.csproj -v",
+    "restore": "dotnet restore ../../../source/Espresso.sln",
+    "start-webapi": "ASPNETCORE_ENVIRONMENT=local-local-db dotnet run --project ../../../source/Espresso.WebApi/Espresso.WebApi.csproj --urls \"http://localhost:8000/\" ",
+    "start-webapi:watch": "ASPNETCORE_ENVIRONMENT=local-local-db dotnet watch --project ../../../source/Espresso.WebApi/Espresso.WebApi.csproj run --urls \"http://localhost:8000/\" ",
+    "start-parserdeleter": "DOTNET_ENVIRONMENT=local-local-db dotnet run --project ../../../source/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj",
+    "start-parserdeleter:watch": "DOTNET_ENVIRONMENT=local-local-db dotnet watch --project ../../../source/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj run",
+    "test": "dotnet test ../../../source/Espresso.sln",
+    "test:coverage": "sudo dotnet test --logger 'trx;LogFileName=TestResults.trx' --logger 'xunit;LogFileName=TestResults.xml' --results-directory ../../../tests/UnitTests/TestReports/UnitTests /p:CollectCoverage=true /p:CoverletOutput=TestReports/Coverage/ /p:CoverletOutputFormat=cobertura ../../../source/Espresso.sln",
+    "update-packages": "../../../scripts/update-packages-script.sh"
+  },
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.9.0",
+    "axios": "^0.19.2",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-infinite": "^0.13.0",
+    "react-intersection-observer": "^8.26.2",
+    "react-scripts": "3.4.1",
+    "react-window": "^1.8.5"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^10.2.1",
+    "@testing-library/user-event": "^11.3.1",
+    "@types/enzyme": "^3.10.5",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/jest": "^25.2.3",
+    "@types/node": "^14.0.12",
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-window": "^1.8.2",
+    "@typescript-eslint/eslint-plugin": "^3.2.0",
+    "@typescript-eslint/parser": "^3.2.0",
+    "enzyme-to-json": "^3.5.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-react": "^1.1.7",
+    "eslint-plugin-import": "^2.21.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^4.0.4",
+    "husky": "^4.2.5",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1",
+    "typescript": "^3.9.5"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn build && yarn test && pretty-quick && yarn lint-frontend && yarn test-frontend:ci "
+    }
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
+  }
+}

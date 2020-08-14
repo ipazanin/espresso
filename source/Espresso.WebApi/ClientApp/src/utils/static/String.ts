@@ -1,5 +1,6 @@
 class String {
-  static snakeCaseToCamelCase = (word: string) => word.toLowerCase().replace(/([-_]\w)/g, (g) => g[1].toUpperCase());
+  static snakeCaseToCamelCase = (word: string) =>
+    word.toLowerCase().replace(/([-_]\w)/g, g => g[1].toUpperCase());
 
   static hexToRgba = (hex: string, alpha: number) => {
     const r = parseInt(hex.slice(1, 3), 16);

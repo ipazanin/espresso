@@ -1,8 +1,14 @@
 import { Environment } from './environment';
 
 class Configuration {
+  /**
+   * Environment
+   */
   public readonly environment: Environment;
 
+  /**
+   * Configuration object
+   */
   public readonly settings: Record<string, unknown>;
 
   /**
@@ -25,44 +31,23 @@ class Configuration {
     //   Configuration.throwErrorExpression('Missing configuration.');
     // }
 
-    Object.keys(this.settings).forEach((key) => {
+    Object.keys(this.settings).forEach(key => {
       Object.defineProperty(this, key, {
         value: appSettingsEnvironment[key] ?? appSettings[key],
       });
     });
   }
 
-  public getProperty(property: string): unknown {
+  /**
+   * Gets property from configuration object
+   * @param property name of property on configuration object
+   */
+  public getProperty<T = unknown>(property: 'serverUrl' | 'headers'): T {
     if (!Object.prototype.hasOwnProperty.call(this.settings, property)) {
       throw new Error('Missing key.');
     }
 
-    return this.settings[property];
-  }
-
-  public getServerUrl(): string {
-    const serverUrlPropertyName = 'serverUrl';
-    if (
-      !Object.prototype.hasOwnProperty.call(
-        this.settings,
-        serverUrlPropertyName
-      )
-    ) {
-      throw new Error(`Missing key ${serverUrlPropertyName}`);
-    }
-
-    return this.settings[serverUrlPropertyName] as string;
-  }
-
-  public getHeaders(): Record<string, string> {
-    const headersPropertyName = 'headers';
-    if (
-      !Object.prototype.hasOwnProperty.call(this.settings, headersPropertyName)
-    ) {
-      throw new Error(`Missing key ${headersPropertyName}`);
-    }
-
-    return this.settings[headersPropertyName] as Record<string, string>;
+    return this.settings[property] as T;
   }
 }
 export { Configuration };
