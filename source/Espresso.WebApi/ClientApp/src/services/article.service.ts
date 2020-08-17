@@ -18,7 +18,7 @@ class ArticleService {
       return res.data;
     } catch (err) {
       console.log('err while fetching latest articles:', err);
-      return { articles: [] };
+      return { articles: [], newNewsPortals: [], newNewsPortalsPosition: 0 };
     }
   }
 }
