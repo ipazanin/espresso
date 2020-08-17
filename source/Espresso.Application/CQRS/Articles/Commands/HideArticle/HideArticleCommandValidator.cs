@@ -6,7 +6,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.HideArticle
     {
         public HideArticleCommandValidator()
         {
-            RuleFor(request => request.ArticleId).NotEmpty();
+            _ = RuleFor(request => request.ArticleId).NotEmpty();
         }
     }
 }

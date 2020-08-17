@@ -47,7 +47,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.IncrementTrendingArticleSc
             if (databaseArticle != null)
             {
                 databaseArticle.IncrementNumberOfClicks();
-                await _context
+                _ = await _context
                     .SaveChangesAsync(cancellationToken: default)
                     .ConfigureAwait(continueOnCapturedContext: false);
             }
@@ -59,7 +59,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.IncrementTrendingArticleSc
             if (memoryCacheArticles.TryGetValue(request.Id, out var memoryCacheArticle))
             {
                 memoryCacheArticle.IncrementNumberOfClicks();
-                _memoryCache.Set(
+                _ = _memoryCache.Set(
                     key: MemoryCacheConstants.ArticleKey,
                     value: memoryCacheArticles.Values.ToList()
                 );

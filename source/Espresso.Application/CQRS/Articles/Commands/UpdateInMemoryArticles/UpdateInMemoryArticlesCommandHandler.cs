@@ -57,7 +57,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.UpdateInMemoryArticles
                 .Select(articleKeyValuePair => articleKeyValuePair.Value)
                 .ToList();
 
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
                 value: articlesToSave
             );
@@ -76,7 +76,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.UpdateInMemoryArticles
             {
                 if (savedArticles.ContainsKey(article.Id))
                 {
-                    savedArticles.Remove(article.Id);
+                    _ = savedArticles.Remove(article.Id);
                     savedArticles.Add(article.Id, article);
                 }
             }
@@ -85,7 +85,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.UpdateInMemoryArticles
                 .Select(articleKeyValuePair => articleKeyValuePair.Value)
                 .ToList();
 
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
                 value: articlesToSave
             );
@@ -102,7 +102,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.UpdateInMemoryArticles
                 .Where(article => article.CreateDateTime > maxAge)
                 .ToList();
 
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
                 value: savedArticlesWithoutOldArticles
             );

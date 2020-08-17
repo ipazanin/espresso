@@ -9,11 +9,11 @@ namespace Espresso.Application.CQRS.ApplicationDownloads.Commands.CreateApplicat
     {
         public CreateApplicationDownloadCommandValidator()
         {
-            RuleFor(createApplicationDownloadCommand => createApplicationDownloadCommand.ConsumerVersion).NotEmpty().MaximumLength(PropertyConstraintConstants.ApplicationDownloadMobileAppVersionHasMaxLenght);
+            _ = RuleFor(createApplicationDownloadCommand => createApplicationDownloadCommand.ConsumerVersion).NotEmpty().MaximumLength(PropertyConstraintConstants.ApplicationDownloadMobileAppVersionHasMaxLenght);
 
-            RuleFor(createApplicationDownloadCommand => createApplicationDownloadCommand.CurrentEspressoWebApiVersion).NotEmpty().MaximumLength(PropertyConstraintConstants.ApplicationDownloadWebApiVersionHasMaxLenght);
+            _ = RuleFor(createApplicationDownloadCommand => createApplicationDownloadCommand.CurrentEspressoWebApiVersion).NotEmpty().MaximumLength(PropertyConstraintConstants.ApplicationDownloadWebApiVersionHasMaxLenght);
 
-            RuleFor(createApplicationDownloadCommand => createApplicationDownloadCommand.DeviceType).Must(mobileDeviceType => Enum.IsDefined(typeof(DeviceType), mobileDeviceType) && mobileDeviceType != DeviceType.Undefined);
+            _ = RuleFor(createApplicationDownloadCommand => createApplicationDownloadCommand.DeviceType).Must(mobileDeviceType => Enum.IsDefined(typeof(DeviceType), mobileDeviceType) && mobileDeviceType != DeviceType.Undefined);
         }
     }
 }

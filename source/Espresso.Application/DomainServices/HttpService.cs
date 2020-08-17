@@ -39,7 +39,7 @@ namespace Espresso.Application.DomainServices
         {
             var httpClient = _httpClientFactory.CreateClient();
             httpClient.Timeout = httpClientTimeout;
-            httpClient.AddHeadersToHttpClient(httpHeaders);
+            _ = httpClient.AddHeadersToHttpClient(httpHeaders);
 
             var httpContent = await CreateJsonHttpContent(
                 data: data,

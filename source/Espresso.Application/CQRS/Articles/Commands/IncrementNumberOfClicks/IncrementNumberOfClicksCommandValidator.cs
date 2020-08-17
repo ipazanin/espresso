@@ -6,7 +6,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.IncrementTrendingArticleSc
     {
         public IncrementNumberOfClicksCommandValidator()
         {
-            RuleFor(incrementArticleTrendingScoreCommand => incrementArticleTrendingScoreCommand.Id).NotEmpty();
+            _ = RuleFor(incrementArticleTrendingScoreCommand => incrementArticleTrendingScoreCommand.Id).NotEmpty();
         }
     }
 }

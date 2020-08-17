@@ -76,7 +76,7 @@ namespace Espresso.Application.Initialization
             var stopwatch = Stopwatch.StartNew();
 
             #region ApiKeys
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ApiKeysKey,
                 value: _commonConfiguration.ApiKeys.ToList()
             );
@@ -89,7 +89,7 @@ namespace Espresso.Application.Initialization
                 .AsNoTracking()
                 .ToListAsync();
 
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.RegionKey,
                 value: regions.ToList()
             );
@@ -103,7 +103,7 @@ namespace Espresso.Application.Initialization
 
             var newsPortalsDictionary = newsPortals.ToDictionary(newsPortal => newsPortal.Id);
 
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.NewsPortalKey,
                 value: newsPortals.ToList()
             );
@@ -118,7 +118,7 @@ namespace Espresso.Application.Initialization
 
             var categoryDictionary = categories.ToDictionary(category => category.Id);
 
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.CategoryKey,
                 value: categories.ToList()
             );
@@ -163,7 +163,7 @@ namespace Espresso.Application.Initialization
                 }
             }
 
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
                 value: articlesToAdd
             );
@@ -172,7 +172,7 @@ namespace Espresso.Application.Initialization
             #region ApplicationDownloads
             var applicationDownloads = await _applicationDownloadRepository.GetApplicationDownloads();
 
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ApplicationDownloadKey,
                 value: applicationDownloads.ToList()
             );
@@ -198,7 +198,7 @@ namespace Espresso.Application.Initialization
             var stopwatch = Stopwatch.StartNew();
 
             #region ApiKeys
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ApiKeysKey,
                 value: _commonConfiguration.ApiKeys.ToList()
             );
@@ -211,7 +211,7 @@ namespace Espresso.Application.Initialization
                 .ToListAsync();
             var newsPortalsDictionary = newsPortals.ToDictionary(newsPortal => newsPortal.Id);
 
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.NewsPortalKey,
                 value: newsPortals.ToList()
             );
@@ -225,7 +225,7 @@ namespace Espresso.Application.Initialization
 
             var categoryDictionary = categories.ToDictionary(category => category.Id);
 
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.CategoryKey,
                 value: categories.ToList()
             );
@@ -270,7 +270,7 @@ namespace Espresso.Application.Initialization
                 }
             }
 
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
                 value: articlesToAdd.ToList()
             );
@@ -285,7 +285,7 @@ namespace Espresso.Application.Initialization
                 .AsNoTracking()
                 .ToListAsync();
 
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.RssFeedKey,
                 value: rssFeeds.ToList()
             );
@@ -308,7 +308,7 @@ namespace Espresso.Application.Initialization
         #region Private Methods
         private void InitializeFireBase()
         {
-            FirebaseApp.Create(new AppOptions()
+            _ = FirebaseApp.Create(new AppOptions()
             {
                 Credential = GoogleCredential.FromFile(
                 path: Path.Combine(

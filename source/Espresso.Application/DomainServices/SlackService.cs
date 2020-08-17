@@ -252,34 +252,34 @@ namespace Espresso.Application.DomainServices
             CancellationToken cancellationToken
         )
         {
-            await _memoryCache.GetOrCreateAsync(data.Text, async entry =>
-            {
-                entry.AbsoluteExpirationRelativeToNow = ExceptionMessageCooldownInterval;
-                try
-                {
-                    var stream = new MemoryStream();
-                    await JsonSerializer.SerializeAsync(
-                        stream,
-                        data,
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
+            _ = await _memoryCache.GetOrCreateAsync(data.Text, async entry =>
+              {
+                  entry.AbsoluteExpirationRelativeToNow = ExceptionMessageCooldownInterval;
+                  try
+                  {
+                      var stream = new MemoryStream();
+                      await JsonSerializer.SerializeAsync(
+                          stream,
+                          data,
+                          cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                    stream.Position = 0;
-                    using var reader = new StreamReader(stream);
-                    var jsonString = await reader.ReadToEndAsync().ConfigureAwait(false);
+                      stream.Position = 0;
+                      using var reader = new StreamReader(stream);
+                      var jsonString = await reader.ReadToEndAsync().ConfigureAwait(false);
 
-                    var content = new StringContent(jsonString, Encoding.UTF8, MimeTypeConstants.Json);
-                    var response = await _httpClient.PostAsync(
-                        requestUri: WebHookurl,
-                        content: content,
-                        cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
-                }
-                catch (Exception)
-                {
-                }
+                      var content = new StringContent(jsonString, Encoding.UTF8, MimeTypeConstants.Json);
+                      var response = await _httpClient.PostAsync(
+                          requestUri: WebHookurl,
+                          content: content,
+                          cancellationToken: cancellationToken
+                      ).ConfigureAwait(false);
+                  }
+                  catch (Exception)
+                  {
+                  }
 
-                return "";
-            }).ConfigureAwait(false);
+                  return "";
+              }).ConfigureAwait(false);
         }
         #endregion
 

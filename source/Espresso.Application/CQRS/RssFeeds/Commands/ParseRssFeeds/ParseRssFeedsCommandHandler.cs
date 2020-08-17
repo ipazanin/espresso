@@ -80,7 +80,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             ).ConfigureAwait(false);
 
             // To Save SkipParseConfiguration.CurrentSkip
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.RssFeedKey,
                 value: rssFeeds.ToList()
             );
@@ -107,7 +107,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             CancellationToken cancellationToken
         )
         {
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.DeadLockLogKey,
                 value: $"Started {nameof(ParseRssFeeds)}"
             );
@@ -139,15 +139,15 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                         )
                         {
                             using var request = new HttpRequestMessage(HttpMethod.Get, closureRssFeed.Url);
-                            request.Headers.TryAddWithoutValidation("Accept", "text/html,application/xhtml+xml,application/xml");
-                            request.Headers.TryAddWithoutValidation("Accept-Encoding", "gzip, deflate");
-                            request.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:19.0) Gecko/20100101 Firefox/19.0");
-                            request.Headers.TryAddWithoutValidation("Accept-Charset", "ISO-8859-1");
+                            _ = request.Headers.TryAddWithoutValidation("Accept", "text/html,application/xhtml+xml,application/xml");
+                            _ = request.Headers.TryAddWithoutValidation("Accept-Encoding", "gzip, deflate");
+                            _ = request.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:19.0) Gecko/20100101 Firefox/19.0");
+                            _ = request.Headers.TryAddWithoutValidation("Accept-Charset", "ISO-8859-1");
 
                             using var response = await _httpClient
                                 .SendAsync(request, cancellationToken)
                                 .ConfigureAwait(false);
-                            response.EnsureSuccessStatusCode();
+                            _ = response.EnsureSuccessStatusCode();
                             using var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
                             using var decompressedStream = new GZipStream(responseStream, CompressionMode.Decompress);
                             using var streamReader = new StreamReader(decompressedStream);
@@ -182,7 +182,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
 
             await Task.WhenAll(getRssFeedRequestTasks).ConfigureAwait(false);
 
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.DeadLockLogKey,
                         value: $"Ended {nameof(ParseRssFeeds)}"
                     );
@@ -231,7 +231,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                                 cancellationToken: cancellationToken
                             ).ConfigureAwait(false);
 
-                            parsedArticles.TryAdd(article.Id, article);
+                            _ = parsedArticles.TryAdd(article.Id, article);
                         }
                         catch (Exception exception)
                         {
@@ -296,10 +296,10 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                 }
                 else
                 {
-                    uniqueArticles.TryAdd(article.Id, article);
-                    articleIdArticleDictionary.TryAdd((article.NewsPortalId, article.ArticleId), article.Id);
-                    titleArticleDictionary.TryAdd((article.NewsPortalId, article.Title), article.Id);
-                    summaryArticleDictionary.TryAdd((article.NewsPortalId, article.Summary), article.Id);
+                    _ = uniqueArticles.TryAdd(article.Id, article);
+                    _ = articleIdArticleDictionary.TryAdd((article.NewsPortalId, article.ArticleId), article.Id);
+                    _ = titleArticleDictionary.TryAdd((article.NewsPortalId, article.Title), article.Id);
+                    _ = summaryArticleDictionary.TryAdd((article.NewsPortalId, article.Summary), article.Id);
                 }
             }
 
@@ -312,7 +312,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             IEnumerable<Category> categories
         )
         {
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.DeadLockLogKey,
                 value: $"Started {nameof(CreateOrUpdateArticles)}"
             );
@@ -332,9 +332,9 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
 
             foreach (var article in savedArticles)
             {
-                savedArticlesArticleIdDictionary.TryAdd((article.NewsPortalId, article.ArticleId), article.Id);
-                savedArticlesTitleDictionary.TryAdd((article.NewsPortalId, article.Title), article.Id);
-                savedArticlesSummaryDictionary.TryAdd((article.NewsPortalId, article.Summary), article.Id);
+                _ = savedArticlesArticleIdDictionary.TryAdd((article.NewsPortalId, article.ArticleId), article.Id);
+                _ = savedArticlesTitleDictionary.TryAdd((article.NewsPortalId, article.Title), article.Id);
+                _ = savedArticlesSummaryDictionary.TryAdd((article.NewsPortalId, article.Summary), article.Id);
             }
 
             foreach (var article in articles)
@@ -365,7 +365,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             var createdArticleDtos = createArticles.Select(ArticleDto.GetProjection().Compile());
             var updatedArticleDtos = updateArticles.Select(ArticleDto.GetProjection().Compile());
 
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.DeadLockLogKey,
                 value: $"Ended {nameof(CreateOrUpdateArticles)}"
             );
@@ -381,7 +381,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             {
                 return;
             }
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.DeadLockLogKey,
                 value: $"Started {nameof(CreateArticles)}"
             );
@@ -408,11 +408,11 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             _articleRepository.InsertArticles(articlesToCreate);
             _articleCategoryRepository.InsertArticleCategories(articleCategoriesToCreate);
 
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
                 value: savedArticles.Values.ToList()
             );
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.DeadLockLogKey,
                 value: $"Ended {nameof(CreateArticles)}"
             );
@@ -426,7 +426,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             {
                 return;
             }
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.DeadLockLogKey,
                 value: $"Started {nameof(UpdateArticles)}"
             );
@@ -441,7 +441,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             {
                 if (savedArticles.ContainsKey(article.Id))
                 {
-                    savedArticles.Remove(article.Id);
+                    _ = savedArticles.Remove(article.Id);
                     savedArticles.Add(article.Id, article);
                     articlesToUpdate.Add(article);
                 }
@@ -460,11 +460,11 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             _articleCategoryRepository.InsertArticleCategories(createArticleCategories);
             _articleCategoryRepository.DeleteArticleCategories(deleteArticleCategoryIds);
 
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
                 value: savedArticles.Values.ToList()
             );
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.DeadLockLogKey,
                 value: $"Ended {nameof(UpdateArticles)}"
             );
