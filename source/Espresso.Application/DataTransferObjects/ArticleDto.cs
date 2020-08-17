@@ -194,12 +194,9 @@ namespace Espresso.Application.DataTransferObjects
 
         public override bool Equals(object? obj)
         {
-            if (!(obj is ArticleDto other))
-            {
-                return false;
-            }
-
-            return Title.Equals(other.Title) && NewsPortal.Id.Equals(other.NewsPortal.Id);
+            return obj is ArticleDto other &&
+            Title.Equals(other.Title) &&
+            NewsPortal.Id.Equals(other.NewsPortal.Id);
         }
 
         public override int GetHashCode()

@@ -11,17 +11,9 @@ namespace Espresso.Domain.Infrastructure
         protected static bool EqualOperator(ValueObject left, ValueObject right)
         {
             // Bitwise XOR
-            if (left is null ^ right is null)
-            {
-                return false;
-            }
-
-            if (right == null)
-            {
-                return false;
-            }
-
-            return left?.Equals(right) != false;
+            return !(left is null ^ right is null) &&
+                right != null &&
+                left?.Equals(right) != false;
         }
 
         protected static bool NotEqualOperator(ValueObject left, ValueObject right)

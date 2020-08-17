@@ -25,12 +25,9 @@ namespace Espresso.Application.Infrastructure
                 .Where(validationFailure => validationFailure != null)
                 .ToList();
 
-            if (failures.Count != 0)
-            {
-                throw new ValidationException(failures);
-            }
-
-            return next();
+            return failures.Count != 0 ?
+                throw new ValidationException(failures) :
+                next();
         }
     }
 }

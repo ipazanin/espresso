@@ -25,12 +25,7 @@ namespace Espresso.Domain.Extensions
             var members = type.GetMember(value.ToString());
             var display = (DisplayAttribute)members.First().GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault();
 
-            if (display != null)
-            {
-                return display.Name;
-            }
-
-            return value.ToString();
+            return display != null ? display.Name : value.ToString();
         }
     }
 }

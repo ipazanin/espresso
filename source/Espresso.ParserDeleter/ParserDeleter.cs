@@ -17,7 +17,6 @@ using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MediatR.Pipeline;
 
 namespace Espresso.Workers.ParserDeleter
 {

@@ -179,6 +179,7 @@ namespace Espresso.Domain.Services
             switch (rssFeed.ImageUrlParseConfiguration.ImageUrlParseStrategy)
             {
                 case ImageUrlParseStrategy.SecondLinkOrFromSummary:
+                case ImageUrlParseStrategy.Undefined:
                 default:
                     {
                         imageUrl = itemLinks.Count() > 1 ? itemLinks.ElementAt(1)?.ToString() : null;
@@ -221,18 +222,11 @@ namespace Espresso.Domain.Services
 
         private string? AddBaseUrlToImageUrl(string? imageUrl, string? baseUrl)
         {
-            if (
-                !string.IsNullOrEmpty(imageUrl) &&
+            return !string.IsNullOrEmpty(imageUrl) &&
                 !string.IsNullOrEmpty(baseUrl) &&
-                !imageUrl.StartsWith("http") // covers https also
-            )
-            {
-                return $"{baseUrl}{imageUrl.Remove(0, 1)}";
-            }
-            else
-            {
-                return imageUrl;
-            }
+                !imageUrl.StartsWith("http")
+                ? $"{baseUrl}{imageUrl.Remove(0, 1)}"
+                : imageUrl;
         }
         #endregion
 
@@ -244,17 +238,11 @@ namespace Espresso.Domain.Services
             var maximumPublishDateTime = utcNow;
             var rssFeedPublishDateTime = itemPublishDateTime.UtcDateTime;
 
-            if (rssFeedPublishDateTime < invalidPublishdateTimeMinimum)
-            {
-                return null;
-            }
-
-            if (rssFeedPublishDateTime > maximumPublishDateTime || rssFeedPublishDateTime < minimumPublishDateTime)
-            {
-                return utcNow;
-            }
-
-            return rssFeedPublishDateTime;
+            return rssFeedPublishDateTime < invalidPublishdateTimeMinimum
+                ? null
+                : rssFeedPublishDateTime > maximumPublishDateTime || rssFeedPublishDateTime < minimumPublishDateTime
+                ? (DateTime?)utcNow
+                : (DateTime?)rssFeedPublishDateTime;
         }
         #endregion
 

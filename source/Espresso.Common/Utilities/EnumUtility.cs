@@ -21,12 +21,7 @@ namespace Espresso.Domain.Utilities
 
             value = (T)Enum.Parse(typeof(T), enumValue.ToString(), true);
 
-            if (Enum.IsDefined(type, value))
-            {
-                return true;
-            }
-
-            return false;
+            return Enum.IsDefined(type, value);
         }
 
         /// <summary>
@@ -56,12 +51,7 @@ namespace Espresso.Domain.Utilities
 
                 value = (T)Enum.Parse(typeof(T), enumValue, true);
 
-                if (Enum.IsDefined(type, value))
-                {
-                    return true;
-                }
-
-                return false;
+                return Enum.IsDefined(type, value);
             }
             catch (Exception ex)
             {
@@ -80,12 +70,7 @@ namespace Espresso.Domain.Utilities
         /// <returns></returns>
         public static T GetEnumOrDefault<T>(string enumValue, T defaultValue) where T : struct, IConvertible
         {
-            if (TryParseEnum<T>(enumValue, out var createdEnum))
-            {
-                return createdEnum;
-            }
-
-            return defaultValue;
+            return TryParseEnum<T>(enumValue, out var createdEnum) ? createdEnum : defaultValue;
         }
 
         /// <summary>
@@ -97,12 +82,7 @@ namespace Espresso.Domain.Utilities
         /// <returns></returns>
         public static T GetEnumOrDefault<T>(int enumValue, T defaultValue) where T : struct, IConvertible
         {
-            if (TryParseEnum<T>(enumValue, out var createdEnum))
-            {
-                return createdEnum;
-            }
-
-            return defaultValue;
+            return TryParseEnum<T>(enumValue, out var createdEnum) ? createdEnum : defaultValue;
         }
 
         /// <summary>
@@ -114,12 +94,7 @@ namespace Espresso.Domain.Utilities
         /// <returns></returns>
         public static T GetEnumOrDefault<T>(T enumValue, T defaultValue) where T : struct, IConvertible
         {
-            if (Enum.IsDefined(typeof(T), enumValue))
-            {
-                return enumValue;
-            }
-
-            return defaultValue;
+            return Enum.IsDefined(typeof(T), enumValue) ? enumValue : defaultValue;
         }
 
         public static IEnumerable<T> GetAllValues<T>() where T : struct, IConvertible

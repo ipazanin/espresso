@@ -146,6 +146,9 @@ namespace Espresso.Application.DomainServices
                     exception: exception,
                     cancellationToken: cancellationToken
                 ),
+                AppEnvironment.Undefined => Task.CompletedTask,
+                AppEnvironment.Local => Task.CompletedTask,
+                AppEnvironment.Dev => Task.CompletedTask,
                 _ => Task.CompletedTask,
             };
         }
@@ -250,6 +253,9 @@ namespace Espresso.Application.DomainServices
                     exception: exception,
                     cancellationToken: cancellationToken
                 ),
+                AppEnvironment.Undefined => Task.CompletedTask,
+                AppEnvironment.Local => Task.CompletedTask,
+                AppEnvironment.Dev => Task.CompletedTask,
                 _ => Task.CompletedTask,
             };
         }
@@ -372,6 +378,9 @@ namespace Espresso.Application.DomainServices
                     totalIosCount: totalIosCount,
                     cancellationToken: cancellationToken
                 ),
+                AppEnvironment.Undefined => Task.CompletedTask,
+                AppEnvironment.Local => Task.CompletedTask,
+                AppEnvironment.Dev => Task.CompletedTask,
                 _ => Task.CompletedTask,
 
             };
@@ -385,26 +394,24 @@ namespace Espresso.Application.DomainServices
             CancellationToken cancellationToken
         )
         {
-            if (
-                articleUrl.Contains("hr.n1info.com/English/", StringComparison.InvariantCultureIgnoreCase) ||
+            return articleUrl.Contains("hr.n1info.com/English/", StringComparison.InvariantCultureIgnoreCase) ||
                 articleUrl.Contains("www.jutarnji.hr/video/", StringComparison.InvariantCultureIgnoreCase) ||
                 articleUrl.Contains("www.jutarnji.hr/promo/", StringComparison.InvariantCultureIgnoreCase)
-            )
-            {
-                return Task.CompletedTask;
-            }
-
-            return _commonConfiguration.AppEnvironment switch
-            {
-                AppEnvironment.Prod => _slackService.LogMissingCategoriesError(
-                    version: version,
-                    rssFeedUrl: rssFeedUrl,
-                    articleUrl: articleUrl,
-                    urlCategories: urlCategories,
-                    cancellationToken: cancellationToken
-                ),
-                _ => Task.CompletedTask,
-            };
+                ? Task.CompletedTask
+                : (_commonConfiguration.AppEnvironment switch
+                {
+                    AppEnvironment.Prod => _slackService.LogMissingCategoriesError(
+                        version: version,
+                        rssFeedUrl: rssFeedUrl,
+                        articleUrl: articleUrl,
+                        urlCategories: urlCategories,
+                        cancellationToken: cancellationToken
+                    ),
+                    AppEnvironment.Undefined => Task.CompletedTask,
+                    AppEnvironment.Local => Task.CompletedTask,
+                    AppEnvironment.Dev => Task.CompletedTask,
+                    _ => Task.CompletedTask,
+                });
         }
 
         public Task LogNewNewsPortalRequest(
@@ -428,6 +435,8 @@ namespace Espresso.Application.DomainServices
                     url: url,
                     cancellationToken: cancellationToken
                 ),
+                AppEnvironment.Undefined => Task.CompletedTask,
+                AppEnvironment.Local => Task.CompletedTask,
                 _ => Task.CompletedTask,
             };
         }

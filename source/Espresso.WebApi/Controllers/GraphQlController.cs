@@ -70,8 +70,7 @@ namespace Espresso.WebApi.Controllers
                 );
             });
 
-            if (result.Errors?.Count > 0)
-            {
+            return result.Errors?.Count > 0 ?
                 throw new ValidationException(
                     message: string.Join(
                         separator: ",",
@@ -79,9 +78,8 @@ namespace Espresso.WebApi.Controllers
                             .Errors
                             .Select(executionError => executionError.Message)
                         )
-                    );
-            }
-            return Ok(result.Data);
+                    ) :
+                Ok(result.Data);
         }
     }
 }
