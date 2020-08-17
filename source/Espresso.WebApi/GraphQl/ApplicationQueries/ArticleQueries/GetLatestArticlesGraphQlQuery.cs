@@ -49,12 +49,9 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                 ),
                 resolve: async resolveContext =>
                 {
-                    if (
-                        resolveContext.UserContext is GraphQlApplicationContext graphQlUserContext &&
-                        graphQlUserContext != null
-                    )
-                    {
-                        return await mediator.Send(
+                    return resolveContext.UserContext is GraphQlApplicationContext graphQlUserContext &&
+                        graphQlUserContext != null ?
+                        await mediator.Send(
                             request: new GetLatestArticlesQuery(
                                 take: resolveContext.GetArgument<int>("take"),
                                 skip: resolveContext.GetArgument<int>("take"),
@@ -67,12 +64,8 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                                 deviceType: graphQlUserContext.DeviceType
                             ),
                             cancellationToken: resolveContext.CancellationToken
-                        );
-                    }
-                    else
-                    {
+                        ) :
                         throw new ValidationException("Appropriate Headers must be defined!");
-                    }
                 },
                 deprecationReason: null
             );

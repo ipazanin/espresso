@@ -67,6 +67,14 @@ namespace Espresso.WebApi.Filters
             context.HttpContext.Response.ContentType = MimeTypeConstants.Json;
             context.HttpContext.Response.StatusCode = (int)code;
 
+            var exceptionModel = new UnhandledExceptionDto(
+                exceptionMessage: context.Exception.Message,
+                innerExceptionMessage: context.Exception.StackTrace,
+                exceptionStackTrace: context.Exception.InnerException?.Message,
+                innerExceptionStackTrace: context.Exception.InnerException?.StackTrace,
+                errors: errors
+            );
+
             var unhandledExceptionModel = _webApiConfiguration.AppEnvironment switch
             {
                 AppEnvironment.Prod => new UnhandledExceptionDto(
@@ -76,13 +84,10 @@ namespace Espresso.WebApi.Filters
                     innerExceptionStackTrace: null,
                     errors: errors
                 ),
-                _ => new UnhandledExceptionDto(
-                    exceptionMessage: context.Exception.Message,
-                    innerExceptionMessage: context.Exception.StackTrace,
-                    exceptionStackTrace: context.Exception.InnerException?.Message,
-                    innerExceptionStackTrace: context.Exception.InnerException?.StackTrace,
-                    errors: errors
-                ),
+                AppEnvironment.Undefined => exceptionModel,
+                AppEnvironment.Local => exceptionModel,
+                AppEnvironment.Dev => exceptionModel,
+                _ => exceptionModel,
             };
 
             context.Result = new JsonResult(

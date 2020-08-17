@@ -24,12 +24,9 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries
                 arguments: null,
                 resolve: async resolveContext =>
                 {
-                    if (
-                        resolveContext.UserContext is GraphQlApplicationContext graphQlUserContext &&
-                        graphQlUserContext != null
-                    )
-                    {
-                        return await mediator.Send(
+                    return resolveContext.UserContext is GraphQlApplicationContext graphQlUserContext &&
+                        graphQlUserContext != null ?
+                        await mediator.Send(
                             request: new GetConfigurationQuery(
                                 currentEspressoWebApiVersion: graphQlUserContext.CurrentEspressoWebApiVersion,
                                 targetedEspressoWebApiVersion: graphQlUserContext.CurrentEspressoWebApiVersion,
@@ -37,12 +34,8 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries
                                 deviceType: graphQlUserContext.DeviceType
                             ),
                             cancellationToken: resolveContext.CancellationToken
-                        );
-                    }
-                    else
-                    {
+                        ) :
                         throw new ValidationException("Appropriate Headers must be defined!");
-                    }
                 },
                 deprecationReason: null
             );

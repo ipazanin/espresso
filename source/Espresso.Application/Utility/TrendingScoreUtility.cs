@@ -64,22 +64,13 @@ namespace Espresso.Application.Utility
 
             var normalisedTrendingScore = NormaliseTrendingScore(trendingScoreWithArticleAge);
 
-            if (normalisedTrendingScore < 0)
-            {
-                return 0;
-            }
-            if (normalisedTrendingScore >= 1000M)
-            {
-                return 999M;
-            }
-
-            return normalisedTrendingScore;
+            return normalisedTrendingScore < 0 ? 0 : normalisedTrendingScore >= 1000M ? 999M : normalisedTrendingScore;
         }
 
         private decimal NormaliseTrendingScore(decimal trendingScore)
         {
             var maxTrendingScore = _maxTrendingScore == 0 ? 1 : _maxTrendingScore;
-            var normalisedTrendingScore = ((trendingScore / maxTrendingScore) * HalfOfMaxTrendingScoreValue) + HalfOfMaxTrendingScoreValue;
+            var normalisedTrendingScore = (trendingScore / maxTrendingScore * HalfOfMaxTrendingScoreValue) + HalfOfMaxTrendingScoreValue;
 
             return normalisedTrendingScore;
         }

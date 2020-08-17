@@ -52,19 +52,18 @@ namespace Espresso.Application.DomainServices
             htmlDocument.LoadHtml(htmlString);
             var elementTags = htmlDocument.DocumentNode.SelectNodes(xPath);
 
-            if (elementTags == null)
-            {
-                return null;
-            }
-
-            return imageUrlWebScrapeType switch
-            {
-                ImageUrlWebScrapeType.JsonObjectInScriptElement => await GetImageUrlFromJsonObjectFromScriptTag(
-                    elementTags: elementTags,
-                    propertyNames: propertyNames
-                ).ConfigureAwait(false),
-                _ => GetImageUrlFromSrcAttribute(elementTags),
-            };
+            return elementTags == null
+                ? null
+                : (imageUrlWebScrapeType switch
+                {
+                    ImageUrlWebScrapeType.JsonObjectInScriptElement => await GetImageUrlFromJsonObjectFromScriptTag(
+                        elementTags: elementTags,
+                        propertyNames: propertyNames
+                    ).ConfigureAwait(false),
+                    ImageUrlWebScrapeType.Undefined => GetImageUrlFromSrcAttribute(elementTags),
+                    ImageUrlWebScrapeType.SrcAttribute => GetImageUrlFromSrcAttribute(elementTags),
+                    _ => GetImageUrlFromSrcAttribute(elementTags),
+                });
 
         }
 
@@ -129,14 +128,10 @@ namespace Espresso.Application.DomainServices
                 var count = 0;
                 foreach (var propertyName in propertyNames)
                 {
-                    if (count++ == 0)
-                    {
-                        property = data.GetProperty(propertyName);
-                    }
-                    else
-                    {
-                        property = property.GetProperty(propertyName);
-                    }
+                    property =
+                        count++ == 0 ?
+                        data.GetProperty(propertyName) :
+                        property.GetProperty(propertyName);
                 }
                 if (property.Equals(default))
                 {

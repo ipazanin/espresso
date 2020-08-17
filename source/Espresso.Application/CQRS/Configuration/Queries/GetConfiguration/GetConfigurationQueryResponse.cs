@@ -17,7 +17,7 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
             IEnumerable<GetConfigurationRegion> regions
         )
         {
-            this.CategoriesWithNewsPortals = categoriesWithNewsPortals;
+            CategoriesWithNewsPortals = categoriesWithNewsPortals;
             Categories = categories;
             Regions = regions;
         }
