@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from 'components/App';
-import { ConfigurationBuilder } from 'config';
+import { ConfigurationBuilder } from 'configuration';
 import Axios from 'axios';
 import * as serviceWorker from './serviceWorker';
 

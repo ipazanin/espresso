@@ -10,7 +10,9 @@ class Script {
         script.onreadystatechange = () => {
           // @ts-ignore
           if (
+            // @ts-ignore
             script.readyState === 'loaded' ||
+            // @ts-ignore
             script.readyState === 'complete'
           ) {
             // @ts-ignore

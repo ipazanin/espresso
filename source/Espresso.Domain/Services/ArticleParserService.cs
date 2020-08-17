@@ -135,8 +135,9 @@ namespace Espresso.Domain.Services
             {
                 return null;
             }
-
+#pragma warning disable IDE0057
             var articleId = $"{itemId.Substring(itemId.IndexOf("id=") + 3)}/";
+#pragma warning restore IDE0057
             var urlSegments = itemLinks.FirstOrDefault()?.Segments ?? new string[0];
 
             var firstArticleSegment = urlSegments.Count() < 2 ? "" : urlSegments[1].ToLower();

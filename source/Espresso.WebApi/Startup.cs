@@ -75,8 +75,6 @@ namespace Espresso.WebApi
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
-
-
             });
 
             services.AddAuthServices();

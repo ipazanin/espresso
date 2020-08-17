@@ -39,6 +39,7 @@ namespace Espresso.Workers.ParserDeleter
                 {
                     var environmentName = Environment.GetEnvironmentVariable(EnviromentVariableNamesConstants.DotnetEnvironment) ?? "";
                     var configuration = configureOptions
+                        .AddJsonFile($"appsettings.json", optional: false)
                         .AddJsonFile($"appsettings.{environmentName}.json", optional: false)
                         .AddEnvironmentVariables()
                         .Build();

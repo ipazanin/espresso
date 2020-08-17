@@ -1,14 +1,15 @@
 import React from 'react';
+import { ArticleModel } from 'models';
 
 interface ArticleProps extends React.HTMLAttributes<HTMLDivElement> {
-  id: string;
+  article: ArticleModel;
 }
 
 const Article = React.forwardRef<HTMLDivElement, ArticleProps>(
-  ({ id, ...props }, ref) => {
+  ({ article, ...props }, ref) => {
     return (
       <div ref={ref} {...props}>
-        {id}
+        {article.id}
       </div>
     );
   }

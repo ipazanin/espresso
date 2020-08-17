@@ -16,25 +16,28 @@
     "lint-frontend:base": "eslint --ext .ts,.tsx src/",
     "lint-frontend": "yarn lint-frontend:base --fix --cache --cache-location=./node_modules/.cache/",
     "upgrade-frontend": "yarn upgrade",
-    "build": "dotnet build ../../../source/Espresso.sln",
-    "compose-database:up": "docker-compose -f ../../../compose/docker-compose-database.yml down && docker-compose -f ../../../compose/docker-compose-database.yml up --build",
+    "build-backend": "dotnet build ../../../source/Espresso.sln",
+    "compose-database:up": "docker-compose -f ../../../compose/docker-compose-database.yml up --build",
+    "compose-database:recompose": "docker-compose -f ../../../compose/docker-compose-database.yml down && docker-compose -f ../../../compose/docker-compose-database.yml up --build",
     "compose-database:down": "docker-compose -f ../../../compose/docker-compose-database.yml down",
-    "compose-development:up": "sudo docker-compose -f ../../../compose/docker-compose-development.yml down && sudo docker-compose -f ../../../compose/docker-compose-development.yml up --build",
+    "compose-development:up": "sudo docker-compose -f ../../../compose/docker-compose-development.yml up --build",
+    "compose-development:recompose": "sudo docker-compose -f ../../../compose/docker-compose-development.yml down && sudo docker-compose -f ../../../compose/docker-compose-development.yml up --build",
     "compose-development:down": "sudo docker-compose -f ../../../compose/docker-compose-development.yml down",
-    "compose-local:up": "docker-compose -f ../../../compose/docker-compose-local.yml down && docker-compose -f ../../../compose/docker-compose-local.yml up --build",
+    "compose-local:up": "docker-compose -f ../../../compose/docker-compose-local.yml up --build",
+    "compose-local:recompose": "docker-compose -f ../../../compose/docker-compose-local.yml down && docker-compose -f ../../../compose/docker-compose-local.yml up --build",
     "compose-local:down": "docker-compose -f ../../../compose/docker-compose-local.yml down",
     "docker-build:latest": "docker build --force-rm --no-cache -f ../../../source/Espresso.WebApi/Dockerfile -t ipazanin/espresso-webapi:latest --build-arg REACT_APP_ENVIRONMENT=\"production\" ../../../source && docker push ipazanin/espresso-webapi:latest && docker build --force-rm --no-cache -f ../../../source/Espresso.ParserDeleter/Dockerfile -t ipazanin/espresso-parserdeleter:latest ../../../source && docker push ipazanin/espresso-parserdeleter:latest",
-    "format": "dotnet format ../../../source/Espresso.sln",
+    "lint-backend": "dotnet format ../../../source/Espresso.sln",
     "migration-add": "export ASPNETCORE_ENVIRONMENT=local-local-db && dotnet ef migrations add -p ../../../source/Espresso.Persistence/Espresso.Persistence.csproj -v",
     "migration-remove": "export ASPNETCORE_ENVIRONMENT=local-local-db && dotnet ef migrations remove -p ../../../source/Espresso.Persistence/Espresso.Persistence.csproj -v",
-    "restore": "dotnet restore ../../../source/Espresso.sln",
+    "restore-backend": "dotnet restore ../../../source/Espresso.sln",
     "start-webapi": "ASPNETCORE_ENVIRONMENT=local-local-db dotnet run --project ../../../source/Espresso.WebApi/Espresso.WebApi.csproj --urls \"http://localhost:8000/\" ",
     "start-webapi:watch": "ASPNETCORE_ENVIRONMENT=local-local-db dotnet watch --project ../../../source/Espresso.WebApi/Espresso.WebApi.csproj run --urls \"http://localhost:8000/\" ",
     "start-parserdeleter": "DOTNET_ENVIRONMENT=local-local-db dotnet run --project ../../../source/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj",
     "start-parserdeleter:watch": "DOTNET_ENVIRONMENT=local-local-db dotnet watch --project ../../../source/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj run",
-    "test": "dotnet test ../../../source/Espresso.sln",
-    "test:coverage": "sudo dotnet test --logger 'trx;LogFileName=TestResults.trx' --logger 'xunit;LogFileName=TestResults.xml' --results-directory ../../../tests/UnitTests/TestReports/UnitTests /p:CollectCoverage=true /p:CoverletOutput=TestReports/Coverage/ /p:CoverletOutputFormat=cobertura ../../../source/Espresso.sln",
-    "update-packages": "../../../scripts/update-packages-script.sh"
+    "test-backend": "dotnet test ../../../source/Espresso.sln",
+    "test-backend:coverage": "sudo dotnet test --logger 'trx;LogFileName=TestResults.trx' --logger 'xunit;LogFileName=TestResults.xml' --results-directory ../../../tests/UnitTests/TestReports/UnitTests /p:CollectCoverage=true /p:CoverletOutput=TestReports/Coverage/ /p:CoverletOutputFormat=cobertura ../../../source/Espresso.sln",
+    "update-backend-packages": "cd ../../../ && scripts/update-packages-script.sh"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.9.0",
@@ -91,7 +94,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn build && yarn test && pretty-quick && yarn lint-frontend && yarn test-frontend:ci "
+      "pre-commit": "yarn build-backend && yarn test-backend && pretty-quick && yarn lint-frontend && yarn test-frontend:ci "
     }
   },
   "jest": {
