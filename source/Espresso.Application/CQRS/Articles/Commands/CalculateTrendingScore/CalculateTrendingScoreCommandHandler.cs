@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Espresso.Application.Utility;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
-using Espresso.Persistence.Database;
 
 using MediatR;
 

@@ -12,7 +12,6 @@
     <PackageReference Include="MediatR" Version="8.1.0" />
     <PackageReference Include="System.ServiceModel.Syndication" Version="4.7.0" />
     <PackageReference Include="FirebaseAdmin" Version="1.15.0" />
-    <PackageReference Include="GraphQL" Version="2.4.0" />
   </ItemGroup>
 
   <ItemGroup>

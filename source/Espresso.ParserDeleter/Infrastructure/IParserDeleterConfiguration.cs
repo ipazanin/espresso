@@ -23,6 +23,7 @@ namespace Espresso.Workers.ParserDeleter.Infrastructure
 
         public TimeSpan WaitDurationAfterWebServerRequestError { get; }
 
+        public TimeSpan WaitDurationBeforeStartup { get; }
         #endregion
     }
 }

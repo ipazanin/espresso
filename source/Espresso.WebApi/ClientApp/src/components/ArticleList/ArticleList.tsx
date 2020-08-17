@@ -38,31 +38,42 @@ const ArticleList: React.FC = () => {
   }, [inView, fetchArticles]);
 
   return (
-    <FixedSizeList
-      height={800}
-      itemData={state.articles}
-      itemCount={state.articles.length}
-      itemSize={80}
-      overscanCount={5}
-      width="100%"
-    >
-      {({ data, index, style }: FixedSizeListRenderFnProps) => {
-        const article = data[index];
+    <>
+      <div>Najnovije</div>
+      <FixedSizeList
+        height={800}
+        itemData={state.articles}
+        itemCount={state.articles.length}
+        itemSize={120}
+        overscanCount={15}
+        width="40%"
+        style={{ margin: '10px' }}
+      >
+        {({ data, index, style }: FixedSizeListRenderFnProps) => {
+          const article = data[index];
 
-        if (!article) {
-          return null;
-        }
+          if (!article) {
+            return null;
+          }
 
-        return (
-          <Article
-            key={article.id}
-            article={article}
-            style={style}
-            ref={state.articles.length - index === 5 ? articleRef : undefined}
-          />
-        );
-      }}
-    </FixedSizeList>
+          const articleStyle: React.CSSProperties = {
+            display: 'flex',
+            justifyContent: 'flex-start',
+          };
+
+          return (
+            <Article
+              key={article.id}
+              article={article}
+              style={{ ...articleStyle, ...style }}
+              ref={
+                state.articles.length - index === 15 ? articleRef : undefined
+              }
+            />
+          );
+        }}
+      </FixedSizeList>
+    </>
   );
 };
 

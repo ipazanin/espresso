@@ -24,5 +24,17 @@ namespace Espresso.WebApi.Configuration
         /// 
         /// </summary>
         public ApiVersion EspressoWebApiCurrentVersion { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public string SpaProxyServerUrl { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public int NewNewsPortalsPosition { get; }
     }
 }

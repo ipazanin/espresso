@@ -1,8 +1,6 @@
 ﻿using Espresso.Application.DomainServices;
-using Espresso.Common.Configuration;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Services;
-using Espresso.WebApi.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Espresso.WebApi.Extensions

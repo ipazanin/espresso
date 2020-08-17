@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Espresso.Common.Constants
+﻿namespace Espresso.Common.Constants
 {
     public static class MemoryCacheConstants
     {

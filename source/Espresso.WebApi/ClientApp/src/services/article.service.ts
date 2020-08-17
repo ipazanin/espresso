@@ -2,11 +2,11 @@ import axios from 'axios';
 import { GetLatestArticlesResponseModel } from '../models';
 
 class ArticleService {
+  private defaultTake = 40;
+
   private currentSkip = 0;
 
-  private defaultSkipIncrement = 20;
-
-  private defaultTake = 20;
+  private defaultSkipIncrement = this.defaultTake;
 
   public async getLatestArticles(): Promise<GetLatestArticlesResponseModel> {
     this.currentSkip += this.defaultSkipIncrement;

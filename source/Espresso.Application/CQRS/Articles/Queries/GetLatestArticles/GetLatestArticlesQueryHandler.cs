@@ -62,7 +62,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
             var response = new GetLatestArticlesQueryResponse(
                 articles: articleDtos,
                 newNewsPortals: newsPortalDtos,
-                newNewsPortalsPosition: DefaultValueConstants.NewNewsPortalsPosition
+                newNewsPortalsPosition: request.NewNewsPortalsPosition
             );
 
             return Task.FromResult(result: response);

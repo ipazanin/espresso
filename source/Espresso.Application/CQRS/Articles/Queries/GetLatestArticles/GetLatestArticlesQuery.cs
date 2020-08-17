@@ -17,6 +17,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
         public IEnumerable<int>? NewsPortalIds { get; }
 
         public IEnumerable<int>? CategoryIds { get; }
+
+        public int NewNewsPortalsPosition { get; }
         #endregion
 
         #region Constructors
@@ -28,7 +30,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
             string currentEspressoWebApiVersion,
             string targetedEspressoWebApiVersion,
             string consumerVersion,
-            DeviceType deviceType
+            DeviceType deviceType,
+            int newNewsPortalsPosition
         ) : base(
             currentEspressoWebApiVersion: currentEspressoWebApiVersion,
             targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
@@ -55,6 +58,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
                 ?.Where(categoryId => categoryId != default);
 
             CategoryIds = categoryIds == null || categoryIds.Any() ? categoryIds : null;
+            NewNewsPortalsPosition = newNewsPortalsPosition;
         }
         #endregion
 

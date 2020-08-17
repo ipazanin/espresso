@@ -17,6 +17,7 @@ using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MediatR.Pipeline;
 
 namespace Espresso.Workers.ParserDeleter
 {
@@ -51,7 +52,7 @@ namespace Espresso.Workers.ParserDeleter
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await Task.Yield();
-            await Task.Delay(TimeSpan.FromSeconds(40));
+            await Task.Delay(_configuration.WaitDurationBeforeStartup);
 
             await InitializeParser();
 
@@ -165,7 +166,6 @@ namespace Espresso.Workers.ParserDeleter
                 }
             }
         }
-
 
         private CancellationToken GetCancellationToken()
         {

@@ -33,7 +33,7 @@ namespace Espresso.Persistence.Infrastructure
                 .AddEnvironmentVariables()
                 .Build();
 
-            var connectionString = configuration.GetConnectionString(ConfigurationKeyNameConstants.DefaultConnectionStringKeyName);
+            var connectionString = configuration.GetConnectionString("DefaultConnectionString");
 
             return Create(connectionString);
         }
@@ -42,7 +42,7 @@ namespace Espresso.Persistence.Infrastructure
         {
             if (string.IsNullOrEmpty(connectionString))
             {
-                throw new ArgumentException($"Connection string '{ConfigurationKeyNameConstants.DefaultConnectionStringKeyName}' is null or empty.", nameof(connectionString));
+                throw new ArgumentException($"Connection string DefaultConnectionString is null or empty.", nameof(connectionString));
             }
 
             Console.WriteLine($"{nameof(DesignTimeDatabaseContextFactoryBase<TContext>)}.{nameof(Create)}(string): Connection string: '{connectionString}'.");

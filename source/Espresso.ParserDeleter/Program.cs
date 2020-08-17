@@ -98,7 +98,7 @@ namespace Espresso.Workers.ParserDeleter
                     #region Database
                     services.AddDbContext<IApplicationDatabaseContext, ApplicationDatabaseContext>(options =>
                      {
-                         options.UseSqlServer(hostContext.Configuration.GetConnectionString(ConfigurationKeyNameConstants.DefaultConnectionStringKeyName));
+                         options.UseSqlServer(hostContext.Configuration.GetConnectionString("DefaultConnectionString"));
                          switch (configuration.AppEnvironment)
                          {
                              case AppEnvironment.Undefined:
@@ -117,7 +117,7 @@ namespace Espresso.Workers.ParserDeleter
                          }
                      });
 
-                    services.AddScoped<IDatabaseConnectionFactory>(o => new DatabaseConnectionFactory(hostContext.Configuration.GetConnectionString(ConfigurationKeyNameConstants.DefaultConnectionStringKeyName)));
+                    services.AddScoped<IDatabaseConnectionFactory>(o => new DatabaseConnectionFactory(hostContext.Configuration.GetConnectionString("DefaultConnectionString")));
                     services.AddScoped<IApplicationDownloadRepository, ApplicationDownloadRepository>();
                     services.AddScoped<IArticleCategoryRepository, ArticleCategoryRepository>();
                     services.AddScoped<IArticleRepository, ArticleRepository>();
