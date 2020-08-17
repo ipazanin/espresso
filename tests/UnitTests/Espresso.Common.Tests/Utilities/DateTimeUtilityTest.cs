@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using Espresso.Common.Constants;
-using Espresso.Common.Enums;
 using Espresso.Domain.Utilities;
 using Xunit;
 

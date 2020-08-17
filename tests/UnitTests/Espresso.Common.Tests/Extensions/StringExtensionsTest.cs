@@ -1,7 +1,4 @@
-using Espresso.Common.Constants;
-using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
-using Espresso.Domain.Extensions;
 using Xunit;
 
 namespace Espresso.Common.Tests.Extensions

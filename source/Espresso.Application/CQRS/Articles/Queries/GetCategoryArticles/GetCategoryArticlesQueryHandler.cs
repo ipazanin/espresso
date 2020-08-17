@@ -25,7 +25,10 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
         #endregion
 
         #region Methods
-        public Task<GetCategoryArticlesQueryResponse> Handle(GetCategoryArticlesQuery request, CancellationToken cancellationToken)
+        public Task<GetCategoryArticlesQueryResponse> Handle(
+            GetCategoryArticlesQuery request,
+            CancellationToken cancellationToken
+        )
         {
             var articles = _memoryCache.Get<IEnumerable<Article>>(
                 key: MemoryCacheConstants.ArticleKey
@@ -62,7 +65,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
             var response = new GetCategoryArticlesQueryResponse(
                 articles: articleDtos,
                 newNewsPortals: newsPortalDtos,
-                newNewsPortalsPosition: DefaultValueConstants.NewNewsPortalsPosition
+                newNewsPortalsPosition: request.NewNewsPortalsPosition
             );
 
             return Task.FromResult(result: response);

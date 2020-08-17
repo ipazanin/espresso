@@ -14,7 +14,6 @@ using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Infrastructure;
 using Espresso.WebApi.Parameters.HeaderParameters;
 using MediatR;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -79,6 +78,7 @@ namespace Espresso.WebApi.Controllers
                     skip: skip,
                     newsPortalIdsString: newsPortalIds,
                     categoryIdsString: categoryIds,
+                    newNewsPortalsPosition: WebApiConfiguration.NewNewsPortalsPosition,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
@@ -130,6 +130,7 @@ namespace Espresso.WebApi.Controllers
                     skip: skip,
                     newsPortalIdsString: newsPortalIds,
                     categoryIdsString: categoryIds,
+                    newNewsPortalsPosition: WebApiConfiguration.NewNewsPortalsPosition,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
@@ -184,6 +185,7 @@ namespace Espresso.WebApi.Controllers
                     categoryId: categoryId,
                     newsPortalIdsString: newsPortalIds,
                     regionId: regionId,
+                    newNewsPortalsPosition: WebApiConfiguration.NewNewsPortalsPosition,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,

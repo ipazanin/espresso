@@ -6,7 +6,6 @@ namespace Espresso.Common.Constants
     {
         #region Points in Time
         public static DateTime UnixEpochStartTime => new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        public static DateTime TrendingReferentDateTime => new DateTime(2020, 4, 13, 0, 0, 0, DateTimeKind.Utc);
         #endregion
 
         #region Formats
@@ -19,7 +18,6 @@ namespace Espresso.Common.Constants
         public static TimeSpan MaxAgeOfTrendingArticle => TimeSpan.FromDays(2);
         public static TimeSpan MaxAgeOfNewNewsPortal => TimeSpan.FromDays(30);
         public const int OneYearInSeconds = 60 * 60 * 24 * 365;
-
         #endregion
     }
 }

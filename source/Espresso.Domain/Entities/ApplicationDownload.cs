@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq.Expressions;
 
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.Infrastructure;

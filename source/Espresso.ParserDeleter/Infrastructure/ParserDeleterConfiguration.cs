@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Domain.Utilities;
@@ -14,7 +15,7 @@ namespace Espresso.Workers.ParserDeleter.Infrastructure
         #endregion
 
         #region Properties
-        public string ConnectionString => _configuration.GetConnectionString(ConfigurationKeyNameConstants.DefaultConnectionStringKeyName);
+        public string ConnectionString => _configuration.GetConnectionString("DefaultConnectionString");
 
         public string RssFeedParserVersion =>
             $"{ApiVersionConstants.CurrentMajorVersion}." +
@@ -39,13 +40,60 @@ namespace Espresso.Workers.ParserDeleter.Infrastructure
         #region Durations
         public TimeSpan MaxAgeOfOldArticles => DateTimeConstants.MaxAgeOfArticle;
 
-        public TimeSpan CancellationTokenExpirationDuration => TimeSpan.FromMinutes(5);
+        public TimeSpan CancellationTokenExpirationDuration =>
+            // string.IsNullOrEmpty(_configuration["AppConfiguration:WaitDurationsInSeconds:CancellationTokenExpiration"]) ?
+            // TimeSpan.FromMinutes(5) :
+            TimeSpan.FromSeconds(
+                value: int.Parse(
+                    s: _configuration["AppConfiguration:WaitDurationsInSeconds:CancellationTokenExpiration"],
+                    style: NumberStyles.Integer,
+                    provider: CultureInfo.InvariantCulture
+                )
+            );
 
-        public TimeSpan WaitDurationBetweenCommands => TimeSpan.FromSeconds(30);
+        public TimeSpan WaitDurationBetweenCommands =>
+            // string.IsNullOrEmpty(_configuration["AppConfiguration:WaitDurationsInSeconds:BetweenCommands"]) ?
+            // TimeSpan.FromSeconds(30) :
+            TimeSpan.FromSeconds(
+                value: int.Parse(
+                    s: _configuration["AppConfiguration:WaitDurationsInSeconds:BetweenCommands"],
+                    style: NumberStyles.Integer,
+                    provider: CultureInfo.InvariantCulture
+                )
+            );
 
-        public TimeSpan WaitDurationAfterErrors => TimeSpan.FromSeconds(30);
+        public TimeSpan WaitDurationAfterErrors =>
+            // string.IsNullOrEmpty(_configuration["AppConfiguration:WaitDurationsInSeconds:AfterErrors"]) ?
+            // TimeSpan.FromSeconds(30) :
+            TimeSpan.FromSeconds(
+                value: int.Parse(
+                    s: _configuration["AppConfiguration:WaitDurationsInSeconds:AfterErrors"],
+                    style: NumberStyles.Integer,
+                    provider: CultureInfo.InvariantCulture
+                )
+            );
 
-        public TimeSpan WaitDurationAfterWebServerRequestError => TimeSpan.FromSeconds(5);
+        public TimeSpan WaitDurationAfterWebServerRequestError =>
+            // string.IsNullOrEmpty(_configuration["AppConfiguration:WaitDurationsInSeconds:AfterWebServerRequestError"]) ?
+            // TimeSpan.FromSeconds(5) :
+            TimeSpan.FromSeconds(
+                value: int.Parse(
+                    s: _configuration["AppConfiguration:WaitDurationsInSeconds:AfterWebServerRequestError"],
+                    style: NumberStyles.Integer,
+                    provider: CultureInfo.InvariantCulture
+                )
+            );
+
+        public TimeSpan WaitDurationBeforeStartup =>
+            // string.IsNullOrEmpty(_configuration["AppConfiguration:WaitDurationsInSeconds:BeforeStartup"]) ?
+            // TimeSpan.FromSeconds(30) :
+            TimeSpan.FromSeconds(
+                value: int.Parse(
+                    s: _configuration["AppConfiguration:WaitDurationsInSeconds:BeforeStartup"],
+                    style: NumberStyles.Integer,
+                    provider: CultureInfo.InvariantCulture
+                )
+            );
         #endregion
 
         #endregion

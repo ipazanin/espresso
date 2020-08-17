@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Domain.Utilities;
@@ -21,7 +22,7 @@ namespace Espresso.WebApi.Configuration
         /// <summary>
         /// 
         /// </summary>
-        public string ConnectionString => _configuration.GetConnectionString(ConfigurationKeyNameConstants.DefaultConnectionStringKeyName);
+        public string ConnectionString => _configuration.GetConnectionString("DefaultConnectionString");
 
         /// <summary>
         /// 
@@ -63,6 +64,23 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         /// <returns></returns>
         public IEnumerable<string> ApiKeys => _configuration["AppConfiguration:ApiKeys"].Split(",", StringSplitOptions.RemoveEmptyEntries);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string SpaProxyServerUrl => _configuration["AppConfiguration:SpaProxyServerUrl"];
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public int NewNewsPortalsPosition => int.Parse(
+            s: _configuration["AppConfiguration:NewNewsPortalsPosition"],
+            style: NumberStyles.Integer,
+            provider: CultureInfo.InvariantCulture
+        );
+
         #endregion
 
         #region Constructors

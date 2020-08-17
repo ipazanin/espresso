@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
-using Espresso.Application.GraphQl.Infrastructure;
+using Espresso.WebApi.GraphQl.Infrastructure;
 using Espresso.Application.Hubs;
 using Espresso.Application.Initialization;
 using Espresso.Common.Enums;
@@ -127,10 +127,12 @@ namespace Espresso.WebApi
             {
                 spa.Options.SourcePath = Path.Join(env.ContentRootPath, "ClientApp");
 
-                if (_configuration.AppEnvironment.Equals(AppEnvironment.Local))
+                if (
+                    _configuration.AppEnvironment.Equals(AppEnvironment.Local) &&
+                    !string.IsNullOrEmpty(_configuration.SpaProxyServerUrl)
+                )
                 {
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:3000");
-                    // spa.UseProxyToSpaDevelopmentServer("http://docker.for.mac.localhost:3000");
+                    spa.UseProxyToSpaDevelopmentServer(_configuration.SpaProxyServerUrl);
                 }
             });
 
