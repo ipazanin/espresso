@@ -41,7 +41,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.DeleteOldArticles
             var notOldMemoryCacheArticles = memoryCacheArticles
                 .Where(article => article.CreateDateTime > maxArticleAge)
                 .ToList();
-            _memoryCache.Set(key: MemoryCacheConstants.ArticleKey, value: notOldMemoryCacheArticles);
+            _ = _memoryCache.Set(key: MemoryCacheConstants.ArticleKey, value: notOldMemoryCacheArticles);
 
             var numberOfArticlesToDelete = _articleRepository.DeleteArticles(maxArticleAge);
 

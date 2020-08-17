@@ -58,7 +58,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.CalculateTrendingScore
                 rssFeed: null
             )).ToList();
 
-            _memoryCache.Set(MemoryCacheConstants.ArticleKey, articlesWithUpdatedTrendingScore);
+            _ = _memoryCache.Set(MemoryCacheConstants.ArticleKey, articlesWithUpdatedTrendingScore);
 
             return Unit.Task;
         }

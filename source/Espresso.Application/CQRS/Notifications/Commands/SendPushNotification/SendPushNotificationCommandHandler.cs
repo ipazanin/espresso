@@ -59,7 +59,7 @@ namespace Espresso.Application.CQRS.Notifications.Commands.SendPushNotification
 
             var messaging = FirebaseMessaging.DefaultInstance;
 
-            await messaging.SendAsync(message);
+            _ = await messaging.SendAsync(message);
             var pushNotification = new PushNotification(
                 id: Guid.NewGuid(),
                 internalName: request.InternalName,
@@ -71,8 +71,8 @@ namespace Espresso.Application.CQRS.Notifications.Commands.SendPushNotification
                 createdAt: DateTime.UtcNow
             );
 
-            _espressoDatabaseContext.PushNotifications.Add(pushNotification);
-            await _espressoDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
+            _ = _espressoDatabaseContext.PushNotifications.Add(pushNotification);
+            _ = await _espressoDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
 
             return Unit.Value;
         }

@@ -42,7 +42,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.HideArticle
             if (databaseArticle != null)
             {
                 databaseArticle.HideArticle();
-                await _espressoDatabaseContext
+                _ = await _espressoDatabaseContext
                     .SaveChangesAsync(cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -57,7 +57,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.HideArticle
             if (memoryCacheArticles.TryGetValue(key: request.ArticleId, value: out var memoryCacheArticle))
             {
                 memoryCacheArticle.HideArticle();
-                _memoryCache.Set(
+                _ = _memoryCache.Set(
                     key: MemoryCacheConstants.ArticleKey,
                     value: memoryCacheArticles.Values.ToList()
                 );

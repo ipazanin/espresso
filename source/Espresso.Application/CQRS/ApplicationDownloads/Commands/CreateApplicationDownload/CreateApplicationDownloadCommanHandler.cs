@@ -45,9 +45,9 @@ namespace Espresso.Application.CQRS.ApplicationDownloads.Commands.CreateApplicat
                 mobileDeviceType: request.DeviceType
             );
 
-            _context.ApplicationDownload.Add(applicationDownload);
+            _ = _context.ApplicationDownload.Add(applicationDownload);
 
-            await _context
+            _ = await _context
                 .SaveChangesAsync(cancellationToken)
                 .ConfigureAwait(false);
 
@@ -57,7 +57,7 @@ namespace Espresso.Application.CQRS.ApplicationDownloads.Commands.CreateApplicat
 
             applicationDownloads = applicationDownloads.Append(applicationDownload);
 
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ApplicationDownloadKey,
                 value: applicationDownloads.ToList()
             );
