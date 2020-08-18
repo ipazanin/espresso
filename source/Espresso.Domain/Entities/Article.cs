@@ -10,22 +10,6 @@ namespace Espresso.Domain.Entities
     public class Article :
         IEntity<Guid, Article>
     {
-        #region Constants
-        public const int ArticleIdMaxLength = 500;
-        public const int SummaryMaxLength = 2000;
-        public const int TitleMaxLength = 500;
-        public const int UrlMaxLength = 500;
-        public const int ImageUrlMaxLength = 500;
-
-        public const bool ArticleIdIsRequired = true;
-        public const bool SummaryIsRequired = true;
-        public const bool TitleIsRequired = true;
-        public const bool UrlIsRequired = true;
-        public const bool ImageUrlIsRequired = false;
-
-        public const bool IsHiddenDefaultValue = false;
-        #endregion
-
         #region Properties
         public Guid Id { get; private set; }
 
@@ -264,9 +248,9 @@ namespace Espresso.Domain.Entities
                         (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId));
         }
 
-        public static Expression<Func<Article, bool>> GetTrendingArticlePredicate()
+        public static Expression<Func<Article, bool>> GetTrendingArticlePredicate(TimeSpan maxAgeOfTrendingArticle)
         {
-            var maxTrendingDateTime = DateTime.UtcNow - DateTimeConstants.MaxAgeOfTrendingArticle;
+            var maxTrendingDateTime = DateTime.UtcNow - maxAgeOfTrendingArticle;
 
             return article => !article.IsHidden && article.PublishDateTime > maxTrendingDateTime;
         }
@@ -282,6 +266,22 @@ namespace Espresso.Domain.Entities
         }
         #endregion
 
+        #endregion
+
+        #region Inner Classes
+        public const int ArticleIdMaxLength = 500;
+        public const int SummaryMaxLength = 2000;
+        public const int TitleMaxLength = 500;
+        public const int UrlMaxLength = 500;
+        public const int ImageUrlMaxLength = 500;
+
+        // public const bool ArticleIdIsRequired = true;
+        // public const bool SummaryIsRequired = true;
+        // public const bool TitleIsRequired = true;
+        // public const bool UrlIsRequired = true;
+        // public const bool ImageUrlIsRequired = false;
+
+        public const bool IsHiddenDefaultValue = false;
         #endregion
     }
 }

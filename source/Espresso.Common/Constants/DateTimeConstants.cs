@@ -10,12 +10,11 @@ namespace Espresso.Common.Constants
 
         #region Formats
         public const string LoggerDateTimeFormat = "HH:mm:ss.ff";
-        public const string MobileAppDateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss";
+        public const string ArticleDateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss";
         #endregion
 
         #region Timespans
         public static TimeSpan MaxAgeOfArticle => TimeSpan.FromDays(7);
-        public static TimeSpan MaxAgeOfTrendingArticle => TimeSpan.FromDays(2);
         public static TimeSpan MaxAgeOfNewNewsPortal => TimeSpan.FromDays(30);
         public const int OneYearInSeconds = 60 * 60 * 24 * 365;
         #endregion

@@ -27,8 +27,9 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "omnisharp.enableRoslynAnalyzers": true,
+  "omnisharp.enableEditorConfigSupport": true,
+  "omnisharp.autoStart": true,
   "omnisharp.enableMsBuildLoadProjectsOnDemand": false,
-  "omnisharp.defaultLaunchSolution": "Espresso.sln",
   "eslint.alwaysShowStatus": true,
   "eslint.format.enable": true,
   "eslint.validate": ["javascript", "typescript"],

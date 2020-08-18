@@ -8,8 +8,8 @@ interface ArticleProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const imgStyle: React.CSSProperties = {
-  width: '100px',
   height: '100px',
+  width: '100px',
 };
 
 const textContainerStyle: React.CSSProperties = {
@@ -26,12 +26,12 @@ const newsPortalNameContainerStyle: React.CSSProperties = {
 };
 
 const smallDotStyle: React.CSSProperties = {
-  height: '5px',
-  width: '5px',
-  margin: '5px',
   backgroundColor: '#000',
   borderRadius: '50%',
   display: 'inline-block',
+  height: '5px',
+  margin: '5px',
+  width: '5px',
 };
 
 const getArticleAgeDisplayString = (publishDateTimeString: string): string => {

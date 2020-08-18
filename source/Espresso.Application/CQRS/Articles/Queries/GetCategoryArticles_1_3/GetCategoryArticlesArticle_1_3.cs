@@ -85,7 +85,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles_1_3
                 Title = article.Title,
                 ImageUrl = article.ImageUrl,
                 Url = article.Url,
-                PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.MobileAppDateTimeFormat),
+                PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.ArticleDateTimeFormat),
                 NewsPortal = GetCategoryArticlesNewsPortal_1_3.GetProjection()
                     .Compile()
                     .Invoke(article.NewsPortal!),

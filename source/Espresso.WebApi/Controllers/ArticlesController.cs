@@ -282,6 +282,7 @@ namespace Espresso.WebApi.Controllers
                 request: new GetTrendingArticlesQuery(
                     take: take,
                     skip: skip,
+                    maxAgeOfTrendingArticle: WebApiConfiguration.MaxAgeOfTrendingArticle,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,

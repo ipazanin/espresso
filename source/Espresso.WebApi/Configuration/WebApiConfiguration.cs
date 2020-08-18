@@ -81,6 +81,17 @@ namespace Espresso.WebApi.Configuration
             provider: CultureInfo.InvariantCulture
         );
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public TimeSpan MaxAgeOfTrendingArticle => TimeSpan.FromHours(
+            value: int.Parse(
+                s: _configuration["AppConfiguration:MaxAgeOfTrendingArticlesInHours"],
+                style: NumberStyles.Integer,
+                provider: CultureInfo.InvariantCulture
+            )
+        );
         #endregion
 
         #region Constructors
