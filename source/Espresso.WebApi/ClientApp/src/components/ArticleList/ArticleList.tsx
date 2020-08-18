@@ -6,6 +6,7 @@ import { articleService } from 'services';
 import Article from './Article/Article';
 
 interface FixedSizeListRenderFnProps extends ListChildComponentProps {
+  // eslint-disable-next-line react/no-unused-prop-types
   data: ArticleModel[];
 }
 

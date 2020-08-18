@@ -1,4 +1,5 @@
-﻿using Espresso.Common.Configuration;
+﻿using System;
+using Espresso.Common.Configuration;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Espresso.WebApi.Configuration
@@ -36,5 +37,11 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         /// <value></value>
         public int NewNewsPortalsPosition { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public TimeSpan MaxAgeOfTrendingArticle { get; }
     }
 }

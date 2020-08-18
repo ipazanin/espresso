@@ -5,6 +5,7 @@ using Espresso.Common.Constants;
 using FluentValidation;
 using GraphQL.Types;
 using MediatR;
+using Espresso.WebApi.Configuration;
 
 namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
 {
@@ -17,7 +18,8 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
         /// 
         /// </summary>
         /// <param name="mediator"></param>
-        public GetTrendingArticlesGraphQlQuery(IMediator mediator)
+        /// <param name="webApiConfiguration"></param>
+        public GetTrendingArticlesGraphQlQuery(IMediator mediator, IWebApiConfiguration webApiConfiguration)
         {
             Name = nameof(GetTrendingArticlesGraphQlQuery);
             FieldAsync<GetTrendingArticlesQueryResponseType>(
@@ -45,6 +47,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             request: new GetTrendingArticlesQuery(
                                 take: resolveContext.GetArgument<int>("take"),
                                 skip: resolveContext.GetArgument<int>("take"),
+                                maxAgeOfTrendingArticle: webApiConfiguration.MaxAgeOfTrendingArticle,
                                 currentEspressoWebApiVersion: graphQlUserContext.CurrentEspressoWebApiVersion,
                                 targetedEspressoWebApiVersion: graphQlUserContext.CurrentEspressoWebApiVersion,
                                 consumerVersion: graphQlUserContext.ConsumerVersion,

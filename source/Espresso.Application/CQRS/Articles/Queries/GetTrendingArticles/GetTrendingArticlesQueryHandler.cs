@@ -33,7 +33,12 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
             );
 
             var articleDtos = articles
-                .Where(predicate: Article.GetTrendingArticlePredicate().Compile())
+                .Where(
+                    predicate: Article.GetTrendingArticlePredicate(
+                        maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle
+                    )
+                    .Compile()
+                )
                 .OrderByDescending(keySelector: Article.GetTrendingArticleOrderByDescendingExpression().Compile())
                 .Skip(request.Skip)
                 .Take(request.Take)
