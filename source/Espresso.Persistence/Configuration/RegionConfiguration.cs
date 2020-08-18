@@ -13,8 +13,7 @@ namespace Espresso.Persistence.Configuration
         public void Configure(EntityTypeBuilder<Region> builder)
         {
             builder.Property(region => region.Name)
-                .HasMaxLength(PropertyConstraintConstants.RegionNameHasMaxLength)
-                .IsRequired(PropertyConstraintConstants.RegionNameIsRequired);
+                .HasMaxLength(PropertyConstraintConstants.RegionNameHasMaxLength);
 
             builder.HasMany(region => region.NewsPortals)
                 .WithOne(newsPortal => newsPortal.Region!)

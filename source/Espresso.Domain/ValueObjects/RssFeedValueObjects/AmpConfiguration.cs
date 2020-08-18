@@ -15,7 +15,7 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         /// {2} = Second Article Segment
         /// {1} = First Article Segment
         /// </summary>
-        public string TemplateUrl { get; private set; }
+        public string? TemplateUrl { get; private set; }
         #endregion
 
         #region Constructors
@@ -24,7 +24,6 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         /// </summary>
         private AmpConfiguration()
         {
-            TemplateUrl = null!;
         }
 
         public AmpConfiguration(bool hasAmpArticles, string templateUrl)
@@ -35,7 +34,7 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         #endregion
 
         #region Methods
-        protected override IEnumerable<object> GetAtomicValues()
+        protected override IEnumerable<object?> GetAtomicValues()
         {
             yield return HasAmpArticles;
             yield return TemplateUrl;

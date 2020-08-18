@@ -11,23 +11,18 @@ namespace Espresso.Persistence.Configuration
             #region Property Mapping
             builder.Property(article => article.ArticleId)
                 .HasMaxLength(Article.ArticleIdMaxLength);
-            // .IsRequired(Article.ArticleIdIsRequired);
 
             builder.Property(article => article.Summary)
                 .HasMaxLength(Article.SummaryMaxLength);
-            // .IsRequired(Article.SummaryIsRequired);
 
             builder.Property(article => article.Title)
                 .HasMaxLength(Article.TitleMaxLength);
-            // .IsRequired(Article.TitleIsRequired);
 
             builder.Property(article => article.Url)
                 .HasMaxLength(Article.UrlMaxLength);
-            // .IsRequired(Article.UrlIsRequired);
 
             builder.Property(article => article.Title)
                 .HasMaxLength(Article.ImageUrlMaxLength);
-            // .IsRequired(Article.ImageUrlIsRequired);
 
             builder.Property(article => article.IsHidden)
                 .HasDefaultValue(Article.IsHiddenDefaultValue);

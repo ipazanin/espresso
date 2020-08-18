@@ -16,16 +16,13 @@ namespace Espresso.Persistence.Configuration
         public void Configure(EntityTypeBuilder<NewsPortal> builder)
         {
             builder.Property(newsPortal => newsPortal.Name)
-                .HasMaxLength(PropertyConstraintConstants.NEWSPORTAL_NAME_HASMAXLENGHT)
-                .IsRequired(PropertyConstraintConstants.NEWSPORTAL_NAME_ISREQUIRED);
+                .HasMaxLength(PropertyConstraintConstants.NEWSPORTAL_NAME_HASMAXLENGHT);
 
             builder.Property(newsPortal => newsPortal.BaseUrl)
-                .HasMaxLength(PropertyConstraintConstants.NEWSPORTAL_BASEURL_HASMAXLENGHT)
-                .IsRequired(PropertyConstraintConstants.NEWSPORTAL_BASEURL_ISREQUIRED);
+                .HasMaxLength(PropertyConstraintConstants.NEWSPORTAL_BASEURL_HASMAXLENGHT);
 
             builder.Property(newsPortal => newsPortal.IconUrl)
-                .HasMaxLength(PropertyConstraintConstants.NEWSPORTAL_ICONURL_HASMAXLENGHT)
-                .IsRequired(PropertyConstraintConstants.NEWSPORTAL_ICONURL_ISREQUIRED);
+                .HasMaxLength(PropertyConstraintConstants.NEWSPORTAL_ICONURL_HASMAXLENGHT);
 
             builder.HasMany(newsPortal => newsPortal.RssFeeds)
                 .WithOne(rssFeed => rssFeed.NewsPortal!)

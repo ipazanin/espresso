@@ -275,12 +275,6 @@ namespace Espresso.Domain.Entities
         public const int UrlMaxLength = 500;
         public const int ImageUrlMaxLength = 500;
 
-        // public const bool ArticleIdIsRequired = true;
-        // public const bool SummaryIsRequired = true;
-        // public const bool TitleIsRequired = true;
-        // public const bool UrlIsRequired = true;
-        // public const bool ImageUrlIsRequired = false;
-
         public const bool IsHiddenDefaultValue = false;
         #endregion
     }
