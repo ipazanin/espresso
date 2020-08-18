@@ -16,8 +16,7 @@ namespace Espresso.Persistence.Configuration
         {
             #region Property Mapping
             builder.Property(rssFeed => rssFeed.Url)
-                .HasMaxLength(PropertyConstraintConstants.RssFeedUrlHasMaxLength)
-                .IsRequired(PropertyConstraintConstants.RssFeedUrlIsRequired);
+                .HasMaxLength(PropertyConstraintConstants.RssFeedUrlHasMaxLength);
             #endregion
 
             #region Value Object Mapping
@@ -27,8 +26,7 @@ namespace Espresso.Persistence.Configuration
 
             ampConfigurationBuilder
                 .Property(ampConfiguration => ampConfiguration!.TemplateUrl)
-                .HasMaxLength(PropertyConstraintConstants.RssFeedAmpConfigurationTemplateUrlHasMaxLength)
-                .IsRequired(PropertyConstraintConstants.RssFeedAmpConfigurationTemplateUrlIsRequired);
+                .HasMaxLength(PropertyConstraintConstants.RssFeedAmpConfigurationTemplateUrlHasMaxLength);
 
             ampConfigurationBuilder
                 .Property(ampConfiguration => ampConfiguration!.HasAmpArticles);
@@ -43,20 +41,20 @@ namespace Espresso.Persistence.Configuration
                 .OwnsOne(rssFeed => rssFeed.CategoryParseConfiguration);
 
             categoryParseConfigurationBuilder
-                .Property(categoryParseConfiguration => categoryParseConfiguration.CategoryParseStrategy)
-                .IsRequired(true);
+                .Property(categoryParseConfiguration => categoryParseConfiguration.CategoryParseStrategy);
             #endregion
 
             #region ImageUrlParseConfiguration
             var imageUrlParseConfiguration = builder.OwnsOne(rssFeed => rssFeed.ImageUrlParseConfiguration);
 
             imageUrlParseConfiguration.Property(imageUrlConfig => imageUrlConfig.ImgElementXPath)
-                .HasMaxLength(PropertyConstraintConstants.RssFeedImgElementXPathHasMaxLength)
-                .IsRequired(PropertyConstraintConstants.RssFeedImgElementXPathIsRequired);
-            imageUrlParseConfiguration.Property(imageUrlConfig => imageUrlConfig.ImageUrlParseStrategy)
-                .IsRequired(true);
-            imageUrlParseConfiguration.Property(imageUrlConfig => imageUrlConfig.ShouldImageUrlBeWebScraped)
-                .IsRequired(true)
+                .HasMaxLength(PropertyConstraintConstants.RssFeedImgElementXPathHasMaxLength);
+
+            imageUrlParseConfiguration
+                .Property(imageUrlConfig => imageUrlConfig.ImageUrlParseStrategy);
+
+            imageUrlParseConfiguration
+                .Property(imageUrlConfig => imageUrlConfig.ShouldImageUrlBeWebScraped)
                 .HasDefaultValue(false);
             #endregion
 

@@ -13,16 +13,13 @@ namespace Espresso.Persistence.Configuration
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.Property(category => category.Name)
-                .HasMaxLength(PropertyConstraintConstants.CategoryNameHasMaxLenght)
-                .IsRequired(PropertyConstraintConstants.CategoryNameIsRequired);
+                .HasMaxLength(PropertyConstraintConstants.CategoryNameHasMaxLenght);
 
             builder.Property(category => category.Color)
-                .HasMaxLength(PropertyConstraintConstants.CategoryNameHasMaxLenght)
-                .IsRequired(PropertyConstraintConstants.CategoryNameIsRequired);
+                .HasMaxLength(PropertyConstraintConstants.CategoryColorHasMaxLenght);
 
             builder.Property(category => category.KeyWordsRegexPattern)
-                .HasMaxLength(PropertyConstraintConstants.CategoryKeyWordsRegexPatterHasMaxLenght)
-                .IsRequired(PropertyConstraintConstants.CategoryKeyWordsRegexPatternIsRequired);
+                .HasMaxLength(PropertyConstraintConstants.CategoryKeyWordsRegexPatterHasMaxLenght);
 
             builder.HasMany(category => category.ArticleCategories)
                 .WithOne(articleCategory => articleCategory.Category!)

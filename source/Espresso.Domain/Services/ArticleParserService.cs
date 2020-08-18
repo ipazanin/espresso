@@ -124,7 +124,10 @@ namespace Espresso.Domain.Services
         private string? GetUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks, string? itemId)
         {
             string? articleUrl;
-            if (rssFeed.AmpConfiguration?.HasAmpArticles != true)
+            if (
+                rssFeed.AmpConfiguration?.HasAmpArticles != true ||
+                rssFeed.AmpConfiguration.TemplateUrl is null
+            )
             {
                 articleUrl = itemLinks?.FirstOrDefault()?.ToString() ?? itemId;
 
