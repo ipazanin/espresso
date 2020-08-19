@@ -1,14 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import ArticleList from 'components/ArticleList';
+import FeaturedArticles from 'components/FeaturedArticles';
+import { GetLatestArticlesResponseModel } from 'models';
+import { articleService } from 'services';
+import { useInView } from 'react-intersection-observer';
+import { css } from 'aphrodite';
+import { homeStyle } from './Home.style';
 
-import UpcomingEvents from './partials/UpcomingEvents';
+const Home: React.FC = () => {
+  const [state, setState] = useState<GetLatestArticlesResponseModel>({
+    articles: [],
+    newNewsPortals: [],
+    newNewsPortalsPosition: 2,
+  });
 
-const Home: React.FC = () => (
-  <div>
-    <div>{process.env.REACT_APP_TEST}</div>
-    <UpcomingEvents
-      events={[{ name: 'First event' }, { name: 'Second event' }]}
-    />
-  </div>
-);
+  const [articleRef, inView] = useInView();
+
+  const fetchArticles = React.useCallback(async () => {
+    const response = await articleService.getLatestArticles();
+
+    setState(prevState => ({
+      articles: [...prevState.articles, ...response.articles],
+      newNewsPortals: response.newNewsPortals,
+      newNewsPortalsPosition: response.newNewsPortalsPosition,
+    }));
+  }, []);
+
+  useEffect(() => {
+    fetchArticles();
+  }, [fetchArticles]);
+
+  useEffect(() => {
+    if (inView) {
+      fetchArticles();
+    }
+  }, [inView, fetchArticles]);
+
+  return (
+    <div className={css(homeStyle.container)}>
+      <FeaturedArticles />
+      <ArticleList articles={state.articles} articleRef={articleRef} />
+    </div>
+  );
+};
 
 export default Home;

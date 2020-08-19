@@ -2,10 +2,12 @@
 using System.Threading.Tasks;
 using Espresso.Application.CQRS.Categories.Queries.GetCategories;
 using Espresso.Common.Constants;
+using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Infrastructure;
 using Espresso.WebApi.Parameters.HeaderParameters;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +23,13 @@ namespace Espresso.WebApi.Controllers
         /// </summary>
         /// <param name="mediator"></param>
         /// <param name="webApiConfiguration"></param>
-        public CategoriesController(IMediator mediator, IWebApiConfiguration webApiConfiguration) : base(mediator, webApiConfiguration)
+        public CategoriesController(
+            IMediator mediator,
+            IWebApiConfiguration webApiConfiguration)
+         : base(
+             mediator,
+            webApiConfiguration
+        )
         {
         }
 
@@ -42,6 +50,7 @@ namespace Espresso.WebApi.Controllers
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetCategoriesQueryResponse))]
         [HttpGet]
+        [Authorize(Roles = ApiKey.MobileAppRole)]
         [Route("api/categories")]
         public async Task<IActionResult> GetCategories(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,

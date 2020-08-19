@@ -1,6 +1,6 @@
 import React from 'react';
-import { ArticleModel } from 'models';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
+import { ArticleModel } from '../../models';
 import Article from '../Article/Article';
 
 interface FixedSizeListRenderFnProps extends ListChildComponentProps {
@@ -13,10 +13,6 @@ const articleStyle: React.CSSProperties = {
   justifyContent: 'flex-start',
 };
 
-const containerStyle: React.CSSProperties = {
-  width: '40%',
-};
-
 interface ArticleListProps {
   articles: ArticleModel[];
 
@@ -25,7 +21,7 @@ interface ArticleListProps {
 
 const ArticleList: React.FC<ArticleListProps> = ({ articles, articleRef }) => {
   return (
-    <div style={containerStyle}>
+    <>
       <div>Najnovije</div>
       <FixedSizeList
         height={800}
@@ -33,7 +29,7 @@ const ArticleList: React.FC<ArticleListProps> = ({ articles, articleRef }) => {
         itemCount={articles.length}
         itemSize={120}
         overscanCount={5}
-        width="100%"
+        width="40%"
         style={{ margin: '10px' }}
       >
         {({ data, index, style }: FixedSizeListRenderFnProps) => {
@@ -53,7 +49,7 @@ const ArticleList: React.FC<ArticleListProps> = ({ articles, articleRef }) => {
           );
         }}
       </FixedSizeList>
-    </div>
+    </>
   );
 };
 

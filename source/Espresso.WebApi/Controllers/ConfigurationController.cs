@@ -5,10 +5,12 @@ using Espresso.Application.CQRS.Configuration.Queries.GetConfiguration;
 using Espresso.Application.CQRS.Configuration.Queries.GetConfiguration_1_3;
 using Espresso.Common.Constants;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Infrastructure;
 using Espresso.WebApi.Parameters.HeaderParameters;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,6 +48,7 @@ namespace Espresso.WebApi.Controllers
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetConfigurationQueryResponse))]
         [HttpGet]
+        [Authorize(Roles = ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/configuration")]
         public async Task<IActionResult> GetConfiguration(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
@@ -82,6 +85,7 @@ namespace Espresso.WebApi.Controllers
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetConfigurationQueryResponse_1_3))]
         [HttpGet]
+        [Authorize(Roles = ApiKey.MobileAppRole)]
         [Route("api/configuration")]
         public async Task<IActionResult> GetConfiguration_1_3(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
@@ -120,6 +124,7 @@ namespace Espresso.WebApi.Controllers
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetConfigurationQueryResponse))]
         [HttpGet]
+        [Authorize(Roles = ApiKey.MobileAppRole)]
         [Route("api/configuration")]
         public async Task<IActionResult> GetConfiguration_1_2(
             [Required] string mobileAppVersion,

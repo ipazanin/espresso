@@ -2,7 +2,7 @@ import axios from 'axios';
 import { GetLatestArticlesResponseModel } from '../models';
 
 class ArticleService {
-  private defaultTake = 40;
+  private defaultTake = 20;
 
   private currentSkip = 0;
 

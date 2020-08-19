@@ -43,5 +43,29 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         /// <value></value>
         public TimeSpan MaxAgeOfTrendingArticle { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public string AndroidApiKey { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public string IosApiKey { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public string WebApiKey { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public string ParserApiKey { get; }
     }
 }
