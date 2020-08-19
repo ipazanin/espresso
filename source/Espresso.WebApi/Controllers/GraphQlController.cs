@@ -11,6 +11,8 @@ using GraphQL;
 using GraphQL.Types;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Espresso.WebApi.Authentication;
 
 namespace Espresso.WebApi.Controllers
 {
@@ -49,6 +51,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = ApiKey.WebAppRole)]
         [Route("graphql")]
         public async Task<IActionResult> Post(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,

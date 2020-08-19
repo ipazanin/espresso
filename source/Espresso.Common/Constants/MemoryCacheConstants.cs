@@ -42,9 +42,7 @@
         #endregion
 
         #region Common
-        public const string DeadLockLogKey = "DeadLockLogKey";
-
-        public const string ApiKeysKey = "ApiKeysKey";
+        public const string DeadLockLogKey = nameof(DeadLockLogKey);
         #endregion
     }
 }

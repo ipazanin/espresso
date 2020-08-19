@@ -7,21 +7,24 @@ namespace Espresso.WebApi.Authentication
     /// </summary>
     public class ApiKey
     {
+        #region Constants
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="owner"></param>
-        /// <param name="key"></param>
-        /// <param name="created"></param>
-        public ApiKey(int id, string owner, string key, DateTime created)
-        {
-            Id = id;
-            Owner = owner ?? throw new ArgumentNullException(nameof(owner));
-            Key = key ?? throw new ArgumentNullException(nameof(key));
-            Created = created;
-        }
+        public const string MobileAppRole = "Mobile";
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string WebAppRole = "Web";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string ParserRole = "Parser";
+        #endregion
+
+        #region Properties
         /// <summary>
         /// 
         /// </summary>
@@ -30,16 +33,31 @@ namespace Espresso.WebApi.Authentication
         /// <summary>
         /// 
         /// </summary>
-        public string Owner { get; }
+        public string Role { get; }
 
         /// <summary>
         /// 
         /// </summary>
         public string Key { get; }
+        #endregion
 
+        #region Constructors
         /// <summary>
         /// 
         /// </summary>
-        public DateTime Created { get; }
+        /// <param name="id"></param>
+        /// <param name="role"></param>
+        /// <param name="key"></param>
+        public ApiKey(
+            int id,
+            string role,
+            string key
+        )
+        {
+            Id = id;
+            Role = role ?? throw new ArgumentNullException(nameof(role));
+            Key = key ?? throw new ArgumentNullException(nameof(key));
+        }
+        #endregion
     }
 }

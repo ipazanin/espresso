@@ -3,11 +3,13 @@ using System.Threading.Tasks;
 using Espresso.Application.CQRS.NewsPortals.Commands.NewSourcesRequest;
 using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
 using Espresso.Common.Constants;
+using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Infrastructure;
 using Espresso.WebApi.Parameters.HeaderParameters;
 using Espresso.WebApi.RequestObject;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,6 +51,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
+        [Authorize(Roles = ApiKey.MobileAppRole)]
         [Route("api/newsportals")]
         public async Task<IActionResult> GetNewsPortals(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
@@ -89,6 +92,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost]
+        [Authorize(Roles = ApiKey.MobileAppRole)]
         [Route("api/newsportals")]
         public async Task<IActionResult> RequestNewsPortal(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,

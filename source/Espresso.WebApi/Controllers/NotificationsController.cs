@@ -7,11 +7,13 @@ using Espresso.Application.CQRS.Notifications.Commands.SendPushNotification;
 using Espresso.Application.CQRS.Notifications.Queries.GetPushNotifications;
 using Espresso.Application.DataTransferObjects;
 using Espresso.Common.Constants;
+using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Infrastructure;
 using Espresso.WebApi.Parameters.HeaderParameters;
 using Espresso.WebApi.RequestObject;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +30,12 @@ namespace Espresso.WebApi.Controllers
         /// </summary>
         /// <param name="mediator"></param>
         /// <param name="webApiConfiguration"></param>
-        public NotificationsController(IMediator mediator, IWebApiConfiguration webApiConfiguration) : base(mediator, webApiConfiguration)
+        public NotificationsController(
+            IMediator mediator,
+            IWebApiConfiguration webApiConfiguration
+        ) : base(
+            mediator, webApiConfiguration
+        )
         {
         }
 
@@ -45,6 +52,7 @@ namespace Espresso.WebApi.Controllers
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPost]
+        [Authorize(Roles = ApiKey.ParserRole)]
         [Route("api/notifications/articles")]
         public async Task<IActionResult> SendLatestArticlesNotificition(
             [FromBody] ArticlesRequestObjectDto articlesRequest,
@@ -107,6 +115,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost]
+        [Authorize(Roles = ApiKey.MobileAppRole)]
         [Route("api/notifications")]
         public async Task<IActionResult> SendPushNotificition(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
@@ -151,6 +160,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
+        [Authorize(Roles = ApiKey.MobileAppRole)]
         [Route("api/notifications")]
         public async Task<IActionResult> GetPushNotificition(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,

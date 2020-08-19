@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -48,7 +49,7 @@ namespace Espresso.WebApi.Authentication
         /// <returns></returns>
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            if (!Request.Headers.TryGetValue(HttpHeaderConstants.HeaderName, out var apiKeyHeaderValues) &&
+            if (!Request.Headers.TryGetValue(HttpHeaderConstants.ApiKeyHeaderName, out var apiKeyHeaderValues) &&
                 !Request.Headers.TryGetValue(ApiKeyHeaderName_1_2, out apiKeyHeaderValues)
             )
             {
@@ -68,7 +69,7 @@ namespace Espresso.WebApi.Authentication
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, existingApiKey.Owner)
+                    new Claim(ClaimTypes.Role, existingApiKey.Role)
                 };
 
                 var identity = new ClaimsIdentity(claims, Options.AuthenticationType);
@@ -89,7 +90,7 @@ namespace Espresso.WebApi.Authentication
         /// <returns></returns>
         protected override async Task HandleChallengeAsync(AuthenticationProperties properties)
         {
-            Response.StatusCode = 401;
+            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             Response.ContentType = ProblemDetailsContentType;
             var problemDetails = InvalidApiKeyMessage;
 
@@ -103,7 +104,7 @@ namespace Espresso.WebApi.Authentication
         /// <returns></returns>
         protected override async Task HandleForbiddenAsync(AuthenticationProperties properties)
         {
-            Response.StatusCode = 403;
+            Response.StatusCode = (int)HttpStatusCode.Forbidden;
             Response.ContentType = ProblemDetailsContentType;
             var problemDetails = InvalidApiKeyMessage;
 

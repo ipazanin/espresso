@@ -1,4 +1,5 @@
-﻿using Espresso.WebApi.Configuration;
+﻿using Espresso.WebApi.Authentication;
+using Espresso.WebApi.Configuration;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,6 @@ namespace Espresso.WebApi.Infrastructure
     /// <summary>
     /// Api controlles base
     /// </summary>
-    [Authorize]
     [ApiController]
     public abstract class ApiController : ControllerBase
     {

@@ -75,13 +75,6 @@ namespace Espresso.Application.Initialization
 
             var stopwatch = Stopwatch.StartNew();
 
-            #region ApiKeys
-            _ = _memoryCache.Set(
-                key: MemoryCacheConstants.ApiKeysKey,
-                value: _commonConfiguration.ApiKeys.ToList()
-            );
-            #endregion
-
             #region Regions
             var regions = await _context
                 .Regions
@@ -196,13 +189,6 @@ namespace Espresso.Application.Initialization
             await _context.Database.MigrateAsync();
 
             var stopwatch = Stopwatch.StartNew();
-
-            #region ApiKeys
-            _ = _memoryCache.Set(
-                key: MemoryCacheConstants.ApiKeysKey,
-                value: _commonConfiguration.ApiKeys.ToList()
-            );
-            #endregion
 
             #region NewsPortals
             var newsPortals = await _context

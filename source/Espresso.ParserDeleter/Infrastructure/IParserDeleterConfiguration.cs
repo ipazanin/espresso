@@ -11,6 +11,8 @@ namespace Espresso.Workers.ParserDeleter.Infrastructure
 
         public string ServerUrl { get; }
 
+        public string ParserApiKey { get; }
+
         #region Durations
 
         public TimeSpan MaxAgeOfOldArticles { get; }

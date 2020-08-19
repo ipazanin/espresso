@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
+using Espresso.WebApi.Configuration;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Espresso.WebApi.Authentication
@@ -20,21 +21,46 @@ namespace Espresso.WebApi.Authentication
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="memoryCache"></param>
+        /// <param name="configuration"></param>
         public InMemoryApiKeyProvider(
-            IMemoryCache memoryCache
+            IWebApiConfiguration configuration
         )
         {
-            var existingApiKeys = memoryCache
-                .Get<IEnumerable<string>>(key: MemoryCacheConstants.ApiKeysKey)
-                .Select((apiKey, index) => new ApiKey(
-                    id: index,
-                    owner: "ipazanin",
-                    key: apiKey,
-                    created: new DateTime(2020, 4, 7)
-                ));
-
-            _apiKeys = existingApiKeys.ToDictionary(x => x.Key, x => x);
+            _apiKeys = new Dictionary<string, ApiKey>
+            {
+                {
+                    configuration.AndroidApiKey,
+                    new ApiKey(
+                        id: 1,
+                        role: ApiKey.MobileAppRole,
+                        key: configuration.AndroidApiKey
+                    )
+                },
+                {
+                    configuration.IosApiKey,
+                    new ApiKey(
+                        id: 2,
+                        role: ApiKey.MobileAppRole,
+                        key: configuration.IosApiKey
+                    )
+                },
+                {
+                    configuration.WebApiKey,
+                    new ApiKey(
+                        id: 3,
+                        role: ApiKey.WebAppRole,
+                        key: configuration.WebApiKey
+                    )
+                },
+                {
+                    configuration.ParserApiKey,
+                    new ApiKey(
+                        id: 4,
+                        role: ApiKey.ParserRole,
+                        key: configuration.ParserApiKey
+                    )
+                },
+            };
         }
         #endregion
 

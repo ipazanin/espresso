@@ -63,12 +63,6 @@ namespace Espresso.WebApi.Configuration
         /// 
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<string> ApiKeys => _configuration["AppConfiguration:ApiKeys"].Split(",", StringSplitOptions.RemoveEmptyEntries);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public string SpaProxyServerUrl => _configuration["AppConfiguration:SpaProxyServerUrl"];
 
         /// <summary>
@@ -92,6 +86,30 @@ namespace Espresso.WebApi.Configuration
                 provider: CultureInfo.InvariantCulture
             )
         );
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string AndroidApiKey => _configuration["AppConfiguration:ApiKeys:Android"];
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string IosApiKey => _configuration["AppConfiguration:ApiKeys:Ios"];
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string WebApiKey => _configuration["AppConfiguration:ApiKeys:Web"];
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string ParserApiKey => _configuration["AppConfiguration:ApiKeys:Parser"];
         #endregion
 
         #region Constructors

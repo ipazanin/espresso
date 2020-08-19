@@ -26,7 +26,6 @@ namespace Espresso.Workers.ParserDeleter
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IParserDeleterConfiguration _configuration;
         private readonly ILoggerService _loggerService;
-        private readonly IMemoryCache _memoryCache;
         private readonly IHttpService _httpService;
         #endregion
 
@@ -35,14 +34,12 @@ namespace Espresso.Workers.ParserDeleter
             IServiceScopeFactory serviceScopeFactory,
             IParserDeleterConfiguration configuration,
             ILoggerService loggerService,
-            IMemoryCache memoryCache,
             IHttpService httpService
         )
         {
             _serviceScopeFactory = serviceScopeFactory;
             _configuration = configuration;
             _loggerService = loggerService;
-            _memoryCache = memoryCache;
             _httpService = httpService;
         }
         #endregion
@@ -124,10 +121,10 @@ namespace Espresso.Workers.ParserDeleter
             }
 
             var numberOfTries = 5;
-            var apiKey = _memoryCache.Get<IEnumerable<string>>(key: MemoryCacheConstants.ApiKeysKey).First();
+            var apiKey = _configuration.ParserApiKey;
             var httpHeaders = new List<(string headerKey, string headerValue)>
             {
-                (headerKey: HttpHeaderConstants.HeaderName, headerValue: apiKey),
+                (headerKey: HttpHeaderConstants.ApiKeyHeaderName, headerValue: apiKey),
                 (headerKey: HttpHeaderConstants.EspressoApiHeaderName, headerValue: _configuration.RssFeedParserMajorMinorVersion),
                 (headerKey: HttpHeaderConstants.VersionHeaderName, headerValue: _configuration.RssFeedParserVersion),
                 (headerKey: HttpHeaderConstants.DeviceTypeHeaderName, headerValue: ((int)DeviceType.RssFeedParser).ToString()),

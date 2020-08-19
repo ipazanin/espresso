@@ -73,11 +73,11 @@ namespace Espresso.WebApi.Extensions
 
         private static void ConfigureApiSecurity(SwaggerGenOptions options)
         {
-            options.AddSecurityDefinition(HttpHeaderConstants.HeaderName, new OpenApiSecurityScheme
+            options.AddSecurityDefinition(HttpHeaderConstants.ApiKeyHeaderName, new OpenApiSecurityScheme
             {
                 Description = "API Key",
                 In = ParameterLocation.Header,
-                Name = HttpHeaderConstants.HeaderName,
+                Name = HttpHeaderConstants.ApiKeyHeaderName,
                 Type = SecuritySchemeType.ApiKey
             });
 
@@ -86,13 +86,13 @@ namespace Espresso.WebApi.Extensions
                     {
                         new OpenApiSecurityScheme
                         {
-                            Name = HttpHeaderConstants.HeaderName,
+                            Name = HttpHeaderConstants.ApiKeyHeaderName,
                             Type = SecuritySchemeType.ApiKey,
                             In = ParameterLocation.Header,
                             Reference = new OpenApiReference
                             {
                                 Type = ReferenceType.SecurityScheme,
-                                Id = HttpHeaderConstants.HeaderName
+                                Id = HttpHeaderConstants.ApiKeyHeaderName
                             },
                         },
                         new string[] {}

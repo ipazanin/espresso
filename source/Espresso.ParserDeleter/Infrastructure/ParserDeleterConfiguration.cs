@@ -35,14 +35,12 @@ namespace Espresso.Workers.ParserDeleter.Infrastructure
 
         public string Version => RssFeedParserVersion;
 
-        public IEnumerable<string> ApiKeys => _configuration["AppConfiguration:ApiKeys"].Split(",", StringSplitOptions.RemoveEmptyEntries);
+        public string ParserApiKey => _configuration["AppConfiguration:ApiKeys:Parser"];
 
         #region Durations
         public TimeSpan MaxAgeOfOldArticles => DateTimeConstants.MaxAgeOfArticle;
 
         public TimeSpan CancellationTokenExpirationDuration =>
-            // string.IsNullOrEmpty(_configuration["AppConfiguration:WaitDurationsInSeconds:CancellationTokenExpiration"]) ?
-            // TimeSpan.FromMinutes(5) :
             TimeSpan.FromSeconds(
                 value: int.Parse(
                     s: _configuration["AppConfiguration:WaitDurationsInSeconds:CancellationTokenExpiration"],
@@ -52,8 +50,6 @@ namespace Espresso.Workers.ParserDeleter.Infrastructure
             );
 
         public TimeSpan WaitDurationBetweenCommands =>
-            // string.IsNullOrEmpty(_configuration["AppConfiguration:WaitDurationsInSeconds:BetweenCommands"]) ?
-            // TimeSpan.FromSeconds(30) :
             TimeSpan.FromSeconds(
                 value: int.Parse(
                     s: _configuration["AppConfiguration:WaitDurationsInSeconds:BetweenCommands"],
@@ -63,8 +59,6 @@ namespace Espresso.Workers.ParserDeleter.Infrastructure
             );
 
         public TimeSpan WaitDurationAfterErrors =>
-            // string.IsNullOrEmpty(_configuration["AppConfiguration:WaitDurationsInSeconds:AfterErrors"]) ?
-            // TimeSpan.FromSeconds(30) :
             TimeSpan.FromSeconds(
                 value: int.Parse(
                     s: _configuration["AppConfiguration:WaitDurationsInSeconds:AfterErrors"],
@@ -74,8 +68,6 @@ namespace Espresso.Workers.ParserDeleter.Infrastructure
             );
 
         public TimeSpan WaitDurationAfterWebServerRequestError =>
-            // string.IsNullOrEmpty(_configuration["AppConfiguration:WaitDurationsInSeconds:AfterWebServerRequestError"]) ?
-            // TimeSpan.FromSeconds(5) :
             TimeSpan.FromSeconds(
                 value: int.Parse(
                     s: _configuration["AppConfiguration:WaitDurationsInSeconds:AfterWebServerRequestError"],
@@ -85,8 +77,6 @@ namespace Espresso.Workers.ParserDeleter.Infrastructure
             );
 
         public TimeSpan WaitDurationBeforeStartup =>
-            // string.IsNullOrEmpty(_configuration["AppConfiguration:WaitDurationsInSeconds:BeforeStartup"]) ?
-            // TimeSpan.FromSeconds(30) :
             TimeSpan.FromSeconds(
                 value: int.Parse(
                     s: _configuration["AppConfiguration:WaitDurationsInSeconds:BeforeStartup"],
@@ -94,6 +84,7 @@ namespace Espresso.Workers.ParserDeleter.Infrastructure
                     provider: CultureInfo.InvariantCulture
                 )
             );
+
         #endregion
 
         #endregion
