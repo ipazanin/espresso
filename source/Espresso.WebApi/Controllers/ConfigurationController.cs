@@ -48,7 +48,7 @@ namespace Espresso.WebApi.Controllers
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetConfigurationQueryResponse))]
         [HttpGet]
-        [Authorize(Roles = ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/configuration")]
         public async Task<IActionResult> GetConfiguration(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
@@ -85,7 +85,7 @@ namespace Espresso.WebApi.Controllers
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetConfigurationQueryResponse_1_3))]
         [HttpGet]
-        [Authorize(Roles = ApiKey.MobileAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
         [Route("api/configuration")]
         public async Task<IActionResult> GetConfiguration_1_3(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
@@ -124,7 +124,7 @@ namespace Espresso.WebApi.Controllers
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetConfigurationQueryResponse))]
         [HttpGet]
-        [Authorize(Roles = ApiKey.MobileAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
         [Route("api/configuration")]
         public async Task<IActionResult> GetConfiguration_1_2(
             [Required] string mobileAppVersion,

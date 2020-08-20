@@ -115,7 +115,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost]
-        [Authorize(Roles = ApiKey.MobileAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole)]
         [Route("api/notifications")]
         public async Task<IActionResult> SendPushNotificition(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
@@ -160,7 +160,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
-        [Authorize(Roles = ApiKey.MobileAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole)]
         [Route("api/notifications")]
         public async Task<IActionResult> GetPushNotificition(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
@@ -110,6 +109,18 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         /// <returns></returns>
         public string ParserApiKey => _configuration["AppConfiguration:ApiKeys:Parser"];
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string DevAndroidApiKey => _configuration["AppConfiguration:ApiKeys:DevAndroid"];
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string DevIosApiKey => _configuration["AppConfiguration:ApiKeys:DevIos"];
         #endregion
 
         #region Constructors

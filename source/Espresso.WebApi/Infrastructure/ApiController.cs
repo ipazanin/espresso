@@ -1,7 +1,5 @@
-﻿using Espresso.WebApi.Authentication;
-using Espresso.WebApi.Configuration;
+﻿using Espresso.WebApi.Configuration;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Espresso.WebApi.Infrastructure

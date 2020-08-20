@@ -11,17 +11,22 @@ namespace Espresso.WebApi.Authentication
         /// <summary>
         /// 
         /// </summary>
-        public const string MobileAppRole = "Mobile";
+        public const string MobileAppRole = nameof(MobileAppRole);
 
         /// <summary>
         /// 
         /// </summary>
-        public const string WebAppRole = "Web";
+        public const string WebAppRole = nameof(WebAppRole);
 
         /// <summary>
         /// 
         /// </summary>
-        public const string ParserRole = "Parser";
+        public const string ParserRole = nameof(ParserRole);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string DevMobileAppRole = nameof(DevMobileAppRole);
         #endregion
 
         #region Properties

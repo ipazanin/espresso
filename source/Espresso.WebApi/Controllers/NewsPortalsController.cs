@@ -51,7 +51,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
-        [Authorize(Roles = ApiKey.MobileAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
         [Route("api/newsportals")]
         public async Task<IActionResult> GetNewsPortals(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
@@ -92,7 +92,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost]
-        [Authorize(Roles = ApiKey.MobileAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
         [Route("api/newsportals")]
         public async Task<IActionResult> RequestNewsPortal(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
