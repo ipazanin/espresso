@@ -67,5 +67,17 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         /// <value></value>
         public string ParserApiKey { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public string DevIosApiKey { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public string DevAndroidApiKey { get; }
     }
 }

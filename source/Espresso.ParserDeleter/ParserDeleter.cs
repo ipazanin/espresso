@@ -14,7 +14,6 @@ using Espresso.Domain.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.Workers.ParserDeleter.Infrastructure;
 using MediatR;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 

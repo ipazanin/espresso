@@ -49,7 +49,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost]
-        [Authorize(Roles = ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/application-downloads")]
         public async Task<IActionResult> CreateApplicationDownload(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
@@ -86,7 +86,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost]
-        [Authorize(Roles = ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/applicationDownloads/create")]
         public async Task<IActionResult> CreateApplicationDownload_1_3(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
@@ -125,7 +125,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost]
-        [Authorize(Roles = ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/applicationDownloads/create")]
         public async Task<IActionResult> CreateApplicationDownload_1_2(
             [Required] string mobileAppVersion,
@@ -162,7 +162,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
-        [Authorize(Roles = ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/application-downloads")]
         public async Task<IActionResult> GetApplicationDownloadsStatistics(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
@@ -198,7 +198,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
-        [Authorize(Roles = ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/applicationDownloads/statistics")]
         public async Task<IActionResult> GetApplicationDownloadsStatistics_1_3(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,

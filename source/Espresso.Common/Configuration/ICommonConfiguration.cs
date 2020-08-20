@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Espresso.Common.Enums;
+﻿using Espresso.Common.Enums;
 
 namespace Espresso.Common.Configuration
 {

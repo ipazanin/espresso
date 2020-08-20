@@ -51,7 +51,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = ApiKey.WebAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("graphql")]
         public async Task<IActionResult> Post(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,

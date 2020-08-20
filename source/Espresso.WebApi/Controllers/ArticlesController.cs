@@ -64,7 +64,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
-        [Authorize(Roles = ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/articles")]
         public async Task<IActionResult> GetLatestArticles(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
@@ -117,7 +117,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
-        [Authorize(Roles = ApiKey.MobileAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
         [Route("api/articles/latest")]
         public async Task<IActionResult> GetLatestArticles_1_3(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
@@ -171,7 +171,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
-        [Authorize(Roles = ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/categories/{categoryId}/articles")]
         public async Task<IActionResult> GetCategoryArticles(
             [FromRoute] int categoryId,
@@ -226,7 +226,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
-        [Authorize(Roles = ApiKey.MobileAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
         [Route("api/articles/category")]
         public async Task<IActionResult> GetCategoryArticles_1_3(
             [Required] int categoryId,
@@ -276,7 +276,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
-        [Authorize(Roles = ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/articles/trending")]
         public async Task<IActionResult> GetTrendingArticles(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
@@ -322,7 +322,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPatch]
-        [Authorize(Roles = ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/articles/{articleId}")]
         public async Task<IActionResult> IncrementArticleScore(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
@@ -375,7 +375,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPatch]
-        [Authorize(Roles = ApiKey.MobileAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
         [Route("api/articles/score/{articleId}")]
         public async Task<IActionResult> IncrementArticleScore_1_3(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
@@ -424,7 +424,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpDelete]
-        [Authorize(Roles = ApiKey.MobileAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole)]
         [Route("api/articles/{articleId}")]
         public async Task<IActionResult> HideArticle(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,

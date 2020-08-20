@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Espresso.Common.Constants;
 using Espresso.WebApi.Configuration;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace Espresso.WebApi.Authentication
 {
@@ -58,6 +55,22 @@ namespace Espresso.WebApi.Authentication
                         id: 4,
                         role: ApiKey.ParserRole,
                         key: configuration.ParserApiKey
+                    )
+                },
+                {
+                    configuration.DevAndroidApiKey,
+                    new ApiKey(
+                        id: 5,
+                        role: ApiKey.DevMobileAppRole,
+                        key: configuration.DevAndroidApiKey
+                    )
+                },
+                {
+                    configuration.DevIosApiKey,
+                    new ApiKey(
+                        id: 6,
+                        role: ApiKey.DevMobileAppRole,
+                        key: configuration.DevIosApiKey
                     )
                 },
             };

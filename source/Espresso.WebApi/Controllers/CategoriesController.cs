@@ -50,7 +50,7 @@ namespace Espresso.WebApi.Controllers
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetCategoriesQueryResponse))]
         [HttpGet]
-        [Authorize(Roles = ApiKey.MobileAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
         [Route("api/categories")]
         public async Task<IActionResult> GetCategories(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
