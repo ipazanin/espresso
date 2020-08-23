@@ -34,7 +34,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
             var articleDtos = articles
                 .OrderByDescending(keySelector: Article.GetArticleOrderByDescendingExpression().Compile())
                 .Where(
-                    predicate: Article.GetLatestArticlePredicate(
+                    predicate: Article.GetArticlesFromNewsPortalsAndCategoriesPredicate(
                         categoryIds: request.CategoryIds,
                         newsPortalIds: request.NewsPortalIds
                     ).Compile()
@@ -53,8 +53,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
                         newsPortalIds: request.NewsPortalIds,
                         categoryIds: request.CategoryIds,
                         regionId: null
-                    )
-                    .Compile()
+                    ).Compile()
                 )
                 .OrderBy(keySelector: NewsPortal.GetOrderByExpression().Compile())
                 .Select(selector: GetLatestArticlesNewsPortal.GetProjection().Compile());

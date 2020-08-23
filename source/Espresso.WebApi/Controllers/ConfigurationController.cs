@@ -47,6 +47,7 @@ namespace Espresso.WebApi.Controllers
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetConfigurationQueryResponse))]
+        [ApiVersion("1.4")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/configuration")]
@@ -84,6 +85,7 @@ namespace Espresso.WebApi.Controllers
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetConfigurationQueryResponse_1_3))]
+        [ApiVersion("1.3")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
         [Route("api/configuration")]
@@ -123,6 +125,7 @@ namespace Espresso.WebApi.Controllers
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetConfigurationQueryResponse))]
+        [ApiVersion("1.2")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
         [Route("api/configuration")]

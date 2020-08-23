@@ -1,13 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 
-namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
+namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
 {
-    public class GetTrendingArticlesArticle
+    public class GetFeaturedArticlesArticle
     {
         #region Properties
         /// <summary>
@@ -36,24 +36,19 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
         public string PublishDateTime { get; private set; }
 
         /// <summary>
-        /// Trending Score
-        /// </summary>
-        public int TrendingScore { get; private set; }
-
-        /// <summary>
         /// News Portal
         /// </summary>
-        public GetTrendingArticlesNewsPortal NewsPortal { get; private set; }
+        public GetFeaturedArticlesNewsPortal NewsPortal { get; private set; }
 
         /// <summary>
         /// List Of Categories article belongs to
         /// </summary>
-        public IEnumerable<GetTrendingArticlesCategory> Categories { get; private set; } = new List<GetTrendingArticlesCategory>();
+        public IEnumerable<GetFeaturedArticlesCategory> Categories { get; private set; } = new List<GetFeaturedArticlesCategory>();
         #endregion
 
         #region Constructors
 
-        private GetTrendingArticlesArticle()
+        private GetFeaturedArticlesArticle()
         {
             Url = null!;
             Title = null!;
@@ -64,22 +59,21 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
         #endregion
 
         #region Methods
-        public static Expression<Func<Article, GetTrendingArticlesArticle>> GetProjection()
+        public static Expression<Func<Article, GetFeaturedArticlesArticle>> GetProjection()
         {
-            return article => new GetTrendingArticlesArticle
+            return article => new GetFeaturedArticlesArticle
             {
                 Id = article.Id,
                 Title = article.Title,
                 ImageUrl = article.ImageUrl,
                 Url = article.Url,
                 PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.ArticleDateTimeFormat),
-                NewsPortal = GetTrendingArticlesNewsPortal.GetProjection()
+                NewsPortal = GetFeaturedArticlesNewsPortal.GetProjection()
                     .Compile()
                     .Invoke(article.NewsPortal!),
                 Categories = article.ArticleCategories
                     .Select(articleCategory => articleCategory.Category)
-                    .Select(GetTrendingArticlesCategory.GetProjection().Compile()!),
-                TrendingScore = (int)article.TrendingScore
+                    .Select(GetFeaturedArticlesCategory.GetProjection().Compile()!)
             };
         }
         #endregion

@@ -35,11 +35,9 @@ RUN npm install
 
 # add app
 COPY Espresso.WebApi/ClientApp/. /usr/src/app
-RUN echo IPAZANIN $REACT_APP_ENVIRONMENT
 ENV REACT_APP_ENVIRONMENT=$REACT_APP_ENVIRONMENT
 RUN npm run build-frontend
 #End React build
-
 
 FROM base AS final
 # ASP.NET Core  

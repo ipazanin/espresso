@@ -51,6 +51,7 @@ namespace Espresso.WebApi.Controllers
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ApiVersion("1.4")]
         [HttpPost]
         [Authorize(Roles = ApiKey.ParserRole)]
         [Route("api/notifications/articles")]
@@ -114,6 +115,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ApiVersion("1.4")]
         [HttpPost]
         [Authorize(Roles = ApiKey.DevMobileAppRole)]
         [Route("api/notifications")]
@@ -159,6 +161,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ApiVersion("1.4")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole)]
         [Route("api/notifications")]

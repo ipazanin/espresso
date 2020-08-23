@@ -224,7 +224,7 @@ namespace Espresso.Domain.Entities
         }
 
         #region Expressions
-        public static Expression<Func<Article, bool>> GetLatestArticlePredicate(
+        public static Expression<Func<Article, bool>> GetArticlesFromNewsPortalsAndCategoriesPredicate(
             IEnumerable<int>? categoryIds,
             IEnumerable<int>? newsPortalIds
         )
@@ -254,7 +254,7 @@ namespace Espresso.Domain.Entities
             return article => !article.IsHidden && article.PublishDateTime > maxTrendingDateTime;
         }
 
-        public static Expression<Func<Article, object>> GetTrendingArticleOrderByDescendingExpression()
+        public static Expression<Func<Article, object>> GetOrderByDescendingTrendingScoreExpression()
         {
             return article => article.TrendingScore;
         }

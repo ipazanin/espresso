@@ -14,9 +14,16 @@ namespace Espresso.WebApi.Authentication
         /// <param name="authenticationBuilder"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static AuthenticationBuilder AddApiKeySupport(this AuthenticationBuilder authenticationBuilder, Action<ApiKeyAuthenticationOptions> options)
+        public static AuthenticationBuilder AddApiKeySupport(
+            this AuthenticationBuilder authenticationBuilder,
+            Action<ApiKeyAuthenticationOptions> options
+        )
         {
-            return authenticationBuilder.AddScheme<ApiKeyAuthenticationOptions, ApiKeyAuthenticationHandler>(ApiKeyAuthenticationOptions.DefaultScheme, options);
+            return authenticationBuilder
+                .AddScheme<ApiKeyAuthenticationOptions, ApiKeyAuthenticationHandler>(
+                    authenticationScheme: ApiKeyAuthenticationOptions.DefaultScheme,
+                    configureOptions: options
+                );
         }
     }
 }

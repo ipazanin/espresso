@@ -50,6 +50,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="query"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [ApiVersion("1.4")]
         [HttpPost]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("graphql")]

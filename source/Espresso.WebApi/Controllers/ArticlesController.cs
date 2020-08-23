@@ -7,6 +7,7 @@ using Espresso.Application.CQRS.Articles.Commands.HideArticle;
 using Espresso.Application.CQRS.Articles.Commands.IncrementTrendingArticleScore;
 using Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles;
 using Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles_1_3;
+using Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles;
 using Espresso.Application.CQRS.Articles.Queries.GetLatestArticles;
 using Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles;
 using Espresso.Common.Constants;
@@ -63,6 +64,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ApiVersion("1.4")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/articles")]
@@ -116,6 +118,8 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ApiVersion("1.3")]
+        [ApiVersion("1.2")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
         [Route("api/articles/latest")]
@@ -170,6 +174,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ApiVersion("1.4")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/categories/{categoryId}/articles")]
@@ -225,6 +230,8 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ApiVersion("1.3")]
+        [ApiVersion("1.2")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
         [Route("api/articles/category")]
@@ -275,6 +282,9 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ApiVersion("1.4")]
+        [ApiVersion("1.3")]
+        [ApiVersion("1.2")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/articles/trending")]
@@ -290,6 +300,59 @@ namespace Espresso.WebApi.Controllers
                     take: take,
                     skip: skip,
                     maxAgeOfTrendingArticle: WebApiConfiguration.MaxAgeOfTrendingArticle,
+                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
+                    deviceType: basicInformationsHeaderParameters.DeviceType
+                ),
+                cancellationToken: cancellationToken
+            ).ConfigureAwait(false);
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Get featured articles
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///     Get /api/articles/featured?<paramref name="take"/>=1&amp;<paramref name="skip"/>=0
+        /// </remarks>
+        /// <param name="cancellationToken"></param>
+        /// <param name="take">Number of articles</param>
+        /// <param name="skip">Number of skipped articles</param>
+        /// <param name="newsPortalIds">NewsPortal Ids comma delimited</param>
+        /// <param name="categoryIds">Category Ids comma delimited</param>
+        /// <param name="basicInformationsHeaderParameters"></param>
+        /// <returns>Response object containing articles</returns>
+        /// <response code="200">Response object containing articles</response>
+        /// <response code="400">If <paramref name="take"/> is not between 0 and 100 or <paramref name="skip"/> is lower than 0</response>
+        /// <response code="401">If API Key is invalid or missing</response>
+        /// <response code="500">If unhandled exception occurred</response>
+        [Produces(MimeTypeConstants.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetTrendingArticlesQueryResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ApiVersion("1.4")]
+        [HttpGet]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
+        [Route("api/articles/featured")]
+        public async Task<IActionResult> GetFeaturedArticles(
+            [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
+            CancellationToken cancellationToken,
+            [FromQuery] int take = DefaultValueConstants.DefaultTake,
+            [FromQuery] int skip = DefaultValueConstants.DefaultSkip,
+            [FromQuery] string? newsPortalIds = null,
+            [FromQuery] string? categoryIds = null
+        )
+        {
+            var response = await Mediator.Send(
+                request: new GetFeaturedArticlesQuery(
+                    take: take,
+                    skip: skip,
+                    categoryIdsString: categoryIds,
+                    newsPortalIdsString: newsPortalIds,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
@@ -321,6 +384,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ApiVersion("1.4")]
         [HttpPatch]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/articles/{articleId}")]
@@ -374,6 +438,8 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ApiVersion("1.3")]
+        [ApiVersion("1.2")]
         [HttpPatch]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
         [Route("api/articles/score/{articleId}")]
@@ -423,6 +489,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ApiVersion("1.4")]
         [HttpDelete]
         [Authorize(Roles = ApiKey.DevMobileAppRole)]
         [Route("api/articles/{articleId}")]

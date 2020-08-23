@@ -38,7 +38,12 @@ namespace Espresso.WebApi.Authentication
             UrlEncoder encoder,
             ISystemClock clock,
             IApiKeyProvider apiKeyProvider
-        ) : base(options, logger, encoder, clock)
+        ) : base(
+            options: options,
+            logger: logger,
+            encoder: encoder,
+            clock: clock
+        )
         {
             _apiKeyProvider = apiKeyProvider;
         }

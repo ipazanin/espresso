@@ -8,14 +8,14 @@ namespace Espresso.WebApi.Extensions
     /// <summary>
     /// 
     /// </summary>
-    public static class AppServicesServiceCollectionExtensions
+    public static class ServicesServiceCollectionExtensions
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static IServiceCollection AddAppServices(this IServiceCollection services)
+        public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<ILoggerService, LoggerService>();
             services.AddScoped<ISlackService, SlackService>();

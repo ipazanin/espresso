@@ -1,20 +1,13 @@
 ﻿using System.IO;
-using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
-using Espresso.WebApi.GraphQl.Infrastructure;
 using Espresso.Application.Hubs;
 using Espresso.Application.Initialization;
 using Espresso.Common.Enums;
-using Espresso.Domain.IValidators;
-using Espresso.Domain.Validators;
 using Espresso.WebApi.Configuration;
-using Espresso.WebApi.Extensions;
-using Espresso.WebApi.Filters;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Espresso.WebApi.Extensions;
 
 namespace Espresso.WebApi
 {
@@ -44,52 +37,7 @@ namespace Espresso.WebApi
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAppConfiguration();
-            services.AddAppServices();
-
-            #region MemoryCache
-            services.AddMemoryCache();
-            services.AddTransient<IApplicationInit, ApplicationInit>();
-            #endregion
-
-            #region Validators
-            services.AddScoped<IArticleValidator, ArticleValidator>();
-            #endregion
-
-            services.AddMediatRServices();
-
-            services.AddHttpClient();
-            services.AddControllers();
-
-            services.AddApiVersioningServices(_configuration);
-
-            services
-                .AddMvc(options =>
-                {
-                    options.Filters.Add(typeof(CustomExceptionFilterAttribute));
-                    options.EnableEndpointRouting = false;
-                })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-                .AddFluentValidation(fluentValidatorConfiguration => fluentValidatorConfiguration.RegisterValidatorsFromAssemblyContaining<GetNewsPortalsQueryValidator>());
-
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/build";
-            });
-
-            services.AddAuthServices();
-
-            #region Health Checks
-            services.AddHealthChecks();
-            #endregion
-
-            services.AddSignalR();
-
-            services.AddGraphQlServices();
-
-            services.AddSwaggerServices(_configuration);
-
-            services.AddPersistentServices(_configuration);
+            services.AddApplicationServices(_configuration);
         }
 
         /// <summary>
