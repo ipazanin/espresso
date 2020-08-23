@@ -21,7 +21,7 @@
         #endregion
 
         #region Articles
-        public const string ArticleKey = "Article";
+        public const string ArticleKey = nameof(ArticleKey);
         #endregion
 
         #region ArticleCategory

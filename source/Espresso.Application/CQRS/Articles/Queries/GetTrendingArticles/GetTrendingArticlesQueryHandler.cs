@@ -39,7 +39,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
                     )
                     .Compile()
                 )
-                .OrderByDescending(keySelector: Article.GetTrendingArticleOrderByDescendingExpression().Compile())
+                .OrderByDescending(keySelector: Article.GetOrderByDescendingTrendingScoreExpression().Compile())
                 .Skip(request.Skip)
                 .Take(request.Take)
                 .Select(GetTrendingArticlesArticle.GetProjection().Compile());
