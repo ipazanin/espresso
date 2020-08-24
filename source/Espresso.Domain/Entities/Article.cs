@@ -224,27 +224,32 @@ namespace Espresso.Domain.Entities
         }
 
         #region Expressions
-        public static Expression<Func<Article, bool>> GetArticlesFromNewsPortalsAndCategoriesPredicate(
+        public static Expression<Func<Article, bool>> GetFilteredArticlesPredicate(
             IEnumerable<int>? categoryIds,
-            IEnumerable<int>? newsPortalIds
+            IEnumerable<int>? newsPortalIds,
+            string? titleSearchQuery
         )
         {
-            return article => !article.IsHidden &&
+            return article =>
+                !article.IsHidden &&
                 (categoryIds == null || article
                     .ArticleCategories
                     .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
-                (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId));
+                (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)) &&
+                (string.IsNullOrEmpty(titleSearchQuery) || article.Title.Contains(titleSearchQuery));
         }
 
-        public static Expression<Func<Article, bool>> GetCategoryArticlePredicate(
+        public static Expression<Func<Article, bool>> GetFilteredArticlesPredicate(
             int categoryId,
-            IEnumerable<int>? newsPortalIds
+            IEnumerable<int>? newsPortalIds,
+            string? titleSearchQuery
         )
         {
-            return article => !article.IsHidden &&
-                        article.ArticleCategories
-                            .Any(articleCategory => articleCategory.CategoryId.Equals(categoryId)) &&
-                        (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId));
+            return article =>
+                !article.IsHidden &&
+                article.ArticleCategories.Any(articleCategory => articleCategory.CategoryId.Equals(categoryId)) &&
+                (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)) &&
+                (string.IsNullOrEmpty(titleSearchQuery) || article.Title.Contains(titleSearchQuery));
         }
 
         public static Expression<Func<Article, bool>> GetTrendingArticlePredicate(TimeSpan maxAgeOfTrendingArticle)

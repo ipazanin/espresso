@@ -75,7 +75,10 @@ namespace Espresso.WebApi
             {
                 spa.Options.SourcePath = Path.Join(env.ContentRootPath, "ClientApp");
 
-                if (_configuration.AppEnvironment.Equals(AppEnvironment.Local))
+                if (
+                    _configuration.AppEnvironment.Equals(AppEnvironment.Local) &&
+                    _configuration.UseSpaProxyServer
+                )
                 {
                     spa.UseProxyToSpaDevelopmentServer(_configuration.SpaProxyServerUrl);
                 }

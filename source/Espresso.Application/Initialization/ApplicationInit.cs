@@ -11,7 +11,7 @@ using Espresso.Common.Enums;
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
-using Espresso.Persistence.IRepository;
+using Espresso.Persistence.IRepositories;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.EntityFrameworkCore;

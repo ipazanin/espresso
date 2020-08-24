@@ -19,6 +19,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
         public IEnumerable<int>? CategoryIds { get; }
 
         public int NewNewsPortalsPosition { get; }
+
+        public string? TitleSearchQuery { get; }
         #endregion
 
         #region Constructors
@@ -31,7 +33,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
             string targetedEspressoWebApiVersion,
             string consumerVersion,
             DeviceType deviceType,
-            int newNewsPortalsPosition
+            int newNewsPortalsPosition,
+            string? titleSearchQuery
         ) : base(
             currentEspressoWebApiVersion: currentEspressoWebApiVersion,
             targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
@@ -58,7 +61,9 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
                 ?.Where(categoryId => categoryId != default);
 
             CategoryIds = categoryIds == null || categoryIds.Any() ? categoryIds : null;
+
             NewNewsPortalsPosition = newNewsPortalsPosition;
+            TitleSearchQuery = titleSearchQuery;
         }
         #endregion
 
@@ -67,7 +72,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
         {
             return $"{nameof(Take)}:{Take}, {nameof(Skip)}:{Skip}, " +
             $"{nameof(NewsPortalIds)}:{(NewsPortalIds is null ? "" : string.Join(",", NewsPortalIds))}, " +
-            $"{nameof(CategoryIds)}:{(CategoryIds is null ? "" : string.Join(",", CategoryIds))}";
+            $"{nameof(CategoryIds)}:{(CategoryIds is null ? "" : string.Join(",", CategoryIds))}, " +
+            $"{nameof(TitleSearchQuery)}:{TitleSearchQuery}";
         }
         #endregion
     }

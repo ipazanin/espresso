@@ -6,34 +6,32 @@
     "**/node_modules": true,
     "**/ClientApp/build": false
   },
-  "window.zoomLevel": 0.25,
-  "workbench.sideBar.location": "right",
-  "workbench.colorTheme": "Visual Studio 2019 Dark",
-  "files.autoSave": "afterDelay",
-  "files.autoSaveDelay": 1700,
-  "editor.formatOnPaste": true,
-  "editor.formatOnType": true,
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll": true
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "csharp.maxProjectFileCountForDiagnosticAnalysis": 0,
-  "csharp.semanticHighlighting.enabled": true,
-  "[csharp]": {
-    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+  "csharp.maxProjectFileCountForDiagnosticAnalysis": 0,
+  "csharp.semanticHighlighting.enabled": true,
   "omnisharp.enableRoslynAnalyzers": true,
   "omnisharp.enableEditorConfigSupport": true,
   "omnisharp.autoStart": true,
   "omnisharp.enableMsBuildLoadProjectsOnDemand": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
   "eslint.alwaysShowStatus": true,
   "eslint.format.enable": true,
   "eslint.validate": ["javascript", "typescript"],
-  "eslint.packageManager": "yarn",
+  "eslint.packageManager": "npm",
   "eslint.workingDirectories": ["./source/Espresso.WebApi/ClientApp"],
   "eslint.options": {
     "configFile": ".eslintrc"

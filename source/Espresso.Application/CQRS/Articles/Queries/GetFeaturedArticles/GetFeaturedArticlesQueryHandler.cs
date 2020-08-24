@@ -35,9 +35,10 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
             var articleDtos = articles
                 .OrderByDescending(keySelector: Article.GetOrderByDescendingTrendingScoreExpression().Compile())
                 .Where(
-                    predicate: Article.GetArticlesFromNewsPortalsAndCategoriesPredicate(
+                    predicate: Article.GetFilteredArticlesPredicate(
                         categoryIds: request.CategoryIds,
-                        newsPortalIds: request.NewsPortalIds
+                        newsPortalIds: request.NewsPortalIds,
+                        titleSearchQuery: null
                     ).Compile()
                 )
                 .Skip(request.Skip)

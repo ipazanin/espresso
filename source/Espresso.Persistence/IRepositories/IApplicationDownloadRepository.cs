@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Espresso.Domain.Entities;
 
-namespace Espresso.Persistence.IRepository
+namespace Espresso.Persistence.IRepositories
 {
     public interface IApplicationDownloadRepository
     {

@@ -10,11 +10,11 @@
     "start-frontend": "REACT_APP_ENVIRONMENT=local react-scripts start",
     "build-frontend": "react-scripts build",
     "test-frontend": "REACT_APP_ENVIRONMENT=test react-scripts test",
-    "test-frontend:cov": "yarn test-frontend -- --coverage",
-    "test-frontend:ci": "CI=true yarn test-frontend",
+    "test-frontend:cov": "npm run test-frontend -- --coverage",
+    "test-frontend:ci": "CI=true npm run test-frontend",
     "lint-frontend:base": "eslint --ext .ts,.tsx src/",
-    "lint-frontend": "yarn lint-frontend:base --fix --cache --cache-location=./node_modules/.cache/",
-    "upgrade-frontend": "yarn upgrade",
+    "lint-frontend": "npm run lint-frontend:base --fix --cache --cache-location=./node_modules/.cache/",
+    "upgrade-frontend": "npm run upgrade",
     "build-backend": "dotnet build ../../../source/Espresso.sln",
     "compose-database:up": "docker-compose -f ../../../compose/docker-compose-database.yml up --build",
     "compose-database:recompose": "docker-compose -f ../../../compose/docker-compose-database.yml down && docker-compose -f ../../../compose/docker-compose-database.yml up --build",
@@ -97,7 +97,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn build-backend && yarn test-backend && pretty-quick && yarn lint-frontend && yarn test-frontend:ci "
+      "pre-commit": "npm run build-backend && npm run test-backend && pretty-quick && npm run lint-frontend && npm run test-frontend:ci "
     }
   },
   "jest": {
