@@ -4,9 +4,9 @@ using Dapper;
 
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
-using Espresso.Persistence.IRepository;
+using Espresso.Persistence.IRepositories;
 
-namespace Espresso.Persistence.Repository
+namespace Espresso.Persistence.Repositories
 {
     public class ApplicationDownloadRepository : IApplicationDownloadRepository
     {

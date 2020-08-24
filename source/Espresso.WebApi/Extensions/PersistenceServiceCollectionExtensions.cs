@@ -1,8 +1,8 @@
 ﻿using Espresso.Common.Enums;
 
 using Espresso.Persistence.Database;
-using Espresso.Persistence.IRepository;
-using Espresso.Persistence.Repository;
+using Espresso.Persistence.IRepositories;
+using Espresso.Persistence.Repositories;
 using Espresso.WebApi.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

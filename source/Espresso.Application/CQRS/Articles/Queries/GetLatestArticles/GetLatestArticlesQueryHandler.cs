@@ -25,7 +25,10 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
         #endregion
 
         #region Methods
-        public Task<GetLatestArticlesQueryResponse> Handle(GetLatestArticlesQuery request, CancellationToken cancellationToken)
+        public Task<GetLatestArticlesQueryResponse> Handle(
+            GetLatestArticlesQuery request,
+            CancellationToken cancellationToken
+        )
         {
             var articles = _memoryCache.Get<IEnumerable<Article>>(
                 key: MemoryCacheConstants.ArticleKey
@@ -34,9 +37,10 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
             var articleDtos = articles
                 .OrderByDescending(keySelector: Article.GetArticleOrderByDescendingExpression().Compile())
                 .Where(
-                    predicate: Article.GetArticlesFromNewsPortalsAndCategoriesPredicate(
+                    predicate: Article.GetFilteredArticlesPredicate(
                         categoryIds: request.CategoryIds,
-                        newsPortalIds: request.NewsPortalIds
+                        newsPortalIds: request.NewsPortalIds,
+                        titleSearchQuery: request.TitleSearchQuery
                     ).Compile()
                 )
                 .Skip(request.Skip)

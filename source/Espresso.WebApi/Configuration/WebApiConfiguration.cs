@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Globalization;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
-using Espresso.Domain.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -53,74 +51,69 @@ namespace Espresso.WebApi.Configuration
         /// <summary>
         /// 
         /// </summary>
-        public AppEnvironment AppEnvironment => EnumUtility.GetEnumOrDefault(
-            enumValue: _configuration["AppConfiguration:Environment"],
-            defaultValue: AppEnvironment.Prod
-        );
+        public AppEnvironment AppEnvironment => _configuration.GetValue<AppEnvironment>("AppConfiguration:Environment");
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public string SpaProxyServerUrl => _configuration["AppConfiguration:SpaProxyServerUrl"];
+        public string SpaProxyServerUrl => _configuration.GetValue<string>("AppConfiguration:SpaProxyServerUrl");
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public bool UseSpaProxyServer => _configuration.GetValue<bool>("AppConfiguration:UseSpaProxyServer");
 
         /// <summary>
         /// 
         /// </summary>
         /// <value></value>
-        public int NewNewsPortalsPosition => int.Parse(
-            s: _configuration["AppConfiguration:NewNewsPortalsPosition"],
-            style: NumberStyles.Integer,
-            provider: CultureInfo.InvariantCulture
-        );
+        public int NewNewsPortalsPosition => _configuration.GetValue<int>("AppConfiguration:NewNewsPortalsPosition");
 
         /// <summary>
         /// 
         /// </summary>
         /// <value></value>
         public TimeSpan MaxAgeOfTrendingArticle => TimeSpan.FromHours(
-            value: int.Parse(
-                s: _configuration["AppConfiguration:MaxAgeOfTrendingArticlesInHours"],
-                style: NumberStyles.Integer,
-                provider: CultureInfo.InvariantCulture
-            )
+            value: _configuration.GetValue<int>("AppConfiguration:MaxAgeOfTrendingArticlesInHours")
         );
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public string AndroidApiKey => _configuration["AppConfiguration:ApiKeys:Android"];
+        public string AndroidApiKey => _configuration.GetValue<string>("AppConfiguration:ApiKeys:Android");
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public string IosApiKey => _configuration["AppConfiguration:ApiKeys:Ios"];
+        public string IosApiKey => _configuration.GetValue<string>("AppConfiguration:ApiKeys:Ios");
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public string WebApiKey => _configuration["AppConfiguration:ApiKeys:Web"];
+        public string WebApiKey => _configuration.GetValue<string>("AppConfiguration:ApiKeys:Web");
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public string ParserApiKey => _configuration["AppConfiguration:ApiKeys:Parser"];
+        public string ParserApiKey => _configuration.GetValue<string>("AppConfiguration:ApiKeys:Parser");
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public string DevAndroidApiKey => _configuration["AppConfiguration:ApiKeys:DevAndroid"];
+        public string DevAndroidApiKey => _configuration.GetValue<string>("AppConfiguration:ApiKeys:DevAndroid");
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public string DevIosApiKey => _configuration["AppConfiguration:ApiKeys:DevIos"];
+        public string DevIosApiKey => _configuration.GetValue<string>("AppConfiguration:ApiKeys:DevIos");
         #endregion
 
         #region Constructors

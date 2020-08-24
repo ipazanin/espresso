@@ -19,7 +19,7 @@ using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
-using Espresso.Persistence.IRepository;
+using Espresso.Persistence.IRepositories;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 

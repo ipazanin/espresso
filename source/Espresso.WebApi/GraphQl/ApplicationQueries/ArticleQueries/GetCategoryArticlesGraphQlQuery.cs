@@ -49,6 +49,10 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                         {
                             Name = "regionId",
                         },
+                        new QueryArgument<IntGraphType>
+                        {
+                            Name = "titleSearchQuery",
+                        },
                     }
                 ),
                 resolve: async resolveContext =>
@@ -63,6 +67,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                                 categoryId: resolveContext.GetArgument<int>("categoryId"),
                                 regionId: resolveContext.GetArgument<int?>("regionId"),
                                 newNewsPortalsPosition: configuration.NewNewsPortalsPosition,
+                                titleSearchQuery: resolveContext.GetArgument<string?>("titleSearchQuery"),
                                 currentEspressoWebApiVersion: graphQlUserContext.CurrentEspressoWebApiVersion,
                                 targetedEspressoWebApiVersion: graphQlUserContext.CurrentEspressoWebApiVersion,
                                 consumerVersion: graphQlUserContext.ConsumerVersion,

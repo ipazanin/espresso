@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Dapper;
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
-using Espresso.Persistence.IRepository;
+using Espresso.Persistence.IRepositories;
 using Microsoft.Data.SqlClient;
 
-namespace Espresso.Persistence.Repository
+namespace Espresso.Persistence.Repositories
 {
     public class ArticleRepository : IArticleRepository
     {

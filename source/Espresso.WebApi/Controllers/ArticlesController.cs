@@ -53,6 +53,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="skip">Number of skipped articles</param>
         /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
         /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored</param>
+        /// <param name="titleSearchQuery">Article Title Search Query</param>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <returns>Response object containing articles</returns>
         /// <response code="200">Response object containing articles</response>
@@ -74,7 +75,8 @@ namespace Espresso.WebApi.Controllers
             [FromQuery] int take = DefaultValueConstants.DefaultTake,
             [FromQuery] int skip = DefaultValueConstants.DefaultSkip,
             [FromQuery] string? newsPortalIds = null,
-            [FromQuery] string? categoryIds = null
+            [FromQuery] string? categoryIds = null,
+            [FromQuery] string? titleSearchQuery = null
         )
         {
             var response = await Mediator.Send(
@@ -84,6 +86,7 @@ namespace Espresso.WebApi.Controllers
                     newsPortalIdsString: newsPortalIds,
                     categoryIdsString: categoryIds,
                     newNewsPortalsPosition: WebApiConfiguration.NewNewsPortalsPosition,
+                    titleSearchQuery: titleSearchQuery,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
@@ -140,6 +143,7 @@ namespace Espresso.WebApi.Controllers
                     categoryIdsString: categoryIds,
                     newNewsPortalsPosition: WebApiConfiguration.NewNewsPortalsPosition,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    titleSearchQuery: null,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType
@@ -164,6 +168,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
         /// <param name="regionId">Region ID</param>
+        /// <param name="titleSearchQuery">Article Title Search Query</param>
         /// <returns>Response object containing articles</returns>
         /// <response code="200">Response object containing articles</response>
         /// <response code="400">If <paramref name="take"/> is not between and 100 or <paramref name="skip"/> is lower than 0 or <paramref name="categoryId"/> is not valid category id</response>
@@ -185,7 +190,8 @@ namespace Espresso.WebApi.Controllers
             [FromQuery] int take = DefaultValueConstants.DefaultTake,
             [FromQuery] int skip = DefaultValueConstants.DefaultSkip,
             [FromQuery] string? newsPortalIds = null,
-            [FromQuery] int? regionId = null
+            [FromQuery] int? regionId = null,
+            [FromQuery] string? titleSearchQuery = null
         )
         {
             var articles = await Mediator.Send(
@@ -196,6 +202,7 @@ namespace Espresso.WebApi.Controllers
                     newsPortalIdsString: newsPortalIds,
                     regionId: regionId,
                     newNewsPortalsPosition: WebApiConfiguration.NewNewsPortalsPosition,
+                    titleSearchQuery: titleSearchQuery,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
