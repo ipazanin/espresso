@@ -4,18 +4,20 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200630100508_IPazanin_MovedurlSegmentIndexToRssFeedCategory")]
+    partial class IPazanin_MovedurlSegmentIndexToRssFeedCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.7")
+                .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -64,11 +66,6 @@ namespace Espresso.Persistence.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsHidden")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
                     b.Property<int>("NewsPortalId")
                         .HasColumnType("int");
 
@@ -87,7 +84,6 @@ namespace Espresso.Persistence.Migrations
                         .HasMaxLength(2000);
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 
@@ -143,9 +139,6 @@ namespace Espresso.Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CategoryType")
-                        .HasColumnType("int");
-
                     b.Property<string>("Color")
                         .IsRequired()
                         .HasColumnType("nvarchar(20)")
@@ -160,12 +153,6 @@ namespace Espresso.Persistence.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
-                    b.Property<int?>("Position")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SortIndex")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
@@ -174,90 +161,56 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CategoryType = 1,
                             Color = "#E84855",
-                            Name = "Vijesti",
-                            SortIndex = 2
+                            Name = "Vijesti"
                         },
                         new
                         {
                             Id = 2,
-                            CategoryType = 1,
                             Color = "#4CB944",
-                            Name = "Sport",
-                            SortIndex = 3
+                            Name = "Sport"
                         },
                         new
                         {
                             Id = 3,
-                            CategoryType = 1,
                             Color = "#F4B100",
-                            Name = "Show",
-                            SortIndex = 4
+                            Name = "Show"
                         },
                         new
                         {
                             Id = 4,
-                            CategoryType = 1,
                             Color = "#32936F",
-                            Name = "Lifestyle",
-                            SortIndex = 5
+                            Name = "Lifestyle"
                         },
                         new
                         {
                             Id = 5,
-                            CategoryType = 1,
                             Color = "#2E86AB",
-                            Name = "Tech",
-                            SortIndex = 6
+                            Name = "Tech"
                         },
                         new
                         {
                             Id = 6,
-                            CategoryType = 1,
                             Color = "#9055A2",
-                            Name = "Viral",
-                            SortIndex = 7
+                            Name = "Viral"
                         },
                         new
                         {
                             Id = 7,
-                            CategoryType = 1,
                             Color = "#3185FC",
-                            Name = "Biznis",
-                            SortIndex = 8
+                            Name = "Biznis"
                         },
                         new
                         {
                             Id = 8,
-                            CategoryType = 1,
                             Color = "#FC814A",
-                            Name = "Auto/Moto",
-                            SortIndex = 9
+                            Name = "Auto/Moto"
                         },
                         new
                         {
                             Id = 9,
-                            CategoryType = 1,
                             Color = "#AC80A0",
-                            Name = "Kultura",
-                            SortIndex = 10
-                        },
-                        new
-                        {
-                            Id = 11,
-                            CategoryType = 3,
-                            Color = "#AC80A0",
-                            Name = "Generalno",
-                            SortIndex = 1
-                        },
-                        new
-                        {
-                            Id = 12,
-                            CategoryType = 2,
-                            Color = "#AC80A0",
-                            Name = "Lokalno",
-                            Position = 3
+                            Name = "Kultura"
                         });
                 });
 
@@ -273,33 +226,17 @@ namespace Espresso.Persistence.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("IconUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
-
-                    b.Property<bool?>("IsNewOverride")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<int>("RegionId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("RegionId");
 
                     b.ToTable("NewsPortals");
 
@@ -308,417 +245,211 @@ namespace Espresso.Persistence.Migrations
                         {
                             Id = 1,
                             BaseUrl = "https://www.index.hr/",
-                            CategoryId = 11,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Index.png",
-                            Name = "Index.hr",
-                            RegionId = 1
+                            Name = "Index.hr"
                         },
                         new
                         {
                             Id = 2,
                             BaseUrl = "https://www.24sata.hr/",
-                            CategoryId = 11,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/DvadesetCetiriSata.png",
-                            Name = "24 sata",
-                            RegionId = 1
+                            Name = "24 sata"
                         },
                         new
                         {
                             Id = 3,
                             BaseUrl = "https://sportske.jutarnji.hr/",
-                            CategoryId = 2,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/SportskeNovosti.png",
-                            Name = "Sportske Novosti",
-                            RegionId = 1
+                            Name = "Sportske Novosti"
                         },
                         new
                         {
                             Id = 4,
                             BaseUrl = "https://sportske.jutarnji.hr/",
-                            CategoryId = 11,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/JutarnjiList.png",
-                            Name = "Jutarnji List",
-                            RegionId = 1
+                            Name = "Jutarnji List"
                         },
                         new
                         {
                             Id = 5,
                             BaseUrl = "https://net.hr/",
-                            CategoryId = 11,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/NetHr.png",
-                            Name = "Net.hr",
-                            RegionId = 1
+                            Name = "Net.hr"
                         },
                         new
                         {
                             Id = 6,
                             BaseUrl = "https://slobodnadalmacija.hr/",
-                            CategoryId = 11,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/SlobodnaDalmacija.png",
-                            Name = "Slobodna Dalmacija",
-                            RegionId = 1
+                            Name = "Slobodna Dalmacija"
                         },
                         new
                         {
                             Id = 7,
                             BaseUrl = "https://www.tportal.hr/",
-                            CategoryId = 11,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/TPortal.png",
-                            Name = "tportal",
-                            RegionId = 1
+                            Name = "tportal"
                         },
                         new
                         {
                             Id = 8,
                             BaseUrl = "https://www.vecernji.hr/",
-                            CategoryId = 11,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/VecernjiList.png",
-                            Name = "Večernji List",
-                            RegionId = 1
+                            Name = "Večernji List"
                         },
                         new
                         {
                             Id = 9,
                             BaseUrl = "https://www.telegram.hr/",
-                            CategoryId = 11,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Telegram.png",
-                            Name = "Telegram",
-                            RegionId = 1
+                            Name = "Telegram"
                         },
                         new
                         {
                             Id = 10,
                             BaseUrl = "https://dnevnik.hr/",
-                            CategoryId = 11,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Dnevnik.png",
-                            Name = "Dnevnik",
-                            RegionId = 1
+                            Name = "Dnevnik"
                         },
                         new
                         {
                             Id = 11,
                             BaseUrl = "https://gol.dnevnik.hr/",
-                            CategoryId = 2,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Gol.png",
-                            Name = "Gol",
-                            RegionId = 1
+                            Name = "Gol"
                         },
                         new
                         {
                             Id = 12,
                             BaseUrl = "https://sportnet.rtl.hr/",
-                            CategoryId = 11,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/RtlVijesti.png",
-                            Name = "RTL Vijesti",
-                            RegionId = 1
+                            Name = "RTL Vijesti"
                         },
                         new
                         {
                             Id = 15,
                             BaseUrl = "http://www.nogometplus.net/",
-                            CategoryId = 2,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/NogometPlus.png",
-                            Name = "Nogomet Plus",
-                            RegionId = 1
+                            Name = "Nogomet Plus"
                         },
                         new
                         {
                             Id = 16,
                             BaseUrl = "https://lider.media/",
-                            CategoryId = 7,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Lider.png",
-                            Name = "Lider",
-                            RegionId = 1
+                            Name = "Lider"
                         },
                         new
                         {
                             Id = 18,
                             BaseUrl = "https://www.bug.hr/",
-                            CategoryId = 5,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Bug.png",
-                            Name = "Bug",
-                            RegionId = 1
+                            Name = "Bug"
                         },
                         new
                         {
                             Id = 19,
                             BaseUrl = "https://www.vidi.hr/",
-                            CategoryId = 5,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/VidiHr.png",
-                            Name = "Vidi.hr",
-                            RegionId = 1
+                            Name = "Vidi.hr"
                         },
                         new
                         {
                             Id = 20,
                             BaseUrl = "https://zimo.dnevnik.hr/",
-                            CategoryId = 5,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Zimo.png",
-                            Name = "Zimo",
-                            RegionId = 1
+                            Name = "Zimo"
                         },
                         new
                         {
                             Id = 21,
                             BaseUrl = "https://www.netokracija.com/",
-                            CategoryId = 5,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Netokracija.png",
-                            Name = "Netokracija",
-                            RegionId = 1
+                            Name = "Netokracija"
                         },
                         new
                         {
                             Id = 22,
                             BaseUrl = "https://poslovnipuls.com/",
-                            CategoryId = 7,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/PoslovniPuls.png",
-                            Name = "Poslovni Puls",
-                            RegionId = 1
+                            Name = "Poslovni Puls"
                         },
                         new
                         {
                             Id = 23,
                             BaseUrl = "https://pcchip.hr/",
-                            CategoryId = 5,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/PcChip.png",
-                            Name = "PCchip",
-                            RegionId = 1
+                            Name = "PCchip"
                         },
                         new
                         {
                             Id = 25,
                             BaseUrl = "http://www.cosmopolitan.hr/",
-                            CategoryId = 4,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Cosmopolitan.png",
-                            Name = "Cosmopolitan",
-                            RegionId = 1
+                            Name = "Cosmopolitan"
                         },
                         new
                         {
                             Id = 26,
                             BaseUrl = "https://wall.hr/",
-                            CategoryId = 4,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/WallHr.png",
-                            Name = "Wall.hr",
-                            RegionId = 1
+                            Name = "Wall.hr"
                         },
                         new
                         {
                             Id = 27,
                             BaseUrl = "http://www.ljepotaizdravlje.hr/",
-                            CategoryId = 4,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/LjepotaIZdravlje.png",
-                            Name = "Ljepota i zdravlje",
-                            RegionId = 1
+                            Name = "Ljepota i zdravlje"
                         },
                         new
                         {
                             Id = 28,
                             BaseUrl = "https://www.autonet.hr/",
-                            CategoryId = 8,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Autonet.png",
-                            Name = "Autonet",
-                            RegionId = 1
+                            Name = "Autonet"
                         },
                         new
                         {
                             Id = 29,
                             BaseUrl = "https://hr.n1info.com/",
-                            CategoryId = 1,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/N1.png",
-                            Name = "N1",
-                            RegionId = 1
+                            Name = "N1"
                         },
                         new
                         {
                             Id = 30,
                             BaseUrl = "https://narod.hr/",
-                            CategoryId = 1,
-                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/NarodHr.png",
-                            Name = "Narod HR",
-                            RegionId = 1
+                            Name = "Narod HR"
                         },
                         new
                         {
                             Id = 31,
                             BaseUrl = "https://www.hrt.hr/",
-                            CategoryId = 1,
-                            CreatedAt = new DateTime(2020, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Hrt.png",
-                            Name = "HRT",
-                            RegionId = 1
+                            Name = "HRT"
                         },
                         new
                         {
                             Id = 32,
                             BaseUrl = "https://100posto.jutarnji.hr/",
-                            CategoryId = 1,
-                            CreatedAt = new DateTime(2020, 6, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/StoPosto.png",
-                            Name = "100posto",
-                            RegionId = 1
+                            Name = "100posto"
                         },
                         new
                         {
                             Id = 33,
                             BaseUrl = "https://www.dnevno.hr/",
-                            CategoryId = 1,
-                            CreatedAt = new DateTime(2020, 6, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/Dnevno.png",
-                            Name = "Dnevno.Hr",
-                            RegionId = 1
+                            Name = "Dnevno.Hr"
                         },
                         new
                         {
                             Id = 35,
                             BaseUrl = "https://direktno.hr/",
-                            CategoryId = 1,
-                            CreatedAt = new DateTime(2020, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconUrl = "Icons/DirektnoHr.png",
-                            Name = "Direktno",
-                            RegionId = 1
-                        },
-                        new
-                        {
-                            Id = 36,
-                            BaseUrl = "https://www.scena.hr/",
-                            CategoryId = 3,
-                            CreatedAt = new DateTime(2020, 7, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IconUrl = "Icons/Scena.png",
-                            Name = "Scena",
-                            RegionId = 1
-                        },
-                        new
-                        {
-                            Id = 37,
-                            BaseUrl = "https://www.dalmacijadanas.hr/",
-                            CategoryId = 12,
-                            CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IconUrl = "Icons/DalmacijaDanas.png",
-                            Name = "Dalmacija Danas",
-                            RegionId = 2
-                        });
-                });
-
-            modelBuilder.Entity("Espresso.Domain.Entities.PushNotification", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ArticleUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasMaxLength(5000);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("InternalName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
-
-                    b.Property<bool>("IsSoundEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
-
-                    b.Property<string>("Topic")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PushNotifications");
-                });
-
-            modelBuilder.Entity("Espresso.Domain.Entities.Region", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Regions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Global"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Dalmacija"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Istra & Kvarner"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Lika"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Sjeverna Hrvatska"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Slavonija & Baranja"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Zagreb"
+                            Name = "Direktno"
                         });
                 });
 
@@ -1252,20 +983,6 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 1,
                             NewsPortalId = 35,
                             Url = "https://direktno.hr/rss/publish/latest/direktnotv-100/"
-                        },
-                        new
-                        {
-                            Id = 82,
-                            CategoryId = 1,
-                            NewsPortalId = 36,
-                            Url = "https://www.scena.hr/feed/"
-                        },
-                        new
-                        {
-                            Id = 83,
-                            CategoryId = 12,
-                            NewsPortalId = 37,
-                            Url = "https://www.dalmacijadanas.hr/feed/"
                         });
                 });
 
@@ -1665,7 +1382,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 1,
                             RssFeedId = 14,
                             UrlRegex = "crna-kronika",
-                            UrlSegmentIndex = 2
+                            UrlSegmentIndex = 1
                         },
                         new
                         {
@@ -1673,7 +1390,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 1,
                             RssFeedId = 14,
                             UrlRegex = "svijet",
-                            UrlSegmentIndex = 2
+                            UrlSegmentIndex = 1
                         },
                         new
                         {
@@ -1850,54 +1567,6 @@ namespace Espresso.Persistence.Migrations
                             RssFeedId = 66,
                             UrlRegex = "svijet",
                             UrlSegmentIndex = 1
-                        },
-                        new
-                        {
-                            Id = 71,
-                            CategoryId = 2,
-                            RssFeedId = 39,
-                            UrlRegex = "na-prvu",
-                            UrlSegmentIndex = 1
-                        },
-                        new
-                        {
-                            Id = 72,
-                            CategoryId = 4,
-                            RssFeedId = 82,
-                            UrlRegex = "lifestyle",
-                            UrlSegmentIndex = 1
-                        },
-                        new
-                        {
-                            Id = 73,
-                            CategoryId = 3,
-                            RssFeedId = 82,
-                            UrlRegex = "vijesti",
-                            UrlSegmentIndex = 1
-                        },
-                        new
-                        {
-                            Id = 74,
-                            CategoryId = 9,
-                            RssFeedId = 82,
-                            UrlRegex = "kultura",
-                            UrlSegmentIndex = 1
-                        },
-                        new
-                        {
-                            Id = 75,
-                            CategoryId = 3,
-                            RssFeedId = 82,
-                            UrlRegex = "televizija",
-                            UrlSegmentIndex = 1
-                        },
-                        new
-                        {
-                            Id = 76,
-                            CategoryId = 4,
-                            RssFeedId = 82,
-                            UrlRegex = "dogadjanja",
-                            UrlSegmentIndex = 1
                         });
                 });
 
@@ -1927,21 +1596,6 @@ namespace Espresso.Persistence.Migrations
                     b.HasOne("Espresso.Domain.Entities.Category", "Category")
                         .WithMany("ArticleCategories")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Espresso.Domain.Entities.NewsPortal", b =>
-                {
-                    b.HasOne("Espresso.Domain.Entities.Category", "Category")
-                        .WithMany("NewsPortals")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Espresso.Domain.Entities.Region", "Region")
-                        .WithMany("NewsPortals")
-                        .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -2456,16 +2110,6 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 79,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 82,
-                                    CategoryParseStrategy = 2
-                                },
-                                new
-                                {
-                                    RssFeedId = 83,
                                     CategoryParseStrategy = 1
                                 });
                         });
@@ -3079,22 +2723,6 @@ namespace Espresso.Persistence.Migrations
                                     ImageUrlParseStrategy = 1,
                                     ImageUrlWebScrapeType = 1,
                                     ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 82,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'mycontent')]//img",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 83,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img",
                                     ShouldImageUrlBeWebScraped = false
                                 });
                         });
