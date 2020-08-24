@@ -37,6 +37,7 @@ namespace Espresso.Domain.Entities
 
         public bool IsHidden { get; private set; }
 
+        #region Relationships
         public int NewsPortalId { get; private set; }
 
         public NewsPortal? NewsPortal { get; private set; }
@@ -46,6 +47,8 @@ namespace Espresso.Domain.Entities
         public RssFeed? RssFeed { get; private set; }
 
         public ICollection<ArticleCategory> ArticleCategories { get; private set; } = new List<ArticleCategory>();
+        #endregion
+
         #region NotMapped In Database
         public IEnumerable<ArticleCategory> CreateArticleCategories { get; private set; } = new List<ArticleCategory>();
         public IEnumerable<ArticleCategory> DeleteArticleCategories { get; private set; } = new List<ArticleCategory>();

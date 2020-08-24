@@ -19,7 +19,8 @@ namespace Espresso.WebApi.Authentication
     public class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthenticationOptions>
     {
         private const string ProblemDetailsContentType = "application/problem+json";
-        private const string InvalidApiKeyMessage = "Invalid API Key";
+        private const string UnAuthenticatedApiKeyMessage = "Given API Key is Invalid";
+        private const string ForbiddenMessage = "Given API Key is Forbidden from requested resource";
         private const string ApiKeyHeaderName_1_2 = "Espresso-Api-Key";
 
         private readonly IApiKeyProvider _apiKeyProvider;
@@ -85,7 +86,7 @@ namespace Espresso.WebApi.Authentication
                 return AuthenticateResult.Success(ticket);
             }
 
-            return AuthenticateResult.Fail(InvalidApiKeyMessage);
+            return AuthenticateResult.Fail(UnAuthenticatedApiKeyMessage);
         }
 
         /// <summary>
@@ -97,7 +98,7 @@ namespace Espresso.WebApi.Authentication
         {
             Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             Response.ContentType = ProblemDetailsContentType;
-            var problemDetails = InvalidApiKeyMessage;
+            var problemDetails = UnAuthenticatedApiKeyMessage;
 
             await Response.WriteAsync(JsonSerializer.Serialize(problemDetails)).ConfigureAwait(false);
         }
@@ -111,7 +112,7 @@ namespace Espresso.WebApi.Authentication
         {
             Response.StatusCode = (int)HttpStatusCode.Forbidden;
             Response.ContentType = ProblemDetailsContentType;
-            var problemDetails = InvalidApiKeyMessage;
+            var problemDetails = ForbiddenMessage;
 
             await Response.WriteAsync(JsonSerializer.Serialize(problemDetails)).ConfigureAwait(false);
         }
