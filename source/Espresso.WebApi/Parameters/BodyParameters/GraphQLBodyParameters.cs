@@ -1,4 +1,6 @@
-﻿namespace Espresso.WebApi.Parameters.BodyParameters
+﻿using Newtonsoft.Json.Linq;
+
+namespace Espresso.WebApi.Parameters.BodyParameters
 {
     /// <summary>
     /// 
@@ -23,6 +25,6 @@
         /// 
         /// </summary>
         /// <value></value>
-        public string? Variables { get; set; }
+        public JObject? Variables { get; set; }
     }
 }
