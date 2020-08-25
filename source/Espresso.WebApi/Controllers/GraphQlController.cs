@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.WebApi.GraphQl.Infrastructure;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Infrastructure;
 using Espresso.WebApi.Parameters.BodyParameters;
@@ -13,6 +12,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Espresso.WebApi.Authentication;
+using System.Collections.Generic;
 
 namespace Espresso.WebApi.Controllers
 {
@@ -64,14 +64,15 @@ namespace Espresso.WebApi.Controllers
             {
                 executionOptions.Schema = _schema;
                 executionOptions.Query = query.Query;
-                executionOptions.Inputs = query.Variables?.ToInputs();
+                executionOptions.Inputs = new Inputs(query.Variables);
                 executionOptions.CancellationToken = cancellationToken;
-                executionOptions.UserContext = new GraphQlApplicationContext(
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
-                );
+                executionOptions.UserContext = new Dictionary<string, object>
+                {
+                    { "currentEspressoWebApiVersion", WebApiConfiguration.Version },
+                    { "targetedEspressoWebApiVersion", basicInformationsHeaderParameters.EspressoWebApiVersion },
+                    { "consumerVersion", basicInformationsHeaderParameters.Version },
+                    { "deviceType", basicInformationsHeaderParameters.DeviceType },
+                };
             });
 
             return result.Errors?.Count > 0 ?

@@ -1,11 +1,10 @@
 ﻿using Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetCategoryArticlesTypes;
-using Espresso.WebApi.GraphQl.Infrastructure;
 using Espresso.Common.Constants;
-using FluentValidation;
 using GraphQL.Types;
 using MediatR;
 using Espresso.WebApi.Configuration;
+using Espresso.Domain.Enums.ApplicationDownloadEnums;
 
 namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
 {
@@ -57,25 +56,22 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                 ),
                 resolve: async resolveContext =>
                 {
-                    return resolveContext.UserContext is GraphQlApplicationContext graphQlUserContext &&
-                        graphQlUserContext != null ?
-                        await mediator.Send(
-                            request: new GetCategoryArticlesQuery(
-                                take: resolveContext.GetArgument<int>("take"),
-                                skip: resolveContext.GetArgument<int>("take"),
-                                newsPortalIdsString: resolveContext.GetArgument<string?>("newsPortalIds"),
-                                categoryId: resolveContext.GetArgument<int>("categoryId"),
-                                regionId: resolveContext.GetArgument<int?>("regionId"),
-                                newNewsPortalsPosition: configuration.NewNewsPortalsPosition,
-                                titleSearchQuery: resolveContext.GetArgument<string?>("titleSearchQuery"),
-                                currentEspressoWebApiVersion: graphQlUserContext.CurrentEspressoWebApiVersion,
-                                targetedEspressoWebApiVersion: graphQlUserContext.CurrentEspressoWebApiVersion,
-                                consumerVersion: graphQlUserContext.ConsumerVersion,
-                                deviceType: graphQlUserContext.DeviceType
-                            ),
-                            cancellationToken: resolveContext.CancellationToken
-                        ) :
-                        throw new ValidationException("Appropriate Headers must be defined!");
+                    return await mediator.Send(
+                        request: new GetCategoryArticlesQuery(
+                            take: (int?)resolveContext.Arguments["take"],
+                            skip: (int?)resolveContext.Arguments["skip"],
+                            newsPortalIdsString: (string?)resolveContext.Arguments["newsPortalIds"],
+                            categoryId: (int)resolveContext.Arguments["categoryId"],
+                            regionId: (int?)resolveContext.Arguments["regionId"],
+                            newNewsPortalsPosition: configuration.NewNewsPortalsPosition,
+                            titleSearchQuery: (string?)resolveContext.Arguments["titleSearchQuery"],
+                            currentEspressoWebApiVersion: (string)resolveContext.UserContext["currentEspressoWebApiVersion"],
+                            targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],
+                            consumerVersion: (string)resolveContext.UserContext["consumerVersion"],
+                            deviceType: (DeviceType)resolveContext.UserContext["deviceType"]
+                        ),
+                        cancellationToken: resolveContext.CancellationToken
+                    );
                 },
                 deprecationReason: null
             );
