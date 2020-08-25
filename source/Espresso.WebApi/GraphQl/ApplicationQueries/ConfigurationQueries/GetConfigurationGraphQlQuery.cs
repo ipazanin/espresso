@@ -1,7 +1,6 @@
 ﻿using Espresso.Application.CQRS.Configuration.Queries.GetConfiguration;
+using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes;
-using Espresso.WebApi.GraphQl.Infrastructure;
-using FluentValidation;
 using GraphQL.Types;
 using MediatR;
 
@@ -24,18 +23,15 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries
                 arguments: null,
                 resolve: async resolveContext =>
                 {
-                    return resolveContext.UserContext is GraphQlApplicationContext graphQlUserContext &&
-                        graphQlUserContext != null ?
-                        await mediator.Send(
-                            request: new GetConfigurationQuery(
-                                currentEspressoWebApiVersion: graphQlUserContext.CurrentEspressoWebApiVersion,
-                                targetedEspressoWebApiVersion: graphQlUserContext.CurrentEspressoWebApiVersion,
-                                consumerVersion: graphQlUserContext.ConsumerVersion,
-                                deviceType: graphQlUserContext.DeviceType
-                            ),
-                            cancellationToken: resolveContext.CancellationToken
-                        ) :
-                        throw new ValidationException("Appropriate Headers must be defined!");
+                    return await mediator.Send(
+                        request: new GetConfigurationQuery(
+                            currentEspressoWebApiVersion: (string)resolveContext.UserContext["currentEspressoWebApiVersion"],
+                            targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],
+                            consumerVersion: (string)resolveContext.UserContext["consumerVersion"],
+                            deviceType: (DeviceType)resolveContext.UserContext["deviceType"]
+                        ),
+                        cancellationToken: resolveContext.CancellationToken
+                    );
                 },
                 deprecationReason: null
             );

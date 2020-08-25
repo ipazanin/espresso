@@ -1,7 +1,6 @@
 ﻿using System;
 using Espresso.Application.CQRS.Articles.Commands.IncrementTrendingArticleScore;
-using Espresso.WebApi.GraphQl.Infrastructure;
-using FluentValidation;
+using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using GraphQL.Types;
 using MediatR;
 
@@ -32,28 +31,18 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                 ),
                 resolve: async resolveContext =>
                 {
-                    if (
-                        resolveContext.UserContext is GraphQlApplicationContext graphQlUserContext &&
-                        graphQlUserContext != null
-                    )
-                    {
-                        var articleId = resolveContext.GetArgument<Guid>("articleId");
-                        await mediator.Send(
+                    var articleId = (Guid)resolveContext.Arguments["articleId"];
+                    await mediator.Send(
                            request: new IncrementNumberOfClicksCommand(
                                id: articleId,
-                               currentEspressoWebApiVersion: graphQlUserContext.CurrentEspressoWebApiVersion,
-                               targetedEspressoWebApiVersion: graphQlUserContext.CurrentEspressoWebApiVersion,
-                               consumerVersion: graphQlUserContext.ConsumerVersion,
-                               deviceType: graphQlUserContext.DeviceType
+                            currentEspressoWebApiVersion: (string)resolveContext.UserContext["currentEspressoWebApiVersion"],
+                            targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],
+                            consumerVersion: (string)resolveContext.UserContext["consumerVersion"],
+                            deviceType: (DeviceType)resolveContext.UserContext["deviceType"]
                            ),
                            cancellationToken: resolveContext.CancellationToken
                         );
-                        return articleId;
-                    }
-                    else
-                    {
-                        throw new ValidationException("Appropriate Headers must be defined!");
-                    }
+                    return articleId;
                 },
                 deprecationReason: null
             );

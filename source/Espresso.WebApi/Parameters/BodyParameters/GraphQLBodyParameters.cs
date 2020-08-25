@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
+using GraphQL.SystemTextJson;
 
 namespace Espresso.WebApi.Parameters.BodyParameters
 {
@@ -13,7 +15,11 @@ namespace Espresso.WebApi.Parameters.BodyParameters
         /// <value></value>
         public string? OperationName { get; set; }
 
-        // public string? NamedQuery { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public string? NamedQuery { get; set; }
 
         /// <summary>
         /// 
@@ -25,6 +31,7 @@ namespace Espresso.WebApi.Parameters.BodyParameters
         /// 
         /// </summary>
         /// <value></value>
-        public JObject? Variables { get; set; }
+        [JsonConverter(typeof(ObjectDictionaryConverter))]
+        public Dictionary<string, object>? Variables { get; set; }
     }
 }

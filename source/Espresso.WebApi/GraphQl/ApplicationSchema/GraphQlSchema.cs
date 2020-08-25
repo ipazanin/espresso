@@ -1,5 +1,5 @@
-﻿using Espresso.WebApi.GraphQl.ApplicationQueries;
-using GraphQL;
+﻿using System;
+using Espresso.WebApi.GraphQl.ApplicationQueries;
 using GraphQL.Types;
 
 namespace Espresso.WebApi.GraphQl.ApplicationSchema
@@ -12,11 +12,10 @@ namespace Espresso.WebApi.GraphQl.ApplicationSchema
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="resolver"></param>
-        /// <returns></returns>
-        public GraphQlSchema(IDependencyResolver resolver) : base(resolver)
+        /// <param name="serviceProvider"></param>
+        public GraphQlSchema(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            Query = resolver.Resolve<RootGraphQlQuery>();
+            Query = serviceProvider.GetService(typeof(RootGraphQlQuery)) as RootGraphQlQuery;
         }
     }
 }

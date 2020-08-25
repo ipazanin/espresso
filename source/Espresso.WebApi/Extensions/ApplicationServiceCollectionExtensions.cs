@@ -32,6 +32,7 @@ namespace Espresso.WebApi.Extensions
             services.AddScoped<IArticleValidator, ArticleValidator>();
             services.AddHttpClient();
             services.AddControllers();
+
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(CustomExceptionFilterAttribute));

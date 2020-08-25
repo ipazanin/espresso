@@ -7,7 +7,7 @@ using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetLatestArticlesTyp
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetTrendingArticlesTypes;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes;
 using GraphQL;
-using GraphQL.Http;
+using GraphQL.SystemTextJson;
 using GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -37,9 +37,6 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
         private static IServiceCollection AddGraphQlInfrastructure(this IServiceCollection services)
         {
             services.AddScoped<ISchema, GraphQlSchema>();
-            services.AddScoped<IDependencyResolver>(
-                serviceProvider => new FuncDependencyResolver(serviceProvider.GetRequiredService)
-            );
             services.AddScoped<IDocumentExecuter, DocumentExecuter>();
             services.AddScoped<IDocumentWriter, DocumentWriter>();
 

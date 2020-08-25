@@ -1,11 +1,10 @@
 ﻿using Espresso.Application.CQRS.Articles.Queries.GetLatestArticles;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetLatestArticlesTypes;
-using Espresso.WebApi.GraphQl.Infrastructure;
 using Espresso.Common.Constants;
-using FluentValidation;
 using GraphQL.Types;
 using MediatR;
 using Espresso.WebApi.Configuration;
+using Espresso.Domain.Enums.ApplicationDownloadEnums;
 
 namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
 {
@@ -53,24 +52,21 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                 ),
                 resolve: async resolveContext =>
                 {
-                    return resolveContext.UserContext is GraphQlApplicationContext graphQlUserContext &&
-                        graphQlUserContext != null ?
-                        await mediator.Send(
-                            request: new GetLatestArticlesQuery(
-                                take: resolveContext.GetArgument<int>("take"),
-                                skip: resolveContext.GetArgument<int>("take"),
-                                newsPortalIdsString: resolveContext.GetArgument<string?>("newsPortalIds"),
-                                categoryIdsString: resolveContext.GetArgument<string?>("categoryIds"),
-                                newNewsPortalsPosition: configuration.NewNewsPortalsPosition,
-                                titleSearchQuery: resolveContext.GetArgument<string?>("titleSearchQuery"),
-                                currentEspressoWebApiVersion: graphQlUserContext.CurrentEspressoWebApiVersion,
-                                targetedEspressoWebApiVersion: graphQlUserContext.CurrentEspressoWebApiVersion,
-                                consumerVersion: graphQlUserContext.ConsumerVersion,
-                                deviceType: graphQlUserContext.DeviceType
-                            ),
-                            cancellationToken: resolveContext.CancellationToken
-                        ) :
-                        throw new ValidationException("Appropriate Headers must be defined!");
+                    return await mediator.Send(
+                        request: new GetLatestArticlesQuery(
+                            take: (int?)resolveContext.Arguments["take"],
+                            skip: (int?)resolveContext.Arguments["skip"],
+                            newsPortalIdsString: (string?)resolveContext.Arguments["newsPortalIds"],
+                            categoryIdsString: (string?)resolveContext.Arguments["categoryIds"],
+                            newNewsPortalsPosition: configuration.NewNewsPortalsPosition,
+                            titleSearchQuery: (string?)resolveContext.Arguments["titleSearchQuery"],
+                            currentEspressoWebApiVersion: (string)resolveContext.UserContext["currentEspressoWebApiVersion"],
+                            targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],
+                            consumerVersion: (string)resolveContext.UserContext["consumerVersion"],
+                            deviceType: (DeviceType)resolveContext.UserContext["deviceType"]
+                        ),
+                        cancellationToken: resolveContext.CancellationToken
+                    );
                 },
                 deprecationReason: null
             );
