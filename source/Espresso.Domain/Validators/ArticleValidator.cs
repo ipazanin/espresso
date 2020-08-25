@@ -73,6 +73,7 @@ namespace Espresso.Domain.Validators
                 numberOfClicks: numberOfClicks,
                 trendingScore: trendingScore,
                 isHidden: Article.IsHiddenDefaultValue,
+                isFeatured: Article.IsFeaturedDefaultValue,
                 newsPortalId: newsPortalId,
                 rssFeedId: rssFeedId,
                 articleCategories: articleCategories,

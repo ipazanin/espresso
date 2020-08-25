@@ -33,7 +33,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
             );
 
             var articleDtos = articles
-                .OrderByDescending(keySelector: Article.GetOrderByDescendingTrendingScoreExpression().Compile())
+                .OrderByDescending(keySelector: Article.GetOrderByDescendingIsFeaturedExpression().Compile())
+                .ThenByDescending(keySelector: Article.GetOrderByDescendingTrendingScoreExpression().Compile())
                 .Where(
                     predicate: Article.GetFilteredArticlesPredicate(
                         categoryIds: request.CategoryIds,
