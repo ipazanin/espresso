@@ -1,5 +1,6 @@
 using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
 using Espresso.Application.Initialization;
+using Espresso.Common.Enums;
 using Espresso.Domain.IValidators;
 using Espresso.Domain.Validators;
 using Espresso.WebApi.Configuration;
@@ -60,6 +61,21 @@ namespace Espresso.WebApi.Extensions
             services.AddMediatRServices();
             services.AddPersistentServices(configuration);
             services.AddSwaggerServices(configuration);
+
+            if (configuration.AppEnvironment.Equals(AppEnvironment.Dev))
+            {
+                services.AddCors(
+                    setupAction: o => o.AddPolicy(
+                         name: "DevCorsPolicy",
+                         configurePolicy: builder =>
+                          {
+                              builder.AllowAnyOrigin()
+                                     .AllowAnyMethod()
+                                     .AllowAnyHeader();
+                          }
+                     )
+                );
+            }
 
             return services;
         }
