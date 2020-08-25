@@ -37,6 +37,8 @@ namespace Espresso.Domain.Entities
 
         public bool IsHidden { get; private set; }
 
+        public bool IsFeatured { get; private set; }
+
         #region Relationships
         public int NewsPortalId { get; private set; }
 
@@ -81,6 +83,7 @@ namespace Espresso.Domain.Entities
             int numberOfClicks,
             decimal trendingScore,
             bool isHidden,
+            bool isFeatured,
             int newsPortalId,
             int rssFeedId,
             IEnumerable<ArticleCategory>? articleCategories,
@@ -100,6 +103,7 @@ namespace Espresso.Domain.Entities
             NumberOfClicks = numberOfClicks;
             TrendingScore = trendingScore;
             IsHidden = isHidden;
+            IsFeatured = isFeatured;
             NewsPortalId = newsPortalId;
             RssFeedId = rssFeedId;
             ArticleCategories = articleCategories?.ToList() ?? ArticleCategories;
@@ -115,6 +119,15 @@ namespace Espresso.Domain.Entities
         public void IncrementNumberOfClicks()
         {
             NumberOfClicks++;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="trendingScore"></param>
+        public void UpdateTrendingScore(decimal trendingScore)
+        {
+            TrendingScore = trendingScore;
         }
 
         /// <summary>
@@ -267,9 +280,14 @@ namespace Espresso.Domain.Entities
             return article => article.TrendingScore;
         }
 
-        public static Expression<Func<Article, object>> GetArticleOrderByDescendingExpression()
+        public static Expression<Func<Article, object>> GetOrderByDescendingPublishDateExpression()
         {
             return article => article.PublishDateTime;
+        }
+
+        public static Expression<Func<Article, object>> GetOrderByDescendingIsFeaturedExpression()
+        {
+            return article => article.IsFeatured;
         }
         #endregion
 
@@ -283,6 +301,8 @@ namespace Espresso.Domain.Entities
         public const int ImageUrlMaxLength = 500;
 
         public const bool IsHiddenDefaultValue = false;
+
+        public const bool IsFeaturedDefaultValue = false;
         #endregion
     }
 }

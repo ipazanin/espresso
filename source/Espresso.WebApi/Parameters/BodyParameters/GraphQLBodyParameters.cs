@@ -5,11 +5,7 @@
     /// </summary>
     public class GraphQLBodyParameters
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        public string? OperationName { get; set; }
+        // public string? OperationName { get; set; }
 
         /// <summary>
         /// 

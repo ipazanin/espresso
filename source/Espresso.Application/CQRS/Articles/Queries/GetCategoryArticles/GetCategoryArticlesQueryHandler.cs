@@ -35,7 +35,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
             );
 
             var articleDtos = articles
-                .OrderByDescending(keySelector: Article.GetArticleOrderByDescendingExpression().Compile())
+                .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
                 .Where(
                     predicate: Article.GetFilteredArticlesPredicate(
                         categoryId: request.CategoryId,

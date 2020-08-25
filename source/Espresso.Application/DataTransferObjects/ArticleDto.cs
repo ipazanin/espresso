@@ -49,8 +49,6 @@ namespace Espresso.Application.DataTransferObjects
 
         public int RssFeedId { get; set; }
 
-        public bool IsHidden { get; set; }
-
         /// <summary>
         /// News Portal ID
         /// </summary>
@@ -88,7 +86,6 @@ namespace Espresso.Application.DataTransferObjects
             int numberOfClicks,
             string articleId,
             string summary,
-            bool isHidden,
             int rssFeedId,
             NewsPortalDto newsPortal,
             IEnumerable<CategoryDto> categories
@@ -105,7 +102,6 @@ namespace Espresso.Application.DataTransferObjects
             NumberOfClicks = numberOfClicks;
             ArticleId = articleId;
             Summary = summary;
-            IsHidden = isHidden;
             RssFeedId = rssFeedId;
             NewsPortal = newsPortal;
             Categories = categories;
@@ -134,7 +130,6 @@ namespace Espresso.Application.DataTransferObjects
                 ArticleId = article.ArticleId,
                 Summary = article.Summary,
                 RssFeedId = article.RssFeedId,
-                IsHidden = article.IsHidden,
             };
         }
 
@@ -142,21 +137,23 @@ namespace Espresso.Application.DataTransferObjects
         {
             return article =>
             {
-                var articleCategories = article.Categories.Select(category => new ArticleCategory(
-                    id: new Guid(),
-                    articleId: article.Id,
-                    categoryId: category.Id,
-                    article: null,
-                    category: new Category(
-                        id: category.Id,
-                        name: category.Name,
-                        color: category.Color,
-                        keyWordsRegexPattern: category.KeyWordsRegexPattern,
-                        sortIndex: category.SortIndex,
-                        position: category.Position,
-                        categoryType: category.CategoryType
+                var articleCategories = article.Categories.Select(
+                    category => new ArticleCategory(
+                        id: new Guid(),
+                        articleId: article.Id,
+                        categoryId: category.Id,
+                        article: null,
+                        category: new Category(
+                            id: category.Id,
+                            name: category.Name,
+                            color: category.Color,
+                            keyWordsRegexPattern: category.KeyWordsRegexPattern,
+                            sortIndex: category.SortIndex,
+                            position: category.Position,
+                            categoryType: category.CategoryType
+                        )
                     )
-                )).ToList();
+                ).ToList();
 
                 var newsPortal = new NewsPortal(
                     id: article.NewsPortal.Id,
@@ -181,7 +178,8 @@ namespace Espresso.Application.DataTransferObjects
                     publishDateTime: article.PublishDateTime,
                     numberOfClicks: article.NumberOfClicks,
                     trendingScore: article.TrendingScore,
-                    isHidden: article.IsHidden,
+                    isHidden: Article.IsHiddenDefaultValue,
+                    isFeatured: Article.IsFeaturedDefaultValue,
                     newsPortalId: article.NewsPortal.Id,
                     rssFeedId: article.RssFeedId,
                     articleCategories: articleCategories,
@@ -202,108 +200,6 @@ namespace Espresso.Application.DataTransferObjects
         public override int GetHashCode()
         {
             return HashCode.Combine(NewsPortal.Id, Title);
-        }
-
-        public Article GetUpdatedEntity()
-        {
-            var articleCategories = Categories.Select(category =>
-                new ArticleCategory(
-                    id: new Guid(),
-                    articleId: Id,
-                    categoryId: category.Id,
-                    article: null,
-                    category: new Category(
-                        id: category.Id,
-                        name: category.Name,
-                        color: category.Color,
-                        keyWordsRegexPattern: category.KeyWordsRegexPattern,
-                        sortIndex: category.SortIndex,
-                        position: category.Position,
-                        categoryType: category.CategoryType
-                    )
-                )).ToList();
-
-            var newsPortal = new NewsPortal(
-                id: NewsPortal.Id,
-                name: NewsPortal.Name,
-                baseUrl: NewsPortal.BaseUrl,
-                iconUrl: NewsPortal.IconUrl,
-                isNewOverride: NewsPortal.IsNewOverride,
-                createdAt: NewsPortal.CreatedAt,
-                categoryId: NewsPortal.CategoryId,
-                regionId: NewsPortal.RegionId
-            );
-
-            return new Article(
-                id: Id,
-                articleId: ArticleId,
-                url: Url,
-                summary: Summary,
-                title: Title,
-                imageUrl: ImageUrl,
-                createDateTime: CreateDateTime,
-                updateDateTime: UpdateDateTime,
-                publishDateTime: PublishDateTime,
-                numberOfClicks: NumberOfClicks,
-                trendingScore: TrendingScore,
-                isHidden: IsHidden,
-                newsPortalId: NewsPortal.Id,
-                rssFeedId: RssFeedId,
-                articleCategories: articleCategories,
-                newsPortal: newsPortal,
-                rssFeed: null
-            );
-        }
-
-        public Article CreateEntity()
-        {
-            var articleCategories = Categories.Select(category =>
-                new ArticleCategory(
-                    id: new Guid(),
-                    articleId: Id,
-                    categoryId: category.Id,
-                    article: null,
-                    category: new Category(
-                        id: category.Id,
-                        name: category.Name,
-                        color: category.Color,
-                        keyWordsRegexPattern: category.KeyWordsRegexPattern,
-                        sortIndex: category.SortIndex,
-                        position: category.Position,
-                        categoryType: category.CategoryType
-                    )
-                )).ToList();
-
-            var newsPortal = new NewsPortal(
-                id: NewsPortal.Id,
-                name: NewsPortal.Name,
-                baseUrl: NewsPortal.BaseUrl,
-                iconUrl: NewsPortal.IconUrl,
-                isNewOverride: NewsPortal.IsNewOverride,
-                createdAt: NewsPortal.CreatedAt,
-                categoryId: NewsPortal.CategoryId,
-                regionId: NewsPortal.RegionId
-            );
-
-            return new Article(
-                id: Id,
-                articleId: ArticleId,
-                url: Url,
-                summary: Summary,
-                title: Title,
-                imageUrl: ImageUrl,
-                createDateTime: CreateDateTime,
-                updateDateTime: UpdateDateTime,
-                publishDateTime: PublishDateTime,
-                numberOfClicks: NumberOfClicks,
-                trendingScore: TrendingScore,
-                isHidden: IsHidden,
-                newsPortalId: NewsPortal.Id,
-                rssFeedId: RssFeedId,
-                articleCategories: articleCategories,
-                newsPortal: newsPortal,
-                rssFeed: null
-            );
         }
         #endregion
     }

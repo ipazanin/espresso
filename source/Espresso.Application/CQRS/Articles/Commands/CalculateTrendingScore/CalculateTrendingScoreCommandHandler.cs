@@ -38,27 +38,17 @@ namespace Espresso.Application.CQRS.Articles.Commands.CalculateTrendingScore
             var clicksPerArticle = articles.Select(articleKey => articleKey.NumberOfClicks);
             var trendingScoreUtility = new TrendingScoreUtility(clicksPerArticle);
 
-            var articlesWithUpdatedTrendingScore = articles.Select(article => new Article(
-                id: article.Id,
-                articleId: article.ArticleId,
-                url: article.Url,
-                summary: article.Summary,
-                title: article.Title,
-                imageUrl: article.ImageUrl,
-                createDateTime: article.CreateDateTime,
-                updateDateTime: article.UpdateDateTime,
-                publishDateTime: article.PublishDateTime,
-                numberOfClicks: article.NumberOfClicks,
-                trendingScore: trendingScoreUtility.CalculateTrendingScore(article.NumberOfClicks, article.PublishDateTime),
-                isHidden: article.IsHidden,
-                newsPortalId: article.NewsPortalId,
-                rssFeedId: article.RssFeedId,
-                articleCategories: article.ArticleCategories,
-                newsPortal: article.NewsPortal,
-                rssFeed: null
-            )).ToList();
+            foreach (var article in articles)
+            {
+                article.UpdateTrendingScore(
+                    trendingScore: trendingScoreUtility.CalculateTrendingScore(
+                        clicks: article.NumberOfClicks,
+                        publishDateTime: article.PublishDateTime
+                    )
+                );
+            }
 
-            _ = _memoryCache.Set(MemoryCacheConstants.ArticleKey, articlesWithUpdatedTrendingScore);
+            _ = _memoryCache.Set(MemoryCacheConstants.ArticleKey, articles.ToList());
 
             return Unit.Task;
         }
