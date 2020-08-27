@@ -55,9 +55,9 @@ namespace Espresso.WebApi
             IWebApiConfiguration configuration
         )
         {
-            if (configuration.AppEnvironment.Equals(AppEnvironment.Dev))
+            if (configuration.EnableCors)
             {
-                app.UseCors("DevCorsPolicy");
+                app.UseCors("CustomCorsPolicy");
             }
 
             memoryCacheInit.InitWebApi().GetAwaiter().GetResult();

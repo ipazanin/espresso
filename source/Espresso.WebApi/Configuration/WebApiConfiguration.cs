@@ -68,6 +68,12 @@ namespace Espresso.WebApi.Configuration
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public bool EnableCors => _configuration.GetValue<bool>("AppConfiguration:EnableCors");
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <value></value>
         public int NewNewsPortalsPosition => _configuration.GetValue<int>("AppConfiguration:NewNewsPortalsPosition");
 

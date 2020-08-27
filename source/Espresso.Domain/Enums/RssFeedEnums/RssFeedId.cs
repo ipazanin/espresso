@@ -84,5 +84,6 @@
         DirektnoHr_Direktno = 81,
         Scena = 82,
         DalmacijaDanas = 83,
+        Nacional = 84,
     }
 }

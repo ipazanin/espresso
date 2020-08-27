@@ -36,7 +36,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
                 .OrderByDescending(keySelector: Article.GetOrderByDescendingIsFeaturedExpression().Compile())
                 .ThenByDescending(keySelector: Article.GetOrderByDescendingTrendingScoreExpression().Compile())
                 .Where(
-                    predicate: Article.GetFilteredArticlesPredicate(
+                    predicate: Article.GetFilteredFeaturedArticlesPredicate(
                         categoryIds: request.CategoryIds,
                         newsPortalIds: request.NewsPortalIds,
                         titleSearchQuery: null
