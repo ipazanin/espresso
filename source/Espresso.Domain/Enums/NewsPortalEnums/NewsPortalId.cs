@@ -80,5 +80,7 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         DalmacijaDanas = 37,
         [Display(Name = "Nacional")]
         Nacional = 38,
+        [Display(Name = "Express")]
+        Express = 39,
     }
 }
