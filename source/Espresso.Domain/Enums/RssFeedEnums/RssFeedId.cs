@@ -85,5 +85,6 @@
         Scena = 82,
         DalmacijaDanas = 83,
         Nacional = 84,
+        Express = 85,
     }
 }

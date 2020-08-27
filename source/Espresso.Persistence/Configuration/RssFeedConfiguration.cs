@@ -344,6 +344,15 @@ namespace Espresso.Persistence.Configuration
                     categoryId: (int)CategoryId.Vijesti
                 ),
                 #endregion
+
+                #region Express
+                new RssFeed(
+                    id: (int)RssFeedId.Express,
+                    url: "https://express.24sata.hr/feeds/placeholder-head/rss_feed",
+                    newsPortalId: (int)NewsPortalId.Express,
+                    categoryId: (int)CategoryId.Vijesti
+                ),
+                #endregion
             };
 
             builder.HasData(rssFeeds);
@@ -451,6 +460,15 @@ namespace Espresso.Persistence.Configuration
             {
                 RssFeedId = (int)RssFeedId.StoPosto,
                 NumberOfSkips = 5,
+                CurrentSkip = 0
+            });
+            #endregion
+
+            #region Express
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Express,
+                NumberOfSkips = 10,
                 CurrentSkip = 0
             });
             #endregion
@@ -600,25 +618,21 @@ namespace Espresso.Persistence.Configuration
             {
                 RssFeedId = (int)RssFeedId.Hrt_Vijesti,
                 CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
-                UrlSegmentIndex = (int?)null,
             });
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Hrt_Sport,
                 CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
-                UrlSegmentIndex = (int?)null,
             });
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Hrt_Magazin,
                 CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
-                UrlSegmentIndex = (int?)null,
             });
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Hrt_Glazba,
                 CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
-                UrlSegmentIndex = (int?)null,
             });
             #endregion
 
@@ -654,49 +668,41 @@ namespace Espresso.Persistence.Configuration
             {
                 RssFeedId = (int)RssFeedId.DirektnoHr_Direkt,
                 CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
-                UrlSegmentIndex = (int?)null,
             });
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.DirektnoHr_Direktno,
                 CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
-                UrlSegmentIndex = (int?)null,
             });
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.DirektnoHr_Domovina,
                 CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
-                UrlSegmentIndex = (int?)null,
             });
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.DirektnoHr_EuSvijet,
                 CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
-                UrlSegmentIndex = (int?)null,
             });
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.DirektnoHr_Kolumne,
                 CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
-                UrlSegmentIndex = (int?)null,
             });
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.DirektnoHr_Razvoj,
                 CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
-                UrlSegmentIndex = (int?)null,
             });
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.DirektnoHr_Sport,
                 CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
-                UrlSegmentIndex = (int?)null,
             });
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.DirektnoHr_Zivot,
                 CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
-                UrlSegmentIndex = (int?)null,
             });
             #endregion
 
@@ -705,7 +711,6 @@ namespace Espresso.Persistence.Configuration
             {
                 RssFeedId = (int)RssFeedId.Scena,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
-                UrlSegmentIndex = 1
             });
             #endregion
 
@@ -714,7 +719,14 @@ namespace Espresso.Persistence.Configuration
             {
                 RssFeedId = (int)RssFeedId.Nacional,
                 CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
-                UrlSegmentIndex = (int?)null
+            });
+            #endregion
+
+            #region Express
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Express,
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl,
             });
             #endregion
 
@@ -1042,6 +1054,18 @@ namespace Espresso.Persistence.Configuration
                 RssFeedId = (int)RssFeedId.Nacional,
                 ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
                 ImgElementXPath = "//div[contains(@class, 'single-post-media')]//img",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
+            #region Express
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Express,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
                 ShouldImageUrlBeWebScraped = false,
                 ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
                 JsonWebScrapePropertyNames = (string?)null

@@ -71,40 +71,6 @@ namespace Espresso.Domain.Entities
         {
             return SkipParseConfiguration?.ShouldParse() != false;
         }
-
-        public RssFeed GetUpdatedEntity()
-        {
-            return this;
-        }
-
-        public RssFeed GetUpdatedEntityWithRelations()
-        {
-            return this;
-        }
-
-        public void UpdateNewsPortalCategoryAndRssFeedcategories(
-            NewsPortal newsPortal,
-            Category category,
-            IEnumerable<RssFeedCategory> rssFeedCategories
-        )
-        {
-            NewsPortal = newsPortal;
-            Category = category;
-            RssFeedCategories = rssFeedCategories.ToList();
-        }
-
-        public void UpdateValueObjects(
-            AmpConfiguration ampConfiguration,
-            CategoryParseConfiguration categoryParseConfiguration,
-            ImageUrlParseConfiguration imageUrlParseConfiguration,
-            SkipParseConfiguration skipParseConfiguration
-        )
-        {
-            AmpConfiguration = ampConfiguration;
-            CategoryParseConfiguration = categoryParseConfiguration;
-            ImageUrlParseConfiguration = imageUrlParseConfiguration;
-            SkipParseConfiguration = skipParseConfiguration;
-        }
         #endregion
     }
 }

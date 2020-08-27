@@ -57,7 +57,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.index.hr/",
                     iconUrl: $"Icons/{NewsPortalId.Index}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global
                 ),
@@ -67,7 +67,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.24sata.hr/",
                     iconUrl: $"Icons/{NewsPortalId.DvadesetCetiriSata}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global
                 ),
@@ -77,7 +77,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://sportske.jutarnji.hr/",
                     iconUrl: $"Icons/{NewsPortalId.SportskeNovosti}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Sport,
                     regionId: (int)RegionId.Global
                 ),
@@ -87,7 +87,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://sportske.jutarnji.hr/",
                     iconUrl: $"Icons/{NewsPortalId.JutarnjiList}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global
                 ),
@@ -97,7 +97,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://net.hr/",
                     iconUrl: $"Icons/{NewsPortalId.NetHr}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global
                 ),
@@ -107,7 +107,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://slobodnadalmacija.hr/",
                     iconUrl: $"Icons/{NewsPortalId.SlobodnaDalmacija}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global
                 ),
@@ -117,7 +117,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.tportal.hr/",
                     iconUrl: $"Icons/{NewsPortalId.TPortal}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global
                 ),
@@ -127,7 +127,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.vecernji.hr/",
                     iconUrl: $"Icons/{NewsPortalId.VecernjiList}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global
                 ),
@@ -137,7 +137,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.telegram.hr/",
                     iconUrl: $"Icons/{NewsPortalId.Telegram}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global
                 ),
@@ -147,7 +147,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://dnevnik.hr/",
                     iconUrl: $"Icons/{NewsPortalId.Dnevnik}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global
                 ),
@@ -157,7 +157,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://gol.dnevnik.hr/",
                     iconUrl: $"Icons/{NewsPortalId.Gol}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Sport,
                     regionId: (int)RegionId.Global
                 ),
@@ -168,7 +168,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://sportnet.rtl.hr/",
                     iconUrl: $"Icons/{NewsPortalId.RtlVijesti}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global
                 ),
@@ -178,7 +178,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "http://www.nogometplus.net/",
                     iconUrl: $"Icons/{NewsPortalId.NogometPlus}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Sport,
                     regionId: (int)RegionId.Global
                 ), // Nemaju SLS LUL
@@ -188,7 +188,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://lider.media/",
                     iconUrl: $"Icons/{NewsPortalId.Lider}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1), categoryId: (int)CategoryId.Biznis,
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc), categoryId: (int)CategoryId.Biznis,
                     regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
@@ -197,7 +197,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.bug.hr/",
                     iconUrl: $"Icons/{NewsPortalId.Bug}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global
                 ),
@@ -207,7 +207,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.vidi.hr/",
                     iconUrl: $"Icons/{NewsPortalId.VidiHr}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global
                 ),
@@ -217,7 +217,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://zimo.dnevnik.hr/",
                     iconUrl: $"Icons/{NewsPortalId.Zimo}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global
                 ),
@@ -227,7 +227,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.netokracija.com/",
                     iconUrl: $"Icons/{NewsPortalId.Netokracija}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global
                 ),
@@ -237,7 +237,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://poslovnipuls.com/",
                     iconUrl: $"Icons/{NewsPortalId.PoslovniPuls}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Biznis,
                     regionId: (int)RegionId.Global
                 ),
@@ -247,7 +247,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://pcchip.hr/",
                     iconUrl: $"Icons/{NewsPortalId.PcChip}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global
                 ),
@@ -257,7 +257,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "http://www.cosmopolitan.hr/",
                     iconUrl: $"Icons/{NewsPortalId.Cosmopolitan}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Lifestyle,
                     regionId: (int)RegionId.Global
                 ),
@@ -267,7 +267,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://wall.hr/",
                     iconUrl: $"Icons/{NewsPortalId.WallHr}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Lifestyle,
                     regionId: (int)RegionId.Global
                 ),
@@ -277,7 +277,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "http://www.ljepotaizdravlje.hr/",
                     iconUrl: $"Icons/{NewsPortalId.LjepotaIZdravlje}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Lifestyle,
                     regionId: (int)RegionId.Global
                 ), // Nemaju SLS LUL
@@ -287,7 +287,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.autonet.hr/",
                     iconUrl: $"Icons/{NewsPortalId.Autonet}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.AutoMoto,
                     regionId: (int)RegionId.Global
                 ),
@@ -297,7 +297,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl:"https://hr.n1info.com/",
                     iconUrl:$"Icons/{NewsPortalId.N1}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1),
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global
                 ),
@@ -307,7 +307,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl:"https://narod.hr/",
                     iconUrl: $"Icons/{NewsPortalId.NarodHr}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt:new DateTime(2020, 5, 1),
+                    createdAt:new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId:(int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global
                 ),
@@ -317,7 +317,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.hrt.hr/",
                     iconUrl: $"Icons/{NewsPortalId.Hrt}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 6, 25),
+                    createdAt: new DateTime(2020, 6, 25, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global
                 ),
@@ -327,7 +327,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://100posto.jutarnji.hr/",
                     iconUrl: $"Icons/{NewsPortalId.StoPosto}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 6, 28),
+                    createdAt: new DateTime(2020, 6, 28, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global
                 ),
@@ -337,7 +337,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.dnevno.hr/",
                     iconUrl: $"Icons/{NewsPortalId.Dnevno}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 6, 28),
+                    createdAt: new DateTime(2020, 6, 28, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global
                 ),
@@ -354,7 +354,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://direktno.hr/",
                     iconUrl: $"Icons/{NewsPortalId.DirektnoHr}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 7, 1),
+                    createdAt: new DateTime(2020, 7, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global
                 ),
@@ -364,7 +364,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.scena.hr/",
                     iconUrl: $"Icons/{NewsPortalId.Scena}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 7, 13),
+                    createdAt: new DateTime(2020, 7, 13, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Show,
                     regionId: (int)RegionId.Global
                 ),
@@ -374,7 +374,17 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.nacional.hr/",
                     iconUrl: $"Icons/{NewsPortalId.Nacional}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 10, 1),
+                    createdAt: new DateTime(2020, 10, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Vijesti,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.Express,
+                    name: NewsPortalId.Express.GetDisplayName(),
+                    baseUrl: "https://express.24sata.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.Express}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 10, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global
                 ),
@@ -391,7 +401,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.dalmacijadanas.hr/",
                     iconUrl: $"Icons/{NewsPortalId.DalmacijaDanas}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 10, 1),
+                    createdAt: new DateTime(2020, 10, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija
                 ),

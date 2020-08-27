@@ -32,7 +32,6 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
                 return true;
             }
 
-            NumberOfSkips = NumberOfSkips;
             CurrentSkip = CurrentSkip == NumberOfSkips ? 0 : CurrentSkip + 1;
 
             return CurrentSkip == 0;
