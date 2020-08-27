@@ -124,6 +124,14 @@ namespace Espresso.Domain.Entities
         /// <summary>
         /// 
         /// </summary>
+        public void ToggleFeatured()
+        {
+            IsFeatured = !IsFeatured;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="trendingScore"></param>
         public void UpdateTrendingScore(decimal trendingScore)
         {
@@ -267,6 +275,23 @@ namespace Espresso.Domain.Entities
                 (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)) &&
                 (string.IsNullOrEmpty(titleSearchQuery) || article.Title.Contains(titleSearchQuery));
         }
+
+        public static Expression<Func<Article, bool>> GetFilteredFeaturedArticlesPredicate(
+            IEnumerable<int>? categoryIds,
+            IEnumerable<int>? newsPortalIds,
+            string? titleSearchQuery
+        )
+        {
+            return article =>
+                !article.IsHidden &&
+                article.IsFeatured &&
+                (categoryIds == null || article
+                    .ArticleCategories
+                    .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
+                (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)) &&
+                (string.IsNullOrEmpty(titleSearchQuery) || article.Title.Contains(titleSearchQuery));
+        }
+
 
         public static Expression<Func<Article, bool>> GetTrendingArticlePredicate(TimeSpan maxAgeOfTrendingArticle)
         {

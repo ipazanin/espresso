@@ -62,17 +62,17 @@ namespace Espresso.WebApi.Extensions
             services.AddPersistentServices(configuration);
             services.AddSwaggerServices(configuration);
 
-            if (configuration.AppEnvironment.Equals(AppEnvironment.Dev))
+            if (configuration.EnableCors)
             {
                 services.AddCors(
                     setupAction: o => o.AddPolicy(
-                         name: "DevCorsPolicy",
+                         name: "CustomCorsPolicy",
                          configurePolicy: builder =>
-                          {
-                              builder.AllowAnyOrigin()
-                                     .AllowAnyMethod()
-                                     .AllowAnyHeader();
-                          }
+                         {
+                             builder.AllowAnyOrigin()
+                                    .AllowAnyMethod()
+                                    .AllowAnyHeader();
+                         }
                      )
                 );
             }

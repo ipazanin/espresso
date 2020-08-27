@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Espresso.Application.CQRS.Articles.Commands.CalculateTrendingScore;
 using Espresso.Application.CQRS.Articles.Commands.HideArticle;
 using Espresso.Application.CQRS.Articles.Commands.IncrementTrendingArticleScore;
+using Espresso.Application.CQRS.Articles.Commands.ToggleFeaturedArticle;
 using Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles;
 using Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles_1_3;
 using Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles;
@@ -508,6 +509,46 @@ namespace Espresso.WebApi.Controllers
         {
             await Mediator.Send(
                 request: new HideArticleCommand(
+                    articleId: articleId,
+                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
+                    deviceType: basicInformationsHeaderParameters.DeviceType
+                ),
+                cancellationToken: cancellationToken
+            ).ConfigureAwait(false);
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Hide article with <paramref name="articleId"/>
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <param name="articleId">Article Id</param>
+        /// <param name="basicInformationsHeaderParameters">Basic App Informations</param>
+        /// <returns></returns>
+        /// <response code="200">When operation is sucessfull</response>
+        /// <response code="400">If <paramref name="articleId"/> is not valid Guid</response>
+        /// <response code="401">If API Key is invalid or missing</response>
+        /// <response code="500">If unhandled exception occurred</response>
+        [Produces(MimeTypeConstants.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ApiVersion("1.4")]
+        [HttpPost]
+        [Authorize(Roles = ApiKey.DevMobileAppRole)]
+        [Route("api/articles/{articleId}/featured")]
+        public async Task<IActionResult> ToggleFeaturedArticle(
+            [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
+            [FromRoute][Required] Guid articleId,
+            CancellationToken cancellationToken
+        )
+        {
+            await Mediator.Send(
+                request: new ToggleFeaturedArticleCommand(
                     articleId: articleId,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,

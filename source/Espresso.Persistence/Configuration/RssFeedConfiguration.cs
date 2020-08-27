@@ -335,6 +335,15 @@ namespace Espresso.Persistence.Configuration
                     categoryId: (int)CategoryId.Vijesti
                 ),
                 #endregion
+
+                #region Nacional
+                new RssFeed(
+                    id: (int)RssFeedId.Nacional,
+                    url: "https://www.nacional.hr/feed/",
+                    newsPortalId: (int)NewsPortalId.Nacional,
+                    categoryId: (int)CategoryId.Vijesti
+                ),
+                #endregion
             };
 
             builder.HasData(rssFeeds);
@@ -700,6 +709,17 @@ namespace Espresso.Persistence.Configuration
             });
             #endregion
 
+            #region Nacional
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Nacional,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+                UrlSegmentIndex = (int?)null
+            });
+            #endregion
+
+            #region Local NewsPortals
+
             #region Dalmacija Danas
             categoryParseConfigurationBuilder.HasData(new
             {
@@ -707,6 +727,8 @@ namespace Espresso.Persistence.Configuration
                 CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
                 UrlSegmentIndex = (int?)null
             });
+            #endregion
+
             #endregion
         }
 
@@ -1014,6 +1036,20 @@ namespace Espresso.Persistence.Configuration
             });
             #endregion
 
+            #region Nacional
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Nacional,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "//div[contains(@class, 'single-post-media')]//img",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
+            #region Local NewsPortals
+
             #region Dalmacija Danas
             imageUrlParseConfigurationBuilder.HasData(new
             {
@@ -1024,6 +1060,8 @@ namespace Espresso.Persistence.Configuration
                 ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
                 JsonWebScrapePropertyNames = (string?)null
             });
+            #endregion
+
             #endregion
         }
     }

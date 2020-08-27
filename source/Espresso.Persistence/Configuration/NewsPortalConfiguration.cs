@@ -368,6 +368,16 @@ namespace Espresso.Persistence.Configuration
                     categoryId: (int)CategoryId.Show,
                     regionId: (int)RegionId.Global
                 ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.Nacional,
+                    name: NewsPortalId.Nacional.GetDisplayName(),
+                    baseUrl: "https://www.nacional.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.Nacional}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 10, 1),
+                    categoryId: (int)CategoryId.Vijesti,
+                    regionId: (int)RegionId.Global
+                ),
             };
 
             builder.HasData(newsPortals);
@@ -381,7 +391,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.dalmacijadanas.hr/",
                     iconUrl: $"Icons/{NewsPortalId.DalmacijaDanas}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 8, 1),
+                    createdAt: new DateTime(2020, 10, 1),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija
                 ),
