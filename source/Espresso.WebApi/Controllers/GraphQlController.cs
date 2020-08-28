@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Espresso.WebApi.Authentication;
 using System.Collections.Generic;
+using Espresso.Common.Enums;
 
 namespace Espresso.WebApi.Controllers
 {
@@ -66,6 +67,13 @@ namespace Espresso.WebApi.Controllers
                 executionOptions.Query = query.Query;
                 executionOptions.Inputs = new Inputs(query.Variables);
                 executionOptions.CancellationToken = cancellationToken;
+
+                if (WebApiConfiguration.AppEnvironment.Equals(AppEnvironment.Local))
+                {
+                    executionOptions.ExposeExceptions = true;
+                    executionOptions.EnableMetrics = true;
+                }
+
                 executionOptions.UserContext = new Dictionary<string, object>
                 {
                     { "currentEspressoWebApiVersion", WebApiConfiguration.Version },
@@ -79,11 +87,9 @@ namespace Espresso.WebApi.Controllers
                 throw new ValidationException(
                     message: string.Join(
                         separator: ",",
-                        values: result
-                            .Errors
-                            .Select(executionError => executionError.Message)
-                        )
-                    ) :
+                        values: result.Errors.Select(executionError => executionError.Message)
+                    )
+                ) :
                 Ok(result.Data);
         }
     }
