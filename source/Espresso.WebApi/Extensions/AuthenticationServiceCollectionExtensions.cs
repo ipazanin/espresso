@@ -6,7 +6,7 @@ namespace Espresso.WebApi.Extensions
     /// <summary>
     /// 
     /// </summary>
-    public static class AuthentificationServiceCollectionExtensions
+    public static class AuthenticationServiceCollectionExtensions
     {
         /// <summary>
         /// 

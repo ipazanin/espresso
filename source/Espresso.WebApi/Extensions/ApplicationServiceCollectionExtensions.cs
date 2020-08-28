@@ -1,6 +1,5 @@
 using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
 using Espresso.Application.Initialization;
-using Espresso.Common.Enums;
 using Espresso.Domain.IValidators;
 using Espresso.Domain.Validators;
 using Espresso.WebApi.Configuration;
@@ -21,11 +20,11 @@ namespace Espresso.WebApi.Extensions
         /// 
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="configuration"></param>
+        /// <param name="webApiConfiguration"></param>
         /// <returns></returns>
         public static IServiceCollection AddApplicationServices(
             this IServiceCollection services,
-            IWebApiConfiguration configuration
+            IWebApiConfiguration webApiConfiguration
         )
         {
             services.AddMemoryCache();
@@ -38,7 +37,7 @@ namespace Espresso.WebApi.Extensions
             {
                 options.Filters.Add(typeof(CustomExceptionFilterAttribute));
                 options.EnableEndpointRouting = false;
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+            }).SetCompatibilityVersion(CompatibilityVersion.Latest)
                 .AddFluentValidation(
                     fluentValidatorConfiguration =>
                         fluentValidatorConfiguration
@@ -59,10 +58,10 @@ namespace Espresso.WebApi.Extensions
             services.AddServices();
             services.AddAuthServices();
             services.AddMediatRServices();
-            services.AddPersistentServices(configuration);
-            services.AddSwaggerServices(configuration);
+            services.AddPersistentServices(webApiConfiguration);
+            services.AddSwaggerServices(webApiConfiguration);
 
-            if (configuration.EnableCors)
+            if (webApiConfiguration.EnableCors)
             {
                 services.AddCors(
                     setupAction: o => o.AddPolicy(
