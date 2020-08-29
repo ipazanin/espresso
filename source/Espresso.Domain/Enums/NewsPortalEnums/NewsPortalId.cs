@@ -120,5 +120,7 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         GlasSlavonije = 57,
         [Display(Name = "Slavonski Hr")]
         SlavonskiHr = 58,
+        [Display(Name = "iVijesti")]
+        IVijesti = 59,
     }
 }

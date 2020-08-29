@@ -105,5 +105,6 @@
         BaranjaInfo = 102,
         GlasSlavonije = 103,
         SlavonskiHr = 104,
+        IVijesti = 105,
     }
 }

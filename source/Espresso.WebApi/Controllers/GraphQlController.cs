@@ -14,8 +14,6 @@ using Microsoft.AspNetCore.Authorization;
 using Espresso.WebApi.Authentication;
 using System.Collections.Generic;
 using Espresso.Common.Enums;
-using GraphQL.Utilities;
-using System;
 
 namespace Espresso.WebApi.Controllers
 {
