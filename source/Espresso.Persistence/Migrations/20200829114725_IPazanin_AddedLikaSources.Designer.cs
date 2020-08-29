@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class EspressoDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200829114725_IPazanin_AddedLikaSources")]
+    partial class IPazanin_AddedLikaSources
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -736,96 +738,6 @@ namespace Espresso.Persistence.Migrations
                             IconUrl = "Icons/LikaPlus.png",
                             Name = "Lika plus",
                             RegionId = 4
-                        },
-                        new
-                        {
-                            Id = 50,
-                            BaseUrl = "https://www.index.hr/",
-                            CategoryId = 12,
-                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/IndexHrZagreb.png",
-                            Name = "Index.Hr - Zagreb",
-                            RegionId = 5
-                        },
-                        new
-                        {
-                            Id = 51,
-                            BaseUrl = "https://www.zagreb.info/",
-                            CategoryId = 12,
-                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/ZagrebInfo.png",
-                            Name = "Zagreb Info",
-                            RegionId = 5
-                        },
-                        new
-                        {
-                            Id = 52,
-                            BaseUrl = "https://www.zagrebancija.com/",
-                            CategoryId = 12,
-                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/Zagrebancija.png",
-                            Name = "Zagrebancija",
-                            RegionId = 5
-                        },
-                        new
-                        {
-                            Id = 53,
-                            BaseUrl = "https://sjever.hr/",
-                            CategoryId = 12,
-                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/SjeverHr.png",
-                            Name = "Sjever.hr",
-                            RegionId = 6
-                        },
-                        new
-                        {
-                            Id = 54,
-                            BaseUrl = "https://prigorski.hr/",
-                            CategoryId = 12,
-                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/PrigorskiHr.png",
-                            Name = "Sjever.hr",
-                            RegionId = 6
-                        },
-                        new
-                        {
-                            Id = 55,
-                            BaseUrl = "https://epodravina.hr/",
-                            CategoryId = 12,
-                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/PodravinaHr.png",
-                            Name = "ePodravina.hr",
-                            RegionId = 6
-                        },
-                        new
-                        {
-                            Id = 56,
-                            BaseUrl = "https://www.baranjainfo.hr/",
-                            CategoryId = 12,
-                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/BaranjaInfo.png",
-                            Name = "Baranja info",
-                            RegionId = 7
-                        },
-                        new
-                        {
-                            Id = 57,
-                            BaseUrl = "https://www.glas-slavonije.hr/",
-                            CategoryId = 12,
-                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/GlasSlavonije.png",
-                            Name = "Glas Slavonije",
-                            RegionId = 7
-                        },
-                        new
-                        {
-                            Id = 58,
-                            BaseUrl = "https://slavonski.hr/",
-                            CategoryId = 12,
-                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/SlavonskiHr.png",
-                            Name = "Slavonski Hr",
-                            RegionId = 7
                         });
                 });
 
@@ -1558,69 +1470,6 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 12,
                             NewsPortalId = 49,
                             Url = "http://www.likaplus.hr/rss"
-                        },
-                        new
-                        {
-                            Id = 96,
-                            CategoryId = 12,
-                            NewsPortalId = 50,
-                            Url = "https://www.index.hr/rss/vijesti-zagreb"
-                        },
-                        new
-                        {
-                            Id = 97,
-                            CategoryId = 12,
-                            NewsPortalId = 51,
-                            Url = "https://www.zagreb.info/feed"
-                        },
-                        new
-                        {
-                            Id = 98,
-                            CategoryId = 12,
-                            NewsPortalId = 52,
-                            Url = "https://www.zagrebancija.com/feed"
-                        },
-                        new
-                        {
-                            Id = 99,
-                            CategoryId = 12,
-                            NewsPortalId = 53,
-                            Url = "https://sjever.hr/feed"
-                        },
-                        new
-                        {
-                            Id = 100,
-                            CategoryId = 12,
-                            NewsPortalId = 54,
-                            Url = "https://prigorski.hr/feed"
-                        },
-                        new
-                        {
-                            Id = 101,
-                            CategoryId = 12,
-                            NewsPortalId = 55,
-                            Url = "https://epodravina.hr/feed"
-                        },
-                        new
-                        {
-                            Id = 102,
-                            CategoryId = 12,
-                            NewsPortalId = 56,
-                            Url = "https://www.baranjainfo.hr/feed"
-                        },
-                        new
-                        {
-                            Id = 103,
-                            CategoryId = 12,
-                            NewsPortalId = 57,
-                            Url = "https://www.glas-slavonije.hr/rss"
-                        },
-                        new
-                        {
-                            Id = 104,
-                            CategoryId = 12,
-                            NewsPortalId = 58,
-                            Url = "https://slavonski.hr/feed"
                         });
                 });
 
@@ -2909,51 +2758,6 @@ namespace Espresso.Persistence.Migrations
                                 {
                                     RssFeedId = 95,
                                     CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 96,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 97,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 98,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 99,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 100,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 101,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 102,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 103,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 104,
-                                    CategoryParseStrategy = 1
                                 });
                         });
 
@@ -3671,78 +3475,6 @@ namespace Espresso.Persistence.Migrations
                                     ImageUrlWebScrapeType = 1,
                                     ImgElementXPath = "",
                                     ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 96,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 97,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 98,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 99,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 100,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 101,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 102,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 103,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 104,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
                                 });
                         });
 
@@ -3874,30 +3606,6 @@ namespace Espresso.Persistence.Migrations
                                     RssFeedId = 85,
                                     CurrentSkip = 0,
                                     NumberOfSkips = 10
-                                },
-                                new
-                                {
-                                    RssFeedId = 70,
-                                    CurrentSkip = 0,
-                                    NumberOfSkips = 5
-                                },
-                                new
-                                {
-                                    RssFeedId = 69,
-                                    CurrentSkip = 0,
-                                    NumberOfSkips = 5
-                                },
-                                new
-                                {
-                                    RssFeedId = 68,
-                                    CurrentSkip = 0,
-                                    NumberOfSkips = 5
-                                },
-                                new
-                                {
-                                    RssFeedId = 67,
-                                    CurrentSkip = 0,
-                                    NumberOfSkips = 5
                                 });
                         });
                 });

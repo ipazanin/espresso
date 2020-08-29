@@ -136,7 +136,8 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                             closureRssFeed.NewsPortalId == (int)NewsPortalId.NarodHr ||
                             closureRssFeed.NewsPortalId == (int)NewsPortalId.StoPosto ||
                             closureRssFeed.NewsPortalId == (int)NewsPortalId.PoslovniPuls ||
-                            closureRssFeed.NewsPortalId == (int)NewsPortalId.SlobodnaDalmacija
+                            closureRssFeed.NewsPortalId == (int)NewsPortalId.SlobodnaDalmacija ||
+                            closureRssFeed.NewsPortalId == (int)NewsPortalId.LikaExpress
                         )
                         {
                             using var request = new HttpRequestMessage(HttpMethod.Get, closureRssFeed.Url);

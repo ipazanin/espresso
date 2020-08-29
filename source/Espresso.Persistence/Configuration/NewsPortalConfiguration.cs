@@ -430,16 +430,179 @@ namespace Espresso.Persistence.Configuration
 
                 #region Istra i Kvarner
                 new NewsPortal(
-                    id:(int)NewsPortalId.KulturIstra,
-                    name: NewsPortalId.KulturIstra.GetDisplayName(),
-                    baseUrl: "https://kulturistra.hr/",
-                    iconUrl: $"Icons/{NewsPortalId.KulturIstra}{FileExtensionConstants.Png}",
+                    id:(int)NewsPortalId.IPazin,
+                    name: NewsPortalId.IPazin.GetDisplayName(),
+                    baseUrl: "https://www.ipazin.net/",
+                    iconUrl: $"Icons/{NewsPortalId.IPazin}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Istra
-                ),      
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.NoviList,
+                    name: NewsPortalId.NoviList.GetDisplayName(),
+                    baseUrl: "https://www.novilist.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.NoviList}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Istra
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.Parentium,
+                    name: NewsPortalId.Parentium.GetDisplayName(),
+                    baseUrl: "https://www.parentium.com/",
+                    iconUrl: $"Icons/{NewsPortalId.Parentium}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Istra
+                ),
                 #endregion
+
+                #region Lika
+                new NewsPortal(
+                    id:(int)NewsPortalId.LikaKlub,
+                    name: NewsPortalId.LikaKlub.GetDisplayName(),
+                    baseUrl: "https://likaclub.eu/",
+                    iconUrl: $"Icons/{NewsPortalId.LikaKlub}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Lika
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.LikaExpress,
+                    name: NewsPortalId.LikaExpress.GetDisplayName(),
+                    baseUrl: "http://www.lika-express.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.LikaExpress}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Lika
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.LikaOnline,
+                    name: NewsPortalId.LikaOnline.GetDisplayName(),
+                    baseUrl: "https://www.lika-online.com/",
+                    iconUrl: $"Icons/{NewsPortalId.LikaOnline}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Lika
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.LikaPlus,
+                    name: NewsPortalId.LikaPlus.GetDisplayName(),
+                    baseUrl: "http://www.likaplus.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.LikaPlus}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Lika
+                ),
+                #endregion
+
+                #region Zagreb
+                new NewsPortal(
+                    id:(int)NewsPortalId.IndexHrZagreb,
+                    name: NewsPortalId.IndexHrZagreb.GetDisplayName(),
+                    baseUrl: "https://www.index.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.IndexHrZagreb}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Zagreb
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.ZagrebInfo,
+                    name: NewsPortalId.ZagrebInfo.GetDisplayName(),
+                    baseUrl: "https://www.zagreb.info/",
+                    iconUrl: $"Icons/{NewsPortalId.ZagrebInfo}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Zagreb
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.Zagrebancija,
+                    name: NewsPortalId.Zagrebancija.GetDisplayName(),
+                    baseUrl: "https://www.zagrebancija.com/",
+                    iconUrl: $"Icons/{NewsPortalId.Zagrebancija}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Zagreb
+                ),                               
+                #endregion
+
+                #region Sjeverna Hrvatska
+                new NewsPortal(
+                    id:(int)NewsPortalId.SjeverHr,
+                    name: NewsPortalId.SjeverHr.GetDisplayName(),
+                    baseUrl: "https://sjever.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.SjeverHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.SjevernaHrvatska
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.PrigorskiHr,
+                    name: NewsPortalId.PrigorskiHr.GetDisplayName(),
+                    baseUrl: "https://prigorski.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.PrigorskiHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.SjevernaHrvatska
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.PodravinaHr,
+                    name: NewsPortalId.PodravinaHr.GetDisplayName(),
+                    baseUrl: "https://epodravina.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.PodravinaHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.SjevernaHrvatska
+                ),                        
+                #endregion
+
+
+                #region Slavonija
+                new NewsPortal(
+                    id:(int)NewsPortalId.BaranjaInfo,
+                    name: NewsPortalId.BaranjaInfo.GetDisplayName(),
+                    baseUrl: "https://www.baranjainfo.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.BaranjaInfo}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Slavonija
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.GlasSlavonije,
+                    name: NewsPortalId.GlasSlavonije.GetDisplayName(),
+                    baseUrl: "https://www.glas-slavonije.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.GlasSlavonije}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Slavonija
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.SlavonskiHr,
+                    name: NewsPortalId.SlavonskiHr.GetDisplayName(),
+                    baseUrl: "https://slavonski.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.SlavonskiHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Slavonija
+                ),                                  
+                #endregion                                            
             };
 
             builder.HasData(localNewsPortals);

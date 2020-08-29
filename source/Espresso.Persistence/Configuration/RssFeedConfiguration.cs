@@ -392,15 +392,165 @@ namespace Espresso.Persistence.Configuration
 
                 #region Istra i Kvarner
 
-                #region KulturIstra
+                #region Ipazin
                 new RssFeed(
-                    id: (int)RssFeedId.KulturIstra,
-                    url: "https://kulturistra.hr/rss",
-                    newsPortalId: (int)NewsPortalId.KulturIstra,
+                    id: (int)RssFeedId.IPazin,
+                    url: "https://www.ipazin.net/feed",
+                    newsPortalId: (int)NewsPortalId.IPazin,
                     categoryId: (int)CategoryId.Local
                 ),
                 #endregion
 
+                #region Novi List
+                new RssFeed(
+                    id: (int)RssFeedId.NoviList,
+                    url: "https://www.novilist.hr/feed",
+                    newsPortalId: (int)NewsPortalId.NoviList,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion
+
+                #region Parentium
+                new RssFeed(
+                    id: (int)RssFeedId.Parentium,
+                    url: "https://www.parentium.com/rssfeed.asp",
+                    newsPortalId: (int)NewsPortalId.Parentium,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion                
+
+                #endregion
+
+                #region Lika
+
+                #region LikaKlub
+                new RssFeed(
+                    id: (int)RssFeedId.LikaKlub,
+                    url: "https://likaclub.eu/feed",
+                    newsPortalId: (int)NewsPortalId.LikaKlub,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion  
+
+                #region LikaExpress 
+                new RssFeed(
+                    id: (int)RssFeedId.LikaExpress,
+                    url: "http://www.lika-express.hr/feed",
+                    newsPortalId: (int)NewsPortalId.LikaExpress,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion 
+
+                #region LikaOnline 
+                new RssFeed(
+                    id: (int)RssFeedId.LikaOnline,
+                    url: "https://www.lika-online.com/feed",
+                    newsPortalId: (int)NewsPortalId.LikaOnline,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion                  
+
+                #region Lika Plus
+                new RssFeed(
+                    id: (int)RssFeedId.LikaPlus,
+                    url: "http://www.likaplus.hr/rss",
+                    newsPortalId: (int)NewsPortalId.LikaPlus,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion    
+
+                #endregion
+
+                #region Zagreb
+
+                #region IndexHr Zagreb
+                new RssFeed(
+                    id: (int)RssFeedId.IndexHrZagreb,
+                    url: "https://www.index.hr/rss/vijesti-zagreb",
+                    newsPortalId: (int)NewsPortalId.IndexHrZagreb,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion
+
+                #region Zagreb Info
+                new RssFeed(
+                    id: (int)RssFeedId.ZagrebInfo,
+                    url: "https://www.zagreb.info/feed",
+                    newsPortalId: (int)NewsPortalId.ZagrebInfo,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion
+
+                #region Zagrebancija
+                new RssFeed(
+                    id: (int)RssFeedId.Zagrebancija,
+                    url: "https://www.zagrebancija.com/feed",
+                    newsPortalId: (int)NewsPortalId.Zagrebancija,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion                
+
+                #endregion
+
+                #region Sjeverna Hrvatska
+
+                #region SjeverHr
+                new RssFeed(
+                    id: (int)RssFeedId.SjeverHr,
+                    url: "https://sjever.hr/feed",
+                    newsPortalId: (int)NewsPortalId.SjeverHr,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion
+
+                #region PrigoriskiHr
+                new RssFeed(
+                    id: (int)RssFeedId.PrigorskiHr,
+                    url: "https://prigorski.hr/feed",
+                    newsPortalId: (int)NewsPortalId.PrigorskiHr,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion   
+
+                #region PodravinaHr
+                new RssFeed(
+                    id: (int)RssFeedId.PodravinaHr,
+                    url: "https://epodravina.hr/feed",
+                    newsPortalId: (int)NewsPortalId.PodravinaHr,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion                                
+
+                #endregion
+
+                #region Slavonija
+
+                #region BaranjaInfo
+                new RssFeed(
+                    id: (int)RssFeedId.BaranjaInfo,
+                    url: "https://www.baranjainfo.hr/feed",
+                    newsPortalId: (int)NewsPortalId.BaranjaInfo,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion
+
+                #region GlasSlavonije
+                new RssFeed(
+                    id: (int)RssFeedId.GlasSlavonije,
+                    url: "https://www.glas-slavonije.hr/rss",
+                    newsPortalId: (int)NewsPortalId.GlasSlavonije,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion
+
+                #region SlavonskiHr
+                new RssFeed(
+                    id: (int)RssFeedId.SlavonskiHr,
+                    url: "https://slavonski.hr/feed",
+                    newsPortalId: (int)NewsPortalId.SlavonskiHr,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion
 
                 #endregion
 
@@ -509,10 +659,39 @@ namespace Espresso.Persistence.Configuration
                 CurrentSkip = 0
             });
             #endregion
+
+            #region HRT
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Hrt_Glazba,
+                NumberOfSkips = 5,
+                CurrentSkip = 0
+            });
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Hrt_Magazin,
+                NumberOfSkips = 5,
+                CurrentSkip = 0
+            });
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Hrt_Sport,
+                NumberOfSkips = 5,
+                CurrentSkip = 0
+            });
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Hrt_Vijesti,
+                NumberOfSkips = 5,
+                CurrentSkip = 0
+            });
+            #endregion
         }
 
         private void SeedCategoryParseConfiguration(OwnedNavigationBuilder<RssFeed, CategoryParseConfiguration> categoryParseConfigurationBuilder)
         {
+            #region Normal NewsPortals
+
             #region Index
             categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Vijesti, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
             categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Sport, CategoryParseStrategy = CategoryParseStrategy.FromRssFeed });
@@ -767,6 +946,8 @@ namespace Espresso.Persistence.Configuration
             });
             #endregion
 
+            #endregion Normal NewsPortals
+
             #region Local NewsPortals
 
             #region Dalmacija
@@ -799,10 +980,147 @@ namespace Espresso.Persistence.Configuration
 
             #region Istra i Kvarner
 
-            #region Kultur Istra
+            #region iPazin
             categoryParseConfigurationBuilder.HasData(new
             {
-                RssFeedId = (int)RssFeedId.KulturIstra,
+                RssFeedId = (int)RssFeedId.IPazin,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+            });
+            #endregion
+
+            #region Novi List
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.NoviList,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+            });
+            #endregion
+
+            #region Parentium
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Parentium,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+            });
+            #endregion
+
+            #endregion
+
+            #region Lika
+
+            #region LikaKlub
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.LikaKlub,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+            });
+            #endregion
+
+            #region LikaExpress
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.LikaExpress,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+            });
+            #endregion
+
+            #region LikaOnline
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.LikaOnline,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+            });
+            #endregion
+
+            #region LikaPlus
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.LikaPlus,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+            });
+            #endregion
+
+            #endregion
+
+            #region Zagreb
+
+            #region IndexHr Zagreb
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.IndexHrZagreb,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+            });
+            #endregion    
+
+
+            #region Zagreb Info
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.ZagrebInfo,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+            });
+            #endregion
+
+            #region Zagrebancija
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Zagrebancija,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+            });
+            #endregion            
+
+            #endregion
+
+            #region Sjeverna Hrvatska
+
+            #region SjeverHr
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.SjeverHr,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+            });
+            #endregion
+
+            #region PrigorskiHr
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.PrigorskiHr,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+            });
+            #endregion
+
+            #region PodravinaHr
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.PodravinaHr,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+            });
+            #endregion    
+
+            #endregion
+
+            #region Slavonija
+
+            #region BaranjaInfo
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.BaranjaInfo,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+            });
+            #endregion
+
+            #region GlasSlavonije
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.GlasSlavonije,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+            });
+            #endregion
+
+            #region SlavonskiHr
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.SlavonskiHr,
                 CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
             });
             #endregion
@@ -814,6 +1132,8 @@ namespace Espresso.Persistence.Configuration
 
         private void SeedImageUrlParseConfiguration(OwnedNavigationBuilder<RssFeed, ImageUrlParseConfiguration> imageUrlParseConfigurationBuilder)
         {
+            #region Normal NewsPortals
+
             #region Index
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Vijesti, ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary, ImgElementXPath = "//img[contains(@class, 'img-large loaded')]", ShouldImageUrlBeWebScraped = false, ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute, JsonWebScrapePropertyNames = (string?)null });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Sport, ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary, ImgElementXPath = "//img[contains(@class, 'img-large loaded')]", ShouldImageUrlBeWebScraped = false, ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute, JsonWebScrapePropertyNames = (string?)null });
@@ -1140,6 +1460,8 @@ namespace Espresso.Persistence.Configuration
             });
             #endregion
 
+            #endregion Normal NewsPortals
+
             #region Local NewsPortals
 
             #region Dalmacija
@@ -1184,10 +1506,10 @@ namespace Espresso.Persistence.Configuration
 
             #region Istra i Kvarner
 
-            #region Kultur Istra
+            #region iPazin
             imageUrlParseConfigurationBuilder.HasData(new
             {
-                RssFeedId = (int)RssFeedId.KulturIstra,
+                RssFeedId = (int)RssFeedId.IPazin,
                 ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
                 ImgElementXPath = "",
                 ShouldImageUrlBeWebScraped = false,
@@ -1195,6 +1517,202 @@ namespace Espresso.Persistence.Configuration
                 JsonWebScrapePropertyNames = (string?)null
             });
             #endregion
+
+            #region NoviList
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.NoviList,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
+            #region Parentium
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Parentium,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
+            #endregion
+
+            #region Lika
+
+            #region LikaKlub
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.LikaKlub,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
+            #region LikaExpress
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.LikaExpress,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
+            #region LikaOnline
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.LikaOnline,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
+            #region LikaPlus
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.LikaPlus,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
+            #endregion
+
+            #region Zagreb
+
+            #region Index Hr Zagreb
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.IndexHrZagreb,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
+            #region Zagreb Info
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.ZagrebInfo,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
+            #region Zagrebancija
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Zagrebancija,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion            
+
+            #endregion
+
+            #region Sjeverna Hrvatska
+
+            #region SjeverHr
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.SjeverHr,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
+            #region PrigorskiHr
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.PrigorskiHr,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
+            #region PodravinaHr
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.PodravinaHr,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion    
+
+            #endregion
+
+            #region Slavonija
+
+            #region BaranjaInfo
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.BaranjaInfo,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
+            #region Glas Slavonije
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.GlasSlavonije,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion    
+
+            #region SlavonskiHr
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.SlavonskiHr,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion    
 
             #endregion
 
