@@ -279,12 +279,15 @@ namespace Espresso.Domain.Entities
         public static Expression<Func<Article, bool>> GetFilteredFeaturedArticlesPredicate(
             IEnumerable<int>? categoryIds,
             IEnumerable<int>? newsPortalIds,
-            string? titleSearchQuery
+            string? titleSearchQuery,
+            TimeSpan maxAgeOfFeaturedArticle
         )
         {
+            var maxDateTimeOfFeaturedArticle = DateTime.UtcNow - maxAgeOfFeaturedArticle;
             return article =>
                 !article.IsHidden &&
                 article.IsFeatured &&
+                article.PublishDateTime > maxDateTimeOfFeaturedArticle &&
                 (categoryIds == null || article
                     .ArticleCategories
                     .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
@@ -308,11 +311,6 @@ namespace Espresso.Domain.Entities
         public static Expression<Func<Article, object>> GetOrderByDescendingPublishDateExpression()
         {
             return article => article.PublishDateTime;
-        }
-
-        public static Expression<Func<Article, object>> GetOrderByDescendingIsFeaturedExpression()
-        {
-            return article => article.IsFeatured;
         }
         #endregion
 

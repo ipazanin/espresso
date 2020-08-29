@@ -29,6 +29,7 @@
         GetPushNotifications = 25,
         HideArticle = 26,
         GetFeaturedArticles = 27,
-        ToggleFeaturedArticle = 28
+        ToggleFeaturedArticle = 28,
+        SlackServiceException = 29,
     }
 }

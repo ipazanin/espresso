@@ -17,7 +17,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries
         /// <param name="mediator"></param>
         public GetConfigurationGraphQlQuery(IMediator mediator)
         {
-            Name = nameof(GetConfigurationGraphQlQuery);
+            Name = "Configuration";
             FieldAsync<GetConfigurationQueryResponseType>(
                 name: nameof(GetConfigurationGraphQlQuery),
                 arguments: null,

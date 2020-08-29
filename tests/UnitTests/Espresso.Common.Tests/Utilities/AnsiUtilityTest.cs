@@ -23,7 +23,7 @@ namespace Espresso.Common.Tests.Utilities
             #endregion
 
             #region Act
-            var actualAnsiStringValue = AnsiUtility.EncodeRequestName(stringValue);
+            var actualAnsiStringValue = AnsiUtility.EncodeEventName(stringValue);
             #endregion
 
             #region Assert

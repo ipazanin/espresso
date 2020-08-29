@@ -32,9 +32,5 @@
         #region RssFeedCategory
         public const int RssFeedCategoryUrlRegexHasMaxLength = 100;
         #endregion
-
-        #region Region
-        public const int RegionNameHasMaxLength = 100;
-        #endregion
     }
 }

@@ -374,7 +374,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://www.nacional.hr/",
                     iconUrl: $"Icons/{NewsPortalId.Nacional}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 10, 1, 0, 0, 0, DateTimeKind.Utc),
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global
                 ),
@@ -384,7 +384,7 @@ namespace Espresso.Persistence.Configuration
                     baseUrl: "https://express.24sata.hr/",
                     iconUrl: $"Icons/{NewsPortalId.Express}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 10, 1, 0, 0, 0, DateTimeKind.Utc),
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global
                 ),
@@ -395,16 +395,51 @@ namespace Espresso.Persistence.Configuration
 
             var localNewsPortals = new List<NewsPortal>
             {
+                #region Dalmacija
                 new NewsPortal(
                     id:(int)NewsPortalId.DalmacijaDanas,
                     name: NewsPortalId.DalmacijaDanas.GetDisplayName(),
                     baseUrl: "https://www.dalmacijadanas.hr/",
                     iconUrl: $"Icons/{NewsPortalId.DalmacijaDanas}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 10, 1, 0, 0, 0, DateTimeKind.Utc),
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija
                 ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.DalmacijaNews,
+                    name: NewsPortalId.DalmacijaNews.GetDisplayName(),
+                    baseUrl: "https://www.dalmacijanews.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.DalmacijaDanas}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Dalmacija
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.DalmatinskiPortal,
+                    name: NewsPortalId.DalmatinskiPortal.GetDisplayName(),
+                    baseUrl: "https://dalmatinskiportal.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.DalmatinskiPortal}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Dalmacija
+                ),                
+                #endregion
+
+                #region Istra i Kvarner
+                new NewsPortal(
+                    id:(int)NewsPortalId.KulturIstra,
+                    name: NewsPortalId.KulturIstra.GetDisplayName(),
+                    baseUrl: "https://kulturistra.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.KulturIstra}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Istra
+                ),      
+                #endregion
             };
 
             builder.HasData(localNewsPortals);

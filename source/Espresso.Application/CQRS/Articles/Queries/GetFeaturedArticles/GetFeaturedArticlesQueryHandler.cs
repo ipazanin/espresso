@@ -32,19 +32,45 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
                 key: MemoryCacheConstants.ArticleKey
             );
 
-            var articleDtos = articles
-                .OrderByDescending(keySelector: Article.GetOrderByDescendingIsFeaturedExpression().Compile())
-                .ThenByDescending(keySelector: Article.GetOrderByDescendingTrendingScoreExpression().Compile())
+            var featuredArticleDtos = articles
                 .Where(
                     predicate: Article.GetFilteredFeaturedArticlesPredicate(
                         categoryIds: request.CategoryIds,
                         newsPortalIds: request.NewsPortalIds,
-                        titleSearchQuery: null
+                        titleSearchQuery: null,
+                        maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle
                     ).Compile()
                 )
-                .Skip(request.Skip)
-                .Take(request.Take)
+                .OrderByDescending(
+                    keySelector: Article
+                        .GetOrderByDescendingTrendingScoreExpression()
+                        .Compile()
+                )
+                .ThenByDescending(
+                    keySelector: Article
+                        .GetOrderByDescendingTrendingScoreExpression()
+                        .Compile()
+                )
                 .Select(GetFeaturedArticlesArticle.GetProjection().Compile());
+
+            var trendingArticleDtos = articles
+                .Where(
+                    predicate: Article.GetTrendingArticlePredicate(
+                        maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle
+                    )
+                    .Compile()
+                )
+                .OrderByDescending(
+                    keySelector: Article
+                        .GetOrderByDescendingTrendingScoreExpression()
+                        .Compile()
+                    )
+                .Select(GetFeaturedArticlesArticle.GetProjection().Compile());
+
+            var articleDtos = featuredArticleDtos
+                .Union(trendingArticleDtos)
+                .Skip(request.Skip)
+                .Take(request.Take);
 
             var response = new GetFeaturedArticlesQueryResponse(
                 articles: articleDtos

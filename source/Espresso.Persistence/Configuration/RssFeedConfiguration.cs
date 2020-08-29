@@ -359,6 +359,8 @@ namespace Espresso.Persistence.Configuration
 
             var localRssFeeds = new List<RssFeed>
             {
+                #region Dalmacija
+                
                 #region Dalmacija Danas
                 new RssFeed(
                     id: (int)RssFeedId.DalmacijaDanas,
@@ -367,6 +369,41 @@ namespace Espresso.Persistence.Configuration
                     categoryId: (int)CategoryId.Local
                 ),
                 #endregion
+
+                #region Dalmacija Danas
+                new RssFeed(
+                    id: (int)RssFeedId.DalmacijaNews,
+                    url: "https://www.dalmacijanews.hr/rss",
+                    newsPortalId: (int)NewsPortalId.DalmacijaNews,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion 
+
+                #region Dalmatinski Portal
+                new RssFeed(
+                    id: (int)RssFeedId.DalmatinskiPortal,
+                    url: "https://dalmatinskiportal.hr/sadrzaj/rss/vijesti.xml",
+                    newsPortalId: (int)NewsPortalId.DalmatinskiPortal,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion                
+
+                #endregion
+
+                #region Istra i Kvarner
+
+                #region KulturIstra
+                new RssFeed(
+                    id: (int)RssFeedId.KulturIstra,
+                    url: "https://kulturistra.hr/rss",
+                    newsPortalId: (int)NewsPortalId.KulturIstra,
+                    categoryId: (int)CategoryId.Local
+                ),
+                #endregion
+
+
+                #endregion
+
             };
 
             builder.HasData(localRssFeeds);
@@ -732,13 +769,44 @@ namespace Espresso.Persistence.Configuration
 
             #region Local NewsPortals
 
+            #region Dalmacija
+
             #region Dalmacija Danas
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.DalmacijaDanas,
                 CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
-                UrlSegmentIndex = (int?)null
             });
+            #endregion
+
+            #region Dalmacija News
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DalmacijaNews,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+            });
+            #endregion
+
+            #region Dalmatinski Portal
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DalmatinskiPortal,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+            });
+            #endregion
+
+            #endregion
+
+            #region Istra i Kvarner
+
+            #region Kultur Istra
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.KulturIstra,
+                CategoryParseStrategy = CategoryParseStrategy.FromRssFeed,
+            });
+            #endregion
+
             #endregion
 
             #endregion
@@ -1074,6 +1142,8 @@ namespace Espresso.Persistence.Configuration
 
             #region Local NewsPortals
 
+            #region Dalmacija
+
             #region Dalmacija Danas
             imageUrlParseConfigurationBuilder.HasData(new
             {
@@ -1084,6 +1154,48 @@ namespace Espresso.Persistence.Configuration
                 ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
                 JsonWebScrapePropertyNames = (string?)null
             });
+            #endregion
+
+            #region Dalmacija News
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DalmacijaNews,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
+            #region Dalmatinski Portal
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.DalmatinskiPortal,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
+            #endregion
+
+            #region Istra i Kvarner
+
+            #region Kultur Istra
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.KulturIstra,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "",
+                ShouldImageUrlBeWebScraped = false,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.SrcAttribute,
+                JsonWebScrapePropertyNames = (string?)null
+            });
+            #endregion
+
             #endregion
 
             #endregion

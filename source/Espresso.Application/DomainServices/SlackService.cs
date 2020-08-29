@@ -6,10 +6,13 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
+using Espresso.Common.Enums;
+using Espresso.Common.Utilities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Models;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 
 namespace Espresso.Application.DomainServices
 {
@@ -46,16 +49,19 @@ namespace Espresso.Application.DomainServices
         #region Fields
         private readonly IMemoryCache _memoryCache;
         private readonly HttpClient _httpClient;
+        private readonly ILogger<SlackService> _logger;
         #endregion
 
         #region Contructor
         public SlackService(
             IMemoryCache memoryCache,
-            IHttpClientFactory httpClientFactory
+            IHttpClientFactory httpClientFactory,
+            ILoggerFactory loggerFactory
         )
         {
             _memoryCache = memoryCache;
             _httpClient = httpClientFactory.CreateClient();
+            _logger = loggerFactory.CreateLogger<SlackService>();
         }
         #endregion
 
@@ -67,13 +73,14 @@ namespace Espresso.Application.DomainServices
             string version,
             string message,
             Exception exception,
+            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         )
         {
             var exceptionMessage = exception.Message;
             var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
 
-            var text = $":blue_book: Request Name: {eventName}\n" +
+            var text = $":blue_book: Event Name: {eventName}\n" +
                 $":label: Version: {version}\n" +
                 $":email: Message: {message}\n" +
                 $":exclamation: Exception Message: {exceptionMessage}\n" +
@@ -86,6 +93,7 @@ namespace Espresso.Application.DomainServices
                     text: text,
                     channel: WarningsChannel
                 ),
+                appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
             ).ConfigureAwait(false);
         }
@@ -95,6 +103,7 @@ namespace Espresso.Application.DomainServices
             string version,
             string message,
             Exception exception,
+            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         )
         {
@@ -117,18 +126,20 @@ namespace Espresso.Application.DomainServices
                     text: text,
                     channel: ErrorsChannel
                 ),
+                appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
             ).ConfigureAwait(continueOnCapturedContext: false);
         }
 
         public async Task LogRequestError(
             string requestName,
-            string webApiVersion,
-            string targetedWebApiVersion,
+            string webVersion,
+            string targetedApiVersion,
             string consumerVersion,
             DeviceType deviceType,
             string requestParameters,
             Exception exception,
+            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         )
         {
@@ -137,8 +148,8 @@ namespace Espresso.Application.DomainServices
             var exceptionStackTrace = exception.StackTrace;
             var innerExceptionStackTrace = exception.InnerException?.StackTrace ?? FormatConstants.EmptyValue;
             var text = $":blue_book: Request Name: {requestName}\n" +
-                $":label: WebApi Version: {webApiVersion}\n" +
-                $":label: Targeted WebApi Version: {targetedWebApiVersion}\n" +
+                $":label: App Version: {webVersion}\n" +
+                $":label: Targeted WebApi Version: {targetedApiVersion}\n" +
                 $":label: Consumer Version: {consumerVersion}\n" +
                 $":iphone: Device Type: {deviceType}\n" +
                 $":books: Request Parameters: {requestParameters}\n" +
@@ -154,6 +165,7 @@ namespace Espresso.Application.DomainServices
                     text: text,
                     channel: ErrorsChannel
                 ),
+                appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
             ).ConfigureAwait(continueOnCapturedContext: false);
         }
@@ -164,6 +176,7 @@ namespace Espresso.Application.DomainServices
             int todayIosCount,
             int totalAndroidCount,
             int totalIosCount,
+            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         )
         {
@@ -179,6 +192,7 @@ namespace Espresso.Application.DomainServices
                     text: text,
                     channel: AppDownloadsChannel
                 ),
+                appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
             ).ConfigureAwait(false);
 
@@ -192,6 +206,7 @@ namespace Espresso.Application.DomainServices
                         ":champagne::beer::beers::tropical_drink::clinking_glasses::wine_glass::cocktail::tumbler_glass:",
                         channel: AppDownloadsChannel
                     ),
+                    appEnvironment: appEnvironment,
                     cancellationToken: cancellationToken
                 ).ConfigureAwait(false);
             }
@@ -202,6 +217,7 @@ namespace Espresso.Application.DomainServices
             string rssFeedUrl,
             string articleUrl,
             string urlCategories,
+            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         )
         {
@@ -218,6 +234,7 @@ namespace Espresso.Application.DomainServices
                     text: text,
                     channel: MissingCategoriesErrorsChannel
                 ),
+                appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
             );
         }
@@ -226,6 +243,7 @@ namespace Espresso.Application.DomainServices
             string newsPortalName,
             string email,
             string? url,
+            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         )
         {
@@ -241,6 +259,7 @@ namespace Espresso.Application.DomainServices
                     text: text,
                     channel: NewNewsPortalRequestChannel
                 ),
+                appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
             );
         }
@@ -249,9 +268,15 @@ namespace Espresso.Application.DomainServices
         #region Private Methods
         private async Task Log(
             SlackWebHookDto data,
+            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         )
         {
+            if (!appEnvironment.Equals(AppEnvironment.Prod))
+            {
+                return;
+            }
+
             _ = await _memoryCache.GetOrCreateAsync(data.Text, async entry =>
               {
                   entry.AbsoluteExpirationRelativeToNow = ExceptionMessageCooldownInterval;
@@ -274,8 +299,36 @@ namespace Espresso.Application.DomainServices
                           cancellationToken: cancellationToken
                       ).ConfigureAwait(false);
                   }
-                  catch (Exception)
+                  catch (Exception exception)
                   {
+                      var eventName = Event.SlackServiceException.ToString();
+                      var exceptionMessage = exception.Message;
+                      var innerExceptionMessage = exception.InnerException?.Message ?? "";
+
+                      var formattedMessage =
+                        $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
+                        $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
+                        $"{AnsiUtility.EncodeErrorMessage("{2}")}\n\t" +
+                        $"{AnsiUtility.EncodeParameterName(nameof(innerExceptionMessage))}: " +
+                        $"{AnsiUtility.EncodeErrorMessage("{3}")}";
+
+
+                      var args = new object[]
+                      {
+                          eventName,
+                          exceptionMessage,
+                          innerExceptionMessage,
+                      };
+
+                      _logger.LogError(
+                          eventId: new EventId(
+                              id: (int)Event.SlackServiceException,
+                              name: eventName
+                          ),
+                          exception: exception,
+                          message: formattedMessage,
+                          args: args
+                      );
                   }
 
                   return "";

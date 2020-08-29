@@ -13,6 +13,8 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
 
         public string Name { get; private set; }
 
+        public string Subtitle { get; private set; }
+
         public IEnumerable<GetConfigurationNewsPortal> NewsPortals { get; private set; } = new List<GetConfigurationNewsPortal>();
         #endregion
 
@@ -20,6 +22,7 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
         private GetConfigurationRegion()
         {
             Name = null!;
+            Subtitle = null!;
         }
         #endregion
 
@@ -30,7 +33,8 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
             {
                 Id = region.Id,
                 Name = region.Name,
-                NewsPortals = region.NewsPortals.Select(GetConfigurationNewsPortal.GetProjection().Compile())
+                Subtitle = region.Subtitle,
+                NewsPortals = region.NewsPortals.Select(GetConfigurationNewsPortal.GetProjection().Compile()),
             };
         }
         #endregion

@@ -86,5 +86,8 @@
         DalmacijaDanas = 83,
         Nacional = 84,
         Express = 85,
+        DalmacijaNews = 86,
+        DalmatinskiPortal = 87,
+        KulturIstra = 88,
     }
 }
