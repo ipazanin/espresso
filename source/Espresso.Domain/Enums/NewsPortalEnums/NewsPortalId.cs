@@ -88,7 +88,37 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         DalmatinskiPortal = 41,
         [Display(Name = "Kultur Istra")]
         KulturIstra = 42,
-
-
+        [Display(Name = "iPazin")]
+        IPazin = 43,
+        [Display(Name = "NL")]
+        NoviList = 44,
+        [Display(Name = "Parentium")]
+        Parentium = 45,
+        [Display(Name = "Lika Klub")]
+        LikaKlub = 46,
+        [Display(Name = "Lika express")]
+        LikaExpress = 47,
+        [Display(Name = "Lika Online")]
+        LikaOnline = 48,
+        [Display(Name = "Lika plus")]
+        LikaPlus = 49,
+        [Display(Name = "Index.Hr - Zagreb")]
+        IndexHrZagreb = 50,
+        [Display(Name = "Zagreb Info")]
+        ZagrebInfo = 51,
+        [Display(Name = "Zagrebancija")]
+        Zagrebancija = 52,
+        [Display(Name = "Sjever.hr")]
+        SjeverHr = 53,
+        [Display(Name = "Sjever.hr")]
+        PrigorskiHr = 54,
+        [Display(Name = "ePodravina.hr")]
+        PodravinaHr = 55,
+        [Display(Name = "Baranja info")]
+        BaranjaInfo = 56,
+        [Display(Name = "Glas Slavonije")]
+        GlasSlavonije = 57,
+        [Display(Name = "Slavonski Hr")]
+        SlavonskiHr = 58,
     }
 }

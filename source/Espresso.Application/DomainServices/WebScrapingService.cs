@@ -41,7 +41,7 @@ namespace Espresso.Application.DomainServices
             CancellationToken cancellationToken
         )
         {
-            if (articleUrl is null)
+            if (articleUrl is null || string.IsNullOrEmpty(xPath))
             {
                 return null;
             }

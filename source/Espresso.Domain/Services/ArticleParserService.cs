@@ -118,6 +118,7 @@ namespace Espresso.Domain.Services
         #region ArticleId
         private string? GetArticleId(string? itemId, IEnumerable<Uri?>? itemLinks, RssFeed rssFeed)
         {
+            // TODO Refactor
             if (rssFeed.NewsPortalId == (int)NewsPortalId.DalmacijaNews)
             {
                 return itemLinks?.FirstOrDefault()?.ToString();
