@@ -48,7 +48,7 @@ namespace Espresso.Application.DomainServices
         )
         {
             var message =
-                $"{AnsiUtility.EncodeRequestName("{0}")}\n\t" +
+                $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
                 $"{AnsiUtility.EncodeParameterName(nameof(webApiVersion))}: " +
                 $"{AnsiUtility.EncodeVersion("{1}")}\n\t" +
                 $"{AnsiUtility.EncodeParameterName(nameof(targetedWebApiVersion))}: " +
@@ -99,7 +99,7 @@ namespace Espresso.Application.DomainServices
             var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
 
             var message =
-                $"{AnsiUtility.EncodeRequestName("{0}")}\n\t" +
+                $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
                 $"{AnsiUtility.EncodeParameterName(nameof(webApiVersion))}: " +
                 $"{AnsiUtility.EncodeVersion("{1}")}\n\t" +
                 $"{AnsiUtility.EncodeParameterName(nameof(targetedWebApiVersion))}: " +
@@ -138,12 +138,13 @@ namespace Espresso.Application.DomainServices
             {
                 AppEnvironment.Prod => _slackService.LogRequestError(
                     requestName: requestName,
-                    webApiVersion: webApiVersion,
-                    targetedWebApiVersion: targetedWebApiVersion,
+                    apiVersion: webApiVersion,
+                    targetedApiVersion: targetedWebApiVersion,
                     consumerVersion: consumerVersion,
                     deviceType: deviceType,
                     requestParameters: requestParameters,
                     exception: exception,
+                    appEnvironment: _commonConfiguration.AppEnvironment,
                     cancellationToken: cancellationToken
                 ),
                 AppEnvironment.Undefined => Task.CompletedTask,
@@ -166,7 +167,7 @@ namespace Espresso.Application.DomainServices
             var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
 
             var formattedMessage =
-                $"{AnsiUtility.EncodeRequestName("{0}")}\n\t" +
+                $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
                 $"{AnsiUtility.EncodeParameterName(nameof(message))}: " +
                 $"{AnsiUtility.EncodeRequestParameters("{1}")}\n\t" +
                 $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
@@ -200,6 +201,7 @@ namespace Espresso.Application.DomainServices
                         version: version,
                         message: message,
                         exception: exception,
+                        appEnvironment: _commonConfiguration.AppEnvironment,
                         cancellationToken: cancellationToken
                     );
             }
@@ -218,7 +220,7 @@ namespace Espresso.Application.DomainServices
             var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
 
             var formattedMessage =
-                $"{AnsiUtility.EncodeRequestName("{0}")}\n\t" +
+                $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
                 $"{AnsiUtility.EncodeParameterName(nameof(version))}: " +
                 $"{AnsiUtility.EncodeVersion("{1}")}\n\t" +
                 $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
@@ -251,6 +253,7 @@ namespace Espresso.Application.DomainServices
                     version: version,
                     message: message,
                     exception: exception,
+                    appEnvironment: _commonConfiguration.AppEnvironment,
                     cancellationToken: cancellationToken
                 ),
                 AppEnvironment.Undefined => Task.CompletedTask,
@@ -274,7 +277,7 @@ namespace Espresso.Application.DomainServices
         {
             var eventId = new EventId(id: requestId, name: requestName);
             var message =
-                $"{AnsiUtility.EncodeRequestName($"{{@{nameof(requestName)}}}")}\n\t" +
+                $"{AnsiUtility.EncodeEventName($"{{@{nameof(requestName)}}}")}\n\t" +
                 $"{AnsiUtility.EncodeParameterName(nameof(duration))}: " +
                 $"{AnsiUtility.EncodeDuration($"{{@{nameof(duration)}}}")}\n\t" +
                 $"{AnsiUtility.EncodeParameterName(nameof(categoriesCount))}: " +
@@ -323,7 +326,7 @@ namespace Espresso.Application.DomainServices
         {
             var eventId = new EventId(id: requestId, name: requestName);
             var message =
-                $"{AnsiUtility.EncodeRequestName($"{{@{nameof(requestName)}}}")}\n\t" +
+                $"{AnsiUtility.EncodeEventName($"{{@{nameof(requestName)}}}")}\n\t" +
                 $"{AnsiUtility.EncodeParameterName(nameof(duration))}: " +
                 $"{AnsiUtility.EncodeDuration($"{{@{nameof(duration)}}}")}\n\t" +
                 $"{AnsiUtility.EncodeParameterName(nameof(categoriesCount))}: " +
@@ -376,6 +379,7 @@ namespace Espresso.Application.DomainServices
                     todayIosCount: todayIosCount,
                     totalAndroidCount: totalAndroidCount,
                     totalIosCount: totalIosCount,
+                    appEnvironment: _commonConfiguration.AppEnvironment,
                     cancellationToken: cancellationToken
                 ),
                 AppEnvironment.Undefined => Task.CompletedTask,
@@ -405,6 +409,7 @@ namespace Espresso.Application.DomainServices
                         rssFeedUrl: rssFeedUrl,
                         articleUrl: articleUrl,
                         urlCategories: urlCategories,
+                        appEnvironment: _commonConfiguration.AppEnvironment,
                         cancellationToken: cancellationToken
                     ),
                     AppEnvironment.Undefined => Task.CompletedTask,
@@ -427,12 +432,14 @@ namespace Espresso.Application.DomainServices
                     newsPortalName: newsPortalName,
                     email: email,
                     url: url,
+                    appEnvironment: _commonConfiguration.AppEnvironment,
                     cancellationToken: cancellationToken
                 ),
                 AppEnvironment.Prod => _slackService.LogNewNewsPortalRequest(
                     newsPortalName: newsPortalName,
                     email: email,
                     url: url,
+                    appEnvironment: _commonConfiguration.AppEnvironment,
                     cancellationToken: cancellationToken
                 ),
                 AppEnvironment.Undefined => Task.CompletedTask,

@@ -4,12 +4,12 @@ using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using GraphQL.Types;
 using MediatR;
 
-namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
+namespace Espresso.WebApi.GraphQl.ApplicationMutations.ArticlesQueries
 {
     /// <summary>
     /// 
     /// </summary>
-    public class IncrementNumberOfClicksGraphQlMutation : ObjectGraphType, IGraphQlQuery
+    public class IncrementNumberOfClicksGraphQlMutation : ObjectGraphType, IGraphQlMutation
     {
         /// <summary>
         /// 
@@ -17,7 +17,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
         /// <param name="mediator"></param>
         public IncrementNumberOfClicksGraphQlMutation(IMediator mediator)
         {
-            Name = nameof(IncrementNumberOfClicksGraphQlMutation);
+            Name = "IncrementNumberOfClicks";
             FieldAsync<IdGraphType>(
                 name: nameof(IncrementNumberOfClicksGraphQlMutation),
                 arguments: new QueryArguments(

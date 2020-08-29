@@ -88,6 +88,14 @@ namespace Espresso.WebApi.Configuration
         /// <summary>
         /// 
         /// </summary>
+        /// <value></value>
+        public TimeSpan MaxAgeOfFeaturedArticle => TimeSpan.FromHours(
+            value: _configuration.GetValue<int>("AppConfiguration:MaxAgeOfFeaturedArticlesInHours")
+        );
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         public string AndroidApiKey => _configuration.GetValue<string>("AppConfiguration:ApiKeys:Android");
 

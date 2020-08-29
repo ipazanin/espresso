@@ -1,21 +1,21 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using GraphQL.Types;
 
-namespace Espresso.WebApi.GraphQl.ApplicationQueries
+namespace Espresso.WebApi.GraphQl.ApplicationMutations
 {
     /// <summary>
     /// 
     /// </summary>
-    public class RootGraphQlQuery : ObjectGraphType
+    public class RootGraphQlMutation : ObjectGraphType
     {
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="graphQlQueries"></param>
-        public RootGraphQlQuery(IEnumerable<IGraphQlQuery> graphQlQueries)
+        /// <param name="graphQlMutations"></param>
+        public RootGraphQlMutation(IEnumerable<IGraphQlMutation> graphQlMutations)
         {
-            Name = "RootQuery";
-            foreach (var marker in graphQlQueries)
+            Name = "RootMutation";
+            foreach (var marker in graphQlMutations)
             {
                 if (marker is ObjectGraphType<object> q)
                 {

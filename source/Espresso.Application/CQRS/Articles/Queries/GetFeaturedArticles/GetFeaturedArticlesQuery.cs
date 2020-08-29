@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Espresso.Application.Infrastructure;
@@ -17,6 +18,10 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
         public IEnumerable<int>? NewsPortalIds { get; }
 
         public IEnumerable<int>? CategoryIds { get; }
+
+        public TimeSpan MaxAgeOfFeaturedArticle { get; }
+
+        public TimeSpan MaxAgeOfTrendingArticle { get; }
         #endregion
 
         #region Constructors
@@ -28,7 +33,9 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
             string currentEspressoWebApiVersion,
             string targetedEspressoWebApiVersion,
             string consumerVersion,
-            DeviceType deviceType
+            DeviceType deviceType,
+            TimeSpan maxAgeOfFeaturedArticle,
+            TimeSpan maxAgeOfTrendingArticle
         ) : base(
             currentEspressoWebApiVersion,
             targetedEspressoWebApiVersion,
@@ -65,6 +72,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
                 ?.Where(categoryId => categoryId != default);
 
             CategoryIds = categoryIds == null || categoryIds.Any() ? categoryIds : null;
+            MaxAgeOfFeaturedArticle = maxAgeOfFeaturedArticle;
+            MaxAgeOfTrendingArticle = maxAgeOfTrendingArticle;
         }
         #endregion
 

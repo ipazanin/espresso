@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-
+using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 
 namespace Espresso.Domain.IServices
@@ -13,6 +13,7 @@ namespace Espresso.Domain.IServices
             string version,
             string message,
             Exception exception,
+            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         );
 
@@ -21,17 +22,19 @@ namespace Espresso.Domain.IServices
             string version,
             string message,
             Exception exception,
+            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         );
 
         public Task LogRequestError(
             string requestName,
-            string webApiVersion,
-            string targetedWebApiVersion,
+            string apiVersion,
+            string targetedApiVersion,
             string consumerVersion,
             DeviceType deviceType,
             string requestParameters,
             Exception exception,
+            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         );
 
@@ -41,6 +44,7 @@ namespace Espresso.Domain.IServices
             int todayIosCount,
             int totalAndroidCount,
             int totalIosCount,
+            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         );
 
@@ -49,6 +53,7 @@ namespace Espresso.Domain.IServices
             string rssFeedUrl,
             string articleUrl,
             string urlCategories,
+            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         );
 
@@ -56,6 +61,7 @@ namespace Espresso.Domain.IServices
             string newsPortalName,
             string email,
             string? url,
+            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         );
     }

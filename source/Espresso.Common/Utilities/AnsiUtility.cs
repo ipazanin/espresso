@@ -41,7 +41,7 @@
             return $"\u001b[{string.Join(";", parameters)}m{value}\u001b[0m";
         }
 
-        public static string EncodeRequestName(string value)
+        public static string EncodeEventName(string value)
         {
             return Encode(value, YellowColor, Bold, Underline);
         }

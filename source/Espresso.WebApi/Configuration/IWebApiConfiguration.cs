@@ -60,6 +60,12 @@ namespace Espresso.WebApi.Configuration
         /// 
         /// </summary>
         /// <value></value>
+        public TimeSpan MaxAgeOfFeaturedArticle { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
         public string AndroidApiKey { get; }
 
         /// <summary>

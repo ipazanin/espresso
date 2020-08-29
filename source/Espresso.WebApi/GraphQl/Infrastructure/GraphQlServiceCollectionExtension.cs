@@ -1,4 +1,6 @@
-﻿using Espresso.WebApi.GraphQl.ApplicationQueries;
+﻿using Espresso.WebApi.GraphQl.ApplicationMutations;
+using Espresso.WebApi.GraphQl.ApplicationMutations.ArticlesQueries;
+using Espresso.WebApi.GraphQl.ApplicationQueries;
 using Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries;
 using Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries;
 using Espresso.WebApi.GraphQl.ApplicationSchema;
@@ -29,6 +31,7 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
         {
             services.AddGraphQlInfrastructure();
             services.AddGraphQlQueries();
+            services.AddGraphQlMutations();
             services.AddGraphQlTypes();
 
             return services;
@@ -52,13 +55,20 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
             services.AddScoped<GetCategoryArticlesGraphQlQuery>();
             services.AddScoped<GetTrendingArticlesGraphQlQuery>();
             services.AddScoped<GetConfigurationGraphQlQuery>();
-            services.AddScoped<IncrementNumberOfClicksGraphQlMutation>();
 
             services.AddScoped<IGraphQlQuery, GetLatestArticlesGraphQlQuery>();
             services.AddScoped<IGraphQlQuery, GetCategoryArticlesGraphQlQuery>();
             services.AddScoped<IGraphQlQuery, GetTrendingArticlesGraphQlQuery>();
             services.AddScoped<IGraphQlQuery, GetConfigurationGraphQlQuery>();
-            services.AddScoped<IGraphQlQuery, IncrementNumberOfClicksGraphQlMutation>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddGraphQlMutations(this IServiceCollection services)
+        {
+            services.AddScoped<IncrementNumberOfClicksGraphQlMutation>();
+
+            services.AddScoped<IGraphQlMutation, IncrementNumberOfClicksGraphQlMutation>();
 
             return services;
         }

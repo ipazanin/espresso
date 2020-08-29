@@ -82,5 +82,13 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         Nacional = 38,
         [Display(Name = "Express")]
         Express = 39,
+        [Display(Name = "Dalmacija News")]
+        DalmacijaNews = 40,
+        [Display(Name = "Dalmatinski Portal")]
+        DalmatinskiPortal = 41,
+        [Display(Name = "Kultur Istra")]
+        KulturIstra = 42,
+
+
     }
 }

@@ -13,7 +13,10 @@ namespace Espresso.Persistence.Configuration
         public void Configure(EntityTypeBuilder<Region> builder)
         {
             builder.Property(region => region.Name)
-                .HasMaxLength(PropertyConstraintConstants.RegionNameHasMaxLength);
+                .HasMaxLength(Region.RegionNameHasMaxLength);
+
+            builder.Property(region => region.Subtitle)
+                .HasMaxLength(Region.RegionSubtitleHasMaxLength);
 
             builder.HasMany(region => region.NewsPortals)
                 .WithOne(newsPortal => newsPortal.Region!)
@@ -29,31 +32,38 @@ namespace Espresso.Persistence.Configuration
             {
                 new Region(
                     id: (int)RegionId.Global,
-                    name: RegionId.Global.GetDisplayName()
+                    name: RegionId.Global.GetDisplayName(),
+                    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
                 ),
                 new Region(
                     id: (int)RegionId.Dalmacija,
-                    name: RegionId.Dalmacija.GetDisplayName()
+                    name: RegionId.Dalmacija.GetDisplayName(),
+                    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
                 ),
                 new Region(
                     id: (int)RegionId.Istra,
-                    name: RegionId.Istra.GetDisplayName()
+                    name: RegionId.Istra.GetDisplayName(),
+                    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
                 ),
                 new Region(
                     id: (int)RegionId.Lika,
-                    name: RegionId.Lika.GetDisplayName()
+                    name: RegionId.Lika.GetDisplayName(),
+                    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
                 ),
                 new Region(
                     id: (int)RegionId.SjevernaHrvatska,
-                    name: RegionId.SjevernaHrvatska.GetDisplayName()
+                    name: RegionId.SjevernaHrvatska.GetDisplayName(),
+                    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
                 ),
                 new Region(
                     id: (int)RegionId.Slavonija,
-                    name: RegionId.Slavonija.GetDisplayName()
+                    name: RegionId.Slavonija.GetDisplayName(),
+                    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
                 ),
                 new Region(
                     id: (int)RegionId.Zagreb,
-                    name: RegionId.Zagreb.GetDisplayName()
+                    name: RegionId.Zagreb.GetDisplayName(),
+                    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
                 ),
             };
 

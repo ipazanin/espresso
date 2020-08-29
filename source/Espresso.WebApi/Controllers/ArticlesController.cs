@@ -361,6 +361,8 @@ namespace Espresso.WebApi.Controllers
                     skip: skip,
                     categoryIdsString: categoryIds,
                     newsPortalIdsString: newsPortalIds,
+                    maxAgeOfFeaturedArticle: WebApiConfiguration.MaxAgeOfFeaturedArticle,
+                    maxAgeOfTrendingArticle: WebApiConfiguration.MaxAgeOfTrendingArticle,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
@@ -538,7 +540,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ApiVersion("1.4")]
-        [HttpPost]
+        [HttpPatch]
         [Authorize(Roles = ApiKey.DevMobileAppRole)]
         [Route("api/articles/{articleId}/featured")]
         public async Task<IActionResult> ToggleFeaturedArticle(

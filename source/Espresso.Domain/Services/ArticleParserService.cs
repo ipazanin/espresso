@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.IServices;
 using Espresso.Domain.IValidators;
@@ -50,7 +51,8 @@ namespace Espresso.Domain.Services
 
             var articleId = GetArticleId(
                 itemId: itemId,
-                itemLinks: itemLinks
+                itemLinks: itemLinks,
+                rssFeed: rssFeed
             );
 
             var url = GetUrl(
@@ -114,8 +116,12 @@ namespace Espresso.Domain.Services
         #region Private Methods
 
         #region ArticleId
-        private string? GetArticleId(string? itemId, IEnumerable<Uri?>? itemLinks)
+        private string? GetArticleId(string? itemId, IEnumerable<Uri?>? itemLinks, RssFeed rssFeed)
         {
+            if (rssFeed.NewsPortalId == (int)NewsPortalId.DalmacijaNews)
+            {
+                return itemLinks?.FirstOrDefault()?.ToString();
+            }
             return itemId ?? itemLinks?.FirstOrDefault()?.ToString();
         }
         #endregion

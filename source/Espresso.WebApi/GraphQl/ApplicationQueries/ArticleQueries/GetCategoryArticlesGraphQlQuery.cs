@@ -20,7 +20,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
         /// <param name="configuration"></param>
         public GetCategoryArticlesGraphQlQuery(IMediator mediator, IWebApiConfiguration configuration)
         {
-            Name = nameof(GetCategoryArticlesGraphQlQuery);
+            Name = "CategoryArticles";
             FieldAsync<GetCategoryArticlesQueryResponseType>(
                 name: nameof(GetCategoryArticlesGraphQlQuery),
                 arguments: new QueryArguments(
