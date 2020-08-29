@@ -1,17 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Espresso.Persistence.Migrations
 {
-    public partial class IPazanin_CorrectedNacionalName : Migration
+    public partial class IPazanin_AddedIsFeaturedDefaultValue : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.UpdateData(
-                table: "NewsPortals",
-                keyColumn: "Id",
-                keyValue: 38,
-                column: "Name",
-                value: "Nacional");
+            migrationBuilder.AlterColumn<bool>(
+                name: "IsFeatured",
+                table: "Articles",
+                nullable: false,
+                defaultValue: false,
+                oldClrType: typeof(bool),
+                oldType: "bit");
 
             migrationBuilder.UpdateData(
                 table: "RssFeeds",
@@ -23,12 +24,13 @@ namespace Espresso.Persistence.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.UpdateData(
-                table: "NewsPortals",
-                keyColumn: "Id",
-                keyValue: 38,
-                column: "Name",
-                value: "Scena");
+            migrationBuilder.AlterColumn<bool>(
+                name: "IsFeatured",
+                table: "Articles",
+                type: "bit",
+                nullable: false,
+                oldClrType: typeof(bool),
+                oldDefaultValue: false);
 
             migrationBuilder.UpdateData(
                 table: "RssFeeds",

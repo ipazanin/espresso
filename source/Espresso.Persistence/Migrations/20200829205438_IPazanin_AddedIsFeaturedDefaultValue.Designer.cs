@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    [Migration("20200630100508_IPazanin_MovedurlSegmentIndexToRssFeedCategory")]
-    partial class IPazanin_MovedurlSegmentIndexToRssFeedCategory
+    [Migration("20200829205438_IPazanin_AddedIsFeaturedDefaultValue")]
+    partial class IPazanin_AddedIsFeaturedDefaultValue
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.5")
+                .HasAnnotation("ProductVersion", "3.1.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -66,6 +66,16 @@ namespace Espresso.Persistence.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsFeatured")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsHidden")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<int>("NewsPortalId")
                         .HasColumnType("int");
 
@@ -84,6 +94,7 @@ namespace Espresso.Persistence.Migrations
                         .HasMaxLength(2000);
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 
@@ -139,6 +150,9 @@ namespace Espresso.Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CategoryType")
+                        .HasColumnType("int");
+
                     b.Property<string>("Color")
                         .IsRequired()
                         .HasColumnType("nvarchar(20)")
@@ -153,6 +167,12 @@ namespace Espresso.Persistence.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
+                    b.Property<int?>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SortIndex")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
@@ -161,56 +181,90 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 1,
+                            CategoryType = 1,
                             Color = "#E84855",
-                            Name = "Vijesti"
+                            Name = "Vijesti",
+                            SortIndex = 2
                         },
                         new
                         {
                             Id = 2,
+                            CategoryType = 1,
                             Color = "#4CB944",
-                            Name = "Sport"
+                            Name = "Sport",
+                            SortIndex = 3
                         },
                         new
                         {
                             Id = 3,
+                            CategoryType = 1,
                             Color = "#F4B100",
-                            Name = "Show"
+                            Name = "Show",
+                            SortIndex = 4
                         },
                         new
                         {
                             Id = 4,
+                            CategoryType = 1,
                             Color = "#32936F",
-                            Name = "Lifestyle"
+                            Name = "Lifestyle",
+                            SortIndex = 5
                         },
                         new
                         {
                             Id = 5,
+                            CategoryType = 1,
                             Color = "#2E86AB",
-                            Name = "Tech"
+                            Name = "Tech",
+                            SortIndex = 6
                         },
                         new
                         {
                             Id = 6,
+                            CategoryType = 1,
                             Color = "#9055A2",
-                            Name = "Viral"
+                            Name = "Viral",
+                            SortIndex = 7
                         },
                         new
                         {
                             Id = 7,
+                            CategoryType = 1,
                             Color = "#3185FC",
-                            Name = "Biznis"
+                            Name = "Biznis",
+                            SortIndex = 8
                         },
                         new
                         {
                             Id = 8,
+                            CategoryType = 1,
                             Color = "#FC814A",
-                            Name = "Auto/Moto"
+                            Name = "Auto/Moto",
+                            SortIndex = 9
                         },
                         new
                         {
                             Id = 9,
+                            CategoryType = 1,
                             Color = "#AC80A0",
-                            Name = "Kultura"
+                            Name = "Kultura",
+                            SortIndex = 10
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CategoryType = 3,
+                            Color = "#AC80A0",
+                            Name = "Generalno",
+                            SortIndex = 1
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CategoryType = 2,
+                            Color = "#AC80A0",
+                            Name = "Lokalno",
+                            Position = 3
                         });
                 });
 
@@ -226,17 +280,33 @@ namespace Espresso.Persistence.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("IconUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
+
+                    b.Property<bool?>("IsNewOverride")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
+                    b.Property<int>("RegionId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("RegionId");
 
                     b.ToTable("NewsPortals");
 
@@ -245,211 +315,629 @@ namespace Espresso.Persistence.Migrations
                         {
                             Id = 1,
                             BaseUrl = "https://www.index.hr/",
+                            CategoryId = 11,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Index.png",
-                            Name = "Index.hr"
+                            Name = "Index.hr",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 2,
                             BaseUrl = "https://www.24sata.hr/",
+                            CategoryId = 11,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/DvadesetCetiriSata.png",
-                            Name = "24 sata"
+                            Name = "24 sata",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 3,
                             BaseUrl = "https://sportske.jutarnji.hr/",
+                            CategoryId = 2,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/SportskeNovosti.png",
-                            Name = "Sportske Novosti"
+                            Name = "Sportske Novosti",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 4,
                             BaseUrl = "https://sportske.jutarnji.hr/",
+                            CategoryId = 11,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/JutarnjiList.png",
-                            Name = "Jutarnji List"
+                            Name = "Jutarnji List",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 5,
                             BaseUrl = "https://net.hr/",
+                            CategoryId = 11,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/NetHr.png",
-                            Name = "Net.hr"
+                            Name = "Net.hr",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 6,
                             BaseUrl = "https://slobodnadalmacija.hr/",
+                            CategoryId = 11,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/SlobodnaDalmacija.png",
-                            Name = "Slobodna Dalmacija"
+                            Name = "Slobodna Dalmacija",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 7,
                             BaseUrl = "https://www.tportal.hr/",
+                            CategoryId = 11,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/TPortal.png",
-                            Name = "tportal"
+                            Name = "tportal",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 8,
                             BaseUrl = "https://www.vecernji.hr/",
+                            CategoryId = 11,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/VecernjiList.png",
-                            Name = "Večernji List"
+                            Name = "Večernji List",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 9,
                             BaseUrl = "https://www.telegram.hr/",
+                            CategoryId = 11,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Telegram.png",
-                            Name = "Telegram"
+                            Name = "Telegram",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 10,
                             BaseUrl = "https://dnevnik.hr/",
+                            CategoryId = 11,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Dnevnik.png",
-                            Name = "Dnevnik"
+                            Name = "Dnevnik",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 11,
                             BaseUrl = "https://gol.dnevnik.hr/",
+                            CategoryId = 2,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Gol.png",
-                            Name = "Gol"
+                            Name = "Gol",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 12,
                             BaseUrl = "https://sportnet.rtl.hr/",
+                            CategoryId = 11,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/RtlVijesti.png",
-                            Name = "RTL Vijesti"
+                            Name = "RTL Vijesti",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 15,
                             BaseUrl = "http://www.nogometplus.net/",
+                            CategoryId = 2,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/NogometPlus.png",
-                            Name = "Nogomet Plus"
+                            Name = "Nogomet Plus",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 16,
                             BaseUrl = "https://lider.media/",
+                            CategoryId = 7,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Lider.png",
-                            Name = "Lider"
+                            Name = "Lider",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 18,
                             BaseUrl = "https://www.bug.hr/",
+                            CategoryId = 5,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Bug.png",
-                            Name = "Bug"
+                            Name = "Bug",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 19,
                             BaseUrl = "https://www.vidi.hr/",
+                            CategoryId = 5,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/VidiHr.png",
-                            Name = "Vidi.hr"
+                            Name = "Vidi.hr",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 20,
                             BaseUrl = "https://zimo.dnevnik.hr/",
+                            CategoryId = 5,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Zimo.png",
-                            Name = "Zimo"
+                            Name = "Zimo",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 21,
                             BaseUrl = "https://www.netokracija.com/",
+                            CategoryId = 5,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Netokracija.png",
-                            Name = "Netokracija"
+                            Name = "Netokracija",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 22,
                             BaseUrl = "https://poslovnipuls.com/",
+                            CategoryId = 7,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/PoslovniPuls.png",
-                            Name = "Poslovni Puls"
+                            Name = "Poslovni Puls",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 23,
                             BaseUrl = "https://pcchip.hr/",
+                            CategoryId = 5,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/PcChip.png",
-                            Name = "PCchip"
+                            Name = "PCchip",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 25,
                             BaseUrl = "http://www.cosmopolitan.hr/",
+                            CategoryId = 4,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Cosmopolitan.png",
-                            Name = "Cosmopolitan"
+                            Name = "Cosmopolitan",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 26,
                             BaseUrl = "https://wall.hr/",
+                            CategoryId = 4,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/WallHr.png",
-                            Name = "Wall.hr"
+                            Name = "Wall.hr",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 27,
                             BaseUrl = "http://www.ljepotaizdravlje.hr/",
+                            CategoryId = 4,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/LjepotaIZdravlje.png",
-                            Name = "Ljepota i zdravlje"
+                            Name = "Ljepota i zdravlje",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 28,
                             BaseUrl = "https://www.autonet.hr/",
+                            CategoryId = 8,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Autonet.png",
-                            Name = "Autonet"
+                            Name = "Autonet",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 29,
                             BaseUrl = "https://hr.n1info.com/",
+                            CategoryId = 1,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/N1.png",
-                            Name = "N1"
+                            Name = "N1",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 30,
                             BaseUrl = "https://narod.hr/",
+                            CategoryId = 1,
+                            CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/NarodHr.png",
-                            Name = "Narod HR"
+                            Name = "Narod HR",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 31,
                             BaseUrl = "https://www.hrt.hr/",
+                            CategoryId = 1,
+                            CreatedAt = new DateTime(2020, 6, 25, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Hrt.png",
-                            Name = "HRT"
+                            Name = "HRT",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 32,
                             BaseUrl = "https://100posto.jutarnji.hr/",
+                            CategoryId = 1,
+                            CreatedAt = new DateTime(2020, 6, 28, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/StoPosto.png",
-                            Name = "100posto"
+                            Name = "100posto",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 33,
                             BaseUrl = "https://www.dnevno.hr/",
+                            CategoryId = 1,
+                            CreatedAt = new DateTime(2020, 6, 28, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Dnevno.png",
-                            Name = "Dnevno.Hr"
+                            Name = "Dnevno.Hr",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 35,
                             BaseUrl = "https://direktno.hr/",
+                            CategoryId = 1,
+                            CreatedAt = new DateTime(2020, 7, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/DirektnoHr.png",
-                            Name = "Direktno"
+                            Name = "Direktno",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 36,
+                            BaseUrl = "https://www.scena.hr/",
+                            CategoryId = 3,
+                            CreatedAt = new DateTime(2020, 7, 13, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/Scena.png",
+                            Name = "Scena",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 38,
+                            BaseUrl = "https://www.nacional.hr/",
+                            CategoryId = 1,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/Nacional.png",
+                            Name = "Nacional",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 39,
+                            BaseUrl = "https://express.24sata.hr/",
+                            CategoryId = 1,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/Express.png",
+                            Name = "Express",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 37,
+                            BaseUrl = "https://www.dalmacijadanas.hr/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/DalmacijaDanas.png",
+                            Name = "Dalmacija Danas",
+                            RegionId = 2
+                        },
+                        new
+                        {
+                            Id = 40,
+                            BaseUrl = "https://www.dalmacijanews.hr/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/DalmacijaDanas.png",
+                            Name = "Dalmacija News",
+                            RegionId = 2
+                        },
+                        new
+                        {
+                            Id = 41,
+                            BaseUrl = "https://dalmatinskiportal.hr/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/DalmatinskiPortal.png",
+                            Name = "Dalmatinski Portal",
+                            RegionId = 2
+                        },
+                        new
+                        {
+                            Id = 44,
+                            BaseUrl = "https://www.novilist.hr/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/NoviList.png",
+                            Name = "NL",
+                            RegionId = 3
+                        },
+                        new
+                        {
+                            Id = 45,
+                            BaseUrl = "https://www.parentium.com/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/Parentium.png",
+                            Name = "Parentium",
+                            RegionId = 3
+                        },
+                        new
+                        {
+                            Id = 59,
+                            BaseUrl = "https://ivijesti.hr/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/IVijesti.png",
+                            Name = "iVijesti",
+                            RegionId = 3
+                        },
+                        new
+                        {
+                            Id = 46,
+                            BaseUrl = "https://likaclub.eu/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/LikaKlub.png",
+                            Name = "Lika Klub",
+                            RegionId = 4
+                        },
+                        new
+                        {
+                            Id = 47,
+                            BaseUrl = "http://www.lika-express.hr/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/LikaExpress.png",
+                            Name = "Lika express",
+                            RegionId = 4
+                        },
+                        new
+                        {
+                            Id = 48,
+                            BaseUrl = "https://www.lika-online.com/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/LikaOnline.png",
+                            Name = "Lika Online",
+                            RegionId = 4
+                        },
+                        new
+                        {
+                            Id = 49,
+                            BaseUrl = "http://www.likaplus.hr/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/LikaPlus.png",
+                            Name = "Lika plus",
+                            RegionId = 4
+                        },
+                        new
+                        {
+                            Id = 50,
+                            BaseUrl = "https://www.index.hr/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/IndexHrZagreb.png",
+                            Name = "Index.Hr - Zagreb",
+                            RegionId = 5
+                        },
+                        new
+                        {
+                            Id = 51,
+                            BaseUrl = "https://www.zagreb.info/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/ZagrebInfo.png",
+                            Name = "Zagreb Info",
+                            RegionId = 5
+                        },
+                        new
+                        {
+                            Id = 52,
+                            BaseUrl = "https://www.zagrebancija.com/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/Zagrebancija.png",
+                            Name = "Zagrebancija",
+                            RegionId = 5
+                        },
+                        new
+                        {
+                            Id = 53,
+                            BaseUrl = "https://sjever.hr/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/SjeverHr.png",
+                            Name = "Sjever.hr",
+                            RegionId = 6
+                        },
+                        new
+                        {
+                            Id = 54,
+                            BaseUrl = "https://prigorski.hr/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/PrigorskiHr.png",
+                            Name = "Sjever.hr",
+                            RegionId = 6
+                        },
+                        new
+                        {
+                            Id = 55,
+                            BaseUrl = "https://epodravina.hr/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/PodravinaHr.png",
+                            Name = "ePodravina.hr",
+                            RegionId = 6
+                        },
+                        new
+                        {
+                            Id = 56,
+                            BaseUrl = "https://www.baranjainfo.hr/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/BaranjaInfo.png",
+                            Name = "Baranja info",
+                            RegionId = 7
+                        },
+                        new
+                        {
+                            Id = 57,
+                            BaseUrl = "https://www.glas-slavonije.hr/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/GlasSlavonije.png",
+                            Name = "Glas Slavonije",
+                            RegionId = 7
+                        },
+                        new
+                        {
+                            Id = 58,
+                            BaseUrl = "https://slavonski.hr/",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/SlavonskiHr.png",
+                            Name = "Slavonski Hr",
+                            RegionId = 7
+                        });
+                });
+
+            modelBuilder.Entity("Espresso.Domain.Entities.PushNotification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ArticleUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(5000);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InternalName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<bool>("IsSoundEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("Topic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PushNotifications");
+                });
+
+            modelBuilder.Entity("Espresso.Domain.Entities.Region", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Subtitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Regions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Global",
+                            Subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Dalmacija",
+                            Subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Istra & Kvarner",
+                            Subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Lika",
+                            Subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Sjeverna Hrvatska",
+                            Subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Slavonija & Baranja",
+                            Subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Zagreb",
+                            Subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
                         });
                 });
 
@@ -983,6 +1471,160 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 1,
                             NewsPortalId = 35,
                             Url = "https://direktno.hr/rss/publish/latest/direktnotv-100/"
+                        },
+                        new
+                        {
+                            Id = 82,
+                            CategoryId = 1,
+                            NewsPortalId = 36,
+                            Url = "https://www.scena.hr/feed/"
+                        },
+                        new
+                        {
+                            Id = 84,
+                            CategoryId = 1,
+                            NewsPortalId = 38,
+                            Url = "https://www.nacional.hr/feed/"
+                        },
+                        new
+                        {
+                            Id = 85,
+                            CategoryId = 1,
+                            NewsPortalId = 39,
+                            Url = "https://express.24sata.hr/feeds/placeholder-head/rss_feed"
+                        },
+                        new
+                        {
+                            Id = 83,
+                            CategoryId = 12,
+                            NewsPortalId = 37,
+                            Url = "https://www.dalmacijadanas.hr/feed/"
+                        },
+                        new
+                        {
+                            Id = 86,
+                            CategoryId = 12,
+                            NewsPortalId = 40,
+                            Url = "https://www.dalmacijanews.hr/rss"
+                        },
+                        new
+                        {
+                            Id = 87,
+                            CategoryId = 12,
+                            NewsPortalId = 41,
+                            Url = "https://dalmatinskiportal.hr/sadrzaj/rss/vijesti.xml"
+                        },
+                        new
+                        {
+                            Id = 105,
+                            CategoryId = 12,
+                            NewsPortalId = 59,
+                            Url = "https://ivijesti.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 90,
+                            CategoryId = 12,
+                            NewsPortalId = 44,
+                            Url = "https://www.novilist.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 91,
+                            CategoryId = 12,
+                            NewsPortalId = 45,
+                            Url = "https://www.parentium.com/rssfeed.asp"
+                        },
+                        new
+                        {
+                            Id = 92,
+                            CategoryId = 12,
+                            NewsPortalId = 46,
+                            Url = "https://likaclub.eu/feed"
+                        },
+                        new
+                        {
+                            Id = 93,
+                            CategoryId = 12,
+                            NewsPortalId = 47,
+                            Url = "http://www.lika-express.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 94,
+                            CategoryId = 12,
+                            NewsPortalId = 48,
+                            Url = "https://www.lika-online.com/feed"
+                        },
+                        new
+                        {
+                            Id = 95,
+                            CategoryId = 12,
+                            NewsPortalId = 49,
+                            Url = "http://www.likaplus.hr/rss"
+                        },
+                        new
+                        {
+                            Id = 96,
+                            CategoryId = 12,
+                            NewsPortalId = 50,
+                            Url = "https://www.index.hr/rss/vijesti-zagreb"
+                        },
+                        new
+                        {
+                            Id = 97,
+                            CategoryId = 12,
+                            NewsPortalId = 51,
+                            Url = "https://www.zagreb.info/feed"
+                        },
+                        new
+                        {
+                            Id = 98,
+                            CategoryId = 12,
+                            NewsPortalId = 52,
+                            Url = "https://www.zagrebancija.com/feed"
+                        },
+                        new
+                        {
+                            Id = 99,
+                            CategoryId = 12,
+                            NewsPortalId = 53,
+                            Url = "https://sjever.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 100,
+                            CategoryId = 12,
+                            NewsPortalId = 54,
+                            Url = "https://prigorski.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 101,
+                            CategoryId = 12,
+                            NewsPortalId = 55,
+                            Url = "https://epodravina.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 102,
+                            CategoryId = 12,
+                            NewsPortalId = 56,
+                            Url = "https://www.baranjainfo.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 103,
+                            CategoryId = 12,
+                            NewsPortalId = 57,
+                            Url = "https://www.glas-slavonije.hr/rss"
+                        },
+                        new
+                        {
+                            Id = 104,
+                            CategoryId = 12,
+                            NewsPortalId = 58,
+                            Url = "https://slavonski.hr/feed"
                         });
                 });
 
@@ -1382,7 +2024,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 1,
                             RssFeedId = 14,
                             UrlRegex = "crna-kronika",
-                            UrlSegmentIndex = 1
+                            UrlSegmentIndex = 2
                         },
                         new
                         {
@@ -1390,7 +2032,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 1,
                             RssFeedId = 14,
                             UrlRegex = "svijet",
-                            UrlSegmentIndex = 1
+                            UrlSegmentIndex = 2
                         },
                         new
                         {
@@ -1567,6 +2209,86 @@ namespace Espresso.Persistence.Migrations
                             RssFeedId = 66,
                             UrlRegex = "svijet",
                             UrlSegmentIndex = 1
+                        },
+                        new
+                        {
+                            Id = 71,
+                            CategoryId = 2,
+                            RssFeedId = 39,
+                            UrlRegex = "na-prvu",
+                            UrlSegmentIndex = 1
+                        },
+                        new
+                        {
+                            Id = 72,
+                            CategoryId = 4,
+                            RssFeedId = 82,
+                            UrlRegex = "lifestyle",
+                            UrlSegmentIndex = 1
+                        },
+                        new
+                        {
+                            Id = 73,
+                            CategoryId = 3,
+                            RssFeedId = 82,
+                            UrlRegex = "vijesti",
+                            UrlSegmentIndex = 1
+                        },
+                        new
+                        {
+                            Id = 74,
+                            CategoryId = 9,
+                            RssFeedId = 82,
+                            UrlRegex = "kultura",
+                            UrlSegmentIndex = 1
+                        },
+                        new
+                        {
+                            Id = 75,
+                            CategoryId = 3,
+                            RssFeedId = 82,
+                            UrlRegex = "televizija",
+                            UrlSegmentIndex = 1
+                        },
+                        new
+                        {
+                            Id = 76,
+                            CategoryId = 4,
+                            RssFeedId = 82,
+                            UrlRegex = "dogadjanja",
+                            UrlSegmentIndex = 1
+                        },
+                        new
+                        {
+                            Id = 77,
+                            CategoryId = 1,
+                            RssFeedId = 85,
+                            UrlRegex = "top-news",
+                            UrlSegmentIndex = 1
+                        },
+                        new
+                        {
+                            Id = 78,
+                            CategoryId = 1,
+                            RssFeedId = 85,
+                            UrlRegex = "life",
+                            UrlSegmentIndex = 1
+                        },
+                        new
+                        {
+                            Id = 79,
+                            CategoryId = 7,
+                            RssFeedId = 85,
+                            UrlRegex = "ekonomix",
+                            UrlSegmentIndex = 1
+                        },
+                        new
+                        {
+                            Id = 80,
+                            CategoryId = 5,
+                            RssFeedId = 85,
+                            UrlRegex = "tehno",
+                            UrlSegmentIndex = 1
                         });
                 });
 
@@ -1596,6 +2318,21 @@ namespace Espresso.Persistence.Migrations
                     b.HasOne("Espresso.Domain.Entities.Category", "Category")
                         .WithMany("ArticleCategories")
                         .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Espresso.Domain.Entities.NewsPortal", b =>
+                {
+                    b.HasOne("Espresso.Domain.Entities.Category", "Category")
+                        .WithMany("NewsPortals")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Espresso.Domain.Entities.Region", "Region")
+                        .WithMany("NewsPortals")
+                        .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -2110,6 +2847,116 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 79,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 82,
+                                    CategoryParseStrategy = 2
+                                },
+                                new
+                                {
+                                    RssFeedId = 84,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 85,
+                                    CategoryParseStrategy = 2
+                                },
+                                new
+                                {
+                                    RssFeedId = 83,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 86,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 87,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 105,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 90,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 91,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 92,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 93,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 94,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 95,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 96,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 97,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 98,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 99,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 100,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 101,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 102,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 103,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 104,
                                     CategoryParseStrategy = 1
                                 });
                         });
@@ -2724,6 +3571,182 @@ namespace Espresso.Persistence.Migrations
                                     ImageUrlWebScrapeType = 1,
                                     ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
                                     ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 82,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'mycontent')]//img",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 84,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'single-post-media')]//img",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 85,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 83,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 86,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 87,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 105,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 90,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 91,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 92,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 93,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 94,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 95,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 96,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 97,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 98,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 99,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 100,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 101,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 102,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 103,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 104,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
                                 });
                         });
 
@@ -2847,6 +3870,36 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 71,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 5
+                                },
+                                new
+                                {
+                                    RssFeedId = 85,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 10
+                                },
+                                new
+                                {
+                                    RssFeedId = 70,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 5
+                                },
+                                new
+                                {
+                                    RssFeedId = 69,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 5
+                                },
+                                new
+                                {
+                                    RssFeedId = 68,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 5
+                                },
+                                new
+                                {
+                                    RssFeedId = 67,
                                     CurrentSkip = 0,
                                     NumberOfSkips = 5
                                 });
