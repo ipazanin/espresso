@@ -27,7 +27,7 @@ namespace Espresso.Persistence.Configuration
             builder.Property(article => article.IsHidden)
                 .HasDefaultValue(Article.IsHiddenDefaultValue);
 
-            builder.Property(article => article.IsHidden)
+            builder.Property(article => article.IsFeatured)
                 .HasDefaultValue(Article.IsFeaturedDefaultValue);
 
             builder.Ignore(article => article.CreateArticleCategories);
