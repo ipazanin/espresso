@@ -16,7 +16,6 @@ using Espresso.Common.Enums;
 
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.NewsPortalEnums;
-using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 using Espresso.Domain.Infrastructure;
 using Espresso.Domain.ValueObjects.RssFeedValueObjects;
