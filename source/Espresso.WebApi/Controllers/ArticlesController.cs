@@ -10,6 +10,7 @@ using Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles;
 using Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles_1_3;
 using Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles;
 using Espresso.Application.CQRS.Articles.Queries.GetLatestArticles;
+using Espresso.Application.CQRS.Articles.Queries.GetLatestArticles_1_3;
 using Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Authentication;
@@ -137,12 +138,11 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var response = await Mediator.Send(
-                request: new GetLatestArticlesQuery(
+                request: new GetLatestArticlesQuery_1_3(
                     take: take,
                     skip: skip,
                     newsPortalIdsString: newsPortalIds,
                     categoryIdsString: categoryIds,
-                    newNewsPortalsPosition: WebApiConfiguration.NewNewsPortalsPosition,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     titleSearchQuery: null,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,

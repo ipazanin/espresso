@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using Espresso.Domain.Enums.RegionEnums;
 using Espresso.Domain.Infrastructure;
 
 namespace Espresso.Domain.Entities
@@ -26,6 +29,18 @@ namespace Espresso.Domain.Entities
             Id = id;
             Name = name;
             Subtitle = subtitle;
+        }
+        #endregion
+
+        #region Methods
+        public static Expression<Func<Region, object>> GetOrderByRegionNameExpression()
+        {
+            return region => region.Name;
+        }
+
+        public static Expression<Func<Region, bool>> GetAllRegionsExpectGlobalPredicate()
+        {
+            return region => !region.Id.Equals((int)RegionId.Global);
         }
         #endregion
     }

@@ -109,15 +109,11 @@ namespace Espresso.Application.DomainServices
         {
             var exceptionMessage = exception.Message;
             var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
-            var exceptionStackTrace = exception.StackTrace ?? "";
-            var innerExceptionStackTrace = exception.InnerException?.StackTrace ?? FormatConstants.EmptyValue;
             var text = $":blue_book: Event Name: {eventName}\n" +
                 $":label: Version: {version}\n" +
                 $":email: Message: {message}\n" +
                 $":exclamation: Exception Message: {exceptionMessage}\n" +
-                $":chart: Stack Trace: {exceptionStackTrace}\n" +
-                $":exclamation: Inner Exception Message: {innerExceptionMessage}\n" +
-                $":chart: Inner Stack Trace: {innerExceptionStackTrace}\n";
+                $":exclamation: Inner Exception Message: {innerExceptionMessage}\n";
 
             await Log(
                 data: new SlackWebHookDto(
@@ -145,8 +141,6 @@ namespace Espresso.Application.DomainServices
         {
             var exceptionMessage = exception.Message;
             var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
-            var exceptionStackTrace = exception.StackTrace;
-            var innerExceptionStackTrace = exception.InnerException?.StackTrace ?? FormatConstants.EmptyValue;
             var text = $":blue_book: Request Name: {requestName}\n" +
                 $":label: App Version: {webVersion}\n" +
                 $":label: Targeted WebApi Version: {targetedApiVersion}\n" +
@@ -154,9 +148,7 @@ namespace Espresso.Application.DomainServices
                 $":iphone: Device Type: {deviceType}\n" +
                 $":books: Request Parameters: {requestParameters}\n" +
                 $":exclamation: Exception Message: {exceptionMessage}\n" +
-                $":chart: Stack Trace: {exceptionStackTrace}\n" +
-                $":exclamation: Inner Exception Message: {innerExceptionMessage}\n" +
-                $":chart: Stack Trace: {innerExceptionStackTrace}\n";
+                $":exclamation: Inner Exception Message: {innerExceptionMessage}\n";
 
             await Log(
                 data: new SlackWebHookDto(

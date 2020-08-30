@@ -23,6 +23,7 @@
     "compose-development:recompose": "sudo docker-compose -f ../../../compose/docker-compose-development.yml down && sudo docker-compose -f ../../../compose/docker-compose-development.yml up --build",
     "compose-development:down": "sudo docker-compose -f ../../../compose/docker-compose-development.yml down",
     "compose-local:up": "docker-compose -f ../../../compose/docker-compose-local.yml up --build",
+    "compose-local:up:no-build": "docker-compose -f ../../../compose/docker-compose-local.yml up",
     "compose-local:recompose": "docker-compose -f ../../../compose/docker-compose-local.yml down && docker-compose -f ../../../compose/docker-compose-local.yml up --build",
     "compose-local:down": "docker-compose -f ../../../compose/docker-compose-local.yml down",
     "docker-build:latest": "docker build --force-rm --no-cache -f ../../../source/Espresso.WebApi/Dockerfile -t ipazanin/espresso-webapi:latest --build-arg REACT_APP_ENVIRONMENT=\"production\" ../../../source && docker push ipazanin/espresso-webapi:latest && docker build --force-rm --no-cache -f ../../../source/Espresso.ParserDeleter/Dockerfile -t ipazanin/espresso-parserdeleter:latest ../../../source && docker push ipazanin/espresso-parserdeleter:latest",

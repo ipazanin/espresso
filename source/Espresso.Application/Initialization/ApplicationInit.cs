@@ -69,11 +69,12 @@ namespace Espresso.Application.Initialization
         #region Public Methods
         public async Task InitWebApi()
         {
+            var stopwatch = Stopwatch.StartNew();
+
             InitializeFireBase();
 
             await _context.Database.MigrateAsync();
 
-            var stopwatch = Stopwatch.StartNew();
 
             #region Regions
             var regions = await _context
