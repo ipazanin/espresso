@@ -32,37 +32,37 @@ namespace Espresso.Persistence.Configuration
                 new Region(
                     id: (int)RegionId.Global,
                     name: RegionId.Global.GetDisplayName(),
-                    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                    subtitle: "Global"
                 ),
                 new Region(
                     id: (int)RegionId.Dalmacija,
                     name: RegionId.Dalmacija.GetDisplayName(),
-                    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                    subtitle: "Split, Zadar, Dubrovnik, Šibenik, Kaštela, Imotski..."
                 ),
                 new Region(
                     id: (int)RegionId.Istra,
                     name: RegionId.Istra.GetDisplayName(),
-                    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                    subtitle: "Rijeka, Pula, Opatija, Pazin, Umag, Poreč, Rovinj..."
                 ),
                 new Region(
                     id: (int)RegionId.Lika,
                     name: RegionId.Lika.GetDisplayName(),
-                    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                    subtitle: "Lokalne vijesti iz Ličko-Senjske županije"
                 ),
                 new Region(
                     id: (int)RegionId.SjevernaHrvatska,
                     name: RegionId.SjevernaHrvatska.GetDisplayName(),
-                    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                    subtitle: "Međimurje, Podravina, Sisak, Zagorje..."
                 ),
                 new Region(
                     id: (int)RegionId.Slavonija,
                     name: RegionId.Slavonija.GetDisplayName(),
-                    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                    subtitle: "Osijek, Vinkovci, Slavonski Brod, Vukovar, Požega..."
                 ),
                 new Region(
                     id: (int)RegionId.Zagreb,
                     name: RegionId.Zagreb.GetDisplayName(),
-                    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                    subtitle: "Lokalne vijesti iz grada Zagreba i okolice"
                 ),
             };
 

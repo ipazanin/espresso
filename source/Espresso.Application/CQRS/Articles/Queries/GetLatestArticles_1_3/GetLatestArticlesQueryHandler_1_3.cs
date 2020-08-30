@@ -4,19 +4,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Enums.CategoryEnums;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
+namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles_1_3
 {
-    public class GetArticlesQueryHandler : IRequestHandler<GetLatestArticlesQuery, GetLatestArticlesQueryResponse>
+    public class GetLatestArticlesQueryHandler_1_3 : IRequestHandler<GetLatestArticlesQuery_1_3, GetLatestArticlesQueryResponse_1_3>
     {
         #region Fields
         private readonly IMemoryCache _memoryCache;
         #endregion
 
         #region Constructors
-        public GetArticlesQueryHandler(
+        public GetLatestArticlesQueryHandler_1_3(
             IMemoryCache memoryCache
         )
         {
@@ -25,8 +26,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
         #endregion
 
         #region Methods
-        public Task<GetLatestArticlesQueryResponse> Handle(
-            GetLatestArticlesQuery request,
+        public Task<GetLatestArticlesQueryResponse_1_3> Handle(
+            GetLatestArticlesQuery_1_3 request,
             CancellationToken cancellationToken
         )
         {
@@ -43,28 +44,16 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
                         titleSearchQuery: request.TitleSearchQuery
                     ).Compile()
                 )
+                .Where(
+                    article => !article.ArticleCategories
+                        .Any(articleCategory => articleCategory.CategoryId.Equals((int)CategoryId.Local))
+                )
                 .Skip(request.Skip)
                 .Take(request.Take)
-                .Select(GetLatestArticlesArticle.GetProjection().Compile());
+                .Select(GetLatestArticlesArticle_1_3.GetProjection().Compile());
 
-            var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
-                key: MemoryCacheConstants.NewsPortalKey
-            );
-
-            var newsPortalDtos = newsPortals
-                .Where(
-                    predicate: NewsPortal.GetLatestSugestedNewsPortalsPredicate(
-                        newsPortalIds: request.NewsPortalIds,
-                        categoryIds: request.CategoryIds
-                    ).Compile()
-                )
-                .OrderBy(keySelector: NewsPortal.GetOrderByExpression().Compile())
-                .Select(selector: GetLatestArticlesNewsPortal.GetProjection().Compile());
-
-            var response = new GetLatestArticlesQueryResponse(
-                articles: articleDtos,
-                newNewsPortals: newsPortalDtos,
-                newNewsPortalsPosition: request.NewNewsPortalsPosition
+            var response = new GetLatestArticlesQueryResponse_1_3(
+                articles: articleDtos
             );
 
             return Task.FromResult(result: response);

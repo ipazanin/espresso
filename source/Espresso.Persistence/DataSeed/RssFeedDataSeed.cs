@@ -1148,7 +1148,15 @@ namespace Espresso.Persistence.DataSeed
             #endregion
 
             #region Večernji List
-            imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.VecernjiList, ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary, ImgElementXPath = "//script[contains(@type, 'application/ld+json')]", ShouldImageUrlBeWebScraped = true, ImageUrlWebScrapeType = ImageUrlWebScrapeType.JsonObjectInScriptElement, JsonWebScrapePropertyNames = "image,url" });
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.VecernjiList,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary,
+                ImgElementXPath = "//script[contains(@type, 'application/ld+json')]",
+                ShouldImageUrlBeWebScraped = true,
+                ImageUrlWebScrapeType = ImageUrlWebScrapeType.JsonObjectInScriptElement,
+                JsonWebScrapePropertyNames = "image,url"
+            });
             #endregion
 
             #region  Telegram

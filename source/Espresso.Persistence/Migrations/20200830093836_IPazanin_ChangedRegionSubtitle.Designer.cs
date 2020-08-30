@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200830093836_IPazanin_ChangedRegionSubtitle")]
+    partial class IPazanin_ChangedRegionSubtitle
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -917,7 +919,7 @@ namespace Espresso.Persistence.Migrations
                         {
                             Id = 4,
                             Name = "Lika",
-                            Subtitle = "Lokalne vijesti iz Ličko-Senjske županije"
+                            Subtitle = "Gospić, Udbina, Otočac, Senj..."
                         },
                         new
                         {
@@ -935,7 +937,7 @@ namespace Espresso.Persistence.Migrations
                         {
                             Id = 5,
                             Name = "Zagreb",
-                            Subtitle = "Lokalne vijesti iz grada Zagreba i okolice"
+                            Subtitle = "Grad Zagreb"
                         });
                 });
 

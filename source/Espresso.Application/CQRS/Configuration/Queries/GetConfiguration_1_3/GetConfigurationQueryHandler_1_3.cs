@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Enums.CategoryEnums;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -32,10 +33,12 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration_1_3
 
             var newsPortalDtos = newsPortals
                 .OrderBy(keySelector: newsPortal => newsPortal.Name)
+                .Where(predicate: newsPortal => !newsPortal.CategoryId.Equals((int)CategoryId.Local))
                 .Select(selector: GetConfigurationNewsPortal_1_3.GetProjection().Compile());
 
             var categoryDtos = categories
                 .Where(predicate: Category.GetAllCategoriesExceptGeneralExpression().Compile())
+                .Where(predicate: category => !category.Id.Equals((int)CategoryId.Local))
                 .Select(selector: GetConfigurationCategory_1_3.GetProjection().Compile());
 
             var response = new GetConfigurationQueryResponse_1_3(

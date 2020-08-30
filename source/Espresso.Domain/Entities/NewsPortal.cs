@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Espresso.Common.Constants;
 using Espresso.Domain.Infrastructure;
+using Espresso.Domain.Enums.CategoryEnums;
 
 namespace Espresso.Domain.Entities
 {
@@ -69,16 +70,32 @@ namespace Espresso.Domain.Entities
         #endregion
 
         #region Methods        
-        public static Expression<Func<NewsPortal, bool>> GetSugestedNewsPortalsPredicate(
+        public static Expression<Func<NewsPortal, bool>> GetCategorySugestedNewsPortalsPredicate(
             IEnumerable<int>? newsPortalIds,
-            IEnumerable<int>? categoryIds,
+            int categoryId,
             int? regionId
         )
         {
             return newsPortal =>
                 newsPortalIds != null && !newsPortalIds.Contains(newsPortal.Id) &&
-                (categoryIds == null || categoryIds.Contains(newsPortal.CategoryId)) &&
+                categoryId.Equals(newsPortal.CategoryId) &&
                 (regionId == null || newsPortal.RegionId == regionId) &&
+                (
+                    newsPortal.IsNewOverride != null ?
+                    newsPortal.IsNewOverride.Value :
+                    newsPortal.CreatedAt > (DateTime.UtcNow - DateTimeConstants.MaxAgeOfNewNewsPortal)
+                );
+        }
+
+        public static Expression<Func<NewsPortal, bool>> GetLatestSugestedNewsPortalsPredicate(
+            IEnumerable<int>? newsPortalIds,
+            IEnumerable<int>? categoryIds
+        )
+        {
+            return newsPortal =>
+                newsPortalIds != null && !newsPortalIds.Contains(newsPortal.Id) &&
+                (categoryIds == null || categoryIds.Contains(newsPortal.CategoryId)) &&
+                (!newsPortal.CategoryId.Equals((int)Enums.CategoryEnums.CategoryId.Local)) &&
                 (
                     newsPortal.IsNewOverride != null ?
                     newsPortal.IsNewOverride.Value :

@@ -46,6 +46,8 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
                 .Where(grouping => grouping.NewsPortals.Count() != 0);
 
             var regionGroupedNewsPortals = regions
+                .OrderBy(keySelector: Region.GetOrderByRegionNameExpression().Compile())
+                .Where(predicate: Region.GetAllRegionsExpectGlobalPredicate().Compile())
                 .Select(selector: GetConfigurationRegion.GetProjection().Compile());
 
             var response = new GetConfigurationQueryResponse(
