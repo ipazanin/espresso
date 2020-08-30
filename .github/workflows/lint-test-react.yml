@@ -23,6 +23,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - name: install
+        working-directory: ./source/Espresso.WebApi/ClientApp
+        run: npm install
       - name: lint
         working-directory: ./source/Espresso.WebApi/ClientApp
         run: npm run lint-frontend
