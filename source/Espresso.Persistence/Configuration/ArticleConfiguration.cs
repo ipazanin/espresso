@@ -30,12 +30,10 @@ namespace Espresso.Persistence.Configuration
             builder.Property(article => article.IsFeatured)
                 .HasDefaultValue(Article.IsFeaturedDefaultValue);
 
+            // TODO: get rid of these properties
             builder.Ignore(article => article.CreateArticleCategories);
             builder.Ignore(article => article.DeleteArticleCategories);
             #endregion
-
-            builder.HasIndex(article => article.PublishDateTime);
-            builder.HasIndex(article => article.TrendingScore);
 
             builder.HasOne(article => article.NewsPortal)
                 .WithMany(newsPortal => newsPortal!.Articles)
