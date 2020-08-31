@@ -12,90 +12,31 @@ namespace Espresso.WebApi.Configuration
         /// <summary>
         /// 
         /// </summary>
-        public ApiVersion EspressoWebApiVersion_1_2 { get; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public ApiVersion EspressoWebApiVersion_1_3 { get; }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ApiVersion EspressoWebApiCurrentVersion { get; }
+        /// <value></value>
+        public AppVersionConfiguration AppVersionConfiguration { get; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <value></value>
-        public string SpaProxyServerUrl { get; }
+        public AppConfiguration AppConfiguration { get; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <value></value>
-        public bool UseSpaProxyServer { get; }
+        public DatabaseConfiguration DatabaseConfiguration { get; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <value></value>
-        public bool EnableCors { get; }
+        public ApiKeysConfiguration ApiKeysConfiguration { get; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <value></value>
-        public int NewNewsPortalsPosition { get; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        public TimeSpan MaxAgeOfTrendingArticle { get; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        public TimeSpan MaxAgeOfFeaturedArticle { get; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        public string AndroidApiKey { get; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        public string IosApiKey { get; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        public string WebApiKey { get; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        public string ParserApiKey { get; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        public string DevIosApiKey { get; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        public string DevAndroidApiKey { get; }
+        public SpaConfiguration SpaConfiguration { get; }
     }
 }

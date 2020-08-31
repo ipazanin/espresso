@@ -56,7 +56,6 @@ namespace Espresso.WebApi.Controllers
         /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
         /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored</param>
         /// <param name="titleSearchQuery">Article Title Search Query</param>
-        /// <param name="regionId"></param>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <returns>Response object containing articles</returns>
         /// <response code="200">Response object containing articles</response>
@@ -79,8 +78,7 @@ namespace Espresso.WebApi.Controllers
             [FromQuery] int skip = DefaultValueConstants.DefaultSkip,
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] string? categoryIds = null,
-            [FromQuery] string? titleSearchQuery = null,
-            [FromQuery] int? regionId = null
+            [FromQuery] string? titleSearchQuery = null
         )
         {
             var response = await Mediator.Send(
@@ -89,9 +87,8 @@ namespace Espresso.WebApi.Controllers
                     skip: skip,
                     newsPortalIdsString: newsPortalIds,
                     categoryIdsString: categoryIds,
-                    newNewsPortalsPosition: WebApiConfiguration.NewNewsPortalsPosition,
+                    newNewsPortalsPosition: WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                     titleSearchQuery: titleSearchQuery,
-                    regionId: regionId,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
@@ -205,7 +202,7 @@ namespace Espresso.WebApi.Controllers
                     categoryId: categoryId,
                     newsPortalIdsString: newsPortalIds,
                     regionId: regionId,
-                    newNewsPortalsPosition: WebApiConfiguration.NewNewsPortalsPosition,
+                    newNewsPortalsPosition: WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                     titleSearchQuery: titleSearchQuery,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
@@ -310,7 +307,7 @@ namespace Espresso.WebApi.Controllers
                 request: new GetTrendingArticlesQuery(
                     take: take,
                     skip: skip,
-                    maxAgeOfTrendingArticle: WebApiConfiguration.MaxAgeOfTrendingArticle,
+                    maxAgeOfTrendingArticle: WebApiConfiguration.AppConfiguration.MaxAgeOfTrendingArticle,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
@@ -364,8 +361,8 @@ namespace Espresso.WebApi.Controllers
                     skip: skip,
                     categoryIdsString: categoryIds,
                     newsPortalIdsString: newsPortalIds,
-                    maxAgeOfFeaturedArticle: WebApiConfiguration.MaxAgeOfFeaturedArticle,
-                    maxAgeOfTrendingArticle: WebApiConfiguration.MaxAgeOfTrendingArticle,
+                    maxAgeOfFeaturedArticle: WebApiConfiguration.AppConfiguration.MaxAgeOfFeaturedArticle,
+                    maxAgeOfTrendingArticle: WebApiConfiguration.AppConfiguration.MaxAgeOfTrendingArticle,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,

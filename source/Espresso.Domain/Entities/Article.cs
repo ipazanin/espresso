@@ -252,8 +252,7 @@ namespace Espresso.Domain.Entities
         public static Expression<Func<Article, bool>> GetFilteredArticlesPredicate(
             IEnumerable<int>? categoryIds,
             IEnumerable<int>? newsPortalIds,
-            string? titleSearchQuery,
-            int? regionId
+            string? titleSearchQuery
         )
         {
             return article =>
@@ -262,11 +261,6 @@ namespace Espresso.Domain.Entities
                     .ArticleCategories
                     .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
                 (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)) &&
-                (
-                    regionId == null ?
-                    !article.NewsPortal!.CategoryId.Equals((int)CategoryId.Local) :
-                    article.NewsPortal!.RegionId.Equals(regionId)
-                ) &&
                 (string.IsNullOrEmpty(titleSearchQuery) || article.Title.Contains(titleSearchQuery));
         }
 

@@ -44,7 +44,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                         request: new GetTrendingArticlesQuery(
                             take: (int)resolveContext.Arguments["take"],
                             skip: (int)resolveContext.Arguments["take"],
-                            maxAgeOfTrendingArticle: webApiConfiguration.MaxAgeOfTrendingArticle,
+                            maxAgeOfTrendingArticle: webApiConfiguration.AppConfiguration.MaxAgeOfTrendingArticle,
                             currentEspressoWebApiVersion: (string)resolveContext.UserContext["currentEspressoWebApiVersion"],
                             targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],
                             consumerVersion: (string)resolveContext.UserContext["consumerVersion"],

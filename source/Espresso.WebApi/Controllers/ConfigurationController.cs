@@ -137,7 +137,7 @@ namespace Espresso.WebApi.Controllers
         {
             var request = new GetConfigurationQuery_1_3(
                 currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                targetedEspressoWebApiVersion: WebApiConfiguration.EspressoWebApiVersion_1_2.ToString(),
+                targetedEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.EspressoWebApiVersion_1_2.ToString(),
                 consumerVersion: mobileAppVersion,
                 deviceType: mobileDeviceType
             );

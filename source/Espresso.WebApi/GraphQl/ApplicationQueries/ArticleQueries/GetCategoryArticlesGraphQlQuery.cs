@@ -63,7 +63,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             newsPortalIdsString: (string?)resolveContext.Arguments["newsPortalIds"],
                             categoryId: (int)resolveContext.Arguments["categoryId"],
                             regionId: (int?)resolveContext.Arguments["regionId"],
-                            newNewsPortalsPosition: configuration.NewNewsPortalsPosition,
+                            newNewsPortalsPosition: configuration.AppConfiguration.NewNewsPortalsPosition,
                             titleSearchQuery: (string?)resolveContext.Arguments["titleSearchQuery"],
                             currentEspressoWebApiVersion: (string)resolveContext.UserContext["currentEspressoWebApiVersion"],
                             targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],

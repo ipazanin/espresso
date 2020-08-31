@@ -38,24 +38,24 @@ namespace Espresso.WebApi.Extensions
 
         private static void ConfigureSwaggerDocumentVersions(SwaggerGenOptions options, IWebApiConfiguration configuration)
         {
-            options.SwaggerDoc(configuration.EspressoWebApiCurrentVersion.ToString(), new OpenApiInfo
+            options.SwaggerDoc(configuration.AppVersionConfiguration.EspressoWebApiCurrentVersion.ToString(), new OpenApiInfo
             {
                 Title = $"Espresso API",
-                Version = configuration.EspressoWebApiCurrentVersion.ToString(),
+                Version = configuration.AppVersionConfiguration.EspressoWebApiCurrentVersion.ToString(),
                 Description = "Espresso APP Web Api"
             });
 
-            options.SwaggerDoc(configuration.EspressoWebApiVersion_1_3.ToString(), new OpenApiInfo
+            options.SwaggerDoc(configuration.AppVersionConfiguration.EspressoWebApiVersion_1_3.ToString(), new OpenApiInfo
             {
                 Title = $"Espresso API",
-                Version = configuration.EspressoWebApiVersion_1_3.ToString(),
+                Version = configuration.AppVersionConfiguration.EspressoWebApiVersion_1_3.ToString(),
                 Description = "Espresso APP Web Api"
             });
 
-            options.SwaggerDoc(configuration.EspressoWebApiVersion_1_2.ToString(), new OpenApiInfo
+            options.SwaggerDoc(configuration.AppVersionConfiguration.EspressoWebApiVersion_1_2.ToString(), new OpenApiInfo
             {
                 Title = $"Espresso API",
-                Version = configuration.EspressoWebApiVersion_1_2.ToString(),
+                Version = configuration.AppVersionConfiguration.EspressoWebApiVersion_1_2.ToString(),
                 Description = "Espresso APP Web Api"
             });
 
