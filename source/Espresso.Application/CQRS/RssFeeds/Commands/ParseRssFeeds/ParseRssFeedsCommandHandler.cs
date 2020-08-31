@@ -262,7 +262,6 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                             }
                             else
                             {
-
                                 await _loggerService.LogWarning(
                                     eventId: (int)Event.ArticleParsing,
                                     eventName: Event.ArticleParsing.GetDisplayName(),

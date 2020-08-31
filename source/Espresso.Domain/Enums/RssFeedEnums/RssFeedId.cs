@@ -106,5 +106,10 @@
         GlasSlavonije = 103,
         SlavonskiHr = 104,
         IVijesti = 105,
+        DubrovackiDnevnik = 106,
+        IstarskaZupanija = 107,
+        ZagrebOnline = 108,
+        SisakInfo = 109,
+        OsijekNews = 110,
     }
 }

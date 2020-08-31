@@ -8,6 +8,21 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
 {
     public class ImageUrlParseConfiguration : ValueObject
     {
+        #region Constants
+
+        public const ImageUrlParseStrategy ImageUrlParseStrategyDefaultValue = ImageUrlParseStrategy.SecondLinkOrFromSummary;
+
+        public const string ImgElementXPathDefaultValue = "";
+        public const int ImgElementXPathHasMaxLength = 300;
+
+        public const bool ShouldImageUrlBeWebScrapedDefaultValue = false;
+
+        public const ImageUrlWebScrapeType ImageUrlWebScrapeTypeDefaultValue = ImageUrlWebScrapeType.SrcAttribute;
+
+        public const string? JsonWebScrapePropertyNamesDefaultValue = null;
+        public const int JsonWebScrapePropertyNamesHasMaxLength = 300;
+        #endregion
+
         #region Properties
         public ImageUrlParseStrategy ImageUrlParseStrategy { get; private set; }
 

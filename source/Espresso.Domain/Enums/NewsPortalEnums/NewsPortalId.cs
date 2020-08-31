@@ -122,5 +122,15 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         SlavonskiHr = 58,
         [Display(Name = "iVijesti")]
         IVijesti = 59,
+        [Display(Name = "Dubrovački Dnevnik.hr")]
+        DubrovackiDnevnik = 60,
+        [Display(Name = "Istarska Županija")]
+        IstarskaZupanija = 61,
+        [Display(Name = "Zagreb Online")]
+        ZagrebOnline = 62,
+        [Display(Name = "Sisak.Info")]
+        SisakInfo = 63,
+        [Display(Name = "Osijek NEWS")]
+        OsijekNews = 64,
     }
 }

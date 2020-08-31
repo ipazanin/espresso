@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200831170502_IPazanin_FixedNewsPortalsBaseUrls")]
+    partial class IPazanin_FixedNewsPortalsBaseUrls
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2562,9 +2564,7 @@ namespace Espresso.Persistence.Migrations
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                             b1.Property<int>("CategoryParseStrategy")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasDefaultValue(1);
+                                .HasColumnType("int");
 
                             b1.HasKey("RssFeedId");
 
@@ -2576,6 +2576,66 @@ namespace Espresso.Persistence.Migrations
                             b1.HasData(
                                 new
                                 {
+                                    RssFeedId = 1,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 2,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 3,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 4,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 5,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 6,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 7,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 8,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 9,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 10,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 11,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 12,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
                                     RssFeedId = 13,
                                     CategoryParseStrategy = 2
                                 },
@@ -2583,6 +2643,116 @@ namespace Espresso.Persistence.Migrations
                                 {
                                     RssFeedId = 14,
                                     CategoryParseStrategy = 2
+                                },
+                                new
+                                {
+                                    RssFeedId = 15,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 16,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 17,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 18,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 19,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 20,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 21,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 22,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 23,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 24,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 25,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 26,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 27,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 28,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 29,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 30,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 31,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 32,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 33,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 34,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 35,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 36,
+                                    CategoryParseStrategy = 1
                                 },
                                 new
                                 {
@@ -2596,8 +2766,93 @@ namespace Espresso.Persistence.Migrations
                                 },
                                 new
                                 {
+                                    RssFeedId = 40,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
                                     RssFeedId = 42,
                                     CategoryParseStrategy = 2
+                                },
+                                new
+                                {
+                                    RssFeedId = 43,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 44,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 47,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 48,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 49,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 50,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 54,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 55,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 56,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 57,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 58,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 59,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 61,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 62,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 63,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 64,
+                                    CategoryParseStrategy = 1
                                 },
                                 new
                                 {
@@ -2611,6 +2866,26 @@ namespace Espresso.Persistence.Migrations
                                 },
                                 new
                                 {
+                                    RssFeedId = 67,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 68,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 69,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 70,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
                                     RssFeedId = 71,
                                     CategoryParseStrategy = 2
                                 },
@@ -2621,13 +2896,178 @@ namespace Espresso.Persistence.Migrations
                                 },
                                 new
                                 {
+                                    RssFeedId = 74,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 81,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 75,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 76,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 80,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 77,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 78,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 79,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
                                     RssFeedId = 82,
                                     CategoryParseStrategy = 2
                                 },
                                 new
                                 {
+                                    RssFeedId = 84,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
                                     RssFeedId = 85,
                                     CategoryParseStrategy = 2
+                                },
+                                new
+                                {
+                                    RssFeedId = 83,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 86,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 87,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 106,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 105,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 90,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 91,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 107,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 92,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 93,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 94,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 95,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 96,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 97,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 98,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 108,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 99,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 100,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 101,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 109,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 102,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 103,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 104,
+                                    CategoryParseStrategy = 1
+                                },
+                                new
+                                {
+                                    RssFeedId = 110,
+                                    CategoryParseStrategy = 1
                                 });
                         });
 
@@ -2639,27 +3079,18 @@ namespace Espresso.Persistence.Migrations
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                             b1.Property<int>("ImageUrlParseStrategy")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasDefaultValue(1);
+                                .HasColumnType("int");
 
                             b1.Property<int>("ImageUrlWebScrapeType")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasDefaultValue(1);
+                                .HasColumnType("int");
 
                             b1.Property<string>("ImgElementXPath")
                                 .IsRequired()
-                                .ValueGeneratedOnAdd()
                                 .HasColumnType("nvarchar(300)")
-                                .HasMaxLength(300)
-                                .HasDefaultValue("");
+                                .HasMaxLength(300);
 
                             b1.Property<string>("JsonWebScrapePropertyNames")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("nvarchar(300)")
-                                .HasMaxLength(300)
-                                .HasDefaultValue(null);
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<bool>("ShouldImageUrlBeWebScraped")
                                 .ValueGeneratedOnAdd()
@@ -2677,186 +3108,295 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 2,
-                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 3,
-                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 4,
-                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 5,
-                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 6,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 7,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 8,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 9,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 10,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 11,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 12,
-                                    ImgElementXPath = "//img[contains(@class, 'media-object adaptive lazy')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'media-object adaptive lazy')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 13,
-                                    ImgElementXPath = "//img[contains(@class, 'media-object adaptive lazy')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'media-object adaptive lazy')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 14,
-                                    ImgElementXPath = "//div[contains(@class, 'featured-img')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'featured-img')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 15,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 16,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 17,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 18,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 19,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 20,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 21,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 22,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 23,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 24,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 25,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 26,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 27,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 28,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 29,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 30,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 31,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 32,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 33,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 34,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 35,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 36,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 37,
+                                    ImageUrlParseStrategy = 1,
                                     ImageUrlWebScrapeType = 2,
                                     ImgElementXPath = "//script[contains(@type, 'application/ld+json')]",
                                     JsonWebScrapePropertyNames = "image,url",
@@ -2865,198 +3405,498 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 39,
-                                    ImgElementXPath = "//div[contains(@class, 'thumb')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'thumb')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 40,
-                                    ImgElementXPath = "//div[contains(@class, 'featured-img')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'featured-img')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 42,
-                                    ImgElementXPath = "//figure[contains(@class, 'article-main-img')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//figure[contains(@class, 'article-main-img')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 43,
-                                    ImgElementXPath = "//figure[contains(@class, 'article-image main-image')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//figure[contains(@class, 'article-image main-image')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 44,
-                                    ImgElementXPath = "//img[contains(@class, 'naslovna')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'naslovna')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 47,
-                                    ImgElementXPath = "//div[contains(@class, 'post-img')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'post-img')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 48,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 49,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 50,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 54,
-                                    ImgElementXPath = "//div[contains(@class, 'entry-content')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'entry-content')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 55,
-                                    ImgElementXPath = "//div[contains(@class, 'attribute-image')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'attribute-image')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 56,
-                                    ImgElementXPath = "//div[contains(@class, 'img-holder')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'img-holder')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 57,
-                                    ImgElementXPath = "//div[contains(@class, 'post__hero')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'post__hero')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 58,
-                                    ImgElementXPath = "//div[contains(@class, 'postFeaturedImg postFeaturedImg--single')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'postFeaturedImg postFeaturedImg--single')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 59,
-                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 61,
-                                    ImgElementXPath = "//div[contains(@class, 'first-image')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'first-image')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 62,
                                     ImageUrlParseStrategy = 2,
-                                    ImgElementXPath = "//figure[contains(@class, 'dcms-image article-image')]//img"
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//figure[contains(@class, 'dcms-image article-image')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 63,
-                                    ImgElementXPath = "//div[contains(@class, 'post-thumbnail')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'post-thumbnail')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 64,
-                                    ImgElementXPath = "//figure[contains(@class, 'figure')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//figure[contains(@class, 'figure')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 65,
-                                    ImgElementXPath = "//figure[contains(@class, 'media')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//figure[contains(@class, 'media')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 66,
-                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 67,
-                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 68,
-                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 69,
-                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 70,
-                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 71,
-                                    ImgElementXPath = "//picture[contains(@class, 'pic')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//picture[contains(@class, 'pic')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 72,
-                                    ImgElementXPath = "//div[contains(@class, 'img-holder inner')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'img-holder inner')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 74,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 81,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 75,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 76,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 80,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 77,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 78,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 79,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 82,
-                                    ImgElementXPath = "//div[contains(@class, 'mycontent')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'mycontent')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 84,
-                                    ImgElementXPath = "//div[contains(@class, 'single-post-media')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'single-post-media')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 85,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 83,
-                                    ImgElementXPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img"
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 86,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 87,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 106,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 105,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 90,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 91,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 107,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 92,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 93,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 94,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 95,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 96,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 97,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 98,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 108,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 99,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 100,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 101,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 109,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 102,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 103,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 104,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 110,
+                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlWebScrapeType = 1,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
                                 });
                         });
 

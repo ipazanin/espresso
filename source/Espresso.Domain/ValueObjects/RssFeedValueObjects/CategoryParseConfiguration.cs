@@ -7,6 +7,10 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
 {
     public class CategoryParseConfiguration : ValueObject
     {
+        #region Constants
+        public const CategoryParseStrategy CategoryParseStrategyDefaultValue = CategoryParseStrategy.FromRssFeed;
+        #endregion
+
         #region Properties
         public CategoryParseStrategy CategoryParseStrategy { get; private set; }
         #endregion

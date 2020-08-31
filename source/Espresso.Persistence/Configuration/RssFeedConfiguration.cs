@@ -1,5 +1,6 @@
 ﻿using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
+using Espresso.Domain.ValueObjects.RssFeedValueObjects;
 using Espresso.Persistence.DataSeed;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -16,44 +17,10 @@ namespace Espresso.Persistence.Configuration
             #endregion
 
             #region Value Object Mapping
-
-            #region AmpConfiguration
-            var ampConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.AmpConfiguration);
-
-            ampConfigurationBuilder
-                .Property(ampConfiguration => ampConfiguration!.TemplateUrl)
-                .HasMaxLength(PropertyConstraintConstants.RssFeedAmpConfigurationTemplateUrlHasMaxLength);
-
-            ampConfigurationBuilder
-                .Property(ampConfiguration => ampConfiguration!.HasAmpArticles);
-            #endregion
-
-            #region SkipParseConfiguration
-            var skipParseConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.SkipParseConfiguration);
-            #endregion
-
-            #region CategoryParseConfiguration
-            var categoryParseConfigurationBuilder = builder
-                .OwnsOne(rssFeed => rssFeed.CategoryParseConfiguration);
-
-            categoryParseConfigurationBuilder
-                .Property(categoryParseConfiguration => categoryParseConfiguration.CategoryParseStrategy);
-            #endregion
-
-            #region ImageUrlParseConfiguration
-            var imageUrlParseConfiguration = builder.OwnsOne(rssFeed => rssFeed.ImageUrlParseConfiguration);
-
-            imageUrlParseConfiguration.Property(imageUrlConfig => imageUrlConfig.ImgElementXPath)
-                .HasMaxLength(PropertyConstraintConstants.RssFeedImgElementXPathHasMaxLength);
-
-            imageUrlParseConfiguration
-                .Property(imageUrlConfig => imageUrlConfig.ImageUrlParseStrategy);
-
-            imageUrlParseConfiguration
-                .Property(imageUrlConfig => imageUrlConfig.ShouldImageUrlBeWebScraped)
-                .HasDefaultValue(false);
-            #endregion
-
+            ConfigureAmpConfiguration(builder);
+            ConfigureSkipParseConfiguration(builder);
+            ConfigureCategoryParseConfiguration(builder);
+            ConfigureImageUrlParseConfiguration(builder);
             #endregion
 
             #region Relations Mapping
@@ -79,14 +46,65 @@ namespace Espresso.Persistence.Configuration
             #endregion
 
             #region Data Seed
-            RssFeedDataSeed.Seed(
-                builder: builder,
-                ampConfigurationBuilder: ampConfigurationBuilder!,
-                skipParseConfigurationBuilder: skipParseConfigurationBuilder!,
-                categoryParseConfigurationBuilder: categoryParseConfigurationBuilder,
-                imageUrlParseConfigurationBuilder: imageUrlParseConfiguration
-            );
+            RssFeedDataSeed.Seed(builder: builder);
             #endregion
         }
+
+        private void ConfigureAmpConfiguration(EntityTypeBuilder<RssFeed> builder)
+        {
+            var ampConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.AmpConfiguration);
+
+            ampConfigurationBuilder
+                .Property(ampConfiguration => ampConfiguration!.TemplateUrl)
+                .HasMaxLength(PropertyConstraintConstants.RssFeedAmpConfigurationTemplateUrlHasMaxLength);
+
+            ampConfigurationBuilder
+                .Property(ampConfiguration => ampConfiguration!.HasAmpArticles);
+        }
+
+        private void ConfigureSkipParseConfiguration(EntityTypeBuilder<RssFeed> builder)
+        {
+
+            var skipParseConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.SkipParseConfiguration);
+        }
+
+        private void ConfigureCategoryParseConfiguration(EntityTypeBuilder<RssFeed> builder)
+        {
+            var categoryParseConfigurationBuilder = builder
+                .OwnsOne(rssFeed => rssFeed.CategoryParseConfiguration);
+
+            categoryParseConfigurationBuilder
+                .Property(categoryParseConfiguration => categoryParseConfiguration.CategoryParseStrategy)
+                .HasDefaultValue(CategoryParseConfiguration.CategoryParseStrategyDefaultValue);
+        }
+
+        private void ConfigureImageUrlParseConfiguration(EntityTypeBuilder<RssFeed> builder)
+        {
+            var imageUrlParseConfiguration = builder.OwnsOne(rssFeed => rssFeed.ImageUrlParseConfiguration);
+
+            imageUrlParseConfiguration
+                .Property(imageUrlConfig => imageUrlConfig.ImgElementXPath)
+                .HasMaxLength(ImageUrlParseConfiguration.ImgElementXPathHasMaxLength)
+                .HasDefaultValue(ImageUrlParseConfiguration.ImgElementXPathDefaultValue);
+
+            imageUrlParseConfiguration
+                .Property(imageUrlConfig => imageUrlConfig.ImageUrlParseStrategy)
+                .HasDefaultValue(ImageUrlParseConfiguration.ImageUrlParseStrategyDefaultValue);
+
+            imageUrlParseConfiguration
+                .Property(imageUrlConfig => imageUrlConfig.ShouldImageUrlBeWebScraped)
+                .HasDefaultValue(ImageUrlParseConfiguration.ShouldImageUrlBeWebScrapedDefaultValue);
+
+            imageUrlParseConfiguration
+                .Property(imageUrlConfig => imageUrlConfig.ImageUrlWebScrapeType)
+                .HasDefaultValue(ImageUrlParseConfiguration.ImageUrlWebScrapeTypeDefaultValue);
+
+            imageUrlParseConfiguration
+                .Property(imageUrlConfig => imageUrlConfig.JsonWebScrapePropertyNames)
+                .HasMaxLength(ImageUrlParseConfiguration.JsonWebScrapePropertyNamesHasMaxLength)
+                .HasDefaultValue(ImageUrlParseConfiguration.JsonWebScrapePropertyNamesDefaultValue);
+
+        }
+
     }
 }

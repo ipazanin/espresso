@@ -21,6 +21,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
         public int NewNewsPortalsPosition { get; }
 
         public string? TitleSearchQuery { get; }
+
+        public int? RegionId { get; }
         #endregion
 
         #region Constructors
@@ -29,12 +31,13 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
             int? skip,
             string? newsPortalIdsString,
             string? categoryIdsString,
+            int newNewsPortalsPosition,
+            string? titleSearchQuery,
+            int? regionId,
             string currentEspressoWebApiVersion,
             string targetedEspressoWebApiVersion,
             string consumerVersion,
-            DeviceType deviceType,
-            int newNewsPortalsPosition,
-            string? titleSearchQuery
+            DeviceType deviceType
         ) : base(
             currentEspressoWebApiVersion: currentEspressoWebApiVersion,
             targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
@@ -64,6 +67,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
 
             NewNewsPortalsPosition = newNewsPortalsPosition;
             TitleSearchQuery = titleSearchQuery;
+            RegionId = regionId;
         }
         #endregion
 

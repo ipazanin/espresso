@@ -56,6 +56,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
         /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored</param>
         /// <param name="titleSearchQuery">Article Title Search Query</param>
+        /// <param name="regionId"></param>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <returns>Response object containing articles</returns>
         /// <response code="200">Response object containing articles</response>
@@ -78,7 +79,8 @@ namespace Espresso.WebApi.Controllers
             [FromQuery] int skip = DefaultValueConstants.DefaultSkip,
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] string? categoryIds = null,
-            [FromQuery] string? titleSearchQuery = null
+            [FromQuery] string? titleSearchQuery = null,
+            [FromQuery] int? regionId = null
         )
         {
             var response = await Mediator.Send(
@@ -89,6 +91,7 @@ namespace Espresso.WebApi.Controllers
                     categoryIdsString: categoryIds,
                     newNewsPortalsPosition: WebApiConfiguration.NewNewsPortalsPosition,
                     titleSearchQuery: titleSearchQuery,
+                    regionId: regionId,
                     currentEspressoWebApiVersion: WebApiConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,

@@ -50,7 +50,6 @@ namespace Espresso.Domain.Services
             var initialTrendingScore = 0;
 
             var articleId = GetArticleId(
-                itemId: itemId,
                 itemLinks: itemLinks,
                 rssFeed: rssFeed
             );
@@ -116,35 +115,52 @@ namespace Espresso.Domain.Services
         #region Private Methods
 
         #region ArticleId
-        private string? GetArticleId(string? itemId, IEnumerable<Uri?>? itemLinks, RssFeed rssFeed)
+        private string? GetArticleId(IEnumerable<Uri?>? itemLinks, RssFeed rssFeed)
         {
-            // TODO Refactor
-            if (rssFeed.NewsPortalId == (int)NewsPortalId.DalmacijaNews)
+            var url = itemLinks?.FirstOrDefault()?.ToString();
+            // TODO: Refactor
+            if (
+                rssFeed.Id.Equals((int)RssFeedId.IstarskaZupanija) &&
+                !string.IsNullOrWhiteSpace(url)
+            )
             {
-                return itemLinks?.FirstOrDefault()?.ToString();
+                return rssFeed.NewsPortal!.BaseUrl + url;
             }
-            return itemId ?? itemLinks?.FirstOrDefault()?.ToString();
+            return url;
         }
         #endregion
 
         #region Url
         private string? GetUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks, string? itemId)
         {
-            string? articleUrl;
-            if (
-                rssFeed.AmpConfiguration?.HasAmpArticles != true ||
-                rssFeed.AmpConfiguration.TemplateUrl is null
-            )
+            if (rssFeed.AmpConfiguration?.HasAmpArticles == true)
             {
-                articleUrl = itemLinks?.FirstOrDefault()?.ToString() ?? itemId;
-
-                return articleUrl;
+                return GetAmpUrl(rssFeed, itemLinks, itemId);
             }
 
-            if (itemId is null || itemLinks?.FirstOrDefault() is null)
+            return GetNormalUrl(rssFeed, itemLinks);
+        }
+
+        private string? GetNormalUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks)
+        {
+            var url = itemLinks?.FirstOrDefault()?.ToString();
+
+            var articleUrl = AddBaseUrlToUrlFragment(url, rssFeed.NewsPortal?.BaseUrl);
+
+            return articleUrl;
+        }
+
+        private string? GetAmpUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks, string? itemId)
+        {
+            if (
+                itemId is null ||
+                itemLinks?.FirstOrDefault() is null ||
+                string.IsNullOrEmpty(rssFeed.AmpConfiguration?.TemplateUrl)
+            )
             {
                 return null;
             }
+
 #pragma warning disable IDE0057
             var articleId = $"{itemId.Substring(itemId.IndexOf("id=") + 3)}/";
 #pragma warning restore IDE0057
@@ -155,7 +171,7 @@ namespace Espresso.Domain.Services
             var thirdArticleSegment = urlSegments.Count() < 4 ? "" : urlSegments[3].ToLower();
             var fourthArticleSegment = urlSegments.Count() < 5 ? "" : urlSegments[4].ToLower();
 
-            articleUrl = string.Format(
+            var articleUrl = string.Format(
                 rssFeed.AmpConfiguration.TemplateUrl,
                 articleId,
                 firstArticleSegment,
@@ -225,18 +241,9 @@ namespace Espresso.Domain.Services
                 ).ConfigureAwait(false);
             }
 
-            imageUrl = AddBaseUrlToImageUrl(imageUrl, rssFeed.NewsPortal?.BaseUrl);
+            imageUrl = AddBaseUrlToUrlFragment(imageUrl, rssFeed.NewsPortal?.BaseUrl);
 
             return imageUrl;
-        }
-
-        private string? AddBaseUrlToImageUrl(string? imageUrl, string? baseUrl)
-        {
-            return !string.IsNullOrEmpty(imageUrl) &&
-                !string.IsNullOrEmpty(baseUrl) &&
-                !imageUrl.StartsWith("http")
-                ? $"{baseUrl}{imageUrl.Remove(0, 1)}"
-                : imageUrl;
         }
         #endregion
 
@@ -379,6 +386,28 @@ namespace Espresso.Domain.Services
             );
         }
 
+        #endregion
+
+        #region Common
+
+        private string? AddBaseUrlToUrlFragment(string? urlFragmentOrFullUrl, string? baseUrl)
+        {
+            if (
+                string.IsNullOrEmpty(urlFragmentOrFullUrl) ||
+                string.IsNullOrEmpty(baseUrl)
+            )
+            {
+                return null;
+            }
+            else if (urlFragmentOrFullUrl.StartsWith("http"))
+            {
+                return urlFragmentOrFullUrl;
+            }
+            else
+            {
+                return $"{baseUrl}{urlFragmentOrFullUrl}";
+            }
+        }
         #endregion
 
         #endregion
