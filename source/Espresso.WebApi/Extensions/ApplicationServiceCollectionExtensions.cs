@@ -61,7 +61,7 @@ namespace Espresso.WebApi.Extensions
             services.AddPersistentServices(webApiConfiguration);
             services.AddSwaggerServices(webApiConfiguration);
 
-            if (webApiConfiguration.EnableCors)
+            if (webApiConfiguration.SpaConfiguration.EnableCors)
             {
                 services.AddCors(
                     setupAction: o => o.AddPolicy(

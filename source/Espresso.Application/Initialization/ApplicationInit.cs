@@ -35,7 +35,6 @@ namespace Espresso.Application.Initialization
         private readonly IArticleRepository _articleRepository;
         private readonly IApplicationDownloadRepository _applicationDownloadRepository;
         private readonly IApplicationDatabaseContext _context;
-        private readonly ICommonConfiguration _commonConfiguration;
         private readonly ILoggerService _loggerService;
         #endregion
 
@@ -52,7 +51,6 @@ namespace Espresso.Application.Initialization
             IArticleCategoryRepository articleCategoryRepository,
             IArticleRepository articleRepository,
             IApplicationDatabaseContext context,
-            ICommonConfiguration commonConfiguration,
             ILoggerService loggerService
         )
         {
@@ -61,7 +59,6 @@ namespace Espresso.Application.Initialization
             _articleRepository = articleRepository;
             _applicationDownloadRepository = applicationDownloadRepository;
             _context = context;
-            _commonConfiguration = commonConfiguration;
             _loggerService = loggerService;
         }
         #endregion

@@ -15,7 +15,7 @@ using Espresso.Domain.Validators;
 using Espresso.Persistence.Database;
 using Espresso.Persistence.IRepositories;
 using Espresso.Persistence.Repositories;
-using Espresso.Workers.ParserDeleter.Infrastructure;
+using Espresso.ParserDeleter.Configuration;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +24,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Espresso.Workers.ParserDeleter
+namespace Espresso.ParserDeleter
 {
     public class Program
     {
@@ -98,7 +98,7 @@ namespace Espresso.Workers.ParserDeleter
                     #region Database
                     services.AddDbContext<IApplicationDatabaseContext, ApplicationDatabaseContext>(options =>
                      {
-                         options.UseSqlServer(hostContext.Configuration.GetConnectionString("DefaultConnectionString"));
+                         options.UseSqlServer(configuration.DatabaseConfiguration.ConnectionString);
                          switch (configuration.AppEnvironment)
                          {
                              case AppEnvironment.Undefined:
@@ -117,7 +117,7 @@ namespace Espresso.Workers.ParserDeleter
                          }
                      });
 
-                    services.AddScoped<IDatabaseConnectionFactory>(o => new DatabaseConnectionFactory(hostContext.Configuration.GetConnectionString("DefaultConnectionString")));
+                    services.AddScoped<IDatabaseConnectionFactory>(o => new DatabaseConnectionFactory(configuration.DatabaseConfiguration.ConnectionString));
                     services.AddScoped<IApplicationDownloadRepository, ApplicationDownloadRepository>();
                     services.AddScoped<IArticleCategoryRepository, ArticleCategoryRepository>();
                     services.AddScoped<IArticleRepository, ArticleRepository>();

@@ -11,123 +11,53 @@ namespace Espresso.WebApi.Configuration
     /// </summary>
     public class WebApiConfiguration : IWebApiConfiguration
     {
-        #region Fields
-        private readonly IConfiguration _configuration;
-        #endregion
 
         #region Properties
         /// <summary>
         /// 
         /// </summary>
-        public string ConnectionString => _configuration.GetConnectionString("DefaultConnectionString");
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Version =>
-            $"{ApiVersionConstants.CurrentMajorVersion}." +
-            $"{ApiVersionConstants.CurrentMinorVersion}." +
-            $"{ApiVersionConstants.CurrentFixVersion}";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ApiVersion EspressoWebApiVersion_1_2 => new ApiVersion(1, 2);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ApiVersion EspressoWebApiVersion_1_3 => new ApiVersion(1, 3);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ApiVersion EspressoWebApiCurrentVersion =>
-            new ApiVersion(
-                majorVersion: ApiVersionConstants.CurrentMajorVersion,
-                minorVersion: ApiVersionConstants.CurrentMinorVersion
-            );
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public AppEnvironment AppEnvironment => _configuration.GetValue<AppEnvironment>("AppConfiguration:Environment");
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public string SpaProxyServerUrl => _configuration.GetValue<string>("AppConfiguration:SpaProxyServerUrl");
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public bool UseSpaProxyServer => _configuration.GetValue<bool>("AppConfiguration:UseSpaProxyServer");
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public bool EnableCors => _configuration.GetValue<bool>("AppConfiguration:EnableCors");
+        /// <value></value>
+        public AppVersionConfiguration AppVersionConfiguration { get; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <value></value>
-        public int NewNewsPortalsPosition => _configuration.GetValue<int>("AppConfiguration:NewNewsPortalsPosition");
+        public AppConfiguration AppConfiguration { get; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <value></value>
-        public TimeSpan MaxAgeOfTrendingArticle => TimeSpan.FromHours(
-            value: _configuration.GetValue<int>("AppConfiguration:MaxAgeOfTrendingArticlesInHours")
-        );
+        public DatabaseConfiguration DatabaseConfiguration { get; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <value></value>
-        public TimeSpan MaxAgeOfFeaturedArticle => TimeSpan.FromHours(
-            value: _configuration.GetValue<int>("AppConfiguration:MaxAgeOfFeaturedArticlesInHours")
-        );
+        public ApiKeysConfiguration ApiKeysConfiguration { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        public string AndroidApiKey => _configuration.GetValue<string>("AppConfiguration:ApiKeys:Android");
+        /// <value></value>
+        public SpaConfiguration SpaConfiguration { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        public string IosApiKey => _configuration.GetValue<string>("AppConfiguration:ApiKeys:Ios");
+        public AppEnvironment AppEnvironment => AppConfiguration.AppEnvironment;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        public string WebApiKey => _configuration.GetValue<string>("AppConfiguration:ApiKeys:Web");
+        public string Version => AppVersionConfiguration.Version;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        public string ParserApiKey => _configuration.GetValue<string>("AppConfiguration:ApiKeys:Parser");
+        public string ConnectionString => DatabaseConfiguration.ConnectionString;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public string DevAndroidApiKey => _configuration.GetValue<string>("AppConfiguration:ApiKeys:DevAndroid");
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public string DevIosApiKey => _configuration.GetValue<string>("AppConfiguration:ApiKeys:DevIos");
         #endregion
 
         #region Constructors
@@ -137,7 +67,11 @@ namespace Espresso.WebApi.Configuration
         /// <param name="configuration"></param>
         public WebApiConfiguration(IConfiguration configuration)
         {
-            _configuration = configuration;
+            AppConfiguration = new AppConfiguration(configuration.GetSection("AppConfiguration"));
+            AppVersionConfiguration = new AppVersionConfiguration();
+            DatabaseConfiguration = new DatabaseConfiguration(configuration.GetSection("DatabaseConfiguration"));
+            ApiKeysConfiguration = new ApiKeysConfiguration(configuration.GetSection("ApiKeysConfiguration"));
+            SpaConfiguration = new SpaConfiguration(configuration.GetSection("SpaConfiguration"));
         }
         #endregion
     }

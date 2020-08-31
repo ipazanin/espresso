@@ -138,7 +138,7 @@ namespace Espresso.WebApi.Controllers
         {
             var command = new CreateApplicationDownloadCommand(
                 currentEspressoWebApiVersion: WebApiConfiguration.Version,
-                targetedEspressoWebApiVersion: WebApiConfiguration.EspressoWebApiVersion_1_2.ToString(),
+                targetedEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.EspressoWebApiVersion_1_2.ToString(),
                 consumerVersion: mobileAppVersion,
                 deviceType: mobileDeviceType
             );

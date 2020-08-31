@@ -40,8 +40,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
                     predicate: Article.GetFilteredArticlesPredicate(
                         categoryIds: request.CategoryIds,
                         newsPortalIds: request.NewsPortalIds,
-                        titleSearchQuery: request.TitleSearchQuery,
-                        regionId: request.RegionId
+                        titleSearchQuery: request.TitleSearchQuery
                     ).Compile()
                 )
                 .Skip(request.Skip)

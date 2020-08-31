@@ -48,10 +48,6 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                         {
                             Name = "titleSearchQuery",
                         },
-                        new QueryArgument<IntGraphType>
-                        {
-                            Name = "regionId",
-                        },
                     }
                 ),
                 resolve: async resolveContext =>
@@ -62,9 +58,8 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             skip: (int?)resolveContext.Arguments["skip"],
                             newsPortalIdsString: (string?)resolveContext.Arguments["newsPortalIds"],
                             categoryIdsString: (string?)resolveContext.Arguments["categoryIds"],
-                            newNewsPortalsPosition: configuration.NewNewsPortalsPosition,
+                            newNewsPortalsPosition: configuration.AppConfiguration.NewNewsPortalsPosition,
                             titleSearchQuery: (string?)resolveContext.Arguments["titleSearchQuery"],
-                            regionId: (int?)resolveContext.Arguments["regionId"],
                             currentEspressoWebApiVersion: (string)resolveContext.UserContext["currentEspressoWebApiVersion"],
                             targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],
                             consumerVersion: (string)resolveContext.UserContext["consumerVersion"],

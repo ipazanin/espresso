@@ -1,18 +1,18 @@
 {
   "profiles": {
-    "Espresso.Workers.ParserDeleter Local Db": {
+    "Espresso.ParserDeleter Local Db": {
       "commandName": "Project",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "local-local-db"
       }
     },
-    "Espresso.Workers.ParserDeleter Production Db": {
+    "Espresso.ParserDeleter Production Db": {
       "commandName": "Project",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "local-production-db"
       }
     },
-    "Espresso.Workers.ParserDeleter Development": {
+    "Espresso.ParserDeleter Development": {
       "commandName": "Project",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "development"

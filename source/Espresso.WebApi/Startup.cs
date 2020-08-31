@@ -55,7 +55,7 @@ namespace Espresso.WebApi
             IWebApiConfiguration configuration
         )
         {
-            if (configuration.EnableCors)
+            if (configuration.SpaConfiguration.EnableCors)
             {
                 app.UseCors("CustomCorsPolicy");
             }
@@ -88,10 +88,10 @@ namespace Espresso.WebApi
 
                 if (
                     _configuration.AppEnvironment.Equals(AppEnvironment.Local) &&
-                    _configuration.UseSpaProxyServer
+                    _configuration.SpaConfiguration.UseSpaProxyServer
                 )
                 {
-                    spa.UseProxyToSpaDevelopmentServer(_configuration.SpaProxyServerUrl);
+                    spa.UseProxyToSpaDevelopmentServer(_configuration.SpaConfiguration.SpaProxyServerUrl);
                 }
             });
 

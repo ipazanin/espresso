@@ -12,12 +12,12 @@ using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.Extensions;
 using Espresso.Domain.IServices;
-using Espresso.Workers.ParserDeleter.Infrastructure;
+using Espresso.ParserDeleter.Configuration;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Espresso.Workers.ParserDeleter
+namespace Espresso.ParserDeleter
 {
     public class ParserDeleter : BackgroundService
     {
@@ -47,7 +47,7 @@ namespace Espresso.Workers.ParserDeleter
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await Task.Yield();
-            await Task.Delay(_configuration.WaitDurationBeforeStartup);
+            await Task.Delay(_configuration.TimersConfiguration.WaitDurationBeforeStartup);
 
             await InitializeParser();
 
@@ -61,9 +61,9 @@ namespace Espresso.Workers.ParserDeleter
 
                     var parseRssFeedsCommandResponse = await mediator.Send(
                         request: new ParseRssFeedsCommand(
-                            currentEspressoWebApiVersion: _configuration.RssFeedParserVersion,
-                            targetedEspressoWebApiVersion: _configuration.RssFeedParserMajorMinorVersion,
-                            consumerVersion: _configuration.RssFeedParserVersion,
+                            currentEspressoWebApiVersion: _configuration.AppConfiguration.RssFeedParserVersion,
+                            targetedEspressoWebApiVersion: _configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
+                            consumerVersion: _configuration.AppConfiguration.RssFeedParserVersion,
                             deviceType: DeviceType.RssFeedParser
                         ),
                         cancellationToken: cancellationToken
@@ -73,28 +73,28 @@ namespace Espresso.Workers.ParserDeleter
 
                     await mediator.Send(
                         request: new DeleteOldArticlesCommand(
-                            maxAgeOfOldArticles: _configuration.MaxAgeOfOldArticles,
-                            currentEspressoWebApiVersion: _configuration.RssFeedParserVersion,
-                            targetedEspressoWebApiVersion: _configuration.RssFeedParserMajorMinorVersion,
-                            consumerVersion: _configuration.RssFeedParserVersion,
+                            maxAgeOfOldArticles: _configuration.TimersConfiguration.MaxAgeOfOldArticles,
+                            currentEspressoWebApiVersion: _configuration.AppConfiguration.RssFeedParserVersion,
+                            targetedEspressoWebApiVersion: _configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
+                            consumerVersion: _configuration.AppConfiguration.RssFeedParserVersion,
                             deviceType: DeviceType.RssFeedParser
                         ),
                         cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
 
-                    await Task.Delay(_configuration.WaitDurationBetweenCommands).ConfigureAwait(false);
+                    await Task.Delay(_configuration.TimersConfiguration.WaitDurationBetweenCommands).ConfigureAwait(false);
                 }
                 catch (Exception exception)
                 {
                     await _loggerService.LogError(
                         eventId: (int)Event.ParserDeleterWebJob,
                         eventName: Event.ParserDeleterWebJob.GetDisplayName(),
-                        version: _configuration.RssFeedParserVersion,
+                        version: _configuration.AppConfiguration.RssFeedParserVersion,
                         message: exception.Message,
                         exception: exception,
                         cancellationToken: stoppingToken
                     );
-                    await Task.Delay(_configuration.WaitDurationAfterErrors).ConfigureAwait(false);
+                    await Task.Delay(_configuration.TimersConfiguration.WaitDurationAfterErrors).ConfigureAwait(false);
                 }
             }
         }
@@ -120,12 +120,12 @@ namespace Espresso.Workers.ParserDeleter
             }
 
             var numberOfTries = 5;
-            var apiKey = _configuration.ParserApiKey;
+            var apiKey = _configuration.ApiKeysConfiguration.ParserApiKey;
             var httpHeaders = new List<(string headerKey, string headerValue)>
             {
                 (headerKey: HttpHeaderConstants.ApiKeyHeaderName, headerValue: apiKey),
-                (headerKey: HttpHeaderConstants.EspressoApiHeaderName, headerValue: _configuration.RssFeedParserMajorMinorVersion),
-                (headerKey: HttpHeaderConstants.VersionHeaderName, headerValue: _configuration.RssFeedParserVersion),
+                (headerKey: HttpHeaderConstants.EspressoApiHeaderName, headerValue: _configuration.AppConfiguration.RssFeedParserMajorMinorVersion),
+                (headerKey: HttpHeaderConstants.VersionHeaderName, headerValue: _configuration.AppConfiguration.RssFeedParserVersion),
                 (headerKey: HttpHeaderConstants.DeviceTypeHeaderName, headerValue: ((int)DeviceType.RssFeedParser).ToString()),
             };
 
@@ -134,7 +134,7 @@ namespace Espresso.Workers.ParserDeleter
                 try
                 {
                     await _httpService.PostJsonAsync(
-                        url: $"{_configuration.ServerUrl}/api/notifications/articles",
+                        url: $"{_configuration.AppConfiguration.ServerUrl}/api/notifications/articles",
                         data: new ArticlesRequestObjectDto
                         {
                             CreatedArticles = parseRssFeedsResponse.CreatedArticles,
@@ -157,7 +157,7 @@ namespace Espresso.Workers.ParserDeleter
                         exception: exception,
                         cancellationToken: cancellationToken
                     );
-                    await Task.Delay(_configuration.WaitDurationAfterWebServerRequestError).ConfigureAwait(false);
+                    await Task.Delay(_configuration.TimersConfiguration.WaitDurationAfterWebServerRequestError).ConfigureAwait(false);
                 }
             }
         }
@@ -165,7 +165,7 @@ namespace Espresso.Workers.ParserDeleter
         private CancellationToken GetCancellationToken()
         {
             var cancellationTokeSource = new CancellationTokenSource(
-                delay: _configuration.CancellationTokenExpirationDuration
+                delay: _configuration.TimersConfiguration.CancellationTokenExpirationDuration
             );
             return cancellationTokeSource.Token;
         }
