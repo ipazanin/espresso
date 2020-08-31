@@ -111,11 +111,7 @@ namespace Espresso.Persistence.Migrations
 
                     b.HasIndex("NewsPortalId");
 
-                    b.HasIndex("PublishDateTime");
-
                     b.HasIndex("RssFeedId");
-
-                    b.HasIndex("TrendingScore");
 
                     b.ToTable("Articles");
                 });

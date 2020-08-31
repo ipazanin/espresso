@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    [Migration("20200829203232_IPazanin_InitialCreate")]
-    partial class IPazanin_InitialCreate
+    [Migration("20200831202800_IPazanin_RemovedIndecies")]
+    partial class IPazanin_RemovedIndecies
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -67,7 +67,9 @@ namespace Espresso.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsFeatured")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<bool>("IsHidden")
                         .ValueGeneratedOnAdd()
@@ -111,11 +113,7 @@ namespace Espresso.Persistence.Migrations
 
                     b.HasIndex("NewsPortalId");
 
-                    b.HasIndex("PublishDateTime");
-
                     b.HasIndex("RssFeedId");
-
-                    b.HasIndex("TrendingScore");
 
                     b.ToTable("Articles");
                 });
@@ -312,7 +310,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            BaseUrl = "https://www.index.hr/",
+                            BaseUrl = "https://www.index.hr",
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Index.png",
@@ -322,7 +320,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 2,
-                            BaseUrl = "https://www.24sata.hr/",
+                            BaseUrl = "https://www.24sata.hr",
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/DvadesetCetiriSata.png",
@@ -332,7 +330,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 3,
-                            BaseUrl = "https://sportske.jutarnji.hr/",
+                            BaseUrl = "https://sportske.jutarnji.hr",
                             CategoryId = 2,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/SportskeNovosti.png",
@@ -342,7 +340,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 4,
-                            BaseUrl = "https://sportske.jutarnji.hr/",
+                            BaseUrl = "https://sportske.jutarnji.hr",
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/JutarnjiList.png",
@@ -352,7 +350,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 5,
-                            BaseUrl = "https://net.hr/",
+                            BaseUrl = "https://net.hr",
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/NetHr.png",
@@ -362,7 +360,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 6,
-                            BaseUrl = "https://slobodnadalmacija.hr/",
+                            BaseUrl = "https://slobodnadalmacija.hr",
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/SlobodnaDalmacija.png",
@@ -372,7 +370,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 7,
-                            BaseUrl = "https://www.tportal.hr/",
+                            BaseUrl = "https://www.tportal.hr",
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/TPortal.png",
@@ -382,7 +380,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 8,
-                            BaseUrl = "https://www.vecernji.hr/",
+                            BaseUrl = "https://www.vecernji.hr",
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/VecernjiList.png",
@@ -392,7 +390,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 9,
-                            BaseUrl = "https://www.telegram.hr/",
+                            BaseUrl = "https://www.telegram.hr",
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Telegram.png",
@@ -402,7 +400,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 10,
-                            BaseUrl = "https://dnevnik.hr/",
+                            BaseUrl = "https://dnevnik.hr",
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Dnevnik.png",
@@ -412,7 +410,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 11,
-                            BaseUrl = "https://gol.dnevnik.hr/",
+                            BaseUrl = "https://gol.dnevnik.hr",
                             CategoryId = 2,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Gol.png",
@@ -422,7 +420,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 12,
-                            BaseUrl = "https://sportnet.rtl.hr/",
+                            BaseUrl = "https://sportnet.rtl.hr",
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/RtlVijesti.png",
@@ -432,7 +430,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 15,
-                            BaseUrl = "http://www.nogometplus.net/",
+                            BaseUrl = "http://www.nogometplus.net",
                             CategoryId = 2,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/NogometPlus.png",
@@ -442,7 +440,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 16,
-                            BaseUrl = "https://lider.media/",
+                            BaseUrl = "https://lider.media",
                             CategoryId = 7,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Lider.png",
@@ -452,7 +450,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 18,
-                            BaseUrl = "https://www.bug.hr/",
+                            BaseUrl = "https://www.bug.hr",
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Bug.png",
@@ -462,7 +460,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 19,
-                            BaseUrl = "https://www.vidi.hr/",
+                            BaseUrl = "https://www.vidi.hr",
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/VidiHr.png",
@@ -472,7 +470,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 20,
-                            BaseUrl = "https://zimo.dnevnik.hr/",
+                            BaseUrl = "https://zimo.dnevnik.hr",
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Zimo.png",
@@ -482,7 +480,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 21,
-                            BaseUrl = "https://www.netokracija.com/",
+                            BaseUrl = "https://www.netokracija.com",
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Netokracija.png",
@@ -492,7 +490,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 22,
-                            BaseUrl = "https://poslovnipuls.com/",
+                            BaseUrl = "https://poslovnipuls.com",
                             CategoryId = 7,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/PoslovniPuls.png",
@@ -502,7 +500,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 23,
-                            BaseUrl = "https://pcchip.hr/",
+                            BaseUrl = "https://pcchip.hr",
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/PcChip.png",
@@ -512,7 +510,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 25,
-                            BaseUrl = "http://www.cosmopolitan.hr/",
+                            BaseUrl = "http://www.cosmopolitan.hr",
                             CategoryId = 4,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Cosmopolitan.png",
@@ -522,7 +520,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 26,
-                            BaseUrl = "https://wall.hr/",
+                            BaseUrl = "https://wall.hr",
                             CategoryId = 4,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/WallHr.png",
@@ -532,7 +530,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 27,
-                            BaseUrl = "http://www.ljepotaizdravlje.hr/",
+                            BaseUrl = "http://www.ljepotaizdravlje.hr",
                             CategoryId = 4,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/LjepotaIZdravlje.png",
@@ -542,7 +540,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 28,
-                            BaseUrl = "https://www.autonet.hr/",
+                            BaseUrl = "https://www.autonet.hr",
                             CategoryId = 8,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Autonet.png",
@@ -552,7 +550,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 29,
-                            BaseUrl = "https://hr.n1info.com/",
+                            BaseUrl = "https://hr.n1info.com",
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/N1.png",
@@ -562,7 +560,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 30,
-                            BaseUrl = "https://narod.hr/",
+                            BaseUrl = "https://narod.hr",
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/NarodHr.png",
@@ -572,7 +570,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 31,
-                            BaseUrl = "https://www.hrt.hr/",
+                            BaseUrl = "https://www.hrt.hr",
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 6, 25, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Hrt.png",
@@ -582,7 +580,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 32,
-                            BaseUrl = "https://100posto.jutarnji.hr/",
+                            BaseUrl = "https://100posto.jutarnji.hr",
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 6, 28, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/StoPosto.png",
@@ -592,7 +590,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 33,
-                            BaseUrl = "https://www.dnevno.hr/",
+                            BaseUrl = "https://www.dnevno.hr",
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 6, 28, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Dnevno.png",
@@ -602,7 +600,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 35,
-                            BaseUrl = "https://direktno.hr/",
+                            BaseUrl = "https://direktno.hr",
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 7, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/DirektnoHr.png",
@@ -612,7 +610,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 36,
-                            BaseUrl = "https://www.scena.hr/",
+                            BaseUrl = "https://www.scena.hr",
                             CategoryId = 3,
                             CreatedAt = new DateTime(2020, 7, 13, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Scena.png",
@@ -622,7 +620,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 38,
-                            BaseUrl = "https://www.nacional.hr/",
+                            BaseUrl = "https://www.nacional.hr",
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Nacional.png",
@@ -632,7 +630,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 39,
-                            BaseUrl = "https://express.24sata.hr/",
+                            BaseUrl = "https://express.24sata.hr",
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Express.png",
@@ -642,7 +640,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 37,
-                            BaseUrl = "https://www.dalmacijadanas.hr/",
+                            BaseUrl = "https://www.dalmacijadanas.hr",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/DalmacijaDanas.png",
@@ -652,7 +650,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 40,
-                            BaseUrl = "https://www.dalmacijanews.hr/",
+                            BaseUrl = "https://www.dalmacijanews.hr",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/DalmacijaDanas.png",
@@ -662,7 +660,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 41,
-                            BaseUrl = "https://dalmatinskiportal.hr/",
+                            BaseUrl = "https://dalmatinskiportal.hr",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/DalmatinskiPortal.png",
@@ -671,8 +669,18 @@ namespace Espresso.Persistence.Migrations
                         },
                         new
                         {
+                            Id = 60,
+                            BaseUrl = "https://dubrovackidnevnik.net.hr",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/DubrovackiDnevnik.png",
+                            Name = "Dubrovački Dnevnik.hr",
+                            RegionId = 2
+                        },
+                        new
+                        {
                             Id = 44,
-                            BaseUrl = "https://www.novilist.hr/",
+                            BaseUrl = "https://www.novilist.hr",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/NoviList.png",
@@ -682,7 +690,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 45,
-                            BaseUrl = "https://www.parentium.com/",
+                            BaseUrl = "https://www.parentium.com",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Parentium.png",
@@ -692,7 +700,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 59,
-                            BaseUrl = "https://ivijesti.hr/",
+                            BaseUrl = "https://ivijesti.hr",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/IVijesti.png",
@@ -701,8 +709,18 @@ namespace Espresso.Persistence.Migrations
                         },
                         new
                         {
+                            Id = 61,
+                            BaseUrl = "http://www.istra-istria.hr",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/IstarskaZupanija.png",
+                            Name = "Istarska Županija",
+                            RegionId = 3
+                        },
+                        new
+                        {
                             Id = 46,
-                            BaseUrl = "https://likaclub.eu/",
+                            BaseUrl = "https://likaclub.eu",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/LikaKlub.png",
@@ -712,7 +730,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 47,
-                            BaseUrl = "http://www.lika-express.hr/",
+                            BaseUrl = "http://www.lika-express.hr",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/LikaExpress.png",
@@ -722,7 +740,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 48,
-                            BaseUrl = "https://www.lika-online.com/",
+                            BaseUrl = "https://www.lika-online.com",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/LikaOnline.png",
@@ -732,7 +750,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 49,
-                            BaseUrl = "http://www.likaplus.hr/",
+                            BaseUrl = "http://www.likaplus.hr",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/LikaPlus.png",
@@ -742,7 +760,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 50,
-                            BaseUrl = "https://www.index.hr/",
+                            BaseUrl = "https://www.index.hr",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/IndexHrZagreb.png",
@@ -752,7 +770,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 51,
-                            BaseUrl = "https://www.zagreb.info/",
+                            BaseUrl = "https://www.zagreb.info",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/ZagrebInfo.png",
@@ -762,7 +780,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 52,
-                            BaseUrl = "https://www.zagrebancija.com/",
+                            BaseUrl = "https://www.zagrebancija.com",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Zagrebancija.png",
@@ -771,8 +789,18 @@ namespace Espresso.Persistence.Migrations
                         },
                         new
                         {
+                            Id = 62,
+                            BaseUrl = "https://www.zagrebonline.hr",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/ZagrebOnline.png",
+                            Name = "Zagreb Online",
+                            RegionId = 5
+                        },
+                        new
+                        {
                             Id = 53,
-                            BaseUrl = "https://sjever.hr/",
+                            BaseUrl = "https://sjever.hr",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/SjeverHr.png",
@@ -782,7 +810,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 54,
-                            BaseUrl = "https://prigorski.hr/",
+                            BaseUrl = "https://prigorski.hr",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/PrigorskiHr.png",
@@ -792,7 +820,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 55,
-                            BaseUrl = "https://epodravina.hr/",
+                            BaseUrl = "https://epodravina.hr",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/PodravinaHr.png",
@@ -801,8 +829,18 @@ namespace Espresso.Persistence.Migrations
                         },
                         new
                         {
+                            Id = 63,
+                            BaseUrl = "https://www.sisak.info",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/SisakInfo.png",
+                            Name = "Sisak.Info",
+                            RegionId = 6
+                        },
+                        new
+                        {
                             Id = 56,
-                            BaseUrl = "https://www.baranjainfo.hr/",
+                            BaseUrl = "https://www.baranjainfo.hr",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/BaranjaInfo.png",
@@ -812,7 +850,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 57,
-                            BaseUrl = "https://www.glas-slavonije.hr/",
+                            BaseUrl = "https://www.glas-slavonije.hr",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/GlasSlavonije.png",
@@ -822,11 +860,21 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 58,
-                            BaseUrl = "https://slavonski.hr/",
+                            BaseUrl = "https://slavonski.hr",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/SlavonskiHr.png",
                             Name = "Slavonski Hr",
+                            RegionId = 7
+                        },
+                        new
+                        {
+                            Id = 64,
+                            BaseUrl = "https://osijeknews.hr",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/OsijekNews.png",
+                            Name = "Osijek NEWS",
                             RegionId = 7
                         });
                 });
@@ -899,43 +947,43 @@ namespace Espresso.Persistence.Migrations
                         {
                             Id = 1,
                             Name = "Global",
-                            Subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                            Subtitle = "Global"
                         },
                         new
                         {
                             Id = 2,
                             Name = "Dalmacija",
-                            Subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                            Subtitle = "Split, Zadar, Dubrovnik, Šibenik, Kaštela, Imotski..."
                         },
                         new
                         {
                             Id = 3,
                             Name = "Istra & Kvarner",
-                            Subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                            Subtitle = "Rijeka, Pula, Opatija, Pazin, Umag, Poreč, Rovinj..."
                         },
                         new
                         {
                             Id = 4,
                             Name = "Lika",
-                            Subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                            Subtitle = "Lokalne vijesti iz Ličko-Senjske županije"
                         },
                         new
                         {
                             Id = 6,
                             Name = "Sjeverna Hrvatska",
-                            Subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                            Subtitle = "Međimurje, Podravina, Sisak, Zagorje..."
                         },
                         new
                         {
                             Id = 7,
                             Name = "Slavonija & Baranja",
-                            Subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                            Subtitle = "Osijek, Vinkovci, Slavonski Brod, Vukovar, Požega..."
                         },
                         new
                         {
                             Id = 5,
                             Name = "Zagreb",
-                            Subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+                            Subtitle = "Lokalne vijesti iz grada Zagreba i okolice"
                         });
                 });
 
@@ -1514,6 +1562,13 @@ namespace Espresso.Persistence.Migrations
                         },
                         new
                         {
+                            Id = 106,
+                            CategoryId = 12,
+                            NewsPortalId = 60,
+                            Url = "https://dubrovackidnevnik.net.hr/rss"
+                        },
+                        new
+                        {
                             Id = 105,
                             CategoryId = 12,
                             NewsPortalId = 59,
@@ -1532,6 +1587,13 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 12,
                             NewsPortalId = 45,
                             Url = "https://www.parentium.com/rssfeed.asp"
+                        },
+                        new
+                        {
+                            Id = 107,
+                            CategoryId = 12,
+                            NewsPortalId = 61,
+                            Url = "http://www.istra-istria.hr/index.php?id=2415&type=100"
                         },
                         new
                         {
@@ -1584,6 +1646,13 @@ namespace Espresso.Persistence.Migrations
                         },
                         new
                         {
+                            Id = 108,
+                            CategoryId = 12,
+                            NewsPortalId = 62,
+                            Url = "https://www.zagrebonline.hr/feed"
+                        },
+                        new
+                        {
                             Id = 99,
                             CategoryId = 12,
                             NewsPortalId = 53,
@@ -1605,6 +1674,13 @@ namespace Espresso.Persistence.Migrations
                         },
                         new
                         {
+                            Id = 109,
+                            CategoryId = 12,
+                            NewsPortalId = 63,
+                            Url = "https://www.sisak.info/feed"
+                        },
+                        new
+                        {
                             Id = 102,
                             CategoryId = 12,
                             NewsPortalId = 56,
@@ -1623,6 +1699,13 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 12,
                             NewsPortalId = 58,
                             Url = "https://slavonski.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 110,
+                            CategoryId = 12,
+                            NewsPortalId = 64,
+                            Url = "https://osijeknews.hr/feed"
                         });
                 });
 
@@ -2477,7 +2560,9 @@ namespace Espresso.Persistence.Migrations
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                             b1.Property<int>("CategoryParseStrategy")
-                                .HasColumnType("int");
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasDefaultValue(1);
 
                             b1.HasKey("RssFeedId");
 
@@ -2489,66 +2574,6 @@ namespace Espresso.Persistence.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    RssFeedId = 1,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 2,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 3,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 4,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 5,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 6,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 7,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 8,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 9,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 10,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 11,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 12,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
                                     RssFeedId = 13,
                                     CategoryParseStrategy = 2
                                 },
@@ -2556,116 +2581,6 @@ namespace Espresso.Persistence.Migrations
                                 {
                                     RssFeedId = 14,
                                     CategoryParseStrategy = 2
-                                },
-                                new
-                                {
-                                    RssFeedId = 15,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 16,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 17,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 18,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 19,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 20,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 21,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 22,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 23,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 24,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 25,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 26,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 27,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 28,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 29,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 30,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 31,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 32,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 33,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 34,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 35,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 36,
-                                    CategoryParseStrategy = 1
                                 },
                                 new
                                 {
@@ -2679,93 +2594,8 @@ namespace Espresso.Persistence.Migrations
                                 },
                                 new
                                 {
-                                    RssFeedId = 40,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
                                     RssFeedId = 42,
                                     CategoryParseStrategy = 2
-                                },
-                                new
-                                {
-                                    RssFeedId = 43,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 44,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 47,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 48,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 49,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 50,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 54,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 55,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 56,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 57,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 58,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 59,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 61,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 62,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 63,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 64,
-                                    CategoryParseStrategy = 1
                                 },
                                 new
                                 {
@@ -2779,26 +2609,6 @@ namespace Espresso.Persistence.Migrations
                                 },
                                 new
                                 {
-                                    RssFeedId = 67,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 68,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 69,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 70,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
                                     RssFeedId = 71,
                                     CategoryParseStrategy = 2
                                 },
@@ -2809,153 +2619,13 @@ namespace Espresso.Persistence.Migrations
                                 },
                                 new
                                 {
-                                    RssFeedId = 74,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 81,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 75,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 76,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 80,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 77,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 78,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 79,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
                                     RssFeedId = 82,
                                     CategoryParseStrategy = 2
                                 },
                                 new
                                 {
-                                    RssFeedId = 84,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
                                     RssFeedId = 85,
                                     CategoryParseStrategy = 2
-                                },
-                                new
-                                {
-                                    RssFeedId = 83,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 86,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 87,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 105,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 90,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 91,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 92,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 93,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 94,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 95,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 96,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 97,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 98,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 99,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 100,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 101,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 102,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 103,
-                                    CategoryParseStrategy = 1
-                                },
-                                new
-                                {
-                                    RssFeedId = 104,
-                                    CategoryParseStrategy = 1
                                 });
                         });
 
@@ -2967,18 +2637,27 @@ namespace Espresso.Persistence.Migrations
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                             b1.Property<int>("ImageUrlParseStrategy")
-                                .HasColumnType("int");
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasDefaultValue(1);
 
                             b1.Property<int>("ImageUrlWebScrapeType")
-                                .HasColumnType("int");
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasDefaultValue(1);
 
                             b1.Property<string>("ImgElementXPath")
                                 .IsRequired()
+                                .ValueGeneratedOnAdd()
                                 .HasColumnType("nvarchar(300)")
-                                .HasMaxLength(300);
+                                .HasMaxLength(300)
+                                .HasDefaultValue("");
 
                             b1.Property<string>("JsonWebScrapePropertyNames")
-                                .HasColumnType("nvarchar(max)");
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("nvarchar(300)")
+                                .HasMaxLength(300)
+                                .HasDefaultValue(null);
 
                             b1.Property<bool>("ShouldImageUrlBeWebScraped")
                                 .ValueGeneratedOnAdd()
@@ -2996,295 +2675,186 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 1,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 2,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 3,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 4,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 5,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 6,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 7,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 8,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 9,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 10,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 11,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 12,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'media-object adaptive lazy')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'media-object adaptive lazy')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 13,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'media-object adaptive lazy')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'media-object adaptive lazy')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 14,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'featured-img')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'featured-img')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 15,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 16,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 17,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 18,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 19,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 20,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 21,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 22,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 23,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 24,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 25,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 26,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 27,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 28,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 29,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 30,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 31,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 32,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 33,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 34,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 35,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 36,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 37,
-                                    ImageUrlParseStrategy = 1,
                                     ImageUrlWebScrapeType = 2,
                                     ImgElementXPath = "//script[contains(@type, 'application/ld+json')]",
                                     JsonWebScrapePropertyNames = "image,url",
@@ -3293,458 +2863,198 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 39,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'thumb')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'thumb')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 40,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'featured-img')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'featured-img')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 42,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//figure[contains(@class, 'article-main-img')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//figure[contains(@class, 'article-main-img')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 43,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//figure[contains(@class, 'article-image main-image')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//figure[contains(@class, 'article-image main-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 44,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'naslovna')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'naslovna')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 47,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'post-img')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'post-img')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 48,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 49,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 50,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 54,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'entry-content')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'entry-content')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 55,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'attribute-image')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'attribute-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 56,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'img-holder')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'img-holder')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 57,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'post__hero')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'post__hero')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 58,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'postFeaturedImg postFeaturedImg--single')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'postFeaturedImg postFeaturedImg--single')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 59,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 61,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'first-image')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'first-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 62,
                                     ImageUrlParseStrategy = 2,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//figure[contains(@class, 'dcms-image article-image')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//figure[contains(@class, 'dcms-image article-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 63,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'post-thumbnail')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'post-thumbnail')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 64,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//figure[contains(@class, 'figure')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//figure[contains(@class, 'figure')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 65,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//figure[contains(@class, 'media')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//figure[contains(@class, 'media')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 66,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 67,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 68,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 69,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 70,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 71,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//picture[contains(@class, 'pic')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//picture[contains(@class, 'pic')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 72,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'img-holder inner')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'img-holder inner')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 74,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 81,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 75,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 76,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 80,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 77,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 78,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 79,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 82,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'mycontent')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'mycontent')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 84,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'single-post-media')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'single-post-media')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 85,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 83,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 86,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 87,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 105,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 90,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 91,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 92,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 93,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 94,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 95,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 96,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 97,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 98,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 99,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 100,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 101,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 102,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 103,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 104,
-                                    ImageUrlParseStrategy = 1,
-                                    ImageUrlWebScrapeType = 1,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img"
                                 });
                         });
 
