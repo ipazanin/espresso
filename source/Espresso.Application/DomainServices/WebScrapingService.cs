@@ -69,6 +69,11 @@ namespace Espresso.Application.DomainServices
 
         public string? GetSrcAttributeFromFirstImgElement(string? html)
         {
+            if (string.IsNullOrEmpty(html))
+            {
+                return null;
+            }
+
             var htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(html);
             var imgTag = htmlDocument.DocumentNode.SelectSingleNode("//img");

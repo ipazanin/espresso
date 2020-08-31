@@ -24,8 +24,6 @@
         #region RssFeed
         public const int RssFeedUrlHasMaxLength = 300;
 
-        public const int RssFeedImgElementXPathHasMaxLength = 300;
-
         public const int RssFeedAmpConfigurationTemplateUrlHasMaxLength = 300;
         #endregion
 
