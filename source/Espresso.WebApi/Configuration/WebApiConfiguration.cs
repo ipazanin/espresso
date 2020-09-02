@@ -8,6 +8,9 @@ namespace Espresso.WebApi.Configuration
     /// </summary>
     public class WebApiConfiguration : IWebApiConfiguration
     {
+        #region Fields
+        private readonly IConfiguration _configuration;
+        #endregion
 
         #region Properties
         /// <summary>
@@ -63,6 +66,7 @@ namespace Espresso.WebApi.Configuration
             DatabaseConfiguration = new DatabaseConfiguration(configuration.GetSection("DatabaseConfiguration"));
             ApiKeysConfiguration = new ApiKeysConfiguration(configuration.GetSection("ApiKeysConfiguration"));
             SpaConfiguration = new SpaConfiguration(configuration.GetSection("SpaConfiguration"));
+            _configuration = configuration;
         }
         #endregion
     }

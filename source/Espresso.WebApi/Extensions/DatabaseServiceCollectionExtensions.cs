@@ -22,7 +22,10 @@ namespace Espresso.WebApi.Extensions
         /// <param name="services"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public static IServiceCollection AddDatabaseServices(this IServiceCollection services, IWebApiConfiguration configuration)
+        public static IServiceCollection AddDatabaseServices(
+            this IServiceCollection services,
+            IWebApiConfiguration configuration
+        )
         {
             services.AddDatabaseConfiguration(configuration);
             services.AddRepositories();
@@ -49,10 +52,6 @@ namespace Espresso.WebApi.Extensions
                     case AppEnvironment.Dev:
                     default:
                         options.EnableDetailedErrors();
-                        options.UseLoggerFactory(LoggerFactory.Create(builder =>
-                        {
-                            builder.AddConsole();
-                        }));
                         options.EnableSensitiveDataLogging(true);
                         break;
                     case AppEnvironment.Prod:
