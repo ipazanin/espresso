@@ -1,4 +1,6 @@
-﻿namespace Espresso.WebApi.Configuration
+﻿using Microsoft.Extensions.Configuration;
+
+namespace Espresso.WebApi.Configuration
 {
     /// <summary>
     /// 

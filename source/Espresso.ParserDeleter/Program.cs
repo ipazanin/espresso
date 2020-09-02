@@ -110,10 +110,6 @@ namespace Espresso.ParserDeleter
                              case AppEnvironment.Dev:
                              default:
                                  options.EnableDetailedErrors();
-                                 options.UseLoggerFactory(LoggerFactory.Create(builder =>
-                                 {
-                                     builder.AddConsole();
-                                 }));
                                  options.EnableSensitiveDataLogging(true);
                                  break;
                              case AppEnvironment.Prod:
