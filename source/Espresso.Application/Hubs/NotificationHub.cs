@@ -12,7 +12,7 @@ namespace Espresso.Application.Hubs
 
         public async Task AddToGroup(string groupName)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, groupName).ConfigureAwait(false);
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
         }
 
         public override Task OnConnectedAsync()
@@ -27,7 +27,7 @@ namespace Espresso.Application.Hubs
 
         public async Task RemoveFromGroup(string groupName)
         {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName).ConfigureAwait(false);
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
         }
     }
 }

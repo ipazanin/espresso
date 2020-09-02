@@ -1,7 +1,4 @@
-﻿using System;
-using Espresso.Common.Constants;
-using Espresso.Common.Enums;
-using Microsoft.AspNetCore.Mvc;
+﻿using Espresso.Common.Enums;
 using Microsoft.Extensions.Configuration;
 
 namespace Espresso.WebApi.Configuration
@@ -52,12 +49,6 @@ namespace Espresso.WebApi.Configuration
         /// 
         /// </summary>
         public string Version => AppVersionConfiguration.Version;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string ConnectionString => DatabaseConfiguration.ConnectionString;
-
         #endregion
 
         #region Constructors

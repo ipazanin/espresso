@@ -1,4 +1,5 @@
-﻿using Espresso.Common.Enums;
+﻿using System;
+using Espresso.Common.Enums;
 
 using Espresso.Persistence.Database;
 using Espresso.Persistence.IRepositories;
@@ -13,7 +14,7 @@ namespace Espresso.WebApi.Extensions
     /// <summary>
     /// 
     /// </summary>
-    public static class PersistenceServiceCollectionExtensions
+    public static class DatabaseServiceCollectionExtensions
     {
         /// <summary>
         /// 
@@ -21,20 +22,27 @@ namespace Espresso.WebApi.Extensions
         /// <param name="services"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public static IServiceCollection AddPersistentServices(this IServiceCollection services, IWebApiConfiguration configuration)
+        public static IServiceCollection AddDatabaseServices(this IServiceCollection services, IWebApiConfiguration configuration)
         {
-            services.AddPersistenceConfiguration(configuration);
+            services.AddDatabaseConfiguration(configuration);
             services.AddRepositories();
 
             return services;
         }
 
-        private static IServiceCollection AddPersistenceConfiguration(this IServiceCollection services, IWebApiConfiguration configuration)
+        private static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services, IWebApiConfiguration configuration)
         {
             services.AddDbContext<IApplicationDatabaseContext, ApplicationDatabaseContext>(options =>
             {
-                options.UseSqlServer(configuration.ConnectionString);
-                switch (configuration.AppEnvironment)
+                options.UseSqlServer(
+                    connectionString: configuration.DatabaseConfiguration.ConnectionString,
+                    sqlServerOptionsAction: sqlServerOptions =>
+                    {
+                        sqlServerOptions.CommandTimeout((int)TimeSpan.FromMinutes(2).TotalSeconds);
+                    }
+                );
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+                switch (configuration.AppConfiguration.AppEnvironment)
                 {
                     case AppEnvironment.Undefined:
                     case AppEnvironment.Local:
@@ -52,7 +60,7 @@ namespace Espresso.WebApi.Extensions
                 }
             });
 
-            services.AddScoped<IDatabaseConnectionFactory>(serviceProvider => new DatabaseConnectionFactory(configuration.ConnectionString));
+            services.AddScoped<IDatabaseConnectionFactory>(serviceProvider => new DatabaseConnectionFactory(configuration.DatabaseConfiguration.ConnectionString));
 
             return services;
         }

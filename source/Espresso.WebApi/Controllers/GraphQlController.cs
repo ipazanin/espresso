@@ -69,7 +69,7 @@ namespace Espresso.WebApi.Controllers
                 executionOptions.OperationName = query.OperationName;
                 executionOptions.CancellationToken = cancellationToken;
 
-                if (WebApiConfiguration.AppEnvironment.Equals(AppEnvironment.Local))
+                if (WebApiConfiguration.AppConfiguration.AppEnvironment.Equals(AppEnvironment.Local))
                 {
                     executionOptions.ExposeExceptions = true;
                     executionOptions.EnableMetrics = true;
@@ -77,7 +77,7 @@ namespace Espresso.WebApi.Controllers
 
                 executionOptions.UserContext = new Dictionary<string, object>
                 {
-                    { "currentEspressoWebApiVersion", WebApiConfiguration.Version },
+                    { "currentEspressoWebApiVersion", WebApiConfiguration.AppVersionConfiguration.Version },
                     { "targetedEspressoWebApiVersion", basicInformationsHeaderParameters.EspressoWebApiVersion },
                     { "consumerVersion", basicInformationsHeaderParameters.Version },
                     { "deviceType", basicInformationsHeaderParameters.DeviceType },

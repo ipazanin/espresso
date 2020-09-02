@@ -58,7 +58,7 @@ namespace Espresso.WebApi.Extensions
             services.AddServices();
             services.AddAuthServices();
             services.AddMediatRServices();
-            services.AddPersistentServices(webApiConfiguration);
+            services.AddDatabaseServices(webApiConfiguration);
             services.AddSwaggerServices(webApiConfiguration);
 
             if (webApiConfiguration.SpaConfiguration.EnableCors)

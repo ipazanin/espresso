@@ -36,6 +36,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
             string targetedEspressoWebApiVersion,
             string consumerVersion,
             DeviceType deviceType,
+            AppEnvironment appEnvironment,
             int newNewsPortalsPosition,
             string? titleSearchQuery
         ) : base(
@@ -43,6 +44,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
             targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
             consumerVersion: consumerVersion,
             deviceType: deviceType,
+            appEnvironment: appEnvironment,
             Event.GetCategoryArticlesQuery
         )
         {

@@ -18,14 +18,16 @@ namespace Espresso.Application.CQRS.NewsPortals.Commands.NewSourcesRequest
             string targetedEspressoWebApiVersion,
             string consumerVersion,
             DeviceType deviceType,
+            AppEnvironment appEnvironment,
             string newsPortalName,
             string email,
             string? url
         ) : base(
             currentEspressoWebApiVersion: currentEspressoWebApiVersion,
             targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
-          consumerVersion: consumerVersion,
+            consumerVersion: consumerVersion,
             deviceType: deviceType,
+            appEnvironment: appEnvironment,
             Event.NewSourcesRequest
         )
         {

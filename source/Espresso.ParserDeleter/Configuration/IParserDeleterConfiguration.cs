@@ -1,9 +1,6 @@
-﻿using System;
-using Espresso.Common.Configuration;
-
-namespace Espresso.ParserDeleter.Configuration
+﻿namespace Espresso.ParserDeleter.Configuration
 {
-    public interface IParserDeleterConfiguration : ICommonConfiguration
+    public interface IParserDeleterConfiguration
     {
         public ApiKeysConfiguration ApiKeysConfiguration { get; }
         public AppConfiguration AppConfiguration { get; }

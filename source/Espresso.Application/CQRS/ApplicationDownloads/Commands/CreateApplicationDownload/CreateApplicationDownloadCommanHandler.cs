@@ -18,20 +18,20 @@ namespace Espresso.Application.CQRS.ApplicationDownloads.Commands.CreateApplicat
     {
         #region Fields
         private readonly IApplicationDatabaseContext _context;
-        private readonly ILoggerService _loggerService;
         private readonly IMemoryCache _memoryCache;
+        private readonly ISlackService _slackService;
         #endregion
 
         #region Constructors
         public CreateApplicationDownloadCommanHandler(
             IApplicationDatabaseContext context,
-            ILoggerService loggerService,
-            IMemoryCache memoryCache
-            )
+            IMemoryCache memoryCache,
+            ISlackService slackService
+        )
         {
             _context = context;
-            _loggerService = loggerService;
             _memoryCache = memoryCache;
+            _slackService = slackService;
         }
         #endregion
 
@@ -49,7 +49,7 @@ namespace Espresso.Application.CQRS.ApplicationDownloads.Commands.CreateApplicat
 
             _ = await _context
                 .SaveChangesAsync(cancellationToken)
-                .ConfigureAwait(false);
+                ;
 
             var applicationDownloads = _memoryCache.Get<IEnumerable<ApplicationDownload>>(
                 key: MemoryCacheConstants.ApplicationDownloadKey
@@ -79,14 +79,15 @@ namespace Espresso.Application.CQRS.ApplicationDownloads.Commands.CreateApplicat
                 applicationDownloads.MobileDeviceType == DeviceType.Android
             );
 
-            await _loggerService.LogAppDownload(
-                mobileDeviceType: request.DeviceType.GetDisplayName(),
-                todayAndroidCount: todayAndroidCount,
-                todayIosCount: todayIosCount,
-                totalAndroidCount: totalAndroidCount,
-                totalIosCount: totalIosCount,
-                cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            await _slackService.LogAppDownload(
+                    mobileDeviceType: request.DeviceType.GetDisplayName(),
+                    todayAndroidCount: todayAndroidCount,
+                    todayIosCount: todayIosCount,
+                    totalAndroidCount: totalAndroidCount,
+                    totalIosCount: totalIosCount,
+                    appEnvironment: request.AppEnvironment,
+                    cancellationToken: cancellationToken
+            );
 
             return Unit.Value;
         }

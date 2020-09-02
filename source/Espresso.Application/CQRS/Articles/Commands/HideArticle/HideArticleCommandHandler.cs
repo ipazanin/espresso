@@ -44,7 +44,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.HideArticle
                 databaseArticle.HideArticle();
                 _ = await _espressoDatabaseContext
                     .SaveChangesAsync(cancellationToken)
-                    .ConfigureAwait(false);
+                    ;
             }
             else
             {

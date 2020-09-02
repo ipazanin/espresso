@@ -1,6 +1,5 @@
 using Espresso.Common.Constants;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace Espresso.WebApi.Configuration
 {

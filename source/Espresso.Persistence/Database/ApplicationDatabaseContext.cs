@@ -24,9 +24,6 @@ namespace Espresso.Persistence.Database
             : base(options)
         {
             ChangeTracker.LazyLoadingEnabled = false;
-            //ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            //ChangeTracker.AutoDetectChangesEnabled = false;
-            Database.SetCommandTimeout(TimeSpan.FromMinutes(2));
         }
         #endregion
 

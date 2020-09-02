@@ -1,13 +1,9 @@
-﻿using System;
-using Espresso.Common.Configuration;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Espresso.WebApi.Configuration
+﻿namespace Espresso.WebApi.Configuration
 {
     /// <summary>
     /// 
     /// </summary>
-    public interface IWebApiConfiguration : ICommonConfiguration
+    public interface IWebApiConfiguration
     {
         /// <summary>
         /// 

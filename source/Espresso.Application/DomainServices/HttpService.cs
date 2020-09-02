@@ -50,7 +50,7 @@ namespace Espresso.Application.DomainServices
                     requestUri: url,
                     content: httpContent
                 )
-                .ConfigureAwait(false);
+                ;
 
             var statusCode = response.StatusCode;
 
@@ -78,13 +78,13 @@ namespace Espresso.Application.DomainServices
                 value: data,
                 options: null,
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             stream.Position = 0;
             using var reader = new StreamReader(stream);
             var jsonString = await reader
                 .ReadToEndAsync()
-                .ConfigureAwait(false);
+                ;
 
             var content = new StringContent(
                 content: jsonString,

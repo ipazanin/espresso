@@ -17,7 +17,6 @@ namespace Espresso.WebApi.Extensions
         /// <returns></returns>
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
-            services.AddScoped<ILoggerService, LoggerService>();
             services.AddScoped<ISlackService, SlackService>();
             services.AddScoped<IArticleParserService, ArticleParserService>();
             services.AddScoped<IWebScrapingService, WebScrapingService>();

@@ -15,13 +15,15 @@ namespace Espresso.Application.CQRS.Articles.Commands.ToggleFeaturedArticle
             string currentEspressoWebApiVersion,
             string targetedEspressoWebApiVersion,
             string consumerVersion,
-            DeviceType deviceType
+            DeviceType deviceType,
+            AppEnvironment appEnvironment
         ) : base(
-            currentEspressoWebApiVersion,
-            targetedEspressoWebApiVersion,
-            consumerVersion,
-            deviceType,
-            Event.ToggleFeaturedArticle
+            currentEspressoWebApiVersion: currentEspressoWebApiVersion,
+            targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
+            consumerVersion: consumerVersion,
+            deviceType: deviceType,
+            appEnvironment: appEnvironment,
+            eventIdEnum: Event.ToggleFeaturedArticle
         )
         {
             ArticleId = articleId;

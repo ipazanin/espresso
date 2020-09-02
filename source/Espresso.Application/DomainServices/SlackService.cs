@@ -95,7 +95,7 @@ namespace Espresso.Application.DomainServices
                 ),
                 appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
         }
 
         public async Task LogError(
@@ -124,7 +124,7 @@ namespace Espresso.Application.DomainServices
                 ),
                 appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(continueOnCapturedContext: false);
+            );
         }
 
         public async Task LogRequestError(
@@ -159,7 +159,7 @@ namespace Espresso.Application.DomainServices
                 ),
                 appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(continueOnCapturedContext: false);
+            );
         }
 
         public async Task LogAppDownload(
@@ -186,7 +186,7 @@ namespace Espresso.Application.DomainServices
                 ),
                 appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             if (totalAndroidCount + totalIosCount == EspressoDownloadsMileStone)
             {
@@ -200,7 +200,7 @@ namespace Espresso.Application.DomainServices
                     ),
                     appEnvironment: appEnvironment,
                     cancellationToken: cancellationToken
-                ).ConfigureAwait(false);
+                );
             }
         }
 
@@ -278,18 +278,18 @@ namespace Espresso.Application.DomainServices
                       await JsonSerializer.SerializeAsync(
                           stream,
                           data,
-                          cancellationToken: cancellationToken).ConfigureAwait(false);
+                          cancellationToken: cancellationToken);
 
                       stream.Position = 0;
                       using var reader = new StreamReader(stream);
-                      var jsonString = await reader.ReadToEndAsync().ConfigureAwait(false);
+                      var jsonString = await reader.ReadToEndAsync();
 
                       var content = new StringContent(jsonString, Encoding.UTF8, MimeTypeConstants.Json);
                       var response = await _httpClient.PostAsync(
                           requestUri: WebHookurl,
                           content: content,
                           cancellationToken: cancellationToken
-                      ).ConfigureAwait(false);
+                      );
                   }
                   catch (Exception exception)
                   {
@@ -324,7 +324,7 @@ namespace Espresso.Application.DomainServices
                   }
 
                   return "";
-              }).ConfigureAwait(false);
+              });
         }
         #endregion
 

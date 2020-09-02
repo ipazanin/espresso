@@ -4,7 +4,6 @@ using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
 using Espresso.Application.DomainServices;
 using Espresso.Application.Infrastructure;
 using Espresso.Application.Initialization;
-using Espresso.Common.Configuration;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 
@@ -57,11 +56,9 @@ namespace Espresso.ParserDeleter
                     #region Configuration
                     services.AddHostedService<ParserDeleter>();
                     services.AddTransient<IParserDeleterConfiguration, ParserDeleterConfiguration>();
-                    services.AddTransient<ICommonConfiguration, ParserDeleterConfiguration>();
                     #endregion
 
                     #region Services
-                    services.AddSingleton<ILoggerService, LoggerService>();
                     services.AddSingleton<ISlackService, SlackService>();
                     services.AddSingleton<IHttpService, HttpService>();
                     services.AddScoped<IArticleParserService, ArticleParserService>();
@@ -98,8 +95,15 @@ namespace Espresso.ParserDeleter
                     #region Database
                     services.AddDbContext<IApplicationDatabaseContext, ApplicationDatabaseContext>(options =>
                      {
-                         options.UseSqlServer(configuration.DatabaseConfiguration.ConnectionString);
-                         switch (configuration.AppEnvironment)
+                         options.UseSqlServer(
+                             connectionString: configuration.DatabaseConfiguration.ConnectionString,
+                             sqlServerOptionsAction: sqlServerOptions =>
+                             {
+                                 sqlServerOptions.CommandTimeout((int)TimeSpan.FromMinutes(2).TotalSeconds);
+                             }
+                         );
+                         options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+                         switch (configuration.AppConfiguration.AppEnvironment)
                          {
                              case AppEnvironment.Undefined:
                              case AppEnvironment.Local:

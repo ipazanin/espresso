@@ -10,12 +10,14 @@ namespace Espresso.Application.CQRS.ApplicationDownloads.Queries.GetApplicationD
             string currentEspressoWebApiVersion,
             string targetedEspressoWebApiVersion,
             string consumerVersion,
-            DeviceType deviceType
+            DeviceType deviceType,
+            AppEnvironment appEnvironment
         ) : base(
             currentEspressoWebApiVersion: currentEspressoWebApiVersion,
             targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
             consumerVersion: consumerVersion,
             deviceType: deviceType,
+            appEnvironment: appEnvironment,
             Event.GetApplicationDownloadStatisticsQuery
         )
         {

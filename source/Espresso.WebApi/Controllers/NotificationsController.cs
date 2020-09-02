@@ -65,35 +65,38 @@ namespace Espresso.WebApi.Controllers
                 request: new UpdateInMemoryArticlesCommand(
                     articlesRequest.CreatedArticles,
                     articlesRequest.UpdatedArticles,
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             await Mediator.Send(
                 request: new CalculateTrendingScoreCommand(
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             await Mediator.Send(
                 request: new SendArticlesNotificationsCommand(
                     articlesRequest.CreatedArticles,
                     articlesRequest.UpdatedArticles,
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             return Ok();
         }
@@ -133,10 +136,11 @@ namespace Espresso.WebApi.Controllers
                     topic: sendPushNotificationRequestObject.Topic,
                     articleUrl: sendPushNotificationRequestObject.ArticleUrl,
                     isSoundEnabled: sendPushNotificationRequestObject.IsSoundEnabled,
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
             );
@@ -176,10 +180,11 @@ namespace Espresso.WebApi.Controllers
                 request: new GetPushNotificationsQuery(
                     take: take,
                     skip: skip,
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
             );

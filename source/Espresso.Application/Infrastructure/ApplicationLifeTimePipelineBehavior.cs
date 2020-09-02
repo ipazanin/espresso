@@ -19,9 +19,8 @@ namespace Espresso.Application.Infrastructure
         #endregion
 
         #region Fields
-        private readonly ILoggerService _loggerService;
+        private readonly ISlackService _slackService;
         private readonly IMemoryCache _memoryCache;
-        //private readonly ILogger<TRequest> _logger;
         #endregion
 
         #region Properties
@@ -32,15 +31,16 @@ namespace Espresso.Application.Infrastructure
         public string ConsumerVersion { get; set; } = "";
         public DeviceType DeviceType { get; set; }
         public string RequestParameters { get; set; } = "";
+        public AppEnvironment AppEnvironment { get; set; }
         #endregion
 
         #region Constructors
         public ApplicationLifeTimePipelineBehavior(
             IMemoryCache memoryCache,
-            ILoggerService loggerService
+            ISlackService slackService
         )
         {
-            _loggerService = loggerService;
+            _slackService = slackService;
             _memoryCache = memoryCache;
         }
         #endregion
@@ -65,14 +65,14 @@ namespace Espresso.Application.Infrastructure
             TargetedWebApiVersion = requestBase?.TargetedEspressoWebApiVersion ?? "";
             ConsumerVersion = requestBase?.ConsumerVersion ?? "";
             DeviceType = requestBase?.DeviceType ?? DeviceType.Undefined;
+            AppEnvironment = requestBase?.AppEnvironment ?? AppEnvironment.Undefined;
 
             using var timer = new System.Timers.Timer(DeadLockThreshold.TotalMilliseconds);
             timer.Elapsed += TerminateProcess;
             timer.Start();
             try
             {
-                var response = await next()
-                    .ConfigureAwait(false);
+                var response = await next();
 
                 timer.Stop();
 
@@ -87,20 +87,27 @@ namespace Espresso.Application.Infrastructure
 
         private void TerminateProcess(object source, ElapsedEventArgs e)
         {
-            var memoryCacheLogMessage = _memoryCache.Get<string>(MemoryCacheConstants.DeadLockLogKey);
-            _loggerService.LogRequestError(
-                requestId: RequestId,
-                requestName: RequestName,
-                webApiVersion: WebApiVersion,
-                targetedWebApiVersion: TargetedWebApiVersion,
-                consumerVersion: ConsumerVersion,
-                deviceType: DeviceType,
-                requestParameters: RequestParameters,
-                exception: new Exception($"Deadlocked at {memoryCacheLogMessage}!"),
-                cancellationToken: default
-            )
+            var memoryCacheLogMessage = _memoryCache
+                .GetOrCreate(
+                    key: MemoryCacheConstants.DeadLockLogKey,
+                    factory: cacheEntry => ""
+                );
+
+            _slackService
+                .LogRequestError(
+                    requestName: RequestName,
+                    apiVersion: WebApiVersion,
+                    targetedApiVersion: TargetedWebApiVersion,
+                    consumerVersion: ConsumerVersion,
+                    deviceType: DeviceType,
+                    requestParameters: RequestParameters,
+                    exception: new Exception($"Deadlocked at {memoryCacheLogMessage}!"),
+                    appEnvironment: AppEnvironment,
+                    cancellationToken: default
+                )
                 .GetAwaiter()
                 .GetResult();
+
             Environment.Exit(-1);
         }
         #endregion

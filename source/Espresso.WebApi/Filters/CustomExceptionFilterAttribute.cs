@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Espresso.Application.Exceptions;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
+using Espresso.Common.Utilities;
 using Espresso.Domain.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.WebApi.Configuration;
@@ -13,6 +14,7 @@ using Espresso.WebApi.DataTransferObjects;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 
 namespace Espresso.WebApi.Filters
 {
@@ -24,24 +26,27 @@ namespace Espresso.WebApi.Filters
     public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
     {
         #region Fields
-        private readonly ILoggerService _loggerService;
         private readonly IWebApiConfiguration _webApiConfiguration;
-
+        private readonly ISlackService _slackService;
+        private readonly ILogger<CustomExceptionFilterAttribute> _logger;
         #endregion
 
         #region Constructors
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="loggerService"></param>
         /// <param name="webApiConfiguration"></param>
+        /// <param name="slackService"></param>
+        /// <param name="loggerFactory"></param>
         public CustomExceptionFilterAttribute(
-            ILoggerService loggerService,
-            IWebApiConfiguration webApiConfiguration
+            IWebApiConfiguration webApiConfiguration,
+            ISlackService slackService,
+            ILoggerFactory loggerFactory
         )
         {
-            _loggerService = loggerService;
             _webApiConfiguration = webApiConfiguration;
+            _slackService = slackService;
+            _logger = loggerFactory.CreateLogger<CustomExceptionFilterAttribute>();
         }
         #endregion 
 
@@ -75,7 +80,7 @@ namespace Espresso.WebApi.Filters
                 errors: errors
             );
 
-            var unhandledExceptionModel = _webApiConfiguration.AppEnvironment switch
+            var unhandledExceptionModel = _webApiConfiguration.AppConfiguration.AppEnvironment switch
             {
                 AppEnvironment.Prod => new UnhandledExceptionDto(
                     exceptionMessage: FormatConstants.UnhandledExceptionMessage,
@@ -94,13 +99,42 @@ namespace Espresso.WebApi.Filters
                 value: unhandledExceptionModel
             );
 
-            return _loggerService.LogError(
-                eventId: (int)Event.CustomExceptionFilterAttribute,
-                eventName: Event.CustomExceptionFilterAttribute.GetDisplayName(),
-                version: _webApiConfiguration.Version,
-                message: context.Exception.Message,
+            var eventName = Event.CustomExceptionFilterAttribute.GetDisplayName();
+            var eventId = (int)Event.CustomExceptionFilterAttribute;
+            var version = _webApiConfiguration.AppVersionConfiguration.Version;
+            var message = context.Exception.Message;
+            var exceptionMessage = context.Exception.Message;
+            var innerExceptionMessage = context.Exception.InnerException?.Message ?? "";
+
+            _logger.LogError(
+                eventId: new EventId(
+                    id: eventId,
+                    name: eventName
+                ),
                 exception: context.Exception,
-                cancellationToken: default
+                message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
+                    $"{AnsiUtility.EncodeParameterName(nameof(version))}: " +
+                    $"{AnsiUtility.EncodeVersion("{1}")}\n\t" +
+                    $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
+                    $"{AnsiUtility.EncodeErrorMessage("{2}")}\n\t" +
+                    $"{AnsiUtility.EncodeParameterName(nameof(innerExceptionMessage))}: " +
+                    $"{AnsiUtility.EncodeErrorMessage("{3}")}",
+                args: new object[]
+                {
+                    eventName,
+                    version,
+                    exceptionMessage,
+                    innerExceptionMessage,
+                }
+            );
+
+            return _slackService.LogError(
+                    eventName: eventName,
+                    version: version,
+                    message: message,
+                    exception: context.Exception,
+                    appEnvironment: _webApiConfiguration.AppConfiguration.AppEnvironment,
+                    cancellationToken: default
             );
         }
         #endregion
