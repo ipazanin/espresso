@@ -12,11 +12,6 @@ namespace Espresso.WebApi
     /// </summary>
     public class Program
     {
-
-        #region Fields
-        private static IConfiguration _configuration = null!;
-        #endregion
-
         /// <summary>
         /// 
         /// </summary>
@@ -36,7 +31,7 @@ namespace Espresso.WebApi
                 .ConfigureAppConfiguration(configureOptions =>
                 {
                     var environmentName = Environment.GetEnvironmentVariable(EnviromentVariableNamesConstants.AspNetCoreEnvironment) ?? "";
-                    _configuration = configureOptions
+                    var configuration = configureOptions
                         .AddJsonFile($"appsettings.json", optional: false)
                         .AddJsonFile($"appsettings.{environmentName}.json", optional: false)
                         .AddEnvironmentVariables()
@@ -49,7 +44,6 @@ namespace Espresso.WebApi
                     {
                         options.TimestampFormat = $"\n{DateTimeConstants.LoggerDateTimeFormat} - ";
                     });
-                    loggingBuilder.AddConfiguration(_configuration);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
