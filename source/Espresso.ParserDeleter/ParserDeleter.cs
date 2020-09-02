@@ -9,6 +9,7 @@ using Espresso.Application.DataTransferObjects;
 using Espresso.Application.Initialization;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
+using Espresso.Common.Utilities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.Extensions;
 using Espresso.Domain.IServices;
@@ -16,6 +17,7 @@ using Espresso.ParserDeleter.Configuration;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Espresso.ParserDeleter
 {
@@ -24,22 +26,25 @@ namespace Espresso.ParserDeleter
         #region Fields
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IParserDeleterConfiguration _configuration;
-        private readonly ILoggerService _loggerService;
         private readonly IHttpService _httpService;
+        private readonly ISlackService _slackService;
+        private readonly ILogger<ParserDeleter> _logger;
         #endregion
 
         #region Constructors
         public ParserDeleter(
             IServiceScopeFactory serviceScopeFactory,
             IParserDeleterConfiguration configuration,
-            ILoggerService loggerService,
-            IHttpService httpService
+            IHttpService httpService,
+            ISlackService slackService,
+            ILoggerFactory loggerFactory
         )
         {
             _serviceScopeFactory = serviceScopeFactory;
             _configuration = configuration;
-            _loggerService = loggerService;
             _httpService = httpService;
+            _slackService = slackService;
+            _logger = loggerFactory.CreateLogger<ParserDeleter>();
         }
         #endregion
 
@@ -64,12 +69,13 @@ namespace Espresso.ParserDeleter
                             currentEspressoWebApiVersion: _configuration.AppConfiguration.RssFeedParserVersion,
                             targetedEspressoWebApiVersion: _configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
                             consumerVersion: _configuration.AppConfiguration.RssFeedParserVersion,
-                            deviceType: DeviceType.RssFeedParser
+                            deviceType: DeviceType.RssFeedParser,
+                            appEnvironment: _configuration.AppConfiguration.AppEnvironment
                         ),
                         cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
+                    );
 
-                    await CallWebServer(parseRssFeedsCommandResponse, cancellationToken).ConfigureAwait(false);
+                    await CallWebServer(parseRssFeedsCommandResponse, cancellationToken);
 
                     await mediator.Send(
                         request: new DeleteOldArticlesCommand(
@@ -77,24 +83,54 @@ namespace Espresso.ParserDeleter
                             currentEspressoWebApiVersion: _configuration.AppConfiguration.RssFeedParserVersion,
                             targetedEspressoWebApiVersion: _configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
                             consumerVersion: _configuration.AppConfiguration.RssFeedParserVersion,
-                            deviceType: DeviceType.RssFeedParser
+                            deviceType: DeviceType.RssFeedParser,
+                            appEnvironment: _configuration.AppConfiguration.AppEnvironment
                         ),
                         cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
+                    );
 
-                    await Task.Delay(_configuration.TimersConfiguration.WaitDurationBetweenCommands).ConfigureAwait(false);
+                    await Task.Delay(_configuration.TimersConfiguration.WaitDurationBetweenCommands);
                 }
                 catch (Exception exception)
                 {
-                    await _loggerService.LogError(
-                        eventId: (int)Event.ParserDeleterWebJob,
-                        eventName: Event.ParserDeleterWebJob.GetDisplayName(),
-                        version: _configuration.AppConfiguration.RssFeedParserVersion,
-                        message: exception.Message,
+                    var eventName = Event.ParserDeleterWebJob.GetDisplayName();
+                    var eventId = (int)Event.ParserDeleterWebJob;
+                    var version = _configuration.AppConfiguration.Version;
+                    var exceptionMessage = exception.Message;
+                    var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
+
+                    _logger.LogError(
+                        eventId: new EventId(
+                            id: eventId,
+                            name: eventName
+                        ),
                         exception: exception,
-                        cancellationToken: stoppingToken
+                        message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
+                            $"{AnsiUtility.EncodeParameterName(nameof(version))}: " +
+                            $"{AnsiUtility.EncodeVersion("{1}")}\n\t" +
+                            $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
+                            $"{AnsiUtility.EncodeErrorMessage("{2}")}\n\t" +
+                            $"{AnsiUtility.EncodeParameterName(nameof(innerExceptionMessage))}: " +
+                            $"{AnsiUtility.EncodeErrorMessage("{3}")}",
+                        args: new object[]
+                        {
+                            eventName,
+                            version,
+                            exceptionMessage,
+                            innerExceptionMessage,
+                        }
                     );
-                    await Task.Delay(_configuration.TimersConfiguration.WaitDurationAfterErrors).ConfigureAwait(false);
+
+                    await _slackService.LogError(
+                            eventName: eventName,
+                            version: _configuration.AppConfiguration.Version,
+                            message: exception.Message,
+                            exception: exception,
+                            appEnvironment: _configuration.AppConfiguration.AppEnvironment,
+                            cancellationToken: default
+                    );
+
+                    await Task.Delay(_configuration.TimersConfiguration.WaitDurationAfterErrors);
                 }
             }
         }
@@ -149,15 +185,41 @@ namespace Espresso.ParserDeleter
                 }
                 catch (Exception exception)
                 {
-                    await _loggerService.LogError(
-                        eventId: (int)Event.ParserDeleterNewArticlesRequest,
-                        eventName: Event.ParserDeleterNewArticlesRequest.GetDisplayName(),
-                        version: _configuration.Version,
-                        message: exception.Message,
+                    var eventName = Event.ParserDeleterNewArticlesRequest.GetDisplayName();
+                    var eventId = (int)Event.ParserDeleterNewArticlesRequest;
+                    var version = _configuration.AppConfiguration.Version;
+                    var exceptionMessage = exception.Message;
+                    var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
+                    _logger.LogError(
+                        eventId: new EventId(
+                            id: eventId,
+                            name: eventName
+                        ),
                         exception: exception,
-                        cancellationToken: cancellationToken
+                        message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
+                            $"{AnsiUtility.EncodeParameterName(nameof(version))}: " +
+                            $"{AnsiUtility.EncodeVersion("{1}")}\n\t" +
+                            $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
+                            $"{AnsiUtility.EncodeErrorMessage("{2}")}\n\t" +
+                            $"{AnsiUtility.EncodeParameterName(nameof(innerExceptionMessage))}: " +
+                            $"{AnsiUtility.EncodeErrorMessage("{3}")}",
+                        args: new object[]
+                        {
+                            eventName,
+                            version,
+                            exceptionMessage,
+                            innerExceptionMessage,
+                        }
                     );
-                    await Task.Delay(_configuration.TimersConfiguration.WaitDurationAfterWebServerRequestError).ConfigureAwait(false);
+                    await _slackService.LogError(
+                            eventName: eventName,
+                            version: _configuration.AppConfiguration.Version,
+                            message: exception.Message,
+                            exception: exception,
+                            appEnvironment: _configuration.AppConfiguration.AppEnvironment,
+                            cancellationToken: default
+                    );
+                    await Task.Delay(_configuration.TimersConfiguration.WaitDurationAfterWebServerRequestError);
                 }
             }
         }

@@ -35,6 +35,11 @@ namespace Espresso.Persistence.Configuration
             builder.Ignore(article => article.DeleteArticleCategories);
             #endregion
 
+            #region Indices
+            builder.HasIndex(article => article.PublishDateTime);
+            #endregion
+
+            #region Relationships
             builder.HasOne(article => article.NewsPortal)
                 .WithMany(newsPortal => newsPortal!.Articles)
                 .HasForeignKey(article => article.NewsPortalId)
@@ -49,6 +54,7 @@ namespace Espresso.Persistence.Configuration
                 .WithOne(articleCatgory => articleCatgory!.Article!)
                 .HasForeignKey(articleCategory => articleCategory.ArticleId)
                 .OnDelete(DeleteBehavior.Cascade);
+            #endregion
         }
     }
 }

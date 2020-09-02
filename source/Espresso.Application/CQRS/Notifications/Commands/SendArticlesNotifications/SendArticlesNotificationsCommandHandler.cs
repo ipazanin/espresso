@@ -45,7 +45,7 @@ namespace Espresso.Application.CQRS.Notifications.Commands.SendArticlesNotificat
                 method: LatestArticlesClientMethodName,
                 arg1: newArticlesNotificationDto,
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             return Unit.Value;
         }

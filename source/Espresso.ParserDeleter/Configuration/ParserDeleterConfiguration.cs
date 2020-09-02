@@ -1,6 +1,4 @@
-﻿using System;
-using Espresso.Common.Constants;
-using Espresso.Common.Enums;
+﻿using Espresso.Common.Enums;
 using Microsoft.Extensions.Configuration;
 
 namespace Espresso.ParserDeleter.Configuration
@@ -16,8 +14,6 @@ namespace Espresso.ParserDeleter.Configuration
         public AppEnvironment AppEnvironment => AppConfiguration.AppEnvironment;
 
         public string Version => AppConfiguration.Version;
-
-        public string ConnectionString => DatabaseConfiguration.ConnectionString;
         #endregion
 
         #region Constructors

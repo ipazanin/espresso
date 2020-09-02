@@ -69,7 +69,7 @@ namespace Espresso.WebApi.Authentication
                 return AuthenticateResult.NoResult();
             }
 
-            var existingApiKey = await _apiKeyProvider.GetApiKey(providedApiKey).ConfigureAwait(false);
+            var existingApiKey = await _apiKeyProvider.GetApiKey(providedApiKey);
 
             if (existingApiKey != null)
             {
@@ -100,7 +100,7 @@ namespace Espresso.WebApi.Authentication
             Response.ContentType = ProblemDetailsContentType;
             var problemDetails = UnAuthenticatedApiKeyMessage;
 
-            await Response.WriteAsync(JsonSerializer.Serialize(problemDetails)).ConfigureAwait(false);
+            await Response.WriteAsync(JsonSerializer.Serialize(problemDetails));
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Espresso.WebApi.Authentication
             Response.ContentType = ProblemDetailsContentType;
             var problemDetails = ForbiddenMessage;
 
-            await Response.WriteAsync(JsonSerializer.Serialize(problemDetails)).ConfigureAwait(false);
+            await Response.WriteAsync(JsonSerializer.Serialize(problemDetails));
         }
     }
 }

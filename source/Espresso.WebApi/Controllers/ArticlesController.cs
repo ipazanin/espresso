@@ -89,13 +89,14 @@ namespace Espresso.WebApi.Controllers
                     categoryIdsString: categoryIds,
                     newNewsPortalsPosition: WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                     titleSearchQuery: titleSearchQuery,
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             return Ok(response);
         }
@@ -143,14 +144,15 @@ namespace Espresso.WebApi.Controllers
                     skip: skip,
                     newsPortalIdsString: newsPortalIds,
                     categoryIdsString: categoryIds,
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     titleSearchQuery: null,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             return Ok(response);
         }
@@ -204,13 +206,14 @@ namespace Espresso.WebApi.Controllers
                     regionId: regionId,
                     newNewsPortalsPosition: WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                     titleSearchQuery: titleSearchQuery,
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             return Ok(articles);
         }
@@ -258,13 +261,14 @@ namespace Espresso.WebApi.Controllers
                     skip: skip,
                     categoryId: categoryId,
                     newsPortalIdsString: newsPortalIds,
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             return Ok(articles);
         }
@@ -308,13 +312,14 @@ namespace Espresso.WebApi.Controllers
                     take: take,
                     skip: skip,
                     maxAgeOfTrendingArticle: WebApiConfiguration.AppConfiguration.MaxAgeOfTrendingArticle,
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             return Ok(response);
         }
@@ -363,13 +368,14 @@ namespace Espresso.WebApi.Controllers
                     newsPortalIdsString: newsPortalIds,
                     maxAgeOfFeaturedArticle: WebApiConfiguration.AppConfiguration.MaxAgeOfFeaturedArticle,
                     maxAgeOfTrendingArticle: WebApiConfiguration.AppConfiguration.MaxAgeOfTrendingArticle,
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             return Ok(response);
         }
@@ -407,23 +413,25 @@ namespace Espresso.WebApi.Controllers
             await Mediator.Send(
                 request: new IncrementNumberOfClicksCommand(
                     id: articleId,
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             await Mediator.Send(
                 request: new CalculateTrendingScoreCommand(
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             return Ok();
         }
@@ -462,23 +470,25 @@ namespace Espresso.WebApi.Controllers
             await Mediator.Send(
                 request: new IncrementNumberOfClicksCommand(
                     id: articleId,
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             await Mediator.Send(
                 request: new CalculateTrendingScoreCommand(
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             return Ok();
         }
@@ -512,13 +522,14 @@ namespace Espresso.WebApi.Controllers
             await Mediator.Send(
                 request: new HideArticleCommand(
                     articleId: articleId,
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             return Ok();
         }
@@ -552,13 +563,14 @@ namespace Espresso.WebApi.Controllers
             await Mediator.Send(
                 request: new ToggleFeaturedArticleCommand(
                     articleId: articleId,
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             return Ok();
         }

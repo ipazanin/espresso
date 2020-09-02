@@ -34,12 +34,14 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
             string currentEspressoWebApiVersion,
             string targetedEspressoWebApiVersion,
             string consumerVersion,
-            DeviceType deviceType
+            DeviceType deviceType,
+            AppEnvironment appEnvironment
         ) : base(
             currentEspressoWebApiVersion: currentEspressoWebApiVersion,
             targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
             consumerVersion: consumerVersion,
             deviceType: deviceType,
+            appEnvironment: appEnvironment,
             Event.GetLatestArticlesQuery
         )
         {

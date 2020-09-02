@@ -18,7 +18,7 @@
         GetNewsPortalsQuery = 13,
         SendArticlesNotificationsQuery = 15,
         ParseRssFeedsCommand = 16,
-        MemoryCacheInit = 17,
+        ParserInit = 17,
         ParserDeleterWebJob = 18,
         RssFeedLoading = 19,
         ArticleParsing = 20,
@@ -31,5 +31,6 @@
         GetFeaturedArticles = 27,
         ToggleFeaturedArticle = 28,
         SlackServiceException = 29,
+        WebApiInit = 30,
     }
 }

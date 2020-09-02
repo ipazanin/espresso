@@ -16,6 +16,8 @@ namespace Espresso.Application.Infrastructure
         public DeviceType DeviceType { get; }
 
         public Event EventIdEnum { get; }
+
+        public AppEnvironment AppEnvironment { get; }
         #endregion
 
         #region Constructors
@@ -24,6 +26,7 @@ namespace Espresso.Application.Infrastructure
             string targetedEspressoWebApiVersion,
             string consumerVersion,
             DeviceType deviceType,
+            AppEnvironment appEnvironment,
             Event eventIdEnum
         )
         {
@@ -32,6 +35,7 @@ namespace Espresso.Application.Infrastructure
             ConsumerVersion = consumerVersion;
             DeviceType = deviceType;
             EventIdEnum = eventIdEnum;
+            AppEnvironment = appEnvironment;
         }
         #endregion
     }

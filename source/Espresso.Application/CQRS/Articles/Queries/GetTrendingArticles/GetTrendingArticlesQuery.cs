@@ -22,12 +22,14 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
             string targetedEspressoWebApiVersion,
             string consumerVersion,
             DeviceType deviceType,
+            AppEnvironment appEnvironment,
             TimeSpan maxAgeOfTrendingArticle
         ) : base(
             currentEspressoWebApiVersion: currentEspressoWebApiVersion,
             targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
             consumerVersion: consumerVersion,
             deviceType: deviceType,
+            appEnvironment: appEnvironment,
             Event.GetTrendingArticlesQuery
         )
         {

@@ -12,13 +12,15 @@ namespace Espresso.Application.CQRS.ApplicationDownloads.Commands.CreateApplicat
             string currentEspressoWebApiVersion,
             string targetedEspressoWebApiVersion,
             string consumerVersion,
-            DeviceType deviceType
+            DeviceType deviceType,
+            AppEnvironment appEnvironment
         ) : base(
             currentEspressoWebApiVersion: currentEspressoWebApiVersion,
             targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
             consumerVersion: consumerVersion,
             deviceType: deviceType,
-            Event.CreateApplicationDownloadCommand
+            appEnvironment: appEnvironment,
+            eventIdEnum: Event.CreateApplicationDownloadCommand
         )
         {
         }

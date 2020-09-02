@@ -33,7 +33,7 @@ namespace Espresso.Persistence.Infrastructure
                 .AddEnvironmentVariables()
                 .Build();
 
-            var connectionString = configuration.GetConnectionString("DefaultConnectionString");
+            var connectionString = configuration.GetValue<string>("DatabaseConfiguration:DefaultConnectionString");
 
             return Create(connectionString);
         }

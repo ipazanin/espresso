@@ -61,13 +61,14 @@ namespace Espresso.WebApi.Controllers
         {
             var categories = await Mediator.Send(
                 request: new GetCategoriesQuery(
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             return Ok(categories);
         }

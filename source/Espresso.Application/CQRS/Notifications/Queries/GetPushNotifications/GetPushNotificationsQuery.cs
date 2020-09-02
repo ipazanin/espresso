@@ -16,12 +16,14 @@ namespace Espresso.Application.CQRS.Notifications.Queries.GetPushNotifications
             string currentEspressoWebApiVersion,
             string targetedEspressoWebApiVersion,
             string consumerVersion,
-            DeviceType deviceType
+            DeviceType deviceType,
+            AppEnvironment appEnvironment
         ) : base(
             currentEspressoWebApiVersion: currentEspressoWebApiVersion,
             targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
-          consumerVersion: consumerVersion,
+            consumerVersion: consumerVersion,
             deviceType: deviceType,
+            appEnvironment: appEnvironment,
             Event.GetPushNotifications
         )
         {

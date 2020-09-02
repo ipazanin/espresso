@@ -34,14 +34,16 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
             string targetedEspressoWebApiVersion,
             string consumerVersion,
             DeviceType deviceType,
+            AppEnvironment appEnvironment,
             TimeSpan maxAgeOfFeaturedArticle,
             TimeSpan maxAgeOfTrendingArticle
         ) : base(
-            currentEspressoWebApiVersion,
-            targetedEspressoWebApiVersion,
-            consumerVersion,
-            deviceType,
-            Event.GetFeaturedArticles
+            currentEspressoWebApiVersion: currentEspressoWebApiVersion,
+            targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
+            consumerVersion: consumerVersion,
+            deviceType: deviceType,
+            appEnvironment: appEnvironment,
+            eventIdEnum: Event.GetFeaturedArticles
         )
         {
             Take = take ?? DefaultValueConstants.DefaultTake;

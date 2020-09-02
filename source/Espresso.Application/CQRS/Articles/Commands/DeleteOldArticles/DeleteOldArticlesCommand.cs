@@ -17,12 +17,14 @@ namespace Espresso.Application.CQRS.Articles.Commands.DeleteOldArticles
             string currentEspressoWebApiVersion,
             string targetedEspressoWebApiVersion,
             string consumerVersion,
-            DeviceType deviceType
+            DeviceType deviceType,
+            AppEnvironment appEnvironment
         ) : base(
             currentEspressoWebApiVersion: currentEspressoWebApiVersion,
             targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
-          consumerVersion: consumerVersion,
+            consumerVersion: consumerVersion,
             deviceType: deviceType,
+            appEnvironment: appEnvironment,
             Event.CalculateTrendingScoreCommand
         )
         {

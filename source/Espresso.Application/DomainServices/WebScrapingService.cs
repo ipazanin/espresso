@@ -45,8 +45,8 @@ namespace Espresso.Application.DomainServices
             {
                 return null;
             }
-            var response = await _httpClient.GetAsync(articleUrl, cancellationToken).ConfigureAwait(false);
-            var htmlString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var response = await _httpClient.GetAsync(articleUrl, cancellationToken);
+            var htmlString = await response.Content.ReadAsStringAsync();
 
             var htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(htmlString);
@@ -59,7 +59,7 @@ namespace Espresso.Application.DomainServices
                     ImageUrlWebScrapeType.JsonObjectInScriptElement => await GetImageUrlFromJsonObjectFromScriptTag(
                         elementTags: elementTags,
                         propertyNames: propertyNames
-                    ).ConfigureAwait(false),
+                    ),
                     ImageUrlWebScrapeType.Undefined => GetImageUrlFromSrcAttribute(elementTags),
                     ImageUrlWebScrapeType.SrcAttribute => GetImageUrlFromSrcAttribute(elementTags),
                     _ => GetImageUrlFromSrcAttribute(elementTags),
@@ -126,7 +126,7 @@ namespace Espresso.Application.DomainServices
                 return null;
             }
             var jsonMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(jsonText));
-            var data = await JsonSerializer.DeserializeAsync<JsonElement>(jsonMemoryStream).ConfigureAwait(false);
+            var data = await JsonSerializer.DeserializeAsync<JsonElement>(jsonMemoryStream);
             try
             {
                 JsonElement property = default;

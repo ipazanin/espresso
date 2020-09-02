@@ -73,7 +73,7 @@ namespace Espresso.Domain.Services
                 itemContent: itemContent,
                 rssFeed: rssFeed,
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             var publishDateTime = GetPublishDateTime(
                 itemPublishDateTime: itemPublishDateTime,
@@ -238,7 +238,7 @@ namespace Espresso.Domain.Services
                     imageUrlWebScrapeType: rssFeed.ImageUrlParseConfiguration.ImageUrlWebScrapeType,
                     propertyNames: rssFeed.ImageUrlParseConfiguration.GetPropertyNames(),
                     cancellationToken: cancellationToken
-                ).ConfigureAwait(false);
+                );
             }
 
             imageUrl = AddBaseUrlToUrlFragment(imageUrl, rssFeed.NewsPortal?.BaseUrl);

@@ -4,18 +4,18 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Espresso.Common.Configuration;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
-
+using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
-using Espresso.Domain.IServices;
+using Espresso.Domain.Extensions;
 using Espresso.Persistence.Database;
 using Espresso.Persistence.IRepositories;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 
 namespace Espresso.Application.Initialization
 {
@@ -35,7 +35,7 @@ namespace Espresso.Application.Initialization
         private readonly IArticleRepository _articleRepository;
         private readonly IApplicationDownloadRepository _applicationDownloadRepository;
         private readonly IApplicationDatabaseContext _context;
-        private readonly ILoggerService _loggerService;
+        private readonly ILogger<ApplicationInit> _logger;
         #endregion
 
         #region Constructors
@@ -51,7 +51,7 @@ namespace Espresso.Application.Initialization
             IArticleCategoryRepository articleCategoryRepository,
             IArticleRepository articleRepository,
             IApplicationDatabaseContext context,
-            ILoggerService loggerService
+            ILoggerFactory loggerFactory
         )
         {
             _memoryCache = memoryCache;
@@ -59,7 +59,7 @@ namespace Espresso.Application.Initialization
             _articleRepository = articleRepository;
             _applicationDownloadRepository = applicationDownloadRepository;
             _context = context;
-            _loggerService = loggerService;
+            _logger = loggerFactory.CreateLogger<ApplicationInit>();
         }
         #endregion
 
@@ -118,7 +118,7 @@ namespace Espresso.Application.Initialization
             #region Article Categories
             var articleCategories = await _articleCategoryRepository
                 .GetArticleCategories()
-                .ConfigureAwait(false);
+                ;
             var articleCategoriesToAdd = new List<ArticleCategory>();
 
             foreach (var articleCategory in articleCategories)
@@ -136,10 +136,10 @@ namespace Espresso.Application.Initialization
                 .GroupBy(keySelector: articleCategory => articleCategory.ArticleId)
                 .ToDictionary(keySelector: grouping => grouping.Key);
 
-            var articles = await _articleRepository.GetArticles();
+            var allArticles = await _articleRepository.GetArticles();
             var articlesToAdd = new List<Article>();
 
-            foreach (var article in articles)
+            foreach (var article in allArticles)
             {
                 if (
                     newsPortalsDictionary.TryGetValue(article.NewsPortalId, out var newsPortal) &&
@@ -169,16 +169,51 @@ namespace Espresso.Application.Initialization
             );
             #endregion
 
-            _loggerService.LogWebApiMemoryCacheInit(
-                requestId: (int)Event.MemoryCacheInit,
-                requestName: nameof(ApplicationInit),
-                duration: stopwatch.Elapsed,
-                categoriesCount: categories.Count,
-                newsPortalsCount: newsPortals.Count,
-                articleCategoriesCount: articleCategories.Count(),
-                totalArticlesCount: articles.Count(),
-                articlesCount: articlesToAdd.Count(),
-                applicationDownloadsCount: applicationDownloads.Count()
+            stopwatch.Stop();
+
+            var eventId = (int)Event.WebApiInit;
+            var eventName = Event.WebApiInit.GetDisplayName();
+            var duration = stopwatch.Elapsed;
+            var categoriesCount = categories.Count;
+            var newsPortalsCount = newsPortals.Count;
+            var articleCategoriesCount = articleCategories.Count();
+            var allArticlesCount = allArticles.Count();
+            var articlesToAddCount = articlesToAdd.Count();
+            var applicationDownloadsCount = applicationDownloads.Count();
+
+            var message =
+                $"{AnsiUtility.EncodeEventName($"{{@{nameof(eventName)}}}")}\n\t" +
+                $"{AnsiUtility.EncodeParameterName(nameof(duration))}: " +
+                $"{AnsiUtility.EncodeDuration($"{{@{nameof(duration)}}}")}\n\t" +
+                $"{AnsiUtility.EncodeParameterName(nameof(categoriesCount))}: " +
+                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(categoriesCount)}}}")}\n\t" +
+                $"{AnsiUtility.EncodeParameterName(nameof(newsPortalsCount))}: " +
+                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(newsPortalsCount)}}}")}\n\t" +
+                $"{AnsiUtility.EncodeParameterName(nameof(articleCategoriesCount))}: " +
+                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(articleCategoriesCount)}}}")}\n\t" +
+                $"{AnsiUtility.EncodeParameterName(nameof(allArticlesCount))}: " +
+                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(allArticlesCount)}}}")}\n\t" +
+                $"{AnsiUtility.EncodeParameterName(nameof(articlesToAddCount))}: " +
+                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(articlesToAddCount)}}}")}\n\t" +
+                $"{AnsiUtility.EncodeParameterName(nameof(applicationDownloadsCount))}: " +
+                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(applicationDownloadsCount)}}}")}\n\t";
+
+            var args = new object[]
+            {
+                eventName,
+                duration,
+                categoriesCount,
+                newsPortalsCount,
+                articleCategoriesCount,
+                allArticlesCount,
+                articlesToAddCount,
+                applicationDownloadsCount
+            };
+
+            _logger.LogInformation(
+                eventId: new EventId(id: eventId, name: eventName),
+                message: message,
+                args: args
             );
         }
 
@@ -218,7 +253,7 @@ namespace Espresso.Application.Initialization
             #region Article Categories
             var articleCategories = await _articleCategoryRepository
                 .GetArticleCategories()
-                .ConfigureAwait(false);
+                ;
             var articleCategoriesToAdd = new List<ArticleCategory>();
 
             foreach (var articleCategory in articleCategories)
@@ -236,10 +271,10 @@ namespace Espresso.Application.Initialization
                 .GroupBy(articleCategory => articleCategory.ArticleId)
                 .ToDictionary(grouping => grouping.Key);
 
-            var articles = await _articleRepository.GetArticles();
+            var allArticles = await _articleRepository.GetArticles();
             var articlesToAdd = new List<Article>();
 
-            foreach (var article in articles)
+            foreach (var article in allArticles)
             {
                 if (
                     newsPortalsDictionary.TryGetValue(article.NewsPortalId, out var newsPortal) &&
@@ -274,17 +309,51 @@ namespace Espresso.Application.Initialization
                 value: rssFeeds.ToList()
             );
             #endregion
+            stopwatch.Stop();
 
-            _loggerService.LogParserDeleterMemoryCacheInit(
-                requestId: (int)Event.MemoryCacheInit,
-                requestName: nameof(ApplicationInit),
-                duration: stopwatch.Elapsed,
-                categoriesCount: categories.Count,
-                newsPortalsCount: newsPortals.Count,
-                articleCategoriesCount: articleCategories.Count(),
-                totalArticlesCount: articles.Count(),
-                articlesCount: articlesToAdd.Count(),
-                rssFeedCount: rssFeeds.Count
+            var eventId = (int)Event.ParserInit;
+            var eventName = Event.ParserInit.GetDisplayName();
+            var duration = stopwatch.Elapsed;
+            var categoriesCount = categories.Count;
+            var newsPortalsCount = newsPortals.Count;
+            var articleCategoriesCount = articleCategories.Count();
+            var allArticlesCount = allArticles.Count();
+            var articlesToAddCount = articlesToAdd.Count();
+            var rssFeedCount = rssFeeds.Count;
+
+            var message =
+                $"{AnsiUtility.EncodeEventName($"{{@{nameof(eventName)}}}")}\n\t" +
+                $"{AnsiUtility.EncodeParameterName(nameof(duration))}: " +
+                $"{AnsiUtility.EncodeDuration($"{{@{nameof(duration)}}}")}\n\t" +
+                $"{AnsiUtility.EncodeParameterName(nameof(categoriesCount))}: " +
+                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(categoriesCount)}}}")}\n\t" +
+                $"{AnsiUtility.EncodeParameterName(nameof(newsPortalsCount))}: " +
+                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(newsPortalsCount)}}}")}\n\t" +
+                $"{AnsiUtility.EncodeParameterName(nameof(articleCategoriesCount))}: " +
+                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(articleCategoriesCount)}}}")}\n\t" +
+                $"{AnsiUtility.EncodeParameterName(nameof(allArticlesCount))}: " +
+                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(allArticlesCount)}}}")}\n\t" +
+                $"{AnsiUtility.EncodeParameterName(nameof(articlesToAddCount))}: " +
+                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(articlesToAddCount)}}}")}\n\t" +
+                $"{AnsiUtility.EncodeParameterName(nameof(rssFeedCount))}: " +
+                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(rssFeedCount)}}}")}\n\t";
+
+            var args = new object[]
+            {
+                eventName,
+                duration,
+                categoriesCount,
+                newsPortalsCount,
+                articleCategoriesCount,
+                allArticlesCount,
+                articlesToAddCount,
+                rssFeedCount
+            };
+
+            _logger.LogInformation(
+                eventId: new EventId(id: eventId, name: eventName),
+                message: message,
+                args: args
             );
         }
         #endregion

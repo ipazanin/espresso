@@ -1,5 +1,4 @@
-﻿using Espresso.Common.Configuration;
-using Espresso.WebApi.Configuration;
+﻿using Espresso.WebApi.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Espresso.WebApi.Extensions
@@ -17,7 +16,6 @@ namespace Espresso.WebApi.Extensions
         public static IServiceCollection AddAppConfiguration(this IServiceCollection services)
         {
             services.AddTransient<IWebApiConfiguration, WebApiConfiguration>();
-            services.AddTransient<ICommonConfiguration, WebApiConfiguration>();
 
             return services;
         }

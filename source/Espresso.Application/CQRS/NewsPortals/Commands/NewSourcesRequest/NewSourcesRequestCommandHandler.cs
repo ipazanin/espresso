@@ -7,28 +7,36 @@ namespace Espresso.Application.CQRS.NewsPortals.Commands.NewSourcesRequest
 {
     public class NewSourcesRequestCommandHandler : IRequestHandler<NewsSourcesRequestCommand>
     {
-        private readonly ILoggerService _loggerService;
+        #region Fields
+        private readonly ISlackService _slackService;
+        #endregion
 
+        #region Constructors
         public NewSourcesRequestCommandHandler(
-            ILoggerService loggerService
+            ISlackService slackService
         )
         {
-            _loggerService = loggerService;
+            _slackService = slackService;
         }
+        #endregion
 
+        #region Methods
         public async Task<Unit> Handle(
             NewsSourcesRequestCommand request,
             CancellationToken cancellationToken
         )
         {
-            await _loggerService.LogNewNewsPortalRequest(
-                newsPortalName: request.NewsPortalName,
-                email: request.Email,
-                url: request.Url,
-                cancellationToken: cancellationToken
-            );
+            await _slackService
+                .LogNewNewsPortalRequest(
+                    newsPortalName: request.NewsPortalName,
+                    email: request.Email,
+                    url: request.Url,
+                    appEnvironment: request.AppEnvironment,
+                    cancellationToken: cancellationToken
+                );
 
             return Unit.Value;
         }
+        #endregion
     }
 }

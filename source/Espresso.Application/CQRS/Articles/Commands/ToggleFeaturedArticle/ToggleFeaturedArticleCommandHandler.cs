@@ -49,7 +49,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.ToggleFeaturedArticle
                 databaseArticle.ToggleFeatured();
                 _ = _context
                     .SaveChangesAsync(cancellationToken: default)
-                    .ConfigureAwait(continueOnCapturedContext: false);
+                    ;
             }
             else
             {

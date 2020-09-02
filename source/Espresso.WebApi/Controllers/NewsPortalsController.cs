@@ -62,13 +62,14 @@ namespace Espresso.WebApi.Controllers
         {
             var getNewsPortalsQueryResponse = await Mediator.Send(
                 request: new GetNewsPortalsQuery(
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
                 ),
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             return Ok(getNewsPortalsQueryResponse);
         }
@@ -105,16 +106,17 @@ namespace Espresso.WebApi.Controllers
         {
             var getNewsPortalsQueryResponse = await Mediator.Send(
                 request: new NewsSourcesRequestCommand(
-                    currentEspressoWebApiVersion: WebApiConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment,
                     newsPortalName: requestNewsPortalRequestObject.NewsPortalName ?? "",
                     email: requestNewsPortalRequestObject.Email ?? "",
                     url: requestNewsPortalRequestObject.Url
                 ),
                 cancellationToken: cancellationToken
-            ).ConfigureAwait(false);
+            );
 
             return Ok(getNewsPortalsQueryResponse);
         }

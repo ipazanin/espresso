@@ -41,7 +41,7 @@ namespace Espresso.WebApi.Middleware
                 headers.Remove(header);
             }
 
-            await _next(context).ConfigureAwait(false);
+            await _next(context);
         }
     }
 }
