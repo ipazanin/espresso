@@ -18,13 +18,12 @@ namespace Espresso.WebApi.GraphQl.ApplicationMutations.ArticlesQueries
         /// <param name="mediator"></param>
         public IncrementNumberOfClicksGraphQlMutation(IMediator mediator)
         {
-            Name = "IncrementNumberOfClicks";
-            FieldAsync<IdGraphType>(
-                name: nameof(IncrementNumberOfClicksGraphQlMutation),
+            FieldAsync<StringGraphType>(
+                name: "incrementNumberOfClicks",
                 arguments: new QueryArguments(
                     args: new QueryArgument[]
                     {
-                        new QueryArgument<NonNullGraphType<IdGraphType>>
+                        new QueryArgument<NonNullGraphType<StringGraphType>>
                         {
                             Name = "articleId"
                         }
@@ -32,10 +31,10 @@ namespace Espresso.WebApi.GraphQl.ApplicationMutations.ArticlesQueries
                 ),
                 resolve: async resolveContext =>
                 {
-                    var articleId = (Guid)resolveContext.Arguments["articleId"];
+                    var articleIdString = (string)resolveContext.Arguments["articleId"];
                     await mediator.Send(
                            request: new IncrementNumberOfClicksCommand(
-                            id: articleId,
+                            id: Guid.Parse(articleIdString),
                             currentEspressoWebApiVersion: (string)resolveContext.UserContext["currentEspressoWebApiVersion"],
                             targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],
                             consumerVersion: (string)resolveContext.UserContext["consumerVersion"],
@@ -44,7 +43,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationMutations.ArticlesQueries
                            ),
                            cancellationToken: resolveContext.CancellationToken
                         );
-                    return articleId;
+                    return articleIdString;
                 },
                 deprecationReason: null
             );

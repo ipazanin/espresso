@@ -21,9 +21,8 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
         /// <param name="configuration"></param>
         public GetCategoryArticlesGraphQlQuery(IMediator mediator, IWebApiConfiguration configuration)
         {
-            Name = "CategoryArticles";
             FieldAsync<GetCategoryArticlesQueryResponseType>(
-                name: nameof(GetCategoryArticlesGraphQlQuery),
+                name: "categoryArticles",
                 arguments: new QueryArguments(
                     args: new QueryArgument[]
                     {
@@ -49,7 +48,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                         {
                             Name = "regionId",
                         },
-                        new QueryArgument<IntGraphType>
+                        new QueryArgument<StringGraphType>
                         {
                             Name = "titleSearchQuery",
                         },

@@ -21,9 +21,8 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
         /// <param name="configuration"></param>
         public GetLatestArticlesGraphQlQuery(IMediator mediator, IWebApiConfiguration configuration)
         {
-            Name = "LatestArticles";
             FieldAsync<GetLatestArticlesQueryResponseType>(
-                name: nameof(GetLatestArticlesGraphQlQuery),
+                name: "latestArticles",
                 arguments: new QueryArguments(
                     args: new QueryArgument[]
                     {

@@ -14,7 +14,6 @@ namespace Espresso.WebApi.GraphQl.ApplicationMutations
         /// <param name="graphQlMutations"></param>
         public RootGraphQlMutation(IEnumerable<IGraphQlMutation> graphQlMutations)
         {
-            Name = "RootMutation";
             foreach (var marker in graphQlMutations)
             {
                 if (marker is ObjectGraphType<object> q)

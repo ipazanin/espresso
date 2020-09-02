@@ -21,9 +21,8 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
         /// <param name="webApiConfiguration"></param>
         public GetTrendingArticlesGraphQlQuery(IMediator mediator, IWebApiConfiguration webApiConfiguration)
         {
-            Name = "TrendingArticles";
             FieldAsync<GetTrendingArticlesQueryResponseType>(
-                name: nameof(GetTrendingArticlesGraphQlQuery),
+                name: "trendingArticles",
                 arguments: new QueryArguments(
                     args: new QueryArgument[]
                     {
