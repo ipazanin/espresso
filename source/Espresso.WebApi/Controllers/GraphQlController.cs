@@ -65,7 +65,8 @@ namespace Espresso.WebApi.Controllers
             {
                 executionOptions.Schema = _schema;
                 executionOptions.Query = query.Query;
-                executionOptions.Inputs = new Inputs(query.Variables);
+                // executionOptions.Inputs = new Inputs(query.Variables);
+                executionOptions.Inputs = query.Variables is null ? null : new Inputs(query.Variables);
                 executionOptions.OperationName = query.OperationName;
                 executionOptions.CancellationToken = cancellationToken;
 
@@ -81,6 +82,7 @@ namespace Espresso.WebApi.Controllers
                     { "targetedEspressoWebApiVersion", basicInformationsHeaderParameters.EspressoWebApiVersion },
                     { "consumerVersion", basicInformationsHeaderParameters.Version },
                     { "deviceType", basicInformationsHeaderParameters.DeviceType },
+                    { "appEnvironment", WebApiConfiguration.AppConfiguration.AppEnvironment },
                 };
             });
 

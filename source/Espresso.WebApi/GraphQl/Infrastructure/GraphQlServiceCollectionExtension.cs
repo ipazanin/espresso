@@ -44,6 +44,7 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
             services.AddScoped<IDocumentWriter, DocumentWriter>();
 
             services.AddScoped<RootGraphQlQuery>();
+            services.AddScoped<RootGraphQlMutation>();
 
             return services;
         }
