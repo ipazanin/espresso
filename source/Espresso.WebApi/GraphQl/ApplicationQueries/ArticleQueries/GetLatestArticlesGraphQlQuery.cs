@@ -1,11 +1,11 @@
 ﻿using Espresso.Application.CQRS.Articles.Queries.GetLatestArticles;
-using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetLatestArticlesTypes;
 using Espresso.Common.Constants;
+using Espresso.Common.Enums;
+using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.WebApi.Configuration;
+using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetLatestArticlesTypes;
 using GraphQL.Types;
 using MediatR;
-using Espresso.WebApi.Configuration;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
-using Espresso.Common.Enums;
 
 namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
 {

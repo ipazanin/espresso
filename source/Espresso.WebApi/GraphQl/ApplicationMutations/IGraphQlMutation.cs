@@ -1,4 +1,4 @@
-namespace Espresso.WebApi.GraphQl.ApplicationMutations
+﻿namespace Espresso.WebApi.GraphQl.ApplicationMutations
 {
     /// <summary>
     /// Used as marker for mutations

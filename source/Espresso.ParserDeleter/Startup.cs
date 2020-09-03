@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Reflection;
 using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
 using Espresso.Application.DomainServices;

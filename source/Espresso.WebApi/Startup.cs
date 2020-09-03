@@ -3,12 +3,12 @@ using Espresso.Application.Hubs;
 using Espresso.Application.Initialization;
 using Espresso.Common.Enums;
 using Espresso.WebApi.Configuration;
+using Espresso.WebApi.Extensions;
+using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Espresso.WebApi.Extensions;
-using GraphQL.Server.Ui.Playground;
 
 namespace Espresso.WebApi
 {

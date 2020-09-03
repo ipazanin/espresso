@@ -1,4 +1,4 @@
-namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
+﻿namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
 {
     public class GetFeaturedArticlesQueryValidator
     {

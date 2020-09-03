@@ -1,4 +1,4 @@
-using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
+﻿using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
 using Espresso.Application.Initialization;
 using Espresso.Domain.IValidators;
 using Espresso.Domain.Validators;
