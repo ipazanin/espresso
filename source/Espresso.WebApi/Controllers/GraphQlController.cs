@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Espresso.Common.Enums;
+using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Infrastructure;
 using Espresso.WebApi.Parameters.BodyParameters;
@@ -9,11 +12,8 @@ using FluentValidation;
 using GraphQL;
 using GraphQL.Types;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Espresso.WebApi.Authentication;
-using System.Collections.Generic;
-using Espresso.Common.Enums;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Espresso.WebApi.Controllers
 {

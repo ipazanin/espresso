@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Enums.NewsPortalEnums;
