@@ -1,25 +1,7 @@
 ﻿using System;
-using System.Reflection;
-using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
-using Espresso.Application.DomainServices;
-using Espresso.Application.Infrastructure;
-using Espresso.Application.Initialization;
 using Espresso.Common.Constants;
-using Espresso.Common.Enums;
-
-using Espresso.Domain.IServices;
-using Espresso.Domain.IValidators;
-using Espresso.Domain.Services;
-using Espresso.Domain.Validators;
-using Espresso.Persistence.Database;
-using Espresso.Persistence.IRepositories;
-using Espresso.Persistence.Repositories;
-using Espresso.ParserDeleter.Configuration;
-using MediatR;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 

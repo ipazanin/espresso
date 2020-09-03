@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Infrastructure;
 
 namespace Espresso.Domain.Entities

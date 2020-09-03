@@ -7,7 +7,6 @@ using Espresso.Persistence.Repositories;
 using Espresso.WebApi.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Espresso.WebApi.Extensions
 {

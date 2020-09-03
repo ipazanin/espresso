@@ -8,7 +8,6 @@ using Espresso.WebApi.GraphQl.Infrastructure;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Espresso.WebApi.Extensions
 {

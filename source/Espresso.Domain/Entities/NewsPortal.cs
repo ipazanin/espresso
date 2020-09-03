@@ -4,7 +4,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using Espresso.Common.Constants;
 using Espresso.Domain.Infrastructure;
-using Espresso.Domain.Enums.CategoryEnums;
 
 namespace Espresso.Domain.Entities
 {

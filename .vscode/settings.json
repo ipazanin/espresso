@@ -27,6 +27,7 @@
   "omnisharp.enableEditorConfigSupport": true,
   "omnisharp.autoStart": true,
   "omnisharp.enableMsBuildLoadProjectsOnDemand": false,
+  "omnisharp.enableImportCompletion": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "eslint.alwaysShowStatus": true,
   "eslint.format.enable": true,
