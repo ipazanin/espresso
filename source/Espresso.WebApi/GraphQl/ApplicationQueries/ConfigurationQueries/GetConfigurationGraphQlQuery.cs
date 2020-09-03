@@ -1,6 +1,7 @@
 ﻿using Espresso.Application.CQRS.Configuration.Queries.GetConfiguration;
 using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes;
 using GraphQL.Types;
 using MediatR;
@@ -16,7 +17,11 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries
         /// 
         /// </summary>
         /// <param name="mediator"></param>
-        public GetConfigurationGraphQlQuery(IMediator mediator)
+        /// <param name="webApiConfiguration"></param>
+        public GetConfigurationGraphQlQuery(
+            IMediator mediator,
+            IWebApiConfiguration webApiConfiguration
+        )
         {
             FieldAsync<GetConfigurationQueryResponseType>(
                 name: "configuration",
@@ -25,11 +30,12 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries
                 {
                     return await mediator.Send(
                         request: new GetConfigurationQuery(
+                            maxAgeOfNewNewsPortal: webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
                             currentEspressoWebApiVersion: (string)resolveContext.UserContext["currentEspressoWebApiVersion"],
                             targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],
                             consumerVersion: (string)resolveContext.UserContext["consumerVersion"],
                             deviceType: (DeviceType)resolveContext.UserContext["deviceType"],
-                            appEnvironment: (AppEnvironment)resolveContext.UserContext["appEnvironment"]
+                            appEnvironment: webApiConfiguration.AppConfiguration.AppEnvironment
                         ),
                         cancellationToken: resolveContext.CancellationToken
                     );

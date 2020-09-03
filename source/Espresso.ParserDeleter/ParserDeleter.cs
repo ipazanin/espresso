@@ -52,7 +52,7 @@ namespace Espresso.ParserDeleter
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await Task.Yield();
-            await Task.Delay(_configuration.TimersConfiguration.WaitDurationBeforeStartup);
+            await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationBeforeStartup);
 
             await InitializeParser();
 
@@ -79,7 +79,7 @@ namespace Espresso.ParserDeleter
 
                     await mediator.Send(
                         request: new DeleteOldArticlesCommand(
-                            maxAgeOfOldArticles: _configuration.TimersConfiguration.MaxAgeOfOldArticles,
+                            maxAgeOfOldArticles: _configuration.DateTimeConfiguration.MaxAgeOfArticles,
                             currentEspressoWebApiVersion: _configuration.AppConfiguration.RssFeedParserVersion,
                             targetedEspressoWebApiVersion: _configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
                             consumerVersion: _configuration.AppConfiguration.RssFeedParserVersion,
@@ -89,7 +89,7 @@ namespace Espresso.ParserDeleter
                         cancellationToken: cancellationToken
                     );
 
-                    await Task.Delay(_configuration.TimersConfiguration.WaitDurationBetweenCommands);
+                    await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationBetweenCommands);
                 }
                 catch (Exception exception)
                 {
@@ -130,7 +130,7 @@ namespace Espresso.ParserDeleter
                             cancellationToken: default
                     );
 
-                    await Task.Delay(_configuration.TimersConfiguration.WaitDurationAfterErrors);
+                    await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationAfterErrors);
                 }
             }
         }
@@ -219,7 +219,7 @@ namespace Espresso.ParserDeleter
                             appEnvironment: _configuration.AppConfiguration.AppEnvironment,
                             cancellationToken: default
                     );
-                    await Task.Delay(_configuration.TimersConfiguration.WaitDurationAfterWebServerRequestError);
+                    await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationAfterWebServerRequestError);
                 }
             }
         }
@@ -227,7 +227,7 @@ namespace Espresso.ParserDeleter
         private CancellationToken GetCancellationToken()
         {
             var cancellationTokeSource = new CancellationTokenSource(
-                delay: _configuration.TimersConfiguration.CancellationTokenExpirationDuration
+                delay: _configuration.DateTimeConfiguration.CancellationTokenExpirationDuration
             );
             return cancellationTokeSource.Token;
         }

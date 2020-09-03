@@ -36,7 +36,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.UpdateInMemoryArticles
             CreateArticles(request.CreatedArticles);
             UpdateArticles(request.UpdatedArticles);
 
-            RemoveOldArticles();
+            RemoveOldArticles(request.MaxAgeOfArticle);
             var response = new UpdateInMemoryArticlesCommandResponse(request.UpdatedArticles.Count(), request.CreatedArticles.Count());
 
             return Task.FromResult(result: response);
@@ -91,9 +91,9 @@ namespace Espresso.Application.CQRS.Articles.Commands.UpdateInMemoryArticles
             );
         }
 
-        private void RemoveOldArticles()
+        private void RemoveOldArticles(TimeSpan maxAgeOfArticle)
         {
-            var maxAge = DateTime.UtcNow - DateTimeConstants.MaxAgeOfArticle;
+            var maxAge = DateTime.UtcNow - maxAgeOfArticle;
 
             var savedArticles = _memoryCache
                 .Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey);

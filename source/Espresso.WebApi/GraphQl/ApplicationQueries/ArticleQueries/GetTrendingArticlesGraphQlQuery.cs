@@ -44,12 +44,12 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                         request: new GetTrendingArticlesQuery(
                             take: (int)resolveContext.Arguments["take"],
                             skip: (int)resolveContext.Arguments["take"],
-                            maxAgeOfTrendingArticle: webApiConfiguration.AppConfiguration.MaxAgeOfTrendingArticle,
+                            maxAgeOfTrendingArticle: webApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
                             currentEspressoWebApiVersion: (string)resolveContext.UserContext["currentEspressoWebApiVersion"],
                             targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],
                             consumerVersion: (string)resolveContext.UserContext["consumerVersion"],
                             deviceType: (DeviceType)resolveContext.UserContext["deviceType"],
-                            appEnvironment: (AppEnvironment)resolveContext.UserContext["appEnvironment"]
+                            appEnvironment: webApiConfiguration.AppConfiguration.AppEnvironment
                         ),
                         cancellationToken: resolveContext.CancellationToken
                     );

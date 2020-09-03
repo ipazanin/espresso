@@ -61,8 +61,8 @@ namespace Espresso.Application.Infrastructure
             RequestName = typeof(TRequest).Name;
             RequestId = (int)(requestBase?.EventIdEnum ?? Event.Undefined);
             RequestParameters = request?.ToString() ?? "";
-            WebApiVersion = requestBase?.CurrentEspressoWebApiVersion ?? "";
-            TargetedWebApiVersion = requestBase?.TargetedEspressoWebApiVersion ?? "";
+            WebApiVersion = requestBase?.CurrentApiVersion ?? "";
+            TargetedWebApiVersion = requestBase?.TargetedApiVersion ?? "";
             ConsumerVersion = requestBase?.ConsumerVersion ?? "";
             DeviceType = requestBase?.DeviceType ?? DeviceType.Undefined;
             AppEnvironment = requestBase?.AppEnvironment ?? AppEnvironment.Undefined;

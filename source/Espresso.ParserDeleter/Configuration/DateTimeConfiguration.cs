@@ -4,14 +4,17 @@ using Microsoft.Extensions.Configuration;
 
 namespace Espresso.ParserDeleter.Configuration
 {
-    public class TimersConfiguration
+    public class DateTimeConfiguration
     {
         #region Fields
         private readonly IConfigurationSection _configuration;
         #endregion
 
         #region Properties
-        public TimeSpan MaxAgeOfOldArticles => DateTimeConstants.MaxAgeOfArticle;
+        public TimeSpan MaxAgeOfArticles =>
+            TimeSpan.FromDays(
+                value: _configuration.GetValue<int>("MaxAgeOfArticlesInDays")
+            );
 
         public TimeSpan CancellationTokenExpirationDuration =>
             TimeSpan.FromSeconds(
@@ -41,7 +44,7 @@ namespace Espresso.ParserDeleter.Configuration
         #endregion
 
         #region Constructors
-        public TimersConfiguration(IConfigurationSection configuration)
+        public DateTimeConfiguration(IConfigurationSection configuration)
         {
             _configuration = configuration;
         }

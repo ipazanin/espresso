@@ -42,12 +42,8 @@ namespace Espresso.WebApi.Configuration
         /// <summary>
         /// 
         /// </summary>
-        public AppEnvironment AppEnvironment => AppConfiguration.AppEnvironment;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Version => AppVersionConfiguration.Version;
+        /// <value></value>
+        public DateTimeConfiguration DateTimeConfiguration { get; }
         #endregion
 
         #region Constructors
@@ -62,6 +58,7 @@ namespace Espresso.WebApi.Configuration
             DatabaseConfiguration = new DatabaseConfiguration(configuration.GetSection("DatabaseConfiguration"));
             ApiKeysConfiguration = new ApiKeysConfiguration(configuration.GetSection("ApiKeysConfiguration"));
             SpaConfiguration = new SpaConfiguration(configuration.GetSection("SpaConfiguration"));
+            DateTimeConfiguration = new DateTimeConfiguration(configuration.GetSection("DateTimeConfiguration"));
         }
         #endregion
     }

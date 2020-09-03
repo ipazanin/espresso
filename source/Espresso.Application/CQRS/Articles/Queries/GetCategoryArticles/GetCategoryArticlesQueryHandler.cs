@@ -56,7 +56,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
                     NewsPortal.GetCategorySugestedNewsPortalsPredicate(
                         newsPortalIds: request.NewsPortalIds,
                         categoryId: request.CategoryId,
-                        regionId: request.RegionId
+                        regionId: request.RegionId,
+                        maxAgeOfNewNewsPortal: request.MaxAgeOfNewNewsPortal
                     )
                     .Compile()
                 )

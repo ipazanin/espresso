@@ -196,7 +196,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
 
                         await _slackService.LogWarning(
                             eventName: eventName,
-                            version: request.CurrentEspressoWebApiVersion,
+                            version: request.CurrentApiVersion,
                             message: message,
                             exception: exception,
                             appEnvironment: request.AppEnvironment,
@@ -278,7 +278,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                                         ?? new string[] { }
                                 );
                                 await _slackService.LogMissingCategoriesError(
-                                    version: request.CurrentEspressoWebApiVersion,
+                                    version: request.CurrentApiVersion,
                                     rssFeedUrl: rssFeedUrl,
                                     articleUrl: syndicationItem?.Links?.FirstOrDefault()?.Uri?.ToString() ?? "",
                                     urlCategories: urlCategories,
@@ -312,7 +312,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
 
                                 await _slackService.LogWarning(
                                     eventName: eventName,
-                                    version: request.CurrentEspressoWebApiVersion,
+                                    version: request.CurrentApiVersion,
                                     message: message,
                                     exception: exception,
                                     appEnvironment: request.AppEnvironment,

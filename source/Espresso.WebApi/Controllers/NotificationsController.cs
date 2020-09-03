@@ -65,6 +65,7 @@ namespace Espresso.WebApi.Controllers
                 request: new UpdateInMemoryArticlesCommand(
                     articlesRequest.CreatedArticles,
                     articlesRequest.UpdatedArticles,
+                    maxAgeOfArticle: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfArticle,
                     currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,

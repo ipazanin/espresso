@@ -39,7 +39,7 @@ namespace Espresso.Application.CQRS.ApplicationDownloads.Commands.CreateApplicat
         public async Task<Unit> Handle(CreateApplicationDownloadCommand request, CancellationToken cancellationToken)
         {
             var applicationDownload = new ApplicationDownload(
-                webApiVersion: request.CurrentEspressoWebApiVersion,
+                webApiVersion: request.CurrentApiVersion,
                 mobileAppVersion: request.ConsumerVersion,
                 downloadedTime: DateTime.UtcNow,
                 mobileDeviceType: request.DeviceType

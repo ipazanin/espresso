@@ -29,7 +29,7 @@ namespace Espresso.Application.CQRS.ApplicationDownloads.Commands.CreateApplicat
         #region Methods
         public override string ToString()
         {
-            return $"{nameof(CurrentEspressoWebApiVersion)}:{CurrentEspressoWebApiVersion}, " +
+            return $"{nameof(CurrentApiVersion)}:{CurrentApiVersion}, " +
                 $"{nameof(ConsumerVersion)}:{ConsumerVersion}, " +
                 $"{nameof(DeviceType)}:{DeviceType} ";
         }

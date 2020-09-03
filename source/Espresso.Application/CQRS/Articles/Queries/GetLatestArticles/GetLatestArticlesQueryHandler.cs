@@ -55,7 +55,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
                 .Where(
                     predicate: NewsPortal.GetLatestSugestedNewsPortalsPredicate(
                         newsPortalIds: request.NewsPortalIds,
-                        categoryIds: request.CategoryIds
+                        categoryIds: request.CategoryIds,
+                        maxAgeOfNewNewsPortal: request.MaxAgeOfNewNewsPortal
                     ).Compile()
                 )
                 .OrderBy(keySelector: NewsPortal.GetOrderByExpression().Compile())

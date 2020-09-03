@@ -37,7 +37,7 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
         #endregion
 
         #region Methods
-        public static Expression<Func<Category, GetConfigurationCategoryWithNewsPortals>> GetProjection()
+        public static Expression<Func<Category, GetConfigurationCategoryWithNewsPortals>> GetProjection(TimeSpan maxAgeOfNewNewsPortal)
         {
             return category => new GetConfigurationCategoryWithNewsPortals
             {
@@ -46,7 +46,12 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
                 Color = category.Color,
                 Position = category.Position,
                 CategoryType = category.CategoryType,
-                NewsPortals = category.NewsPortals.Select(GetConfigurationNewsPortal.GetProjection().Compile())
+                NewsPortals = category.NewsPortals
+                    .Select(
+                        GetConfigurationNewsPortal
+                            .GetProjection(maxAgeOfNewNewsPortal)
+                            .Compile()
+                    )
             };
         }
         #endregion

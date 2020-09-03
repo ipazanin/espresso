@@ -35,7 +35,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.DeleteOldArticles
         #region Methods
         public Task<DeleteOldArticlesCommandResponse> Handle(DeleteOldArticlesCommand request, CancellationToken cancellationToken)
         {
-            var maxArticleAge = DateTime.UtcNow - DateTimeConstants.MaxAgeOfArticle;
+            var maxArticleAge = DateTime.UtcNow - request.MaxAgeOfOldArticles;
 
             var memoryCacheArticles = _memoryCache.Get<IEnumerable<Article>>(key: MemoryCacheConstants.ArticleKey);
             var notOldMemoryCacheArticles = memoryCacheArticles

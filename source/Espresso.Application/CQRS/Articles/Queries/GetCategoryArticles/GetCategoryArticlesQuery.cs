@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Espresso.Application.Infrastructure;
 using Espresso.Common.Constants;
@@ -23,6 +24,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
         public int NewNewsPortalsPosition { get; }
 
         public string? TitleSearchQuery { get; }
+
+        public TimeSpan MaxAgeOfNewNewsPortal { get; }
         #endregion
 
         #region Constructors
@@ -32,6 +35,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
             int categoryId,
             string? newsPortalIdsString,
             int? regionId,
+            TimeSpan maxAgeOfNewNewsPortal,
             string currentEspressoWebApiVersion,
             string targetedEspressoWebApiVersion,
             string consumerVersion,
@@ -52,6 +56,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
             Skip = skip ?? DefaultValueConstants.DefaultSkip;
             CategoryId = categoryId;
             RegionId = regionId;
+            MaxAgeOfNewNewsPortal = maxAgeOfNewNewsPortal;
             var newsPortalIds = newsPortalIdsString
                 ?.Replace(" ", "")
                 ?.Split(',')

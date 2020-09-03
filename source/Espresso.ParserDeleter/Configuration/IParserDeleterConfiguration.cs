@@ -5,6 +5,6 @@
         public ApiKeysConfiguration ApiKeysConfiguration { get; }
         public AppConfiguration AppConfiguration { get; }
         public DatabaseConfiguration DatabaseConfiguration { get; }
-        public TimersConfiguration TimersConfiguration { get; }
+        public DateTimeConfiguration DateTimeConfiguration { get; }
     }
 }

@@ -27,22 +27,6 @@ namespace Espresso.WebApi.Configuration
         /// <value></value>
         public int NewNewsPortalsPosition => _configuration.GetValue<int>("NewNewsPortalsPosition");
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        public TimeSpan MaxAgeOfTrendingArticle => TimeSpan.FromHours(
-            value: _configuration.GetValue<int>("MaxAgeOfTrendingArticlesInHours")
-        );
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        public TimeSpan MaxAgeOfFeaturedArticle => TimeSpan.FromHours(
-            value: _configuration.GetValue<int>("MaxAgeOfFeaturedArticlesInHours")
-        );
-
         #endregion
 
         #region Constructors

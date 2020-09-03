@@ -9,11 +9,7 @@ namespace Espresso.ParserDeleter.Configuration
         public ApiKeysConfiguration ApiKeysConfiguration { get; }
         public AppConfiguration AppConfiguration { get; }
         public DatabaseConfiguration DatabaseConfiguration { get; }
-        public TimersConfiguration TimersConfiguration { get; }
-
-        public AppEnvironment AppEnvironment => AppConfiguration.AppEnvironment;
-
-        public string Version => AppConfiguration.Version;
+        public DateTimeConfiguration DateTimeConfiguration { get; }
         #endregion
 
         #region Constructors
@@ -22,7 +18,7 @@ namespace Espresso.ParserDeleter.Configuration
             ApiKeysConfiguration = new ApiKeysConfiguration(configuration.GetSection("ApiKeysConfiguration"));
             AppConfiguration = new AppConfiguration(configuration.GetSection("AppConfiguration"));
             DatabaseConfiguration = new DatabaseConfiguration(configuration.GetSection("DatabaseConfiguration"));
-            TimersConfiguration = new TimersConfiguration(configuration.GetSection("TimersConfiguration"));
+            DateTimeConfiguration = new DateTimeConfiguration(configuration.GetSection("DateTimeConfiguration"));
         }
         #endregion
     }

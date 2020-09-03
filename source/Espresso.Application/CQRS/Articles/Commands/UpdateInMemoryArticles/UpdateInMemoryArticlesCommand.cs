@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Espresso.Application.DataTransferObjects;
 using Espresso.Application.Infrastructure;
@@ -12,9 +13,12 @@ namespace Espresso.Application.CQRS.Articles.Commands.UpdateInMemoryArticles
         public IEnumerable<ArticleDto> CreatedArticles { get; }
         public IEnumerable<ArticleDto> UpdatedArticles { get; }
 
+        public TimeSpan MaxAgeOfArticle { get; }
+
         public UpdateInMemoryArticlesCommand(
             IEnumerable<ArticleDto> createdArticles,
             IEnumerable<ArticleDto> updatedArticles,
+            TimeSpan maxAgeOfArticle,
             string currentEspressoWebApiVersion,
             string targetedEspressoWebApiVersion,
             string consumerVersion,
@@ -31,6 +35,7 @@ namespace Espresso.Application.CQRS.Articles.Commands.UpdateInMemoryArticles
         {
             CreatedArticles = createdArticles;
             UpdatedArticles = updatedArticles;
+            MaxAgeOfArticle = maxAgeOfArticle;
         }
 
         public override string ToString()

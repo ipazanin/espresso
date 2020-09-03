@@ -1,4 +1,5 @@
-﻿using Espresso.Application.Infrastructure;
+﻿using System;
+using Espresso.Application.Infrastructure;
 using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 
@@ -6,7 +7,10 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
 {
     public class GetConfigurationQuery : Request<GetConfigurationQueryResponse>
     {
+        public TimeSpan MaxAgeOfNewNewsPortal { get; }
+
         public GetConfigurationQuery(
+            TimeSpan maxAgeOfNewNewsPortal,
             string currentEspressoWebApiVersion,
             string targetedEspressoWebApiVersion,
             string consumerVersion,
@@ -21,11 +25,12 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
             Event.GetConfigurationQuery
         )
         {
+            MaxAgeOfNewNewsPortal = maxAgeOfNewNewsPortal;
         }
 
         public override string ToString()
         {
-            return "";
+            return $"{nameof(MaxAgeOfNewNewsPortal)}:{MaxAgeOfNewNewsPortal}";
         }
     }
 }

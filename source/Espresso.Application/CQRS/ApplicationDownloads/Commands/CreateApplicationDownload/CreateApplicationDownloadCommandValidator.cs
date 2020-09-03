@@ -11,7 +11,7 @@ namespace Espresso.Application.CQRS.ApplicationDownloads.Commands.CreateApplicat
         {
             _ = RuleFor(createApplicationDownloadCommand => createApplicationDownloadCommand.ConsumerVersion).NotEmpty().MaximumLength(PropertyConstraintConstants.ApplicationDownloadMobileAppVersionHasMaxLenght);
 
-            _ = RuleFor(createApplicationDownloadCommand => createApplicationDownloadCommand.CurrentEspressoWebApiVersion).NotEmpty().MaximumLength(PropertyConstraintConstants.ApplicationDownloadWebApiVersionHasMaxLenght);
+            _ = RuleFor(createApplicationDownloadCommand => createApplicationDownloadCommand.CurrentApiVersion).NotEmpty().MaximumLength(PropertyConstraintConstants.ApplicationDownloadWebApiVersionHasMaxLenght);
 
             _ = RuleFor(createApplicationDownloadCommand => createApplicationDownloadCommand.DeviceType).Must(mobileDeviceType => Enum.IsDefined(typeof(DeviceType), mobileDeviceType) && mobileDeviceType != DeviceType.Undefined);
         }

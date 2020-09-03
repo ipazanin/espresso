@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Espresso.Application.Infrastructure;
 using Espresso.Common.Constants;
@@ -21,6 +22,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
         public int NewNewsPortalsPosition { get; }
 
         public string? TitleSearchQuery { get; }
+
+        public TimeSpan MaxAgeOfNewNewsPortal { get; }
         #endregion
 
         #region Constructors
@@ -31,6 +34,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
             string? categoryIdsString,
             int newNewsPortalsPosition,
             string? titleSearchQuery,
+            TimeSpan maxAgeOfNewNewsPortal,
             string currentEspressoWebApiVersion,
             string targetedEspressoWebApiVersion,
             string consumerVersion,
@@ -66,6 +70,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
 
             NewNewsPortalsPosition = newNewsPortalsPosition;
             TitleSearchQuery = titleSearchQuery;
+            MaxAgeOfNewNewsPortal = maxAgeOfNewNewsPortal;
         }
         #endregion
 
