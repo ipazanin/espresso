@@ -11,16 +11,26 @@ namespace Espresso.Application.CQRS.Notifications.Commands.SendPushNotification
 {
     public class SendPushNotificationCommandHandler : IRequestHandler<SendPushNotificationCommand>
     {
+        #region Constants
         private const string DefaultSoundName = "default";
-        private readonly IApplicationDatabaseContext _espressoDatabaseContext;
+        private const string DisabledSoundName = "";
+        private const int DefaultBadge = 1;
+        #endregion
 
+        #region Fields
+        private readonly IApplicationDatabaseContext _espressoDatabaseContext;
+        #endregion
+
+        #region Constructors
         public SendPushNotificationCommandHandler(
             IApplicationDatabaseContext espressoDatabaseContext
         )
         {
             _espressoDatabaseContext = espressoDatabaseContext;
         }
+        #endregion
 
+        #region Methods
         public async Task<Unit> Handle(SendPushNotificationCommand request, CancellationToken cancellationToken)
         {
             var message = new Message()
@@ -35,8 +45,10 @@ namespace Espresso.Application.CQRS.Notifications.Commands.SendPushNotification
                 {
                     Aps = new Aps
                     {
-                        Badge = 1,
-                        Sound = request.IsSoundEnabled ? DefaultSoundName : ""
+                        Badge = DefaultBadge,
+                        Sound = request.IsSoundEnabled ?
+                            DefaultSoundName :
+                            DisabledSoundName
                     }
                 },
                 Android = new AndroidConfig
@@ -76,5 +88,6 @@ namespace Espresso.Application.CQRS.Notifications.Commands.SendPushNotification
 
             return Unit.Value;
         }
+        #endregion
     }
 }

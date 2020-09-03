@@ -1,5 +1,4 @@
-﻿using System;
-using Espresso.Domain.Entities;
+﻿using Espresso.Domain.Entities;
 using Espresso.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 
