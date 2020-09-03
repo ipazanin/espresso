@@ -47,8 +47,8 @@ namespace Espresso.Application.Infrastructure
             };
             var requestId = (int)(requestBase?.EventIdEnum ?? Event.Undefined);
             var requestName = typeof(TRequest).Name;
-            var apiVersion = requestBase?.CurrentEspressoWebApiVersion ?? "";
-            var targetedApiVersion = requestBase?.TargetedEspressoWebApiVersion ?? "";
+            var apiVersion = requestBase?.CurrentApiVersion ?? "";
+            var targetedApiVersion = requestBase?.TargetedApiVersion ?? "";
             var consumerVersion = requestBase?.ConsumerVersion ?? "";
             var deviceType = requestBase?.DeviceType ?? DeviceType.Undefined;
             var requestParameters = request?.ToString() ?? "";

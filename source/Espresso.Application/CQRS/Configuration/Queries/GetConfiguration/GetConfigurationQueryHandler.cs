@@ -33,7 +33,13 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
 
             var newsPortalDtos = newsPortals
                 .OrderBy(keySelector: newsPortal => newsPortal.Name)
-                .Select(selector: GetConfigurationNewsPortal.GetProjection().Compile());
+                .Select(
+                    selector: GetConfigurationNewsPortal
+                        .GetProjection(
+                            maxAgeOfNewNewsPortal: request.MaxAgeOfNewNewsPortal
+                        )
+                        .Compile()
+                );
 
             var categoryDtos = categories
                 .Where(predicate: Category.GetAllCategoriesExceptGeneralExpression().Compile())
@@ -42,13 +48,23 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
             var categoriesWithNewsPortals = categories
                 .OrderBy(category => category.SortIndex)
                 .Where(predicate: Category.GetAllCategoriesExceptLocalExpression().Compile())
-                .Select(selector: GetConfigurationCategoryWithNewsPortals.GetProjection().Compile())
+                .Select(
+                    selector: GetConfigurationCategoryWithNewsPortals
+                        .GetProjection(maxAgeOfNewNewsPortal: request.MaxAgeOfNewNewsPortal)
+                        .Compile()
+                )
                 .Where(grouping => grouping.NewsPortals.Count() != 0);
 
             var regionGroupedNewsPortals = regions
                 .OrderBy(keySelector: Region.GetOrderByRegionNameExpression().Compile())
                 .Where(predicate: Region.GetAllRegionsExpectGlobalPredicate().Compile())
-                .Select(selector: GetConfigurationRegion.GetProjection().Compile());
+                .Select(
+                    selector: GetConfigurationRegion
+                        .GetProjection(
+                            maxAgeOfNewNewsPortal: request.MaxAgeOfNewNewsPortal
+                        )
+                        .Compile()
+                );
 
             var response = new GetConfigurationQueryResponse(
                 categoriesWithNewsPortals: categoriesWithNewsPortals,

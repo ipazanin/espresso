@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
 using FirebaseAdmin.Messaging;
@@ -33,6 +34,7 @@ namespace Espresso.Application.CQRS.Notifications.Commands.SendPushNotification
         #region Methods
         public async Task<Unit> Handle(SendPushNotificationCommand request, CancellationToken cancellationToken)
         {
+            var internalName = GetInternalName(request.InternalName);
             var message = new Message()
             {
                 Notification = new Notification
@@ -55,6 +57,7 @@ namespace Espresso.Application.CQRS.Notifications.Commands.SendPushNotification
                 {
                     Data = new Dictionary<string, string>
                     {
+                        { "internalName", internalName },
                         { "title", request.Title },
                         { "message", request.Message },
                         { "url", request.ArticleUrl },
@@ -63,6 +66,7 @@ namespace Espresso.Application.CQRS.Notifications.Commands.SendPushNotification
                 },
                 Data = new Dictionary<string, string>
                 {
+                    { "internalName", internalName },
                     { "title", request.Title },
                     { "message", request.Message },
                     { "url", request.ArticleUrl },
@@ -87,6 +91,13 @@ namespace Espresso.Application.CQRS.Notifications.Commands.SendPushNotification
             _ = await _espressoDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
 
             return Unit.Value;
+        }
+
+        private string GetInternalName(string? internalName)
+        {
+            return string.IsNullOrWhiteSpace(internalName) ?
+                $"ESPR-{DateTime.UtcNow.ToString(DateTimeConstants.PushNotificationInternalNameFormat)}" :
+                internalName;
         }
         #endregion
     }

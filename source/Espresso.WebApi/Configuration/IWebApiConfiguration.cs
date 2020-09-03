@@ -34,5 +34,11 @@
         /// </summary>
         /// <value></value>
         public SpaConfiguration SpaConfiguration { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public DateTimeConfiguration DateTimeConfiguration { get; }
     }
 }

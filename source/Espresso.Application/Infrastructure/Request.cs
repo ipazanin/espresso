@@ -1,5 +1,6 @@
 ﻿using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.Domain.Extensions;
 using MediatR;
 
 namespace Espresso.Application.Infrastructure
@@ -7,9 +8,9 @@ namespace Espresso.Application.Infrastructure
     public abstract class Request<TResponse> : IRequest<TResponse>
     {
         #region Properties
-        public string CurrentEspressoWebApiVersion { get; }
+        public string CurrentApiVersion { get; }
 
-        public string TargetedEspressoWebApiVersion { get; }
+        public string TargetedApiVersion { get; }
 
         public string ConsumerVersion { get; }
 
@@ -30,12 +31,24 @@ namespace Espresso.Application.Infrastructure
             Event eventIdEnum
         )
         {
-            CurrentEspressoWebApiVersion = currentEspressoWebApiVersion;
-            TargetedEspressoWebApiVersion = targetedEspressoWebApiVersion;
+            CurrentApiVersion = currentEspressoWebApiVersion;
+            TargetedApiVersion = targetedEspressoWebApiVersion;
             ConsumerVersion = consumerVersion;
             DeviceType = deviceType;
             EventIdEnum = eventIdEnum;
             AppEnvironment = appEnvironment;
+        }
+        #endregion
+
+        #region Methods
+        public override string ToString()
+        {
+            return $"{nameof(CurrentApiVersion)}:{CurrentApiVersion}, " +
+            $"{nameof(TargetedApiVersion)}:{TargetedApiVersion}, " +
+            $"{nameof(ConsumerVersion)}:{ConsumerVersion}, " +
+            $"{nameof(DeviceType)}:{DeviceType.GetDisplayName()}, " +
+            $"{nameof(EventIdEnum)}:{EventIdEnum.GetDisplayName()}, " +
+            $"{nameof(AppEnvironment)}:{AppEnvironment.GetDisplayName()}";
         }
         #endregion
     }

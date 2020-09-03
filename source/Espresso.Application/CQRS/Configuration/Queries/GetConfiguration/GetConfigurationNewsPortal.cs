@@ -26,8 +26,9 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
 
         public int RegionId { get; private set; }
 
-        public static Expression<Func<NewsPortal, GetConfigurationNewsPortal>> GetProjection()
+        public static Expression<Func<NewsPortal, GetConfigurationNewsPortal>> GetProjection(TimeSpan maxAgeOfNewNewsPortal)
         {
+            var newNewsPortalMinDate = DateTime.UtcNow - maxAgeOfNewNewsPortal;
             return newsPortal => new GetConfigurationNewsPortal
             {
                 Id = newsPortal.Id,
@@ -35,7 +36,7 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
                 IconUrl = newsPortal.IconUrl,
                 IsNew = newsPortal.IsNewOverride != null ?
                     newsPortal.IsNewOverride.Value :
-                    (newsPortal.CreatedAt > (DateTime.UtcNow - DateTimeConstants.MaxAgeOfNewNewsPortal)),
+                    newsPortal.CreatedAt > newNewsPortalMinDate,
                 CategoryId = newsPortal.CategoryId,
                 RegionId = newsPortal.RegionId
             };

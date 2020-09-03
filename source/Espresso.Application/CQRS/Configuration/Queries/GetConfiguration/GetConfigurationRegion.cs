@@ -27,14 +27,20 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
         #endregion
 
         #region Methods
-        public static Expression<Func<Region, GetConfigurationRegion>> GetProjection()
+        public static Expression<Func<Region, GetConfigurationRegion>> GetProjection(TimeSpan maxAgeOfNewNewsPortal)
         {
             return region => new GetConfigurationRegion
             {
                 Id = region.Id,
                 Name = region.Name,
                 Subtitle = region.Subtitle,
-                NewsPortals = region.NewsPortals.Select(GetConfigurationNewsPortal.GetProjection().Compile()),
+                NewsPortals = region
+                    .NewsPortals
+                    .Select(
+                        GetConfigurationNewsPortal
+                            .GetProjection(maxAgeOfNewNewsPortal)
+                            .Compile()
+                    ),
             };
         }
         #endregion

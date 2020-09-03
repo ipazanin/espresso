@@ -57,6 +57,7 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var request = new GetConfigurationQuery(
+                maxAgeOfNewNewsPortal: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
                 currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                 targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                 consumerVersion: basicInformationsHeaderParameters.Version,

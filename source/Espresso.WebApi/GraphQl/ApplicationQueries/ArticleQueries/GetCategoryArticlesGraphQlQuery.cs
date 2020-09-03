@@ -18,8 +18,11 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
         /// 
         /// </summary>
         /// <param name="mediator"></param>
-        /// <param name="configuration"></param>
-        public GetCategoryArticlesGraphQlQuery(IMediator mediator, IWebApiConfiguration configuration)
+        /// <param name="webApiConfiguration"></param>
+        public GetCategoryArticlesGraphQlQuery(
+            IMediator mediator,
+            IWebApiConfiguration webApiConfiguration
+        )
         {
             FieldAsync<GetCategoryArticlesQueryResponseType>(
                 name: "categoryArticles",
@@ -63,13 +66,14 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             newsPortalIdsString: (string?)resolveContext.Arguments["newsPortalIds"],
                             categoryId: (int)resolveContext.Arguments["categoryId"],
                             regionId: (int?)resolveContext.Arguments["regionId"],
-                            newNewsPortalsPosition: configuration.AppConfiguration.NewNewsPortalsPosition,
+                            newNewsPortalsPosition: webApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                             titleSearchQuery: (string?)resolveContext.Arguments["titleSearchQuery"],
+                            maxAgeOfNewNewsPortal: webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
                             currentEspressoWebApiVersion: (string)resolveContext.UserContext["currentEspressoWebApiVersion"],
                             targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],
                             consumerVersion: (string)resolveContext.UserContext["consumerVersion"],
                             deviceType: (DeviceType)resolveContext.UserContext["deviceType"],
-                            appEnvironment: (AppEnvironment)resolveContext.UserContext["appEnvironment"]
+                            appEnvironment: webApiConfiguration.AppConfiguration.AppEnvironment
                         ),
                         cancellationToken: resolveContext.CancellationToken
                     );
