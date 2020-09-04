@@ -78,7 +78,7 @@ namespace Espresso.Application.CQRS.Notifications.Commands.SendPushNotification
             _ = await messaging.SendAsync(message);
             var pushNotification = new PushNotification(
                 id: Guid.NewGuid(),
-                internalName: request.InternalName,
+                internalName: internalName,
                 title: request.Title,
                 message: request.Message,
                 topic: request.Topic,
