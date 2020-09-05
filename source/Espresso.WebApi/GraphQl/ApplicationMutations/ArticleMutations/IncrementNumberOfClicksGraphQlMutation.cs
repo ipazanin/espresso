@@ -1,6 +1,5 @@
 ﻿using System;
 using Espresso.Application.CQRS.Articles.Commands.IncrementTrendingArticleScore;
-using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Configuration;
 using GraphQL.Types;

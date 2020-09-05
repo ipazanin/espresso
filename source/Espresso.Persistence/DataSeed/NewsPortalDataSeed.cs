@@ -384,7 +384,7 @@ namespace Espresso.Persistence.DataSeed
                     id:(int)NewsPortalId.DalmacijaNews,
                     name: NewsPortalId.DalmacijaNews.GetDisplayName(),
                     baseUrl: "https://www.dalmacijanews.hr",
-                    iconUrl: $"Icons/{NewsPortalId.DalmacijaDanas}{FileExtensionConstants.Png}",
+                    iconUrl: $"Icons/{NewsPortalId.DalmacijaNews}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,

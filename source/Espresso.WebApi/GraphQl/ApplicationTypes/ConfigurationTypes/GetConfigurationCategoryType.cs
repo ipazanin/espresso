@@ -29,6 +29,9 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes
             Field<IntGraphType>(
                 name: nameof(GetConfigurationCategory.Position)
             );
+            Field<IntGraphType>(
+                name: nameof(GetConfigurationCategory.Url)
+            );
         }
     }
 }

@@ -8,6 +8,16 @@ namespace Espresso.Domain.Entities
 {
     public class Category : IEntity<int, Category>
     {
+        #region Constants
+        public const int NameHasMaxLenght = 20;
+
+        public const int ColorHasMaxLenght = 20;
+
+        public const int KeyWordsRegexPatterHasMaxLenght = 1000;
+
+        public const int UrlHasMaxLength = 20;
+        #endregion
+
         #region Properties
         public int Id { get; private set; }
 
@@ -22,6 +32,8 @@ namespace Espresso.Domain.Entities
         public int? Position { get; private set; }
 
         public CategoryType CategoryType { get; private set; }
+
+        public string Url { get; private set; }
 
         public ICollection<ArticleCategory> ArticleCategories { get; private set; } = new List<ArticleCategory>();
 
@@ -38,6 +50,7 @@ namespace Espresso.Domain.Entities
         {
             Name = null!;
             Color = null!;
+            Url = null!;
         }
 
         public Category(
@@ -47,7 +60,8 @@ namespace Espresso.Domain.Entities
             string? keyWordsRegexPattern,
             int? sortIndex,
             int? position,
-            CategoryType categoryType
+            CategoryType categoryType,
+            string categoryUrl
         )
         {
             Id = id;
@@ -57,6 +71,7 @@ namespace Espresso.Domain.Entities
             SortIndex = sortIndex;
             Position = position;
             CategoryType = categoryType;
+            Url = categoryUrl;
         }
         #endregion
 

@@ -5,6 +5,7 @@ using Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries;
 using Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries;
 using Espresso.WebApi.GraphQl.ApplicationSchema;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetCategoryArticlesTypes;
+using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetFeaturedArticlesTypes;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetLatestArticlesTypes;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetTrendingArticlesTypes;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes;
@@ -53,11 +54,13 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
         private static IServiceCollection AddGraphQlQueries(this IServiceCollection services)
         {
             services.AddScoped<GetLatestArticlesGraphQlQuery>();
+            services.AddScoped<GetFeaturedArticlesGraphQlQuery>();
             services.AddScoped<GetCategoryArticlesGraphQlQuery>();
             services.AddScoped<GetTrendingArticlesGraphQlQuery>();
             services.AddScoped<GetConfigurationGraphQlQuery>();
 
             services.AddScoped<IGraphQlQuery, GetLatestArticlesGraphQlQuery>();
+            services.AddScoped<IGraphQlQuery, GetFeaturedArticlesGraphQlQuery>();
             services.AddScoped<IGraphQlQuery, GetCategoryArticlesGraphQlQuery>();
             services.AddScoped<IGraphQlQuery, GetTrendingArticlesGraphQlQuery>();
             services.AddScoped<IGraphQlQuery, GetConfigurationGraphQlQuery>();
@@ -78,6 +81,7 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
         {
             services.AddGetCategoryArticlesGraphQlTypes();
             services.AddGetLatestArticlesGraphQlTypes();
+            services.AddGetFeaturedArticlesGraphQlTypes();
             services.AddGetTrendingArticlesGraphQlTypes();
             services.AddConfigurationGraphQlTypes();
 
@@ -100,6 +104,16 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
             services.AddScoped<GetLatestArticlesCategoryType>();
             services.AddScoped<GetLatestArticlesNewsPortalType>();
             services.AddScoped<GetLatestArticlesQueryResponseType>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddGetFeaturedArticlesGraphQlTypes(this IServiceCollection services)
+        {
+            services.AddScoped<GetFeaturedArticlesArticleType>();
+            services.AddScoped<GetFeaturedArticlesCategoryType>();
+            services.AddScoped<GetFeaturedArticlesNewsPortalType>();
+            services.AddScoped<GetFeaturedArticlesQueryResponseType>();
 
             return services;
         }

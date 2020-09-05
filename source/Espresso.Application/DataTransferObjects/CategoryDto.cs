@@ -17,9 +17,11 @@ namespace Espresso.Application.DataTransferObjects
 
         public int? SortIndex { get; set; }
 
-        public int? Position { get; private set; }
+        public int? Position { get; set; }
 
-        public CategoryType CategoryType { get; private set; }
+        public CategoryType CategoryType { get; set; }
+
+        public string Url { get; set; }
         #endregion
 
         #region Contructors
@@ -31,6 +33,7 @@ namespace Espresso.Application.DataTransferObjects
             Name = null!;
             Color = null!;
             KeyWordsRegexPattern = null!;
+            Url = null!;
         }
         #endregion
 
@@ -45,7 +48,8 @@ namespace Espresso.Application.DataTransferObjects
                 KeyWordsRegexPattern = category.KeyWordsRegexPattern,
                 SortIndex = category.SortIndex,
                 Position = category.Position,
-                CategoryType = category.CategoryType
+                CategoryType = category.CategoryType,
+                Url = category.Url
             };
         }
         #endregion

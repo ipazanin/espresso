@@ -1,5 +1,4 @@
-﻿using System;
-using Espresso.Common.Enums;
+﻿using Espresso.Common.Enums;
 using Microsoft.Extensions.Configuration;
 
 namespace Espresso.WebApi.Configuration

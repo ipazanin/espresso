@@ -1,7 +1,8 @@
-﻿using Espresso.Application.CQRS.Articles.Queries.GetLatestArticles;
+﻿using Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles;
 using Espresso.Common.Constants;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Configuration;
+using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetFeaturedArticlesTypes;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetLatestArticlesTypes;
 using GraphQL.Types;
 using MediatR;
@@ -11,20 +12,20 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
     /// <summary>
     /// 
     /// </summary>
-    public class GetLatestArticlesGraphQlQuery : ObjectGraphType, IGraphQlQuery
+    public class GetFeaturedArticlesGraphQlQuery : ObjectGraphType, IGraphQlQuery
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="mediator"></param>
         /// <param name="webApiConfiguration"></param>
-        public GetLatestArticlesGraphQlQuery(
+        public GetFeaturedArticlesGraphQlQuery(
             IMediator mediator,
             IWebApiConfiguration webApiConfiguration
         )
         {
-            FieldAsync<GetLatestArticlesQueryResponseType>(
-                name: "latestArticles",
+            FieldAsync<GetFeaturedArticlesQueryResponseType>(
+                name: "featuredArticles",
                 arguments: new QueryArguments(
                     args: new QueryArgument[]
                     {
@@ -50,10 +51,6 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                         {
                             Name = "categoryIds",
                         },
-                        new QueryArgument<StringGraphType>
-                        {
-                            Name = "titleSearchQuery",
-                        },
                     }
                 ),
                 resolve: async resolveContext =>
@@ -61,15 +58,14 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                     var minTimestampString = (string?)resolveContext.Arguments["minTimestamp"];
                     var minTimestamp = string.IsNullOrEmpty(minTimestampString) ? null : (long?)long.Parse(minTimestampString);
                     return await mediator.Send(
-                        request: new GetLatestArticlesQuery(
+                        request: new GetFeaturedArticlesQuery(
                             take: (int)resolveContext.Arguments["take"],
                             skip: (int)resolveContext.Arguments["skip"],
                             minTimestamp: minTimestamp,
                             newsPortalIdsString: (string?)resolveContext.Arguments["newsPortalIds"],
                             categoryIdsString: (string?)resolveContext.Arguments["categoryIds"],
-                            newNewsPortalsPosition: webApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
-                            titleSearchQuery: (string?)resolveContext.Arguments["titleSearchQuery"],
-                            maxAgeOfNewNewsPortal: webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
+                            maxAgeOfFeaturedArticle: webApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,
+                            maxAgeOfTrendingArticle: webApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
                             currentEspressoWebApiVersion: (string)resolveContext.UserContext["currentEspressoWebApiVersion"],
                             targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],
                             consumerVersion: (string)resolveContext.UserContext["consumerVersion"],

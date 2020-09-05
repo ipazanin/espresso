@@ -22,6 +22,8 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
         public int? Position { get; private set; }
 
         public CategoryType CategoryType { get; private set; }
+
+        public string Url { get; private set; }
         #endregion
 
         #region Constructors
@@ -29,6 +31,24 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
         {
             Name = null!;
             Color = null!;
+            Url = null!;
+        }
+
+        public GetConfigurationCategory(
+            int id,
+            string name,
+            string color,
+            int? position,
+            CategoryType categoryType,
+            string url
+        )
+        {
+            Id = id;
+            Name = name;
+            Color = color;
+            Position = position;
+            CategoryType = categoryType;
+            Url = url;
         }
         #endregion
 
@@ -42,6 +62,7 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
                 Color = category.Color,
                 Position = category.Position,
                 CategoryType = category.CategoryType,
+                Url = category.Url
             };
         }
         #endregion

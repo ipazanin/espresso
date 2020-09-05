@@ -1,5 +1,4 @@
-﻿using Espresso.Common.Enums;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace Espresso.ParserDeleter.Configuration
 {

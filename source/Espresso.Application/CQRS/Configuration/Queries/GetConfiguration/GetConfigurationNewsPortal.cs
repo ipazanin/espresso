@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq.Expressions;
-using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 
 namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
