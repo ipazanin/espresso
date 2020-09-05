@@ -80,10 +80,12 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
         #region Methods
         public override string ToString()
         {
-            return $"{nameof(Take)}:{Take}, {nameof(Skip)}:{Skip}, " +
-            $"{nameof(NewsPortalIds)}:{(NewsPortalIds is null ? "" : string.Join(",", NewsPortalIds))}, " +
-            $"{nameof(CategoryIds)}:{(CategoryIds is null ? "" : string.Join(",", CategoryIds))}, " +
-            $"{nameof(TitleSearchQuery)}:{TitleSearchQuery}";
+            return $"{nameof(Take)}:{Take}, " +
+                $"{nameof(Skip)}:{Skip}, " +
+                $"{nameof(MinTimestamp)}:{MinTimestamp}, " +
+                $"{nameof(NewsPortalIds)}:{(NewsPortalIds is null ? "" : string.Join(",", NewsPortalIds))}, " +
+                $"{nameof(CategoryIds)}:{(CategoryIds is null ? "" : string.Join(",", CategoryIds))}, " +
+                $"{nameof(TitleSearchQuery)}:{TitleSearchQuery}";
         }
         #endregion
     }

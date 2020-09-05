@@ -76,7 +76,10 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
         #region Methods
         public override string ToString()
         {
-            return $"{nameof(Take)}:{Take}, {nameof(Skip)}:{Skip}, {nameof(CategoryId)}:{CategoryId}, " +
+            return $"{nameof(Take)}:{Take}, " +
+                $"{nameof(Skip)}:{Skip}, " +
+                $"{nameof(MinTimestamp)}:{MinTimestamp}, " +
+                $"{nameof(CategoryId)}:{CategoryId}, " +
                 $"{nameof(NewsPortalIds)}:{(NewsPortalIds is null ? "" : string.Join(",", NewsPortalIds))}";
         }
         #endregion
