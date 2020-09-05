@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200905151717_IPazanin_AddedCategoryUrl")]
+    partial class IPazanin_AddedCategoryUrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -669,7 +671,7 @@ namespace Espresso.Persistence.Migrations
                             BaseUrl = "https://www.dalmacijanews.hr",
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/DalmacijaNews.png",
+                            IconUrl = "Icons/DalmacijaDanas.png",
                             Name = "Dalmacija News",
                             RegionId = 2
                         },

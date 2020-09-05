@@ -150,7 +150,8 @@ namespace Espresso.Application.DataTransferObjects
                             keyWordsRegexPattern: category.KeyWordsRegexPattern,
                             sortIndex: category.SortIndex,
                             position: category.Position,
-                            categoryType: category.CategoryType
+                            categoryType: category.CategoryType,
+                            categoryUrl: category.Url
                         )
                     )
                 ).ToList();

@@ -7,14 +7,6 @@
         public const int ApplicationDownloadMobileAppVersionHasMaxLenght = 20;
         #endregion
 
-        #region Category
-        public const int CategoryNameHasMaxLenght = 20;
-
-        public const int CategoryColorHasMaxLenght = 20;
-
-        public const int CategoryKeyWordsRegexPatterHasMaxLenght = 1000;
-        #endregion
-
         #region NewsPortal
         public const int NEWSPORTAL_NAME_HASMAXLENGHT = 100;
         public const int NEWSPORTAL_BASEURL_HASMAXLENGHT = 100;

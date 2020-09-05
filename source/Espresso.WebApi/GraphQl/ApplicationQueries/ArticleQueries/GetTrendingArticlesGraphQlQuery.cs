@@ -1,6 +1,5 @@
 ﻿using Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles;
 using Espresso.Common.Constants;
-using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetTrendingArticlesTypes;
@@ -36,7 +35,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             Name = "skip",
                             DefaultValue = DefaultValueConstants.DefaultSkip
                         },
-                        new QueryArgument<LongGraphType>
+                        new QueryArgument<StringGraphType>
                         {
                             Name = "minTimestamp",
                         },
@@ -44,11 +43,14 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                 ),
                 resolve: async resolveContext =>
                 {
+                    var minTimestampString = (string?)resolveContext.Arguments["minTimestamp"];
+                    var minTimestamp = string.IsNullOrEmpty(minTimestampString) ? null : (long?)long.Parse(minTimestampString);
+
                     return await mediator.Send(
                         request: new GetTrendingArticlesQuery(
                             take: (int)resolveContext.Arguments["take"],
                             skip: (int)resolveContext.Arguments["take"],
-                            minTimestamp: (long?)resolveContext.Arguments["minTimestamp"],
+                            minTimestamp: minTimestamp,
                             maxAgeOfTrendingArticle: webApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
                             currentEspressoWebApiVersion: (string)resolveContext.UserContext["currentEspressoWebApiVersion"],
                             targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],

@@ -1,5 +1,4 @@
 ﻿using Espresso.Application.CQRS.Configuration.Queries.GetConfiguration;
-using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes;

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Extensions;
@@ -12,15 +11,21 @@ namespace Espresso.Persistence.Configuration
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
+            #region Properties
             builder.Property(category => category.Name)
-                .HasMaxLength(PropertyConstraintConstants.CategoryNameHasMaxLenght);
+                .HasMaxLength(Category.NameHasMaxLenght);
 
             builder.Property(category => category.Color)
-                .HasMaxLength(PropertyConstraintConstants.CategoryColorHasMaxLenght);
+                .HasMaxLength(Category.ColorHasMaxLenght);
 
             builder.Property(category => category.KeyWordsRegexPattern)
-                .HasMaxLength(PropertyConstraintConstants.CategoryKeyWordsRegexPatterHasMaxLenght);
+                .HasMaxLength(Category.KeyWordsRegexPatterHasMaxLenght);
 
+            builder.Property(category => category.Url)
+                .HasMaxLength(Category.UrlHasMaxLength);
+            #endregion
+
+            #region Relationships
             builder.HasMany(category => category.ArticleCategories)
                 .WithOne(articleCategory => articleCategory.Category!)
                 .OnDelete(DeleteBehavior.Cascade)
@@ -35,6 +40,7 @@ namespace Espresso.Persistence.Configuration
                 .WithOne(newsPortal => newsPortal.Category!)
                 .HasForeignKey(newsPortal => newsPortal.CategoryId)
                 .OnDelete(DeleteBehavior.Cascade);
+            #endregion
 
             Seed(builder);
         }
@@ -50,7 +56,8 @@ namespace Espresso.Persistence.Configuration
                     keyWordsRegexPattern: null,
                     sortIndex: 2,
                     position: null,
-                    categoryType: CategoryType.Normal
+                    categoryType: CategoryType.Normal,
+                    categoryUrl: "/vijesti"
                 ),
                 new Category(
                     id:(int)CategoryId.Sport,
@@ -59,7 +66,8 @@ namespace Espresso.Persistence.Configuration
                     keyWordsRegexPattern: null,
                     sortIndex: 3,
                     position: null,
-                    categoryType: CategoryType.Normal
+                    categoryType: CategoryType.Normal,
+                    categoryUrl: "/sport"
                 ),
                 new Category(
                     id:(int)CategoryId.Show,
@@ -68,7 +76,8 @@ namespace Espresso.Persistence.Configuration
                     keyWordsRegexPattern: null,
                     sortIndex: 4,
                     position: null,
-                    categoryType: CategoryType.Normal
+                    categoryType: CategoryType.Normal,
+                    categoryUrl: "/show"
                 ),
                 new Category(
                     id:(int)CategoryId.Lifestyle,
@@ -77,7 +86,8 @@ namespace Espresso.Persistence.Configuration
                     keyWordsRegexPattern: null,
                     sortIndex: 5,
                     position: null,
-                    categoryType: CategoryType.Normal
+                    categoryType: CategoryType.Normal,
+                    categoryUrl: "/lifestyle"
                 ),
                 new Category(
                     id:(int)CategoryId.Tech,
@@ -86,7 +96,8 @@ namespace Espresso.Persistence.Configuration
                     keyWordsRegexPattern: null,
                     sortIndex: 6,
                     position: null,
-                    categoryType: CategoryType.Normal
+                    categoryType: CategoryType.Normal,
+                    categoryUrl: "/tech"
                 ),
                 new Category(
                     id:(int)CategoryId.Viral,
@@ -95,7 +106,8 @@ namespace Espresso.Persistence.Configuration
                     keyWordsRegexPattern: null,
                     sortIndex: 7,
                     position: null,
-                    categoryType: CategoryType.Normal
+                    categoryType: CategoryType.Normal,
+                    categoryUrl: "/viral"
                 ),
                 new Category(
                     id:(int)CategoryId.Biznis,
@@ -104,7 +116,8 @@ namespace Espresso.Persistence.Configuration
                     keyWordsRegexPattern: null,
                     sortIndex: 8,
                     position: null,
-                    categoryType: CategoryType.Normal
+                    categoryType: CategoryType.Normal,
+                    categoryUrl: "/biznis"
                 ),
                 new Category(
                     id:(int)CategoryId.AutoMoto,
@@ -113,7 +126,8 @@ namespace Espresso.Persistence.Configuration
                     keyWordsRegexPattern: null,
                     sortIndex: 9,
                     position: null,
-                    categoryType: CategoryType.Normal
+                    categoryType: CategoryType.Normal,
+                    categoryUrl: "/auto-moto"
                 ),
                 new Category(
                     id:(int)CategoryId.Kultura,
@@ -122,7 +136,8 @@ namespace Espresso.Persistence.Configuration
                     keyWordsRegexPattern: null,
                     sortIndex: 10,
                     position: null,
-                    categoryType: CategoryType.Normal
+                    categoryType: CategoryType.Normal,
+                    categoryUrl: "/kultura"
                 ),
                 new Category(
                     id:(int)CategoryId.General,
@@ -131,7 +146,8 @@ namespace Espresso.Persistence.Configuration
                     keyWordsRegexPattern: null,
                     sortIndex: 1,
                     position: null,
-                    categoryType: CategoryType.General
+                    categoryType: CategoryType.General,
+                    categoryUrl: "/general"
                 ),
                 new Category(
                     id:(int)CategoryId.Local,
@@ -140,7 +156,8 @@ namespace Espresso.Persistence.Configuration
                     keyWordsRegexPattern: null,
                     sortIndex: null,
                     position: 3,
-                    categoryType: CategoryType.Local
+                    categoryType: CategoryType.Local,
+                    categoryUrl: "/local"
                 ),
             };
 

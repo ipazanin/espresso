@@ -1,6 +1,5 @@
 ﻿using Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles;
 using Espresso.Common.Constants;
-using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetCategoryArticlesTypes;
@@ -39,7 +38,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             Name = "skip",
                             DefaultValue = DefaultValueConstants.DefaultSkip
                         },
-                        new QueryArgument<LongGraphType>
+                        new QueryArgument<StringGraphType>
                         {
                             Name = "minTimestamp",
                         },
@@ -63,11 +62,13 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                 ),
                 resolve: async resolveContext =>
                 {
+                    var minTimestampString = (string?)resolveContext.Arguments["minTimestamp"];
+                    var minTimestamp = string.IsNullOrEmpty(minTimestampString) ? null : (long?)long.Parse(minTimestampString);
                     return await mediator.Send(
                         request: new GetCategoryArticlesQuery(
                             take: (int)resolveContext.Arguments["take"],
                             skip: (int)resolveContext.Arguments["skip"],
-                            minTimestamp: (long?)resolveContext.Arguments["minTimestamp"],
+                            minTimestamp: minTimestamp,
                             newsPortalIdsString: (string?)resolveContext.Arguments["newsPortalIds"],
                             categoryId: (int)resolveContext.Arguments["categoryId"],
                             regionId: (int?)resolveContext.Arguments["regionId"],

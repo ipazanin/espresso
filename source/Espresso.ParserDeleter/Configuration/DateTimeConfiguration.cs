@@ -1,5 +1,4 @@
 ﻿using System;
-using Espresso.Common.Constants;
 using Microsoft.Extensions.Configuration;
 
 namespace Espresso.ParserDeleter.Configuration
