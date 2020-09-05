@@ -47,6 +47,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
         {
             return $"{nameof(Take)}:{Take}, " +
                 $"{nameof(Skip)}:{Skip}, " +
+                $"{nameof(MinTimestamp)}:{MinTimestamp}, " +
                 $"{nameof(MaxAgeOfTrendingArticle)}:{MaxAgeOfTrendingArticle}";
         }
         #endregion
