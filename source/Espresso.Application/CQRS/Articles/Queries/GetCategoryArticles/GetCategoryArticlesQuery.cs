@@ -15,6 +15,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
 
         public int Skip { get; }
 
+        public long? MinTimestamp { get; }
+
         public int CategoryId { get; }
 
         public int? RegionId { get; }
@@ -30,8 +32,9 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
 
         #region Constructors
         public GetCategoryArticlesQuery(
-            int? take,
-            int? skip,
+            int take,
+            int skip,
+            long? minTimestamp,
             int categoryId,
             string? newsPortalIdsString,
             int? regionId,
@@ -52,8 +55,9 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
             Event.GetCategoryArticlesQuery
         )
         {
-            Take = take ?? DefaultValueConstants.DefaultTake;
-            Skip = skip ?? DefaultValueConstants.DefaultSkip;
+            Take = take;
+            Skip = skip;
+            MinTimestamp = minTimestamp;
             CategoryId = categoryId;
             RegionId = regionId;
             MaxAgeOfNewNewsPortal = maxAgeOfNewNewsPortal;

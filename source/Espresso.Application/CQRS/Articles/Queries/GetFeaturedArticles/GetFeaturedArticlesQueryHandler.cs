@@ -38,7 +38,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
                         categoryIds: request.CategoryIds,
                         newsPortalIds: request.NewsPortalIds,
                         titleSearchQuery: null,
-                        maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle
+                        maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
+                        minTimestamp: request.MinTimestamp
                     ).Compile()
                 )
                 .OrderByDescending(
@@ -56,7 +57,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
             var trendingArticleDtos = articles
                 .Where(
                     predicate: Article.GetTrendingArticlePredicate(
-                        maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle
+                        maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
+                        minTimestamp: request.MinTimestamp
                     )
                     .Compile()
                 )

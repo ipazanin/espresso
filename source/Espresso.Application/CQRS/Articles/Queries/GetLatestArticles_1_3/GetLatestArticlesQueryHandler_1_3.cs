@@ -41,7 +41,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles_1_3
                     predicate: Article.GetFilteredArticlesPredicate(
                         categoryIds: request.CategoryIds,
                         newsPortalIds: request.NewsPortalIds,
-                        titleSearchQuery: request.TitleSearchQuery
+                        titleSearchQuery: request.TitleSearchQuery,
+                        minTimestamp: null
                     ).Compile()
                 )
                 .Where(

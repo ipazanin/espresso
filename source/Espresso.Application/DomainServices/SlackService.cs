@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
+using Espresso.Domain.DataTransferObjects;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.IServices;
-using Espresso.Domain.Models;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 

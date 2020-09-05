@@ -35,7 +35,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
             var articleDtos = articles
                 .Where(
                     predicate: Article.GetTrendingArticlePredicate(
-                        maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle
+                        maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
+                        minTimestamp: request.MinTimestamp
                     )
                     .Compile()
                 )

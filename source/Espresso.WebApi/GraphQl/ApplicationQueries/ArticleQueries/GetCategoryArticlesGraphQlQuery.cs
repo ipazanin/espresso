@@ -39,6 +39,10 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             Name = "skip",
                             DefaultValue = DefaultValueConstants.DefaultSkip
                         },
+                        new QueryArgument<LongGraphType>
+                        {
+                            Name = "minTimestamp",
+                        },
                         new QueryArgument<StringGraphType>
                         {
                             Name = "newsPortalIds",
@@ -61,8 +65,9 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                 {
                     return await mediator.Send(
                         request: new GetCategoryArticlesQuery(
-                            take: (int?)resolveContext.Arguments["take"],
-                            skip: (int?)resolveContext.Arguments["skip"],
+                            take: (int)resolveContext.Arguments["take"],
+                            skip: (int)resolveContext.Arguments["skip"],
+                            minTimestamp: (long?)resolveContext.Arguments["minTimestamp"],
                             newsPortalIdsString: (string?)resolveContext.Arguments["newsPortalIds"],
                             categoryId: (int)resolveContext.Arguments["categoryId"],
                             regionId: (int?)resolveContext.Arguments["regionId"],
