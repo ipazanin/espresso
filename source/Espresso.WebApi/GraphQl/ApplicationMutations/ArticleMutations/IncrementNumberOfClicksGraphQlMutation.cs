@@ -39,7 +39,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationMutations.ArticlesQueries
                     await mediator.Send(
                            request: new IncrementNumberOfClicksCommand(
                             id: Guid.Parse(articleIdString),
-                            currentEspressoWebApiVersion: (string)resolveContext.UserContext["currentEspressoWebApiVersion"],
+                            currentEspressoWebApiVersion: webApiConfiguration.AppVersionConfiguration.Version,
                             targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],
                             consumerVersion: (string)resolveContext.UserContext["consumerVersion"],
                             deviceType: (DeviceType)resolveContext.UserContext["deviceType"],

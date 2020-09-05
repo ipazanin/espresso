@@ -65,7 +65,6 @@ namespace Espresso.WebApi.Controllers
             {
                 executionOptions.Schema = _schema;
                 executionOptions.Query = query.Query;
-                // executionOptions.Inputs = new Inputs(query.Variables);
                 executionOptions.Inputs = query.Variables is null ? null : new Inputs(query.Variables);
                 executionOptions.OperationName = query.OperationName;
                 executionOptions.CancellationToken = cancellationToken;
@@ -78,22 +77,25 @@ namespace Espresso.WebApi.Controllers
 
                 executionOptions.UserContext = new Dictionary<string, object>
                 {
-                    { "currentEspressoWebApiVersion", WebApiConfiguration.AppVersionConfiguration.Version },
                     { "targetedEspressoWebApiVersion", basicInformationsHeaderParameters.EspressoWebApiVersion },
                     { "consumerVersion", basicInformationsHeaderParameters.Version },
                     { "deviceType", basicInformationsHeaderParameters.DeviceType },
-                    { "appEnvironment", WebApiConfiguration.AppConfiguration.AppEnvironment },
                 };
             });
 
-            return result.Errors?.Count > 0 ?
+            if (result.Errors?.Count > 0)
+            {
+                var values = new List<string>(result.Errors.Select(executionError => executionError.Message));
+                values.AddRange(result.Errors.Select(executionError => executionError.InnerException?.Message ?? ""));
                 throw new ValidationException(
                     message: string.Join(
                         separator: ",",
-                        values: result.Errors.Select(executionError => executionError.Message)
+                        values: values
                     )
-                ) :
-                Ok(result.Data);
+                );
+            }
+
+            return Ok(result.Data);
         }
     }
 }
