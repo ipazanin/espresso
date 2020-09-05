@@ -17,6 +17,7 @@ using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Infrastructure;
 using Espresso.WebApi.Parameters.HeaderParameters;
+using Espresso.WebApi.QueryParameters;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -48,18 +49,17 @@ namespace Espresso.WebApi.Controllers
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Get /api/articles/category?<paramref name="take"/>=1&amp;<paramref name="skip"/>=0
+        ///     Get /api/articles
         /// </remarks>
         /// <param name="cancellationToken"></param>
-        /// <param name="take">Number of articles</param>
-        /// <param name="skip">Number of skipped articles</param>
         /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
         /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored</param>
         /// <param name="titleSearchQuery">Article Title Search Query</param>
         /// <param name="basicInformationsHeaderParameters"></param>
+        /// <param name="paginationParameters">Parameters used for pagination</param>
         /// <returns>Response object containing articles</returns>
         /// <response code="200">Response object containing articles</response>
-        /// <response code="400">If <paramref name="take"/> is not between 0 and 100 or <paramref name="skip"/> is lower than 0</response>
+        /// <response code="400">If validation fails</response>
         /// <response code="401">If API Key is invalid or missing</response>
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
@@ -73,9 +73,8 @@ namespace Espresso.WebApi.Controllers
         [Route("api/articles")]
         public async Task<IActionResult> GetLatestArticles(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
+            [FromQuery] PaginationParameters paginationParameters,
             CancellationToken cancellationToken,
-            [FromQuery] int take = DefaultValueConstants.DefaultTake,
-            [FromQuery] int skip = DefaultValueConstants.DefaultSkip,
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] string? categoryIds = null,
             [FromQuery] string? titleSearchQuery = null
@@ -83,8 +82,9 @@ namespace Espresso.WebApi.Controllers
         {
             var response = await Mediator.Send(
                 request: new GetLatestArticlesQuery(
-                    take: take,
-                    skip: skip,
+                    take: paginationParameters.Take,
+                    skip: paginationParameters.Skip,
+                    minTimestamp: paginationParameters.MinTimestamp,
                     newsPortalIdsString: newsPortalIds,
                     categoryIdsString: categoryIds,
                     newNewsPortalsPosition: WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
@@ -163,19 +163,18 @@ namespace Espresso.WebApi.Controllers
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Get /api/articles/category?<paramref name="take"/>=1&amp;<paramref name="skip"/>=0
+        ///     Get /api/articles/category
         /// </remarks>
         /// <param name="cancellationToken"></param>
-        /// <param name="take">Number of articles</param>
-        /// <param name="skip">Number of skipped articles</param>
         /// <param name="categoryId">Category Id</param>
         /// <param name="basicInformationsHeaderParameters"></param>
+        /// <param name="paginationParameters">Parameters used for pagination</param>
         /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
         /// <param name="regionId">Region ID</param>
         /// <param name="titleSearchQuery">Article Title Search Query</param>
         /// <returns>Response object containing articles</returns>
         /// <response code="200">Response object containing articles</response>
-        /// <response code="400">If <paramref name="take"/> is not between and 100 or <paramref name="skip"/> is lower than 0 or <paramref name="categoryId"/> is not valid category id</response>
+        /// <response code="400">If validation fails</response>
         /// <response code="401">If API Key is invalid or missing</response>
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
@@ -190,9 +189,8 @@ namespace Espresso.WebApi.Controllers
         public async Task<IActionResult> GetCategoryArticles(
             [FromRoute] int categoryId,
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
+            [FromQuery] PaginationParameters paginationParameters,
             CancellationToken cancellationToken,
-            [FromQuery] int take = DefaultValueConstants.DefaultTake,
-            [FromQuery] int skip = DefaultValueConstants.DefaultSkip,
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] int? regionId = null,
             [FromQuery] string? titleSearchQuery = null
@@ -200,8 +198,9 @@ namespace Espresso.WebApi.Controllers
         {
             var articles = await Mediator.Send(
                 request: new GetCategoryArticlesQuery(
-                    take: take,
-                    skip: skip,
+                    take: paginationParameters.Take,
+                    skip: paginationParameters.Skip,
+                    minTimestamp: paginationParameters.MinTimestamp,
                     categoryId: categoryId,
                     newsPortalIdsString: newsPortalIds,
                     regionId: regionId,
@@ -280,15 +279,14 @@ namespace Espresso.WebApi.Controllers
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Get /api/articles/trending?<paramref name="take"/>=1&amp;<paramref name="skip"/>=0
+        ///     Get /api/articles/trending
         /// </remarks>
         /// <param name="cancellationToken"></param>
-        /// <param name="take">Number of articles</param>
-        /// <param name="skip">Number of skipped articles</param>
         /// <param name="basicInformationsHeaderParameters"></param>
+        /// <param name="paginationParameters">Parameters used for pagination</param>
         /// <returns>Response object containing articles</returns>
         /// <response code="200">Response object containing articles</response>
-        /// <response code="400">If <paramref name="take"/> is not between 0 and 100 or <paramref name="skip"/> is lower than 0</response>
+        /// <response code="400">If validation fails</response>
         /// <response code="401">If API Key is invalid or missing</response>
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
@@ -304,15 +302,15 @@ namespace Espresso.WebApi.Controllers
         [Route("api/articles/trending")]
         public async Task<IActionResult> GetTrendingArticles(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            CancellationToken cancellationToken,
-            [FromQuery] int take = DefaultValueConstants.DefaultTake,
-            [FromQuery] int skip = DefaultValueConstants.DefaultSkip
+            [FromQuery] PaginationParameters paginationParameters,
+            CancellationToken cancellationToken
         )
         {
             var response = await Mediator.Send(
                 request: new GetTrendingArticlesQuery(
-                    take: take,
-                    skip: skip,
+                    take: paginationParameters.Take,
+                    skip: paginationParameters.Skip,
+                    minTimestamp: paginationParameters.MinTimestamp,
                     maxAgeOfTrendingArticle: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
                     currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
@@ -331,17 +329,16 @@ namespace Espresso.WebApi.Controllers
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Get /api/articles/featured?<paramref name="take"/>=1&amp;<paramref name="skip"/>=0
+        ///     Get /api/articles/featured
         /// </remarks>
         /// <param name="cancellationToken"></param>
-        /// <param name="take">Number of articles</param>
-        /// <param name="skip">Number of skipped articles</param>
         /// <param name="newsPortalIds">NewsPortal Ids comma delimited</param>
         /// <param name="categoryIds">Category Ids comma delimited</param>
         /// <param name="basicInformationsHeaderParameters"></param>
+        /// <param name="paginationParameters">Parameters used for pagination</param>
         /// <returns>Response object containing articles</returns>
         /// <response code="200">Response object containing articles</response>
-        /// <response code="400">If <paramref name="take"/> is not between 0 and 100 or <paramref name="skip"/> is lower than 0</response>
+        /// <response code="400">If validation fails</response>
         /// <response code="401">If API Key is invalid or missing</response>
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
@@ -355,17 +352,17 @@ namespace Espresso.WebApi.Controllers
         [Route("api/articles/featured")]
         public async Task<IActionResult> GetFeaturedArticles(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
+            [FromQuery] PaginationParameters paginationParameters,
             CancellationToken cancellationToken,
-            [FromQuery] int take = DefaultValueConstants.DefaultTake,
-            [FromQuery] int skip = DefaultValueConstants.DefaultSkip,
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] string? categoryIds = null
         )
         {
             var response = await Mediator.Send(
                 request: new GetFeaturedArticlesQuery(
-                    take: take,
-                    skip: skip,
+                    take: paginationParameters.Take,
+                    skip: paginationParameters.Skip,
+                    minTimestamp: paginationParameters.MinTimestamp,
                     categoryIdsString: categoryIds,
                     newsPortalIdsString: newsPortalIds,
                     maxAgeOfFeaturedArticle: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,

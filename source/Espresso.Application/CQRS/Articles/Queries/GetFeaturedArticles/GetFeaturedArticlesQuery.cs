@@ -14,7 +14,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
         public int Take { get; }
 
         public int Skip { get; }
-
+        public long? MinTimestamp { get; }
         public IEnumerable<int>? NewsPortalIds { get; }
 
         public IEnumerable<int>? CategoryIds { get; }
@@ -26,8 +26,9 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
 
         #region Constructors
         public GetFeaturedArticlesQuery(
-            int? take,
-            int? skip,
+            int take,
+            int skip,
+            long? minTimestamp,
             string? categoryIdsString,
             string? newsPortalIdsString,
             string currentEspressoWebApiVersion,
@@ -46,9 +47,9 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
             eventIdEnum: Event.GetFeaturedArticles
         )
         {
-            Take = take ?? DefaultValueConstants.DefaultTake;
-            Skip = skip ?? DefaultValueConstants.DefaultSkip;
-
+            Take = take;
+            Skip = skip;
+            MinTimestamp = minTimestamp;
             var newsPortalIds = newsPortalIdsString
                 ?.Replace(" ", "")
                 ?.Split(',')

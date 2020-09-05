@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Espresso.Domain.Models
+namespace Espresso.Domain.DataTransferObjects
 {
     public class SlackWebHookDto
     {

@@ -37,7 +37,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles_1_3
                     predicate: Article.GetFilteredArticlesPredicate(
                         categoryId: request.CategoryId,
                         newsPortalIds: request.NewsPortalIds,
-                        titleSearchQuery: null
+                        titleSearchQuery: null,
+                        minTimestamp: null
                     ).Compile()
                 )
                 .Skip(request.Skip)

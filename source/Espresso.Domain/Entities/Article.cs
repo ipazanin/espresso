@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Espresso.Domain.Infrastructure;
+using Espresso.Domain.Utilities;
 
 namespace Espresso.Domain.Entities
 {
@@ -251,11 +252,17 @@ namespace Espresso.Domain.Entities
         public static Expression<Func<Article, bool>> GetFilteredArticlesPredicate(
             IEnumerable<int>? categoryIds,
             IEnumerable<int>? newsPortalIds,
-            string? titleSearchQuery
+            string? titleSearchQuery,
+            long? minTimestamp
         )
         {
+            var articleMinimumAge = minTimestamp is null ?
+                DateTime.UtcNow :
+                DateTimeUtility.GetDateTime(minTimestamp.Value);
+
             return article =>
                 !article.IsHidden &&
+                article.PublishDateTime < articleMinimumAge &&
                 (categoryIds == null || article
                     .ArticleCategories
                     .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
@@ -266,11 +273,17 @@ namespace Espresso.Domain.Entities
         public static Expression<Func<Article, bool>> GetFilteredArticlesPredicate(
             int categoryId,
             IEnumerable<int>? newsPortalIds,
-            string? titleSearchQuery
+            string? titleSearchQuery,
+            long? minTimestamp
         )
         {
+            var articleMinimumAge = minTimestamp is null ?
+                DateTime.UtcNow :
+                DateTimeUtility.GetDateTime(minTimestamp.Value);
+
             return article =>
                 !article.IsHidden &&
+                article.PublishDateTime < articleMinimumAge &&
                 article.ArticleCategories.Any(articleCategory => articleCategory.CategoryId.Equals(categoryId)) &&
                 (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)) &&
                 (string.IsNullOrEmpty(titleSearchQuery) || article.Title.Contains(titleSearchQuery));
@@ -280,13 +293,19 @@ namespace Espresso.Domain.Entities
             IEnumerable<int>? categoryIds,
             IEnumerable<int>? newsPortalIds,
             string? titleSearchQuery,
-            TimeSpan maxAgeOfFeaturedArticle
+            TimeSpan maxAgeOfFeaturedArticle,
+            long? minTimestamp
         )
         {
+            var articleMinimumAge = minTimestamp is null ?
+                DateTime.UtcNow :
+                DateTimeUtility.GetDateTime(minTimestamp.Value);
+
             var maxDateTimeOfFeaturedArticle = DateTime.UtcNow - maxAgeOfFeaturedArticle;
             return article =>
                 !article.IsHidden &&
                 article.IsFeatured &&
+                article.PublishDateTime < articleMinimumAge &&
                 article.PublishDateTime > maxDateTimeOfFeaturedArticle &&
                 (categoryIds == null || article
                     .ArticleCategories
@@ -296,11 +315,21 @@ namespace Espresso.Domain.Entities
         }
 
 
-        public static Expression<Func<Article, bool>> GetTrendingArticlePredicate(TimeSpan maxAgeOfTrendingArticle)
+        public static Expression<Func<Article, bool>> GetTrendingArticlePredicate(
+            TimeSpan maxAgeOfTrendingArticle,
+            long? minTimestamp
+        )
         {
+            var articleMinimumAge = minTimestamp is null ?
+                DateTime.UtcNow :
+                DateTimeUtility.GetDateTime(minTimestamp.Value);
+
             var maxTrendingDateTime = DateTime.UtcNow - maxAgeOfTrendingArticle;
 
-            return article => !article.IsHidden && article.PublishDateTime > maxTrendingDateTime;
+            return article =>
+                !article.IsHidden &&
+                article.PublishDateTime < articleMinimumAge &&
+                article.PublishDateTime > maxTrendingDateTime;
         }
 
         public static Expression<Func<Article, object>> GetOrderByDescendingTrendingScoreExpression()

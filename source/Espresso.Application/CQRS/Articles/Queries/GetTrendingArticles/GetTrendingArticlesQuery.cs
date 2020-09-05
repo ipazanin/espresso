@@ -10,6 +10,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
         #region Properties
         public int Take { get; }
         public int Skip { get; }
+        public long? MinTimestamp { get; }
 
         public TimeSpan MaxAgeOfTrendingArticle { get; }
         #endregion
@@ -18,6 +19,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
         public GetTrendingArticlesQuery(
             int take,
             int skip,
+            long? minTimestamp,
             string currentEspressoWebApiVersion,
             string targetedEspressoWebApiVersion,
             string consumerVersion,
@@ -35,6 +37,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
         {
             Take = take;
             Skip = skip;
+            MinTimestamp = minTimestamp;
             MaxAgeOfTrendingArticle = maxAgeOfTrendingArticle;
         }
         #endregion

@@ -35,7 +35,11 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                         {
                             Name = "skip",
                             DefaultValue = DefaultValueConstants.DefaultSkip
-                        }
+                        },
+                        new QueryArgument<LongGraphType>
+                        {
+                            Name = "minTimestamp",
+                        },
                     }
                 ),
                 resolve: async resolveContext =>
@@ -44,6 +48,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                         request: new GetTrendingArticlesQuery(
                             take: (int)resolveContext.Arguments["take"],
                             skip: (int)resolveContext.Arguments["take"],
+                            minTimestamp: (long?)resolveContext.Arguments["minTimestamp"],
                             maxAgeOfTrendingArticle: webApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
                             currentEspressoWebApiVersion: (string)resolveContext.UserContext["currentEspressoWebApiVersion"],
                             targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],

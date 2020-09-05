@@ -15,6 +15,8 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
 
         public int Skip { get; }
 
+        public long? MinTimestamp { get; }
+
         public IEnumerable<int>? NewsPortalIds { get; }
 
         public IEnumerable<int>? CategoryIds { get; }
@@ -28,8 +30,9 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
 
         #region Constructors
         public GetLatestArticlesQuery(
-            int? take,
-            int? skip,
+            int take,
+            int skip,
+            long? minTimestamp,
             string? newsPortalIdsString,
             string? categoryIdsString,
             int newNewsPortalsPosition,
@@ -49,9 +52,9 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
             Event.GetLatestArticlesQuery
         )
         {
-            Take = take ?? DefaultValueConstants.DefaultTake;
-            Skip = skip ?? DefaultValueConstants.DefaultSkip;
-
+            Take = take;
+            Skip = skip;
+            MinTimestamp = minTimestamp;
             var newsPortalIds = newsPortalIdsString
                 ?.Replace(" ", "")
                 ?.Split(',')
