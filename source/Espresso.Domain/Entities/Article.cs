@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Infrastructure;
 using Espresso.Domain.Utilities;
 
@@ -328,6 +329,7 @@ namespace Espresso.Domain.Entities
 
             return article =>
                 !article.IsHidden &&
+                !article.NewsPortal!.CategoryId.Equals((int)CategoryId.Local) &&
                 article.PublishDateTime < articleMinimumAge &&
                 article.PublishDateTime > maxTrendingDateTime;
         }
