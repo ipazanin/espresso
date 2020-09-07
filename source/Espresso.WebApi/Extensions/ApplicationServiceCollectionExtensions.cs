@@ -31,7 +31,11 @@ namespace Espresso.WebApi.Extensions
             services.AddTransient<IApplicationInit, ApplicationInit>();
             services.AddScoped<IArticleValidator, ArticleValidator>();
             services.AddHttpClient();
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(jsonOptions =>
+                {
+                    jsonOptions.JsonSerializerOptions.MaxDepth = 100;
+                });
 
             services.AddMvc(options =>
             {
