@@ -6,6 +6,7 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
     {
         public GetConfigurationQueryValidator()
         {
+            RuleFor(request => request.MaxAgeOfNewNewsPortal).NotEmpty();
         }
     }
 }

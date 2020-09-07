@@ -2,7 +2,8 @@
 using Espresso.Common.Constants;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Configuration;
-using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetCategoryArticlesTypes;
+using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.ConfigurationTypes.GetWebCategoryArticlesTypes;
+using GraphQL;
 using GraphQL.Types;
 using MediatR;
 
@@ -62,18 +63,21 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                 ),
                 resolve: async resolveContext =>
                 {
-                    var minTimestampString = (string?)resolveContext.Arguments["minTimestamp"];
-                    var minTimestamp = string.IsNullOrEmpty(minTimestampString) ? null : (long?)long.Parse(minTimestampString);
+                    var minTimestampString = resolveContext.GetArgument<string?>("minTimestamp");
+                    var minTimestamp = string.IsNullOrEmpty(minTimestampString) ?
+                        null :
+                        (long?)long.Parse(minTimestampString);
+
                     return await mediator.Send(
                         request: new GetCategoryArticlesQuery(
                             take: (int)resolveContext.Arguments["take"],
                             skip: (int)resolveContext.Arguments["skip"],
                             minTimestamp: minTimestamp,
-                            newsPortalIdsString: (string?)resolveContext.Arguments["newsPortalIds"],
+                            newsPortalIdsString: resolveContext.GetArgument<string?>("newsPortalIds"),
                             categoryId: (int)resolveContext.Arguments["categoryId"],
-                            regionId: (int?)resolveContext.Arguments["regionId"],
+                            regionId: resolveContext.GetArgument<int?>("regionId"),
                             newNewsPortalsPosition: webApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
-                            titleSearchQuery: (string?)resolveContext.Arguments["titleSearchQuery"],
+                            titleSearchQuery: resolveContext.GetArgument<string?>("titleSearchQuery"),
                             maxAgeOfNewNewsPortal: webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
                             currentEspressoWebApiVersion: webApiConfiguration.AppVersionConfiguration.Version,
                             targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],

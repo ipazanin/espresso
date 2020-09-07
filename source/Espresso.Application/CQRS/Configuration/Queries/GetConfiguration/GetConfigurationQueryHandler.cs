@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -45,22 +44,6 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
             var categoryDtos = categories
                 .Where(predicate: Category.GetAllCategoriesExceptGeneralExpression().Compile())
                 .Select(selector: GetConfigurationCategory.GetProjection().Compile());
-
-            if (request.DeviceType.Equals(DeviceType.WebApp))
-            {
-                var categoryDtosList = categoryDtos.ToList();
-                var sveVijesticategoryDto = new GetConfigurationCategory(
-                    id: -1,
-                    name: "Sve Vijesti",
-                    color: "",
-                    position: null,
-                    categoryType: CategoryType.General,
-                    url: "/"
-                );
-
-                categoryDtosList.Insert(0, sveVijesticategoryDto);
-                categoryDtos = categoryDtosList;
-            }
 
             var categoriesWithNewsPortals = categories
                 .OrderBy(category => category.SortIndex)

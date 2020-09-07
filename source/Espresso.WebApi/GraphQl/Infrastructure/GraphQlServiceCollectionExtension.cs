@@ -4,11 +4,13 @@ using Espresso.WebApi.GraphQl.ApplicationQueries;
 using Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries;
 using Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries;
 using Espresso.WebApi.GraphQl.ApplicationSchema;
+using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.ConfigurationTypes.GetWebCategoryArticlesTypes;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetCategoryArticlesTypes;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetFeaturedArticlesTypes;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetLatestArticlesTypes;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetTrendingArticlesTypes;
-using Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes;
+using Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetConfigurationTypes;
+using Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetWebCategoryArticlesTypes;
 using GraphQL;
 using GraphQL.SystemTextJson;
 using GraphQL.Types;
@@ -58,12 +60,14 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
             services.AddScoped<GetCategoryArticlesGraphQlQuery>();
             services.AddScoped<GetTrendingArticlesGraphQlQuery>();
             services.AddScoped<GetConfigurationGraphQlQuery>();
+            services.AddScoped<GetWebConfigurationGraphQlQuery>();
 
             services.AddScoped<IGraphQlQuery, GetLatestArticlesGraphQlQuery>();
             services.AddScoped<IGraphQlQuery, GetFeaturedArticlesGraphQlQuery>();
             services.AddScoped<IGraphQlQuery, GetCategoryArticlesGraphQlQuery>();
             services.AddScoped<IGraphQlQuery, GetTrendingArticlesGraphQlQuery>();
             services.AddScoped<IGraphQlQuery, GetConfigurationGraphQlQuery>();
+            services.AddScoped<IGraphQlQuery, GetWebConfigurationGraphQlQuery>();
 
             return services;
         }
@@ -83,7 +87,8 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
             services.AddGetLatestArticlesGraphQlTypes();
             services.AddGetFeaturedArticlesGraphQlTypes();
             services.AddGetTrendingArticlesGraphQlTypes();
-            services.AddConfigurationGraphQlTypes();
+            services.AddGetConfigurationGraphQlTypes();
+            services.AddGetWebConfigurationGraphQlTypes();
 
             return services;
         }
@@ -128,13 +133,21 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
             return services;
         }
 
-        private static IServiceCollection AddConfigurationGraphQlTypes(this IServiceCollection services)
+        private static IServiceCollection AddGetConfigurationGraphQlTypes(this IServiceCollection services)
         {
             services.AddScoped<GetConfigurationCategoryType>();
             services.AddScoped<GetConfigurationCategoryWithNewsPortalsType>();
             services.AddScoped<GetConfigurationNewsPortalType>();
             services.AddScoped<GetConfigurationQueryResponseType>();
             services.AddScoped<GetConfigurationRegionType>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddGetWebConfigurationGraphQlTypes(this IServiceCollection services)
+        {
+            services.AddScoped<GetWebConfigurationCategoryType>();
+            services.AddScoped<GetWebConfigurationQueryResponseType>();
 
             return services;
         }

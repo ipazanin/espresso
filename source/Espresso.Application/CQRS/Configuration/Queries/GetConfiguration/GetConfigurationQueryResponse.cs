@@ -9,7 +9,7 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
 
         public IEnumerable<GetConfigurationCategory> Categories { get; }
 
-        public IEnumerable<GetConfigurationRegion> Regions { get; set; }
+        public IEnumerable<GetConfigurationRegion> Regions { get; }
 
         public GetConfigurationQueryResponse(
             IEnumerable<GetConfigurationCategoryWithNewsPortals> categoriesWithNewsPortals,

@@ -2,9 +2,9 @@
 using System.Linq.Expressions;
 using Espresso.Domain.Entities;
 
-namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
+namespace Espresso.Application.CQRS.Configuration.Queries.GetWebConfiguration
 {
-    public class GetConfigurationCategory
+    public class GetWebConfigurationCategory
     {
         #region Properties
         /// <summary>
@@ -22,21 +22,25 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
         public int? Position { get; private set; }
 
         public CategoryType CategoryType { get; private set; }
+
+        public string Url { get; private set; }
         #endregion
 
         #region Constructors
-        private GetConfigurationCategory()
+        private GetWebConfigurationCategory()
         {
             Name = null!;
             Color = null!;
+            Url = null!;
         }
 
-        public GetConfigurationCategory(
+        public GetWebConfigurationCategory(
             int id,
             string name,
             string color,
             int? position,
-            CategoryType categoryType
+            CategoryType categoryType,
+            string url
         )
         {
             Id = id;
@@ -44,19 +48,21 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
             Color = color;
             Position = position;
             CategoryType = categoryType;
+            Url = url;
         }
         #endregion
 
         #region Methods
-        public static Expression<Func<Category, GetConfigurationCategory>> GetProjection()
+        public static Expression<Func<Category, GetWebConfigurationCategory>> GetProjection()
         {
-            return category => new GetConfigurationCategory
+            return category => new GetWebConfigurationCategory
             {
                 Id = category.Id,
                 Name = category.Name,
                 Color = category.Color,
                 Position = category.Position,
                 CategoryType = category.CategoryType,
+                Url = category.Url
             };
         }
         #endregion
