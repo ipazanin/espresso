@@ -79,7 +79,9 @@
     "react/jsx-wrap-multilines": 0,
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "sort-keys": "warn",
-    "sort-vars": "warn"
+    "sort-vars": "warn",
+    "react/button-has-type": "off",
+    "no-unused-vars": "error",
+    "class-methods-use-this": "off"
   }
 }

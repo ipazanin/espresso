@@ -1,0 +1,67 @@
+@import '../../styles/settings/variables';
+
+.container {
+  background-color: $gray300;
+  box-shadow: $boxShadow__1;
+  height: 4rem;
+
+  .logoLink {
+    height: 100%;
+
+    .logo {
+      height: 100%;
+      object-fit: cover;
+      width: 4.5rem;
+    }
+  }
+
+  .items {
+    height: 100%;
+
+    .navItem {
+      align-items: center;
+      display: flex;
+      margin: 0 map-get($spacing, 'MD');
+      text-decoration: none;
+      position: relative;
+
+      &__active {
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: map-get($spacing, 'SM');
+          background-color: $primary;
+          border-bottom-left-radius: map-get($spacing, 'LG');
+          border-bottom-right-radius: map-get($spacing, 'LG');
+        }
+
+        &Text {
+          color: $primary;
+        }
+      }
+
+      &Text {
+        margin: 0;
+
+        &:hover {
+          color: $primary;
+        }
+      }
+    }
+  }
+
+  .arrowsWrapper {
+    height: 100%;
+
+    .arrowBtn {
+      border-left: 0.0625rem solid $gray200;
+    }
+
+    .arrowLeft {
+      transform: rotate(180deg);
+    }
+  }
+}

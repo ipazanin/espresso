@@ -61,8 +61,8 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                         (long?)long.Parse(minTimestampString);
                     return await mediator.Send(
                         request: new GetFeaturedArticlesQuery(
-                            take: (int)resolveContext.Arguments["take"],
-                            skip: (int)resolveContext.Arguments["skip"],
+                            take: resolveContext.GetArgument<int>("take"),
+                            skip: resolveContext.GetArgument<int>("skip"),
                             minTimestamp: minTimestamp,
                             newsPortalIdsString: resolveContext.GetArgument<string?>("newsPortalIds"),
                             categoryIdsString: resolveContext.GetArgument<string?>("categoryIds"),

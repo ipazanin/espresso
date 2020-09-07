@@ -1,0 +1,28 @@
+@import '../../../../styles/settings/variables';
+
+.container {
+  min-width: 28.5rem;
+  max-width: 28.5rem;
+  position: sticky;
+  top: 1rem;
+  right: 0;
+  display: inline-table;
+
+  .subtitle {
+    display: block;
+    margin-bottom: map-get($spacing, 'MD');
+  }
+
+  .listWrapper {
+    // height: calc(100vh - 8.625rem);
+    overflow-y: scroll;
+
+    .article {
+      height: 6.75rem;
+    }
+  }
+
+  .virtualizedList {
+    height: 100% !important;
+  }
+}

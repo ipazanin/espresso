@@ -1,58 +1,141 @@
 import React from 'react';
 import moment from 'moment';
-import { css } from 'aphrodite';
-import { ArticleModel } from 'models/article.model';
-import { articleStyle } from './Article.style';
+import cx from 'classnames';
 
-interface ArticleProps extends React.HTMLAttributes<HTMLDivElement> {
-  key: string;
-  article: ArticleModel;
+import { Flex, Text, Image } from '@profico/react-ui-components';
+import { GetLatestArticlesArticle, GetFeaturedArticlesArticle } from 'models';
+
+import styles from './article.module.scss';
+
+type AnchorElementProps = React.DetailedHTMLProps<
+  React.HTMLProps<HTMLAnchorElement>,
+  HTMLAnchorElement
+>;
+interface LatestArticleProps extends AnchorElementProps {
+  article: GetLatestArticlesArticle;
+}
+interface FeaturedArticleProps extends AnchorElementProps {
+  article: GetFeaturedArticlesArticle;
+  variant: 'main' | 'regular';
 }
 
-const getArticleAgeDisplayString = (publishDateTimeString: string): string => {
-  const publishDateTime = moment.utc(publishDateTimeString);
-
-  const utcNow = moment(new Date().toUTCString()).utc();
-
-  const diffInMinutes = utcNow.diff(publishDateTime, 'minutes');
-
-  if (diffInMinutes < 60) {
-    return `prije ${diffInMinutes}m`;
-  }
-
-  const diffInHours = utcNow.diff(publishDateTime, 'hours');
-
-  if (diffInHours < 24) {
-    return `prije ${diffInHours}h`;
-  }
-
-  const diffInDays = utcNow.diff(publishDateTime, 'days');
-
-  return `prije ${diffInDays}d`;
-};
-
-const Article = React.forwardRef<HTMLDivElement, ArticleProps>(
-  ({ article, style, ...props }, ref) => {
-    return (
-      <article ref={ref} style={{ ...style }} {...props}>
-        <img
-          alt={article.title}
-          src={article.imageUrl}
-          className={css(articleStyle.img)}
-        />
-        <div className={css(articleStyle.textContainer)}>
-          <div className={css(articleStyle.titleContainer)}>
-            {article.title}
-          </div>
-          <div className={css(articleStyle.newsPortalName)}>
-            <div>{article.newsPortal.name}</div>
-            <div className={css(articleStyle.smallDot)} />
-            <div>{getArticleAgeDisplayString(article.publishDateTime)}</div>
-          </div>
-        </div>
-      </article>
-    );
-  }
+const WrapperLink: React.FC<{ href: string; className?: string }> = ({
+  href,
+  className,
+  children,
+}) => (
+  <a
+    href={href}
+    className={cx(styles.wrapperLink, className)}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    {children}
+  </a>
 );
 
-export default Article;
+const Featured: React.FC<FeaturedArticleProps> = ({
+  article,
+  className,
+  variant,
+  ...props
+}) => {
+  const { url, imageUrl, title, newsPortal, publishDateTime } = article;
+
+  if (variant === 'main') {
+    return (
+      <WrapperLink
+        {...props}
+        href={url}
+        className={cx(styles.featuredMain, className)}
+      >
+        <Image
+          src={imageUrl || '/assets/images/logo.png'}
+          fallbackSrc="/assets/images/logo.png"
+          className={styles.coverImage}
+        />
+        <Flex flexDirection="column">
+          <Text
+            title={title}
+            className={styles.title}
+            weight="bold"
+            align="left"
+            size="h1"
+          >
+            {title.length > 120
+              ? `${title.substring(0, 120).trim()}...`
+              : title}
+          </Text>
+          <Flex alignItems="center">
+            <Image
+              src={newsPortal.iconUrl || '/assets/images/logo.png'}
+              fallbackSrc="/assets/images/logo.png"
+              className={styles.newsPortalIcon}
+            />
+            <Text size="caption">
+              {`${newsPortal.name} • ${moment(publishDateTime).fromNow()}`}
+            </Text>
+          </Flex>
+        </Flex>
+      </WrapperLink>
+    );
+  }
+
+  return (
+    <WrapperLink
+      {...props}
+      href={url}
+      className={cx(styles.featuredRegular, className)}
+    >
+      <Flex className={styles.coverImageWrapper}>
+        <Flex className={styles.newsPortalWrapper} alignItems="center">
+          <Image
+            src={newsPortal.iconUrl || '/assets/images/logo.png'}
+            fallbackSrc="/assets/images/logo.png"
+            className={styles.newsPortalIcon}
+          />
+          <Text size="small" color="white">
+            {newsPortal.name}
+          </Text>
+        </Flex>
+        <Flex
+          className={styles.coverImage}
+          style={{
+            backgroundImage: `url(${imageUrl || '/assets/images/logo.png'})`,
+          }}
+          disableStyles
+        />
+      </Flex>
+      <Text title={title} weight="bold" align="left">
+        {title.length > 80 ? `${title.substring(0, 80).trim()}...` : title}
+      </Text>
+    </WrapperLink>
+  );
+};
+
+const Latest: React.FC<LatestArticleProps> = ({
+  article: { url, imageUrl, title, newsPortal, publishDateTime },
+  className,
+  ...props
+}) => (
+  <WrapperLink {...props} href={url} className={cx(styles.latest, className)}>
+    <Image
+      src={imageUrl || '/assets/images/logo.png'}
+      fallbackSrc="/assets/images/logo.png"
+      className={styles.coverImage}
+    />
+    <Flex flexDirection="column" className={styles.textWrapper}>
+      <Text title={title} className={styles.title} weight="bold" align="left">
+        {title.length > 80 ? `${title.substring(0, 80).trim()}...` : title}
+      </Text>
+      <Text size="caption" align="left">
+        {`${newsPortal.name} • ${moment(publishDateTime).fromNow()}`}
+      </Text>
+    </Flex>
+  </WrapperLink>
+);
+
+export default {
+  Featured,
+  Latest,
+};

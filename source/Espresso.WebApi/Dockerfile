@@ -30,6 +30,7 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 # install and cache app dependencies
 COPY Espresso.WebApi/ClientApp/package.json /usr/src/app/package.json
+COPY Espresso.WebApi/ClientApp/.npmrc /usr/src/app/.npmrc
 RUN npm install
 
 # add app

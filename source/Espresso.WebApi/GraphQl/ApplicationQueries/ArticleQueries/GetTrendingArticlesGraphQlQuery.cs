@@ -51,8 +51,8 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
 
                     return await mediator.Send(
                         request: new GetTrendingArticlesQuery(
-                            take: (int)resolveContext.Arguments["take"],
-                            skip: (int)resolveContext.Arguments["take"],
+                            take: resolveContext.GetArgument<int>("take"),
+                            skip: resolveContext.GetArgument<int>("skip"),
                             minTimestamp: minTimestamp,
                             maxAgeOfTrendingArticle: webApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
                             currentEspressoWebApiVersion: webApiConfiguration.AppVersionConfiguration.Version,

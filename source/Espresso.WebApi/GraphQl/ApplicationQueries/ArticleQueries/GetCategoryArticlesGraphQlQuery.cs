@@ -70,14 +70,14 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
 
                     return await mediator.Send(
                         request: new GetCategoryArticlesQuery(
-                            take: (int)resolveContext.Arguments["take"],
-                            skip: (int)resolveContext.Arguments["skip"],
+                            take: resolveContext.GetArgument<int>("take"),
+                            skip: resolveContext.GetArgument<int>("skip"),
                             minTimestamp: minTimestamp,
                             newsPortalIdsString: resolveContext.GetArgument<string?>("newsPortalIds"),
-                            categoryId: (int)resolveContext.Arguments["categoryId"],
+                            categoryId: resolveContext.GetArgument<int>("categoryId"),
                             regionId: resolveContext.GetArgument<int?>("regionId"),
-                            newNewsPortalsPosition: webApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                             titleSearchQuery: resolveContext.GetArgument<string?>("titleSearchQuery"),
+                            newNewsPortalsPosition: webApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                             maxAgeOfNewNewsPortal: webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
                             currentEspressoWebApiVersion: webApiConfiguration.AppVersionConfiguration.Version,
                             targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],

@@ -12,6 +12,7 @@ docker-compose-development.yml
 docker-compose-database.yml
 TestReports
 firebase-key.json
+.npmrc
 
 # User-specific files
 *.rsuser

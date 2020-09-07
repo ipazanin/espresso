@@ -1,0 +1,33 @@
+/** Colors */
+$white: #ffffff;
+$black: #000000;
+
+$gray200: #f7f7f7;
+$gray300: #eeeeee;
+$gray400: #d8d8d8;
+$gray800: #1d1d1b;
+
+$primary: #d7545a;
+
+/** Misc */
+$boxShadow__1: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.04),
+  0 0.5rem 1.5rem 0 rgba(0, 0, 0, 0.04);
+$timingFunction: cubic-bezier(0.39, 0.575, 0.565, 1);
+$spacing: (
+  /** 0.125rem = 2px */ 'XS': 0.125rem,
+  /** 0.25rem = 4px */ 'SM': 0.25rem,
+  /** 0.5rem = 8px */ 'MD': 0.5rem,
+  /** 1rem = 16px */ 'LG': 1rem,
+  /** 1.5rem = 24px */ 'XL': 1.5rem,
+  /** 2rem = 32px */ 'XXL': 2rem
+);
+$borderRadius: 0.5rem;
+$breakpoints: (
+  'XXS': 375px,
+  'XS': 450px,
+  'SM': 576px,
+  'MD': 768px,
+  'LG': 992px,
+  'XL': 1100px,
+  'XXL': 1240px,
+);
