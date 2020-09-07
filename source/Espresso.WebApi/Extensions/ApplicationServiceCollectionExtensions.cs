@@ -4,7 +4,6 @@ using Espresso.Domain.IValidators;
 using Espresso.Domain.Validators;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Filters;
-using Espresso.WebApi.GraphQl.Infrastructure;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
