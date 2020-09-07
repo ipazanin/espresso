@@ -29,7 +29,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetWebCate
             Field<IntGraphType>(
                 name: nameof(GetWebConfigurationCategory.Position)
             );
-            Field<StringGraphType>(
+            Field<NonNullGraphType<StringGraphType>>(
                 name: nameof(GetWebConfigurationCategory.Url)
             );
         }
