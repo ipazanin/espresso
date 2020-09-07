@@ -111,7 +111,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run build-backend && npm run test-backend && pretty-quick && npm run lint-frontend && npm run test-frontend:ci "
+      "pre-commit": "npm run build-backend && npm run test-backend && npm run lint-frontend && npm run test-frontend:ci "
     }
   },
   "jest": {
