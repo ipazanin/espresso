@@ -255,6 +255,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                                 summary: syndicationItem.Summary?.Text,
                                 itemContent: (syndicationItem.Content as TextSyndicationContent)?.Text,
                                 publishDateTime: syndicationItem.PublishDate,
+                                maxAgeOfArticle: request.MaxAgeOfArticle,
                                 cancellationToken: cancellationToken
                             );
 
