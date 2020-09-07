@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using Espresso.WebApi.Parameters.HeaderParameters;
 using FluentValidation;
 using GraphQL;
 using GraphQL.Types;
+using GraphQL.Utilities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -61,6 +63,10 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
+            // var graphqlPrinter = new SchemaPrinter(_schema);
+            // var r = graphqlPrinter.Print();
+            // Console.WriteLine(r);
+
             var result = await _executer.ExecuteAsync(executionOptions =>
             {
                 executionOptions.Schema = _schema;
@@ -95,7 +101,7 @@ namespace Espresso.WebApi.Controllers
                 );
             }
 
-            return Ok(result.Data);
+            return Ok(new { data = result.Data });
         }
     }
 }

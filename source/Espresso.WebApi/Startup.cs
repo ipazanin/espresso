@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using Espresso.Application.Hubs;
 using Espresso.Application.Initialization;
 using Espresso.Common.Enums;
+using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Extensions;
 using GraphQL.Server.Ui.Playground;
@@ -47,15 +49,15 @@ namespace Espresso.WebApi
         /// <param name="app"></param>
         /// <param name="memoryCacheInit"></param>
         /// <param name="env"></param>
-        /// <param name="configuration"></param>
+        /// <param name="webApiConfiguration"></param>
         public void Configure(
             IApplicationBuilder app,
             IApplicationInit memoryCacheInit,
             IWebHostEnvironment env,
-            IWebApiConfiguration configuration
+            IWebApiConfiguration webApiConfiguration
         )
         {
-            if (configuration.SpaConfiguration.EnableCors)
+            if (webApiConfiguration.SpaConfiguration.EnableCors)
             {
                 app.UseCors("CustomCorsPolicy");
             }
@@ -68,11 +70,20 @@ namespace Espresso.WebApi
 
             app.UseHsts();
 
-            app.UseSwaggerServices(configuration);
+            app.UseSwaggerServices(webApiConfiguration);
             app.UseGraphQLPlayground(new GraphQLPlaygroundOptions
             {
                 Path = "/graphql-playground",
-                GraphQLEndPoint = "/graphql"
+                GraphQLEndPoint = "/graphql",
+                Headers = new Dictionary<string, object>
+                {
+                  { "espresso-api-key", webApiConfiguration.ApiKeysConfiguration.WebApiKey },
+                  { "espresso-api-version", webApiConfiguration.AppVersionConfiguration.EspressoWebApiCurrentVersion.ToString() },
+                  { "device-type", DeviceType.WebApp },
+                  { "version", "1.0.0" }
+                },
+                EditorReuseHeaders = true,
+                
             });
 
             app.UseRouting();
