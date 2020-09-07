@@ -3,7 +3,7 @@
     "**/.git": false,
     "**/obj": true,
     "**/bin": true,
-    "**/node_modules": true,
+    "**/node_modules": false,
     "**/ClientApp/build": false
   },
   "[jsonc]": {

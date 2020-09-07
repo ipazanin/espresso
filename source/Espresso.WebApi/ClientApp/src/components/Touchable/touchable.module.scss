@@ -1,0 +1,25 @@
+@import '../../styles/settings/variables';
+
+.container {
+  border: 0.0625rem solid transparent;
+  outline: none;
+  background-color: transparent;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.25s $timingFunction;
+
+  &:focus {
+    outline: none;
+    background-color: rgba($white, 0.5);
+  }
+
+  &:hover {
+    background-color: rgba($white, 0.25);
+  }
+
+  &[disabled] {
+    cursor: none;
+    pointer-events: none;
+  }
+}

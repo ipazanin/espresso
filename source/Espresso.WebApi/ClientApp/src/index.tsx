@@ -6,6 +6,8 @@ import { ConfigurationBuilder } from 'configuration';
 import Axios from 'axios';
 import * as serviceWorker from './serviceWorker';
 
+import './styles/main.scss';
+
 const config = ConfigurationBuilder.getConfiguration();
 Axios.defaults.baseURL = config.getProperty('serverUrl');
 Axios.defaults.headers = config.getProperty('headers');

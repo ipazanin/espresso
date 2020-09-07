@@ -1,0 +1,15 @@
+@import '../../../../styles/settings/variables';
+
+.container {
+  .subtitle {
+    margin-bottom: map-get($spacing, 'MD');
+  }
+
+  .mainArticle {
+    margin-top: 0.75rem;
+  }
+
+  .list {
+    margin-top: 1.25rem;
+  }
+}
