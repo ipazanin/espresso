@@ -3,6 +3,7 @@ using Espresso.Common.Constants;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetLatestArticlesTypes;
+using GraphQL;
 using GraphQL.Types;
 using MediatR;
 
@@ -58,15 +59,17 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                 ),
                 resolve: async resolveContext =>
                 {
-                    var minTimestampString = (string?)resolveContext.Arguments["minTimestamp"];
-                    var minTimestamp = string.IsNullOrEmpty(minTimestampString) ? null : (long?)long.Parse(minTimestampString);
+                    var minTimestampString = resolveContext.GetArgument<string?>("minTimestamp");
+                    var minTimestamp = string.IsNullOrEmpty(minTimestampString) ?
+                        null :
+                        (long?)long.Parse(minTimestampString);
                     return await mediator.Send(
                         request: new GetLatestArticlesQuery(
                             take: (int)resolveContext.Arguments["take"],
                             skip: (int)resolveContext.Arguments["skip"],
                             minTimestamp: minTimestamp,
-                            newsPortalIdsString: (string?)resolveContext.Arguments["newsPortalIds"],
-                            categoryIdsString: (string?)resolveContext.Arguments["categoryIds"],
+                            newsPortalIdsString: resolveContext.GetArgument<string?>("newsPortalIds"),
+                            categoryIdsString: resolveContext.GetArgument<string?>("categoryIds"),
                             newNewsPortalsPosition: webApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                             titleSearchQuery: (string?)resolveContext.Arguments["titleSearchQuery"],
                             maxAgeOfNewNewsPortal: webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,

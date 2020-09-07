@@ -83,7 +83,6 @@ namespace Espresso.WebApi
                   { "version", "1.0.0" }
                 },
                 EditorReuseHeaders = true,
-                
             });
 
             app.UseRouting();

@@ -1,7 +1,8 @@
 ﻿using Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles;
+using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetCategoryArticlesTypes;
 using GraphQL.Types;
 
-namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetCategoryArticlesTypes
+namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.ConfigurationTypes.GetWebCategoryArticlesTypes
 {
     /// <summary>
     /// 

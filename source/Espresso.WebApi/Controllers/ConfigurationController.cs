@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.CQRS.Configuration.Queries.GetConfiguration;
 using Espresso.Application.CQRS.Configuration.Queries.GetConfiguration_1_3;
+using Espresso.Application.CQRS.Configuration.Queries.GetWebConfiguration;
 using Espresso.Common.Constants;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Authentication;
@@ -33,6 +34,46 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
+        /// Get Web Configuration
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///     Get /api/web-configuration
+        /// </remarks>
+        /// <param name="cancellationToken"></param>
+        /// <param name="basicInformationsHeaderParameters"></param>
+        /// <returns>Response object containing app configuration</returns>
+        /// <response code="200">Response object containing app configuration</response>
+        /// <response code="401">If API Key is invalid or missing</response>
+        /// <response code="500">If unhandled exception occurred</response>
+        [Produces(MimeTypeConstants.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetConfigurationQueryResponse))]
+        [ApiVersion("1.4")]
+        [HttpGet]
+        [Authorize(Roles = ApiKey.WebAppRole)]
+        [Route("api/web-configuration")]
+        public async Task<IActionResult> GetWebConfiguration(
+            [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
+            CancellationToken cancellationToken
+        )
+        {
+            var request = new GetWebConfigurationQuery(
+                maxAgeOfNewNewsPortal: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
+                currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                consumerVersion: basicInformationsHeaderParameters.Version,
+                deviceType: basicInformationsHeaderParameters.DeviceType,
+                appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
+            );
+            var getNewsPortalsQueryResponse = await Mediator.Send(
+                request: request,
+                cancellationToken: cancellationToken
+            );
+
+            return Ok(getNewsPortalsQueryResponse);
+        }
+
+        /// <summary>
         /// Get App Configuration
         /// </summary>
         /// <remarks>
@@ -49,7 +90,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetConfigurationQueryResponse))]
         [ApiVersion("1.4")]
         [HttpGet]
-        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
         [Route("api/configuration")]
         public async Task<IActionResult> GetConfiguration(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,

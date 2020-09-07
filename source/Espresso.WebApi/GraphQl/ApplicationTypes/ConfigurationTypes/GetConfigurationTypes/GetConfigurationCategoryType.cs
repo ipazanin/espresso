@@ -1,7 +1,7 @@
 ﻿using Espresso.Application.CQRS.Configuration.Queries.GetConfiguration;
 using GraphQL.Types;
 
-namespace Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes
+namespace Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetConfigurationTypes
 {
     /// <summary>
     /// 
@@ -28,9 +28,6 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes
             );
             Field<IntGraphType>(
                 name: nameof(GetConfigurationCategory.Position)
-            );
-            Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetConfigurationCategory.Url)
             );
         }
     }
