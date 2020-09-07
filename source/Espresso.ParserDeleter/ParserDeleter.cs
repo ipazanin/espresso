@@ -66,6 +66,7 @@ namespace Espresso.ParserDeleter
 
                     var parseRssFeedsCommandResponse = await mediator.Send(
                         request: new ParseRssFeedsCommand(
+                            maxAgeOfArticle: _configuration.DateTimeConfiguration.MaxAgeOfArticles,
                             currentEspressoWebApiVersion: _configuration.AppConfiguration.RssFeedParserVersion,
                             targetedEspressoWebApiVersion: _configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
                             consumerVersion: _configuration.AppConfiguration.RssFeedParserVersion,
@@ -74,6 +75,9 @@ namespace Espresso.ParserDeleter
                         ),
                         cancellationToken: cancellationToken
                     );
+
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
 
                     await CallWebServer(parseRssFeedsCommandResponse, cancellationToken);
 

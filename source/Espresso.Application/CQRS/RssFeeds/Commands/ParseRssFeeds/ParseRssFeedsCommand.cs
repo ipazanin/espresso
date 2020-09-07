@@ -1,4 +1,5 @@
-﻿using Espresso.Application.Infrastructure;
+﻿using System;
+using Espresso.Application.Infrastructure;
 using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 
@@ -6,7 +7,10 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
 {
     public class ParseRssFeedsCommand : Request<ParseRssFeedsCommandResponse>
     {
+        public TimeSpan MaxAgeOfArticle { get; }
+
         public ParseRssFeedsCommand(
+            TimeSpan maxAgeOfArticle,
             string currentEspressoWebApiVersion,
             string targetedEspressoWebApiVersion,
             string consumerVersion,
@@ -21,11 +25,12 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             Event.ParseRssFeedsCommand
         )
         {
+            MaxAgeOfArticle = maxAgeOfArticle;
         }
 
         public override string ToString()
         {
-            return "";
+            return $"{nameof(MaxAgeOfArticle)}:{MaxAgeOfArticle}";
         }
     }
 }

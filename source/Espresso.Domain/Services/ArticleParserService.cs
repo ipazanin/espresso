@@ -39,6 +39,7 @@ namespace Espresso.Domain.Services
             string? itemSummary,
             string? itemContent,
             DateTimeOffset itemPublishDateTime,
+            TimeSpan maxAgeOfArticle,
             CancellationToken cancellationToken
         )
         {
@@ -76,7 +77,8 @@ namespace Espresso.Domain.Services
 
             var publishDateTime = GetPublishDateTime(
                 itemPublishDateTime: itemPublishDateTime,
-                utcNow: utcNow
+                utcNow: utcNow,
+                maxAgeOfArticle: maxAgeOfArticle
             );
 
             var articlecategories = GetArticleCategories(
@@ -247,9 +249,9 @@ namespace Espresso.Domain.Services
         #endregion
 
         #region PublishDateTime
-        private DateTime? GetPublishDateTime(DateTimeOffset itemPublishDateTime, DateTime utcNow)
+        private DateTime? GetPublishDateTime(DateTimeOffset itemPublishDateTime, DateTime utcNow, TimeSpan maxAgeOfArticle)
         {
-            var invalidPublishdateTimeMinimum = utcNow.AddDays(-7);
+            var invalidPublishdateTimeMinimum = utcNow - maxAgeOfArticle;
             var minimumPublishDateTime = utcNow.AddDays(-1);
             var maximumPublishDateTime = utcNow;
             var rssFeedPublishDateTime = itemPublishDateTime.UtcDateTime;
