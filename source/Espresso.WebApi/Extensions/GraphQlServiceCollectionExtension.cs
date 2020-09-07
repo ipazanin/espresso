@@ -16,7 +16,7 @@ using GraphQL.SystemTextJson;
 using GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Espresso.WebApi.GraphQl.Infrastructure
+namespace Espresso.WebApi.Extensions
 {
     /// <summary>
     /// 

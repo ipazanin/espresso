@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.Domain.Enums.CategoryEnums;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -52,7 +53,9 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetWebConfiguration
                 categoryDtos = categoryDtosList;
             }
 
-            var newsPortalIds = newsPortals.Select(newsPortal => newsPortal.Id);
+            var newsPortalIds = newsPortals
+                .Where(newsPortal => !newsPortal.CategoryId.Equals((int)CategoryId.Local))
+                .Select(newsPortal => newsPortal.Id);
 
             var response = new GetWebConfigurationQueryResponse(
                 categories: categoryDtos,
