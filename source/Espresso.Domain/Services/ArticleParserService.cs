@@ -55,6 +55,11 @@ namespace Espresso.Domain.Services
                 itemId: itemId
             );
 
+            var webUrl = GetNormalUrl(
+                rssFeed: rssFeed,
+                itemLinks: itemLinks
+            );
+
             var summary = GetSummary(
                 itemSummary: itemSummary,
                 itemTitle: itemTitle
@@ -88,6 +93,7 @@ namespace Espresso.Domain.Services
             var article = _articleValidator.Validate(
                 id: id,
                 url: url,
+                webUrl: webUrl,
                 summary: summary,
                 title: title,
                 imageUrl: imageUrl,

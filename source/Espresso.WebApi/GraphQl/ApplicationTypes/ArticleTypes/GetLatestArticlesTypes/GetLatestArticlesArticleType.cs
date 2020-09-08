@@ -23,6 +23,9 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetLatestArticle
             Field<NonNullGraphType<StringGraphType>>(
                 name: nameof(GetLatestArticlesArticle.Url)
             );
+            Field<NonNullGraphType<StringGraphType>>(
+                name: nameof(GetLatestArticlesArticle.WebUrl)
+            );
             Field<StringGraphType>(
                 name: nameof(GetLatestArticlesArticle.ImageUrl)
             );

@@ -10,6 +10,7 @@ namespace Espresso.Domain.IValidators
         public Article Validate(
             Guid id,
             string? url,
+            string? webUrl,
             string? summary,
             string? title,
             string? imageUrl,

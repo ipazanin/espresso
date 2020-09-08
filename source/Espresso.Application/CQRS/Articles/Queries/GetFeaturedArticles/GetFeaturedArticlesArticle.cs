@@ -21,6 +21,11 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
         public string Url { get; private set; }
 
         /// <summary>
+        /// Article Url provided by RSS Feed
+        /// </summary>
+        public string WebUrl { get; private set; }
+
+        /// <summary>
         /// Article Title Parsed from RSS Feed
         /// </summary>
         public string Title { get; private set; }
@@ -51,6 +56,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
         private GetFeaturedArticlesArticle()
         {
             Url = null!;
+            WebUrl = null!;
             Title = null!;
             PublishDateTime = null!;
             NewsPortal = null!;
@@ -67,6 +73,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
                 Title = article.Title,
                 ImageUrl = article.ImageUrl,
                 Url = article.Url,
+                WebUrl = article.WebUrl,
                 PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.ArticleDateTimeFormat),
                 NewsPortal = GetFeaturedArticlesNewsPortal.GetProjection()
                     .Compile()

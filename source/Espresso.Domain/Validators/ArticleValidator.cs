@@ -12,6 +12,7 @@ namespace Espresso.Domain.Validators
         public Article Validate(
             Guid id,
             string? url,
+            string? webUrl,
             string? summary,
             string? title,
             string? imageUrl,
@@ -32,6 +33,10 @@ namespace Espresso.Domain.Validators
             NotEmpty(url!, nameof(Article.Url));
             MaxLength(url!, nameof(Article.Url), Article.UrlMaxLength);
             MustBeUrl(url!, nameof(Article.Url));
+
+            NotEmpty(webUrl!, nameof(Article.WebUrl));
+            MaxLength(webUrl!, nameof(Article.WebUrl), Article.WebUrlMaxLength);
+            MustBeUrl(webUrl!, nameof(Article.WebUrl));
 
             NotEmpty(summary!, nameof(Article.Summary));
             MaxLength(summary!, nameof(Article.Summary), Article.SummaryMaxLength);
@@ -58,6 +63,7 @@ namespace Espresso.Domain.Validators
             return new Article(
                 id: id,
                 url: url!,
+                webUrl: webUrl!,
                 summary: summary!,
                 title: title!,
                 imageUrl: imageUrl,

@@ -16,9 +16,15 @@ namespace Espresso.Application.DataTransferObjects
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Article Url provided by RSS Feed
+        /// Article Url provided by RSS Feed or AMP Url
         /// </summary>
         public string Url { get; set; }
+
+
+        /// <summary>
+        /// Article Url provided by RSS Feed
+        /// </summary>
+        public string WebUrl { get; set; }
 
         /// <summary>
         /// Article Title Parsed from RSS Feed
@@ -66,6 +72,7 @@ namespace Espresso.Application.DataTransferObjects
         public ArticleDto()
         {
             Url = null!;
+            WebUrl = null!;
             Title = null!;
             Summary = null!;
             NewsPortal = null!;
@@ -74,6 +81,7 @@ namespace Espresso.Application.DataTransferObjects
         public ArticleDto(
             Guid id,
             string url,
+            string webUrl,
             string title,
             string? imageUrl,
             DateTime publishDateTime,
@@ -89,6 +97,7 @@ namespace Espresso.Application.DataTransferObjects
         {
             Id = id;
             Url = url;
+            WebUrl = webUrl;
             Title = title;
             ImageUrl = imageUrl;
             PublishDateTime = publishDateTime;
@@ -113,6 +122,7 @@ namespace Espresso.Application.DataTransferObjects
                 Title = article.Title,
                 ImageUrl = article.ImageUrl,
                 Url = article.Url,
+                WebUrl = article.WebUrl,
                 PublishDateTime = article.PublishDateTime,
                 CreateDateTime = article.CreateDateTime,
                 UpdateDateTime = article.UpdateDateTime,
@@ -164,6 +174,7 @@ namespace Espresso.Application.DataTransferObjects
                 var createdArticle = new Article(
                     id: article.Id,
                     url: article.Url,
+                    webUrl: article.WebUrl,
                     summary: article.Summary,
                     title: article.Title,
                     imageUrl: article.ImageUrl,

@@ -21,6 +21,11 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
         public string Url { get; private set; }
 
         /// <summary>
+        /// Article Url provided by RSS Feed
+        /// </summary>
+        public string WebUrl { get; private set; }
+
+        /// <summary>
         /// Article Title Parsed from RSS Feed
         /// </summary>
         public string Title { get; private set; }
@@ -51,28 +56,10 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
         private GetLatestArticlesArticle()
         {
             Url = null!;
+            WebUrl = null!;
             Title = null!;
             PublishDateTime = null!;
             NewsPortal = null!;
-        }
-
-        public GetLatestArticlesArticle(
-            Guid id,
-            string url,
-            string title,
-            string? imageUrl,
-            string publishDateTime,
-            GetLatestArticlesNewsPortal newsPortal,
-            IEnumerable<GetLatestArticlesCategory> categories
-        )
-        {
-            Id = id;
-            Url = url;
-            Title = title;
-            ImageUrl = imageUrl;
-            PublishDateTime = publishDateTime;
-            NewsPortal = newsPortal;
-            Categories = categories;
         }
         #endregion
 
@@ -85,6 +72,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
                 Title = article.Title,
                 ImageUrl = article.ImageUrl,
                 Url = article.Url,
+                WebUrl = article.WebUrl,
                 PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.ArticleDateTimeFormat),
                 NewsPortal = GetLatestArticlesNewsPortal.GetProjection()
                     .Compile()

@@ -18,6 +18,9 @@ namespace Espresso.Persistence.Configuration
             builder.Property(article => article.Url)
                 .HasMaxLength(Article.UrlMaxLength);
 
+            builder.Property(article => article.WebUrl)
+                .HasMaxLength(Article.WebUrlMaxLength);
+
             builder.Property(article => article.Title)
                 .HasMaxLength(Article.ImageUrlMaxLength);
 

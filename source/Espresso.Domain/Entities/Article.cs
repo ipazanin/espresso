@@ -16,6 +16,7 @@ namespace Espresso.Domain.Entities
         public const int SummaryMaxLength = 2000;
         public const int TitleMaxLength = 500;
         public const int UrlMaxLength = 500;
+        public const int WebUrlMaxLength = 500;
         public const int ImageUrlMaxLength = 500;
 
         public const bool IsHiddenDefaultValue = false;
@@ -27,6 +28,8 @@ namespace Espresso.Domain.Entities
         public Guid Id { get; private set; }
 
         public string Url { get; private set; }
+
+        public string WebUrl { get; private set; }
 
         public string Summary { get; private set; }
 
@@ -79,11 +82,13 @@ namespace Espresso.Domain.Entities
             Url = null!;
             Summary = null!;
             Title = null!;
+            WebUrl = null!;
         }
 
         public Article(
             Guid id,
             string url,
+            string webUrl,
             string summary,
             string title,
             string? imageUrl,
@@ -103,6 +108,7 @@ namespace Espresso.Domain.Entities
         {
             Id = id;
             Url = url;
+            WebUrl = webUrl;
             Summary = summary;
             Title = title;
             ImageUrl = imageUrl;
@@ -166,6 +172,11 @@ namespace Espresso.Domain.Entities
             if (!Url.Equals(other.Url))
             {
                 Url = other.Url;
+                shouldUpdate = true;
+            }
+            if (!WebUrl.Equals(other.WebUrl))
+            {
+                WebUrl = other.WebUrl;
                 shouldUpdate = true;
             }
             if (!Summary.Equals(other.Summary))
