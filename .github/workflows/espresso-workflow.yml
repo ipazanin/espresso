@@ -65,3 +65,37 @@ jobs:
       - name: test
         working-directory: ./source/Espresso.WebApi/ClientApp
         run: npm run test-frontend:ci
+  workflowFailureSlackNotification:
+    name: Workflow Failure Slack Notification
+    needs: test-frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: tech-bot
+          SLACK_COLOR: '#0FEB0C'
+          SLACK_ICON: https://github.com/rtCamp.png?size=48
+          SLACK_MESSAGE: Test Fail
+          SLACK_TITLE: Fail Test Title
+          SLACK_USERNAME: backend-github-bot
+        if: env.WORKFLOW_CONCLUSION == 'failure'
+  workflowSucessSlackNotification:
+    name: Workflow Failure Slack Notification
+    needs: test-frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: tech-bot
+          SLACK_COLOR: '#0FEB0C'
+          SLACK_ICON: https://github.com/rtCamp.png?size=48
+          SLACK_MESSAGE: Success Test Success
+          SLACK_TITLE: Success Test Title
+          SLACK_USERNAME: backend-github-bot
+        if: env.WORKFLOW_CONCLUSION == 'success'
