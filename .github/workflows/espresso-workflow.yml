@@ -41,9 +41,7 @@ jobs:
         run: npm run test-frontend:ci
   slack-notification:
     name: Workflow Failure Slack Notification
-    needs: 
-      - frontend-workflow
-      - backend-workflow
+    needs: frontend-workflow
       runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
