@@ -93,3 +93,13 @@ $coverImageWidth--latest: 6.25rem;
     padding-right: map-get($spacing, 'LG');
   }
 }
+
+.featuredMain,
+.featuredRegular,
+.latest {
+  .title {
+    &:hover {
+      color: $primary;
+    }
+  }
+}

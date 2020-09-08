@@ -76,9 +76,6 @@ namespace Espresso.ParserDeleter
                         cancellationToken: cancellationToken
                     );
 
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-
                     await CallWebServer(parseRssFeedsCommandResponse, cancellationToken);
 
                     await mediator.Send(
