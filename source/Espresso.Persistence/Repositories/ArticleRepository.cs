@@ -18,11 +18,11 @@ namespace Espresso.Persistence.Repositories
         #endregion
 
         #region Fields
-
         private readonly IEnumerable<string> _columnNames = new[]
         {
                 nameof(Article.Id),
                 nameof(Article.Url),
+                nameof(Article.WebUrl),
                 nameof(Article.Summary),
                 nameof(Article.Title),
                 nameof(Article.ImageUrl),
@@ -37,6 +37,7 @@ namespace Espresso.Persistence.Repositories
 
         private readonly IEnumerable<string> _updateColumnNames = new[]
         {
+                nameof(Article.WebUrl),
                 nameof(Article.Url),
                 nameof(Article.Summary),
                 nameof(Article.Title),
@@ -86,6 +87,7 @@ namespace Espresso.Persistence.Repositories
             {
                 command.Parameters.Add(new SqlParameter($"@{nameof(Article.Id)}", article.Id));
                 command.Parameters.Add(new SqlParameter($"@{nameof(Article.Url)}", article.Url));
+                command.Parameters.Add(new SqlParameter($"@{nameof(Article.WebUrl)}", article.WebUrl));
                 command.Parameters.Add(new SqlParameter($"@{nameof(Article.Summary)}", article.Summary));
                 command.Parameters.Add(new SqlParameter($"@{nameof(Article.Title)}", article.Title));
                 if (article.ImageUrl is null)
@@ -129,6 +131,7 @@ namespace Espresso.Persistence.Repositories
             {
                 command.Parameters.Add(new SqlParameter($"@{IdColumnName}", article.Id));
                 command.Parameters.Add(new SqlParameter($"@{nameof(Article.Url)}", article.Url));
+                command.Parameters.Add(new SqlParameter($"@{nameof(Article.WebUrl)}", article.WebUrl));
                 command.Parameters.Add(new SqlParameter($"@{nameof(Article.Summary)}", article.Summary));
                 command.Parameters.Add(new SqlParameter($"@{nameof(Article.Title)}", article.Title));
                 if (article.ImageUrl is null)

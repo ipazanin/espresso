@@ -23,6 +23,9 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetFeaturedArtic
             Field<NonNullGraphType<StringGraphType>>(
                 name: nameof(GetFeaturedArticlesArticle.Url)
             );
+            Field<NonNullGraphType<StringGraphType>>(
+                name: nameof(GetFeaturedArticlesArticle.WebUrl)
+            );
             Field<StringGraphType>(
                 name: nameof(GetFeaturedArticlesArticle.ImageUrl)
             );
