@@ -1,8 +1,10 @@
-﻿using Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles;
+﻿using System;
+using Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles;
 using Espresso.Common.Constants;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetTrendingArticlesTypes;
+using Espresso.WebApi.GraphQl.Infrastructure;
 using GraphQL;
 using GraphQL.Types;
 using MediatR;
@@ -49,6 +51,9 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                         null :
                         (long?)long.Parse(minTimestampString);
 
+                    var userContext = resolveContext.UserContext as GraphQlUserContext ??
+                        throw new Exception("Invalid GraphQL User Context");
+
                     return await mediator.Send(
                         request: new GetTrendingArticlesQuery(
                             take: resolveContext.GetArgument<int>("take"),
@@ -56,9 +61,9 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             minTimestamp: minTimestamp,
                             maxAgeOfTrendingArticle: webApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
                             currentEspressoWebApiVersion: webApiConfiguration.AppVersionConfiguration.Version,
-                            targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],
-                            consumerVersion: (string)resolveContext.UserContext["consumerVersion"],
-                            deviceType: (DeviceType)resolveContext.UserContext["deviceType"],
+                            targetedEspressoWebApiVersion: userContext.TargetedApiVersion,
+                            consumerVersion: userContext.ConsumerVersion,
+                            deviceType: userContext.DeviceType,
                             appEnvironment: webApiConfiguration.AppConfiguration.AppEnvironment
                         ),
                         cancellationToken: resolveContext.CancellationToken
