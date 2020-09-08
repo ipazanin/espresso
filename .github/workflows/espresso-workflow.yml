@@ -9,34 +9,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Setup .NET Core
+      - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.401
-      - name: Install dependencies
+      - name: Install .NET Dependencies
         run: dotnet restore source/Espresso.sln
-      - name: Build
+      - name: Build .NET
         run: dotnet build --configuration Release --no-restore source/Espresso.sln
-      - name: Test
+      - name: Test .NET
         run: dotnet test --no-restore --verbosity normal source/Espresso.sln
 
       - uses: actions/checkout@v2
-      - name: Use Node.js 14.x
+      - name: Setup Node.js 14.x
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
-      - name: install
+      - name: Install React Dependencies
         working-directory: ./source/Espresso.WebApi/ClientApp
         run: npm install
-      - name: lint
+      - name: Lint React
         working-directory: ./source/Espresso.WebApi/ClientApp
         run: npm run lint-frontend
-      - name: test
+      - name: Test React
         working-directory: ./source/Espresso.WebApi/ClientApp
         run: npm run test-frontend:ci
 
       - uses: actions/checkout@v2
-      - name: Workflow Failure Slack Notification
+      - name: Failure Slack Notification
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
@@ -47,7 +47,7 @@ jobs:
           SLACK_MESSAGE: Workflow Failure
           SLACK_USERNAME: Backend CI/CD
         if: ${{ failure() }}
-      - name: Workflow Success Slack Notification
+      - name: Success Slack Notification
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
@@ -58,6 +58,7 @@ jobs:
           SLACK_MESSAGE: Workflow Success
           SLACK_USERNAME: Backend CI/CD
         if: ${{ success() }}
+
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -82,98 +83,3 @@ jobs:
         env:
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
         run: echo "$MATRIX_CONTEXT"
-# name: espresso-workflow
-# on:
-#   push:
-#     branches: [master]
-#   pull_request:
-#     branches: [master]
-# jobs:
-#   backend-job:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: Setup .NET Core
-#         uses: actions/setup-dotnet@v1
-#         with:
-#           dotnet-version: 3.1.401
-#       - name: Install dependencies
-#         run: dotnet restore source/Espresso.sln
-#       - name: Build
-#         run: dotnet build --configuration Release --no-restore source/Espresso.sln
-#       - name: Test
-#         run: dotnet test --no-restore --verbosity normal source/Espresso.sln
-#   frontend-job:
-#     name: Frontend Workflow
-#     runs-on: ubuntu-latest
-#     strategy:
-#       matrix:
-#         node-version: [14.x]
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: Use Node.js ${{ matrix.node-version }}
-#         uses: actions/setup-node@v1
-#         with:
-#           node-version: ${{ matrix.node-version }}
-#       - name: install
-#         working-directory: ./source/Espresso.WebApi/ClientApp
-#         run: npm install
-#       - name: lint
-#         working-directory: ./source/Espresso.WebApi/ClientApp
-#         run: npm run lint-frontend
-#       - name: test
-#         working-directory: ./source/Espresso.WebApi/ClientApp
-#         run: npm run test-frontend:ci
-#   slack-notification-job:
-#     name: Slack Notification
-#     needs: frontend-job
-#     if: always()
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: Workflow Failure Slack Notification
-#         uses: rtCamp/action-slack-notify@master
-#         env:
-#           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-#           SLACK_CHANNEL: tech-bot
-#           SLACK_COLOR: '#EB0C13'
-#           SLACK_ICON: https://mpng.subpng.com/20180410/xgw/kisspng-internet-bot-web-traffic-safe-5acd7c51dda2f4.1033986715234161459078.jpg
-#           SLACK_TITLE: Failure
-#           SLACK_MESSAGE: Workflow Failure
-#           SLACK_USERNAME: Backend CI/CD
-#         if: ${{ failure() }}
-#       - name: Workflow Success Slack Notification
-#         uses: rtCamp/action-slack-notify@master
-#         env:
-#           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-#           SLACK_CHANNEL: errors-backend-bot
-#           SLACK_COLOR: '#0FEB0C'
-#           SLACK_ICON: https://static.botsrv.com/website/img/quriobot_favicon.1727b193.png
-#           SLACK_TITLE: Success
-#           SLACK_MESSAGE: Workflow Success
-#           SLACK_USERNAME: Backend CI/CD
-#         if: ${{ success() }}
-#       - name: Dump GitHub context
-#         env:
-#           GITHUB_CONTEXT: ${{ toJson(github) }}
-#         run: echo "$GITHUB_CONTEXT"
-#       - name: Dump job context
-#         env:
-#           JOB_CONTEXT: ${{ toJson(job) }}
-#         run: echo "$JOB_CONTEXT"
-#       - name: Dump steps context
-#         env:
-#           STEPS_CONTEXT: ${{ toJson(steps) }}
-#         run: echo "$STEPS_CONTEXT"
-#       - name: Dump runner context
-#         env:
-#           RUNNER_CONTEXT: ${{ toJson(runner) }}
-#         run: echo "$RUNNER_CONTEXT"
-#       - name: Dump strategy context
-#         env:
-#           STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-#         run: echo "$STRATEGY_CONTEXT"
-#       - name: Dump matrix context
-#         env:
-#           MATRIX_CONTEXT: ${{ toJson(matrix) }}
-#         run: echo "$MATRIX_CONTEXT"
