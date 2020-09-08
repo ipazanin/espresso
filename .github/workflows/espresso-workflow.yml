@@ -80,8 +80,10 @@ jobs:
           SLACK_ICON: https://github.com/rtCamp.png?size=48
           SLACK_MESSAGE: Test Fail
           SLACK_TITLE: Fail Test Title
-          SLACK_USERNAME: backend-github-bot
+          SLACK_USERNAME: Backend CI/CD
         if: env.WORKFLOW_CONCLUSION == 'failure'
+      - name: echo
+        run: echo env.WORKFLOW_CONCLUSION
   workflowSucessSlackNotification:
     name: Workflow Failure Slack Notification
     needs: test-frontend
@@ -97,5 +99,7 @@ jobs:
           SLACK_ICON: https://github.com/rtCamp.png?size=48
           SLACK_MESSAGE: Success Test Success
           SLACK_TITLE: Success Test Title
-          SLACK_USERNAME: backend-github-bot
-        if: env.WORKFLOW_CONCLUSION == 'success'
+          SLACK_USERNAME: Backend CI/CD
+        if: env.WORKFLOW_CONCLUSION != 'failure'
+      - name: echo
+        run: echo env.WORKFLOW_CONCLUSION
