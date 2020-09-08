@@ -4,5 +4,4 @@ Espresso Backend
 
 Workflows
 
-![Backend](https://github.com/IvanPazanin/espresso-backend/workflows/Backend/badge.svg)
-![Frontend](https://github.com/IvanPazanin/espresso-backend/workflows/Frontend/badge.svg)
+![Backend](https://github.com/IvanPazanin/espresso-backend/workflows/espresso-workflow/badge.svg)
