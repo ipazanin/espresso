@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Espresso.Common.Enums;
 using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
+using Espresso.WebApi.GraphQl.Infrastructure;
 using Espresso.WebApi.Infrastructure;
 using Espresso.WebApi.Parameters.BodyParameters;
 using Espresso.WebApi.Parameters.HeaderParameters;
@@ -73,17 +74,22 @@ namespace Espresso.WebApi.Controllers
                 executionOptions.OperationName = query.OperationName;
                 executionOptions.CancellationToken = cancellationToken;
 
-                if (WebApiConfiguration.AppConfiguration.AppEnvironment.Equals(AppEnvironment.Local))
+                if (
+                    WebApiConfiguration
+                        .AppConfiguration
+                        .AppEnvironment
+                        .Equals(AppEnvironment.Local)
+                )
                 {
                     executionOptions.ExposeExceptions = true;
                     executionOptions.EnableMetrics = true;
                 }
 
-                executionOptions.UserContext = new Dictionary<string, object>
+                executionOptions.UserContext = new GraphQlUserContext
                 {
-                    { "targetedEspressoWebApiVersion", basicInformationsHeaderParameters.EspressoWebApiVersion },
-                    { "consumerVersion", basicInformationsHeaderParameters.Version },
-                    { "deviceType", basicInformationsHeaderParameters.DeviceType },
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
                 };
             });
 

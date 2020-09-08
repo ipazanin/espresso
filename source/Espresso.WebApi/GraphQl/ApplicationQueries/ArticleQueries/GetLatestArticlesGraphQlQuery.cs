@@ -1,8 +1,10 @@
-﻿using Espresso.Application.CQRS.Articles.Queries.GetLatestArticles;
+﻿using System;
+using Espresso.Application.CQRS.Articles.Queries.GetLatestArticles;
 using Espresso.Common.Constants;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetLatestArticlesTypes;
+using Espresso.WebApi.GraphQl.Infrastructure;
 using GraphQL;
 using GraphQL.Types;
 using MediatR;
@@ -63,6 +65,10 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                     var minTimestamp = string.IsNullOrEmpty(minTimestampString) ?
                         null :
                         (long?)long.Parse(minTimestampString);
+
+                    var userContext = resolveContext.UserContext as GraphQlUserContext ??
+                        throw new Exception("Invalid GraphQL User Context");
+
                     return await mediator.Send(
                         request: new GetLatestArticlesQuery(
                             take: resolveContext.GetArgument<int>("take"),
@@ -74,9 +80,9 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             titleSearchQuery: resolveContext.GetArgument<string?>("titleSearchQuery"),
                             maxAgeOfNewNewsPortal: webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
                             currentEspressoWebApiVersion: webApiConfiguration.AppVersionConfiguration.Version,
-                            targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],
-                            consumerVersion: (string)resolveContext.UserContext["consumerVersion"],
-                            deviceType: (DeviceType)resolveContext.UserContext["deviceType"],
+                            targetedEspressoWebApiVersion: userContext.TargetedApiVersion,
+                            consumerVersion: userContext.ConsumerVersion,
+                            deviceType: userContext.DeviceType,
                             appEnvironment: webApiConfiguration.AppConfiguration.AppEnvironment
                         ),
                         cancellationToken: resolveContext.CancellationToken
