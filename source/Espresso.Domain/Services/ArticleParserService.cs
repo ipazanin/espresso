@@ -49,11 +49,6 @@ namespace Espresso.Domain.Services
             var initialNumberOfClicks = random.Next(0, 15);
             var initialTrendingScore = 0;
 
-            var articleId = GetArticleId(
-                itemLinks: itemLinks,
-                rssFeed: rssFeed
-            );
-
             var url = GetUrl(
                 rssFeed: rssFeed,
                 itemLinks: itemLinks,
@@ -92,7 +87,6 @@ namespace Espresso.Domain.Services
 
             var article = _articleValidator.Validate(
                 id: id,
-                articleId: articleId,
                 url: url,
                 summary: summary,
                 title: title,
@@ -114,22 +108,6 @@ namespace Espresso.Domain.Services
         #endregion
 
         #region Private Methods
-
-        #region ArticleId
-        private string? GetArticleId(IEnumerable<Uri?>? itemLinks, RssFeed rssFeed)
-        {
-            var url = itemLinks?.FirstOrDefault()?.ToString();
-            // TODO: Refactor
-            if (
-                rssFeed.Id.Equals((int)RssFeedId.IstarskaZupanija) &&
-                !string.IsNullOrWhiteSpace(url)
-            )
-            {
-                return rssFeed.NewsPortal!.BaseUrl + url;
-            }
-            return url;
-        }
-        #endregion
 
         #region Url
         private string? GetUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks, string? itemId)

@@ -9,9 +9,6 @@ namespace Espresso.Persistence.Configuration
         public void Configure(EntityTypeBuilder<Article> builder)
         {
             #region Property Mapping
-            builder.Property(article => article.ArticleId)
-                .HasMaxLength(Article.ArticleIdMaxLength);
-
             builder.Property(article => article.Summary)
                 .HasMaxLength(Article.SummaryMaxLength);
 

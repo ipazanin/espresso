@@ -9,7 +9,6 @@ namespace Espresso.Domain.IValidators
     {
         public Article Validate(
             Guid id,
-            string? articleId,
             string? url,
             string? summary,
             string? title,

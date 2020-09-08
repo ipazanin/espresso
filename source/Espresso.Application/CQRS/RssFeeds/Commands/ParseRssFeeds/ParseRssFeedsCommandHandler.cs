@@ -332,7 +332,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             foreach (var article in parsedArticles.Values)
             {
                 if (
-                    articleIdArticleDictionary.TryGetValue((article.NewsPortalId, article.ArticleId), out var alreadyParsedArticleId) ||
+                    articleIdArticleDictionary.TryGetValue((article.NewsPortalId, article.Url), out var alreadyParsedArticleId) ||
                     titleArticleDictionary.TryGetValue((article.NewsPortalId, article.Title), out alreadyParsedArticleId) ||
                     summaryArticleDictionary.TryGetValue((article.NewsPortalId, article.Summary), out alreadyParsedArticleId)
                 )
@@ -345,7 +345,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                 else
                 {
                     _ = uniqueArticles.TryAdd(article.Id, article);
-                    _ = articleIdArticleDictionary.TryAdd((article.NewsPortalId, article.ArticleId), article.Id);
+                    _ = articleIdArticleDictionary.TryAdd((article.NewsPortalId, article.Url), article.Id);
                     _ = titleArticleDictionary.TryAdd((article.NewsPortalId, article.Title), article.Id);
                     _ = summaryArticleDictionary.TryAdd((article.NewsPortalId, article.Summary), article.Id);
                 }
@@ -380,7 +380,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
 
             foreach (var article in savedArticles)
             {
-                _ = savedArticlesArticleIdDictionary.TryAdd((article.NewsPortalId, article.ArticleId), article.Id);
+                _ = savedArticlesArticleIdDictionary.TryAdd((article.NewsPortalId, article.Url), article.Id);
                 _ = savedArticlesTitleDictionary.TryAdd((article.NewsPortalId, article.Title), article.Id);
                 _ = savedArticlesSummaryDictionary.TryAdd((article.NewsPortalId, article.Summary), article.Id);
             }
@@ -388,7 +388,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             foreach (var article in articles)
             {
                 if (
-                    savedArticlesArticleIdDictionary.TryGetValue((article.NewsPortalId, article.ArticleId), out var savedArticleId) ||
+                    savedArticlesArticleIdDictionary.TryGetValue((article.NewsPortalId, article.Url), out var savedArticleId) ||
                     savedArticlesTitleDictionary.TryGetValue((article.NewsPortalId, article.Title), out savedArticleId) ||
                     savedArticlesSummaryDictionary.TryGetValue((article.NewsPortalId, article.Summary), out savedArticleId)
                 )

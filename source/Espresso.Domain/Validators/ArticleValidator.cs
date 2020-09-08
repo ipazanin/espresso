@@ -11,7 +11,6 @@ namespace Espresso.Domain.Validators
         #region Methods
         public Article Validate(
             Guid id,
-            string? articleId,
             string? url,
             string? summary,
             string? title,
@@ -29,10 +28,6 @@ namespace Espresso.Domain.Validators
         )
         {
             NotEmpty(id, nameof(Article.Id));
-
-            NotEmpty(articleId!, nameof(Article.ArticleId));
-            MaxLength(articleId!, nameof(Article.ArticleId), Article.ArticleIdMaxLength);
-            MustBeUrl(articleId!, nameof(Article.ArticleId));
 
             NotEmpty(url!, nameof(Article.Url));
             MaxLength(url!, nameof(Article.Url), Article.UrlMaxLength);
@@ -62,7 +57,6 @@ namespace Espresso.Domain.Validators
 
             return new Article(
                 id: id,
-                articleId: articleId!,
                 url: url!,
                 summary: summary!,
                 title: title!,
