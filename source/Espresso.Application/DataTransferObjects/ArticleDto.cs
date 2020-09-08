@@ -43,8 +43,6 @@ namespace Espresso.Application.DataTransferObjects
 
         public int NumberOfClicks { get; set; }
 
-        public string ArticleId { get; set; }
-
         public string Summary { get; set; }
 
         public int RssFeedId { get; set; }
@@ -69,7 +67,6 @@ namespace Espresso.Application.DataTransferObjects
         {
             Url = null!;
             Title = null!;
-            ArticleId = null!;
             Summary = null!;
             NewsPortal = null!;
         }
@@ -84,7 +81,6 @@ namespace Espresso.Application.DataTransferObjects
             DateTime updateDateTime,
             decimal trendingScore,
             int numberOfClicks,
-            string articleId,
             string summary,
             int rssFeedId,
             NewsPortalDto newsPortal,
@@ -100,7 +96,6 @@ namespace Espresso.Application.DataTransferObjects
             UpdateDateTime = updateDateTime;
             TrendingScore = trendingScore;
             NumberOfClicks = numberOfClicks;
-            ArticleId = articleId;
             Summary = summary;
             RssFeedId = rssFeedId;
             NewsPortal = newsPortal;
@@ -127,7 +122,6 @@ namespace Espresso.Application.DataTransferObjects
                     .Select(CategoryDto.GetProjection().Compile()!),
                 TrendingScore = article.TrendingScore,
                 NumberOfClicks = article.NumberOfClicks,
-                ArticleId = article.ArticleId,
                 Summary = article.Summary,
                 RssFeedId = article.RssFeedId,
             };
@@ -169,7 +163,6 @@ namespace Espresso.Application.DataTransferObjects
 
                 var createdArticle = new Article(
                     id: article.Id,
-                    articleId: article.ArticleId,
                     url: article.Url,
                     summary: article.Summary,
                     title: article.Title,

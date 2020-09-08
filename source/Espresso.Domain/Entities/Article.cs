@@ -11,10 +11,20 @@ namespace Espresso.Domain.Entities
     public class Article :
         IEntity<Guid, Article>
     {
+
+        #region Constants
+        public const int SummaryMaxLength = 2000;
+        public const int TitleMaxLength = 500;
+        public const int UrlMaxLength = 500;
+        public const int ImageUrlMaxLength = 500;
+
+        public const bool IsHiddenDefaultValue = false;
+
+        public const bool IsFeaturedDefaultValue = false;
+        #endregion
+
         #region Properties
         public Guid Id { get; private set; }
-
-        public string ArticleId { get; private set; }
 
         public string Url { get; private set; }
 
@@ -66,7 +76,6 @@ namespace Espresso.Domain.Entities
         /// </summary>
         private Article()
         {
-            ArticleId = null!;
             Url = null!;
             Summary = null!;
             Title = null!;
@@ -74,7 +83,6 @@ namespace Espresso.Domain.Entities
 
         public Article(
             Guid id,
-            string articleId,
             string url,
             string summary,
             string title,
@@ -94,7 +102,6 @@ namespace Espresso.Domain.Entities
         )
         {
             Id = id;
-            ArticleId = articleId;
             Url = url;
             Summary = summary;
             Title = title;
@@ -156,11 +163,6 @@ namespace Espresso.Domain.Entities
         public bool Update(Article other)
         {
             var shouldUpdate = false;
-            if (!ArticleId.Equals(other.ArticleId))
-            {
-                ArticleId = other.ArticleId;
-                shouldUpdate = true;
-            }
             if (!Url.Equals(other.Url))
             {
                 Url = other.Url;
@@ -345,18 +347,6 @@ namespace Espresso.Domain.Entities
         }
         #endregion
 
-        #endregion
-
-        #region Inner Classes
-        public const int ArticleIdMaxLength = 500;
-        public const int SummaryMaxLength = 2000;
-        public const int TitleMaxLength = 500;
-        public const int UrlMaxLength = 500;
-        public const int ImageUrlMaxLength = 500;
-
-        public const bool IsHiddenDefaultValue = false;
-
-        public const bool IsFeaturedDefaultValue = false;
         #endregion
     }
 }

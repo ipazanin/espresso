@@ -22,7 +22,6 @@ namespace Espresso.Persistence.Repositories
         private readonly IEnumerable<string> _columnNames = new[]
         {
                 nameof(Article.Id),
-                nameof(Article.ArticleId),
                 nameof(Article.Url),
                 nameof(Article.Summary),
                 nameof(Article.Title),
@@ -38,7 +37,6 @@ namespace Espresso.Persistence.Repositories
 
         private readonly IEnumerable<string> _updateColumnNames = new[]
         {
-                nameof(Article.ArticleId),
                 nameof(Article.Url),
                 nameof(Article.Summary),
                 nameof(Article.Title),
@@ -87,7 +85,6 @@ namespace Espresso.Persistence.Repositories
             foreach (var article in articles)
             {
                 command.Parameters.Add(new SqlParameter($"@{nameof(Article.Id)}", article.Id));
-                command.Parameters.Add(new SqlParameter($"@{nameof(Article.ArticleId)}", article.ArticleId));
                 command.Parameters.Add(new SqlParameter($"@{nameof(Article.Url)}", article.Url));
                 command.Parameters.Add(new SqlParameter($"@{nameof(Article.Summary)}", article.Summary));
                 command.Parameters.Add(new SqlParameter($"@{nameof(Article.Title)}", article.Title));
@@ -131,7 +128,6 @@ namespace Espresso.Persistence.Repositories
             foreach (var article in articles)
             {
                 command.Parameters.Add(new SqlParameter($"@{IdColumnName}", article.Id));
-                command.Parameters.Add(new SqlParameter($"@{nameof(Article.ArticleId)}", article.ArticleId));
                 command.Parameters.Add(new SqlParameter($"@{nameof(Article.Url)}", article.Url));
                 command.Parameters.Add(new SqlParameter($"@{nameof(Article.Summary)}", article.Summary));
                 command.Parameters.Add(new SqlParameter($"@{nameof(Article.Title)}", article.Title));
