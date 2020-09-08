@@ -1,0 +1,67 @@
+name: Espresso Workflow
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.401
+      - name: Install dependencies
+        run: dotnet restore source/Espresso.sln
+      - name: Build
+        run: dotnet build --configuration Release --no-restore source/Espresso.sln
+  test-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.401
+      - name: Install dependencies
+        run: dotnet restore source/Espresso.sln
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal source/Espresso.sln
+  lint-frontend:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: install
+        working-directory: ./source/Espresso.WebApi/ClientApp
+        run: npm install
+      - name: lint
+        working-directory: ./source/Espresso.WebApi/ClientApp
+        run: npm run lint-frontend
+  test-frontend:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: install
+        working-directory: ./source/Espresso.WebApi/ClientApp
+        run: npm install
+      - name: test
+        working-directory: ./source/Espresso.WebApi/ClientApp
+        run: npm run test-frontend:ci
