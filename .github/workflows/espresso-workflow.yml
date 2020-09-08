@@ -95,5 +95,5 @@ jobs:
         run: echo "$MATRIX_CONTEXT"
       - name: Dump env Context
         env:
-          ENV_CONTEXT: ${{ toJson(env) }}
+          ENV_CONTEXT: ${{ env.WORKFLOW_CONCLUSION }}
         run: echo "$ENV_CONTEXT"
