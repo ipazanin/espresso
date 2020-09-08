@@ -40,12 +40,13 @@ jobs:
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_CHANNEL: tech-bot
+          SLACK_CHANNEL: errors-backend-bot
           SLACK_COLOR: '#EB0C13'
           SLACK_ICON: https://mpng.subpng.com/20180410/xgw/kisspng-internet-bot-web-traffic-safe-5acd7c51dda2f4.1033986715234161459078.jpg
           SLACK_TITLE: Failure
-          SLACK_MESSAGE: Workflow Failure
+          SLACK_MESSAGE: "Workflow Failure \n ${{ toJson(steps) }} \n ${{ toJson(job) }} "
           SLACK_USERNAME: Backend CI/CD
+
         if: ${{ failure() }}
       - name: Success Slack Notification
         uses: rtCamp/action-slack-notify@master
