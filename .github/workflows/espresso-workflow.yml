@@ -20,6 +20,8 @@ jobs:
       - name: Test
         run: dotnet test --no-restore --verbosity normal source/Espresso.sln
   frontend-workflow:
+    name: Frontend Workflow
+    needs: backend-workflow
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -40,7 +42,7 @@ jobs:
         working-directory: ./source/Espresso.WebApi/ClientApp
         run: npm run test-frontend:ci
   slack-notification:
-    name: Workflow Failure Slack Notification
+    name: Slack Notification
     needs: frontend-workflow
     runs-on: ubuntu-latest
     steps:
@@ -51,9 +53,9 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_CHANNEL: tech-bot
           SLACK_COLOR: '#EB0C13'
-          SLACK_ICON: https://static.botsrv.com/website/img/quriobot_favicon.1727b193.png
-          SLACK_MESSAGE: Test Fail
-          SLACK_TITLE: ${{ github.workflow }} Workflow Failure
+          SLACK_ICON: https://mpng.subpng.com/20180410/xgw/kisspng-internet-bot-web-traffic-safe-5acd7c51dda2f4.1033986715234161459078.jpg
+          SLACK_TITLE: ${{ github.workflow }} Failure
+          SLACK_MESSAGE: 'Workflow Failure'
           SLACK_USERNAME: Backend CI/CD
         if: ${{ failure() }}
       - name: Workflow Success Slack Notification
@@ -62,42 +64,32 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_CHANNEL: tech-bot
           SLACK_COLOR: '#0FEB0C'
-          SLACK_ICON: https://mpng.subpng.com/20180410/xgw/kisspng-internet-bot-web-traffic-safe-5acd7c51dda2f4.1033986715234161459078.jpg
-          # SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_MESSAGE: 'Success Test Success'
-          SLACK_TITLE: ${{ github.workflow }} Workflow Success
+          SLACK_ICON: https://static.botsrv.com/website/img/quriobot_favicon.1727b193.png
+          SLACK_TITLE: ${{ github.workflow }} Success
+          SLACK_MESSAGE: 'Workflow Success'
           SLACK_USERNAME: Backend CI/CD
         if: ${{ success() }}
-      - name: echo tests1
-        run: echo env.WORKFLOW_CONCLUSION ${{ env.WORKFLOW_CONCLUSION }}
-      - name: echo tests2
-        run: echo github.workflow ${{ github.workflow }}
-      - name: echo tests3
-        run: echo github.action ${{ github.action }}
-      - name: echo tests4
-        run: echo job.status ${{ job.status }}
-
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "$JOB_CONTEXT"
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "$STEPS_CONTEXT"
-      - name: Dump runner context
-        env:
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-        run: echo "$RUNNER_CONTEXT"
-      - name: Dump strategy context
-        env:
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-        run: echo "$STRATEGY_CONTEXT"
-      - name: Dump matrix context
-        env:
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
-        run: echo "$MATRIX_CONTEXT"
+      # - name: Dump GitHub context
+      #   env:
+      #     GITHUB_CONTEXT: ${{ toJson(github) }}
+      #   run: echo "$GITHUB_CONTEXT"
+      # - name: Dump job context
+      #   env:
+      #     JOB_CONTEXT: ${{ toJson(job) }}
+      #   run: echo "$JOB_CONTEXT"
+      # - name: Dump steps context
+      #   env:
+      #     STEPS_CONTEXT: ${{ toJson(steps) }}
+      #   run: echo "$STEPS_CONTEXT"
+      # - name: Dump runner context
+      #   env:
+      #     RUNNER_CONTEXT: ${{ toJson(runner) }}
+      #   run: echo "$RUNNER_CONTEXT"
+      # - name: Dump strategy context
+      #   env:
+      #     STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+      #   run: echo "$STRATEGY_CONTEXT"
+      # - name: Dump matrix context
+      #   env:
+      #     MATRIX_CONTEXT: ${{ toJson(matrix) }}
+      #   run: echo "$MATRIX_CONTEXT"
