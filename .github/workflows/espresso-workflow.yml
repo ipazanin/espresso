@@ -21,7 +21,6 @@ jobs:
         run: dotnet test --no-restore --verbosity normal source/Espresso.sln
   frontend-job:
     name: Frontend Workflow
-    needs: backend-workflow
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -43,7 +42,7 @@ jobs:
         run: npm run test-frontend:ci
   slack-notification-job:
     name: Slack Notification
-    needs: frontend-workflow
+    needs: frontend-job
     if: always()
     runs-on: ubuntu-latest
     steps:
