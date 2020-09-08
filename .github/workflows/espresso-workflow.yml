@@ -22,7 +22,6 @@ jobs:
   frontend-workflow:
     name: Frontend Workflow
     needs: backend-workflow
-    if: always()
     runs-on: ubuntu-latest
     strategy:
       matrix:
