@@ -19,6 +19,8 @@ interface FeaturedArticleProps extends AnchorElementProps {
   variant: 'main' | 'regular';
 }
 
+const parseTimeFromUtc = (dateTime: string) => moment(`${dateTime}Z`);
+
 const WrapperLink: React.FC<{ href: string; className?: string }> = ({
   href,
   className,
@@ -73,7 +75,9 @@ const Featured: React.FC<FeaturedArticleProps> = ({
               className={styles.newsPortalIcon}
             />
             <Text size="caption">
-              {`${newsPortal.name} • ${moment(publishDateTime).fromNow()}`}
+              {`${newsPortal.name} • ${parseTimeFromUtc(
+                publishDateTime
+              ).fromNow()}`}
             </Text>
           </Flex>
         </Flex>
@@ -106,7 +110,7 @@ const Featured: React.FC<FeaturedArticleProps> = ({
           disableStyles
         />
       </Flex>
-      <Text title={title} weight="bold" align="left">
+      <Text title={title} className={styles.title} weight="bold" align="left">
         {title.length > 80 ? `${title.substring(0, 80).trim()}...` : title}
       </Text>
     </WrapperLink>
@@ -129,7 +133,7 @@ const Latest: React.FC<LatestArticleProps> = ({
         {title.length > 80 ? `${title.substring(0, 80).trim()}...` : title}
       </Text>
       <Text size="caption" align="left">
-        {`${newsPortal.name} • ${moment(publishDateTime).fromNow()}`}
+        {`${newsPortal.name} • ${parseTimeFromUtc(publishDateTime).fromNow()}`}
       </Text>
     </Flex>
   </WrapperLink>

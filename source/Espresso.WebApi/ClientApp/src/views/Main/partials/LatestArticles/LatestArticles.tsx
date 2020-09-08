@@ -4,7 +4,6 @@ import { LoadingSpinner } from 'components/Loader';
 import { GetLatestArticlesArticle } from 'models';
 import { Flex, Text } from '@profico/react-ui-components';
 import { useWindowDimensions } from '@profico/react-utils';
-import { ListChildComponentProps } from 'react-window';
 
 import Article from 'components/Article';
 
@@ -14,21 +13,23 @@ interface LatestArticlesProps {
   articles: GetLatestArticlesArticle[];
   onRefetch: () => void;
   loading: boolean;
-  refetching?: boolean;
-}
-interface FixedSizeListRenderFnProps extends ListChildComponentProps {
-  // eslint-disable-next-line react/no-unused-prop-types
-  data: GetLatestArticlesArticle[];
 }
 
 const LIST_ITEM_HEIGHT = 108;
 const SCROLL_THRESHOLD = LIST_ITEM_HEIGHT * 5;
 
+const handleMouseEnter = () => {
+  document.body.style.setProperty('overflow-y', 'hidden');
+};
+
+const handleMouseLeave = () => {
+  document.body.style.removeProperty('overflow-y');
+};
+
 const LatestArticles: React.FC<LatestArticlesProps> = ({
   articles,
   onRefetch,
   loading,
-  refetching,
 }) => {
   const hasCrossedThreshold = React.useRef<boolean>(false);
 
@@ -84,6 +85,8 @@ const LatestArticles: React.FC<LatestArticlesProps> = ({
         <Flex
           flexDirection="column"
           onScroll={handleListScroll}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
           className={styles.listWrapper}
           style={{ height: LIST_HEIGHT }}
         >
@@ -99,7 +102,6 @@ const LatestArticles: React.FC<LatestArticlesProps> = ({
                 className={styles.article}
               />
             ))}
-            {refetching && <LoadingSpinner size={24} />}
           </Flex>
         </Flex>
       )}

@@ -8,7 +8,7 @@ import {
   GetLatestArticlesQueryResponse,
   GetLatestArticlesArticle,
 } from 'models';
-import { useQuery, NetworkStatus } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import {
   GET_FEATURED_ARTICLES,
   GetFeaturedArticlesQueryArgs,
@@ -17,6 +17,7 @@ import {
   GET_LATEST_ARTICLES,
   GetLatestArticlesQueryArgs,
 } from 'graphql/queries/get_latest_articles';
+import { useDidMount } from '@profico/react-utils';
 
 import FeaturedArticles from './partials/FeaturedArticles';
 import LatestArticles from './partials/LatestArticles';
@@ -42,42 +43,74 @@ const Main: React.FC<MainProps> = ({ category, newsPortalIds }) => {
 
     E.g. `GET_FEATURED_ARTICLES.rest` to `GET_FEATURED_ARTICLES.gql` to switch from REST to GQL.
   */
-  const faResult = useQuery<
+  const [runFaQuery, faResult] = useLazyQuery<
     { featuredArticles: GetFeaturedArticlesQueryResponse },
     GetFeaturedArticlesQueryArgs
-  >(GET_FEATURED_ARTICLES.gql, {
-    variables: {
-      ...(categoryId ? { categoryIds: `${categoryId}` } : {}),
-      newsPortalIds: newsPortalIds.join(','),
-    },
-  });
-  const laResult = useQuery<
+  >(GET_FEATURED_ARTICLES.gql, {});
+  const [runLaQuery, laResult] = useLazyQuery<
     { latestArticles: GetLatestArticlesQueryResponse },
     GetLatestArticlesQueryArgs
   >(GET_LATEST_ARTICLES.rest, {
-    variables: {
-      ...(categoryId ? { categoryIds: `${categoryId}` } : {}),
-      take: 20,
-      skip: skipLatestArticles.current,
-      newsPortalIds: newsPortalIds.join(','),
-    },
     onCompleted: result => {
-      setLatestArticles(prevArticles => [
-        ...prevArticles,
-        ...result.latestArticles.articles,
-      ]);
+      setLatestArticles(result.latestArticles.articles);
     },
   });
 
-  const handleRefetch = React.useCallback(async () => {
-    skipLatestArticles.current += 20;
+  useDidMount(() => {
+    runFaQuery({
+      variables: {
+        ...(categoryId ? { categoryIds: `${categoryId}` } : {}),
+        newsPortalIds: newsPortalIds.join(','),
+      },
+    });
+    runLaQuery({
+      variables: {
+        ...(categoryId ? { categoryIds: `${categoryId}` } : {}),
+        take: 20,
+        skip: skipLatestArticles.current,
+        newsPortalIds: newsPortalIds.join(','),
+      },
+    });
+  });
 
-    await laResult.refetch({ skip: skipLatestArticles.current });
+  const handleRefetch = React.useCallback(async () => {
+    if (laResult.refetch) {
+      skipLatestArticles.current += 20;
+
+      const refetchResult = await laResult.refetch({
+        skip: skipLatestArticles.current,
+      });
+
+      if (refetchResult.data) {
+        const {
+          data: {
+            latestArticles: { articles: newArticles },
+          },
+        } = refetchResult;
+
+        setLatestArticles(prevArticles => [...prevArticles, ...newArticles]);
+      }
+    }
   }, [laResult]);
 
   React.useEffect(() => {
     skipLatestArticles.current = 0;
-  }, [category.id]);
+    setLatestArticles([]);
+    runFaQuery({
+      variables: {
+        ...(categoryId ? { categoryIds: `${categoryId}` } : {}),
+        newsPortalIds: newsPortalIds.join(','),
+      },
+    });
+    runLaQuery({
+      variables: {
+        ...(categoryId ? { categoryIds: `${categoryId}` } : {}),
+        take: 20,
+        skip: skipLatestArticles.current,
+        newsPortalIds: newsPortalIds.join(','),
+      },
+    });
+  }, [categoryId, newsPortalIds, runLaQuery, runFaQuery]);
 
   return (
     <Body>
@@ -92,7 +125,6 @@ const Main: React.FC<MainProps> = ({ category, newsPortalIds }) => {
           articles={latestArticles}
           onRefetch={handleRefetch}
           loading={laResult.loading}
-          refetching={laResult.networkStatus === NetworkStatus.refetch}
         />
       </Flex>
     </Body>

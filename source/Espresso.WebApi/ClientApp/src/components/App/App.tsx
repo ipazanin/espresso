@@ -2,6 +2,8 @@ import React from 'react';
 import AppRouter from 'routers/AppRouter';
 import moment from 'moment';
 import apolloClient from 'configuration/apollo-client';
+import 'moment/locale/hr';
+
 import { ApolloProvider } from '@apollo/client';
 import { TextConfigProvider } from '@profico/react-ui-components';
 import { Palette } from 'styles/Palette';
