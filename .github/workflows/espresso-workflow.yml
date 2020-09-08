@@ -68,8 +68,11 @@ jobs:
           SLACK_TITLE: ${{ github.workflow }} Workflow Success
           SLACK_USERNAME: Backend CI/CD
         if: ${{ success() }}
-      - name: echo tests
+      - name: echo tests1
         run: echo env.WORKFLOW_CONCLUSION ${{ env.WORKFLOW_CONCLUSION }}
+      - name: echo tests2
         run: echo github.workflow ${{ github.workflow }}
+      - name: echo tests3
         run: echo github.action ${{ github.action }}
+      - name: echo tests4
         run: echo job.status ${{ job.status }}
