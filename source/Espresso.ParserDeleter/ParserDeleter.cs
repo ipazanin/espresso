@@ -92,7 +92,7 @@ namespace Espresso.ParserDeleter
 
                     await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationBetweenCommands);
                 }
-                catch (Exceptionn exception)
+                catch (Exception exception)
                 {
                     var eventName = Event.ParserDeleterWebJob.GetDisplayName();
                     var eventId = (int)Event.ParserDeleterWebJob;
