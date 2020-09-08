@@ -1,13 +1,11 @@
-name: Espresso Workflow
-
+name: espresso-workflow
 on:
   push:
     branches: [master]
   pull_request:
     branches: [master]
-
 jobs:
-  build-backend:
+  backend-workflow:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,19 +17,9 @@ jobs:
         run: dotnet restore source/Espresso.sln
       - name: Build
         run: dotnet build --configuration Release --no-restore source/Espresso.sln
-  test-backend:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.401
-      - name: Install dependencies
-        run: dotnet restore source/Espresso.sln
       - name: Test
         run: dotnet test --no-restore --verbosity normal source/Espresso.sln
-  lint-frontend:
+  frontend-workflow:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -48,58 +36,40 @@ jobs:
       - name: lint
         working-directory: ./source/Espresso.WebApi/ClientApp
         run: npm run lint-frontend
-  test-frontend:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x]
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: install
-        working-directory: ./source/Espresso.WebApi/ClientApp
-        run: npm install
       - name: test
         working-directory: ./source/Espresso.WebApi/ClientApp
         run: npm run test-frontend:ci
-  workflowFailureSlackNotification:
+  slack-notification:
     name: Workflow Failure Slack Notification
     needs: test-frontend
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Slack Notification
+      - name: Workflow Failure Slack Notification
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_CHANNEL: tech-bot
-          SLACK_COLOR: '#0FEB0C'
-          SLACK_ICON: https://github.com/rtCamp.png?size=48
+          SLACK_COLOR: '#EB0C13'
+          SLACK_ICON: https://static.botsrv.com/website/img/quriobot_favicon.1727b193.png
           SLACK_MESSAGE: Test Fail
-          SLACK_TITLE: Fail Test Title
+          SLACK_TITLE: ${{ github.workflow }} Workflow Failure
           SLACK_USERNAME: Backend CI/CD
-        if: env.WORKFLOW_CONCLUSION == 'failure'
-      - name: echo
-        run: echo env.WORKFLOW_CONCLUSION
-  workflowSucessSlackNotification:
-    name: Workflow Failure Slack Notification
-    needs: test-frontend
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Slack Notification
+        if: ${{ failure() }}
+      - name: Workflow Success Slack Notification
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_CHANNEL: tech-bot
           SLACK_COLOR: '#0FEB0C'
-          SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_MESSAGE: Success Test Success
-          SLACK_TITLE: Success Test Title
+          SLACK_ICON: https://mpng.subpng.com/20180410/xgw/kisspng-internet-bot-web-traffic-safe-5acd7c51dda2f4.1033986715234161459078.jpg
+          # SLACK_ICON: https://github.com/rtCamp.png?size=48
+          SLACK_MESSAGE: 'Success Test Success'
+          SLACK_TITLE: ${{ github.workflow }} Workflow Success
           SLACK_USERNAME: Backend CI/CD
-        if: env.WORKFLOW_CONCLUSION != 'failure'
-      - name: echo
-        run: echo env.WORKFLOW_CONCLUSION
+        if: ${{ success() }}
+      - name: echo tests
+        run: echo env.WORKFLOW_CONCLUSION ${{ env.WORKFLOW_CONCLUSION }}
+        run: echo github.workflow ${{ github.workflow }}
+        run: echo github.action ${{ github.action }}
+        run: echo job.status ${{ job.status }}
