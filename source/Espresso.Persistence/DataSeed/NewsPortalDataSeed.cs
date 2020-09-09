@@ -310,7 +310,7 @@ namespace Espresso.Persistence.DataSeed
                     iconUrl: $"Icons/{NewsPortalId.Dnevno}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 6, 28, 0, 0, 0, DateTimeKind.Utc),
-                    categoryId: (int)CategoryId.Vijesti,
+                    categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global
                 ),
                 // new NewsPortal(
@@ -357,6 +357,46 @@ namespace Espresso.Persistence.DataSeed
                     iconUrl: $"Icons/{NewsPortalId.Express}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Vijesti,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.OtvorenoHr,
+                    name: NewsPortalId.OtvorenoHr.GetDisplayName(),
+                    baseUrl: "https://otvoreno.hr",
+                    iconUrl: $"Icons/{NewsPortalId.OtvorenoHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 10, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.General,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.GeoPolitika,
+                    name: NewsPortalId.GeoPolitika.GetDisplayName(),
+                    baseUrl: "https://www.geopolitika.news",
+                    iconUrl: $"Icons/{NewsPortalId.GeoPolitika}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 10, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Vijesti,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.PovijestHr,
+                    name: NewsPortalId.PovijestHr.GetDisplayName(),
+                    baseUrl: "https://povijest.hr",
+                    iconUrl: $"Icons/{NewsPortalId.PovijestHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 10, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Vijesti,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.Dnevno7,
+                    name: NewsPortalId.Dnevno7.GetDisplayName(),
+                    baseUrl: "https://7dnevno.hr",
+                    iconUrl: $"Icons/{NewsPortalId.Dnevno7}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 10, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global
                 ),

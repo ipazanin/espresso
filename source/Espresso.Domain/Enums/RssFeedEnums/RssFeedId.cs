@@ -143,6 +143,10 @@
         Portal53 = 140,
         SbPlusHr = 141,
         PozeskaKronika = 142,
-        Osijek031 = 143
+        Osijek031 = 143,
+        OtvorenoHr = 144,
+        GeoPolitika = 145,
+        PovijestHr = 146,
+        Dnevno7 = 147,
     }
 }

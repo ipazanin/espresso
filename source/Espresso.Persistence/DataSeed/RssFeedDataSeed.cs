@@ -290,6 +290,42 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Vijesti
                 ),
                 #endregion
+
+                #region OtvorenoHr
+                new RssFeed(
+                    id: (int)RssFeedId.OtvorenoHr,
+                    url: "https://otvoreno.hr/feed",
+                    newsPortalId: (int)NewsPortalId.OtvorenoHr,
+                    categoryId: (int)CategoryId.Vijesti
+                ),
+                #endregion   
+
+                #region GeoPolitika
+                new RssFeed(
+                    id: (int)RssFeedId.GeoPolitika,
+                    url: "https://www.geopolitika.news/feed",
+                    newsPortalId: (int)NewsPortalId.GeoPolitika,
+                    categoryId: (int)CategoryId.Vijesti
+                ),
+                #endregion 
+
+                #region PovijestHr
+                new RssFeed(
+                    id: (int)RssFeedId.PovijestHr,
+                    url: "https://povijest.hr/feed/",
+                    newsPortalId: (int)NewsPortalId.PovijestHr,
+                    categoryId: (int)CategoryId.Vijesti
+                ),
+                #endregion 
+
+                #region 7Dnevno
+                new RssFeed(
+                    id: (int)RssFeedId.Dnevno7,
+                    url: "https://7dnevno.hr/feed",
+                    newsPortalId: (int)NewsPortalId.Dnevno7,
+                    categoryId: (int)CategoryId.Vijesti
+                ),
+                #endregion   
             };
 
             builder.HasData(rssFeeds);
@@ -1054,6 +1090,30 @@ namespace Espresso.Persistence.DataSeed
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
             });
             #endregion
+
+            #region Otvorenohr
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.OtvorenoHr,
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl,
+            });
+            #endregion
+
+            #region GeoPolitika
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.GeoPolitika,
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl,
+            });
+            #endregion
+
+            #region 7Dnevno
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Dnevno7,
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl,
+            });
+            #endregion                        
         }
 
         private static void SeedImageUrlParseConfiguration(
@@ -1317,6 +1377,38 @@ namespace Espresso.Persistence.DataSeed
                 ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
             });
             #endregion
+
+            #region OtvorenoHr
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.OtvorenoHr,
+                ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img",
+            });
+            #endregion   
+
+            #region GeoPolitika
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.GeoPolitika,
+                ImgElementXPath = "//div[contains(@class, 'entry-image featured-image')]//img",
+            });
+            #endregion
+
+            #region Povijesthr
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.PovijestHr,
+                ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img",
+            });
+            #endregion
+
+            #region 7Dnevno
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Dnevno7,
+                ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img",
+            });
+            #endregion                        
         }
 
         private static void SeedLocalImageUrlParseConfiguration(
