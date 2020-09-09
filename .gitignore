@@ -3,15 +3,22 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-# User Defined
+# App Settings
 appsettings.local-production-db.json
 appsettings.local-local-db.json
+
+# Docker Compose
 docker-compose-local.yml
 docker-compose-parser.yml
 docker-compose-development.yml
 docker-compose-database.yml
-TestReports
 firebase-key.json
+
+# Test Results
+TestReports
+
+# React Build
+build/
 
 # User-specific files
 *.rsuser

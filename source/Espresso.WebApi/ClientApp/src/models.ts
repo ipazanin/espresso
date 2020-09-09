@@ -86,6 +86,7 @@ export type GetLatestArticlesArticle = {
   publishDateTime: Scalars['String'];
   title: Scalars['String'];
   url: Scalars['String'];
+  webUrl: Scalars['String'];
 };
 
 export type GetLatestArticlesNewsPortal = {
@@ -116,6 +117,7 @@ export type GetFeaturedArticlesArticle = {
   publishDateTime: Scalars['String'];
   title: Scalars['String'];
   url: Scalars['String'];
+  webUrl: Scalars['String'];
 };
 
 export type GetFeaturedArticlesNewsPortal = {

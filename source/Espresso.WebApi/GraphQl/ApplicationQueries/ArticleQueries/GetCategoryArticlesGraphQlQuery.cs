@@ -1,7 +1,6 @@
 ﻿using System;
 using Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles;
 using Espresso.Common.Constants;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.ConfigurationTypes.GetWebCategoryArticlesTypes;
 using Espresso.WebApi.GraphQl.Infrastructure;
