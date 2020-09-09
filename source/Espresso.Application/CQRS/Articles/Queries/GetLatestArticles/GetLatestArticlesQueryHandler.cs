@@ -34,6 +34,10 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
                 key: MemoryCacheConstants.ArticleKey
             );
 
+            var firstArticle = articles.FirstOrDefault(
+                article => article.Id.Equals(request.FirstArticleId)
+            );
+
             var articleDtos = articles
                 .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
                 .Where(
@@ -41,7 +45,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
                         categoryIds: request.CategoryIds,
                         newsPortalIds: request.NewsPortalIds,
                         titleSearchQuery: request.TitleSearchQuery,
-                        minTimestamp: request.MinTimestamp
+                        articleCreateDateTime: firstArticle?.CreateDateTime
                     ).Compile()
                 )
                 .Skip(request.Skip)

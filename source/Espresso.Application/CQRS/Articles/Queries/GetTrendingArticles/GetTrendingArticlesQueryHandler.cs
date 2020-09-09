@@ -32,11 +32,15 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
                 key: MemoryCacheConstants.ArticleKey
             );
 
+            var firstArticle = articles.FirstOrDefault(
+                article => article.Id.Equals(request.FirstArticleId)
+            );
+
             var articleDtos = articles
                 .Where(
                     predicate: Article.GetTrendingArticlePredicate(
                         maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
-                        minTimestamp: request.MinTimestamp
+                        articleCreateDateTime: firstArticle?.CreateDateTime
                     )
                     .Compile()
                 )

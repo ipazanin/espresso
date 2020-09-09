@@ -39,25 +39,25 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                         },
                         new QueryArgument<StringGraphType>
                         {
-                            Name = "minTimestamp",
+                            Name = "firstArticleId",
                         },
                     }
                 ),
                 resolve: async resolveContext =>
                 {
-                    var minTimestampString = resolveContext.GetArgument<string?>("minTimestamp");
-                    var minTimestamp = string.IsNullOrEmpty(minTimestampString) ?
-                        null :
-                        (long?)long.Parse(minTimestampString);
-
                     var userContext = resolveContext.UserContext as GraphQlUserContext ??
                         throw new Exception("Invalid GraphQL User Context");
+
+                    var firstArticleIdString = resolveContext.GetArgument<string?>("firstArticleId");
+                    var firstArticleId = firstArticleIdString is null ?
+                        (Guid?)null :
+                        Guid.Parse(firstArticleIdString);
 
                     return await mediator.Send(
                         request: new GetTrendingArticlesQuery(
                             take: resolveContext.GetArgument<int>("take"),
                             skip: resolveContext.GetArgument<int>("skip"),
-                            minTimestamp: minTimestamp,
+                            firstArticleId: firstArticleId,
                             maxAgeOfTrendingArticle: webApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
                             currentEspressoWebApiVersion: webApiConfiguration.AppVersionConfiguration.Version,
                             targetedEspressoWebApiVersion: userContext.TargetedApiVersion,

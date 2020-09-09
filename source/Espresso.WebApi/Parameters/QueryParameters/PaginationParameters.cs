@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Espresso.WebApi.QueryParameters
@@ -25,7 +26,7 @@ namespace Espresso.WebApi.QueryParameters
         /// 
         /// </summary>
         /// <value></value>
-        [FromQuery(Name = "minTimestamp")]
-        public long? MinTimestamp { get; set; } = null;
+        [FromQuery(Name = "firstArticleId")]
+        public Guid? FirstArticleId { get; set; } = null;
     }
 }

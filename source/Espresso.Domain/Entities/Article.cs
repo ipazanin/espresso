@@ -267,12 +267,10 @@ namespace Espresso.Domain.Entities
             IEnumerable<int>? categoryIds,
             IEnumerable<int>? newsPortalIds,
             string? titleSearchQuery,
-            long? minTimestamp
+            DateTime? articleCreateDateTime
         )
         {
-            var articleMinimumAge = minTimestamp is null ?
-                DateTime.UtcNow :
-                DateTimeUtility.GetDateTime(minTimestamp.Value);
+            var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
 
             return article =>
                 !article.IsHidden &&
@@ -288,12 +286,10 @@ namespace Espresso.Domain.Entities
             int categoryId,
             IEnumerable<int>? newsPortalIds,
             string? titleSearchQuery,
-            long? minTimestamp
+            DateTime? articleCreateDateTime
         )
         {
-            var articleMinimumAge = minTimestamp is null ?
-                DateTime.UtcNow :
-                DateTimeUtility.GetDateTime(minTimestamp.Value);
+            var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
 
             return article =>
                 !article.IsHidden &&
@@ -308,14 +304,13 @@ namespace Espresso.Domain.Entities
             IEnumerable<int>? newsPortalIds,
             string? titleSearchQuery,
             TimeSpan maxAgeOfFeaturedArticle,
-            long? minTimestamp
+            DateTime? articleCreateDateTime
         )
         {
-            var articleMinimumAge = minTimestamp is null ?
-                DateTime.UtcNow :
-                DateTimeUtility.GetDateTime(minTimestamp.Value);
+            var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
 
             var maxDateTimeOfFeaturedArticle = DateTime.UtcNow - maxAgeOfFeaturedArticle;
+
             return article =>
                 !article.IsHidden &&
                 article.IsFeatured &&
@@ -331,20 +326,18 @@ namespace Espresso.Domain.Entities
 
         public static Expression<Func<Article, bool>> GetTrendingArticlePredicate(
             TimeSpan maxAgeOfTrendingArticle,
-            long? minTimestamp
+            DateTime? articleCreateDateTime
         )
         {
-            var articleMinimumAge = minTimestamp is null ?
-                DateTime.UtcNow :
-                DateTimeUtility.GetDateTime(minTimestamp.Value);
-
             var maxTrendingDateTime = DateTime.UtcNow - maxAgeOfTrendingArticle;
+
+            var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
 
             return article =>
                 !article.IsHidden &&
-                !article.NewsPortal!.CategoryId.Equals((int)CategoryId.Local) &&
                 article.CreateDateTime < articleMinimumAge &&
-                article.PublishDateTime > maxTrendingDateTime;
+                article.PublishDateTime > maxTrendingDateTime &&
+                !article.NewsPortal!.CategoryId.Equals((int)CategoryId.Local);
         }
 
         public static Expression<Func<Article, object>> GetOrderByDescendingTrendingScoreExpression()

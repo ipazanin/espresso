@@ -10,7 +10,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
         #region Properties
         public int Take { get; }
         public int Skip { get; }
-        public long? MinTimestamp { get; }
+        public Guid? FirstArticleId { get; }
 
         public TimeSpan MaxAgeOfTrendingArticle { get; }
         #endregion
@@ -19,7 +19,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
         public GetTrendingArticlesQuery(
             int take,
             int skip,
-            long? minTimestamp,
+            Guid? firstArticleId,
             string currentEspressoWebApiVersion,
             string targetedEspressoWebApiVersion,
             string consumerVersion,
@@ -37,7 +37,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
         {
             Take = take;
             Skip = skip;
-            MinTimestamp = minTimestamp;
+            FirstArticleId = firstArticleId;
             MaxAgeOfTrendingArticle = maxAgeOfTrendingArticle;
         }
         #endregion
@@ -47,7 +47,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles
         {
             return $"{nameof(Take)}:{Take}, " +
                 $"{nameof(Skip)}:{Skip}, " +
-                $"{nameof(MinTimestamp)}:{MinTimestamp}, " +
+                $"{nameof(FirstArticleId)}:{FirstArticleId}, " +
                 $"{nameof(MaxAgeOfTrendingArticle)}:{MaxAgeOfTrendingArticle}";
         }
         #endregion
