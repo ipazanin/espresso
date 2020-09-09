@@ -2,17 +2,17 @@ import { gql } from '@apollo/client';
 import { MultiApiQuery, PaginationOptions } from 'graphql/types';
 
 const writeQuery = (useRest: boolean) => gql`
-  query GET_LATEST_ARTICLES($take: Int = 5, $skip: Int = 0, $minTimestamp: String = "", $newsPortalIds: String = "", $categoryIds: String = "", $titleSearchQuery: String = "") {
+  query GET_LATEST_ARTICLES($take: Int = 5, $skip: Int = 0, $firstArticleId: String = "", $newsPortalIds: String = "", $categoryIds: String = "", $titleSearchQuery: String = "") {
     latestArticles(
       take: $take,
       skip: $skip,
-      minTimestamp: $minTimestamp,
+      firstArticleId: $firstArticleId,
       newsPortalIds: $newsPortalIds,
       categoryIds: $categoryIds,
       titleSearchQuery: $titleSearchQuery
     ) ${
       useRest
-        ? '@rest(type: "GetLatestArticlesQueryResponse", path: "/articles?take={args.take}&skip={args.skip}&minTimestamp={args.minTimestamp}&newsPortalIds={args.newsPortalIds}&categoryIds={args.categoryIds}")'
+        ? '@rest(type: "GetLatestArticlesQueryResponse", path: "/articles?take={args.take}&skip={args.skip}&firstArticleId={args.firstArticleId}&newsPortalIds={args.newsPortalIds}&categoryIds={args.categoryIds}")'
         : ''
     } {
       articles {
@@ -36,7 +36,7 @@ const writeQuery = (useRest: boolean) => gql`
 `;
 
 export interface GetLatestArticlesQueryArgs extends PaginationOptions {
-  minTimestamp?: string;
+  firstArticleId?: string;
   newsPortalIds?: string;
   categoryIds?: string;
   titleSearchQuery?: string;

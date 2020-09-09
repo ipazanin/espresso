@@ -60,9 +60,15 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                         throw new Exception("Invalid GraphQL User Context");
 
                     var firstArticleIdString = resolveContext.GetArgument<string?>("firstArticleId");
-                    var firstArticleId = firstArticleIdString is null ?
-                        (Guid?)null :
-                        Guid.Parse(firstArticleIdString);
+                    Guid? firstArticleId;
+                    if (Guid.TryParse(firstArticleIdString, out var temporaryFirstArticleId))
+                    {
+                        firstArticleId = temporaryFirstArticleId;
+                    }
+                    else
+                    {
+                        firstArticleId = null;
+                    }
 
                     return await mediator.Send(
                         request: new GetFeaturedArticlesQuery(
