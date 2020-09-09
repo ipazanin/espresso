@@ -38,7 +38,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles_1_3
                         categoryId: request.CategoryId,
                         newsPortalIds: request.NewsPortalIds,
                         titleSearchQuery: null,
-                        minTimestamp: null
+                        articleCreateDateTime: null
                     ).Compile()
                 )
                 .Skip(request.Skip)

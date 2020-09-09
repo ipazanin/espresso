@@ -13,7 +13,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
         public int Take { get; }
 
         public int Skip { get; }
-        public long? MinTimestamp { get; }
+        public Guid? FirstArticleId { get; }
         public IEnumerable<int>? NewsPortalIds { get; }
 
         public IEnumerable<int>? CategoryIds { get; }
@@ -27,7 +27,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
         public GetFeaturedArticlesQuery(
             int take,
             int skip,
-            long? minTimestamp,
+            Guid? firstArticleId,
             string? categoryIdsString,
             string? newsPortalIdsString,
             string currentEspressoWebApiVersion,
@@ -48,7 +48,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
         {
             Take = take;
             Skip = skip;
-            MinTimestamp = minTimestamp;
+            FirstArticleId = firstArticleId;
             var newsPortalIds = newsPortalIdsString
                 ?.Replace(" ", "")
                 ?.Split(',')
@@ -84,7 +84,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
         {
             return $"{nameof(Take)}:{Take}, " +
             $"{nameof(Skip)}:{Skip}, " +
-            $"{nameof(MinTimestamp)}:{MinTimestamp}, " +
+            $"{nameof(FirstArticleId)}:{FirstArticleId}, " +
             $"{nameof(NewsPortalIds)}:{(NewsPortalIds is null ? "" : string.Join(",", NewsPortalIds))}, " +
             $"{nameof(CategoryIds)}:{(CategoryIds is null ? "" : string.Join(",", CategoryIds))}";
         }

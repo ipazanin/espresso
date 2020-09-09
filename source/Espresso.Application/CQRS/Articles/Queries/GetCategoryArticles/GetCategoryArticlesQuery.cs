@@ -14,7 +14,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
 
         public int Skip { get; }
 
-        public long? MinTimestamp { get; }
+        public Guid? FirstArticleId { get; }
 
         public int CategoryId { get; }
 
@@ -33,7 +33,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
         public GetCategoryArticlesQuery(
             int take,
             int skip,
-            long? minTimestamp,
+            Guid? firstArticleId,
             int categoryId,
             string? newsPortalIdsString,
             int? regionId,
@@ -56,7 +56,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
         {
             Take = take;
             Skip = skip;
-            MinTimestamp = minTimestamp;
+            FirstArticleId = firstArticleId;
             CategoryId = categoryId;
             RegionId = regionId;
             MaxAgeOfNewNewsPortal = maxAgeOfNewNewsPortal;
@@ -77,7 +77,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
         {
             return $"{nameof(Take)}:{Take}, " +
                 $"{nameof(Skip)}:{Skip}, " +
-                $"{nameof(MinTimestamp)}:{MinTimestamp}, " +
+                $"{nameof(FirstArticleId)}:{FirstArticleId}, " +
                 $"{nameof(CategoryId)}:{CategoryId}, " +
                 $"{nameof(NewsPortalIds)}:{(NewsPortalIds is null ? "" : string.Join(",", NewsPortalIds))}";
         }

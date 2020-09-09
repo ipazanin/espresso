@@ -32,6 +32,10 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
                 key: MemoryCacheConstants.ArticleKey
             );
 
+            var firstArticle = articles.FirstOrDefault(
+                article => article.Id.Equals(request.FirstArticleId)
+            );
+
             var featuredArticleDtos = articles
                 .Where(
                     predicate: Article.GetFilteredFeaturedArticlesPredicate(
@@ -39,7 +43,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
                         newsPortalIds: request.NewsPortalIds,
                         titleSearchQuery: null,
                         maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
-                        minTimestamp: request.MinTimestamp
+                        articleCreateDateTime: firstArticle?.CreateDateTime
                     ).Compile()
                 )
                 .OrderByDescending(
@@ -58,7 +62,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetFeaturedArticles
                 .Where(
                     predicate: Article.GetTrendingArticlePredicate(
                         maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
-                        minTimestamp: request.MinTimestamp
+                        articleCreateDateTime: firstArticle?.CreateDateTime
                     )
                     .Compile()
                 )

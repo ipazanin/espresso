@@ -14,7 +14,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
 
         public int Skip { get; }
 
-        public long? MinTimestamp { get; }
+        public Guid? FirstArticleId { get; }
 
         public IEnumerable<int>? NewsPortalIds { get; }
 
@@ -31,7 +31,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
         public GetLatestArticlesQuery(
             int take,
             int skip,
-            long? minTimestamp,
+            Guid? firstArticleId,
             string? newsPortalIdsString,
             string? categoryIdsString,
             int newNewsPortalsPosition,
@@ -53,7 +53,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
         {
             Take = take;
             Skip = skip;
-            MinTimestamp = minTimestamp;
+            FirstArticleId = firstArticleId;
             var newsPortalIds = newsPortalIdsString
                 ?.Replace(" ", "")
                 ?.Split(',')
@@ -81,7 +81,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles
         {
             return $"{nameof(Take)}:{Take}, " +
                 $"{nameof(Skip)}:{Skip}, " +
-                $"{nameof(MinTimestamp)}:{MinTimestamp}, " +
+                $"{nameof(FirstArticleId)}:{FirstArticleId}, " +
                 $"{nameof(NewsPortalIds)}:{(NewsPortalIds is null ? "" : string.Join(",", NewsPortalIds))}, " +
                 $"{nameof(CategoryIds)}:{(CategoryIds is null ? "" : string.Join(",", CategoryIds))}, " +
                 $"{nameof(TitleSearchQuery)}:{TitleSearchQuery}";

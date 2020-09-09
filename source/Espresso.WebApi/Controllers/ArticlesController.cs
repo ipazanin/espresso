@@ -84,7 +84,7 @@ namespace Espresso.WebApi.Controllers
                 request: new GetLatestArticlesQuery(
                     take: paginationParameters.Take,
                     skip: paginationParameters.Skip,
-                    minTimestamp: paginationParameters.MinTimestamp,
+                    firstArticleId: paginationParameters.FirstArticleId,
                     newsPortalIdsString: newsPortalIds,
                     categoryIdsString: categoryIds,
                     newNewsPortalsPosition: WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
@@ -200,7 +200,7 @@ namespace Espresso.WebApi.Controllers
                 request: new GetCategoryArticlesQuery(
                     take: paginationParameters.Take,
                     skip: paginationParameters.Skip,
-                    minTimestamp: paginationParameters.MinTimestamp,
+                    firstArticleId: paginationParameters.FirstArticleId,
                     categoryId: categoryId,
                     newsPortalIdsString: newsPortalIds,
                     regionId: regionId,
@@ -310,7 +310,7 @@ namespace Espresso.WebApi.Controllers
                 request: new GetTrendingArticlesQuery(
                     take: paginationParameters.Take,
                     skip: paginationParameters.Skip,
-                    minTimestamp: paginationParameters.MinTimestamp,
+                    firstArticleId: paginationParameters.FirstArticleId,
                     maxAgeOfTrendingArticle: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
                     currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
@@ -362,7 +362,7 @@ namespace Espresso.WebApi.Controllers
                 request: new GetFeaturedArticlesQuery(
                     take: paginationParameters.Take,
                     skip: paginationParameters.Skip,
-                    minTimestamp: paginationParameters.MinTimestamp,
+                    firstArticleId: paginationParameters.FirstArticleId,
                     categoryIdsString: categoryIds,
                     newsPortalIdsString: newsPortalIds,
                     maxAgeOfFeaturedArticle: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,

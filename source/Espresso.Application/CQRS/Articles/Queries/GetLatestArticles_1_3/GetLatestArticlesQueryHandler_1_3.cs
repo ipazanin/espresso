@@ -42,7 +42,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetLatestArticles_1_3
                         categoryIds: request.CategoryIds,
                         newsPortalIds: request.NewsPortalIds,
                         titleSearchQuery: request.TitleSearchQuery,
-                        minTimestamp: null
+                        articleCreateDateTime: null
                     ).Compile()
                 )
                 .Where(
