@@ -198,5 +198,13 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         PozeskaKronika = 97,
         [Display(Name = "Osijek031")]
         Osijek031 = 98,
+        [Display(Name = "Otvoreno.hr")]
+        OtvorenoHr = 99,
+        [Display(Name = "Geopolitika News")]
+        GeoPolitika = 100,
+        [Display(Name = "Povijest.hr")]
+        PovijestHr = 101,
+        [Display(Name = "7dnevno")]
+        Dnevno7 = 102,
     }
 }
