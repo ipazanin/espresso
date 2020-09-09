@@ -2,16 +2,16 @@ import { gql } from '@apollo/client';
 import { MultiApiQuery, PaginationOptions } from 'graphql/types';
 
 const writeQuery = (useRest: boolean) => gql`
-  query GET_FEATURED_ARTICLES($take: Int = 10, $skip: Int = 0, $minTimestamp: String = "", $newsPortalIds: String = "", $categoryIds: String = "") {
+  query GET_FEATURED_ARTICLES($take: Int = 10, $skip: Int = 0, $firstArticleId: String = "", $newsPortalIds: String = "", $categoryIds: String = "") {
     featuredArticles(
         take: $take,
         skip: $skip,
-        minTimestamp: $minTimestamp,
+        firstArticleId: $firstArticleId,
         newsPortalIds: $newsPortalIds,
         categoryIds: $categoryIds,
     ) ${
       useRest
-        ? '@rest(type: "GetFeaturedArticlesQueryResponse", path: "/articles/featured?take={args.take}&skip={args.skip}&minTimestamp={args.minTimestamp}&newsPortalIds={args.newsPortalIds}&categoryIds={args.categoryIds}")'
+        ? '@rest(type: "GetFeaturedArticlesQueryResponse", path: "/articles/featured?take={args.take}&skip={args.skip}&firstArticleId={args.firstArticleId}&newsPortalIds={args.newsPortalIds}&categoryIds={args.categoryIds}")'
         : ''
     } {
       articles {
@@ -35,7 +35,7 @@ const writeQuery = (useRest: boolean) => gql`
 `;
 
 export interface GetFeaturedArticlesQueryArgs extends PaginationOptions {
-  minTimestamp?: string;
+  firstArticleId?: string;
   newsPortalIds?: string;
   categoryIds?: string;
 }
