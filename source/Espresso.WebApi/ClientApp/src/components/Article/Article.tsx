@@ -42,13 +42,13 @@ const Featured: React.FC<FeaturedArticleProps> = ({
   variant,
   ...props
 }) => {
-  const { url, imageUrl, title, newsPortal, publishDateTime } = article;
+  const { webUrl, imageUrl, title, newsPortal, publishDateTime } = article;
 
   if (variant === 'main') {
     return (
       <WrapperLink
         {...props}
-        href={url}
+        href={webUrl}
         className={cx(styles.featuredMain, className)}
       >
         <Image
@@ -88,7 +88,7 @@ const Featured: React.FC<FeaturedArticleProps> = ({
   return (
     <WrapperLink
       {...props}
-      href={url}
+      href={webUrl}
       className={cx(styles.featuredRegular, className)}
     >
       <Flex className={styles.coverImageWrapper}>
@@ -118,11 +118,15 @@ const Featured: React.FC<FeaturedArticleProps> = ({
 };
 
 const Latest: React.FC<LatestArticleProps> = ({
-  article: { url, imageUrl, title, newsPortal, publishDateTime },
+  article: { webUrl, imageUrl, title, newsPortal, publishDateTime },
   className,
   ...props
 }) => (
-  <WrapperLink {...props} href={url} className={cx(styles.latest, className)}>
+  <WrapperLink
+    {...props}
+    href={webUrl}
+    className={cx(styles.latest, className)}
+  >
     <Image
       src={imageUrl || '/assets/images/logo.png'}
       fallbackSrc="/assets/images/logo.png"

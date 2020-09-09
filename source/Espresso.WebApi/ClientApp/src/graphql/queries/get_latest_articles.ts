@@ -17,7 +17,7 @@ const writeQuery = (useRest: boolean) => gql`
     } {
       articles {
         id
-        url
+        webUrl
         title
         imageUrl
         publishDateTime

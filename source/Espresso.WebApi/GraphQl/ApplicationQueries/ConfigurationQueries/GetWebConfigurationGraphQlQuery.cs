@@ -1,7 +1,8 @@
-﻿using Espresso.Application.CQRS.Configuration.Queries.GetWebConfiguration;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
+﻿using System;
+using Espresso.Application.CQRS.Configuration.Queries.GetWebConfiguration;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetWebCategoryArticlesTypes;
+using Espresso.WebApi.GraphQl.Infrastructure;
 using GraphQL.Types;
 using MediatR;
 
@@ -27,13 +28,16 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries
                 arguments: null,
                 resolve: async resolveContext =>
                 {
+                    var userContext = resolveContext.UserContext as GraphQlUserContext ??
+                        throw new Exception("Invalid GraphQL User Context");
+
                     return await mediator.Send(
                         request: new GetWebConfigurationQuery(
                             maxAgeOfNewNewsPortal: webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
                             currentEspressoWebApiVersion: webApiConfiguration.AppVersionConfiguration.Version,
-                            targetedEspressoWebApiVersion: (string)resolveContext.UserContext["targetedEspressoWebApiVersion"],
-                            consumerVersion: (string)resolveContext.UserContext["consumerVersion"],
-                            deviceType: (DeviceType)resolveContext.UserContext["deviceType"],
+                            targetedEspressoWebApiVersion: userContext.TargetedApiVersion,
+                            consumerVersion: userContext.ConsumerVersion,
+                            deviceType: userContext.DeviceType,
                             appEnvironment: webApiConfiguration.AppConfiguration.AppEnvironment
                         ),
                         cancellationToken: resolveContext.CancellationToken
