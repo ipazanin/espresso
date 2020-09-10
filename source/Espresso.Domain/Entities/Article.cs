@@ -274,7 +274,7 @@ namespace Espresso.Domain.Entities
 
             return article =>
                 !article.IsHidden &&
-                article.CreateDateTime < articleMinimumAge &&
+                article.CreateDateTime <= articleMinimumAge &&
                 (categoryIds == null || article
                     .ArticleCategories
                     .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
@@ -293,7 +293,7 @@ namespace Espresso.Domain.Entities
 
             return article =>
                 !article.IsHidden &&
-                article.CreateDateTime < articleMinimumAge &&
+                article.CreateDateTime <= articleMinimumAge &&
                 article.ArticleCategories.Any(articleCategory => articleCategory.CategoryId.Equals(categoryId)) &&
                 (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)) &&
                 (string.IsNullOrEmpty(titleSearchQuery) || article.Title.Contains(titleSearchQuery));
@@ -314,7 +314,7 @@ namespace Espresso.Domain.Entities
             return article =>
                 !article.IsHidden &&
                 article.IsFeatured &&
-                article.CreateDateTime < articleMinimumAge &&
+                article.CreateDateTime <= articleMinimumAge &&
                 article.PublishDateTime > maxDateTimeOfFeaturedArticle &&
                 (categoryIds == null || article
                     .ArticleCategories
@@ -335,7 +335,7 @@ namespace Espresso.Domain.Entities
 
             return article =>
                 !article.IsHidden &&
-                article.CreateDateTime < articleMinimumAge &&
+                article.CreateDateTime <= articleMinimumAge &&
                 article.PublishDateTime > maxTrendingDateTime &&
                 !article.NewsPortal!.CategoryId.Equals((int)CategoryId.Local);
         }
