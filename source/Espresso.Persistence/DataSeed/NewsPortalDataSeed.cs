@@ -367,7 +367,7 @@ namespace Espresso.Persistence.DataSeed
                     iconUrl: $"Icons/{NewsPortalId.OtvorenoHr}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 10, 0, 0, 0, DateTimeKind.Utc),
-                    categoryId: (int)CategoryId.General,
+                    categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global
                 ),
                 new NewsPortal(
@@ -398,6 +398,16 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 10, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.BasketballHr,
+                    name: NewsPortalId.BasketballHr.GetDisplayName(),
+                    baseUrl: "https://basketball.hr",
+                    iconUrl: $"Icons/{NewsPortalId.BasketballHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 14, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Sport,
                     regionId: (int)RegionId.Global
                 ),
             };

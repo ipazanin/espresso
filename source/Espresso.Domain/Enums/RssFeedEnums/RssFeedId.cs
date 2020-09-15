@@ -148,5 +148,6 @@
         GeoPolitika = 145,
         PovijestHr = 146,
         Dnevno7 = 147,
+        BasketballHr = 148,
     }
 }

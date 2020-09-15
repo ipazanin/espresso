@@ -24,7 +24,7 @@ namespace Espresso.Application.CQRS.Articles.Queries.GetCategoryArticles
 
         public override string ToString()
         {
-            return $"{nameof(Articles)}:{Articles.Count()}" +
+            return $"{nameof(Articles)}:{Articles.Count()}, " +
             $"{nameof(NewNewsPortals)}:{NewNewsPortals.Count()}, " +
             $"{nameof(NewNewsPortalsPosition)}:{NewNewsPortalsPosition}";
         }

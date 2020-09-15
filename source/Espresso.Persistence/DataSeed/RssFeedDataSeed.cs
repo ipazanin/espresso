@@ -326,6 +326,15 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Vijesti
                 ),
                 #endregion   
+
+                #region Basketball.Hr
+                new RssFeed(
+                    id: (int)RssFeedId.BasketballHr,
+                    url: "https://basketball.hr/vijesti.xml",
+                    newsPortalId: (int)NewsPortalId.BasketballHr,
+                    categoryId: (int)CategoryId.Sport
+                ),
+                #endregion   
             };
 
             builder.HasData(rssFeeds);
@@ -1005,6 +1014,15 @@ namespace Espresso.Persistence.DataSeed
                 CurrentSkip = 0
             });
             #endregion
+
+            #region Baskteball.Hr
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.BasketballHr,
+                NumberOfSkips = 5,
+                CurrentSkip = 0
+            });
+            #endregion            
         }
 
         private static void SeedCategoryParseConfiguration(
@@ -1113,7 +1131,7 @@ namespace Espresso.Persistence.DataSeed
                 RssFeedId = (int)RssFeedId.Dnevno7,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
             });
-            #endregion                        
+            #endregion                      
         }
 
         private static void SeedImageUrlParseConfiguration(
@@ -1408,7 +1426,15 @@ namespace Espresso.Persistence.DataSeed
                 RssFeedId = (int)RssFeedId.Dnevno7,
                 ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img",
             });
-            #endregion                        
+            #endregion     
+
+            #region Baskteball.Hr
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.BasketballHr,
+                ImgElementXPath = "//div[contains(@class, 'img')]//img",
+            });
+            #endregion                                    
         }
 
         private static void SeedLocalImageUrlParseConfiguration(
