@@ -4,5 +4,13 @@
   },
   "FormattingOptions": {
     "EnableEditorConfigSupport": true
+  },
+  "FileOptions": {
+    "ExcludeSearchPatterns": [
+      "**/node_modules/**/*",
+      "**/bin/**/*",
+      "**/obj/**/*",
+      "**/migrations/**/*"
+    ]
   }
 }

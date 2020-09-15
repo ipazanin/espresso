@@ -206,5 +206,7 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         PovijestHr = 101,
         [Display(Name = "7dnevno")]
         Dnevno7 = 102,
+        [Display(Name = "Basketball.hr")]
+        BasketballHr = 103,
     }
 }

@@ -28,6 +28,7 @@
   "omnisharp.autoStart": true,
   "omnisharp.enableMsBuildLoadProjectsOnDemand": false,
   "omnisharp.enableImportCompletion": true,
+  "omnisharp.projectLoadTimeout": 360,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "eslint.alwaysShowStatus": true,
   "eslint.format.enable": true,
