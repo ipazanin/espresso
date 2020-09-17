@@ -15,7 +15,7 @@ namespace Espresso.Application.Infrastructure
         IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
     {
         #region Constants
-        private static TimeSpan DeadLockThreshold => TimeSpan.FromMinutes(10);
+        private static TimeSpan DeadLockThreshold => TimeSpan.FromMinutes(15);
         #endregion
 
         #region Fields

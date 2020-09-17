@@ -19,7 +19,7 @@ namespace Espresso.Application.DomainServices
     public class SlackService : ISlackService
     {
         #region Constants
-        private const int EspressoDownloadsMileStone = 5000;
+        private const int EspressoDownloadsMileStone = 10000;
         private static readonly TimeSpan s_exceptionMessageCooldownInterval = TimeSpan.FromHours(4);
         private const string WebHookurl = "https://hooks.slack.com/services/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";
 
