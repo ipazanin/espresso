@@ -64,7 +64,7 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         public IEnumerable<string> GetPropertyNames()
         {
             var propertyNames = JsonWebScrapePropertyNames?.Split(",", StringSplitOptions.RemoveEmptyEntries) ??
-                new string[0];
+                Array.Empty<string>();
 
             return propertyNames;
         }

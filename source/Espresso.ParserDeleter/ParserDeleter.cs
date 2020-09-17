@@ -52,7 +52,7 @@ namespace Espresso.ParserDeleter
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await Task.Yield();
-            await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationBeforeStartup);
+            await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationBeforeStartup, stoppingToken);
 
             await InitializeParser();
 
@@ -67,9 +67,9 @@ namespace Espresso.ParserDeleter
                     var parseRssFeedsCommandResponse = await mediator.Send(
                         request: new ParseRssFeedsCommand(
                             maxAgeOfArticle: _configuration.DateTimeConfiguration.MaxAgeOfArticles,
-                            currentEspressoWebApiVersion: _configuration.AppConfiguration.RssFeedParserVersion,
-                            targetedEspressoWebApiVersion: _configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
-                            consumerVersion: _configuration.AppConfiguration.RssFeedParserVersion,
+                            currentEspressoWebApiVersion: AppConfiguration.RssFeedParserVersion,
+                            targetedEspressoWebApiVersion: AppConfiguration.RssFeedParserMajorMinorVersion,
+                            consumerVersion: AppConfiguration.RssFeedParserVersion,
                             deviceType: DeviceType.RssFeedParser,
                             appEnvironment: _configuration.AppConfiguration.AppEnvironment
                         ),
@@ -81,22 +81,22 @@ namespace Espresso.ParserDeleter
                     await mediator.Send(
                         request: new DeleteOldArticlesCommand(
                             maxAgeOfOldArticles: _configuration.DateTimeConfiguration.MaxAgeOfArticles,
-                            currentEspressoWebApiVersion: _configuration.AppConfiguration.RssFeedParserVersion,
-                            targetedEspressoWebApiVersion: _configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
-                            consumerVersion: _configuration.AppConfiguration.RssFeedParserVersion,
+                            currentEspressoWebApiVersion: AppConfiguration.RssFeedParserVersion,
+                            targetedEspressoWebApiVersion: AppConfiguration.RssFeedParserMajorMinorVersion,
+                            consumerVersion: AppConfiguration.RssFeedParserVersion,
                             deviceType: DeviceType.RssFeedParser,
                             appEnvironment: _configuration.AppConfiguration.AppEnvironment
                         ),
                         cancellationToken: cancellationToken
                     );
 
-                    await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationBetweenCommands);
+                    await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationBetweenCommands, stoppingToken);
                 }
                 catch (Exception exception)
                 {
                     var eventName = Event.ParserDeleterWebJob.GetDisplayName();
                     var eventId = (int)Event.ParserDeleterWebJob;
-                    var version = _configuration.AppConfiguration.Version;
+                    var version = AppConfiguration.Version;
                     var exceptionMessage = exception.Message;
                     var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
 
@@ -124,14 +124,14 @@ namespace Espresso.ParserDeleter
 
                     await _slackService.LogError(
                             eventName: eventName,
-                            version: _configuration.AppConfiguration.Version,
+                            version: AppConfiguration.Version,
                             message: exception.Message,
                             exception: exception,
                             appEnvironment: _configuration.AppConfiguration.AppEnvironment,
                             cancellationToken: default
                     );
 
-                    await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationAfterErrors);
+                    await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationAfterErrors, stoppingToken);
                 }
             }
         }
@@ -161,8 +161,8 @@ namespace Espresso.ParserDeleter
             var httpHeaders = new List<(string headerKey, string headerValue)>
             {
                 (headerKey: HttpHeaderConstants.ApiKeyHeaderName, headerValue: apiKey),
-                (headerKey: HttpHeaderConstants.EspressoApiHeaderName, headerValue: _configuration.AppConfiguration.RssFeedParserMajorMinorVersion),
-                (headerKey: HttpHeaderConstants.VersionHeaderName, headerValue: _configuration.AppConfiguration.RssFeedParserVersion),
+                (headerKey: HttpHeaderConstants.EspressoApiHeaderName, headerValue: AppConfiguration.RssFeedParserMajorMinorVersion),
+                (headerKey: HttpHeaderConstants.VersionHeaderName, headerValue: AppConfiguration.RssFeedParserVersion),
                 (headerKey: HttpHeaderConstants.DeviceTypeHeaderName, headerValue: ((int)DeviceType.RssFeedParser).ToString()),
             };
 
@@ -188,7 +188,7 @@ namespace Espresso.ParserDeleter
                 {
                     var eventName = Event.ParserDeleterNewArticlesRequest.GetDisplayName();
                     var eventId = (int)Event.ParserDeleterNewArticlesRequest;
-                    var version = _configuration.AppConfiguration.Version;
+                    var version = AppConfiguration.Version;
                     var exceptionMessage = exception.Message;
                     var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
                     _logger.LogError(
@@ -214,13 +214,13 @@ namespace Espresso.ParserDeleter
                     );
                     await _slackService.LogError(
                             eventName: eventName,
-                            version: _configuration.AppConfiguration.Version,
+                            version: AppConfiguration.Version,
                             message: exception.Message,
                             exception: exception,
                             appEnvironment: _configuration.AppConfiguration.AppEnvironment,
                             cancellationToken: default
                     );
-                    await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationAfterWebServerRequestError);
+                    await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationAfterWebServerRequestError, cancellationToken);
                 }
             }
         }

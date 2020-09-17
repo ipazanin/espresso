@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AnalysisLevel>preview</AnalysisLevel>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <Nullable>enable</Nullable>
   </PropertyGroup>

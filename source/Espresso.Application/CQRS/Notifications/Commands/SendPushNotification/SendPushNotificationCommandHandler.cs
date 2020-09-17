@@ -75,7 +75,7 @@ namespace Espresso.Application.CQRS.Notifications.Commands.SendPushNotification
 
             var messaging = FirebaseMessaging.DefaultInstance;
 
-            _ = await messaging.SendAsync(message);
+            _ = await messaging.SendAsync(message, cancellationToken);
             var pushNotification = new PushNotification(
                 id: Guid.NewGuid(),
                 internalName: internalName,
@@ -93,7 +93,7 @@ namespace Espresso.Application.CQRS.Notifications.Commands.SendPushNotification
             return Unit.Value;
         }
 
-        private string GetInternalName(string? internalName)
+        private static string GetInternalName(string? internalName)
         {
             return string.IsNullOrWhiteSpace(internalName) ?
                 $"ESPR-{DateTime.UtcNow.ToString(DateTimeConstants.PushNotificationInternalNameFormat)}" :

@@ -50,7 +50,7 @@ namespace Espresso.Persistence.Configuration
             #endregion
         }
 
-        private void ConfigureAmpConfiguration(EntityTypeBuilder<RssFeed> builder)
+        private static void ConfigureAmpConfiguration(EntityTypeBuilder<RssFeed> builder)
         {
             var ampConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.AmpConfiguration);
 
@@ -62,13 +62,13 @@ namespace Espresso.Persistence.Configuration
                 .Property(ampConfiguration => ampConfiguration!.HasAmpArticles);
         }
 
-        private void ConfigureSkipParseConfiguration(EntityTypeBuilder<RssFeed> builder)
+        private static void ConfigureSkipParseConfiguration(EntityTypeBuilder<RssFeed> builder)
         {
 
             var skipParseConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.SkipParseConfiguration);
         }
 
-        private void ConfigureCategoryParseConfiguration(EntityTypeBuilder<RssFeed> builder)
+        private static void ConfigureCategoryParseConfiguration(EntityTypeBuilder<RssFeed> builder)
         {
             var categoryParseConfigurationBuilder = builder
                 .OwnsOne(rssFeed => rssFeed.CategoryParseConfiguration);
@@ -78,7 +78,7 @@ namespace Espresso.Persistence.Configuration
                 .HasDefaultValue(CategoryParseConfiguration.CategoryParseStrategyDefaultValue);
         }
 
-        private void ConfigureImageUrlParseConfiguration(EntityTypeBuilder<RssFeed> builder)
+        private static void ConfigureImageUrlParseConfiguration(EntityTypeBuilder<RssFeed> builder)
         {
             var imageUrlParseConfiguration = builder.OwnsOne(rssFeed => rssFeed.ImageUrlParseConfiguration);
 

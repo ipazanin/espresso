@@ -21,8 +21,7 @@ namespace Espresso.ParserDeleter
 {
     public class Startup
     {
-
-        public void ConfigureServices(IServiceCollection services)
+        public static void ConfigureServices(IServiceCollection services)
         {
             #region Configuration
             services.AddHostedService<ParserDeleter>();

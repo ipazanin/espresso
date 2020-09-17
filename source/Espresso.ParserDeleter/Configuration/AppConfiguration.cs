@@ -11,12 +11,12 @@ namespace Espresso.ParserDeleter.Configuration
         #endregion
 
         #region Properties
-        public string RssFeedParserVersion =>
+        public static string RssFeedParserVersion =>
             $"{ApiVersionConstants.CurrentMajorVersion}." +
             $"{ApiVersionConstants.CurrentMinorVersion}." +
             $"{ApiVersionConstants.CurrentFixVersion}";
 
-        public string RssFeedParserMajorMinorVersion =>
+        public static string RssFeedParserMajorMinorVersion =>
             $"{ApiVersionConstants.CurrentMajorVersion}." +
             $"{ApiVersionConstants.CurrentMinorVersion}";
 
@@ -24,7 +24,7 @@ namespace Espresso.ParserDeleter.Configuration
 
         public AppEnvironment AppEnvironment => _configuration.GetValue<AppEnvironment>("Environment");
 
-        public string Version => RssFeedParserVersion;
+        public static string Version => RssFeedParserVersion;
         #endregion
 
         #region Constructors

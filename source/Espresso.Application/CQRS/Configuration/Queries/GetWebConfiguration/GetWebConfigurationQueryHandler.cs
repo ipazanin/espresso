@@ -45,7 +45,7 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetWebConfiguration
                     name: "Sve Vijesti",
                     color: "",
                     position: null,
-                    categoryType: CategoryType.General,
+                    categoryType: Domain.Enums.CategoryEnums.CategoryType.General,
                     url: "/"
                 );
 

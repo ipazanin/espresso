@@ -115,7 +115,7 @@ namespace Espresso.Application.DomainServices
         #endregion
 
         #region Private Methods
-        private async Task<string?> GetImageUrlFromJsonObjectFromScriptTag(
+        private static async Task<string?> GetImageUrlFromJsonObjectFromScriptTag(
             HtmlNodeCollection elementTags,
             IEnumerable<string> propertyNames
         )
@@ -153,7 +153,7 @@ namespace Espresso.Application.DomainServices
             }
         }
 
-        private string? GetImageUrlFromSrcAttribute(HtmlNodeCollection elementTags)
+        private static string? GetImageUrlFromSrcAttribute(HtmlNodeCollection elementTags)
         {
             var imageUrls = elementTags.Select(imgTag => imgTag?.GetAttributeValue("src", null));
             var imageUrl = imageUrls.FirstOrDefault();

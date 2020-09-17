@@ -95,7 +95,7 @@ namespace Espresso.WebApi.Extensions
                                 Id = HttpHeaderConstants.ApiKeyHeaderName
                             },
                         },
-                        new string[] {}
+                        Array.Empty<string>()
                     }
                 });
         }

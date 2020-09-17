@@ -91,7 +91,7 @@ namespace Espresso.WebApi
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-            app.UseMvc();
+
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = Path.Join(env.ContentRootPath, "ClientApp");
