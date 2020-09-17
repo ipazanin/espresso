@@ -25,7 +25,7 @@ namespace Espresso.Persistence.Configuration
             Seed(builder);
         }
 
-        private void Seed(EntityTypeBuilder<Region> builder)
+        private static void Seed(EntityTypeBuilder<Region> builder)
         {
             var regions = new List<Region>
             {

@@ -53,7 +53,7 @@ namespace Espresso.Application.CQRS.Configuration.Queries.GetConfiguration
                         .GetProjection(maxAgeOfNewNewsPortal: request.MaxAgeOfNewNewsPortal)
                         .Compile()
                 )
-                .Where(grouping => grouping.NewsPortals.Count() != 0);
+                .Where(grouping => grouping.NewsPortals.Any());
 
             var regionGroupedNewsPortals = regions
                 .OrderBy(keySelector: Region.GetOrderByRegionNameExpression().Compile())

@@ -48,9 +48,9 @@ namespace Espresso.Application.DomainServices
             var response = await httpClient
                 .PostAsync(
                     requestUri: url,
-                    content: httpContent
-                )
-                ;
+                    content: httpContent,
+                    cancellationToken: cancellationToken
+                );
 
             var statusCode = response.StatusCode;
 
@@ -67,7 +67,7 @@ namespace Espresso.Application.DomainServices
             }
         }
 
-        private async Task<HttpContent> CreateJsonHttpContent<TData>(
+        private static async Task<HttpContent> CreateJsonHttpContent<TData>(
             TData data,
             CancellationToken cancellationToken
         )

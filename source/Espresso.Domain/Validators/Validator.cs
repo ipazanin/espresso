@@ -6,7 +6,7 @@ namespace Espresso.Domain.Validators
 {
     public abstract class Validator
     {
-        protected void NotEmpty<T>(T value, string parameterName, string? errorMessage = null)
+        protected static void NotEmpty<T>(T value, string parameterName, string? errorMessage = null)
         {
             if (Equals(value, default(T)))
             {
@@ -17,7 +17,7 @@ namespace Espresso.Domain.Validators
             }
         }
 
-        protected void NotEmpty<T>(IEnumerable<T> values, string parameterName, string? errorMessage = null)
+        protected static void NotEmpty<T>(IEnumerable<T> values, string parameterName, string? errorMessage = null)
         {
             if (!values.Any())
             {
@@ -28,7 +28,7 @@ namespace Espresso.Domain.Validators
             }
         }
 
-        protected void NotEmpty(string value, string parameterName, string? errorMessage = null)
+        protected static void NotEmpty(string value, string parameterName, string? errorMessage = null)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -39,7 +39,7 @@ namespace Espresso.Domain.Validators
             }
         }
 
-        protected void MaxLength(string value, string parameterName, int maxValue, string? errorMessage = null)
+        protected static void MaxLength(string value, string parameterName, int maxValue, string? errorMessage = null)
         {
             if (value.Length > maxValue)
             {
@@ -50,7 +50,7 @@ namespace Espresso.Domain.Validators
             }
         }
 
-        protected void MustBeUrl(string value, string parameterName, string? errorMessage = null)
+        protected static void MustBeUrl(string value, string parameterName, string? errorMessage = null)
         {
             if (
                !(Uri.TryCreate(value, UriKind.Absolute, out var uriResult) &&

@@ -178,7 +178,7 @@ namespace Espresso.Application.Initialization
             var newsPortalsCount = newsPortals.Count;
             var articleCategoriesCount = articleCategories.Count();
             var allArticlesCount = allArticles.Count();
-            var articlesToAddCount = articlesToAdd.Count();
+            var articlesToAddCount = articlesToAdd.Count;
             var applicationDownloadsCount = applicationDownloads.Count();
 
             var message =
@@ -318,7 +318,7 @@ namespace Espresso.Application.Initialization
             var newsPortalsCount = newsPortals.Count;
             var articleCategoriesCount = articleCategories.Count();
             var allArticlesCount = allArticles.Count();
-            var articlesToAddCount = articlesToAdd.Count();
+            var articlesToAddCount = articlesToAdd.Count;
             var rssFeedCount = rssFeeds.Count;
 
             var message =
@@ -359,7 +359,7 @@ namespace Espresso.Application.Initialization
         #endregion
 
         #region Private Methods
-        private void InitializeFireBase()
+        private static void InitializeFireBase()
         {
             _ = FirebaseApp.Create(new AppOptions()
             {

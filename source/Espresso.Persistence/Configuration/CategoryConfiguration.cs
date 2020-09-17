@@ -45,7 +45,7 @@ namespace Espresso.Persistence.Configuration
             Seed(builder);
         }
 
-        private void Seed(EntityTypeBuilder<Category> builder)
+        private static void Seed(EntityTypeBuilder<Category> builder)
         {
             var categories = new List<Category>
             {

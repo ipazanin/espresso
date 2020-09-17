@@ -276,7 +276,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                                     separator: ", ",
                                     values: rssFeed.RssFeedCategories?
                                         .Select(rssFeedCategory => $"{rssFeedCategory.UrlRegex}-{rssFeedCategory.UrlSegmentIndex}:{rssFeedCategory.Category?.Name ?? ""}")
-                                        ?? new string[] { }
+                                        ?? Array.Empty<string>()
                                 );
                                 await _slackService.LogMissingCategoriesError(
                                     version: request.CurrentApiVersion,
@@ -321,7 +321,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                                 );
                             }
                         }
-                    }));
+                    }, cancellationToken));
                 }
             }
 

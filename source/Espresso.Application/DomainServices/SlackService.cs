@@ -19,31 +19,33 @@ namespace Espresso.Application.DomainServices
     public class SlackService : ISlackService
     {
         #region Constants
-        public const int EspressoDownloadsMileStone = 5000;
-        public static TimeSpan ExceptionMessageCooldownInterval = TimeSpan.FromHours(4);
-        public const string WebHookurl = "https://hooks.slack.com/services/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";
+        private const int EspressoDownloadsMileStone = 5000;
+        private static readonly TimeSpan s_exceptionMessageCooldownInterval = TimeSpan.FromHours(4);
+        private const string WebHookurl = "https://hooks.slack.com/services/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";
 
-        public const string ErrorsBotIconEmoji = ":no_entry:";
-        public const string ErrorBotUsername = "error-bot";
-        public const string ErrorsChannel = "#errors-backend-bot";
+        private const string ErrorsBotIconEmoji = ":no_entry:";
+        private const string ErrorBotUsername = "error-bot";
+        private const string ErrorsChannel = "#errors-backend-bot";
 
-        public const string WarningBotIconEmoji = ":warning:";
-        public const string WarningBotUsername = "warning-bot";
-        public const string WarningsChannel = "#warnings-backend-bot";
-        public const string IvanPazaninUserName = "@ipazanin";
+        private const string WarningBotIconEmoji = ":warning:";
+        private const string WarningBotUsername = "warning-bot";
+        private const string WarningsChannel = "#warnings-backend-bot";
+#pragma warning disable IDE0051
+        private const string IvanPazaninUserName = "@ipazanin";
+#pragma warning disable IDE0051
 
-        public const string AppDownloadsBotIconEmoji = ":tada:";
-        public const string AppDownloadsBotUsername = "app-downloads-bot";
-        public const string AppDownloadsChannel = "#marketing-bot";
+        private const string AppDownloadsBotIconEmoji = ":tada:";
+        private const string AppDownloadsBotUsername = "app-downloads-bot";
+        private const string AppDownloadsChannel = "#marketing-bot";
 
-        public const string MissingCategoriesErrorsBotIconEmoji = ":warning:";
-        public const string MissingCategoriesErrorsBotUsername = "warning-bot";
-        public const string MissingCategoriesErrorsChannel = "#missing-categories-errors-bot";
+        private const string MissingCategoriesErrorsBotIconEmoji = ":warning:";
+        private const string MissingCategoriesErrorsBotUsername = "warning-bot";
+        private const string MissingCategoriesErrorsChannel = "#missing-categories-errors-bot";
 
 
-        public const string NewNewsPortalRequestBotIconEmoji = ":email:";
-        public const string NewNewsPortalRequestBotUsername = "new-source-bot";
-        public const string NewNewsPortalRequestChannel = "#new-source-requests-bot";
+        private const string NewNewsPortalRequestBotIconEmoji = ":email:";
+        private const string NewNewsPortalRequestBotUsername = "new-source-bot";
+        private const string NewNewsPortalRequestChannel = "#new-source-requests-bot";
         #endregion
 
         #region Fields
@@ -271,7 +273,7 @@ namespace Espresso.Application.DomainServices
 
             _ = await _memoryCache.GetOrCreateAsync(data.Text, async entry =>
               {
-                  entry.AbsoluteExpirationRelativeToNow = ExceptionMessageCooldownInterval;
+                  entry.AbsoluteExpirationRelativeToNow = s_exceptionMessageCooldownInterval;
                   try
                   {
                       var stream = new MemoryStream();

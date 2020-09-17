@@ -36,7 +36,7 @@ namespace Espresso.ParserDeleter
                 .ConfigureServices((hostContext, services) =>
                 {
                     var startup = new Startup();
-                    startup.ConfigureServices(services);
+                    Startup.ConfigureServices(services);
                 });
     }
 }

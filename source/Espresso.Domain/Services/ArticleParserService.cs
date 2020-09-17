@@ -116,7 +116,7 @@ namespace Espresso.Domain.Services
         #region Private Methods
 
         #region Url
-        private string? GetUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks, string? itemId)
+        private static string? GetUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks, string? itemId)
         {
             if (rssFeed.AmpConfiguration?.HasAmpArticles == true)
             {
@@ -126,7 +126,7 @@ namespace Espresso.Domain.Services
             return GetNormalUrl(rssFeed, itemLinks);
         }
 
-        private string? GetNormalUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks)
+        private static string? GetNormalUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks)
         {
             var url = itemLinks?.FirstOrDefault()?.ToString();
 
@@ -135,7 +135,7 @@ namespace Espresso.Domain.Services
             return articleUrl;
         }
 
-        private string? GetAmpUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks, string? itemId)
+        private static string? GetAmpUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks, string? itemId)
         {
             if (
                 itemId is null ||
@@ -149,12 +149,12 @@ namespace Espresso.Domain.Services
 #pragma warning disable IDE0057
             var articleId = $"{itemId.Substring(itemId.IndexOf("id=") + 3)}/";
 #pragma warning restore IDE0057
-            var urlSegments = itemLinks.FirstOrDefault()?.Segments ?? new string[0];
+            var urlSegments = itemLinks.FirstOrDefault()?.Segments ?? Array.Empty<string>();
 
-            var firstArticleSegment = urlSegments.Count() < 2 ? "" : urlSegments[1].ToLower();
-            var secondArticleSegment = urlSegments.Count() < 3 ? "" : urlSegments[2].ToLower();
-            var thirdArticleSegment = urlSegments.Count() < 4 ? "" : urlSegments[3].ToLower();
-            var fourthArticleSegment = urlSegments.Count() < 5 ? "" : urlSegments[4].ToLower();
+            var firstArticleSegment = urlSegments.Length < 2 ? "" : urlSegments[1].ToLower();
+            var secondArticleSegment = urlSegments.Length < 3 ? "" : urlSegments[2].ToLower();
+            var thirdArticleSegment = urlSegments.Length < 4 ? "" : urlSegments[3].ToLower();
+            var fourthArticleSegment = urlSegments.Length < 5 ? "" : urlSegments[4].ToLower();
 
             var articleUrl = string.Format(
                 rssFeed.AmpConfiguration.TemplateUrl,
@@ -233,7 +233,7 @@ namespace Espresso.Domain.Services
         #endregion
 
         #region PublishDateTime
-        private DateTime? GetPublishDateTime(DateTimeOffset itemPublishDateTime, DateTime utcNow, TimeSpan maxAgeOfArticle)
+        private static DateTime? GetPublishDateTime(DateTimeOffset itemPublishDateTime, DateTime utcNow, TimeSpan maxAgeOfArticle)
         {
             var invalidPublishdateTimeMinimum = utcNow - maxAgeOfArticle;
             var minimumPublishDateTime = utcNow.AddDays(-1);
@@ -249,7 +249,7 @@ namespace Espresso.Domain.Services
         #endregion
 
         #region ArticleCategories
-        private IEnumerable<ArticleCategory> GetArticleCategories(
+        private static IEnumerable<ArticleCategory> GetArticleCategories(
             IEnumerable<Category> categories,
             string? itemTitle,
             string? itemSummary,
@@ -291,7 +291,7 @@ namespace Espresso.Domain.Services
             return articleCategories;
         }
 
-        private IEnumerable<ArticleCategory> GetArticleCategoriesFromCategorysKeyWords(
+        private static IEnumerable<ArticleCategory> GetArticleCategoriesFromCategorysKeyWords(
             IEnumerable<Category> categories,
             string? itemTitle,
             string? itemSummary,
@@ -319,7 +319,7 @@ namespace Espresso.Domain.Services
             return categoryIds;
         }
 
-        private IEnumerable<ArticleCategory> GetArticlecategoriesFromFromUrl(
+        private static IEnumerable<ArticleCategory> GetArticlecategoriesFromFromUrl(
             Guid articleId,
             Uri? itemUrl,
             RssFeed rssFeed
@@ -357,7 +357,7 @@ namespace Espresso.Domain.Services
             return articleCategories;
         }
 
-        private IEnumerable<ArticleCategory> GetArticleCategoriesFromRssFeed(
+        private static IEnumerable<ArticleCategory> GetArticleCategoriesFromRssFeed(
             Guid articleId,
             RssFeed rssFeed
         )
@@ -375,7 +375,7 @@ namespace Espresso.Domain.Services
 
         #region Common
 
-        private string? AddBaseUrlToUrlFragment(string? urlFragmentOrFullUrl, string? baseUrl)
+        private static string? AddBaseUrlToUrlFragment(string? urlFragmentOrFullUrl, string? baseUrl)
         {
             if (
                 string.IsNullOrEmpty(urlFragmentOrFullUrl) ||

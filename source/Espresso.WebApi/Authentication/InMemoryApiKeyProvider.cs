@@ -86,7 +86,7 @@ namespace Espresso.WebApi.Authentication
         {
             _apiKeys.TryGetValue(providedApiKey, out var key);
 
-            return key is null ? throw new ArgumentNullException(nameof(ApiKey)) : Task.FromResult(key);
+            return key is null ? throw new ArgumentNullException(paramName: nameof(providedApiKey)) : Task.FromResult(key);
         }
     }
 }
