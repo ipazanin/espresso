@@ -34,7 +34,7 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
 
             CurrentSkip = CurrentSkip == NumberOfSkips ? 0 : CurrentSkip + 1;
 
-            return CurrentSkip == 0;
+            return CurrentSkip == 1;
         }
 
         protected override IEnumerable<object?> GetAtomicValues()

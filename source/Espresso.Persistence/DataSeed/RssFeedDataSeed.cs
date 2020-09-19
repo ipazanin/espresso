@@ -197,7 +197,8 @@ namespace Espresso.Persistence.DataSeed
                     id: (int)RssFeedId.StoPosto,
                     url: "https://100posto.jutarnji.hr/rss",
                     newsPortalId: (int)NewsPortalId.StoPosto,
-                    categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Browser
+                    categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Normal
                 ),
                 #endregion
 
