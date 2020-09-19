@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    [Migration("20200909164841_IPazanin_AddedMotusSources")]
-    partial class IPazanin_AddedMotusSources
+    [Migration("20200919205642_IPazanin_InitialCreate")]
+    partial class IPazanin_InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -659,7 +659,7 @@ namespace Espresso.Persistence.Migrations
                         {
                             Id = 99,
                             BaseUrl = "https://otvoreno.hr",
-                            CategoryId = 11,
+                            CategoryId = 1,
                             CreatedAt = new DateTime(2020, 9, 10, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/OtvorenoHr.png",
                             Name = "Otvoreno.hr",
@@ -693,6 +693,16 @@ namespace Espresso.Persistence.Migrations
                             CreatedAt = new DateTime(2020, 9, 10, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Dnevno7.png",
                             Name = "7dnevno",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 103,
+                            BaseUrl = "https://basketball.hr",
+                            CategoryId = 2,
+                            CreatedAt = new DateTime(2020, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/BasketballHr.png",
+                            Name = "Basketball.hr",
                             RegionId = 1
                         },
                         new
@@ -1388,6 +1398,9 @@ namespace Espresso.Persistence.Migrations
                     b.Property<int>("NewsPortalId")
                         .HasColumnType("int");
 
+                    b.Property<int>("RequestType")
+                        .HasColumnType("int");
+
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("nvarchar(300)")
@@ -1407,6 +1420,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 1,
                             CategoryId = 1,
                             NewsPortalId = 1,
+                            RequestType = 1,
                             Url = "https://www.index.hr/rss/vijesti"
                         },
                         new
@@ -1414,6 +1428,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 2,
                             CategoryId = 2,
                             NewsPortalId = 1,
+                            RequestType = 1,
                             Url = "https://www.index.hr/rss/sport"
                         },
                         new
@@ -1421,6 +1436,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 3,
                             CategoryId = 3,
                             NewsPortalId = 1,
+                            RequestType = 1,
                             Url = "https://www.index.hr/rss/magazin"
                         },
                         new
@@ -1428,6 +1444,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 4,
                             CategoryId = 4,
                             NewsPortalId = 1,
+                            RequestType = 1,
                             Url = "https://www.index.hr/rss/rouge"
                         },
                         new
@@ -1435,6 +1452,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 5,
                             CategoryId = 8,
                             NewsPortalId = 1,
+                            RequestType = 1,
                             Url = "https://www.index.hr/rss/auto"
                         },
                         new
@@ -1442,6 +1460,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 6,
                             CategoryId = 1,
                             NewsPortalId = 2,
+                            RequestType = 1,
                             Url = "https://www.24sata.hr/feeds/news.xml"
                         },
                         new
@@ -1449,6 +1468,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 7,
                             CategoryId = 3,
                             NewsPortalId = 2,
+                            RequestType = 1,
                             Url = "https://www.24sata.hr/feeds/show.xml"
                         },
                         new
@@ -1456,6 +1476,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 8,
                             CategoryId = 2,
                             NewsPortalId = 2,
+                            RequestType = 1,
                             Url = "https://www.24sata.hr/feeds/sport.xml"
                         },
                         new
@@ -1463,13 +1484,15 @@ namespace Espresso.Persistence.Migrations
                             Id = 9,
                             CategoryId = 4,
                             NewsPortalId = 2,
-                            Url = "https://www.24sata.hr/feeds/lifestyle.xml"
+                            RequestType = 1,
+                            Url = "https://www.24sata.hr/feeds/Lifestyle.xml"
                         },
                         new
                         {
                             Id = 10,
                             CategoryId = 5,
                             NewsPortalId = 2,
+                            RequestType = 1,
                             Url = "https://www.24sata.hr/feeds/tech.xml"
                         },
                         new
@@ -1477,6 +1500,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 11,
                             CategoryId = 6,
                             NewsPortalId = 2,
+                            RequestType = 1,
                             Url = "https://www.24sata.hr/feeds/fun.xml"
                         },
                         new
@@ -1484,6 +1508,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 12,
                             CategoryId = 2,
                             NewsPortalId = 3,
+                            RequestType = 2,
                             Url = "http://sportske.jutarnji.hr/sn/feed"
                         },
                         new
@@ -1491,6 +1516,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 13,
                             CategoryId = 1,
                             NewsPortalId = 4,
+                            RequestType = 2,
                             Url = "https://www.jutarnji.hr/feed"
                         },
                         new
@@ -1498,6 +1524,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 14,
                             CategoryId = 1,
                             NewsPortalId = 5,
+                            RequestType = 1,
                             Url = "https://net.hr/feed/"
                         },
                         new
@@ -1505,6 +1532,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 15,
                             CategoryId = 1,
                             NewsPortalId = 6,
+                            RequestType = 2,
                             Url = "https://www.slobodnadalmacija.hr/feed/category/119"
                         },
                         new
@@ -1512,6 +1540,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 16,
                             CategoryId = 2,
                             NewsPortalId = 6,
+                            RequestType = 2,
                             Url = "https://www.slobodnadalmacija.hr/feed/category/255"
                         },
                         new
@@ -1519,6 +1548,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 17,
                             CategoryId = 3,
                             NewsPortalId = 6,
+                            RequestType = 2,
                             Url = "https://www.slobodnadalmacija.hr/feed/category/262"
                         },
                         new
@@ -1526,6 +1556,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 18,
                             CategoryId = 3,
                             NewsPortalId = 6,
+                            RequestType = 2,
                             Url = "https://www.slobodnadalmacija.hr/feed/category/375"
                         },
                         new
@@ -1533,6 +1564,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 19,
                             CategoryId = 3,
                             NewsPortalId = 6,
+                            RequestType = 2,
                             Url = "https://www.slobodnadalmacija.hr/feed/category/263"
                         },
                         new
@@ -1540,6 +1572,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 20,
                             CategoryId = 4,
                             NewsPortalId = 6,
+                            RequestType = 2,
                             Url = "https://www.slobodnadalmacija.hr/feed/category/264"
                         },
                         new
@@ -1547,6 +1580,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 21,
                             CategoryId = 4,
                             NewsPortalId = 6,
+                            RequestType = 2,
                             Url = "https://www.slobodnadalmacija.hr/feed/category/265"
                         },
                         new
@@ -1554,6 +1588,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 22,
                             CategoryId = 4,
                             NewsPortalId = 6,
+                            RequestType = 2,
                             Url = "https://www.slobodnadalmacija.hr/feed/category/266"
                         },
                         new
@@ -1561,6 +1596,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 23,
                             CategoryId = 4,
                             NewsPortalId = 6,
+                            RequestType = 2,
                             Url = "https://www.slobodnadalmacija.hr/feed/category/267"
                         },
                         new
@@ -1568,6 +1604,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 24,
                             CategoryId = 4,
                             NewsPortalId = 6,
+                            RequestType = 2,
                             Url = "https://www.slobodnadalmacija.hr/feed/category/268"
                         },
                         new
@@ -1575,6 +1612,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 25,
                             CategoryId = 4,
                             NewsPortalId = 6,
+                            RequestType = 2,
                             Url = "https://www.slobodnadalmacija.hr/feed/category/270"
                         },
                         new
@@ -1582,6 +1620,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 26,
                             CategoryId = 4,
                             NewsPortalId = 6,
+                            RequestType = 2,
                             Url = "https://www.slobodnadalmacija.hr/feed/category/271"
                         },
                         new
@@ -1589,6 +1628,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 27,
                             CategoryId = 5,
                             NewsPortalId = 6,
+                            RequestType = 2,
                             Url = "https://www.slobodnadalmacija.hr/feed/category/269"
                         },
                         new
@@ -1596,6 +1636,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 28,
                             CategoryId = 6,
                             NewsPortalId = 6,
+                            RequestType = 2,
                             Url = "https://www.slobodnadalmacija.hr/feed/category/274"
                         },
                         new
@@ -1603,6 +1644,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 29,
                             CategoryId = 1,
                             NewsPortalId = 7,
+                            RequestType = 1,
                             Url = "https://www.tportal.hr/rss-vijesti.xml"
                         },
                         new
@@ -1610,6 +1652,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 30,
                             CategoryId = 1,
                             NewsPortalId = 7,
+                            RequestType = 1,
                             Url = "https://www.tportal.hr/rss-biznis.xml"
                         },
                         new
@@ -1617,6 +1660,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 31,
                             CategoryId = 2,
                             NewsPortalId = 7,
+                            RequestType = 1,
                             Url = "https://www.tportal.hr/rss-sport.xml"
                         },
                         new
@@ -1624,6 +1668,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 32,
                             CategoryId = 5,
                             NewsPortalId = 7,
+                            RequestType = 1,
                             Url = "https://www.tportal.hr/rss-tehno.xml"
                         },
                         new
@@ -1631,6 +1676,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 33,
                             CategoryId = 3,
                             NewsPortalId = 7,
+                            RequestType = 1,
                             Url = "https://www.tportal.hr/rss-showtime.xml"
                         },
                         new
@@ -1638,13 +1684,15 @@ namespace Espresso.Persistence.Migrations
                             Id = 34,
                             CategoryId = 4,
                             NewsPortalId = 7,
-                            Url = "https://www.tportal.hr/rss-lifestyle.xml"
+                            RequestType = 1,
+                            Url = "https://www.tportal.hr/rss-Lifestyle.xml"
                         },
                         new
                         {
                             Id = 35,
                             CategoryId = 6,
                             NewsPortalId = 7,
+                            RequestType = 1,
                             Url = "https://www.tportal.hr/rss-funbox.xml"
                         },
                         new
@@ -1652,6 +1700,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 36,
                             CategoryId = 9,
                             NewsPortalId = 7,
+                            RequestType = 1,
                             Url = "https://www.tportal.hr/rss-kultura.xml"
                         },
                         new
@@ -1659,6 +1708,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 37,
                             CategoryId = 1,
                             NewsPortalId = 8,
+                            RequestType = 1,
                             Url = "https://www.vecernji.hr/feeds/latest"
                         },
                         new
@@ -1666,6 +1716,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 39,
                             CategoryId = 1,
                             NewsPortalId = 9,
+                            RequestType = 1,
                             Url = "https://www.telegram.hr/feed/"
                         },
                         new
@@ -1673,6 +1724,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 40,
                             CategoryId = 2,
                             NewsPortalId = 9,
+                            RequestType = 1,
                             Url = "https://telesport.telegram.hr/feed/"
                         },
                         new
@@ -1680,6 +1732,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 42,
                             CategoryId = 1,
                             NewsPortalId = 10,
+                            RequestType = 1,
                             Url = "https://dnevnik.hr/assets/feed/articles/"
                         },
                         new
@@ -1687,6 +1740,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 43,
                             CategoryId = 2,
                             NewsPortalId = 11,
+                            RequestType = 1,
                             Url = "https://gol.dnevnik.hr/assets/feed/articles"
                         },
                         new
@@ -1694,6 +1748,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 44,
                             CategoryId = 2,
                             NewsPortalId = 12,
+                            RequestType = 1,
                             Url = "https://sportnet.rtl.hr/rss/"
                         },
                         new
@@ -1701,6 +1756,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 47,
                             CategoryId = 2,
                             NewsPortalId = 15,
+                            RequestType = 1,
                             Url = "http://www.nogometplus.net/index.php/feed/"
                         },
                         new
@@ -1708,6 +1764,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 48,
                             CategoryId = 7,
                             NewsPortalId = 16,
+                            RequestType = 1,
                             Url = "http://lider.media/feed/"
                         },
                         new
@@ -1715,6 +1772,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 49,
                             CategoryId = 7,
                             NewsPortalId = 16,
+                            RequestType = 1,
                             Url = "http://lider.media/feed/"
                         },
                         new
@@ -1722,6 +1780,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 50,
                             CategoryId = 7,
                             NewsPortalId = 16,
+                            RequestType = 1,
                             Url = "http://lider.media/feed/"
                         },
                         new
@@ -1729,6 +1788,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 54,
                             CategoryId = 5,
                             NewsPortalId = 18,
+                            RequestType = 1,
                             Url = "http://www.bug.hr/rss/vijesti/"
                         },
                         new
@@ -1736,6 +1796,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 55,
                             CategoryId = 5,
                             NewsPortalId = 19,
+                            RequestType = 1,
                             Url = "http://www.vidi.hr/rss/feed/vidi"
                         },
                         new
@@ -1743,6 +1804,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 56,
                             CategoryId = 5,
                             NewsPortalId = 20,
+                            RequestType = 1,
                             Url = "https://zimo.dnevnik.hr/assets/feed/articles"
                         },
                         new
@@ -1750,6 +1812,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 57,
                             CategoryId = 5,
                             NewsPortalId = 21,
+                            RequestType = 1,
                             Url = "http://www.netokracija.com/feed"
                         },
                         new
@@ -1757,6 +1820,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 58,
                             CategoryId = 7,
                             NewsPortalId = 22,
+                            RequestType = 2,
                             Url = "http://www.poslovnipuls.com/feed/"
                         },
                         new
@@ -1764,6 +1828,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 59,
                             CategoryId = 5,
                             NewsPortalId = 23,
+                            RequestType = 1,
                             Url = "http://pcchip.hr/feed/"
                         },
                         new
@@ -1771,6 +1836,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 61,
                             CategoryId = 4,
                             NewsPortalId = 25,
+                            RequestType = 1,
                             Url = "http://www.cosmopolitan.hr/feed"
                         },
                         new
@@ -1778,6 +1844,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 62,
                             CategoryId = 4,
                             NewsPortalId = 26,
+                            RequestType = 1,
                             Url = "http://wall.hr/cdn/feed.xml"
                         },
                         new
@@ -1785,6 +1852,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 63,
                             CategoryId = 4,
                             NewsPortalId = 27,
+                            RequestType = 1,
                             Url = "http://www.ljepotaizdravlje.hr/feed"
                         },
                         new
@@ -1792,6 +1860,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 64,
                             CategoryId = 8,
                             NewsPortalId = 28,
+                            RequestType = 1,
                             Url = "https://www.autonet.hr/feed/"
                         },
                         new
@@ -1799,6 +1868,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 65,
                             CategoryId = 1,
                             NewsPortalId = 29,
+                            RequestType = 2,
                             Url = "http://hr.n1info.com/rss/249/Naslovna"
                         },
                         new
@@ -1806,6 +1876,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 66,
                             CategoryId = 1,
                             NewsPortalId = 30,
+                            RequestType = 2,
                             Url = "https://narod.hr/feed"
                         },
                         new
@@ -1813,6 +1884,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 67,
                             CategoryId = 1,
                             NewsPortalId = 31,
+                            RequestType = 1,
                             Url = "https://www.hrt.hr/rss/vijesti/"
                         },
                         new
@@ -1820,6 +1892,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 68,
                             CategoryId = 2,
                             NewsPortalId = 31,
+                            RequestType = 1,
                             Url = "https://www.hrt.hr/rss/sport/"
                         },
                         new
@@ -1827,6 +1900,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 69,
                             CategoryId = 3,
                             NewsPortalId = 31,
+                            RequestType = 1,
                             Url = "https://magazin.hrt.hr/feed.xml"
                         },
                         new
@@ -1834,6 +1908,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 70,
                             CategoryId = 3,
                             NewsPortalId = 31,
+                            RequestType = 1,
                             Url = "https://www.hrt.hr/rss/glazba/"
                         },
                         new
@@ -1841,6 +1916,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 71,
                             CategoryId = 1,
                             NewsPortalId = 32,
+                            RequestType = 2,
                             Url = "https://100posto.jutarnji.hr/rss"
                         },
                         new
@@ -1848,6 +1924,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 72,
                             CategoryId = 1,
                             NewsPortalId = 33,
+                            RequestType = 1,
                             Url = "https://www.dnevno.hr/feed/"
                         },
                         new
@@ -1855,6 +1932,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 74,
                             CategoryId = 1,
                             NewsPortalId = 35,
+                            RequestType = 1,
                             Url = "https://direktno.hr/rss/publish/latest/direkt-50/"
                         },
                         new
@@ -1862,6 +1940,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 75,
                             CategoryId = 1,
                             NewsPortalId = 35,
+                            RequestType = 1,
                             Url = "https://direktno.hr/rss/publish/latest/domovina-10/"
                         },
                         new
@@ -1869,6 +1948,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 76,
                             CategoryId = 1,
                             NewsPortalId = 35,
+                            RequestType = 1,
                             Url = "https://direktno.hr/rss/publish/latest/eu_svijet/"
                         },
                         new
@@ -1876,6 +1956,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 77,
                             CategoryId = 7,
                             NewsPortalId = 35,
+                            RequestType = 1,
                             Url = "https://direktno.hr/rss/publish/latest/razvoj-110/"
                         },
                         new
@@ -1883,6 +1964,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 78,
                             CategoryId = 2,
                             NewsPortalId = 35,
+                            RequestType = 1,
                             Url = "https://direktno.hr/rss/publish/latest/sport-60/"
                         },
                         new
@@ -1890,6 +1972,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 79,
                             CategoryId = 3,
                             NewsPortalId = 35,
+                            RequestType = 1,
                             Url = "https://direktno.hr/rss/publish/latest/zivot-70/"
                         },
                         new
@@ -1897,6 +1980,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 80,
                             CategoryId = 1,
                             NewsPortalId = 35,
+                            RequestType = 1,
                             Url = "https://direktno.hr/rss/publish/latest/kolumne-80/"
                         },
                         new
@@ -1904,6 +1988,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 81,
                             CategoryId = 1,
                             NewsPortalId = 35,
+                            RequestType = 1,
                             Url = "https://direktno.hr/rss/publish/latest/direktnotv-100/"
                         },
                         new
@@ -1911,6 +1996,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 82,
                             CategoryId = 1,
                             NewsPortalId = 36,
+                            RequestType = 1,
                             Url = "https://www.scena.hr/feed/"
                         },
                         new
@@ -1918,6 +2004,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 84,
                             CategoryId = 1,
                             NewsPortalId = 38,
+                            RequestType = 1,
                             Url = "https://www.nacional.hr/feed/"
                         },
                         new
@@ -1925,6 +2012,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 85,
                             CategoryId = 1,
                             NewsPortalId = 39,
+                            RequestType = 1,
                             Url = "https://express.24sata.hr/feeds/placeholder-head/rss_feed"
                         },
                         new
@@ -1932,6 +2020,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 144,
                             CategoryId = 1,
                             NewsPortalId = 99,
+                            RequestType = 1,
                             Url = "https://otvoreno.hr/feed"
                         },
                         new
@@ -1939,6 +2028,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 145,
                             CategoryId = 1,
                             NewsPortalId = 100,
+                            RequestType = 1,
                             Url = "https://www.geopolitika.news/feed"
                         },
                         new
@@ -1946,6 +2036,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 146,
                             CategoryId = 1,
                             NewsPortalId = 101,
+                            RequestType = 1,
                             Url = "https://povijest.hr/feed/"
                         },
                         new
@@ -1953,13 +2044,23 @@ namespace Espresso.Persistence.Migrations
                             Id = 147,
                             CategoryId = 1,
                             NewsPortalId = 102,
+                            RequestType = 1,
                             Url = "https://7dnevno.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 148,
+                            CategoryId = 2,
+                            NewsPortalId = 103,
+                            RequestType = 1,
+                            Url = "https://basketball.hr/vijesti.xml"
                         },
                         new
                         {
                             Id = 83,
                             CategoryId = 12,
                             NewsPortalId = 37,
+                            RequestType = 1,
                             Url = "https://www.dalmacijadanas.hr/feed/"
                         },
                         new
@@ -1967,6 +2068,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 86,
                             CategoryId = 12,
                             NewsPortalId = 40,
+                            RequestType = 1,
                             Url = "https://www.dalmacijanews.hr/rss"
                         },
                         new
@@ -1974,6 +2076,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 87,
                             CategoryId = 12,
                             NewsPortalId = 41,
+                            RequestType = 1,
                             Url = "https://dalmatinskiportal.hr/sadrzaj/rss/vijesti.xml"
                         },
                         new
@@ -1981,6 +2084,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 106,
                             CategoryId = 12,
                             NewsPortalId = 60,
+                            RequestType = 1,
                             Url = "https://dubrovackidnevnik.net.hr/rss"
                         },
                         new
@@ -1988,6 +2092,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 111,
                             CategoryId = 12,
                             NewsPortalId = 65,
+                            RequestType = 1,
                             Url = "https://slobodnadalmacija.hr/feed/category/246"
                         },
                         new
@@ -1995,6 +2100,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 112,
                             CategoryId = 12,
                             NewsPortalId = 66,
+                            RequestType = 1,
                             Url = "https://slobodnadalmacija.hr/feed/category/253"
                         },
                         new
@@ -2002,6 +2108,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 113,
                             CategoryId = 12,
                             NewsPortalId = 67,
+                            RequestType = 1,
                             Url = "https://www.dubrovniknet.hr/feed"
                         },
                         new
@@ -2009,6 +2116,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 114,
                             CategoryId = 12,
                             NewsPortalId = 68,
+                            RequestType = 1,
                             Url = "https://makarska-danas.com/feed"
                         },
                         new
@@ -2016,6 +2124,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 115,
                             CategoryId = 12,
                             NewsPortalId = 69,
+                            RequestType = 1,
                             Url = "https://makarska.hr/rss"
                         },
                         new
@@ -2023,6 +2132,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 116,
                             CategoryId = 12,
                             NewsPortalId = 70,
+                            RequestType = 1,
                             Url = "http://www.portaloko.hr/rss/-1"
                         },
                         new
@@ -2030,6 +2140,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 117,
                             CategoryId = 12,
                             NewsPortalId = 71,
+                            RequestType = 1,
                             Url = "https://www.antenazadar.hr/feed"
                         },
                         new
@@ -2037,6 +2148,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 118,
                             CategoryId = 12,
                             NewsPortalId = 72,
+                            RequestType = 1,
                             Url = "https://radioimotski.hr/feed"
                         },
                         new
@@ -2044,6 +2156,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 119,
                             CategoryId = 12,
                             NewsPortalId = 73,
+                            RequestType = 1,
                             Url = "https://imotskenovine.hr/feed"
                         },
                         new
@@ -2051,6 +2164,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 120,
                             CategoryId = 12,
                             NewsPortalId = 74,
+                            RequestType = 1,
                             Url = "http://www.kastela.org/?format=feed&type=rss"
                         },
                         new
@@ -2058,6 +2172,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 121,
                             CategoryId = 12,
                             NewsPortalId = 75,
+                            RequestType = 1,
                             Url = "https://huknet1.hr/?feed=rss2"
                         },
                         new
@@ -2065,6 +2180,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 122,
                             CategoryId = 12,
                             NewsPortalId = 76,
+                            RequestType = 1,
                             Url = "https://www.zadarskilist.hr/rss.xml"
                         },
                         new
@@ -2072,6 +2188,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 105,
                             CategoryId = 12,
                             NewsPortalId = 59,
+                            RequestType = 1,
                             Url = "https://ivijesti.hr/feed"
                         },
                         new
@@ -2079,6 +2196,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 90,
                             CategoryId = 12,
                             NewsPortalId = 44,
+                            RequestType = 1,
                             Url = "https://www.novilist.hr/feed"
                         },
                         new
@@ -2086,6 +2204,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 91,
                             CategoryId = 12,
                             NewsPortalId = 45,
+                            RequestType = 1,
                             Url = "https://www.parentium.com/rssfeed.asp"
                         },
                         new
@@ -2093,6 +2212,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 107,
                             CategoryId = 12,
                             NewsPortalId = 61,
+                            RequestType = 1,
                             Url = "http://www.istra-istria.hr/index.php?id=2415&type=100"
                         },
                         new
@@ -2100,6 +2220,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 123,
                             CategoryId = 12,
                             NewsPortalId = 77,
+                            RequestType = 1,
                             Url = "https://www.istriaterramagica.eu/feed"
                         },
                         new
@@ -2107,6 +2228,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 124,
                             CategoryId = 12,
                             NewsPortalId = 78,
+                            RequestType = 1,
                             Url = "https://www.ipress.hr/index.php?format=feed&type=rss"
                         },
                         new
@@ -2114,6 +2236,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 125,
                             CategoryId = 12,
                             NewsPortalId = 80,
+                            RequestType = 1,
                             Url = "https://www.rijekadanas.com/feed"
                         },
                         new
@@ -2121,6 +2244,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 126,
                             CategoryId = 12,
                             NewsPortalId = 81,
+                            RequestType = 1,
                             Url = "https://www.fiuman.hr/feed"
                         },
                         new
@@ -2128,6 +2252,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 127,
                             CategoryId = 12,
                             NewsPortalId = 82,
+                            RequestType = 1,
                             Url = "https://riportal.net.hr/feed"
                         },
                         new
@@ -2135,6 +2260,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 92,
                             CategoryId = 12,
                             NewsPortalId = 46,
+                            RequestType = 1,
                             Url = "https://likaclub.eu/feed"
                         },
                         new
@@ -2142,6 +2268,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 93,
                             CategoryId = 12,
                             NewsPortalId = 47,
+                            RequestType = 2,
                             Url = "http://www.lika-express.hr/feed"
                         },
                         new
@@ -2149,6 +2276,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 94,
                             CategoryId = 12,
                             NewsPortalId = 48,
+                            RequestType = 1,
                             Url = "https://www.lika-online.com/feed"
                         },
                         new
@@ -2156,6 +2284,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 95,
                             CategoryId = 12,
                             NewsPortalId = 49,
+                            RequestType = 1,
                             Url = "http://www.likaplus.hr/rss"
                         },
                         new
@@ -2163,6 +2292,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 128,
                             CategoryId = 12,
                             NewsPortalId = 83,
+                            RequestType = 1,
                             Url = "https://www.gspress.net/feed"
                         },
                         new
@@ -2170,6 +2300,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 96,
                             CategoryId = 12,
                             NewsPortalId = 50,
+                            RequestType = 1,
                             Url = "https://www.index.hr/rss/vijesti-zagreb"
                         },
                         new
@@ -2177,6 +2308,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 97,
                             CategoryId = 12,
                             NewsPortalId = 51,
+                            RequestType = 1,
                             Url = "https://www.zagreb.info/feed"
                         },
                         new
@@ -2184,6 +2316,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 98,
                             CategoryId = 12,
                             NewsPortalId = 52,
+                            RequestType = 1,
                             Url = "https://www.zagrebancija.com/feed"
                         },
                         new
@@ -2191,6 +2324,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 108,
                             CategoryId = 12,
                             NewsPortalId = 62,
+                            RequestType = 1,
                             Url = "https://www.zagrebonline.hr/feed"
                         },
                         new
@@ -2198,6 +2332,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 129,
                             CategoryId = 12,
                             NewsPortalId = 84,
+                            RequestType = 1,
                             Url = "https://www.zagrebacki.hr/feed"
                         },
                         new
@@ -2205,6 +2340,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 130,
                             CategoryId = 12,
                             NewsPortalId = 85,
+                            RequestType = 1,
                             Url = "https://www.zgportal.com/feed"
                         },
                         new
@@ -2212,6 +2348,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 131,
                             CategoryId = 12,
                             NewsPortalId = 86,
+                            RequestType = 1,
                             Url = "https://www.zagreb.hr/RssFeeds.aspx?id=17"
                         },
                         new
@@ -2219,6 +2356,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 99,
                             CategoryId = 12,
                             NewsPortalId = 53,
+                            RequestType = 1,
                             Url = "https://sjever.hr/feed"
                         },
                         new
@@ -2226,6 +2364,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 100,
                             CategoryId = 12,
                             NewsPortalId = 54,
+                            RequestType = 1,
                             Url = "https://prigorski.hr/feed"
                         },
                         new
@@ -2233,6 +2372,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 101,
                             CategoryId = 12,
                             NewsPortalId = 55,
+                            RequestType = 1,
                             Url = "https://epodravina.hr/feed"
                         },
                         new
@@ -2240,6 +2380,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 109,
                             CategoryId = 12,
                             NewsPortalId = 63,
+                            RequestType = 1,
                             Url = "https://www.sisak.info/feed"
                         },
                         new
@@ -2247,6 +2388,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 132,
                             CategoryId = 12,
                             NewsPortalId = 87,
+                            RequestType = 1,
                             Url = "https://regionalni.com/feed"
                         },
                         new
@@ -2254,6 +2396,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 133,
                             CategoryId = 12,
                             NewsPortalId = 88,
+                            RequestType = 1,
                             Url = "https://www.glaspodravine.hr/feed"
                         },
                         new
@@ -2261,6 +2404,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 134,
                             CategoryId = 12,
                             NewsPortalId = 89,
+                            RequestType = 1,
                             Url = "https://www.medjimurje.info/feed"
                         },
                         new
@@ -2268,6 +2412,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 135,
                             CategoryId = 12,
                             NewsPortalId = 90,
+                            RequestType = 1,
                             Url = "https://www.mnovine.hr/feed"
                         },
                         new
@@ -2275,6 +2420,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 136,
                             CategoryId = 12,
                             NewsPortalId = 91,
+                            RequestType = 1,
                             Url = "https://www.zagorje.com/rss"
                         },
                         new
@@ -2282,6 +2428,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 102,
                             CategoryId = 12,
                             NewsPortalId = 56,
+                            RequestType = 1,
                             Url = "https://www.baranjainfo.hr/feed"
                         },
                         new
@@ -2289,6 +2436,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 103,
                             CategoryId = 12,
                             NewsPortalId = 57,
+                            RequestType = 1,
                             Url = "https://www.glas-slavonije.hr/rss"
                         },
                         new
@@ -2296,6 +2444,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 104,
                             CategoryId = 12,
                             NewsPortalId = 58,
+                            RequestType = 1,
                             Url = "https://slavonski.hr/feed"
                         },
                         new
@@ -2303,6 +2452,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 110,
                             CategoryId = 12,
                             NewsPortalId = 64,
+                            RequestType = 1,
                             Url = "https://osijeknews.hr/feed"
                         },
                         new
@@ -2310,6 +2460,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 137,
                             CategoryId = 12,
                             NewsPortalId = 92,
+                            RequestType = 1,
                             Url = "https://www.icv.hr/feed/"
                         },
                         new
@@ -2317,6 +2468,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 138,
                             CategoryId = 12,
                             NewsPortalId = 93,
+                            RequestType = 1,
                             Url = "https://www.novska.in/feed"
                         },
                         new
@@ -2324,6 +2476,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 139,
                             CategoryId = 12,
                             NewsPortalId = 94,
+                            RequestType = 1,
                             Url = "https://novosti.hr/feed"
                         },
                         new
@@ -2331,6 +2484,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 140,
                             CategoryId = 12,
                             NewsPortalId = 95,
+                            RequestType = 1,
                             Url = "http://portal53.hr/feed"
                         },
                         new
@@ -2338,6 +2492,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 141,
                             CategoryId = 12,
                             NewsPortalId = 96,
+                            RequestType = 1,
                             Url = "https://sbplus.hr/rss"
                         },
                         new
@@ -2345,6 +2500,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 142,
                             CategoryId = 12,
                             NewsPortalId = 97,
+                            RequestType = 1,
                             Url = "https://www.pozeska-kronika.hr/component/fpss/module/292.feed?type=rss"
                         },
                         new
@@ -2352,6 +2508,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 143,
                             CategoryId = 12,
                             NewsPortalId = 98,
+                            RequestType = 1,
                             Url = "http://www.osijek031.com/news_rss.php"
                         });
                 });
@@ -3108,6 +3265,119 @@ namespace Espresso.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Espresso.Domain.Entities.RssFeedContentModifier", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ReplacementValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<int>("RssFeedId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SourceValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RssFeedId");
+
+                    b.ToTable("RssFeedContentModifier");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ReplacementValue = "<description>",
+                            RssFeedId = 5,
+                            SourceValue = "<content>"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ReplacementValue = "</description>",
+                            RssFeedId = 5,
+                            SourceValue = "</content>"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ReplacementValue = "<description>",
+                            RssFeedId = 3,
+                            SourceValue = "<content>"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ReplacementValue = "</description>",
+                            RssFeedId = 3,
+                            SourceValue = "</content>"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ReplacementValue = "<description>",
+                            RssFeedId = 4,
+                            SourceValue = "<content>"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ReplacementValue = "</description>",
+                            RssFeedId = 4,
+                            SourceValue = "</content>"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ReplacementValue = "<description>",
+                            RssFeedId = 2,
+                            SourceValue = "<content>"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ReplacementValue = "</description>",
+                            RssFeedId = 2,
+                            SourceValue = "</content>"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ReplacementValue = "<description>",
+                            RssFeedId = 1,
+                            SourceValue = "<content>"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ReplacementValue = "</description>",
+                            RssFeedId = 1,
+                            SourceValue = "</content>"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ReplacementValue = "<description>",
+                            RssFeedId = 96,
+                            SourceValue = "<content>"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ReplacementValue = "</description>",
+                            RssFeedId = 96,
+                            SourceValue = "</content>"
+                        });
+                });
+
             modelBuilder.Entity("Espresso.Domain.Entities.Article", b =>
                 {
                     b.HasOne("Espresso.Domain.Entities.NewsPortal", "NewsPortal")
@@ -3425,27 +3695,32 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 1,
-                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 2,
-                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 3,
-                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 4,
-                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 5,
-                                    ImgElementXPath = "//img[contains(@class, 'img-large loaded')]"
+                                    ImageUrlParseStrategy = 1,
+                                    ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
@@ -3823,8 +4098,19 @@ namespace Espresso.Persistence.Migrations
                                 },
                                 new
                                 {
+                                    RssFeedId = 148,
+                                    ImgElementXPath = "//div[contains(@class, 'img')]//img"
+                                },
+                                new
+                                {
                                     RssFeedId = 83,
                                     ImgElementXPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img"
+                                },
+                                new
+                                {
+                                    RssFeedId = 96,
+                                    ImageUrlParseStrategy = 2,
+                                    ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 });
                         });
 
@@ -3992,6 +4278,12 @@ namespace Espresso.Persistence.Migrations
                                     RssFeedId = 112,
                                     CurrentSkip = 0,
                                     NumberOfSkips = 5
+                                },
+                                new
+                                {
+                                    RssFeedId = 148,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 5
                                 });
                         });
                 });
@@ -4006,6 +4298,15 @@ namespace Espresso.Persistence.Migrations
 
                     b.HasOne("Espresso.Domain.Entities.RssFeed", "RssFeed")
                         .WithMany("RssFeedCategories")
+                        .HasForeignKey("RssFeedId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Espresso.Domain.Entities.RssFeedContentModifier", b =>
+                {
+                    b.HasOne("Espresso.Domain.Entities.RssFeed", "RssFeed")
+                        .WithMany("RssFeedContentModifiers")
                         .HasForeignKey("RssFeedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
