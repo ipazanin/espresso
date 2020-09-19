@@ -72,6 +72,7 @@ namespace Espresso.Domain.Services
                 itemSummary: itemSummary,
                 itemContent: itemContent,
                 rssFeed: rssFeed,
+                webUrl: webUrl,
                 cancellationToken: cancellationToken
             );
 
@@ -183,6 +184,7 @@ namespace Espresso.Domain.Services
             string? itemSummary,
             string? itemContent,
             RssFeed rssFeed,
+            string? webUrl,
             CancellationToken cancellationToken
         )
         {
@@ -210,10 +212,8 @@ namespace Espresso.Domain.Services
 
             if (string.IsNullOrEmpty(imageUrl) || rssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped)
             {
-                var articleUrl = itemLinks.FirstOrDefault()?.ToString();
-
                 imageUrl = await _webScrapingService.GetSrcAttributeFromElementDefinedByXPath(
-                    articleUrl: articleUrl,
+                    articleUrl: webUrl,
                     xPath: rssFeed.ImageUrlParseConfiguration.ImgElementXPath,
                     imageUrlWebScrapeType: rssFeed.ImageUrlParseConfiguration.ImageUrlWebScrapeType,
                     propertyNames: rssFeed.ImageUrlParseConfiguration.GetPropertyNames(),
