@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200919164106_IPazanin_UpdatedIndexHrImageUrlXPath")]
+    partial class IPazanin_UpdatedIndexHrImageUrlXPath
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3440,31 +3442,26 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 1,
-                                    ImageUrlParseStrategy = 2,
                                     ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 2,
-                                    ImageUrlParseStrategy = 2,
                                     ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 3,
-                                    ImageUrlParseStrategy = 2,
                                     ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 4,
-                                    ImageUrlParseStrategy = 2,
                                     ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 5,
-                                    ImageUrlParseStrategy = 2,
                                     ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
@@ -3854,7 +3851,6 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 96,
-                                    ImageUrlParseStrategy = 2,
                                     ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 });
                         });

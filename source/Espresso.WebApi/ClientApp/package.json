@@ -16,7 +16,7 @@
     "lint-frontend": "npm run lint-frontend:base --fix --cache --cache-location=./node_modules/.cache/",
     "upgrade-frontend": "npm run upgrade",
     "build-backend": "dotnet build ../../../source/Espresso.sln",
-    "compose-database:up": "docker-compose -f ../../../compose/docker-compose-database.yml up --build",
+    "compose-database:up": "docker-compose -f ../../../compose/docker-compose-database.yml up --build --remove-orphans ",
     "compose-database:down": "docker-compose -f ../../../compose/docker-compose-database.yml down",
     "compose-development:up": "sudo docker-compose -f ../../../compose/docker-compose-development.yml up --build",
     "compose-development:down": "sudo docker-compose -f ../../../compose/docker-compose-development.yml down",
