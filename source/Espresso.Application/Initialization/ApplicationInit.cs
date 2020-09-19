@@ -203,9 +203,15 @@ namespace Espresso.Application.Initialization
 
         public async Task InitParserDeleter()
         {
-            await _context.Database.MigrateAsync();
+            var isInitialised = _memoryCache.Get<IEnumerable<NewsPortal>?>(key: MemoryCacheConstants.NewsPortalKey) != null;
+            if (isInitialised)
+            {
+                return;
+            }
 
             var stopwatch = Stopwatch.StartNew();
+
+            await _context.Database.MigrateAsync();
 
             #region NewsPortals
             var newsPortals = await _context
@@ -285,6 +291,7 @@ namespace Espresso.Application.Initialization
                 .Include(rssFeed => rssFeed.NewsPortal)
                 .Include(rssFeed => rssFeed.RssFeedCategories)
                 .ThenInclude(rssFeedCategory => rssFeedCategory.Category)
+                .Include(rssFeed => rssFeed.RssFeedContentModifiers)
                 .AsNoTracking()
                 .ToListAsync();
 

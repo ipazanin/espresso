@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200919192409_IPazanin_RefactoredRssFeed")]
+    partial class IPazanin_RefactoredRssFeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3293,84 +3295,84 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            ReplacementValue = "<description>",
+                            ReplacementValue = "<a10:content>",
                             RssFeedId = 5,
                             SourceValue = "<content>"
                         },
                         new
                         {
                             Id = 2,
-                            ReplacementValue = "</description>",
+                            ReplacementValue = "</a10:content>",
                             RssFeedId = 5,
                             SourceValue = "</content>"
                         },
                         new
                         {
                             Id = 3,
-                            ReplacementValue = "<description>",
+                            ReplacementValue = "<a10:content>",
                             RssFeedId = 3,
                             SourceValue = "<content>"
                         },
                         new
                         {
                             Id = 4,
-                            ReplacementValue = "</description>",
+                            ReplacementValue = "</a10:content>",
                             RssFeedId = 3,
                             SourceValue = "</content>"
                         },
                         new
                         {
                             Id = 5,
-                            ReplacementValue = "<description>",
+                            ReplacementValue = "<a10:content>",
                             RssFeedId = 4,
                             SourceValue = "<content>"
                         },
                         new
                         {
                             Id = 6,
-                            ReplacementValue = "</description>",
+                            ReplacementValue = "</a10:content>",
                             RssFeedId = 4,
                             SourceValue = "</content>"
                         },
                         new
                         {
                             Id = 7,
-                            ReplacementValue = "<description>",
+                            ReplacementValue = "<a10:content>",
                             RssFeedId = 2,
                             SourceValue = "<content>"
                         },
                         new
                         {
                             Id = 8,
-                            ReplacementValue = "</description>",
+                            ReplacementValue = "</a10:content>",
                             RssFeedId = 2,
                             SourceValue = "</content>"
                         },
                         new
                         {
                             Id = 9,
-                            ReplacementValue = "<description>",
+                            ReplacementValue = "<a10:content>",
                             RssFeedId = 1,
                             SourceValue = "<content>"
                         },
                         new
                         {
                             Id = 10,
-                            ReplacementValue = "</description>",
+                            ReplacementValue = "</a10:content>",
                             RssFeedId = 1,
                             SourceValue = "</content>"
                         },
                         new
                         {
                             Id = 11,
-                            ReplacementValue = "<description>",
+                            ReplacementValue = "<a10:content>",
                             RssFeedId = 96,
                             SourceValue = "<content>"
                         },
                         new
                         {
                             Id = 12,
-                            ReplacementValue = "</description>",
+                            ReplacementValue = "</a10:content>",
                             RssFeedId = 96,
                             SourceValue = "</content>"
                         });
@@ -3693,31 +3695,31 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 1,
-                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlParseStrategy = 2,
                                     ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 2,
-                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlParseStrategy = 2,
                                     ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 3,
-                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlParseStrategy = 2,
                                     ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 4,
-                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlParseStrategy = 2,
                                     ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 5,
-                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlParseStrategy = 2,
                                     ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new

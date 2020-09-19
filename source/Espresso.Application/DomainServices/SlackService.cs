@@ -27,21 +27,21 @@ namespace Espresso.Application.DomainServices
         private const string ErrorBotUsername = "error-bot";
         private const string ErrorsChannel = "#errors-backend-bot";
 
+#pragma warning disable IDE0051
         private const string WarningBotIconEmoji = ":warning:";
         private const string WarningBotUsername = "warning-bot";
         private const string WarningsChannel = "#warnings-backend-bot";
-#pragma warning disable IDE0051
         private const string IvanPazaninUserName = "@ipazanin";
-#pragma warning disable IDE0051
-
-        private const string AppDownloadsBotIconEmoji = ":tada:";
-        private const string AppDownloadsBotUsername = "app-downloads-bot";
-        private const string AppDownloadsChannel = "#marketing-bot";
 
         private const string MissingCategoriesErrorsBotIconEmoji = ":warning:";
         private const string MissingCategoriesErrorsBotUsername = "warning-bot";
         private const string MissingCategoriesErrorsChannel = "#missing-categories-errors-bot";
 
+#pragma warning restore IDE0051
+
+        private const string AppDownloadsBotIconEmoji = ":tada:";
+        private const string AppDownloadsBotUsername = "app-downloads-bot";
+        private const string AppDownloadsChannel = "#marketing-bot";
 
         private const string NewNewsPortalRequestBotIconEmoji = ":email:";
         private const string NewNewsPortalRequestBotUsername = "new-source-bot";
@@ -70,7 +70,7 @@ namespace Espresso.Application.DomainServices
         #region Methods
 
         #region  Public Methods
-        public async Task LogWarning(
+        public Task LogWarning(
             string eventName,
             string version,
             string message,
@@ -81,26 +81,28 @@ namespace Espresso.Application.DomainServices
         {
             var exceptionMessage = exception.Message;
             var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
-
+#pragma warning disable IDE0059
             var text = $":blue_book: Event Name: {eventName}\n" +
                 $":label: Version: {version}\n" +
                 $":email: Message: {message}\n" +
                 $":exclamation: Exception Message: {exceptionMessage}\n" +
                 $":exclamation: Inner Exception Message: {innerExceptionMessage}";
+#pragma warning restore IDE0059
 
-            await Log(
-                data: new SlackWebHookDto(
-                    userName: WarningBotUsername,
-                    iconEmoji: WarningBotIconEmoji,
-                    text: text,
-                    channel: WarningsChannel
-                ),
-                appEnvironment: appEnvironment,
-                cancellationToken: cancellationToken
-            );
+            return Task.CompletedTask;
+            // await Log(
+            //     data: new SlackWebHookDto(
+            //         userName: WarningBotUsername,
+            //         iconEmoji: WarningBotIconEmoji,
+            //         text: text,
+            //         channel: WarningsChannel
+            //     ),
+            //     appEnvironment: appEnvironment,
+            //     cancellationToken: cancellationToken
+            // );
         }
 
-        public async Task LogError(
+        public Task LogError(
             string eventName,
             string version,
             string message,
@@ -117,7 +119,7 @@ namespace Espresso.Application.DomainServices
                 $":exclamation: Exception Message: {exceptionMessage}\n" +
                 $":exclamation: Inner Exception Message: {innerExceptionMessage}\n";
 
-            await Log(
+            return Log(
                 data: new SlackWebHookDto(
                     userName: ErrorBotUsername,
                     iconEmoji: ErrorsBotIconEmoji,
@@ -129,7 +131,7 @@ namespace Espresso.Application.DomainServices
             );
         }
 
-        public async Task LogRequestError(
+        public Task LogRequestError(
             string requestName,
             string apiVersion,
             string targetedApiVersion,
@@ -152,7 +154,7 @@ namespace Espresso.Application.DomainServices
                 $":exclamation: Exception Message: {exceptionMessage}\n" +
                 $":exclamation: Inner Exception Message: {innerExceptionMessage}\n";
 
-            await Log(
+            return Log(
                 data: new SlackWebHookDto(
                     userName: ErrorBotUsername,
                     iconEmoji: ErrorsBotIconEmoji,
@@ -164,7 +166,7 @@ namespace Espresso.Application.DomainServices
             );
         }
 
-        public async Task LogAppDownload(
+        public async Task LogAppDownloadStatistics(
             int yesterdayAndroidCount,
             int yesterdayIosCount,
             int totalAndroidCount,
@@ -215,22 +217,26 @@ namespace Espresso.Application.DomainServices
             CancellationToken cancellationToken
         )
         {
+#pragma warning disable IDE0059
+
             var text = $":blue_book: Request Name: Missing Categories\n" +
                 $":label: Version: {version}\n" +
                 $":email: Rss Feed Url: {rssFeedUrl}\n" +
                 $":email: Article Url: {articleUrl}\n" +
                 $":email: Url-SegmentIndex:Category Map: {urlCategories}\n";
+#pragma warning restore IDE0059
 
-            return Log(
-                data: new SlackWebHookDto(
-                    userName: MissingCategoriesErrorsBotUsername,
-                    iconEmoji: MissingCategoriesErrorsBotIconEmoji,
-                    text: text,
-                    channel: MissingCategoriesErrorsChannel
-                ),
-                appEnvironment: appEnvironment,
-                cancellationToken: cancellationToken
-            );
+            return Task.CompletedTask;
+            // return Log(
+            //     data: new SlackWebHookDto(
+            //         userName: MissingCategoriesErrorsBotUsername,
+            //         iconEmoji: MissingCategoriesErrorsBotIconEmoji,
+            //         text: text,
+            //         channel: MissingCategoriesErrorsChannel
+            //     ),
+            //     appEnvironment: appEnvironment,
+            //     cancellationToken: cancellationToken
+            // );
         }
 
         public Task LogNewNewsPortalRequest(

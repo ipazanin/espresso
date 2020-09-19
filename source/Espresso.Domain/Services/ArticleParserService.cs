@@ -69,7 +69,7 @@ namespace Espresso.Domain.Services
 
             var imageUrl = await GetImageUrl(
                 itemLinks: itemLinks,
-                itemSummary: summary,
+                itemSummary: itemSummary,
                 itemContent: itemContent,
                 rssFeed: rssFeed,
                 cancellationToken: cancellationToken
@@ -206,11 +206,6 @@ namespace Espresso.Domain.Services
                         imageUrl = _webScrapingService.GetSrcAttributeFromFirstImgElement(itemContent);
                         break;
                     }
-            }
-
-            if (rssFeed.Id == (int)RssFeedId.Scena)
-            {
-
             }
 
             if (string.IsNullOrEmpty(imageUrl) || rssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped)

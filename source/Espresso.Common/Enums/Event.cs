@@ -19,7 +19,7 @@
         SendArticlesNotificationsQuery = 15,
         ParseRssFeedsCommand = 16,
         ParserInit = 17,
-        ParserDeleterWebJob = 18,
+        ParseArticlesJob = 18,
         RssFeedLoading = 19,
         ArticleParsing = 20,
         ParserDeleterNewArticlesRequest = 21,
@@ -33,5 +33,6 @@
         SlackServiceException = 29,
         WebApiInit = 30,
         CronJob = 31,
+        DeleteArticlesJob = 32
     }
 }

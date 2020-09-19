@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200919195320_IPazanin_UpdatedIndexHrContentModificator")]
+    partial class IPazanin_UpdatedIndexHrContentModificator
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3693,31 +3695,31 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 1,
-                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlParseStrategy = 2,
                                     ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 2,
-                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlParseStrategy = 2,
                                     ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 3,
-                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlParseStrategy = 2,
                                     ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 4,
-                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlParseStrategy = 2,
                                     ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 5,
-                                    ImageUrlParseStrategy = 1,
+                                    ImageUrlParseStrategy = 2,
                                     ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
