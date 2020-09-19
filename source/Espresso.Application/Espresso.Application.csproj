@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AnalysisLevel>preview</AnalysisLevel>
-    <Configurations>Development;Release;Local</Configurations>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
@@ -13,6 +12,7 @@
     <PackageReference Include="MediatR" Version="8.1.0" />
     <PackageReference Include="System.ServiceModel.Syndication" Version="4.7.0" />
     <PackageReference Include="FirebaseAdmin" Version="1.15.0" />
+    <PackageReference Include="Cronos" Version="0.7.0" />
   </ItemGroup>
 
   <ItemGroup>

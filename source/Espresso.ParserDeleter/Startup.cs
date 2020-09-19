@@ -2,7 +2,7 @@
 using System.Reflection;
 using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
 using Espresso.Application.DomainServices;
-using Espresso.Application.Infrastructure;
+using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using Espresso.Application.Initialization;
 using Espresso.Common.Enums;
 using Espresso.Domain.IServices;

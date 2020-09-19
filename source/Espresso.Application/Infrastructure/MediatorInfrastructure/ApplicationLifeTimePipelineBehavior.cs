@@ -9,7 +9,7 @@ using Espresso.Domain.IServices;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Espresso.Application.Infrastructure
+namespace Espresso.Application.Infrastructure.MediatorInfrastructure
 {
     public class ApplicationLifeTimePipelineBehavior<TRequest, TResponse> :
         IPipelineBehavior<TRequest, TResponse> where TRequest : notnull

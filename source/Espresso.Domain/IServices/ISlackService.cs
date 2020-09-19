@@ -39,9 +39,8 @@ namespace Espresso.Domain.IServices
         );
 
         public Task LogAppDownload(
-            string mobileDeviceType,
-            int todayAndroidCount,
-            int todayIosCount,
+            int yesterdayAndroidCount,
+            int yesterdayIosCount,
             int totalAndroidCount,
             int totalIosCount,
             AppEnvironment appEnvironment,

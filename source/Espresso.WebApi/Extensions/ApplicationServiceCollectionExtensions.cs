@@ -79,6 +79,8 @@ namespace Espresso.WebApi.Extensions
                 );
             }
 
+            services.AddCronJobs(appEnvironment: webApiConfiguration.AppConfiguration.AppEnvironment);
+
             return services;
         }
     }

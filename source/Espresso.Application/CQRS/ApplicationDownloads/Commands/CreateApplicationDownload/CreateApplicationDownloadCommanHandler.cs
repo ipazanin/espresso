@@ -5,9 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
-using Espresso.Domain.Extensions;
-using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
@@ -18,20 +15,14 @@ namespace Espresso.Application.CQRS.ApplicationDownloads.Commands.CreateApplicat
     {
         #region Fields
         private readonly IApplicationDatabaseContext _context;
-        private readonly IMemoryCache _memoryCache;
-        private readonly ISlackService _slackService;
         #endregion
 
         #region Constructors
         public CreateApplicationDownloadCommanHandler(
-            IApplicationDatabaseContext context,
-            IMemoryCache memoryCache,
-            ISlackService slackService
+            IApplicationDatabaseContext context
         )
         {
             _context = context;
-            _memoryCache = memoryCache;
-            _slackService = slackService;
         }
         #endregion
 
@@ -48,46 +39,7 @@ namespace Espresso.Application.CQRS.ApplicationDownloads.Commands.CreateApplicat
             _ = _context.ApplicationDownload.Add(applicationDownload);
 
             _ = await _context
-                .SaveChangesAsync(cancellationToken)
-                ;
-
-            var applicationDownloads = _memoryCache.Get<IEnumerable<ApplicationDownload>>(
-                key: MemoryCacheConstants.ApplicationDownloadKey
-            );
-
-            applicationDownloads = applicationDownloads.Append(applicationDownload);
-
-            _ = _memoryCache.Set(
-                key: MemoryCacheConstants.ApplicationDownloadKey,
-                value: applicationDownloads.ToList()
-            );
-
-            var todayAndroidCount = applicationDownloads.Count(applicationDownloads =>
-                applicationDownloads.MobileDeviceType == DeviceType.Android &&
-                applicationDownloads.DownloadedTime.Date == DateTime.UtcNow.Date
-            );
-
-            var todayIosCount = applicationDownloads.Count(applicationDownloads =>
-                applicationDownloads.MobileDeviceType == DeviceType.Ios &&
-                applicationDownloads.DownloadedTime.Date == DateTime.UtcNow.Date
-            );
-
-            var totalIosCount = applicationDownloads.Count(applicationDownloads =>
-                applicationDownloads.MobileDeviceType == DeviceType.Ios
-            );
-            var totalAndroidCount = applicationDownloads.Count(applicationDownloads =>
-                applicationDownloads.MobileDeviceType == DeviceType.Android
-            );
-
-            await _slackService.LogAppDownload(
-                    mobileDeviceType: request.DeviceType.GetDisplayName(),
-                    todayAndroidCount: todayAndroidCount,
-                    todayIosCount: todayIosCount,
-                    totalAndroidCount: totalAndroidCount,
-                    totalIosCount: totalIosCount,
-                    appEnvironment: request.AppEnvironment,
-                    cancellationToken: cancellationToken
-            );
+                .SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }

@@ -131,7 +131,7 @@ namespace Espresso.Application.DomainServices
 
         public async Task LogRequestError(
             string requestName,
-            string webVersion,
+            string apiVersion,
             string targetedApiVersion,
             string consumerVersion,
             DeviceType deviceType,
@@ -144,7 +144,7 @@ namespace Espresso.Application.DomainServices
             var exceptionMessage = exception.Message;
             var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
             var text = $":blue_book: Request Name: {requestName}\n" +
-                $":label: App Version: {webVersion}\n" +
+                $":label: App Version: {apiVersion}\n" +
                 $":label: Targeted WebApi Version: {targetedApiVersion}\n" +
                 $":label: Consumer Version: {consumerVersion}\n" +
                 $":iphone: Device Type: {deviceType}\n" +
@@ -165,19 +165,19 @@ namespace Espresso.Application.DomainServices
         }
 
         public async Task LogAppDownload(
-            string mobileDeviceType,
-            int todayAndroidCount,
-            int todayIosCount,
+            int yesterdayAndroidCount,
+            int yesterdayIosCount,
             int totalAndroidCount,
             int totalIosCount,
             AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         )
         {
-            var text = $"There’s a new {mobileDeviceType} download :tada:\n" +
-                $":calendar: Today: Android +{todayAndroidCount}, iOS +{todayIosCount}\n" +
+            var text = $":calendar: Yesterday: Android +{yesterdayAndroidCount}, " +
+                $"iOS +{yesterdayIosCount}, total: +{yesterdayAndroidCount + yesterdayIosCount}\n" +
                 $":robot_face: Lifetime Android: {totalAndroidCount}\n" +
-                $":apple: Lifetime iOS: {totalIosCount}";
+                $":apple: Lifetime iOS: {totalIosCount}\n" +
+                $":chart_with_upwards_trend: Lifetime: {totalAndroidCount + totalIosCount}";
 
             await Log(
                 data: new SlackWebHookDto(

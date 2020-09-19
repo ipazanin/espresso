@@ -15,9 +15,9 @@ namespace Espresso.Domain.IServices
             string? itemId,
             IEnumerable<Uri?>? itemLinks,
             string? itemTitle,
-            string? summary,
+            string? itemSummary,
             string? itemContent,
-            DateTimeOffset publishDateTime,
+            DateTimeOffset itemPublishDateTime,
             TimeSpan maxAgeOfArticle,
             CancellationToken cancellationToken
         );

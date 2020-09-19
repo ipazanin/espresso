@@ -252,9 +252,9 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                                 itemId: syndicationItem.Id,
                                 itemLinks: syndicationItem.Links?.Select(syndicationLink => syndicationLink.Uri),
                                 itemTitle: syndicationItem.Title?.Text,
-                                summary: syndicationItem.Summary?.Text,
+                                itemSummary: syndicationItem.Summary?.Text,
                                 itemContent: (syndicationItem.Content as TextSyndicationContent)?.Text,
-                                publishDateTime: syndicationItem.PublishDate,
+                                itemPublishDateTime: syndicationItem.PublishDate,
                                 maxAgeOfArticle: request.MaxAgeOfArticle,
                                 cancellationToken: cancellationToken
                             );
