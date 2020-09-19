@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Espresso.WebApi.Middleware
+namespace Espresso.WebApi.Middleware.SecurityHeaders
 {
     /// <summary>
     /// 

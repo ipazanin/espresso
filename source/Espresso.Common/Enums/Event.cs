@@ -32,5 +32,6 @@
         ToggleFeaturedArticle = 28,
         SlackServiceException = 29,
         WebApiInit = 30,
+        CronJob = 31,
     }
 }

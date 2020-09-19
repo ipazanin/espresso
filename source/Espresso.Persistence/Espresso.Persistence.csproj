@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AnalysisLevel>preview</AnalysisLevel>
-    <Configurations>Development;Release;Local</Configurations>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 

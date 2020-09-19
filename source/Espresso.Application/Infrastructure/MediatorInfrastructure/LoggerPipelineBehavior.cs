@@ -10,7 +10,7 @@ using Espresso.Domain.IServices;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Espresso.Application.Infrastructure
+namespace Espresso.Application.Infrastructure.MediatorInfrastructure
 {
     public class LoggerPipelineBehavior<TRequest, TResponse> :
         IPipelineBehavior<TRequest, TResponse> where TRequest : notnull

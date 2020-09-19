@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Espresso.WebApi.Middleware
+namespace Espresso.WebApi.Middleware.SecurityHeaders
 {
     /// <summary>
     /// Security Headers Middleware

@@ -3,7 +3,7 @@ using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.Extensions;
 using MediatR;
 
-namespace Espresso.Application.Infrastructure
+namespace Espresso.Application.Infrastructure.MediatorInfrastructure
 {
     public abstract class Request<TResponse> : IRequest<TResponse>
     {
