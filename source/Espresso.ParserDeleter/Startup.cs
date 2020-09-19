@@ -4,6 +4,8 @@ using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
 using Espresso.Application.DomainServices;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using Espresso.Application.Initialization;
+using Espresso.Application.IService;
+using Espresso.Application.Services;
 using Espresso.Common.Enums;
 using Espresso.Domain.IServices;
 using Espresso.Domain.IValidators;
@@ -33,6 +35,7 @@ namespace Espresso.ParserDeleter
             services.AddSingleton<IHttpService, HttpService>();
             services.AddScoped<IArticleParserService, ArticleParserService>();
             services.AddScoped<IWebScrapingService, WebScrapingService>();
+            services.AddScoped<IRssFeedService, RssFeedService>();
             #endregion
 
             #region Validators
