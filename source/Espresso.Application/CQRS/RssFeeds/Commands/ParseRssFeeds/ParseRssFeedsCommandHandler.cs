@@ -35,7 +35,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
         private readonly IArticleCategoryRepository _articleCategoryRepository;
         private readonly IArticleParserService _articleParserService;
         private readonly ISlackService _slackService;
-        private readonly IRssFeedService _rssFeedService;
+        private readonly IRssFeedLoadService _rssFeedLoadingService;
         private readonly ILogger<ParseRssFeedsCommandHandler> _logger;
         #endregion
 
@@ -47,7 +47,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             IArticleParserService articleParserService,
             ISlackService slackService,
             ILoggerFactory loggerFactory,
-            IRssFeedService rssFeedService
+            IRssFeedLoadService rssFeedService
         )
         {
             _memoryCache = memoryCache;
@@ -55,7 +55,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             _articleCategoryRepository = articleCategoryRepository;
             _articleParserService = articleParserService;
             _slackService = slackService;
-            _rssFeedService = rssFeedService;
+            _rssFeedLoadingService = rssFeedService;
             _logger = loggerFactory.CreateLogger<ParseRssFeedsCommandHandler>();
         }
         #endregion
@@ -73,7 +73,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             var rssFeeds = _memoryCache.Get<IEnumerable<RssFeed>>(key: MemoryCacheConstants.RssFeedKey);
             var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
 
-            var feeds = await _rssFeedService.ParseRssFeeds(
+            var feeds = await _rssFeedLoadingService.ParseRssFeeds(
                 rssFeeds: rssFeeds,
                 appEnvironment: request.AppEnvironment,
                 currentApiVersion: request.CurrentApiVersion,
@@ -157,11 +157,6 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                             var eventName = Event.ArticleParsing.GetDisplayName();
                             var eventId = (int)Event.ArticleParsing;
                             var message = $"RssFeedUrl: {rssFeedUrl}";
-
-                            if (rssFeed.NewsPortalId == 1 && rssFeed.Id != (int)RssFeedId.Index_Auto)
-                            {
-
-                            }
 
                             if (exception.Message.Equals("articleCategories must not be empty! (Parameter 'articleCategories')"))
                             {

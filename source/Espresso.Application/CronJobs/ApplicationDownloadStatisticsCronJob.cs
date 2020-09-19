@@ -57,7 +57,7 @@ namespace Espresso.Application.CronJobs
                 applicationDownloads.MobileDeviceType == DeviceType.Android
             );
 
-            await _slackService.LogAppDownload(
+            await _slackService.LogAppDownloadStatistics(
                     yesterdayAndroidCount: todayAndroidCount,
                     yesterdayIosCount: todayIosCount,
                     totalAndroidCount: totalAndroidCount,

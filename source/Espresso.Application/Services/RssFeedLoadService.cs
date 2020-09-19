@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -22,17 +22,17 @@ using Microsoft.Extensions.Logging;
 
 namespace Espresso.Application.Services
 {
-    public class RssFeedService : IRssFeedService
+    public class RssFeedLoadService : IRssFeedLoadService
     {
         #region Fields
         private readonly IMemoryCache _memoryCache;
         private readonly ISlackService _slackService;
         private readonly HttpClient _httpClient;
-        private readonly ILogger<RssFeedService> _logger;
+        private readonly ILogger<RssFeedLoadService> _logger;
         #endregion
 
         #region Constructors
-        public RssFeedService(
+        public RssFeedLoadService(
             IHttpClientFactory httpClientFactory,
             IMemoryCache memoryCache,
             ISlackService slackService,
@@ -42,7 +42,7 @@ namespace Espresso.Application.Services
             _memoryCache = memoryCache;
             _slackService = slackService;
             _httpClient = httpClientFactory.CreateClient();
-            _logger = loggerFactory.CreateLogger<RssFeedService>();
+            _logger = loggerFactory.CreateLogger<RssFeedLoadService>();
         }
         #endregion
 
@@ -129,43 +129,14 @@ namespace Espresso.Application.Services
 
         private async Task<SyndicationFeed> LoadFeed(RssFeed rssFeed, CancellationToken cancellationToken)
         {
-            string? feedContent;
-
-            if (
-                rssFeed.NewsPortalId == (int)NewsPortalId.SportskeNovosti ||
-                rssFeed.NewsPortalId == (int)NewsPortalId.JutarnjiList ||
-                rssFeed.NewsPortalId == (int)NewsPortalId.NarodHr ||
-                rssFeed.NewsPortalId == (int)NewsPortalId.StoPosto ||
-                rssFeed.NewsPortalId == (int)NewsPortalId.PoslovniPuls ||
-                rssFeed.NewsPortalId == (int)NewsPortalId.SlobodnaDalmacija ||
-                rssFeed.NewsPortalId == (int)NewsPortalId.N1 ||
-                rssFeed.NewsPortalId == (int)NewsPortalId.LikaExpress
-            )
+            var feedContent = rssFeed.RequestType switch
             {
-                feedContent = await LoadCompressedFeedContent(rssFeed, cancellationToken);
-            }
-            else
-            {
-                feedContent = await LoadFeedContent(rssFeed, cancellationToken);
-            }
+                RequestType.Browser => await LoadCompressedFeedContent(rssFeed, cancellationToken),
+                RequestType.Normal => await LoadFeedContent(rssFeed, cancellationToken),
+                _ => await LoadFeedContent(rssFeed, cancellationToken)
+            };
 
-            var modifiedFeedContent = feedContent
-                .Replace("version=\"2.0\" version=\"2.0\"", "version=\"2.0\"")
-                .Replace("<rss version=\"2.0\">", "<rss xmlns:a10=\"http://www.w3.org/2005/Atom\" version=\"2.0\">")
-                .Trim();
-
-            if (
-                rssFeed.Id == (int)RssFeedId.Index_Auto ||
-                rssFeed.Id == (int)RssFeedId.Index_Magazin ||
-                rssFeed.Id == (int)RssFeedId.Index_Rogue ||
-                rssFeed.Id == (int)RssFeedId.Index_Sport ||
-                rssFeed.Id == (int)RssFeedId.Index_Vijesti ||
-                rssFeed.Id == (int)RssFeedId.IndexHrZagreb
-            )
-            {
-                modifiedFeedContent = modifiedFeedContent.Replace("<content>", "<a10:content>");
-                modifiedFeedContent = modifiedFeedContent.Replace("</content>", "</a10:content>");
-            }
+            var modifiedFeedContent = rssFeed.ModifyContent(feedContent);
 
 
             var reader = XmlReader.Create(
@@ -179,12 +150,9 @@ namespace Espresso.Application.Services
         private async Task<string> LoadCompressedFeedContent(RssFeed rssFeed, CancellationToken cancellationToken)
         {
             using var request = new HttpRequestMessage(HttpMethod.Get, rssFeed.Url);
-            // _ = request.Headers.TryAddWithoutValidation("accept", "text/html,application/xhtml+xml,application/xml");
             _ = request.Headers.TryAddWithoutValidation("accept", "*/*");
             _ = request.Headers.TryAddWithoutValidation("accept-encoding", "gzip, deflate, br");
-            // _ = request.Headers.TryAddWithoutValidation("user-agent", "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:19.0) Gecko/20100101 Firefox/19.0");
             _ = request.Headers.TryAddWithoutValidation("user-agent", "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Mobile Safari/537.36");
-            // _ = request.Headers.TryAddWithoutValidation("accept-charset", "ISO-8859-1");
 
             using var response = await _httpClient.SendAsync(request, cancellationToken);
 

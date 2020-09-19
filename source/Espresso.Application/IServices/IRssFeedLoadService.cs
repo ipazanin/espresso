@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ServiceModel.Syndication;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,7 +7,7 @@ using Espresso.Domain.Entities;
 
 namespace Espresso.Application.IService
 {
-    public interface IRssFeedService
+    public interface IRssFeedLoadService
     {
         public Task<IEnumerable<(SyndicationFeed SyndicationFeed, RssFeed rssFeed)>> ParseRssFeeds(
             IEnumerable<RssFeed> rssFeeds,
