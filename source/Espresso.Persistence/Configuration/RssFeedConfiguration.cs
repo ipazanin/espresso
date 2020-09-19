@@ -43,6 +43,11 @@ namespace Espresso.Persistence.Configuration
                 .WithOne(newArticle => newArticle.RssFeed!)
                 .HasForeignKey(rssFeedCategory => rssFeedCategory.RssFeedId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(rssFeed => rssFeed.RssFeedContentModifiers)
+                .WithOne(rssFeedContentModifier => rssFeedContentModifier.RssFeed!)
+                .HasForeignKey(rssFeedContentModifier => rssFeedContentModifier.RssFeedId)
+                .OnDelete(DeleteBehavior.Cascade);
             #endregion
 
             #region Data Seed
@@ -105,6 +110,5 @@ namespace Espresso.Persistence.Configuration
                 .HasDefaultValue(ImageUrlParseConfiguration.JsonWebScrapePropertyNamesDefaultValue);
 
         }
-
     }
 }

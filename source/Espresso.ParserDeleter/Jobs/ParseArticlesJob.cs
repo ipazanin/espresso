@@ -19,20 +19,20 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Espresso.ParserDeleter
+namespace Espresso.Jobs
 {
-    public class ParserDeleter : BackgroundService
+    public class ParseArticlesJob : BackgroundService
     {
         #region Fields
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IParserDeleterConfiguration _configuration;
         private readonly IHttpService _httpService;
         private readonly ISlackService _slackService;
-        private readonly ILogger<ParserDeleter> _logger;
+        private readonly ILogger<ParseArticlesJob> _logger;
         #endregion
 
         #region Constructors
-        public ParserDeleter(
+        public ParseArticlesJob(
             IServiceScopeFactory serviceScopeFactory,
             IParserDeleterConfiguration configuration,
             IHttpService httpService,
@@ -44,7 +44,7 @@ namespace Espresso.ParserDeleter
             _configuration = configuration;
             _httpService = httpService;
             _slackService = slackService;
-            _logger = loggerFactory.CreateLogger<ParserDeleter>();
+            _logger = loggerFactory.CreateLogger<ParseArticlesJob>();
         }
         #endregion
 
@@ -78,24 +78,12 @@ namespace Espresso.ParserDeleter
 
                     await CallWebServer(parseRssFeedsCommandResponse, cancellationToken);
 
-                    await mediator.Send(
-                        request: new DeleteOldArticlesCommand(
-                            maxAgeOfOldArticles: _configuration.DateTimeConfiguration.MaxAgeOfArticles,
-                            currentEspressoWebApiVersion: AppConfiguration.RssFeedParserVersion,
-                            targetedEspressoWebApiVersion: AppConfiguration.RssFeedParserMajorMinorVersion,
-                            consumerVersion: AppConfiguration.RssFeedParserVersion,
-                            deviceType: DeviceType.RssFeedParser,
-                            appEnvironment: _configuration.AppConfiguration.AppEnvironment
-                        ),
-                        cancellationToken: cancellationToken
-                    );
-
-                    await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationBetweenCommands, stoppingToken);
+                    await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationBetweenParseArticlesJobs, stoppingToken);
                 }
                 catch (Exception exception)
                 {
-                    var eventName = Event.ParserDeleterWebJob.GetDisplayName();
-                    var eventId = (int)Event.ParserDeleterWebJob;
+                    var eventName = Event.ParseArticlesJob.GetDisplayName();
+                    var eventId = (int)Event.ParseArticlesJob;
                     var version = AppConfiguration.Version;
                     var exceptionMessage = exception.Message;
                     var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
@@ -134,13 +122,6 @@ namespace Espresso.ParserDeleter
                     await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationAfterErrors, stoppingToken);
                 }
             }
-        }
-
-        private async Task InitializeParser()
-        {
-            using var scope = _serviceScopeFactory.CreateScope();
-            var memoryCacheInit = scope.ServiceProvider.GetRequiredService<IApplicationInit>();
-            await memoryCacheInit.InitParserDeleter();
         }
 
         private async Task CallWebServer(
@@ -231,6 +212,13 @@ namespace Espresso.ParserDeleter
                 delay: _configuration.DateTimeConfiguration.CancellationTokenExpirationDuration
             );
             return cancellationTokeSource.Token;
+        }
+
+        private async Task InitializeParser()
+        {
+            using var scope = _serviceScopeFactory.CreateScope();
+            var memoryCacheInit = scope.ServiceProvider.GetRequiredService<IApplicationInit>();
+            await memoryCacheInit.InitParserDeleter();
         }
         #endregion
     }

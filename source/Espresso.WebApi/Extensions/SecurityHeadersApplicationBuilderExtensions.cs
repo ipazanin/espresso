@@ -1,5 +1,5 @@
 ﻿using System;
-using Espresso.WebApi.Middleware;
+using Espresso.WebApi.Middleware.SecurityHeaders;
 using Microsoft.AspNetCore.Builder;
 
 namespace Espresso.WebApi.Extensions

@@ -26,6 +26,9 @@ namespace Espresso.Application.DomainServices
         public WebScrapingService(IHttpClientFactory httpClientFactory)
         {
             _httpClient = httpClientFactory.CreateClient();
+            _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "*/*");
+            _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept-encoding", "gzip, deflate, br");
+            _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("user-agent", "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Mobile Safari/537.36");
             _httpClient.Timeout = TimeSpan.FromSeconds(30);
         }
         #endregion
@@ -60,7 +63,6 @@ namespace Espresso.Application.DomainServices
                         elementTags: elementTags,
                         propertyNames: propertyNames
                     ),
-                    ImageUrlWebScrapeType.Undefined => GetImageUrlFromSrcAttribute(elementTags),
                     ImageUrlWebScrapeType.SrcAttribute => GetImageUrlFromSrcAttribute(elementTags),
                     _ => GetImageUrlFromSrcAttribute(elementTags),
                 });

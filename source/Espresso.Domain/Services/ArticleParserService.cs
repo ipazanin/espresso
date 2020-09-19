@@ -84,7 +84,7 @@ namespace Espresso.Domain.Services
             var articlecategories = GetArticleCategories(
                 categories: categories,
                 itemTitle: itemTitle,
-                itemSummary: itemSummary,
+                itemSummary: summary,
                 articleId: id,
                 itemUrl: itemLinks.FirstOrDefault(),
                 rssFeed: rssFeed
@@ -206,11 +206,6 @@ namespace Espresso.Domain.Services
                         imageUrl = _webScrapingService.GetSrcAttributeFromFirstImgElement(itemContent);
                         break;
                     }
-            }
-
-            if (rssFeed.Id == (int)RssFeedId.Scena)
-            {
-
             }
 
             if (string.IsNullOrEmpty(imageUrl) || rssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped)

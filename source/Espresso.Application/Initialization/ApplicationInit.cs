@@ -33,7 +33,6 @@ namespace Espresso.Application.Initialization
         private readonly IMemoryCache _memoryCache;
         private readonly IArticleCategoryRepository _articleCategoryRepository;
         private readonly IArticleRepository _articleRepository;
-        private readonly IApplicationDownloadRepository _applicationDownloadRepository;
         private readonly IApplicationDatabaseContext _context;
         private readonly ILogger<ApplicationInit> _logger;
         #endregion
@@ -47,7 +46,6 @@ namespace Espresso.Application.Initialization
         /// <param name="loggerFactory"></param>
         public ApplicationInit(
             IMemoryCache memoryCache,
-            IApplicationDownloadRepository applicationDownloadRepository,
             IArticleCategoryRepository articleCategoryRepository,
             IArticleRepository articleRepository,
             IApplicationDatabaseContext context,
@@ -57,7 +55,6 @@ namespace Espresso.Application.Initialization
             _memoryCache = memoryCache;
             _articleCategoryRepository = articleCategoryRepository;
             _articleRepository = articleRepository;
-            _applicationDownloadRepository = applicationDownloadRepository;
             _context = context;
             _logger = loggerFactory.CreateLogger<ApplicationInit>();
         }
@@ -160,15 +157,6 @@ namespace Espresso.Application.Initialization
             );
             #endregion
 
-            #region ApplicationDownloads
-            var applicationDownloads = await _applicationDownloadRepository.GetApplicationDownloads();
-
-            _ = _memoryCache.Set(
-                key: MemoryCacheConstants.ApplicationDownloadKey,
-                value: applicationDownloads.ToList()
-            );
-            #endregion
-
             stopwatch.Stop();
 
             var eventId = (int)Event.WebApiInit;
@@ -179,7 +167,6 @@ namespace Espresso.Application.Initialization
             var articleCategoriesCount = articleCategories.Count();
             var allArticlesCount = allArticles.Count();
             var articlesToAddCount = articlesToAdd.Count;
-            var applicationDownloadsCount = applicationDownloads.Count();
 
             var message =
                 $"{AnsiUtility.EncodeEventName($"{{@{nameof(eventName)}}}")}\n\t" +
@@ -194,9 +181,7 @@ namespace Espresso.Application.Initialization
                 $"{AnsiUtility.EncodeParameterName(nameof(allArticlesCount))}: " +
                 $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(allArticlesCount)}}}")}\n\t" +
                 $"{AnsiUtility.EncodeParameterName(nameof(articlesToAddCount))}: " +
-                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(articlesToAddCount)}}}")}\n\t" +
-                $"{AnsiUtility.EncodeParameterName(nameof(applicationDownloadsCount))}: " +
-                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(applicationDownloadsCount)}}}")}\n\t";
+                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(articlesToAddCount)}}}")}\n\t";
 
             var args = new object[]
             {
@@ -207,7 +192,6 @@ namespace Espresso.Application.Initialization
                 articleCategoriesCount,
                 allArticlesCount,
                 articlesToAddCount,
-                applicationDownloadsCount
             };
 
             _logger.LogInformation(
@@ -219,9 +203,15 @@ namespace Espresso.Application.Initialization
 
         public async Task InitParserDeleter()
         {
-            await _context.Database.MigrateAsync();
+            var isInitialised = _memoryCache.Get<IEnumerable<NewsPortal>?>(key: MemoryCacheConstants.NewsPortalKey) != null;
+            if (isInitialised)
+            {
+                return;
+            }
 
             var stopwatch = Stopwatch.StartNew();
+
+            await _context.Database.MigrateAsync();
 
             #region NewsPortals
             var newsPortals = await _context
@@ -301,6 +291,7 @@ namespace Espresso.Application.Initialization
                 .Include(rssFeed => rssFeed.NewsPortal)
                 .Include(rssFeed => rssFeed.RssFeedCategories)
                 .ThenInclude(rssFeedCategory => rssFeedCategory.Category)
+                .Include(rssFeed => rssFeed.RssFeedContentModifiers)
                 .AsNoTracking()
                 .ToListAsync();
 

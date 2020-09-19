@@ -5,7 +5,7 @@
         #region Current Version
         public const int CurrentMajorVersion = 1;
         public const int CurrentMinorVersion = 4;
-        public const int CurrentFixVersion = 2;
+        public const int CurrentFixVersion = 3;
         #endregion
 
         #region Default Version

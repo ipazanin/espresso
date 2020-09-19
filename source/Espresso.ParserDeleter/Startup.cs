@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
 using Espresso.Application.DomainServices;
-using Espresso.Application.Infrastructure;
+using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using Espresso.Application.Initialization;
+using Espresso.Application.IService;
+using Espresso.Application.Services;
 using Espresso.Common.Enums;
 using Espresso.Domain.IServices;
 using Espresso.Domain.IValidators;
 using Espresso.Domain.Services;
 using Espresso.Domain.Validators;
+using Espresso.Jobs;
 using Espresso.ParserDeleter.Configuration;
 using Espresso.Persistence.Database;
 using Espresso.Persistence.IRepositories;
@@ -24,13 +28,13 @@ namespace Espresso.ParserDeleter
         public static void ConfigureServices(IServiceCollection services)
         {
             #region Configuration
-            services.AddHostedService<ParserDeleter>();
             services.AddTransient<IParserDeleterConfiguration, ParserDeleterConfiguration>();
             #endregion
 
             #region Services
             services.AddSingleton<ISlackService, SlackService>();
             services.AddSingleton<IHttpService, HttpService>();
+            services.AddSingleton<IRssFeedLoadService, RssFeedLoadService>();
             services.AddScoped<IArticleParserService, ArticleParserService>();
             services.AddScoped<IWebScrapingService, WebScrapingService>();
             #endregion
@@ -91,6 +95,11 @@ namespace Espresso.ParserDeleter
             services.AddScoped<IApplicationDownloadRepository, ApplicationDownloadRepository>();
             services.AddScoped<IArticleCategoryRepository, ArticleCategoryRepository>();
             services.AddScoped<IArticleRepository, ArticleRepository>();
+            #endregion
+
+            #region Jobs
+            services.AddHostedService<ParseArticlesJob>();
+            services.AddHostedService<DeleteArticlesJob>();
             #endregion
         }
     }

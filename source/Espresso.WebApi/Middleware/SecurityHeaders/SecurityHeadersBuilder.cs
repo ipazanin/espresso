@@ -1,7 +1,7 @@
 ﻿using System;
 using Espresso.Common.Constants;
 
-namespace Espresso.WebApi.Middleware
+namespace Espresso.WebApi.Middleware.SecurityHeaders
 {
     /// <summary>
     /// Exposes methods to build a policy.

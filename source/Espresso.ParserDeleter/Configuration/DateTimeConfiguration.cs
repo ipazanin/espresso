@@ -20,9 +20,14 @@ namespace Espresso.ParserDeleter.Configuration
                 value: _configuration.GetValue<int>("CancellationTokenExpiration")
             );
 
-        public TimeSpan WaitDurationBetweenCommands =>
+        public TimeSpan WaitDurationBetweenParseArticlesJobs =>
             TimeSpan.FromSeconds(
-                value: _configuration.GetValue<int>("BetweenCommands")
+                value: _configuration.GetValue<int>("BetweenParseArticlesJobs")
+            );
+
+        public TimeSpan WaitDurationBetweenDeleteArticlesJobs =>
+            TimeSpan.FromSeconds(
+                value: _configuration.GetValue<int>("BetweenDeleteArticlesJobs")
             );
 
         public TimeSpan WaitDurationAfterErrors =>

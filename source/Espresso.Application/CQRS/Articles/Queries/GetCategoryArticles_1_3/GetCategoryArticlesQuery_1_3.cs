@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Espresso.Application.Infrastructure;
+using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;

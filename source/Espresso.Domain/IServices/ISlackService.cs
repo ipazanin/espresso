@@ -38,10 +38,9 @@ namespace Espresso.Domain.IServices
             CancellationToken cancellationToken
         );
 
-        public Task LogAppDownload(
-            string mobileDeviceType,
-            int todayAndroidCount,
-            int todayIosCount,
+        public Task LogAppDownloadStatistics(
+            int yesterdayAndroidCount,
+            int yesterdayIosCount,
             int totalAndroidCount,
             int totalIosCount,
             AppEnvironment appEnvironment,

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
-
+using Espresso.Persistence.IRepositories;
 using MediatR;
 
 using Microsoft.Extensions.Caching.Memory;
@@ -16,25 +16,22 @@ namespace Espresso.Application.CQRS.ApplicationDownloads.Queries.GetApplicationD
     public class GetApplicationDownloadStatisticsQueryHandler : IRequestHandler<GetApplicationDownloadStatisticsQuery, GetApplicationDownloadStatisticsQueryResponse>
     {
         #region Fields
-        private readonly IMemoryCache _memoryCache;
+        private readonly IApplicationDownloadRepository _applicationDownloadRepository;
         #endregion
 
         #region Constructors
         public GetApplicationDownloadStatisticsQueryHandler(
-            IMemoryCache memoryCache
+            IApplicationDownloadRepository applicationDownloadRepository
         )
         {
-            _memoryCache = memoryCache;
+            _applicationDownloadRepository = applicationDownloadRepository;
         }
         #endregion
 
         #region Methods
-        public Task<GetApplicationDownloadStatisticsQueryResponse> Handle(GetApplicationDownloadStatisticsQuery request, CancellationToken cancellationToken)
+        public async Task<GetApplicationDownloadStatisticsQueryResponse> Handle(GetApplicationDownloadStatisticsQuery request, CancellationToken cancellationToken)
         {
-            var applicationDownloads = _memoryCache
-                .Get<IEnumerable<ApplicationDownload>>(
-                    key: MemoryCacheConstants.ApplicationDownloadKey
-                );
+            var applicationDownloads = await _applicationDownloadRepository.GetApplicationDownloads();
 
             var androidCount = applicationDownloads.Count(
                 predicate: applicationDownload => applicationDownload.MobileDeviceType == DeviceType.Android
@@ -45,7 +42,7 @@ namespace Espresso.Application.CQRS.ApplicationDownloads.Queries.GetApplicationD
             );
             var response = new GetApplicationDownloadStatisticsQueryResponse(androidCount, iosCount, androidCount + iosCount);
 
-            return Task.FromResult(result: response);
+            return response;
         }
         #endregion
     }
