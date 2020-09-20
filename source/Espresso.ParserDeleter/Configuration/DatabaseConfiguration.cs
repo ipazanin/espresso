@@ -10,6 +10,8 @@ namespace Espresso.ParserDeleter.Configuration
 
         #region Properties
         public string ConnectionString => _configuration.GetValue<string>("DefaultConnectionString");
+
+        public int CommandTimeoutInSeconds => _configuration.GetValue<int>("CommandTimeoutInSeconds");
         #endregion
 
         #region Constructors

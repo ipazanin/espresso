@@ -32,19 +32,19 @@ namespace Espresso.WebApi.Extensions
             return services;
         }
 
-        private static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services, IWebApiConfiguration configuration)
+        private static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services, IWebApiConfiguration webApiConfiguration)
         {
             services.AddDbContext<IApplicationDatabaseContext, ApplicationDatabaseContext>(options =>
             {
                 options.UseSqlServer(
-                    connectionString: configuration.DatabaseConfiguration.ConnectionString,
+                    connectionString: webApiConfiguration.DatabaseConfiguration.ConnectionString,
                     sqlServerOptionsAction: sqlServerOptions =>
                     {
-                        sqlServerOptions.CommandTimeout((int)TimeSpan.FromMinutes(2).TotalSeconds);
+                        sqlServerOptions.CommandTimeout(webApiConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
                     }
                 );
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-                switch (configuration.AppConfiguration.AppEnvironment)
+                switch (webApiConfiguration.AppConfiguration.AppEnvironment)
                 {
                     case AppEnvironment.Undefined:
                     case AppEnvironment.Local:
@@ -58,7 +58,7 @@ namespace Espresso.WebApi.Extensions
                 }
             });
 
-            services.AddScoped<IDatabaseConnectionFactory>(serviceProvider => new DatabaseConnectionFactory(configuration.DatabaseConfiguration.ConnectionString));
+            services.AddScoped<IDatabaseConnectionFactory>(serviceProvider => new DatabaseConnectionFactory(webApiConfiguration.DatabaseConfiguration.ConnectionString));
 
             return services;
         }

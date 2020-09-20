@@ -2,12 +2,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.CQRS.Articles.Commands.DeleteOldArticles;
+using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.Extensions;
-using Espresso.Domain.IServices;
 using Espresso.ParserDeleter.Configuration;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

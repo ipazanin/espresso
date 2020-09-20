@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Reflection;
 using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
-using Espresso.Application.DomainServices;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using Espresso.Application.Initialization;
 using Espresso.Application.IService;
+using Espresso.Application.IServices;
 using Espresso.Application.Services;
 using Espresso.Common.Enums;
-using Espresso.Domain.IServices;
 using Espresso.Domain.IValidators;
-using Espresso.Domain.Services;
 using Espresso.Domain.Validators;
 using Espresso.Jobs;
 using Espresso.ParserDeleter.Configuration;
@@ -18,13 +16,26 @@ using Espresso.Persistence.IRepositories;
 using Espresso.Persistence.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Espresso.ParserDeleter
 {
     public class Startup
     {
-        public static void ConfigureServices(IServiceCollection services)
+        #region Fields
+        private readonly ParserDeleterConfiguration _parserDeleterConfiguration;
+        #endregion
+
+        #region Constructors
+        public Startup(IConfiguration configuration)
+        {
+            _parserDeleterConfiguration = new ParserDeleterConfiguration(configuration);
+        }
+        #endregion
+
+        #region Methods
+        public void ConfigureServices(IServiceCollection services)
         {
             #region Configuration
             services.AddTransient<IParserDeleterConfiguration, ParserDeleterConfiguration>();
@@ -57,26 +68,23 @@ namespace Espresso.ParserDeleter
 
             #region MediatR
             services.AddMediatR(typeof(GetNewsPortalsQuery).GetTypeInfo().Assembly);
-            _ = services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggerPipelineBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggerPipelineBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ApplicationLifeTimePipelineBehavior<,>));
             #endregion
-
-            var serviceProvider = services.BuildServiceProvider();
-            var configuration = serviceProvider.GetService<IParserDeleterConfiguration>();
 
             #region Database
             services.AddDbContext<IApplicationDatabaseContext, ApplicationDatabaseContext>(options =>
              {
                  options.UseSqlServer(
-                     connectionString: configuration.DatabaseConfiguration.ConnectionString,
+                     connectionString: _parserDeleterConfiguration.DatabaseConfiguration.ConnectionString,
                      sqlServerOptionsAction: sqlServerOptions =>
                      {
-                         sqlServerOptions.CommandTimeout((int)TimeSpan.FromMinutes(2).TotalSeconds);
+                         sqlServerOptions.CommandTimeout(_parserDeleterConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
                      }
                  );
                  options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-                 switch (configuration.AppConfiguration.AppEnvironment)
+                 switch (_parserDeleterConfiguration.AppConfiguration.AppEnvironment)
                  {
                      case AppEnvironment.Undefined:
                      case AppEnvironment.Local:
@@ -90,7 +98,7 @@ namespace Espresso.ParserDeleter
                  }
              });
 
-            services.AddScoped<IDatabaseConnectionFactory>(o => new DatabaseConnectionFactory(configuration.DatabaseConfiguration.ConnectionString));
+            services.AddScoped<IDatabaseConnectionFactory>(o => new DatabaseConnectionFactory(_parserDeleterConfiguration.DatabaseConfiguration.ConnectionString));
             services.AddScoped<IApplicationDownloadRepository, ApplicationDownloadRepository>();
             services.AddScoped<IArticleCategoryRepository, ArticleCategoryRepository>();
             services.AddScoped<IArticleRepository, ArticleRepository>();
@@ -101,5 +109,6 @@ namespace Espresso.ParserDeleter
             services.AddHostedService<DeleteArticlesJob>();
             #endregion
         }
+        #endregion
     }
 }

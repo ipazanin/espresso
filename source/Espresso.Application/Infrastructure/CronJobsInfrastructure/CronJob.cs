@@ -47,10 +47,10 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
 
         protected virtual async Task ScheduleJob(CancellationToken cancellationToken)
         {
-            var next = _expression.GetNextOccurrence(DateTimeOffset.Now, _timeZoneInfo);
-            if (next.HasValue)
+            var nexOcurrencet = _expression.GetNextOccurrence(DateTimeOffset.Now, _timeZoneInfo);
+            if (nexOcurrencet.HasValue)
             {
-                var delay = next.Value - DateTimeOffset.Now;
+                var delay = nexOcurrencet.Value - DateTimeOffset.Now;
                 if (delay.TotalMilliseconds <= 0)   // prevent non-positive values from being passed into Timer
                 {
                     await ScheduleJob(cancellationToken);

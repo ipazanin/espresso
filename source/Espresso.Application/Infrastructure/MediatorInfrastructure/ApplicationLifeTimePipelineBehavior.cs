@@ -2,10 +2,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
-using Espresso.Domain.IServices;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 

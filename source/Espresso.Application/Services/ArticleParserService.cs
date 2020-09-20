@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Espresso.Application.IServices;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RssFeedEnums;
-using Espresso.Domain.IServices;
 using Espresso.Domain.IValidators;
 
-namespace Espresso.Domain.Services
+namespace Espresso.Application.Services
 {
     public class ArticleParserService : IArticleParserService
     {

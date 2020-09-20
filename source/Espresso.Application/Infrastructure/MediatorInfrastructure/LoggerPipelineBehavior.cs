@@ -2,11 +2,11 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Espresso.Application.IServices;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.Extensions;
-using Espresso.Domain.IServices;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

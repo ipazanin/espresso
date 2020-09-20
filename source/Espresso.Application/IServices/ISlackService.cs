@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 
-namespace Espresso.Domain.IServices
+namespace Espresso.Application.IServices
 {
     public interface ISlackService
     {

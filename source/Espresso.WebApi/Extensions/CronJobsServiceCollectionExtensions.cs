@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using Espresso.Application.CronJobs;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Common.Enums;
@@ -38,7 +37,10 @@ namespace Espresso.WebApi.Extensions
         {
             if (options == null)
             {
-                throw new ArgumentNullException(nameof(options), "Please provide Schedule Configurations.");
+                throw new ArgumentNullException(
+                    paramName: nameof(options),
+                    message: "Please provide Schedule Configurations."
+                );
             }
 
             var config = new CronJobConfiguration<T>();
@@ -46,7 +48,20 @@ namespace Espresso.WebApi.Extensions
 
             if (string.IsNullOrWhiteSpace(config.CronExpression))
             {
-                throw new ArgumentNullException(nameof(CronJobConfiguration<T>.CronExpression), "Empty Cron Expression is not allowed.");
+                throw new ArgumentNullException(
+                    paramName: nameof(CronJobConfiguration<T>.CronExpression),
+                    message: "Empty Cron Expression is not allowed."
+                );
+            }
+
+            if (config.AppEnvironment == AppEnvironment.Undefined)
+            {
+#pragma warning disable CA2208
+                throw new ArgumentException(
+                    message: "Empty AppEnvironment is not allowed.",
+                    paramName: nameof(CronJobConfiguration<T>.AppEnvironment)
+                );
+#pragma warning restore CA2208
             }
 
             services.AddSingleton<ICronJobConfiguration<T>>(config);
