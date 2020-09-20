@@ -10,17 +10,17 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.Extensions;
+using Espresso.Application.IServices;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.Extensions;
-using Espresso.Domain.IServices;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 
-namespace Espresso.Application.DomainServices
+namespace Espresso.Application.Services
 {
     public class WebScrapingService : IWebScrapingService
     {

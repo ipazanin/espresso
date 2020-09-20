@@ -7,10 +7,10 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.Extensions;
+using Espresso.Application.IServices;
 using Espresso.Common.Constants;
-using Espresso.Domain.IServices;
 
-namespace Espresso.Application.DomainServices
+namespace Espresso.Application.Services
 {
     public class HttpService : IHttpService
     {

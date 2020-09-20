@@ -2,6 +2,7 @@
 using Espresso.Common.Constants;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -35,8 +36,9 @@ namespace Espresso.ParserDeleter
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    var startup = new Startup();
-                    Startup.ConfigureServices(services);
+                    var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
+                    var startup = new Startup(configuration);
+                    startup.ConfigureServices(services);
                 });
     }
 }

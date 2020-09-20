@@ -77,7 +77,7 @@ namespace Espresso.WebApi
                 GraphQLEndPoint = "/graphql",
                 Headers = new Dictionary<string, object>
                 {
-                  { "espresso-api-key", webApiConfiguration.ApiKeysConfiguration.WebApiKey },
+                  { "espresso-api-key", "" },
                   { "espresso-api-version", webApiConfiguration.AppVersionConfiguration.EspressoWebApiCurrentVersion.ToString() },
                   { "device-type", DeviceType.WebApp },
                   { "version", "1.0.0" }

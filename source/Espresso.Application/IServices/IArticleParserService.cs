@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 using Espresso.Domain.Entities;
 
-namespace Espresso.Domain.IServices
+namespace Espresso.Application.IServices
 {
     public interface IArticleParserService
     {

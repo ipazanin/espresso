@@ -5,16 +5,16 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.DataTransferObjects;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
-using Espresso.Domain.IServices;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
-namespace Espresso.Application.DomainServices
+namespace Espresso.Application.Services
 {
     public class SlackService : ISlackService
     {

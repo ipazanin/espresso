@@ -2,41 +2,43 @@
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using System.Threading.Tasks;
 using System.Threading;
-using Espresso.Domain.IServices;
 using System.Linq;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
-using Espresso.Common.Enums;
 using Espresso.Persistence.IRepositories;
 using Microsoft.Extensions.Logging;
+using Espresso.Application.IServices;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Espresso.Application.CronJobs
 {
     public class ApplicationDownloadStatisticsCronJob : CronJob<ApplicationDownloadStatisticsCronJob>
     {
         #region Fields
-        private readonly ISlackService _slackService;
-        private readonly IApplicationDownloadRepository _applicationDownloadRepository;
-        private readonly AppEnvironment _appEnvironment;
+        private readonly IServiceScopeFactory _scopeFactory;
+        private readonly ICronJobConfiguration<ApplicationDownloadStatisticsCronJob> _cronJobConfiguration;
         #endregion
 
         #region Constructors
         public ApplicationDownloadStatisticsCronJob(
+            IServiceScopeFactory scopeFactory,
             ICronJobConfiguration<ApplicationDownloadStatisticsCronJob> cronJobConfiguration,
-            ISlackService slackService,
-            IApplicationDownloadRepository applicationDownloadRepository,
             ILoggerFactory loggerFactory
         ) : base(cronJobConfiguration, loggerFactory)
         {
-            _slackService = slackService;
-            _applicationDownloadRepository = applicationDownloadRepository;
-            _appEnvironment = cronJobConfiguration.AppEnvironment;
+            _scopeFactory = scopeFactory;
+            _cronJobConfiguration = cronJobConfiguration;
         }
         #endregion
 
         #region  Methods
         public override async Task DoWork(CancellationToken cancellationToken)
         {
-            var applicationDownloads = await _applicationDownloadRepository.GetApplicationDownloads();
+            using var scope = _scopeFactory.CreateScope();
+            var serviceProvider = scope.ServiceProvider;
+            var applicationDownloadRepository = serviceProvider.GetRequiredService<IApplicationDownloadRepository>();
+            var slackService = serviceProvider.GetRequiredService<ISlackService>();
+
+            var applicationDownloads = await applicationDownloadRepository.GetApplicationDownloads();
 
             var yesterday = DateTime.UtcNow.AddDays(-1);
 
@@ -57,12 +59,12 @@ namespace Espresso.Application.CronJobs
                 applicationDownloads.MobileDeviceType == DeviceType.Android
             );
 
-            await _slackService.LogAppDownloadStatistics(
+            await slackService.LogAppDownloadStatistics(
                     yesterdayAndroidCount: todayAndroidCount,
                     yesterdayIosCount: todayIosCount,
                     totalAndroidCount: totalAndroidCount,
                     totalIosCount: totalIosCount,
-                    appEnvironment: _appEnvironment,
+                    appEnvironment: _cronJobConfiguration.AppEnvironment,
                     cancellationToken: cancellationToken
             );
         }
