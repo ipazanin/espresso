@@ -1,6 +1,5 @@
-﻿using System;
-using System.Reflection;
-using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
+﻿using Espresso.Application.CQRS.Articles.Commands.DeleteOldArticles;
+using Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using Espresso.Application.Initialization;
 using Espresso.Application.IService;
@@ -15,6 +14,7 @@ using Espresso.Persistence.Database;
 using Espresso.Persistence.IRepositories;
 using Espresso.Persistence.Repositories;
 using MediatR;
+using Microsoft.AspNetCore.WebSockets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,13 +38,13 @@ namespace Espresso.ParserDeleter
         public void ConfigureServices(IServiceCollection services)
         {
             #region Configuration
-            services.AddTransient<IParserDeleterConfiguration, ParserDeleterConfiguration>();
+            services.AddSingleton<IParserDeleterConfiguration, ParserDeleterConfiguration>();
             #endregion
 
             #region Services
-            services.AddSingleton<ISlackService, SlackService>();
-            services.AddSingleton<IHttpService, HttpService>();
-            services.AddSingleton<IRssFeedLoadService, RssFeedLoadService>();
+            services.AddScoped<ISlackService, SlackService>();
+            services.AddScoped<IHttpService, HttpService>();
+            services.AddScoped<IRssFeedLoadService, RssFeedLoadService>();
             services.AddScoped<IArticleParserService, ArticleParserService>();
             services.AddScoped<IWebScrapingService, WebScrapingService>();
             #endregion
@@ -62,14 +62,11 @@ namespace Espresso.ParserDeleter
             services.AddHttpClient();
             #endregion
 
-            #region WebSockets
-            services.AddSignalR();
-            #endregion
-
             #region MediatR
-            services.AddMediatR(typeof(GetNewsPortalsQuery).GetTypeInfo().Assembly);
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggerPipelineBehavior<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
+            services.AddSignalR();
+            services.AddMediatR(typeof(ParseRssFeedsCommandHandler).Assembly);
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggerPipelineBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ApplicationLifeTimePipelineBehavior<,>));
             #endregion
 

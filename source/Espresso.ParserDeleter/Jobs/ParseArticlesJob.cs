@@ -7,6 +7,7 @@ using Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds;
 using Espresso.Application.DataTransferObjects;
 using Espresso.Application.Initialization;
 using Espresso.Application.IServices;
+using Espresso.Application.Services;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
@@ -25,8 +26,6 @@ namespace Espresso.Jobs
         #region Fields
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IParserDeleterConfiguration _configuration;
-        private readonly IHttpService _httpService;
-        private readonly ISlackService _slackService;
         private readonly ILogger<ParseArticlesJob> _logger;
         #endregion
 
@@ -34,15 +33,11 @@ namespace Espresso.Jobs
         public ParseArticlesJob(
             IServiceScopeFactory serviceScopeFactory,
             IParserDeleterConfiguration configuration,
-            IHttpService httpService,
-            ISlackService slackService,
             ILoggerFactory loggerFactory
         )
         {
             _serviceScopeFactory = serviceScopeFactory;
             _configuration = configuration;
-            _httpService = httpService;
-            _slackService = slackService;
             _logger = loggerFactory.CreateLogger<ParseArticlesJob>();
         }
         #endregion
@@ -57,15 +52,20 @@ namespace Espresso.Jobs
 
             while (!stoppingToken.IsCancellationRequested)
             {
+                using var scope = _serviceScopeFactory.CreateScope();
+                var slackService = scope.ServiceProvider.GetRequiredService<ISlackService>();
+                var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+
+                var cancellationToken = GetCancellationToken();
+
                 try
                 {
-                    using var scope = _serviceScopeFactory.CreateScope();
-                    var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-                    var cancellationToken = GetCancellationToken();
-
                     var parseRssFeedsCommandResponse = await mediator.Send(
                         request: new ParseRssFeedsCommand(
                             maxAgeOfArticle: _configuration.DateTimeConfiguration.MaxAgeOfArticles,
+                            parserApiKey: _configuration.ApiKeysConfiguration.ParserApiKey,
+                            waitDurationAfterWebServerRequestError: _configuration.DateTimeConfiguration.WaitDurationAfterWebServerRequestError,
+                            serverUrl: _configuration.AppConfiguration.ServerUrl,
                             currentEspressoWebApiVersion: AppConfiguration.RssFeedParserVersion,
                             targetedEspressoWebApiVersion: AppConfiguration.RssFeedParserMajorMinorVersion,
                             consumerVersion: AppConfiguration.RssFeedParserVersion,
@@ -74,8 +74,6 @@ namespace Espresso.Jobs
                         ),
                         cancellationToken: cancellationToken
                     );
-
-                    await CallWebServer(parseRssFeedsCommandResponse, cancellationToken);
 
                     await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationBetweenParseArticlesJobs, stoppingToken);
                 }
@@ -109,7 +107,7 @@ namespace Espresso.Jobs
                         }
                     );
 
-                    await _slackService.LogError(
+                    await slackService.LogError(
                             eventName: eventName,
                             version: AppConfiguration.Version,
                             message: exception.Message,
@@ -119,88 +117,6 @@ namespace Espresso.Jobs
                     );
 
                     await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationAfterErrors, stoppingToken);
-                }
-            }
-        }
-
-        private async Task CallWebServer(
-            ParseRssFeedsCommandResponse parseRssFeedsResponse,
-            CancellationToken cancellationToken
-        )
-        {
-            if (
-                !parseRssFeedsResponse.CreatedArticles.Any() &&
-                !parseRssFeedsResponse.UpdatedArticles.Any()
-            )
-            {
-                return;
-            }
-
-            var numberOfTries = 5;
-            var apiKey = _configuration.ApiKeysConfiguration.ParserApiKey;
-            var httpHeaders = new List<(string headerKey, string headerValue)>
-            {
-                (headerKey: HttpHeaderConstants.ApiKeyHeaderName, headerValue: apiKey),
-                (headerKey: HttpHeaderConstants.EspressoApiHeaderName, headerValue: AppConfiguration.RssFeedParserMajorMinorVersion),
-                (headerKey: HttpHeaderConstants.VersionHeaderName, headerValue: AppConfiguration.RssFeedParserVersion),
-                (headerKey: HttpHeaderConstants.DeviceTypeHeaderName, headerValue: ((int)DeviceType.RssFeedParser).ToString()),
-            };
-
-            while (numberOfTries-- > 0)
-            {
-                try
-                {
-                    await _httpService.PostJsonAsync(
-                        url: $"{_configuration.AppConfiguration.ServerUrl}/api/notifications/articles",
-                        data: new ArticlesRequestObjectDto
-                        {
-                            CreatedArticles = parseRssFeedsResponse.CreatedArticles,
-                            UpdatedArticles = parseRssFeedsResponse.UpdatedArticles
-                        },
-                        httpHeaders: httpHeaders,
-                        httpClientTimeout: TimeSpan.FromSeconds(30),
-                        cancellationToken: cancellationToken
-                    );
-
-                    return;
-                }
-                catch (Exception exception)
-                {
-                    var eventName = Event.ParserDeleterNewArticlesRequest.GetDisplayName();
-                    var eventId = (int)Event.ParserDeleterNewArticlesRequest;
-                    var version = AppConfiguration.Version;
-                    var exceptionMessage = exception.Message;
-                    var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
-                    _logger.LogError(
-                        eventId: new EventId(
-                            id: eventId,
-                            name: eventName
-                        ),
-                        exception: exception,
-                        message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
-                            $"{AnsiUtility.EncodeParameterName(nameof(version))}: " +
-                            $"{AnsiUtility.EncodeVersion("{1}")}\n\t" +
-                            $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
-                            $"{AnsiUtility.EncodeErrorMessage("{2}")}\n\t" +
-                            $"{AnsiUtility.EncodeParameterName(nameof(innerExceptionMessage))}: " +
-                            $"{AnsiUtility.EncodeErrorMessage("{3}")}",
-                        args: new object[]
-                        {
-                            eventName,
-                            version,
-                            exceptionMessage,
-                            innerExceptionMessage,
-                        }
-                    );
-                    await _slackService.LogError(
-                            eventName: eventName,
-                            version: AppConfiguration.Version,
-                            message: exception.Message,
-                            exception: exception,
-                            appEnvironment: _configuration.AppConfiguration.AppEnvironment,
-                            cancellationToken: default
-                    );
-                    await Task.Delay(_configuration.DateTimeConfiguration.WaitDurationAfterWebServerRequestError, cancellationToken);
                 }
             }
         }

@@ -21,7 +21,6 @@ namespace Espresso.Jobs
         #region Fields
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IParserDeleterConfiguration _configuration;
-        private readonly ISlackService _slackService;
         private readonly ILogger<ParseArticlesJob> _logger;
         #endregion
 
@@ -29,13 +28,11 @@ namespace Espresso.Jobs
         public DeleteArticlesJob(
             IServiceScopeFactory serviceScopeFactory,
             IParserDeleterConfiguration configuration,
-            ISlackService slackService,
             ILoggerFactory loggerFactory
         )
         {
             _serviceScopeFactory = serviceScopeFactory;
             _configuration = configuration;
-            _slackService = slackService;
             _logger = loggerFactory.CreateLogger<ParseArticlesJob>();
         }
         #endregion
@@ -52,11 +49,14 @@ namespace Espresso.Jobs
 
             while (!stoppingToken.IsCancellationRequested)
             {
+                using var scope = _serviceScopeFactory.CreateScope();
+                var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                var slackService = scope.ServiceProvider.GetRequiredService<ISlackService>();
+
+                var cancellationToken = GetCancellationToken();
+
                 try
                 {
-                    using var scope = _serviceScopeFactory.CreateScope();
-                    var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-                    var cancellationToken = GetCancellationToken();
 
                     await mediator.Send(
                         request: new DeleteOldArticlesCommand(
@@ -102,7 +102,7 @@ namespace Espresso.Jobs
                         }
                     );
 
-                    await _slackService.LogError(
+                    await slackService.LogError(
                             eventName: eventName,
                             version: AppConfiguration.Version,
                             message: exception.Message,
