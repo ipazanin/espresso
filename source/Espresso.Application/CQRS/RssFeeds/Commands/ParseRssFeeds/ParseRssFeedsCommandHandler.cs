@@ -144,6 +144,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                                 itemContent: (syndicationItem.Content as TextSyndicationContent)?.Text,
                                 itemPublishDateTime: syndicationItem.PublishDate,
                                 maxAgeOfArticle: request.MaxAgeOfArticle,
+                                elementExtensions: syndicationItem.ElementExtensions?.Select(elementExtension => elementExtension?.GetObject<string?>()),
                                 cancellationToken: cancellationToken
                             );
 

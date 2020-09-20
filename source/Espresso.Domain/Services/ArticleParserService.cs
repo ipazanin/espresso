@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.IServices;
 using Espresso.Domain.IValidators;
@@ -40,6 +41,7 @@ namespace Espresso.Domain.Services
             string? itemContent,
             DateTimeOffset itemPublishDateTime,
             TimeSpan maxAgeOfArticle,
+            IEnumerable<string?>? elementExtensions,
             CancellationToken cancellationToken
         )
         {
@@ -73,6 +75,7 @@ namespace Espresso.Domain.Services
                 itemContent: itemContent,
                 rssFeed: rssFeed,
                 webUrl: webUrl,
+                elementExtensions: elementExtensions,
                 cancellationToken: cancellationToken
             );
 
@@ -185,29 +188,32 @@ namespace Espresso.Domain.Services
             string? itemContent,
             RssFeed rssFeed,
             string? webUrl,
+            IEnumerable<string?>? elementExtensions,
             CancellationToken cancellationToken
         )
         {
+            if (rssFeed.NewsPortalId == (int)NewsPortalId.Nacional)
+            {
+
+            }
             string? imageUrl;
             switch (rssFeed.ImageUrlParseConfiguration.ImageUrlParseStrategy)
             {
                 case ImageUrlParseStrategy.SecondLinkOrFromSummary:
-                case ImageUrlParseStrategy.Undefined:
                 default:
+                    imageUrl = itemLinks.Count() > 1 ? itemLinks.ElementAt(1)?.ToString() : null;
+                    if (imageUrl is null)
                     {
-                        imageUrl = itemLinks.Count() > 1 ? itemLinks.ElementAt(1)?.ToString() : null;
-                        if (imageUrl is null)
-                        {
-                            imageUrl = _webScrapingService.GetSrcAttributeFromFirstImgElement(itemSummary);
-                        }
+                        imageUrl = _webScrapingService.GetSrcAttributeFromFirstImgElement(itemSummary);
+                    }
 
-                        break;
-                    }
+                    break;
                 case ImageUrlParseStrategy.FromContent:
-                    {
-                        imageUrl = _webScrapingService.GetSrcAttributeFromFirstImgElement(itemContent);
-                        break;
-                    }
+                    imageUrl = _webScrapingService.GetSrcAttributeFromFirstImgElement(itemContent);
+                    break;
+                case ImageUrlParseStrategy.FromElementExtension:
+                    imageUrl = elementExtensions?.FirstOrDefault();
+                    break;
             }
 
             if (string.IsNullOrEmpty(imageUrl) || rssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped)
@@ -217,6 +223,7 @@ namespace Espresso.Domain.Services
                     xPath: rssFeed.ImageUrlParseConfiguration.ImgElementXPath,
                     imageUrlWebScrapeType: rssFeed.ImageUrlParseConfiguration.ImageUrlWebScrapeType,
                     propertyNames: rssFeed.ImageUrlParseConfiguration.GetPropertyNames(),
+                    requestType: rssFeed.RequestType,
                     cancellationToken: cancellationToken
                 );
             }
@@ -365,11 +372,9 @@ namespace Espresso.Domain.Services
                 category: rssFeed.Category
             );
         }
-
         #endregion
 
         #region Common
-
         private static string? AddBaseUrlToUrlFragment(string? urlFragmentOrFullUrl, string? baseUrl)
         {
             if (

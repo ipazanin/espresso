@@ -33,6 +33,8 @@
         SlackServiceException = 29,
         WebApiInit = 30,
         CronJob = 31,
-        DeleteArticlesJob = 32
+        DeleteArticlesJob = 32,
+        ImageUrlWebScrapingRequest = 33,
+        ImageUrlWebScrapingData = 34,
     }
 }

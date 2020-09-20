@@ -73,7 +73,7 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
                         $"{AnsiUtility.EncodeParameterName(nameof(consumerVersion))}: " +
                         $"{AnsiUtility.EncodeVersion("{3}")}\n\t" +
                         $"{AnsiUtility.EncodeParameterName(nameof(deviceType))}: " +
-                        $"{AnsiUtility.EncodeDeviceType("{4}")}\n\t" +
+                        $"{AnsiUtility.EncodeEnum("{4}")}\n\t" +
                         $"{AnsiUtility.EncodeParameterName(nameof(requestParameters))}: " +
                         $"{AnsiUtility.EncodeRequestParameters("{5}")}\n\t" +
                         $"{AnsiUtility.EncodeParameterName(nameof(duration))}: " +
@@ -110,7 +110,7 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
                         $"{AnsiUtility.EncodeParameterName(nameof(consumerVersion))}: " +
                         $"{AnsiUtility.EncodeVersion("{3}")}\n\t" +
                         $"{AnsiUtility.EncodeParameterName(nameof(deviceType))}: " +
-                        $"{AnsiUtility.EncodeDeviceType("{4}")}\n\t" +
+                        $"{AnsiUtility.EncodeEnum("{4}")}\n\t" +
                         $"{AnsiUtility.EncodeParameterName(nameof(requestParameters))}: " +
                         $"{AnsiUtility.EncodeRequestParameters("{5}")}\n\t" +
                         $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +

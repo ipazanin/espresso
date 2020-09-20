@@ -1343,6 +1343,7 @@ namespace Espresso.Persistence.DataSeed
             {
                 RssFeedId = (int)RssFeedId.N1,
                 ImgElementXPath = "//figure[contains(@class, 'media')]//img",
+                ImageUrlParseStrategy = ImageUrlParseStrategy.FromElementExtension
             });
             #endregion
 
