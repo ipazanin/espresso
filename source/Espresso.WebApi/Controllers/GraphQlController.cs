@@ -62,10 +62,6 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            // var graphqlPrinter = new SchemaPrinter(_schema);
-            // var r = graphqlPrinter.Print();
-            // Console.WriteLine(r);
-
             var result = await _executer.ExecuteAsync(executionOptions =>
             {
                 executionOptions.Schema = _schema;
