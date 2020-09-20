@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using System.Threading.Tasks;
 using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
 using Espresso.Application.DomainServices;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;

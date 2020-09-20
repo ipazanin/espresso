@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using Espresso.Domain.Infrastructure;
-
 namespace Espresso.Domain.Entities
 {
     public class RssFeedContentModifier

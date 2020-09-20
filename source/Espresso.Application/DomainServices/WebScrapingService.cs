@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Espresso.Application.Extensions;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
 using Espresso.Common.Utilities;
@@ -215,9 +216,7 @@ namespace Espresso.Application.DomainServices
                         }
                     case RequestType.Browser:
                         {
-                            request.Headers.TryAddWithoutValidation("accept", "*/*");
-                            request.Headers.TryAddWithoutValidation("accept-encoding", "gzip, deflate");
-                            request.Headers.TryAddWithoutValidation("user-agent", "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Mobile Safari/537.36");
+                            request.AddBrowserHeadersToHttpRequestMessage();
                             using var response = await _httpClient.SendAsync(request: request, cancellationToken: cancellationToken);
                             _ = response.EnsureSuccessStatusCode();
                             using var responseStream = await response.Content.ReadAsStreamAsync();
