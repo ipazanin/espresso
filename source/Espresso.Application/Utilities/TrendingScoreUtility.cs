@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Espresso.Application.Utility
+namespace Espresso.Application.Utilities
 {
     public class TrendingScoreUtility
     {

@@ -2,8 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
-using Espresso.Application.Utility;
+using Espresso.Application.Utilities;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 

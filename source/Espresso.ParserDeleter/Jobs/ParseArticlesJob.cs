@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.CQRS.Articles.Commands.DeleteOldArticles;
 using Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds;
 using Espresso.Application.DataTransferObjects;
 using Espresso.Application.Initialization;
