@@ -17,6 +17,7 @@ namespace Espresso.Domain.IServices
             string xPath,
             ImageUrlWebScrapeType imageUrlWebScrapeType,
             IEnumerable<string> propertyNames,
+            RequestType requestType,
             CancellationToken cancellationToken
         );
     }

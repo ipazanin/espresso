@@ -159,7 +159,7 @@ namespace Espresso.Common.Tests.Utilities
             #endregion
 
             #region Act
-            var actualAnsiStringValue = AnsiUtility.EncodeDeviceType(stringValue);
+            var actualAnsiStringValue = AnsiUtility.EncodeEnum(stringValue);
             #endregion
 
             #region Assert

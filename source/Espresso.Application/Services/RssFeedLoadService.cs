@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net.Http;
 using System.ServiceModel.Syndication;
 using System.Threading;
@@ -75,6 +76,10 @@ namespace Espresso.Application.Services
                     try
                     {
                         var feed = await LoadFeed(rssFeed, cancellationToken);
+
+                        if (rssFeed.NewsPortalId == (int)NewsPortalId.Nacional)
+                        {
+                        }
 
                         parsedArticles.Enqueue((feed, rssFeed));
                     }

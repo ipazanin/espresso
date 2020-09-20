@@ -66,7 +66,12 @@
             return Encode(value, WhiteColor, Italic);
         }
 
-        public static string EncodeDeviceType(string value)
+        public static string EncodeParameter(string value)
+        {
+            return Encode(value, WhiteColor, Italic);
+        }
+
+        public static string EncodeEnum(string value)
         {
             return Encode(value, YellowColor);
         }
