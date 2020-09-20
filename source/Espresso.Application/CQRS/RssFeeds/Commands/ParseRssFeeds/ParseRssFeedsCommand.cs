@@ -2,15 +2,25 @@
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using MediatR;
 
 namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
 {
-    public class ParseRssFeedsCommand : Request<ParseRssFeedsCommandResponse>
+    public class ParseRssFeedsCommand : Request<Unit>
     {
         public TimeSpan MaxAgeOfArticle { get; }
 
+        public string ParserApiKey { get; }
+
+        public TimeSpan WaitDurationAfterWebServerRequestError { get; }
+
+        public string ServerUrl { get; }
+
         public ParseRssFeedsCommand(
             TimeSpan maxAgeOfArticle,
+            string parserApiKey,
+            TimeSpan waitDurationAfterWebServerRequestError,
+            string serverUrl,
             string currentEspressoWebApiVersion,
             string targetedEspressoWebApiVersion,
             string consumerVersion,
@@ -26,11 +36,23 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
         )
         {
             MaxAgeOfArticle = maxAgeOfArticle;
+            ParserApiKey = parserApiKey;
+            WaitDurationAfterWebServerRequestError = waitDurationAfterWebServerRequestError;
+            ServerUrl = serverUrl;
         }
 
         public override string ToString()
         {
-            return $"{nameof(MaxAgeOfArticle)}:{MaxAgeOfArticle}";
+            return $"{nameof(MaxAgeOfArticle)}:{MaxAgeOfArticle}, " +
+                $"{nameof(ParserApiKey)}:{ParserApiKey}, " +
+                $"{nameof(ParserApiKey)}:{ParserApiKey}, " +
+                $"{nameof(ParserApiKey)}:{ParserApiKey}, " +
+                $"{nameof(ParserApiKey)}:{ParserApiKey}, " +
+                $"{nameof(ParserApiKey)}:{ParserApiKey}, " +
+                $"{nameof(ParserApiKey)}:{ParserApiKey}, " +
+                $"{nameof(ParserApiKey)}:{ParserApiKey}, " +
+                $"{nameof(ParserApiKey)}:{ParserApiKey}, " +
+                $"{nameof(ParserApiKey)}:{ParserApiKey}, ";
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.ServiceModel.Syndication;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.Extensions;
 using Espresso.Persistence.IRepositories;
 using MediatR;
@@ -20,7 +22,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
 {
-    public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand, ParseRssFeedsCommandResponse>
+    public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand>
     {
         #region Fields
         private readonly IMemoryCache _memoryCache;
@@ -29,6 +31,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
         private readonly IArticleParserService _articleParserService;
         private readonly ISlackService _slackService;
         private readonly IRssFeedLoadService _rssFeedLoadingService;
+        private readonly IHttpService _httpService;
         private readonly ILogger<ParseRssFeedsCommandHandler> _logger;
         #endregion
 
@@ -40,7 +43,8 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             IArticleParserService articleParserService,
             ISlackService slackService,
             ILoggerFactory loggerFactory,
-            IRssFeedLoadService rssFeedService
+            IRssFeedLoadService rssFeedService,
+            IHttpService httpService
         )
         {
             _memoryCache = memoryCache;
@@ -49,6 +53,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             _articleParserService = articleParserService;
             _slackService = slackService;
             _rssFeedLoadingService = rssFeedService;
+            _httpService = httpService;
             _logger = loggerFactory.CreateLogger<ParseRssFeedsCommandHandler>();
         }
         #endregion
@@ -56,7 +61,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
         #region Methods
 
         #region Public Methods
-        public async Task<ParseRssFeedsCommandResponse> Handle(
+        public async Task<Unit> Handle(
             ParseRssFeedsCommand request,
             CancellationToken cancellationToken
         )
@@ -92,7 +97,14 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                 categories: categories
             );
 
-            return new ParseRssFeedsCommandResponse(createdArticles, updatedArticles);
+            await CallWebServer(
+                request: request,
+                createdArticles: createdArticles,
+                updatedArticles: updatedArticles,
+                cancellationToken: cancellationToken
+            );
+
+            return Unit.Value;
         }
         #endregion
 
@@ -398,6 +410,82 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                 key: MemoryCacheConstants.DeadLockLogKey,
                 value: $"Ended {nameof(UpdateArticles)}"
             );
+        }
+
+        private async Task CallWebServer(
+            ParseRssFeedsCommand request,
+            IEnumerable<ArticleDto> createdArticles,
+            IEnumerable<ArticleDto> updatedArticles,
+            CancellationToken cancellationToken
+        )
+        {
+            if (!createdArticles.Any() && !updatedArticles.Any())
+            {
+                return;
+            }
+
+            var httpHeaders = new List<(string headerKey, string headerValue)>
+            {
+                (headerKey: HttpHeaderConstants.ApiKeyHeaderName, headerValue: request.ParserApiKey),
+                (headerKey: HttpHeaderConstants.EspressoApiHeaderName, headerValue: request.TargetedApiVersion),
+                (headerKey: HttpHeaderConstants.VersionHeaderName, headerValue: request.CurrentApiVersion),
+                (headerKey: HttpHeaderConstants.DeviceTypeHeaderName, headerValue: ((int)DeviceType.RssFeedParser).ToString()),
+            };
+
+            try
+            {
+                await _httpService.PostJsonAsync(
+                    url: $"{request.ServerUrl}/api/notifications/articles",
+                    data: new ArticlesRequestObjectDto
+                    {
+                        CreatedArticles = createdArticles,
+                        UpdatedArticles = updatedArticles
+                    },
+                    httpHeaders: httpHeaders,
+                    httpClientTimeout: TimeSpan.FromSeconds(30),
+                    cancellationToken: cancellationToken
+                );
+
+                return;
+            }
+            catch (Exception exception)
+            {
+                var eventName = Event.ParserDeleterNewArticlesRequest.GetDisplayName();
+                var eventId = (int)Event.ParserDeleterNewArticlesRequest;
+                var version = request.CurrentApiVersion;
+                var exceptionMessage = exception.Message;
+                var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
+                _logger.LogError(
+                    eventId: new EventId(
+                        id: eventId,
+                        name: eventName
+                    ),
+                    exception: exception,
+                    message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
+                        $"{AnsiUtility.EncodeParameterName(nameof(version))}: " +
+                        $"{AnsiUtility.EncodeVersion("{1}")}\n\t" +
+                        $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
+                        $"{AnsiUtility.EncodeErrorMessage("{2}")}\n\t" +
+                        $"{AnsiUtility.EncodeParameterName(nameof(innerExceptionMessage))}: " +
+                        $"{AnsiUtility.EncodeErrorMessage("{3}")}",
+                    args: new object[]
+                    {
+                            eventName,
+                            version,
+                            exceptionMessage,
+                            innerExceptionMessage,
+                    }
+                );
+                await _slackService.LogError(
+                        eventName: eventName,
+                        version: request.TargetedApiVersion,
+                        message: exception.Message,
+                        exception: exception,
+                        appEnvironment: request.AppEnvironment,
+                        cancellationToken: default
+                );
+                await Task.Delay(request.WaitDurationAfterWebServerRequestError, cancellationToken);
+            }
         }
         #endregion
 

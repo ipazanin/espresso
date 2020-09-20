@@ -29,7 +29,7 @@ namespace Espresso.Application.Services
         #endregion
 
         #region Methods
-        public async Task PostJsonAsync<TData>(
+        public async Task<HttpResponseMessage> PostJsonAsync<TData>(
             string url,
             TData data,
             IEnumerable<(string headerName, string headerValue)>? httpHeaders,
@@ -52,19 +52,9 @@ namespace Espresso.Application.Services
                     cancellationToken: cancellationToken
                 );
 
-            var statusCode = response.StatusCode;
+            response.EnsureSuccessStatusCode();
 
-            if (!response.IsSuccessStatusCode)
-            {
-                var responseMessage = await response
-                    .Content
-                    .ReadAsStringAsync();
-
-                throw new Exception(
-                    message: $"Request failed with {nameof(statusCode)}:{statusCode} " +
-                        $"and {nameof(responseMessage)}:{responseMessage}"
-                );
-            }
+            return response;
         }
 
         private static async Task<HttpContent> CreateJsonHttpContent<TData>(
@@ -93,8 +83,6 @@ namespace Espresso.Application.Services
             );
             return content;
         }
-
-
         #endregion
     }
 }
