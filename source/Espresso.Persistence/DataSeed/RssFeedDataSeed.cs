@@ -50,7 +50,7 @@ namespace Espresso.Persistence.DataSeed
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Vijesti, "https://www.24sata.hr/feeds/news.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Vijesti, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Show, "https://www.24sata.hr/feeds/show.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Show, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Sport, "https://www.24sata.hr/feeds/sport.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Sport, requestType: RequestType.Normal),
-                new RssFeed((int)RssFeedId.DvadesetCetiriSata_Lifestyle, "https://www.24sata.hr/feeds/Lifestyle.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Lifestyle, requestType: RequestType.Normal),
+                new RssFeed((int)RssFeedId.DvadesetCetiriSata_Lifestyle, "https://www.24sata.hr/feeds/lifestyle.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Lifestyle, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Tech, "https://www.24sata.hr/feeds/tech.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Tech, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Viral, "https://www.24sata.hr/feeds/fun.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Viral, requestType: RequestType.Normal),
                 #endregion
@@ -276,7 +276,7 @@ namespace Espresso.Persistence.DataSeed
                     id: (int)RssFeedId.Scena,
                     url: "https://www.scena.hr/feed/",
                     newsPortalId: (int)NewsPortalId.Scena,
-                    categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Browser
                 ),
                 #endregion
 

@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200920124558_IPazanin_AddedScnenaBrowserRequestType")]
+    partial class IPazanin_AddedScnenaBrowserRequestType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1483,7 +1485,7 @@ namespace Espresso.Persistence.Migrations
                             CategoryId = 4,
                             NewsPortalId = 2,
                             RequestType = 1,
-                            Url = "https://www.24sata.hr/feeds/lifestyle.xml"
+                            Url = "https://www.24sata.hr/feeds/Lifestyle.xml"
                         },
                         new
                         {
