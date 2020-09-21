@@ -30,8 +30,6 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         Gol = 11,
         [Display(Name = "RTL Vijesti")]
         RtlVijesti = 12,
-        //[Display(Name = "Sprdex")]
-        //Sprdex = 13,
         [Display(Name = "News Bar")]
         NewsBar = 14,
         [Display(Name = "Nogomet Plus")]
@@ -208,5 +206,9 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         Dnevno7 = 102,
         [Display(Name = "Basketball.hr")]
         BasketballHr = 103,
+        [Display(Name = "JoomBoos")]
+        JoomBoos = 104,
+        [Display(Name = "ICT Business")]
+        IctBusiness = 105,
     }
 }

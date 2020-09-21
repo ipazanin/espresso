@@ -44,15 +44,8 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
         public override string ToString()
         {
             return $"{nameof(MaxAgeOfArticle)}:{MaxAgeOfArticle}, " +
-                $"{nameof(ParserApiKey)}:{ParserApiKey}, " +
-                $"{nameof(ParserApiKey)}:{ParserApiKey}, " +
-                $"{nameof(ParserApiKey)}:{ParserApiKey}, " +
-                $"{nameof(ParserApiKey)}:{ParserApiKey}, " +
-                $"{nameof(ParserApiKey)}:{ParserApiKey}, " +
-                $"{nameof(ParserApiKey)}:{ParserApiKey}, " +
-                $"{nameof(ParserApiKey)}:{ParserApiKey}, " +
-                $"{nameof(ParserApiKey)}:{ParserApiKey}, " +
-                $"{nameof(ParserApiKey)}:{ParserApiKey}, ";
+                $"{nameof(WaitDurationAfterWebServerRequestError)}:{WaitDurationAfterWebServerRequestError}, " +
+                $"{nameof(ServerUrl)}:{ServerUrl}";
         }
     }
 }

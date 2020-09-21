@@ -313,13 +313,6 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global
                 ),
-                // new NewsPortal(
-                //     id: (int)NewsPortalId.AutomobiliHr,
-                //     name: NewsPortalId.AutomobiliHr.GetDisplayName(),
-                //     baseUrl: "https://automobili.klik.hr",
-                //     iconUrl: $"Icons/{NewsPortalId.AutomobiliHr}{FileExtensionConstants.Png}", isNewOverride: null, createdAt: new DateTime(2020, 5, 1), categoryId: (int)CategoryId.General
-                // ),
-
                 new NewsPortal(
                     id: (int)NewsPortalId.DirektnoHr,
                     name: NewsPortalId.DirektnoHr.GetDisplayName(),
@@ -408,6 +401,26 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 14, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Sport,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.JoomBoos,
+                    name: NewsPortalId.JoomBoos.GetDisplayName(),
+                    baseUrl: "https://joomboos.24sata.hr",
+                    iconUrl: $"Icons/{NewsPortalId.JoomBoos}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 21, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Viral,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.IctBusiness,
+                    name: NewsPortalId.IctBusiness.GetDisplayName(),
+                    baseUrl: "https://www.ictbusiness.info",
+                    iconUrl: $"Icons/{NewsPortalId.IctBusiness}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 21, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global
                 ),
             };

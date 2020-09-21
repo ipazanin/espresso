@@ -292,7 +292,6 @@ namespace Espresso.Persistence.Migrations
                 values: new object?[,]
                 {
                     { 1, "https://www.index.hr", 11, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/Index.png", null, "Index.hr", 1 },
-                    { 53, "https://sjever.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/SjeverHr.png", null, "Sjever.hr", 6 },
                     { 83, "https://www.gspress.net", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/GsPress.png", null, "GS Press", 4 },
                     { 49, "http://www.likaplus.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/LikaPlus.png", null, "Lika plus", 4 },
                     { 48, "https://www.lika-online.com", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/LikaOnline.png", null, "Lika Online", 4 },
@@ -301,9 +300,9 @@ namespace Espresso.Persistence.Migrations
                     { 82, "https://riportal.net.hr", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/Riportal.png", null, "Riportal", 3 },
                     { 81, "https://www.fiuman.hr", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/Fiuman.png", null, "Fiuman", 3 },
                     { 80, "https://www.rijekadanas.com", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/RijekaDanas.png", null, "Rijeka Danas", 3 },
-                    { 54, "https://prigorski.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/PrigorskiHr.png", null, "Sjever.hr", 6 },
                     { 78, "https://www.ipress.hr", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/IPress.png", null, "iPress", 3 },
-                    { 61, "http://www.istra-istria.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/IstarskaZupanija.png", null, "Istarska Županija", 3 },
+                    { 53, "https://sjever.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/SjeverHr.png", null, "Sjever.hr", 6 },
+                    { 77, "https://www.istriaterramagica.eu", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/IstraTerraMagica.png", null, "Istra Terra Magica", 3 },
                     { 59, "https://ivijesti.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/IVijesti.png", null, "iVijesti", 3 },
                     { 45, "https://www.parentium.com", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/Parentium.png", null, "Parentium", 3 },
                     { 44, "https://www.novilist.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/NoviList.png", null, "NL", 3 },
@@ -312,10 +311,11 @@ namespace Espresso.Persistence.Migrations
                     { 74, "http://www.kastela.org", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/PortalKastela.png", null, "Portal Grada Kaštela", 2 },
                     { 73, "https://imotskenovine.hr", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/ImotskeNovine.png", null, "Imotske Novine", 2 },
                     { 72, "https://radioimotski.hr", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/RadioImotski.png", null, "Radio Imotski", 2 },
-                    { 77, "https://www.istriaterramagica.eu", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/IstraTerraMagica.png", null, "Istra Terra Magica", 3 },
                     { 71, "https://www.antenazadar.hr", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/AntenaZadar.png", null, "Antena portal Zadar", 2 },
+                    { 61, "http://www.istra-istria.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/IstarskaZupanija.png", null, "Istarska Županija", 3 },
+                    { 54, "https://prigorski.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/PrigorskiHr.png", null, "Sjever.hr", 6 },
                     { 55, "https://epodravina.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/PodravinaHr.png", null, "ePodravina.hr", 6 },
-                    { 87, "https://regionalni.com", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/PlusRegionalniTjednik.png", null, "7Plus Regionalni Tjednik", 6 },
+                    { 63, "https://www.sisak.info", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/SisakInfo.png", null, "Sisak.Info", 6 },
                     { 84, "https://www.zagrebacki.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/ZagrebackiList.png", null, "Zagrebački List", 5 },
                     { 62, "https://www.zagrebonline.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/ZagrebOnline.png", null, "Zagreb Online", 5 },
                     { 52, "https://www.zagrebancija.com", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/Zagrebancija.png", null, "Zagrebancija", 5 },
@@ -325,8 +325,8 @@ namespace Espresso.Persistence.Migrations
                     { 97, "https://www.pozeska-kronika.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/PozeskaKronika.png", null, "Požeška Kronika", 7 },
                     { 96, "https://sbplus.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/SbPlusHr.png", null, "SBplus.hr", 7 },
                     { 95, "http://portal53.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/Portal53.png", null, "Portal53", 7 },
-                    { 63, "https://www.sisak.info", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/SisakInfo.png", null, "Sisak.Info", 6 },
                     { 94, "https://novosti.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/NovostiHr.png", null, "Novosti.hr", 7 },
+                    { 93, "https://www.novska.in", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/NovskaIn.png", null, "Novska.IN", 7 },
                     { 92, "https://www.icv.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/InformativniCentarVirovitica.png", null, "Informativni Centar Virovitica", 7 },
                     { 64, "https://osijeknews.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/OsijekNews.png", null, "Osijek NEWS", 7 },
                     { 58, "https://slavonski.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/SlavonskiHr.png", null, "Slavonski Hr", 7 },
@@ -336,10 +336,11 @@ namespace Espresso.Persistence.Migrations
                     { 90, "https://www.mnovine.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/MedimurskeNovine.png", null, "Međimurske Novine", 6 },
                     { 89, "https://www.medjimurje.info", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/MedimurjeInfo.png", null, "Međimurje Info", 6 },
                     { 88, "https://www.glaspodravine.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/GlasPodravineIPrigorja.png", null, "Glas Podravine i Prigorja", 6 },
-                    { 93, "https://www.novska.in", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/NovskaIn.png", null, "Novska.IN", 7 },
-                    { 85, "https://www.zgportal.com", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/ZgPortal.png", null, "ZG portal", 5 },
+                    { 87, "https://regionalni.com", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/PlusRegionalniTjednik.png", null, "7Plus Regionalni Tjednik", 6 },
                     { 70, "http://www.portaloko.hr", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/PortalOko.png", null, "Portaloko.hr", 2 },
-                    { 68, "https://makarska-danas.com", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/MakarskaDanas.png", null, "MakarskaDanas", 2 },
+                    { 85, "https://www.zgportal.com", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/ZgPortal.png", null, "ZG portal", 5 },
+                    { 69, "https://makarska.hr", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/MakarskaHr.png", null, "Makarska", 2 },
+                    { 67, "https://www.dubrovniknet.hr", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/DubrovnikNet.png", null, "Dubrovniknet.hr", 2 },
                     { 25, "http://www.cosmopolitan.hr", 4, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/Cosmopolitan.png", null, "Cosmopolitan", 1 },
                     { 23, "https://pcchip.hr", 5, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/PcChip.png", null, "PCchip", 1 },
                     { 22, "https://poslovnipuls.com", 7, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/PoslovniPuls.png", null, "Poslovni Puls", 1 },
@@ -361,20 +362,21 @@ namespace Espresso.Persistence.Migrations
                     { 3, "https://sportske.jutarnji.hr", 2, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/SportskeNovosti.png", null, "Sportske Novosti", 1 },
                     { 2, "https://www.24sata.hr", 11, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/DvadesetCetiriSata.png", null, "24 sata", 1 },
                     { 11, "https://gol.dnevnik.hr", 2, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/Gol.png", null, "Gol", 1 },
-                    { 69, "https://makarska.hr", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/MakarskaHr.png", null, "Makarska", 2 },
                     { 27, "http://www.ljepotaizdravlje.hr", 4, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/LjepotaIZdravlje.png", null, "Ljepota i zdravlje", 1 },
+                    { 28, "https://www.autonet.hr", 8, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/Autonet.png", null, "Autonet", 1 },
                     { 29, "https://hr.n1info.com", 1, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/N1.png", null, "N1", 1 },
-                    { 67, "https://www.dubrovniknet.hr", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/DubrovnikNet.png", null, "Dubrovniknet.hr", 2 },
                     { 66, "https://slobodnadalmacija.hr", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/SlobodnaDalmacija_Split.png", null, "Slobodna Dalmacija - Split", 2 },
                     { 65, "https://slobodnadalmacija.hr", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/SlobodnaDalmacija_Dalmacija.png", null, "Slobodna Dalmacija - Dalmacija", 2 },
                     { 60, "https://dubrovackidnevnik.net.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/DubrovackiDnevnik.png", null, "Dubrovački Dnevnik.hr", 2 },
                     { 41, "https://dalmatinskiportal.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/DalmatinskiPortal.png", null, "Dalmatinski Portal", 2 },
                     { 40, "https://www.dalmacijanews.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/DalmacijaNews.png", null, "Dalmacija News", 2 },
                     { 37, "https://www.dalmacijadanas.hr", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/DalmacijaDanas.png", null, "Dalmacija Danas", 2 },
+                    { 105, "https://www.ictbusiness.info", 5, new DateTime(2020, 9, 21, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/IctBusiness.png", null, "ICT Business", 1 },
+                    { 104, "https://joomboos.24sata.hr", 6, new DateTime(2020, 9, 21, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/JoomBoos.png", null, "JoomBoos", 1 },
                     { 103, "https://basketball.hr", 2, new DateTime(2020, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/BasketballHr.png", null, "Basketball.hr", 1 },
                     { 102, "https://7dnevno.hr", 1, new DateTime(2020, 9, 10, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/Dnevno7.png", null, "7dnevno", 1 },
-                    { 28, "https://www.autonet.hr", 8, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/Autonet.png", null, "Autonet", 1 },
                     { 101, "https://povijest.hr", 1, new DateTime(2020, 9, 10, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/PovijestHr.png", null, "Povijest.hr", 1 },
+                    { 100, "https://www.geopolitika.news", 1, new DateTime(2020, 9, 10, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/GeoPolitika.png", null, "Geopolitika News", 1 },
                     { 99, "https://otvoreno.hr", 1, new DateTime(2020, 9, 10, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/OtvorenoHr.png", null, "Otvoreno.hr", 1 },
                     { 39, "https://express.24sata.hr", 1, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/Express.png", null, "Express", 1 },
                     { 38, "https://www.nacional.hr", 1, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/Nacional.png", null, "Nacional", 1 },
@@ -384,14 +386,14 @@ namespace Espresso.Persistence.Migrations
                     { 32, "https://100posto.jutarnji.hr", 1, new DateTime(2020, 6, 28, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/StoPosto.png", null, "100posto", 1 },
                     { 31, "https://www.hrt.hr", 1, new DateTime(2020, 6, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/Hrt.png", null, "HRT", 1 },
                     { 30, "https://narod.hr", 1, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/NarodHr.png", null, "Narod HR", 1 },
-                    { 100, "https://www.geopolitika.news", 1, new DateTime(2020, 9, 10, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/GeoPolitika.png", null, "Geopolitika News", 1 },
+                    { 68, "https://makarska-danas.com", 12, new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/MakarskaDanas.png", null, "MakarskaDanas", 2 },
                     { 86, "https://www.zagreb.hr/", 12, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/GradZagreb.png", null, "Grad Zagreb", 5 }
                 });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 1, 1, 1, 1, "https://www.index.hr/rss/vijesti", true, "https://amp.index.hr/article/{0}{3}", 1, "//figure[contains(@class, 'img-container')]//img" });
+                values: new object?[] { 1, 1, 1, 1, "https://www.index.hr/rss/vijesti", true, "https://amp.index.hr/article/{0}{3}", 1, "//figure[contains(@class, 'img-container')]//img" });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
@@ -411,82 +413,100 @@ namespace Espresso.Persistence.Migrations
                     { 116, 12, 70, 1, "http://www.portaloko.hr/rss/-1" },
                     { 115, 12, 69, 1, "https://makarska.hr/rss" },
                     { 114, 12, 68, 1, "https://makarska-danas.com/feed" },
-                    { 113, 12, 67, 1, "https://www.dubrovniknet.hr/feed" },
-                    { 123, 12, 77, 1, "https://www.istriaterramagica.eu/feed" }
+                    { 113, 12, 67, 1, "https://www.dubrovniknet.hr/feed" }
                 });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-                values: new object[] { 112, 12, 66, 1, "https://slobodnadalmacija.hr/feed/category/253", 0, 5 });
+                values: new object?[,]
+                {
+                    { 112, 12, 66, 1, "https://slobodnadalmacija.hr/feed/category/253", 0, 5 },
+                    { 111, 12, 65, 1, "https://slobodnadalmacija.hr/feed/category/246", 0, 5 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url" },
+                values: new object?[] { 106, 12, 60, 1, "https://dubrovackidnevnik.net.hr/rss" });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
+                values: new object?[] { 81, 1, 35, 1, "https://direktno.hr/rss/publish/latest/direktnotv-100/", "//div[contains(@class, 'pd-hero-image')]//img" });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath" },
+                values: new object?[] { 82, 1, 36, 2, "https://www.scena.hr/feed/", 2, "//div[contains(@class, 'mycontent')]//img" });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
+                values: new object?[] { 84, 1, 38, 1, "https://www.nacional.hr/feed/", "//div[contains(@class, 'single-post-media')]//img" });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
+                values: new object?[] { 85, 1, 39, 1, "https://express.24sata.hr/feeds/placeholder-head/rss_feed", 2, "//img[contains(@class, 'article__figure_img')]", 0, 10 });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath" },
+                values: new object?[,]
+                {
+                    { 144, 1, 99, 1, "https://otvoreno.hr/feed", 2, "//div[contains(@class, 'td-post-featured-image')]//img" },
+                    { 145, 1, 100, 1, "https://www.geopolitika.news/feed", 2, "//div[contains(@class, 'entry-image featured-image')]//img" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url" },
+                values: new object?[] { 123, 12, 77, 1, "https://www.istriaterramagica.eu/feed" });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
+                values: new object?[] { 146, 1, 101, 1, "https://povijest.hr/feed/", "//div[contains(@class, 'td-post-featured-image')]//img" });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
+                values: new object?[] { 148, 2, 103, 1, "https://basketball.hr/vijesti.xml", "//div[contains(@class, 'img')]//img", 0, 5 });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
+                values: new object?[] { 149, 6, 104, 1, "https://joomboos.24sata.hr/feeds/axiom-feed/tes-partnerski", 0, 10 });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
+                values: new object?[] { 150, 5, 105, 1, "https://www.ictbusiness.info/rss2.xml", 1, "//div[contains(@class, 'main-content')]//img", 0, 8 });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
+                values: new object?[] { 83, 12, 37, 1, "https://www.dalmacijadanas.hr/feed/", "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img" });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url" },
                 values: new object?[,]
                 {
-                    { 106, 12, 60, 1, "https://dubrovackidnevnik.net.hr/rss" },
-                    { 87, 12, 41, 1, "https://dalmatinskiportal.hr/sadrzaj/rss/vijesti.xml" },
-                    { 86, 12, 40, 1, "https://www.dalmacijanews.hr/rss" }
+                    { 86, 12, 40, 1, "https://www.dalmacijanews.hr/rss" },
+                    { 87, 12, 41, 1, "https://dalmatinskiportal.hr/sadrzaj/rss/vijesti.xml" }
                 });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
-                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 83, 12, 37, 1, "https://www.dalmacijadanas.hr/feed/", "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img" });
-
-            migrationBuilder.InsertData(
-                table: "RssFeeds",
-                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-                values: new object[] { 148, 2, 103, 1, "https://basketball.hr/vijesti.xml", "//div[contains(@class, 'img')]//img", 0, 5 });
-
-            migrationBuilder.InsertData(
-                table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 147, 1, 102, 1, "https://7dnevno.hr/feed", 2, "//div[contains(@class, 'td-post-featured-image')]//img" });
+                values: new object?[] { 147, 1, 102, 1, "https://7dnevno.hr/feed", 2, "//div[contains(@class, 'td-post-featured-image')]//img" });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 146, 1, 101, 1, "https://povijest.hr/feed/", "//div[contains(@class, 'td-post-featured-image')]//img" });
-
-            migrationBuilder.InsertData(
-                table: "RssFeeds",
-                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object?[,]
-                {
-                    { 145, 1, 100, 1, "https://www.geopolitika.news/feed", 2, "//div[contains(@class, 'entry-image featured-image')]//img" },
-                    { 144, 1, 99, 1, "https://otvoreno.hr/feed", 2, "//div[contains(@class, 'td-post-featured-image')]//img" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "RssFeeds",
-                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-                values: new object[] { 85, 1, 39, 1, "https://express.24sata.hr/feeds/placeholder-head/rss_feed", 2, "//img[contains(@class, 'article__figure_img')]", 0, 10 });
-
-            migrationBuilder.InsertData(
-                table: "RssFeeds",
-                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 84, 1, 38, 1, "https://www.nacional.hr/feed/", "//div[contains(@class, 'single-post-media')]//img" });
-
-            migrationBuilder.InsertData(
-                table: "RssFeeds",
-                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 82, 1, 36, 1, "https://www.scena.hr/feed/", 2, "//div[contains(@class, 'mycontent')]//img" });
-
-            migrationBuilder.InsertData(
-                table: "RssFeeds",
-                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object?[,]
-                {
-                    { 81, 1, 35, 1, "https://direktno.hr/rss/publish/latest/direktnotv-100/", "//div[contains(@class, 'pd-hero-image')]//img" },
-                    { 80, 1, 35, 1, "https://direktno.hr/rss/publish/latest/kolumne-80/", "//div[contains(@class, 'pd-hero-image')]//img" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "RssFeeds",
-                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-                values: new object[] { 111, 12, 65, 1, "https://slobodnadalmacija.hr/feed/category/246", 0, 5 });
+                values: new object?[] { 80, 1, 35, 1, "https://direktno.hr/rss/publish/latest/kolumne-80/", "//div[contains(@class, 'pd-hero-image')]//img" });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
@@ -494,7 +514,6 @@ namespace Espresso.Persistence.Migrations
                 values: new object?[,]
                 {
                     { 124, 12, 78, 1, "https://www.ipress.hr/index.php?format=feed&type=rss" },
-                    { 125, 12, 80, 1, "https://www.rijekadanas.com/feed" },
                     { 126, 12, 81, 1, "https://www.fiuman.hr/feed" },
                     { 129, 12, 84, 1, "https://www.zagrebacki.hr/feed" },
                     { 108, 12, 62, 1, "https://www.zagrebonline.hr/feed" },
@@ -505,7 +524,7 @@ namespace Espresso.Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 96, 12, 50, 1, "https://www.index.hr/rss/vijesti-zagreb", 2, "//figure[contains(@class, 'img-container')]//img" });
+                values: new object?[] { 96, 12, 50, 1, "https://www.index.hr/rss/vijesti-zagreb", 2, "//figure[contains(@class, 'img-container')]//img" });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
@@ -529,19 +548,8 @@ namespace Espresso.Persistence.Migrations
                     { 93, 12, 47, 2, "http://www.lika-express.hr/feed" },
                     { 94, 12, 48, 1, "https://www.lika-online.com/feed" },
                     { 95, 12, 49, 1, "http://www.likaplus.hr/rss" },
-                    { 128, 12, 83, 1, "https://www.gspress.net/feed" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "RssFeeds",
-                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 79, 3, 35, 1, "https://direktno.hr/rss/publish/latest/zivot-70/", "//div[contains(@class, 'pd-hero-image')]//img" });
-
-            migrationBuilder.InsertData(
-                table: "RssFeeds",
-                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url" },
-                values: new object?[,]
-                {
+                    { 128, 12, 83, 1, "https://www.gspress.net/feed" },
+                    { 125, 12, 80, 1, "https://www.rijekadanas.com/feed" },
                     { 99, 12, 53, 1, "https://sjever.hr/feed" },
                     { 101, 12, 55, 1, "https://epodravina.hr/feed" },
                     { 109, 12, 63, 1, "https://www.sisak.info/feed" },
@@ -558,8 +566,9 @@ namespace Espresso.Persistence.Migrations
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
                 values: new object?[,]
                 {
-                    { 78, 2, 35, 1, "https://direktno.hr/rss/publish/latest/sport-60/", "//div[contains(@class, 'pd-hero-image')]//img" },
-                    { 76, 1, 35, 1, "https://direktno.hr/rss/publish/latest/eu_svijet/", "//div[contains(@class, 'pd-hero-image')]//img" },
+                    { 79, 3, 35, 1, "https://direktno.hr/rss/publish/latest/zivot-70/", "//div[contains(@class, 'pd-hero-image')]//img" },
+                    { 77, 7, 35, 1, "https://direktno.hr/rss/publish/latest/razvoj-110/", "//div[contains(@class, 'pd-hero-image')]//img" },
+                    { 32, 5, 7, 1, "https://www.tportal.hr/rss-tehno.xml", "//img[contains(@class, 'lateImage lateImageLoaded')]" },
                     { 31, 2, 7, 1, "https://www.tportal.hr/rss-sport.xml", "//img[contains(@class, 'lateImage lateImageLoaded')]" },
                     { 30, 1, 7, 1, "https://www.tportal.hr/rss-biznis.xml", "//img[contains(@class, 'lateImage lateImageLoaded')]" },
                     { 29, 1, 7, 1, "https://www.tportal.hr/rss-vijesti.xml", "//img[contains(@class, 'lateImage lateImageLoaded')]" }
@@ -580,49 +589,9 @@ namespace Espresso.Persistence.Migrations
                     { 21, 4, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/265", "//img[contains(@class, 'card__image')]", 0, 5 },
                     { 20, 4, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/264", "//img[contains(@class, 'card__image')]", 0, 5 },
                     { 19, 3, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/263", "//img[contains(@class, 'card__image')]", 0, 5 },
-                    { 18, 3, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/375", "//img[contains(@class, 'card__image')]", 0, 5 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "RssFeeds",
-                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 32, 5, 7, 1, "https://www.tportal.hr/rss-tehno.xml", "//img[contains(@class, 'lateImage lateImageLoaded')]" });
-
-            migrationBuilder.InsertData(
-                table: "RssFeeds",
-                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-                values: new object?[,]
-                {
+                    { 18, 3, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/375", "//img[contains(@class, 'card__image')]", 0, 5 },
                     { 17, 3, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/262", "//img[contains(@class, 'card__image')]", 0, 5 },
-                    { 15, 1, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/119", "//img[contains(@class, 'card__image')]", 0, 5 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "RssFeeds",
-                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 14, 1, 5, 1, "https://net.hr/feed/", true, "https://net.hr/{1}{2}{3}amp", 2, "//div[contains(@class, 'featured-img')]//img" });
-
-            migrationBuilder.InsertData(
-                table: "RssFeeds",
-                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-                values: new object[] { 13, 1, 4, 2, "https://www.jutarnji.hr/feed", 2, "//img[contains(@class, 'media-object adaptive lazy')]", 0, 5 });
-
-            migrationBuilder.InsertData(
-                table: "RssFeeds",
-                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 12, 2, 3, 2, "http://sportske.jutarnji.hr/sn/feed", "//img[contains(@class, 'media-object adaptive lazy')]" });
-
-            migrationBuilder.InsertData(
-                table: "RssFeeds",
-                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object?[,]
-                {
-                    { 11, 6, 2, 1, "https://www.24sata.hr/feeds/fun.xml", false, null, "//img[contains(@class, 'article__figure_img')]" },
-                    { 10, 5, 2, 1, "https://www.24sata.hr/feeds/tech.xml", false, null, "//img[contains(@class, 'article__figure_img')]" },
-                    { 9, 4, 2, 1, "https://www.24sata.hr/feeds/Lifestyle.xml", false, null, "//img[contains(@class, 'article__figure_img')]" },
-                    { 8, 2, 2, 1, "https://www.24sata.hr/feeds/sport.xml", false, null, "//img[contains(@class, 'article__figure_img')]" },
-                    { 7, 3, 2, 1, "https://www.24sata.hr/feeds/show.xml", false, null, "//img[contains(@class, 'article__figure_img')]" },
-                    { 6, 1, 2, 1, "https://www.24sata.hr/feeds/news.xml", false, null, "//img[contains(@class, 'article__figure_img')]" }
+                    { 16, 2, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/255", "//img[contains(@class, 'card__image')]", 0, 5 }
                 });
 
             migrationBuilder.InsertData(
@@ -630,25 +599,70 @@ namespace Espresso.Persistence.Migrations
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath" },
                 values: new object?[,]
                 {
-                    { 5, 8, 1, 1, "https://www.index.hr/rss/auto", true, "https://amp.index.hr/article/{0}{3}", 1, "//figure[contains(@class, 'img-container')]//img" },
-                    { 4, 4, 1, 1, "https://www.index.hr/rss/rouge", true, "https://amp.index.hr/article/{0}{3}", 1, "//figure[contains(@class, 'img-container')]//img" },
+                    { 2, 2, 1, 1, "https://www.index.hr/rss/sport", true, "https://amp.index.hr/article/{0}{3}", 1, "//figure[contains(@class, 'img-container')]//img" },
                     { 3, 3, 1, 1, "https://www.index.hr/rss/magazin", true, "https://amp.index.hr/article/{0}{3}", 1, "//figure[contains(@class, 'img-container')]//img" },
-                    { 2, 2, 1, 1, "https://www.index.hr/rss/sport", true, "https://amp.index.hr/article/{0}{3}", 1, "//figure[contains(@class, 'img-container')]//img" }
+                    { 4, 4, 1, 1, "https://www.index.hr/rss/rouge", true, "https://amp.index.hr/article/{0}{3}", 1, "//figure[contains(@class, 'img-container')]//img" },
+                    { 5, 8, 1, 1, "https://www.index.hr/rss/auto", true, "https://amp.index.hr/article/{0}{3}", 1, "//figure[contains(@class, 'img-container')]//img" }
                 });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ImgElementXPath" },
+                values: new object?[,]
+                {
+                    { 6, 1, 2, 1, "https://www.24sata.hr/feeds/news.xml", false, null, "//img[contains(@class, 'article__figure_img')]" },
+                    { 7, 3, 2, 1, "https://www.24sata.hr/feeds/show.xml", false, null, "//img[contains(@class, 'article__figure_img')]" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
+                values: new object?[] { 33, 3, 7, 1, "https://www.tportal.hr/rss-showtime.xml", "//img[contains(@class, 'lateImage lateImageLoaded')]" });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ImgElementXPath" },
+                values: new object?[,]
+                {
+                    { 8, 2, 2, 1, "https://www.24sata.hr/feeds/sport.xml", false, null, "//img[contains(@class, 'article__figure_img')]" },
+                    { 10, 5, 2, 1, "https://www.24sata.hr/feeds/tech.xml", false, null, "//img[contains(@class, 'article__figure_img')]" },
+                    { 11, 6, 2, 1, "https://www.24sata.hr/feeds/fun.xml", false, null, "//img[contains(@class, 'article__figure_img')]" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
+                values: new object?[] { 12, 2, 3, 2, "http://sportske.jutarnji.hr/sn/feed", "//img[contains(@class, 'media-object adaptive lazy')]" });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
+                values: new object?[] { 13, 1, 4, 2, "https://www.jutarnji.hr/feed", 2, "//img[contains(@class, 'media-object adaptive lazy')]", 0, 5 });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath" },
+                values: new object?[] { 14, 1, 5, 1, "https://net.hr/feed/", true, "https://net.hr/{1}{2}{3}amp", 2, "//div[contains(@class, 'featured-img')]//img" });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-                values: new object[] { 16, 2, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/255", "//img[contains(@class, 'card__image')]", 0, 5 });
+                values: new object?[] { 15, 1, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/119", "//img[contains(@class, 'card__image')]", 0, 5 });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ImgElementXPath" },
+                values: new object?[] { 9, 4, 2, 1, "https://www.24sata.hr/feeds/lifestyle.xml", false, null, "//img[contains(@class, 'article__figure_img')]" });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
                 values: new object?[,]
                 {
-                    { 33, 3, 7, 1, "https://www.tportal.hr/rss-showtime.xml", "//img[contains(@class, 'lateImage lateImageLoaded')]" },
+                    { 78, 2, 35, 1, "https://direktno.hr/rss/publish/latest/sport-60/", "//div[contains(@class, 'pd-hero-image')]//img" },
                     { 34, 4, 7, 1, "https://www.tportal.hr/rss-Lifestyle.xml", "//img[contains(@class, 'lateImage lateImageLoaded')]" },
-                    { 35, 6, 7, 1, "https://www.tportal.hr/rss-funbox.xml", "//img[contains(@class, 'lateImage lateImageLoaded')]" },
+                    { 36, 9, 7, 1, "https://www.tportal.hr/rss-kultura.xml", "//img[contains(@class, 'lateImage lateImageLoaded')]" },
+                    { 76, 1, 35, 1, "https://direktno.hr/rss/publish/latest/eu_svijet/", "//div[contains(@class, 'pd-hero-image')]//img" },
                     { 75, 1, 35, 1, "https://direktno.hr/rss/publish/latest/domovina-10/", "//div[contains(@class, 'pd-hero-image')]//img" },
                     { 74, 1, 35, 1, "https://direktno.hr/rss/publish/latest/direkt-50/", "//div[contains(@class, 'pd-hero-image')]//img" }
                 });
@@ -656,12 +670,12 @@ namespace Espresso.Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 72, 1, 33, 1, "https://www.dnevno.hr/feed/", 2, "//div[contains(@class, 'img-holder inner')]//img" });
+                values: new object?[] { 72, 1, 33, 1, "https://www.dnevno.hr/feed/", 2, "//div[contains(@class, 'img-holder inner')]//img" });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-                values: new object[] { 71, 1, 32, 2, "https://100posto.jutarnji.hr/rss", 2, "//picture[contains(@class, 'pic')]//img", 0, 5 });
+                values: new object?[] { 71, 1, 32, 1, "https://100posto.jutarnji.hr/rss", 2, "//picture[contains(@class, 'pic')]//img", 0, 5 });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
@@ -677,11 +691,12 @@ namespace Espresso.Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object?[,]
-                {
-                    { 66, 1, 30, 2, "https://narod.hr/feed", 2, "//div[contains(@class, 'td-post-featured-image')]//img" },
-                    { 65, 1, 29, 2, "http://hr.n1info.com/rss/249/Naslovna", 2, "//figure[contains(@class, 'media')]//img" }
-                });
+                values: new object?[] { 66, 1, 30, 2, "https://narod.hr/feed", 2, "//div[contains(@class, 'td-post-featured-image')]//img" });
+
+            migrationBuilder.InsertData(
+                table: "RssFeeds",
+                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath" },
+                values: new object?[] { 65, 1, 29, 2, "http://hr.n1info.com/rss/249/Naslovna", 2, 3, "//figure[contains(@class, 'media')]//img" });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
@@ -695,7 +710,7 @@ namespace Espresso.Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 62, 4, 26, 1, "http://wall.hr/cdn/feed.xml", 2, "//figure[contains(@class, 'dcms-image article-image')]//img" });
+                values: new object?[] { 62, 4, 26, 1, "http://wall.hr/cdn/feed.xml", 2, "//figure[contains(@class, 'dcms-image article-image')]//img" });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
@@ -709,51 +724,41 @@ namespace Espresso.Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-                values: new object[] { 58, 7, 22, 2, "http://www.poslovnipuls.com/feed/", "//div[contains(@class, 'postFeaturedImg postFeaturedImg--single')]//img", 0, 10 });
-
-            migrationBuilder.InsertData(
-                table: "RssFeeds",
-                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 57, 5, 21, 1, "http://www.netokracija.com/feed", true, "https://www.netokracija.com/{1}/amp", "//div[contains(@class, 'post__hero')]//img" });
-
-            migrationBuilder.InsertData(
-                table: "RssFeeds",
-                columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 36, 9, 7, 1, "https://www.tportal.hr/rss-kultura.xml", "//img[contains(@class, 'lateImage lateImageLoaded')]" });
+                values: new object?[] { 58, 7, 22, 2, "http://www.poslovnipuls.com/feed/", "//div[contains(@class, 'postFeaturedImg postFeaturedImg--single')]//img", 0, 10 });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ImageUrlWebScrapeType", "ImageUrlParseConfiguration_ImgElementXPath", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped" },
-                values: new object[] { 37, 1, 8, 1, "https://www.vecernji.hr/feeds/latest", true, "https://m.vecernji.hr/amp/{1}{2}", 2, 2, "//script[contains(@type, 'application/ld+json')]", "image,url", true });
+                values: new object?[] { 37, 1, 8, 1, "https://www.vecernji.hr/feeds/latest", true, "https://m.vecernji.hr/amp/{1}{2}", 2, 2, "//script[contains(@type, 'application/ld+json')]", "image,url", true });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 39, 1, 9, 1, "https://www.telegram.hr/feed/", 2, "//div[contains(@class, 'thumb')]//img" });
+                values: new object?[] { 39, 1, 9, 1, "https://www.telegram.hr/feed/", 2, "//div[contains(@class, 'thumb')]//img" });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 40, 2, 9, 1, "https://telesport.telegram.hr/feed/", "//div[contains(@class, 'featured-img')]//img" });
+                values: new object?[] { 40, 2, 9, 1, "https://telesport.telegram.hr/feed/", "//div[contains(@class, 'featured-img')]//img" });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 42, 1, 10, 1, "https://dnevnik.hr/assets/feed/articles/", true, "https://dnevnik.hr/amp/{1}{2}{3}", 2, "//figure[contains(@class, 'article-main-img')]//img" });
+                values: new object?[] { 42, 1, 10, 1, "https://dnevnik.hr/assets/feed/articles/", true, "https://dnevnik.hr/amp/{1}{2}{3}", 2, "//figure[contains(@class, 'article-main-img')]//img" });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 43, 2, 11, 1, "https://gol.dnevnik.hr/assets/feed/articles", true, "https://gol.dnevnik.hr/amp/{1}{2}{3}{4}", "//figure[contains(@class, 'article-image main-image')]//img" });
+                values: new object?[] { 43, 2, 11, 1, "https://gol.dnevnik.hr/assets/feed/articles", true, "https://gol.dnevnik.hr/amp/{1}{2}{3}{4}", "//figure[contains(@class, 'article-image main-image')]//img" });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
                 values: new object?[,]
                 {
-                    { 77, 7, 35, 1, "https://direktno.hr/rss/publish/latest/razvoj-110/", "//div[contains(@class, 'pd-hero-image')]//img" },
                     { 44, 2, 12, 1, "https://sportnet.rtl.hr/rss/", "//img[contains(@class, 'naslovna')]" },
-                    { 48, 7, 16, 1, "http://lider.media/feed/", "//img[contains(@class, 'card__image')]" },
+                    { 35, 6, 7, 1, "https://www.tportal.hr/rss-funbox.xml", "//img[contains(@class, 'lateImage lateImageLoaded')]" },
+                    { 47, 2, 15, 1, "http://www.nogometplus.net/index.php/feed/", "//div[contains(@class, 'post-img')]//img" },
                     { 49, 7, 16, 1, "http://lider.media/feed/", "//img[contains(@class, 'card__image')]" },
                     { 50, 7, 16, 1, "http://lider.media/feed/", "//img[contains(@class, 'card__image')]" },
                     { 54, 5, 18, 1, "http://www.bug.hr/rss/vijesti/", "//div[contains(@class, 'entry-content')]//img" },
@@ -763,17 +768,21 @@ namespace Espresso.Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 56, 5, 20, 1, "https://zimo.dnevnik.hr/assets/feed/articles", true, "https://zimo.dnevnik.hr/amp/clanak/{2}", "//div[contains(@class, 'img-holder')]//img" });
+                values: new object?[,]
+                {
+                    { 56, 5, 20, 1, "https://zimo.dnevnik.hr/assets/feed/articles", true, "https://zimo.dnevnik.hr/amp/clanak/{2}", "//div[contains(@class, 'img-holder')]//img" },
+                    { 57, 5, 21, 1, "http://www.netokracija.com/feed", true, "https://www.netokracija.com/{1}/amp", "//div[contains(@class, 'post__hero')]//img" }
+                });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ImgElementXPath" },
-                values: new object[] { 47, 2, 15, 1, "http://www.nogometplus.net/index.php/feed/", "//div[contains(@class, 'post-img')]//img" });
+                values: new object?[] { 48, 7, 16, 1, "http://lider.media/feed/", "//img[contains(@class, 'card__image')]" });
 
             migrationBuilder.InsertData(
                 table: "RssFeeds",
                 columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url" },
-                values: new object[] { 131, 12, 86, 1, "https://www.zagreb.hr/RssFeeds.aspx?id=17" });
+                values: new object?[] { 131, 12, 86, 1, "https://www.zagreb.hr/RssFeeds.aspx?id=17" });
 
             migrationBuilder.InsertData(
                 table: "RssFeedCategory",

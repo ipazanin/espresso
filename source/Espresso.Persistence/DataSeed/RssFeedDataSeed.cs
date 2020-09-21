@@ -32,7 +32,7 @@ namespace Espresso.Persistence.DataSeed
         {
             var rssFeeds = new List<RssFeed>
             {
-                #region Index
+
                 new RssFeed(
                     id: (int)RssFeedId.Index_Vijesti,
                     url: "https://www.index.hr/rss/vijesti",
@@ -44,30 +44,30 @@ namespace Espresso.Persistence.DataSeed
                 new RssFeed((int)RssFeedId.Index_Magazin, "https://www.index.hr/rss/magazin", (int)NewsPortalId.Index, (int)CategoryId.Show, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.Index_Rogue,  "https://www.index.hr/rss/rouge", (int)NewsPortalId.Index, (int)CategoryId.Lifestyle, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.Index_Auto, "https://www.index.hr/rss/auto", (int)NewsPortalId.Index, (int)CategoryId.AutoMoto, requestType: RequestType.Normal),
-                #endregion
 
-                #region 24 sata
+
+
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Vijesti, "https://www.24sata.hr/feeds/news.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Vijesti, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Show, "https://www.24sata.hr/feeds/show.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Show, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Sport, "https://www.24sata.hr/feeds/sport.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Sport, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Lifestyle, "https://www.24sata.hr/feeds/lifestyle.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Lifestyle, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Tech, "https://www.24sata.hr/feeds/tech.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Tech, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Viral, "https://www.24sata.hr/feeds/fun.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Viral, requestType: RequestType.Normal),
-                #endregion
 
-                #region Sportske Novosti
+
+
                 new RssFeed((int)RssFeedId.SportskeNovosti_Sport, "http://sportske.jutarnji.hr/sn/feed", (int)NewsPortalId.SportskeNovosti, (int)CategoryId.Sport, requestType: RequestType.Browser),
-                #endregion
 
-                #region Jutarnji
+
+
                 new RssFeed((int)RssFeedId.JutarnjiList, "https://www.jutarnji.hr/feed", (int)NewsPortalId.JutarnjiList, (int)CategoryId.Vijesti, requestType: RequestType.Browser),
-                #endregion
 
-                #region Net.hr
+
+
                 new RssFeed((int)RssFeedId.NetHr, "https://net.hr/feed/", (int)NewsPortalId.NetHr, (int)CategoryId.Vijesti, requestType: RequestType.Normal),
-                #endregion
 
-                #region Slobodna Dalmacija
+
+
                 new RssFeed((int)RssFeedId.SlobodnaDalmacija_Novosti, "https://www.slobodnadalmacija.hr/feed/category/119", (int)NewsPortalId.SlobodnaDalmacija, (int)CategoryId.Vijesti, requestType: RequestType.Browser),
                 new RssFeed((int)RssFeedId.SlobodnaDalmacija_Sport, "https://www.slobodnadalmacija.hr/feed/category/255", (int)NewsPortalId.SlobodnaDalmacija, (int)CategoryId.Sport, requestType: RequestType.Browser),
                 new RssFeed((int)RssFeedId.SlobodnaDalmacija_Showbiz, "https://www.slobodnadalmacija.hr/feed/category/262", (int)NewsPortalId.SlobodnaDalmacija, (int)CategoryId.Show, requestType: RequestType.Browser),
@@ -82,9 +82,9 @@ namespace Espresso.Persistence.DataSeed
                 new RssFeed((int)RssFeedId.SlobodnaDalmacija_Dom, "https://www.slobodnadalmacija.hr/feed/category/271", (int)NewsPortalId.SlobodnaDalmacija, (int)CategoryId.Lifestyle, requestType: RequestType.Browser),
                 new RssFeed((int)RssFeedId.SlobodnaDalmacija_Tehnologija, "https://www.slobodnadalmacija.hr/feed/category/269", (int)NewsPortalId.SlobodnaDalmacija, (int)CategoryId.Tech, requestType: RequestType.Browser),
                 new RssFeed((int)RssFeedId.SlobodnaDalmacija_Viral, "https://www.slobodnadalmacija.hr/feed/category/274", (int)NewsPortalId.SlobodnaDalmacija, (int)CategoryId.Viral, requestType: RequestType.Browser),
-                #endregion 
 
-                #region TPortal
+
+
                 new RssFeed((int)RssFeedId.TPortal_Vijesti, "https://www.tportal.hr/rss-vijesti.xml", (int)NewsPortalId.TPortal, (int)CategoryId.Vijesti, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.TPortal_Biznis, "https://www.tportal.hr/rss-biznis.xml", (int)NewsPortalId.TPortal, (int)CategoryId.Vijesti, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.TPortal_Sport, "https://www.tportal.hr/rss-sport.xml", (int)NewsPortalId.TPortal, (int)CategoryId.Sport, requestType: RequestType.Normal),
@@ -93,16 +93,16 @@ namespace Espresso.Persistence.DataSeed
                 new RssFeed((int)RssFeedId.TPortal_Lifestyle, "https://www.tportal.hr/rss-Lifestyle.xml", (int)NewsPortalId.TPortal, (int)CategoryId.Lifestyle, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.TPortal_FunBox, "https://www.tportal.hr/rss-funbox.xml", (int)NewsPortalId.TPortal, (int)CategoryId.Viral, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.TPortal_Kultura, "https://www.tportal.hr/rss-kultura.xml", (int)NewsPortalId.TPortal, (int)CategoryId.Kultura, requestType: RequestType.Normal),
-                #endregion
 
-                #region Večernji List
+
+
                 new RssFeed((int)RssFeedId.VecernjiList, "https://www.vecernji.hr/feeds/latest", (int)NewsPortalId.VecernjiList, (int)CategoryId.Vijesti, requestType: RequestType.Normal),
-                #endregion
 
-                #region Telegram
+
+
                 new RssFeed((int)RssFeedId.Telegram,"https://www.telegram.hr/feed/", (int)NewsPortalId.Telegram, (int)CategoryId.Vijesti, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.Telegram_Telesport, "https://telesport.telegram.hr/feed/", (int)NewsPortalId.Telegram, (int)CategoryId.Sport, requestType: RequestType.Normal),
-                #endregion
+                
 
                 // Dnevnik
                 new RssFeed((int)RssFeedId.Dnevnik, "https://dnevnik.hr/assets/feed/articles/", (int)NewsPortalId.Dnevnik, (int)CategoryId.Vijesti, requestType: RequestType.Normal),
@@ -144,28 +144,28 @@ namespace Espresso.Persistence.DataSeed
                 
                 // Cosmopolitan
                 new RssFeed((int)RssFeedId.Cosmopolitan, "http://www.cosmopolitan.hr/feed", (int)NewsPortalId.Cosmopolitan, (int)CategoryId.Lifestyle, requestType: RequestType.Normal),
-                
-                #region Wall.hr
+
+
                 new RssFeed((int)RssFeedId.WallHr, "http://wall.hr/cdn/feed.xml", (int)NewsPortalId.WallHr, (int)CategoryId.Lifestyle, requestType: RequestType.Normal),
-                #endregion
-                
-                #region Ljepota i zdravlje
+
+
+
                 new RssFeed((int)RssFeedId.LjepotaIZdravlje, "http://www.ljepotaizdravlje.hr/feed", (int)NewsPortalId.LjepotaIZdravlje, (int)CategoryId.Lifestyle, requestType: RequestType.Normal),
-                #endregion
 
-                #region Autonet
+
+
                 new RssFeed((int)RssFeedId.AutoNet, "https://www.autonet.hr/feed/", (int)NewsPortalId.Autonet, (int)CategoryId.AutoMoto, requestType: RequestType.Normal),
-                #endregion
 
-                #region N1
+
+
                 new RssFeed((int)RssFeedId.N1, "http://hr.n1info.com/rss/249/Naslovna", (int)NewsPortalId.N1, (int)CategoryId.Vijesti, requestType: RequestType.Browser),
-                #endregion
 
-                #region NarodHr
+
+
                 new RssFeed((int)RssFeedId.NarodHr, "https://narod.hr/feed", (int)NewsPortalId.NarodHr, (int)CategoryId.Vijesti, requestType: RequestType.Browser),
-                #endregion
 
-                #region Hrt
+
+
                 new RssFeed(
                     id: (int)RssFeedId.Hrt_Vijesti,
                     url: "https://www.hrt.hr/rss/vijesti/",
@@ -190,9 +190,9 @@ namespace Espresso.Persistence.DataSeed
                     newsPortalId: (int)NewsPortalId.Hrt,
                     categoryId: (int)CategoryId.Show, requestType: RequestType.Normal
                 ),
-                #endregion
 
-                #region  100posto
+
+
                 new RssFeed(
                     id: (int)RssFeedId.StoPosto,
                     url: "https://100posto.jutarnji.hr/rss",
@@ -200,27 +200,18 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Vijesti,
                     requestType: RequestType.Normal
                 ),
-                #endregion
 
-                #region  Dnevno
+
+
                 new RssFeed(
                     id: (int)RssFeedId.Dnevno,
                     url: "https://www.dnevno.hr/feed/",
                     newsPortalId: (int)NewsPortalId.Dnevno,
                     categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
                 ),
-                #endregion
 
-                #region AutomobiliHr
-                // new RssFeed(
-                //     id: (int)RssFeedId.AutomobiliHr,
-                //     url: "https://klik.hr/rss",
-                //     newsPortalId: (int)NewsPortalId.AutomobiliHr,
-                //     categoryId: (int)CategoryId.AutoMoto, requestType: RequestType.Normal
-                // ),
-                #endregion
 
-                #region DirektnoHr
+
                 new RssFeed(
                     id: (int)RssFeedId.DirektnoHr_Direkt,
                     url: "https://direktno.hr/rss/publish/latest/direkt-50/",
@@ -268,80 +259,103 @@ namespace Espresso.Persistence.DataSeed
                     url: "https://direktno.hr/rss/publish/latest/direktnotv-100/",
                     newsPortalId: (int)NewsPortalId.DirektnoHr,
                     categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
-                ),                                                                                
-                #endregion
+                ),
 
-                #region Scena
+
+
                 new RssFeed(
                     id: (int)RssFeedId.Scena,
                     url: "https://www.scena.hr/feed/",
                     newsPortalId: (int)NewsPortalId.Scena,
                     categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Browser
                 ),
-                #endregion
 
-                #region Nacional
+
+
                 new RssFeed(
                     id: (int)RssFeedId.Nacional,
                     url: "https://www.nacional.hr/feed/",
                     newsPortalId: (int)NewsPortalId.Nacional,
                     categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
                 ),
-                #endregion
 
-                #region Express
+
+
                 new RssFeed(
                     id: (int)RssFeedId.Express,
                     url: "https://express.24sata.hr/feeds/placeholder-head/rss_feed",
                     newsPortalId: (int)NewsPortalId.Express,
                     categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
                 ),
-                #endregion
 
-                #region OtvorenoHr
+
+
                 new RssFeed(
                     id: (int)RssFeedId.OtvorenoHr,
                     url: "https://otvoreno.hr/feed",
                     newsPortalId: (int)NewsPortalId.OtvorenoHr,
                     categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
                 ),
-                #endregion   
 
-                #region GeoPolitika
+
+
                 new RssFeed(
                     id: (int)RssFeedId.GeoPolitika,
                     url: "https://www.geopolitika.news/feed",
                     newsPortalId: (int)NewsPortalId.GeoPolitika,
                     categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
                 ),
-                #endregion 
 
-                #region PovijestHr
+
+
                 new RssFeed(
                     id: (int)RssFeedId.PovijestHr,
                     url: "https://povijest.hr/feed/",
                     newsPortalId: (int)NewsPortalId.PovijestHr,
-                    categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Normal
                 ),
-                #endregion 
 
-                #region 7Dnevno
+
+
                 new RssFeed(
                     id: (int)RssFeedId.Dnevno7,
                     url: "https://7dnevno.hr/feed",
                     newsPortalId: (int)NewsPortalId.Dnevno7,
-                    categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Normal
                 ),
-                #endregion   
 
-                #region Basketball.Hr
+
+
                 new RssFeed(
                     id: (int)RssFeedId.BasketballHr,
                     url: "https://basketball.hr/vijesti.xml",
                     newsPortalId: (int)NewsPortalId.BasketballHr,
-                    categoryId: (int)CategoryId.Sport, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Sport,
+                    requestType: RequestType.Normal
                 ),
-                #endregion   
+
+
+
+                new RssFeed(
+                    id: (int)RssFeedId.JoomBoos,
+                    url: "https://joomboos.24sata.hr/feeds/axiom-feed/tes-partnerski",
+                    newsPortalId: (int)NewsPortalId.JoomBoos,
+                    categoryId: (int)CategoryId.Viral,
+                    requestType: RequestType.Normal
+                ),
+
+
+
+                new RssFeed(
+                    id: (int)RssFeedId.IctBusiness,
+                    url: "https://www.ictbusiness.info/rss2.xml",
+                    newsPortalId: (int)NewsPortalId.IctBusiness,
+                    categoryId: (int)CategoryId.Tech,
+                    requestType: RequestType.Normal
+                ),
+
             };
 
             builder.HasData(rssFeeds);
@@ -351,7 +365,7 @@ namespace Espresso.Persistence.DataSeed
         {
             var localRssFeeds = new List<RssFeed>
             {
-                #region Dalmacija
+
                 new RssFeed(
                     id: (int)RssFeedId.DalmacijaDanas,
                     url: "https://www.dalmacijadanas.hr/feed/",
@@ -463,11 +477,11 @@ namespace Espresso.Persistence.DataSeed
                     newsPortalId: (int)NewsPortalId.ZadarskiList,
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal
-                ),                                                 
-                                                                                                          
-                #endregion
+                ),
 
-                #region Istra i Kvarner
+
+
+
                 new RssFeed(
                     id: (int)RssFeedId.IVijesti,
                     url: "https://ivijesti.hr/feed",
@@ -530,10 +544,10 @@ namespace Espresso.Persistence.DataSeed
                     newsPortalId: (int)NewsPortalId.Riportal,
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal
-                ),                                                                                               
-                #endregion
+                ),
 
-                #region Lika
+
+
                 new RssFeed(
                     id: (int)RssFeedId.LikaKlub,
                     url: "https://likaclub.eu/feed",
@@ -568,10 +582,10 @@ namespace Espresso.Persistence.DataSeed
                     newsPortalId: (int)NewsPortalId.GsPress,
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal
-                ),                  
-                #endregion
+                ),
 
-                #region Zagreb
+
+
                 new RssFeed(
                     id: (int)RssFeedId.IndexHrZagreb,
                     url: "https://www.index.hr/rss/vijesti-zagreb",
@@ -620,10 +634,10 @@ namespace Espresso.Persistence.DataSeed
                     newsPortalId: (int)NewsPortalId.GradZagreb,
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal
-                ),                                                
-                #endregion
+                ),
 
-                #region Sjeverna Hrvatska
+
+
                 new RssFeed(
                     id: (int)RssFeedId.SjeverHr,
                     url: "https://sjever.hr/feed",
@@ -686,10 +700,10 @@ namespace Espresso.Persistence.DataSeed
                     newsPortalId: (int)NewsPortalId.ZagorjeCom,
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal
-                ),                                                                                
-                #endregion
+                ),
 
-                #region Slavonija
+
+
                 new RssFeed(
                     id: (int)RssFeedId.BaranjaInfo,
                     url: "https://www.baranjainfo.hr/feed",
@@ -766,8 +780,8 @@ namespace Espresso.Persistence.DataSeed
                     newsPortalId: (int)NewsPortalId.Osijek031,
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal
-                ),                                                                                              
-                #endregion
+                ),
+
 
             };
 
@@ -776,7 +790,7 @@ namespace Espresso.Persistence.DataSeed
 
         private static void SeedAmpConfigurations(OwnedNavigationBuilder<RssFeed, AmpConfiguration> ampConfigurationBuilder)
         {
-            #region Index
+
             ampConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Index_Vijesti,
@@ -807,9 +821,9 @@ namespace Espresso.Persistence.DataSeed
                 HasAmpArticles = true,
                 TemplateUrl = "https://amp.index.hr/article/{0}{3}"
             });
-            #endregion
 
-            #region 24 Sata
+
+
             //ampConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Lifestyle, HasAmpArticles = true, TemplateUrl = "https://m.24sata.hr/amp/{1}{2}" });
             //ampConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Show, HasAmpArticles = true, TemplateUrl = "https://m.24sata.hr/amp/{1}{2}" });
             //ampConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Sport, HasAmpArticles = true, TemplateUrl = "https://m.24sata.hr/amp/{1}{2}" });
@@ -852,75 +866,75 @@ namespace Espresso.Persistence.DataSeed
                 HasAmpArticles = false,
                 TemplateUrl = (string?)null
             });
-            #endregion
 
-            #region NetHr
+
+
             ampConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.NetHr,
                 HasAmpArticles = true,
                 TemplateUrl = "https://net.hr/{1}{2}{3}amp"
             });
-            #endregion
 
-            #region Vecernji List
+
+
             ampConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.VecernjiList,
                 HasAmpArticles = true,
                 TemplateUrl = "https://m.vecernji.hr/amp/{1}{2}"
             });
-            #endregion
 
-            #region Dnevnik
+
+
             ampConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Dnevnik,
                 HasAmpArticles = true,
                 TemplateUrl = "https://dnevnik.hr/amp/{1}{2}{3}"
             });
-            #endregion
 
-            #region  Gol
+
+
             ampConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Gol_Sport,
                 HasAmpArticles = true,
                 TemplateUrl = "https://gol.dnevnik.hr/amp/{1}{2}{3}{4}"
             });
-            #endregion
 
-            #region  Zimo
+
+
             ampConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Zimo_TechVijesti,
                 HasAmpArticles = true,
                 TemplateUrl = "https://zimo.dnevnik.hr/amp/clanak/{2}"
             });
-            #endregion
 
-            #region Netokracija
+
+
             ampConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Netokracija,
                 HasAmpArticles = true,
                 TemplateUrl = "https://www.netokracija.com/{1}/amp"
             });
-            #endregion
+
         }
 
         private static void SeedSkipParseConfiguration(OwnedNavigationBuilder<RssFeed, SkipParseConfiguration> skipParseConfigurationBuilder)
         {
-            #region Jutarnji List
+
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.JutarnjiList,
                 NumberOfSkips = 5,
                 CurrentSkip = 0
             });
-            #endregion
 
-            #region Slobodna Dalmacija
+
+
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Novosti,
@@ -1005,36 +1019,36 @@ namespace Espresso.Persistence.DataSeed
                 NumberOfSkips = 5,
                 CurrentSkip = 0
             });
-            #endregion
 
-            #region Poslovni Puls
+
+
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.PoslovniPuls,
                 NumberOfSkips = 10,
                 CurrentSkip = 0
             });
-            #endregion
 
-            #region 100posto
+
+
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.StoPosto,
                 NumberOfSkips = 5,
                 CurrentSkip = 0
             });
-            #endregion
 
-            #region Express
+
+
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Express,
                 NumberOfSkips = 10,
                 CurrentSkip = 0
             });
-            #endregion
 
-            #region HRT
+
+
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Hrt_Glazba,
@@ -1059,179 +1073,197 @@ namespace Espresso.Persistence.DataSeed
                 NumberOfSkips = 5,
                 CurrentSkip = 0
             });
-            #endregion
 
-            #region SlobodnaDalmacija_Dalmacija
+
+
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Dalmacija,
                 NumberOfSkips = 5,
                 CurrentSkip = 0
             });
-            #endregion
 
-            #region SlobodnaDalmacija_Split
+
+
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Split,
                 NumberOfSkips = 5,
                 CurrentSkip = 0
             });
-            #endregion
 
-            #region Baskteball.Hr
+
+
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.BasketballHr,
                 NumberOfSkips = 5,
                 CurrentSkip = 0
             });
-            #endregion            
+
+
+
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.JoomBoos,
+                NumberOfSkips = 10,
+                CurrentSkip = 0
+            });
+
+
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.IctBusiness,
+                NumberOfSkips = 8,
+                CurrentSkip = 0
+            });
+
         }
 
         private static void SeedCategoryParseConfiguration(
             OwnedNavigationBuilder<RssFeed, CategoryParseConfiguration> categoryParseConfigurationBuilder
         )
         {
-            #region  Jutarnji
+
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.JutarnjiList,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl
 
             });
-            #endregion
 
-            #region  Net.hr
+
+
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.NetHr,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl
 
             });
-            #endregion
 
-            #region Večernji List
+
+
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.VecernjiList,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl
 
             });
-            #endregion
 
-            #region Telegram
+
+
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Telegram,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl
             });
-            #endregion
 
-            // Dnevnik
+
+
             categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Dnevnik, CategoryParseStrategy = CategoryParseStrategy.FromUrl });
 
-            #region N1
+
+
             categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.N1, CategoryParseStrategy = CategoryParseStrategy.FromUrl });
-            #endregion
 
-            #region NarodHr
+
+
             categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.NarodHr, CategoryParseStrategy = CategoryParseStrategy.FromUrl });
-            #endregion
 
-            #region 100posto
+
+
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.StoPosto,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl
 
             });
-            #endregion
 
-            #region Dnevno
+
+
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Dnevno,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl
 
             });
-            #endregion
 
-            #region Scena
+
+
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Scena,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
             });
-            #endregion
 
-            #region Express
+
+
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Express,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
             });
-            #endregion
 
-            #region Otvorenohr
+
+
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.OtvorenoHr,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
             });
-            #endregion
 
-            #region GeoPolitika
+
+
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.GeoPolitika,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
             });
-            #endregion
 
-            #region 7Dnevno
+
+
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Dnevno7,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
             });
-            #endregion                      
+
         }
 
         private static void SeedImageUrlParseConfiguration(
             OwnedNavigationBuilder<RssFeed, ImageUrlParseConfiguration> imageUrlParseConfigurationBuilder
         )
         {
-            #region Index
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Vijesti, ImgElementXPath = "//figure[contains(@class, 'img-container')]//img", ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Sport, ImgElementXPath = "//figure[contains(@class, 'img-container')]//img", ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Magazin, ImgElementXPath = "//figure[contains(@class, 'img-container')]//img", ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Rogue, ImgElementXPath = "//figure[contains(@class, 'img-container')]//img", ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Auto, ImgElementXPath = "//figure[contains(@class, 'img-container')]//img", ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary });
-            #endregion
 
-            #region 24 sata
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Vijesti, ImgElementXPath = "//img[contains(@class, 'article__figure_img')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Show, ImgElementXPath = "//img[contains(@class, 'article__figure_img')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Sport, ImgElementXPath = "//img[contains(@class, 'article__figure_img')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Lifestyle, ImgElementXPath = "//img[contains(@class, 'article__figure_img')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Tech, ImgElementXPath = "//img[contains(@class, 'article__figure_img')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Viral, ImgElementXPath = "//img[contains(@class, 'article__figure_img')]", });
-            #endregion
 
-            #region Sportske Novosti
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SportskeNovosti_Sport, ImgElementXPath = "//img[contains(@class, 'media-object adaptive lazy')]", });
-            #endregion
 
-            #region Jutarnji
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.JutarnjiList, ImgElementXPath = "//img[contains(@class, 'media-object adaptive lazy')]", });
-            #endregion
 
-            #region Net.hr
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.NetHr, ImgElementXPath = "//div[contains(@class, 'featured-img')]//img", });
-            #endregion
 
-            #region Slobodna Dalmacija
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Novosti, ImgElementXPath = "//img[contains(@class, 'card__image')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Sport, ImgElementXPath = "//img[contains(@class, 'card__image')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Showbiz, ImgElementXPath = "//img[contains(@class, 'card__image')]", });
@@ -1246,9 +1278,9 @@ namespace Espresso.Persistence.DataSeed
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Dom, ImgElementXPath = "//img[contains(@class, 'card__image')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Tehnologija, ImgElementXPath = "//img[contains(@class, 'card__image')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Viral, ImgElementXPath = "//img[contains(@class, 'card__image')]", });
-            #endregion
 
-            #region TPortal
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Vijesti, ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Biznis, ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Sport, ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]", });
@@ -1257,9 +1289,9 @@ namespace Espresso.Persistence.DataSeed
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Lifestyle, ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_FunBox, ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.TPortal_Kultura, ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]", });
-            #endregion
 
-            #region Večernji List
+
+
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.VecernjiList,
@@ -1269,93 +1301,93 @@ namespace Espresso.Persistence.DataSeed
                 ImageUrlWebScrapeType = ImageUrlWebScrapeType.JsonObjectInScriptElement,
                 JsonWebScrapePropertyNames = "image,url"
             });
-            #endregion
 
-            #region  Telegram
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Telegram, ImgElementXPath = "//div[contains(@class, 'thumb')]//img", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Telegram_Telesport, ImgElementXPath = "//div[contains(@class, 'featured-img')]//img", });
-            #endregion
 
-            #region Dnevnik
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Dnevnik, ImgElementXPath = "//figure[contains(@class, 'article-main-img')]//img", });
-            #endregion
 
-            #region  Gol
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Gol_Sport, ImgElementXPath = "//figure[contains(@class, 'article-image main-image')]//img", });
-            #endregion
 
-            #region Rtl Vijesti
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.RtlVijesti_Sport, ImgElementXPath = "//img[contains(@class, 'naslovna')]", });
-            #endregion
 
-            #region Nogometni Plus
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.NogometPlus_Nogomet, ImgElementXPath = "//div[contains(@class, 'post-img')]//img", });
-            #endregion
 
-            #region  Lider
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Lider_BiznisIPolitikaHrvatska, ImgElementXPath = "//img[contains(@class, 'card__image')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Lider_BiznisIPolitikaSvijet, ImgElementXPath = "//img[contains(@class, 'card__image')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Lider_Trziste, ImgElementXPath = "//img[contains(@class, 'card__image')]", });
-            #endregion
 
-            #region  Bug
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Bug_TechVijesti, ImgElementXPath = "//div[contains(@class, 'entry-content')]//img", });
-            #endregion
 
-            #region Vidi.Hr
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.VidiHr_TechVijesti, ImgElementXPath = "//div[contains(@class, 'attribute-image')]//img", });
-            #endregion
 
-            #region Zimo
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Zimo_TechVijesti, ImgElementXPath = "//div[contains(@class, 'img-holder')]//img", });
-            #endregion
 
-            #region Netokracija
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Netokracija, ImgElementXPath = "//div[contains(@class, 'post__hero')]//img", });
-            #endregion
 
-            #region Poslovni Plus
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.PoslovniPuls, ImgElementXPath = "//div[contains(@class, 'postFeaturedImg postFeaturedImg--single')]//img", });
-            #endregion
 
-            #region PCChip
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.PcChip, ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img", });
-            #endregion
 
-            #region Cosmopolitan
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Cosmopolitan, ImgElementXPath = "//div[contains(@class, 'first-image')]//img", });
-            #endregion
 
-            #region Wall.hr
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.WallHr, ImageUrlParseStrategy = ImageUrlParseStrategy.FromContent, ImgElementXPath = "//figure[contains(@class, 'dcms-image article-image')]//img", });
-            #endregion
 
-            #region  Ljepota i zdravlje
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.LjepotaIZdravlje, ImgElementXPath = "//div[contains(@class, 'post-thumbnail')]//img", });
-            #endregion
 
-            #region Autonet
+
+
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.AutoNet, ImgElementXPath = "//figure[contains(@class, 'figure')]//img", });
-            #endregion
 
-            #region N1        
+
+
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.N1,
                 ImgElementXPath = "//figure[contains(@class, 'media')]//img",
                 ImageUrlParseStrategy = ImageUrlParseStrategy.FromElementExtension
             });
-            #endregion
 
-            #region NarodHr        
+
+
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.NarodHr,
                 ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img",
             });
-            #endregion
 
-            #region Hrt        
+
+
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Hrt_Vijesti,
@@ -1376,25 +1408,25 @@ namespace Espresso.Persistence.DataSeed
                 RssFeedId = (int)RssFeedId.Hrt_Glazba,
                 ImgElementXPath = "//div[contains(@class, 'image-slider')]//img",
             });
-            #endregion
 
-            #region 100posto
+
+
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.StoPosto,
                 ImgElementXPath = "//picture[contains(@class, 'pic')]//img",
             });
-            #endregion
 
-            #region Dnevno
+
+
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Dnevno,
                 ImgElementXPath = "//div[contains(@class, 'img-holder inner')]//img",
             });
-            #endregion
 
-            #region DirektHr
+
+
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.DirektnoHr_Direkt,
@@ -1435,71 +1467,80 @@ namespace Espresso.Persistence.DataSeed
                 RssFeedId = (int)RssFeedId.DirektnoHr_Zivot,
                 ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
             });
-            #endregion
 
-            #region Scena
+
+
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Scena,
                 ImgElementXPath = "//div[contains(@class, 'mycontent')]//img",
             });
-            #endregion
 
-            #region Nacional
+
+
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Nacional,
                 ImgElementXPath = "//div[contains(@class, 'single-post-media')]//img",
             });
-            #endregion
 
-            #region Express
+
+
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Express,
                 ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
             });
-            #endregion
 
-            #region OtvorenoHr
+
+
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.OtvorenoHr,
                 ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img",
             });
-            #endregion   
 
-            #region GeoPolitika
+
+
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.GeoPolitika,
                 ImgElementXPath = "//div[contains(@class, 'entry-image featured-image')]//img",
             });
-            #endregion
 
-            #region Povijesthr
+
+
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.PovijestHr,
                 ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img",
             });
-            #endregion
 
-            #region 7Dnevno
+
+
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Dnevno7,
                 ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img",
             });
-            #endregion     
 
-            #region Baskteball.Hr
+
+
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.BasketballHr,
                 ImgElementXPath = "//div[contains(@class, 'img')]//img",
             });
-            #endregion                                    
+
+
+
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.IctBusiness,
+                ImgElementXPath = "//div[contains(@class, 'main-content')]//img",
+                ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary
+            });
+
         }
 
         private static void SeedLocalImageUrlParseConfiguration(

@@ -705,6 +705,26 @@ namespace Espresso.Persistence.Migrations
                         },
                         new
                         {
+                            Id = 104,
+                            BaseUrl = "https://joomboos.24sata.hr",
+                            CategoryId = 6,
+                            CreatedAt = new DateTime(2020, 9, 21, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/JoomBoos.png",
+                            Name = "JoomBoos",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 105,
+                            BaseUrl = "https://www.ictbusiness.info",
+                            CategoryId = 5,
+                            CreatedAt = new DateTime(2020, 9, 21, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/IctBusiness.png",
+                            Name = "ICT Business",
+                            RegionId = 1
+                        },
+                        new
+                        {
                             Id = 37,
                             BaseUrl = "https://www.dalmacijadanas.hr",
                             CategoryId = 12,
@@ -2052,6 +2072,22 @@ namespace Espresso.Persistence.Migrations
                             NewsPortalId = 103,
                             RequestType = 1,
                             Url = "https://basketball.hr/vijesti.xml"
+                        },
+                        new
+                        {
+                            Id = 149,
+                            CategoryId = 6,
+                            NewsPortalId = 104,
+                            RequestType = 1,
+                            Url = "https://joomboos.24sata.hr/feeds/axiom-feed/tes-partnerski"
+                        },
+                        new
+                        {
+                            Id = 150,
+                            CategoryId = 5,
+                            NewsPortalId = 105,
+                            RequestType = 1,
+                            Url = "https://www.ictbusiness.info/rss2.xml"
                         },
                         new
                         {
@@ -4102,6 +4138,12 @@ namespace Espresso.Persistence.Migrations
                                 },
                                 new
                                 {
+                                    RssFeedId = 150,
+                                    ImageUrlParseStrategy = 1,
+                                    ImgElementXPath = "//div[contains(@class, 'main-content')]//img"
+                                },
+                                new
+                                {
                                     RssFeedId = 83,
                                     ImgElementXPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img"
                                 },
@@ -4283,6 +4325,18 @@ namespace Espresso.Persistence.Migrations
                                     RssFeedId = 148,
                                     CurrentSkip = 0,
                                     NumberOfSkips = 5
+                                },
+                                new
+                                {
+                                    RssFeedId = 149,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 10
+                                },
+                                new
+                                {
+                                    RssFeedId = 150,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 8
                                 });
                         });
                 });
