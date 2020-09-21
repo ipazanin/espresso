@@ -42,11 +42,9 @@
         VecernjiList = 37,
         Telegram = 39,
         Telegram_Telesport = 40,
-        // Telegram_Zivot = 41,
         Dnevnik = 42,
         Gol_Sport = 43,
         RtlVijesti_Sport = 44,
-        //Sprdex_ZabavnaSatira = 45,
         NewsBar_ZabavnaSatira = 46,
         NogometPlus_Nogomet = 47,
         Lider_BiznisIPolitikaHrvatska = 48,
@@ -149,5 +147,7 @@
         PovijestHr = 146,
         Dnevno7 = 147,
         BasketballHr = 148,
+        JoomBoos = 149,
+        IctBusiness = 150,
     }
 }

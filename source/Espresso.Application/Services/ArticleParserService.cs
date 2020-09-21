@@ -192,10 +192,6 @@ namespace Espresso.Application.Services
             CancellationToken cancellationToken
         )
         {
-            if (rssFeed.NewsPortalId == (int)NewsPortalId.Nacional)
-            {
-
-            }
             string? imageUrl;
             switch (rssFeed.ImageUrlParseConfiguration.ImageUrlParseStrategy)
             {

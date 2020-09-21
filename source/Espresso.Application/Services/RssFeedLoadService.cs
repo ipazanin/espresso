@@ -15,7 +15,6 @@ using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
-using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.Extensions;
 using Microsoft.Extensions.Caching.Memory;
@@ -76,10 +75,6 @@ namespace Espresso.Application.Services
                     try
                     {
                         var feed = await LoadFeed(rssFeed, cancellationToken);
-
-                        if (rssFeed.NewsPortalId == (int)NewsPortalId.Nacional)
-                        {
-                        }
 
                         parsedArticles.Enqueue((feed, rssFeed));
                     }
