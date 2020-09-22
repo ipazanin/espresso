@@ -1,5 +1,6 @@
-﻿using Espresso.WebApi.Application.IServices;
-using Espresso.WebApi.Application.Services;
+﻿using Espresso.Application.IServices;
+using Espresso.Application.Services;
+using Espresso.Wepi.Application.IServices;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Espresso.WebApi.Extensions
@@ -17,8 +18,6 @@ namespace Espresso.WebApi.Extensions
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<ISlackService, SlackService>();
-            services.AddScoped<ICreateArticlesService, CreateArticlesService>();
-            services.AddScoped<IScrapeWebService, ScrapeWebService>();
             services.AddScoped<IHttpService, HttpService>();
 
             return services;

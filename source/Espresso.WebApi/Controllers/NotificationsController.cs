@@ -5,7 +5,6 @@ using Espresso.WebApi.Application.CQRS.Articles.Commands.UpdateInMemoryArticles;
 using Espresso.WebApi.Application.CQRS.Notifications.Commands.SendArticlesNotifications;
 using Espresso.WebApi.Application.CQRS.Notifications.Commands.SendPushNotification;
 using Espresso.WebApi.Application.CQRS.Notifications.Queries.GetPushNotifications;
-using Espresso.WebApi.Application.DataTransferObjects;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
@@ -16,6 +15,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Espresso.Application.DataTransferObjects;
 
 namespace Espresso.WebApi.Controllers
 {
@@ -56,7 +56,7 @@ namespace Espresso.WebApi.Controllers
         [Authorize(Roles = ApiKey.ParserRole)]
         [Route("api/notifications/articles")]
         public async Task<IActionResult> SendLatestArticlesNotificition(
-            [FromBody] ArticlesRequestObjectDto articlesRequest,
+            [FromBody] ArticlesBodyDto articlesRequest,
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             CancellationToken cancellationToken
         )

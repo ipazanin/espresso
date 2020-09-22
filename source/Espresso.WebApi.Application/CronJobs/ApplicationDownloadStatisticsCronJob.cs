@@ -1,13 +1,13 @@
 ﻿using System;
-using Espresso.WebApi.Application.Infrastructure.CronJobsInfrastructure;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Persistence.IRepositories;
 using Microsoft.Extensions.Logging;
-using Espresso.WebApi.Application.IServices;
+using Espresso.Application.IServices;
 using Microsoft.Extensions.DependencyInjection;
+using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 
 namespace Espresso.WebApi.Application.CronJobs
 {

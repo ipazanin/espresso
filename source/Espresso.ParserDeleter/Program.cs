@@ -1,6 +1,5 @@
 ﻿using System;
 using Espresso.Common.Constants;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

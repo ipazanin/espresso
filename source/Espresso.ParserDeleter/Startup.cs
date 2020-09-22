@@ -1,11 +1,6 @@
-﻿using Espresso.WebApi.Application.CQRS.RssFeeds.Commands.ParseRssFeeds;
-using Espresso.WebApi.Application.Infrastructure.MediatorInfrastructure;
-using Espresso.WebApi.Application.Initialization;
-using Espresso.WebApi.Application.IService;
-using Espresso.WebApi.Application.IServices;
-using Espresso.WebApi.Application.Services;
+﻿using Espresso.Application.Infrastructure.MediatorInfrastructure;
+using Espresso.Application.IServices;
 using Espresso.Common.Enums;
-using Espresso.Jobs;
 using Espresso.ParserDeleter.Configuration;
 using Espresso.Persistence.Database;
 using Espresso.Persistence.IRepositories;
@@ -14,8 +9,15 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Espresso.ParserDeleter.Application.Initialization;
+using Espresso.ParserDeleter.Application.IServices;
+using Espresso.Application.Services;
+using Espresso.ParserDeleter.Application.Services;
+using Espresso.Wepi.Application.IServices;
+using Espresso.ParserDeleter.ParseRssFeeds.Validators;
+using Espresso.ParserDeleter.ParseRssFeeds;
+using Espresso.ParserDeleter.Jobs;
 using FluentValidation;
-using Espresso.WebApi.Application.CQRS.RssFeeds.Commands.ParseRssFeeds.Validators;
 
 namespace Espresso.ParserDeleter
 {
@@ -55,7 +57,7 @@ namespace Espresso.ParserDeleter
 
             #region MemoryCache
             services.AddMemoryCache();
-            services.AddTransient<IApplicationInit, ApplicationInit>();
+            services.AddTransient<IParserDeleterInit, ParserDeleterInit>();
             #endregion
 
             #region Http
@@ -63,7 +65,6 @@ namespace Espresso.ParserDeleter
             #endregion
 
             #region MediatR
-            services.AddSignalR();
             services.AddMediatR(typeof(ParseRssFeedsCommandHandler).Assembly);
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggerPipelineBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));

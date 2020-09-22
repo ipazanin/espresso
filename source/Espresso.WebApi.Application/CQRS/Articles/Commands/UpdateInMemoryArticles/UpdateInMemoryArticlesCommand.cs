@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Espresso.WebApi.Application.DataTransferObjects;
-using Espresso.WebApi.Application.Infrastructure.MediatorInfrastructure;
+using Espresso.Application.DataTransferObjects;
+using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 
