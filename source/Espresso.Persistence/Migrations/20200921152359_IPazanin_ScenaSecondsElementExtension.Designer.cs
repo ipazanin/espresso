@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200921152359_IPazanin_ScenaSecondsElementExtension")]
+    partial class IPazanin_ScenaSecondsElementExtension
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3409,62 +3411,6 @@ namespace Espresso.Persistence.Migrations
                             ReplacementValue = "</description>",
                             RssFeedId = 96,
                             SourceValue = "</content>"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            ReplacementValue = "<link>",
-                            RssFeedId = 70,
-                            SourceValue = "<thumb>"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            ReplacementValue = "</link>",
-                            RssFeedId = 70,
-                            SourceValue = "</thumb>"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            ReplacementValue = "<link>",
-                            RssFeedId = 69,
-                            SourceValue = "<thumb>"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            ReplacementValue = "</link>",
-                            RssFeedId = 69,
-                            SourceValue = "</thumb>"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            ReplacementValue = "<link>",
-                            RssFeedId = 68,
-                            SourceValue = "<thumb>"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            ReplacementValue = "</link>",
-                            RssFeedId = 68,
-                            SourceValue = "</thumb>"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            ReplacementValue = "<link>",
-                            RssFeedId = 67,
-                            SourceValue = "<thumb>"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            ReplacementValue = "</link>",
-                            RssFeedId = 67,
-                            SourceValue = "</thumb>"
                         });
                 });
 

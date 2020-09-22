@@ -4,22 +4,16 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Espresso.Domain.Entities;
+using Espresso.Domain.Records;
 
 namespace Espresso.Application.IServices
 {
     public interface IArticleParserService
     {
         public Task<Article> CreateArticleAsync(
-            RssFeed rssFeed,
+            RssFeedItem rssFeedItem,
             IEnumerable<Category> categories,
-            string? itemId,
-            IEnumerable<Uri?>? itemLinks,
-            string? itemTitle,
-            string? itemSummary,
-            string? itemContent,
-            DateTimeOffset itemPublishDateTime,
             TimeSpan maxAgeOfArticle,
-            IEnumerable<string?>? elementExtensions,
             CancellationToken cancellationToken
         );
     }

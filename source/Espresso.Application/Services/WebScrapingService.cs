@@ -6,15 +6,13 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.Extensions;
+using Espresso.Application.IService;
 using Espresso.Application.IServices;
 using Espresso.Common.Enums;
-using Espresso.Common.Extensions;
 using Espresso.Common.Utilities;
-using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.Extensions;
 using HtmlAgilityPack;
@@ -27,10 +25,12 @@ namespace Espresso.Application.Services
         #region Fields
         private readonly ILogger<WebScrapingService> _logger;
         private readonly HttpClient _httpClient;
+        private readonly IHtmlParsingService _htmlParsingService;
         #endregion
 
         #region Constructors
         public WebScrapingService(
+            IHtmlParsingService htmlParsingService,
             IHttpClientFactory httpClientFactory,
             ILoggerFactory loggerFactory
         )
@@ -38,6 +38,7 @@ namespace Espresso.Application.Services
             _logger = loggerFactory.CreateLogger<WebScrapingService>();
             _httpClient = httpClientFactory.CreateClient();
             _httpClient.Timeout = TimeSpan.FromSeconds(10);
+            _htmlParsingService = htmlParsingService;
         }
         #endregion
 
@@ -94,57 +95,19 @@ namespace Espresso.Application.Services
                     elementTags: elementTags,
                     propertyNames: propertyNames
                 ),
-                ImageUrlWebScrapeType.SrcAttribute => GetImageUrlFromSrcAttribute(elementTags),
-                _ => GetImageUrlFromSrcAttribute(elementTags),
+                ImageUrlWebScrapeType.SrcAttribute => _htmlParsingService.GetImageUrlFromSrcAttribute(elementTags),
+                _ => _htmlParsingService.GetImageUrlFromSrcAttribute(elementTags),
             };
 
+            LogWebScrapeResult(
+                imageUrl: imageUrl,
+                articleUrl: articleUrl,
+                xPath: xPath,
+                requestType: requestType,
+                imageUrlWebScrapeType: imageUrlWebScrapeType
+            );
+
             return imageUrl;
-        }
-
-        public string? GetSrcAttributeFromFirstImgElement(string? html)
-        {
-            if (string.IsNullOrEmpty(html))
-            {
-                return null;
-            }
-
-            var htmlDocument = new HtmlDocument();
-            htmlDocument.LoadHtml(html);
-            var imgTag = htmlDocument.DocumentNode.SelectSingleNode("//img");
-
-            var srcAttributeValue = imgTag?.GetAttributeValue("src", null);
-
-            return srcAttributeValue;
-        }
-
-        public string? GetText(string? html)
-        {
-            if (html is null)
-            {
-                return null;
-            }
-
-            var htmlDocument = new HtmlDocument();
-            htmlDocument.LoadHtml(html);
-            var nodes = htmlDocument.DocumentNode
-                .SelectNodes(".//text()")
-                ?.Select(node => node?.InnerText) ?? new List<string>();
-
-            var summary = HtmlEntity.DeEntitize(string.Join(" ", nodes));
-            summary = Regex.Replace(summary, @"\r\n?|\n", " ").RemoveExtraWhiteSpaceCharacters();
-
-            if (string.IsNullOrWhiteSpace(summary))
-            {
-                return null;
-            }
-
-            if (summary.Length > Article.SummaryMaxLength)
-            {
-                summary = summary.Replace(@"\n", " ");
-                summary = $"{string.Concat(summary.Take(Article.SummaryMaxLength - 4))}...";
-            }
-
-            return summary;
         }
         #endregion
 
@@ -187,14 +150,6 @@ namespace Espresso.Application.Services
             }
         }
 
-        private static string? GetImageUrlFromSrcAttribute(HtmlNodeCollection elementTags)
-        {
-            var imageUrls = elementTags.Select(imgTag => imgTag?.GetAttributeValue("src", null));
-            var imageUrl = imageUrls.FirstOrDefault();
-
-            return imageUrl;
-        }
-
         private async Task<string?> GetStringPageContent(
             string articleUrl,
             RequestType requestType,
@@ -234,10 +189,8 @@ namespace Espresso.Application.Services
                     articleUrl: articleUrl,
                     requestType: requestType
                 );
-                throw;
+                return null;
             }
-
-
         }
 
         private void LogImageUrlWebScrapingRequestError(Exception exception, string articleUrl, RequestType requestType)
@@ -337,6 +290,47 @@ namespace Espresso.Application.Services
                         requestType,
                         imageUrlWebScrapeType,
                         errorMessage
+                }
+            );
+        }
+
+        private void LogWebScrapeResult(
+            string? imageUrl,
+            string? articleUrl,
+            string xPath,
+            RequestType requestType,
+            ImageUrlWebScrapeType imageUrlWebScrapeType
+        )
+        {
+            var message = "ImageUrl web scraping successful";
+            var eventName = Event.ImageUrlWebScrapingData.GetDisplayName();
+            _logger.LogInformation(
+                eventId: new EventId(
+                    id: (int)Event.ImageUrlWebScrapingData,
+                    name: eventName
+                ),
+                message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
+                    $"{AnsiUtility.EncodeParameterName(nameof(imageUrl))}: " +
+                    $"{AnsiUtility.EncodeParameter("{1}")}\n\t" +
+                    $"{AnsiUtility.EncodeParameterName(nameof(articleUrl))}: " +
+                    $"{AnsiUtility.EncodeParameter("{2}")}\n\t" +
+                    $"{AnsiUtility.EncodeParameterName(nameof(xPath))}: " +
+                    $"{AnsiUtility.EncodeParameter("{3}")}\n\t" +
+                    $"{AnsiUtility.EncodeParameterName(nameof(requestType))}: " +
+                    $"{AnsiUtility.EncodeEnum("{4}")}\n\t" +
+                    $"{AnsiUtility.EncodeParameterName(nameof(imageUrlWebScrapeType))}: " +
+                    $"{AnsiUtility.EncodeEnum("{5}")}\n\t" +
+                    $"{AnsiUtility.EncodeParameterName(nameof(message))}: " +
+                    $"{AnsiUtility.EncodeParameter("{6}")}",
+                args: new object[]
+                {
+                        eventName,
+                        imageUrl ?? "",
+                        articleUrl ?? "",
+                        xPath,
+                        requestType,
+                        imageUrlWebScrapeType,
+                        message
                 }
             );
         }

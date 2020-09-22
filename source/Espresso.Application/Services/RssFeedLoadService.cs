@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net.Http;
 using System.ServiceModel.Syndication;
 using System.Threading;
@@ -15,8 +16,10 @@ using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.Extensions;
+using Espresso.Domain.Records;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
@@ -47,7 +50,7 @@ namespace Espresso.Application.Services
         #endregion
 
         #region Methods
-        public async Task<IEnumerable<(SyndicationFeed SyndicationFeed, RssFeed rssFeed)>> ParseRssFeeds(
+        public async Task<IEnumerable<RssFeedItem>> ParseRssFeeds(
             IEnumerable<RssFeed> rssFeeds,
             AppEnvironment appEnvironment,
             string currentApiVersion,
@@ -59,7 +62,7 @@ namespace Espresso.Application.Services
                 value: $"Started {nameof(ParseRssFeeds)}"
             );
 
-            var parsedArticles = new ConcurrentQueue<(SyndicationFeed SyndicationFeed, RssFeed rssFeed)>();
+            var parsedArticles = new ConcurrentQueue<RssFeedItem>();
 
             var getRssFeedRequestTasks = new List<Task>();
 
@@ -76,7 +79,33 @@ namespace Espresso.Application.Services
                     {
                         var feed = await LoadFeed(rssFeed, cancellationToken);
 
-                        parsedArticles.Enqueue((feed, rssFeed));
+                        foreach (var syndicationItem in feed.Items)
+                        {
+                            if (syndicationItem is null)
+                            {
+                                continue;
+                            }
+
+                            var rssFeedItem = new RssFeedItem
+                            {
+                                RssFeed = rssFeed,
+                                Id = syndicationItem.Id,
+                                Links = syndicationItem.Links?.Select(syndicationLink => syndicationLink.Uri),
+                                Title = syndicationItem.Title?.Text,
+                                Summary = syndicationItem.Summary?.Text,
+                                Content = (syndicationItem.Content is TextSyndicationContent ?
+                                    syndicationItem.Content as TextSyndicationContent
+                                    : null)
+                                    ?.Text,
+                                PublishDateTime = syndicationItem.PublishDate.DateTime,
+                                ElementExtensions = syndicationItem
+                                    .ElementExtensions
+                                    ?.Select(elementExtension => elementExtension?.GetObject<string?>()),
+                            };
+
+                            parsedArticles.Enqueue(rssFeedItem);
+                        }
+
                     }
                     catch (Exception exception)
                     {
