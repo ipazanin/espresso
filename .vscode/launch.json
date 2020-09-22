@@ -9,12 +9,10 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build web-api",
-      // If you have changed target frameworks, make sure to update the program path.
       "program": "${workspaceFolder}/source/Espresso.WebApi/bin/Debug/netcoreapp3.1/Espresso.WebApi.dll",
       "args": ["--urls", "http://localhost:8000/", "watch"],
       "cwd": "${workspaceFolder}/source/Espresso.WebApi",
       "stopAtEntry": false,
-      // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
       "serverReadyAction": {
         "action": "openExternally",
         "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"
@@ -37,12 +35,10 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build parser",
-      // If you have changed target frameworks, make sure to update the program path.
       "program": "${workspaceFolder}/source/Espresso.ParserDeleter/bin/Debug/netcoreapp3.1/Espresso.ParserDeleter.dll",
       "args": [],
       "cwd": "${workspaceFolder}/source/Espresso.ParserDeleter",
       "stopAtEntry": false,
-      // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
       "serverReadyAction": {
         "action": "openExternally",
         "pattern": "Started Parser"

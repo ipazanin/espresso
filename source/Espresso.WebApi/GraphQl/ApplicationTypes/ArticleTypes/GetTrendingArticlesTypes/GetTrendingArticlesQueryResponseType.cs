@@ -1,4 +1,4 @@
-﻿using Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles;
+﻿using Espresso.WebApi.Application.CQRS.Articles.Queries.GetTrendingArticles;
 using GraphQL.Types;
 
 namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetTrendingArticlesTypes

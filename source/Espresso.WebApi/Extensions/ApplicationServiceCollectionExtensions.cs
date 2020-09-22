@@ -1,5 +1,5 @@
-﻿using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
-using Espresso.Application.Initialization;
+﻿using Espresso.WebApi.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
+using Espresso.WebApi.Application.Initialization;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Filters;
 using FluentValidation.AspNetCore;

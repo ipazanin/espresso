@@ -1,9 +1,9 @@
-﻿using Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds;
-using Espresso.Application.Infrastructure.MediatorInfrastructure;
-using Espresso.Application.Initialization;
-using Espresso.Application.IService;
-using Espresso.Application.IServices;
-using Espresso.Application.Services;
+﻿using Espresso.WebApi.Application.CQRS.RssFeeds.Commands.ParseRssFeeds;
+using Espresso.WebApi.Application.Infrastructure.MediatorInfrastructure;
+using Espresso.WebApi.Application.Initialization;
+using Espresso.WebApi.Application.IService;
+using Espresso.WebApi.Application.IServices;
+using Espresso.WebApi.Application.Services;
 using Espresso.Common.Enums;
 using Espresso.Jobs;
 using Espresso.ParserDeleter.Configuration;
@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
-using Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds.Validators;
+using Espresso.WebApi.Application.CQRS.RssFeeds.Commands.ParseRssFeeds.Validators;
 
 namespace Espresso.ParserDeleter
 {

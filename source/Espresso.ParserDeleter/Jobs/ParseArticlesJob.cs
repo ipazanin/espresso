@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds;
-using Espresso.Application.Initialization;
-using Espresso.Application.IServices;
+using Espresso.WebApi.Application.CQRS.RssFeeds.Commands.ParseRssFeeds;
+using Espresso.WebApi.Application.Initialization;
+using Espresso.WebApi.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;

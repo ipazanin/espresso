@@ -1,5 +1,5 @@
-﻿using Espresso.Application.IServices;
-using Espresso.Application.Services;
+﻿using Espresso.WebApi.Application.IServices;
+using Espresso.WebApi.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Espresso.WebApi.Extensions

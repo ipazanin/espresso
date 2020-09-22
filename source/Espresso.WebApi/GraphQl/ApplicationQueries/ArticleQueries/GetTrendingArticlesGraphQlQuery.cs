@@ -1,5 +1,5 @@
 ﻿using System;
-using Espresso.Application.CQRS.Articles.Queries.GetTrendingArticles;
+using Espresso.WebApi.Application.CQRS.Articles.Queries.GetTrendingArticles;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetTrendingArticlesTypes;

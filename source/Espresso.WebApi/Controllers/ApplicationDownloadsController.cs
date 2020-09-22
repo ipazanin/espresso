@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.CQRS.ApplicationDownloads.Commands.CreateApplicationDownload;
-using Espresso.Application.CQRS.ApplicationDownloads.Queries.GetApplicationDownloadStatistics;
+using Espresso.WebApi.Application.CQRS.ApplicationDownloads.Commands.CreateApplicationDownload;
+using Espresso.WebApi.Application.CQRS.ApplicationDownloads.Queries.GetApplicationDownloadStatistics;
 using Espresso.Common.Constants;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Authentication;
