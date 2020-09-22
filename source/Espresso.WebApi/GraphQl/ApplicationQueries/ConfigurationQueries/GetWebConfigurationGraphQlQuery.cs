@@ -1,5 +1,5 @@
 ﻿using System;
-using Espresso.Application.CQRS.Configuration.Queries.GetWebConfiguration;
+using Espresso.WebApi.Application.CQRS.Configuration.Queries.GetWebConfiguration;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetWebCategoryArticlesTypes;
 using Espresso.WebApi.GraphQl.Infrastructure;

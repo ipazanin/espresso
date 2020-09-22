@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /source
 COPY ["Espresso.ParserDeleter/Espresso.ParserDeleter.csproj", "Espresso.ParserDeleter/"]
 COPY ["Espresso.Common/Espresso.Common.csproj", "Espresso.Common/"]
-COPY ["Espresso.Application/Espresso.Application.csproj", "Espresso.Application/"]
+COPY ["Espresso.WebApi.Application/Espresso.WebApi.Application.csproj", "Espresso.WebApi.Application/"]
 COPY ["Espresso.Domain/Espresso.Domain.csproj", "Espresso.Domain/"]
 COPY ["Espresso.Persistence/Espresso.Persistence.csproj", "Espresso.Persistence/"]
 RUN dotnet restore "Espresso.ParserDeleter/Espresso.ParserDeleter.csproj"

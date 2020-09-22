@@ -1,5 +1,5 @@
 ﻿using System;
-using Espresso.Application.CQRS.Articles.Commands.IncrementTrendingArticleScore;
+using Espresso.WebApi.Application.CQRS.Articles.Commands.IncrementTrendingArticleScore;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.Infrastructure;
 using GraphQL;

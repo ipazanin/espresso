@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Espresso.Application\Espresso.Application.csproj" />
+    <ProjectReference Include="..\Espresso.WebApi.Application\Espresso.WebApi.Application.csproj" />
     <ProjectReference Include="..\Espresso.Common\Espresso.Common.csproj" />
     <ProjectReference Include="..\Espresso.Persistence\Espresso.Persistence.csproj" />
   </ItemGroup>

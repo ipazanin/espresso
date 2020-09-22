@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.CQRS.NewsPortals.Commands.NewSourcesRequest;
-using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
+using Espresso.WebApi.Application.CQRS.NewsPortals.Commands.NewSourcesRequest;
+using Espresso.WebApi.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;

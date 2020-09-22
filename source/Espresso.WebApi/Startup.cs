@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Espresso.Application.Hubs;
-using Espresso.Application.Initialization;
+using Espresso.WebApi.Application.Hubs;
+using Espresso.WebApi.Application.Initialization;
 using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Configuration;

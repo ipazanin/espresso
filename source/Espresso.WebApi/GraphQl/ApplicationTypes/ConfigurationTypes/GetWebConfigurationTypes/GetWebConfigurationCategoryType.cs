@@ -1,4 +1,4 @@
-﻿using Espresso.Application.CQRS.Configuration.Queries.GetWebConfiguration;
+﻿using Espresso.WebApi.Application.CQRS.Configuration.Queries.GetWebConfiguration;
 using GraphQL.Types;
 
 namespace Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetWebCategoryArticlesTypes

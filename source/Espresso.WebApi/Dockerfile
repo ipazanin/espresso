@@ -8,7 +8,7 @@ COPY ["Espresso.WebApi/Espresso.WebApi.csproj", "Espresso.WebApi/"]
 COPY ["Espresso.Domain/Espresso.Domain.csproj", "Espresso.Domain/"]
 COPY ["Espresso.Common/Espresso.Common.csproj", "Espresso.Common/"]
 COPY ["Espresso.Persistence/Espresso.Persistence.csproj", "Espresso.Persistence/"]
-COPY ["Espresso.Application/Espresso.Application.csproj", "Espresso.Application/"]
+COPY ["Espresso.WebApi.Application/Espresso.WebApi.Application.csproj", "Espresso.WebApi.Application/"]
 RUN dotnet restore "Espresso.WebApi/Espresso.WebApi.csproj"
 COPY . .
 WORKDIR "/source/Espresso.WebApi"
