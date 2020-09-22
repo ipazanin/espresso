@@ -8,10 +8,6 @@ namespace Espresso.Application.IServices
 {
     public interface IWebScrapingService
     {
-        public string? GetText(string? html);
-
-        public string? GetSrcAttributeFromFirstImgElement(string? html);
-
         public Task<string?> GetSrcAttributeFromElementDefinedByXPath(
             string? articleUrl,
             string xPath,

@@ -2,7 +2,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.ServiceModel.Syndication;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +14,7 @@ using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.Extensions;
+using Espresso.Domain.Records;
 using Espresso.Persistence.IRepositories;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
@@ -71,7 +71,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             var rssFeeds = _memoryCache.Get<IEnumerable<RssFeed>>(key: MemoryCacheConstants.RssFeedKey);
             var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
 
-            var feeds = await _rssFeedLoadingService.ParseRssFeeds(
+            var rssFeedItems = await _rssFeedLoadingService.ParseRssFeeds(
                 rssFeeds: rssFeeds,
                 appEnvironment: request.AppEnvironment,
                 currentApiVersion: request.CurrentApiVersion,
@@ -85,7 +85,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             );
 
             var articles = await GetArticlesFromLoadedRssFeeds(
-                feeds: feeds,
+                rssFeedItems: rssFeedItems,
                 categories: categories,
                 request: request,
                 cancellationToken: cancellationToken
@@ -110,13 +110,13 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
 
         #region Private Methods
         public async Task<IEnumerable<Article>> GetArticlesFromLoadedRssFeeds(
-            IEnumerable<(SyndicationFeed syndicationFeed, RssFeed rssFeed)> feeds,
+            IEnumerable<RssFeedItem> rssFeedItems,
             IEnumerable<Category> categories,
             ParseRssFeedsCommand request,
             CancellationToken cancellationToken
         )
         {
-            var initialCapacity = feeds.Count();
+            var initialCapacity = rssFeedItems.Count();
             var parsedArticles = new ConcurrentDictionary<Guid, Article>();
             var articleIdArticleDictionary = new Dictionary<(int newsPortalId, string articleId), Guid>(initialCapacity);
             var titleArticleDictionary = new Dictionary<(int newsPortalId, string title), Guid>(initialCapacity);
@@ -125,98 +125,83 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             var tasks = new List<Task>();
             var random = new Random();
 
-            foreach (var (syndicationFeed, rssFeed) in feeds)
+            foreach (var rssFeedItem in rssFeedItems)
             {
-                foreach (var syndicationItem in syndicationFeed.Items)
+                tasks.Add(Task.Run(async () =>
                 {
-                    if (syndicationItem is null)
+                    var initialNumberOfClicks = random.Next(0, 15);
+                    try
                     {
-                        continue;
-                    }
+                        var article = await _articleParserService.CreateArticleAsync(
+                            rssFeedItem: rssFeedItem,
+                            categories: categories,
+                            maxAgeOfArticle: request.MaxAgeOfArticle,
+                            cancellationToken: cancellationToken
+                        );
 
-                    tasks.Add(Task.Run(async () =>
+                        _ = parsedArticles.TryAdd(article.Id, article);
+                    }
+                    catch (Exception exception)
                     {
-                        var initialNumberOfClicks = random.Next(0, 15);
-                        try
+                        var rssFeedUrl = rssFeedItem.RssFeed.Url;
+                        var exceptionMessage = exception.Message;
+                        var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
+                        var eventName = Event.ArticleParsing.GetDisplayName();
+                        var eventId = (int)Event.ArticleParsing;
+                        var message = $"RssFeedUrl: {rssFeedUrl}";
+
+                        if (exception.Message.Equals("articleCategories must not be empty! (Parameter 'articleCategories')"))
                         {
-                            var article = await _articleParserService.CreateArticleAsync(
-                                rssFeed: rssFeed,
-                                categories: categories,
-                                itemId: syndicationItem.Id,
-                                itemLinks: syndicationItem.Links?.Select(syndicationLink => syndicationLink.Uri),
-                                itemTitle: syndicationItem.Title?.Text,
-                                itemSummary: syndicationItem.Summary?.Text,
-                                itemContent: (syndicationItem.Content as TextSyndicationContent)?.Text,
-                                itemPublishDateTime: syndicationItem.PublishDate,
-                                maxAgeOfArticle: request.MaxAgeOfArticle,
-                                elementExtensions: syndicationItem.ElementExtensions?.Select(elementExtension => elementExtension?.GetObject<string?>()),
+                            var urlCategories = string.Join(
+                                separator: ", ",
+                                values: rssFeedItem.RssFeed.RssFeedCategories?
+                                    .Select(rssFeedCategory => $"{rssFeedCategory.UrlRegex}-{rssFeedCategory.UrlSegmentIndex}:{rssFeedCategory.Category?.Name ?? ""}")
+                                    ?? Array.Empty<string>()
+                            );
+                            await _slackService.LogMissingCategoriesError(
+                                version: request.CurrentApiVersion,
+                                rssFeedUrl: rssFeedUrl,
+                                articleUrl: rssFeedItem.Links?.FirstOrDefault()?.ToString() ?? "",
+                                urlCategories: urlCategories,
+                                appEnvironment: request.AppEnvironment,
                                 cancellationToken: cancellationToken
                             );
-
-                            _ = parsedArticles.TryAdd(article.Id, article);
                         }
-                        catch (Exception exception)
+                        else if (exception.Message.Equals("publishDateTime must not be empty! (Parameter 'publishDateTime')"))
                         {
-                            var rssFeedUrl = rssFeed.Url;
-                            var exceptionMessage = exception.Message;
-                            var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
-                            var eventName = Event.ArticleParsing.GetDisplayName();
-                            var eventId = (int)Event.ArticleParsing;
-                            var message = $"RssFeedUrl: {rssFeedUrl}";
 
-                            if (exception.Message.Equals("articleCategories must not be empty! (Parameter 'articleCategories')"))
-                            {
-                                var urlCategories = string.Join(
-                                    separator: ", ",
-                                    values: rssFeed.RssFeedCategories?
-                                        .Select(rssFeedCategory => $"{rssFeedCategory.UrlRegex}-{rssFeedCategory.UrlSegmentIndex}:{rssFeedCategory.Category?.Name ?? ""}")
-                                        ?? Array.Empty<string>()
-                                );
-                                await _slackService.LogMissingCategoriesError(
-                                    version: request.CurrentApiVersion,
-                                    rssFeedUrl: rssFeedUrl,
-                                    articleUrl: syndicationItem?.Links?.FirstOrDefault()?.Uri?.ToString() ?? "",
-                                    urlCategories: urlCategories,
-                                    appEnvironment: request.AppEnvironment,
-                                    cancellationToken: cancellationToken
-                                );
-                            }
-                            else if (exception.Message.Equals("publishDateTime must not be empty! (Parameter 'publishDateTime')"))
-                            {
-
-                            }
-                            else
-                            {
-                                _logger.LogWarning(
-                                    eventId: new EventId(id: eventId, name: eventName),
-                                    message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
-                                        $"{AnsiUtility.EncodeParameterName(nameof(message))}: " +
-                                        $"{AnsiUtility.EncodeRequestParameters("{1}")}\n\t" +
-                                        $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
-                                        $"{AnsiUtility.EncodeErrorMessage("{2}")}\n\t" +
-                                        $"{AnsiUtility.EncodeParameterName(nameof(innerExceptionMessage))}: " +
-                                        $"{AnsiUtility.EncodeErrorMessage("{3}")}",
-                                    args: new object[]
-                                    {
+                        }
+                        else
+                        {
+                            _logger.LogWarning(
+                                eventId: new EventId(id: eventId, name: eventName),
+                                message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
+                                    $"{AnsiUtility.EncodeParameterName(nameof(message))}: " +
+                                    $"{AnsiUtility.EncodeRequestParameters("{1}")}\n\t" +
+                                    $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
+                                    $"{AnsiUtility.EncodeErrorMessage("{2}")}\n\t" +
+                                    $"{AnsiUtility.EncodeParameterName(nameof(innerExceptionMessage))}: " +
+                                    $"{AnsiUtility.EncodeErrorMessage("{3}")}",
+                                args: new object[]
+                                {
                                         eventName,
                                         message,
                                         exceptionMessage,
                                         innerExceptionMessage,
-                                    }
-                                );
+                                }
+                            );
 
-                                await _slackService.LogWarning(
-                                    eventName: eventName,
-                                    version: request.CurrentApiVersion,
-                                    message: message,
-                                    exception: exception,
-                                    appEnvironment: request.AppEnvironment,
-                                    cancellationToken: cancellationToken
-                                );
-                            }
+                            await _slackService.LogWarning(
+                                eventName: eventName,
+                                version: request.CurrentApiVersion,
+                                message: message,
+                                exception: exception,
+                                appEnvironment: request.AppEnvironment,
+                                cancellationToken: cancellationToken
+                            );
                         }
-                    }, cancellationToken));
-                }
+                    }
+                }, cancellationToken));
             }
 
             await Task.WhenAll(tasks);

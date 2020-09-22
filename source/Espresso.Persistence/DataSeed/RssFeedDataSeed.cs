@@ -32,7 +32,6 @@ namespace Espresso.Persistence.DataSeed
         {
             var rssFeeds = new List<RssFeed>
             {
-
                 new RssFeed(
                     id: (int)RssFeedId.Index_Vijesti,
                     url: "https://www.index.hr/rss/vijesti",
@@ -46,7 +45,6 @@ namespace Espresso.Persistence.DataSeed
                 new RssFeed((int)RssFeedId.Index_Auto, "https://www.index.hr/rss/auto", (int)NewsPortalId.Index, (int)CategoryId.AutoMoto, requestType: RequestType.Normal),
 
 
-
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Vijesti, "https://www.24sata.hr/feeds/news.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Vijesti, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Show, "https://www.24sata.hr/feeds/show.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Show, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Sport, "https://www.24sata.hr/feeds/sport.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Sport, requestType: RequestType.Normal),
@@ -54,19 +52,11 @@ namespace Espresso.Persistence.DataSeed
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Tech, "https://www.24sata.hr/feeds/tech.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Tech, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Viral, "https://www.24sata.hr/feeds/fun.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Viral, requestType: RequestType.Normal),
 
-
-
                 new RssFeed((int)RssFeedId.SportskeNovosti_Sport, "http://sportske.jutarnji.hr/sn/feed", (int)NewsPortalId.SportskeNovosti, (int)CategoryId.Sport, requestType: RequestType.Browser),
-
-
 
                 new RssFeed((int)RssFeedId.JutarnjiList, "https://www.jutarnji.hr/feed", (int)NewsPortalId.JutarnjiList, (int)CategoryId.Vijesti, requestType: RequestType.Browser),
 
-
-
                 new RssFeed((int)RssFeedId.NetHr, "https://net.hr/feed/", (int)NewsPortalId.NetHr, (int)CategoryId.Vijesti, requestType: RequestType.Normal),
-
-
 
                 new RssFeed((int)RssFeedId.SlobodnaDalmacija_Novosti, "https://www.slobodnadalmacija.hr/feed/category/119", (int)NewsPortalId.SlobodnaDalmacija, (int)CategoryId.Vijesti, requestType: RequestType.Browser),
                 new RssFeed((int)RssFeedId.SlobodnaDalmacija_Sport, "https://www.slobodnadalmacija.hr/feed/category/255", (int)NewsPortalId.SlobodnaDalmacija, (int)CategoryId.Sport, requestType: RequestType.Browser),
@@ -94,77 +84,46 @@ namespace Espresso.Persistence.DataSeed
                 new RssFeed((int)RssFeedId.TPortal_FunBox, "https://www.tportal.hr/rss-funbox.xml", (int)NewsPortalId.TPortal, (int)CategoryId.Viral, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.TPortal_Kultura, "https://www.tportal.hr/rss-kultura.xml", (int)NewsPortalId.TPortal, (int)CategoryId.Kultura, requestType: RequestType.Normal),
 
-
-
                 new RssFeed((int)RssFeedId.VecernjiList, "https://www.vecernji.hr/feeds/latest", (int)NewsPortalId.VecernjiList, (int)CategoryId.Vijesti, requestType: RequestType.Normal),
-
-
 
                 new RssFeed((int)RssFeedId.Telegram,"https://www.telegram.hr/feed/", (int)NewsPortalId.Telegram, (int)CategoryId.Vijesti, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.Telegram_Telesport, "https://telesport.telegram.hr/feed/", (int)NewsPortalId.Telegram, (int)CategoryId.Sport, requestType: RequestType.Normal),
-                
 
-                // Dnevnik
                 new RssFeed((int)RssFeedId.Dnevnik, "https://dnevnik.hr/assets/feed/articles/", (int)NewsPortalId.Dnevnik, (int)CategoryId.Vijesti, requestType: RequestType.Normal),
 
-                // Gol
                 new RssFeed((int)RssFeedId.Gol_Sport, "https://gol.dnevnik.hr/assets/feed/articles", (int)NewsPortalId.Gol, (int)CategoryId.Sport, requestType: RequestType.Normal),
 
-                // Rtl Vijesti
                 new RssFeed((int)RssFeedId.RtlVijesti_Sport, "https://sportnet.rtl.hr/rss/", (int)NewsPortalId.RtlVijesti, (int)CategoryId.Sport, requestType: RequestType.Normal),
-                
-                // Sprdex
-                //new RssFeed((int)RssFeedId.Sprdex_ZabavnaSatira, "http://sprdex.net.hr/feed/", (int)NewsPortalId.Sprdex, (int)CategoryId.Viral, requestType: RequestType.Normal),
-                
-                // Nogometni Plus
+
                 new RssFeed((int)RssFeedId.NogometPlus_Nogomet, "http://www.nogometplus.net/index.php/feed/", (int)NewsPortalId.NogometPlus, (int)CategoryId.Sport, requestType: RequestType.Normal),
-                
-                // Lider
+
                 new RssFeed((int)RssFeedId.Lider_BiznisIPolitikaHrvatska, "http://lider.media/feed/", (int)NewsPortalId.Lider, (int)CategoryId.Biznis, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.Lider_BiznisIPolitikaSvijet, "http://lider.media/feed/", (int)NewsPortalId.Lider, (int)CategoryId.Biznis, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.Lider_Trziste, "http://lider.media/feed/", (int)NewsPortalId.Lider, (int)CategoryId.Biznis, requestType: RequestType.Normal),
-                
-                // Bug
+
                 new RssFeed((int)RssFeedId.Bug_TechVijesti, "http://www.bug.hr/rss/vijesti/", (int)NewsPortalId.Bug, (int)CategoryId.Tech, requestType: RequestType.Normal),
 
-                // Vidi.Hr
                 new RssFeed((int)RssFeedId.VidiHr_TechVijesti, "http://www.vidi.hr/rss/feed/vidi", (int)NewsPortalId.VidiHr, (int)CategoryId.Tech, requestType: RequestType.Normal),
 
-                // Zimo
                 new RssFeed((int)RssFeedId.Zimo_TechVijesti, "https://zimo.dnevnik.hr/assets/feed/articles", (int)NewsPortalId.Zimo, (int)CategoryId.Tech, requestType: RequestType.Normal),
 
-                // Netokracija
                 new RssFeed((int)RssFeedId.Netokracija, "http://www.netokracija.com/feed", (int)NewsPortalId.Netokracija, (int)CategoryId.Tech, requestType: RequestType.Normal),
 
-                // Poslovni Plus
                 new RssFeed((int)RssFeedId.PoslovniPuls, "http://www.poslovnipuls.com/feed/", (int)NewsPortalId.PoslovniPuls, (int)CategoryId.Biznis, requestType: RequestType.Browser),
-                
-                // PCChip
-                new RssFeed((int)RssFeedId.PcChip, "http://pcchip.hr/feed/", (int)NewsPortalId.PcChip, (int)CategoryId.Tech, requestType: RequestType.Normal),
-                
-                // Cosmopolitan
-                new RssFeed((int)RssFeedId.Cosmopolitan, "http://www.cosmopolitan.hr/feed", (int)NewsPortalId.Cosmopolitan, (int)CategoryId.Lifestyle, requestType: RequestType.Normal),
 
+                new RssFeed((int)RssFeedId.PcChip, "http://pcchip.hr/feed/", (int)NewsPortalId.PcChip, (int)CategoryId.Tech, requestType: RequestType.Normal),
+
+                new RssFeed((int)RssFeedId.Cosmopolitan, "http://www.cosmopolitan.hr/feed", (int)NewsPortalId.Cosmopolitan, (int)CategoryId.Lifestyle, requestType: RequestType.Normal),
 
                 new RssFeed((int)RssFeedId.WallHr, "http://wall.hr/cdn/feed.xml", (int)NewsPortalId.WallHr, (int)CategoryId.Lifestyle, requestType: RequestType.Normal),
 
-
-
                 new RssFeed((int)RssFeedId.LjepotaIZdravlje, "http://www.ljepotaizdravlje.hr/feed", (int)NewsPortalId.LjepotaIZdravlje, (int)CategoryId.Lifestyle, requestType: RequestType.Normal),
-
-
 
                 new RssFeed((int)RssFeedId.AutoNet, "https://www.autonet.hr/feed/", (int)NewsPortalId.Autonet, (int)CategoryId.AutoMoto, requestType: RequestType.Normal),
 
-
-
                 new RssFeed((int)RssFeedId.N1, "http://hr.n1info.com/rss/249/Naslovna", (int)NewsPortalId.N1, (int)CategoryId.Vijesti, requestType: RequestType.Browser),
 
-
-
                 new RssFeed((int)RssFeedId.NarodHr, "https://narod.hr/feed", (int)NewsPortalId.NarodHr, (int)CategoryId.Vijesti, requestType: RequestType.Browser),
-
-
 
                 new RssFeed(
                     id: (int)RssFeedId.Hrt_Vijesti,
@@ -479,9 +438,6 @@ namespace Espresso.Persistence.DataSeed
                     requestType: RequestType.Normal
                 ),
 
-
-
-
                 new RssFeed(
                     id: (int)RssFeedId.IVijesti,
                     url: "https://ivijesti.hr/feed",
@@ -545,8 +501,6 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal
                 ),
-
-
 
                 new RssFeed(
                     id: (int)RssFeedId.LikaKlub,
@@ -636,8 +590,6 @@ namespace Espresso.Persistence.DataSeed
                     requestType: RequestType.Normal
                 ),
 
-
-
                 new RssFeed(
                     id: (int)RssFeedId.SjeverHr,
                     url: "https://sjever.hr/feed",
@@ -701,8 +653,6 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal
                 ),
-
-
 
                 new RssFeed(
                     id: (int)RssFeedId.BaranjaInfo,
@@ -933,8 +883,6 @@ namespace Espresso.Persistence.DataSeed
                 CurrentSkip = 0
             });
 
-
-
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Novosti,
@@ -1020,16 +968,12 @@ namespace Espresso.Persistence.DataSeed
                 CurrentSkip = 0
             });
 
-
-
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.PoslovniPuls,
                 NumberOfSkips = 10,
                 CurrentSkip = 0
             });
-
-
 
             skipParseConfigurationBuilder.HasData(new
             {
@@ -1038,16 +982,12 @@ namespace Espresso.Persistence.DataSeed
                 CurrentSkip = 0
             });
 
-
-
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Express,
                 NumberOfSkips = 10,
                 CurrentSkip = 0
             });
-
-
 
             skipParseConfigurationBuilder.HasData(new
             {
@@ -1074,8 +1014,6 @@ namespace Espresso.Persistence.DataSeed
                 CurrentSkip = 0
             });
 
-
-
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Dalmacija,
@@ -1092,8 +1030,6 @@ namespace Espresso.Persistence.DataSeed
                 CurrentSkip = 0
             });
 
-
-
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.BasketballHr,
@@ -1101,20 +1037,24 @@ namespace Espresso.Persistence.DataSeed
                 CurrentSkip = 0
             });
 
-
-
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.JoomBoos,
-                NumberOfSkips = 10,
+                NumberOfSkips = 7,
                 CurrentSkip = 0
             });
-
 
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.IctBusiness,
                 NumberOfSkips = 8,
+                CurrentSkip = 0
+            });
+
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Scena,
+                NumberOfSkips = 6,
                 CurrentSkip = 0
             });
 
@@ -1124,15 +1064,12 @@ namespace Espresso.Persistence.DataSeed
             OwnedNavigationBuilder<RssFeed, CategoryParseConfiguration> categoryParseConfigurationBuilder
         )
         {
-
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.JutarnjiList,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl
 
             });
-
-
 
             categoryParseConfigurationBuilder.HasData(new
             {
@@ -1141,8 +1078,6 @@ namespace Espresso.Persistence.DataSeed
 
             });
 
-
-
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.VecernjiList,
@@ -1150,27 +1085,33 @@ namespace Espresso.Persistence.DataSeed
 
             });
 
-
-
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Telegram,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl
             });
 
-
-
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Dnevnik, CategoryParseStrategy = CategoryParseStrategy.FromUrl });
-
-
-
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.N1, CategoryParseStrategy = CategoryParseStrategy.FromUrl });
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Dnevnik,
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl
+            });
 
 
 
-            categoryParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.NarodHr, CategoryParseStrategy = CategoryParseStrategy.FromUrl });
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.N1,
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl
+            });
 
 
+
+            categoryParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.NarodHr,
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl
+            });
 
             categoryParseConfigurationBuilder.HasData(new
             {
@@ -1179,8 +1120,6 @@ namespace Espresso.Persistence.DataSeed
 
             });
 
-
-
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Dnevno,
@@ -1188,15 +1127,11 @@ namespace Espresso.Persistence.DataSeed
 
             });
 
-
-
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Scena,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
             });
-
-
 
             categoryParseConfigurationBuilder.HasData(new
             {
@@ -1204,23 +1139,17 @@ namespace Espresso.Persistence.DataSeed
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
             });
 
-
-
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.OtvorenoHr,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
             });
 
-
-
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.GeoPolitika,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
             });
-
-
 
             categoryParseConfigurationBuilder.HasData(new
             {
@@ -1241,8 +1170,6 @@ namespace Espresso.Persistence.DataSeed
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Rogue, ImgElementXPath = "//figure[contains(@class, 'img-container')]//img", ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Auto, ImgElementXPath = "//figure[contains(@class, 'img-container')]//img", ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary });
 
-
-
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Vijesti, ImgElementXPath = "//img[contains(@class, 'article__figure_img')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Show, ImgElementXPath = "//img[contains(@class, 'article__figure_img')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Sport, ImgElementXPath = "//img[contains(@class, 'article__figure_img')]", });
@@ -1250,19 +1177,11 @@ namespace Espresso.Persistence.DataSeed
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Tech, ImgElementXPath = "//img[contains(@class, 'article__figure_img')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.DvadesetCetiriSata_Viral, ImgElementXPath = "//img[contains(@class, 'article__figure_img')]", });
 
-
-
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SportskeNovosti_Sport, ImgElementXPath = "//img[contains(@class, 'media-object adaptive lazy')]", });
-
-
 
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.JutarnjiList, ImgElementXPath = "//img[contains(@class, 'media-object adaptive lazy')]", });
 
-
-
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.NetHr, ImgElementXPath = "//div[contains(@class, 'featured-img')]//img", });
-
-
 
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Novosti, ImgElementXPath = "//img[contains(@class, 'card__image')]", });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Sport, ImgElementXPath = "//img[contains(@class, 'card__image')]", });
@@ -1375,7 +1294,7 @@ namespace Espresso.Persistence.DataSeed
             {
                 RssFeedId = (int)RssFeedId.N1,
                 ImgElementXPath = "//figure[contains(@class, 'media')]//img",
-                ImageUrlParseStrategy = ImageUrlParseStrategy.FromElementExtension
+                ImageUrlParseStrategy = ImageUrlParseStrategy.FromFirstElementExtension
             });
 
 
@@ -1468,15 +1387,12 @@ namespace Espresso.Persistence.DataSeed
                 ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img",
             });
 
-
-
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Scena,
                 ImgElementXPath = "//div[contains(@class, 'mycontent')]//img",
+                ImageUrlParseStrategy = ImageUrlParseStrategy.FromSecondElementExtension
             });
-
-
 
             imageUrlParseConfigurationBuilder.HasData(new
             {
@@ -1484,15 +1400,11 @@ namespace Espresso.Persistence.DataSeed
                 ImgElementXPath = "//div[contains(@class, 'single-post-media')]//img",
             });
 
-
-
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Express,
                 ImgElementXPath = "//img[contains(@class, 'article__figure_img')]",
             });
-
-
 
             imageUrlParseConfigurationBuilder.HasData(new
             {
@@ -1500,15 +1412,11 @@ namespace Espresso.Persistence.DataSeed
                 ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img",
             });
 
-
-
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.GeoPolitika,
                 ImgElementXPath = "//div[contains(@class, 'entry-image featured-image')]//img",
             });
-
-
 
             imageUrlParseConfigurationBuilder.HasData(new
             {
@@ -1516,15 +1424,11 @@ namespace Espresso.Persistence.DataSeed
                 ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img",
             });
 
-
-
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Dnevno7,
                 ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img",
             });
-
-
 
             imageUrlParseConfigurationBuilder.HasData(new
             {
@@ -1532,15 +1436,12 @@ namespace Espresso.Persistence.DataSeed
                 ImgElementXPath = "//div[contains(@class, 'img')]//img",
             });
 
-
-
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.IctBusiness,
                 ImgElementXPath = "//div[contains(@class, 'main-content')]//img",
                 ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary
             });
-
         }
 
         private static void SeedLocalImageUrlParseConfiguration(

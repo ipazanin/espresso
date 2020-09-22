@@ -87,6 +87,55 @@ namespace Espresso.Persistence.DataSeed
                 replacementValue: "</description>",
                 rssFeedId: (int)RssFeedId.IndexHrZagreb
             ));
+
+            builder.HasData(new RssFeedContentModifier(
+                id: id++,
+                sourceValue: "<thumb>",
+                replacementValue: "<link>",
+                rssFeedId: (int)RssFeedId.Hrt_Glazba
+            ));
+            builder.HasData(new RssFeedContentModifier(
+                id: id++,
+                sourceValue: "</thumb>",
+                replacementValue: "</link>",
+                rssFeedId: (int)RssFeedId.Hrt_Glazba
+            ));
+            builder.HasData(new RssFeedContentModifier(
+                id: id++,
+                sourceValue: "<thumb>",
+                replacementValue: "<link>",
+                rssFeedId: (int)RssFeedId.Hrt_Magazin
+            ));
+            builder.HasData(new RssFeedContentModifier(
+                id: id++,
+                sourceValue: "</thumb>",
+                replacementValue: "</link>",
+                rssFeedId: (int)RssFeedId.Hrt_Magazin
+            ));
+            builder.HasData(new RssFeedContentModifier(
+                id: id++,
+                sourceValue: "<thumb>",
+                replacementValue: "<link>",
+                rssFeedId: (int)RssFeedId.Hrt_Sport
+            ));
+            builder.HasData(new RssFeedContentModifier(
+                id: id++,
+                sourceValue: "</thumb>",
+                replacementValue: "</link>",
+                rssFeedId: (int)RssFeedId.Hrt_Sport
+            ));
+            builder.HasData(new RssFeedContentModifier(
+                id: id++,
+                sourceValue: "<thumb>",
+                replacementValue: "<link>",
+                rssFeedId: (int)RssFeedId.Hrt_Vijesti
+            ));
+            builder.HasData(new RssFeedContentModifier(
+                id: id++,
+                sourceValue: "</thumb>",
+                replacementValue: "</link>",
+                rssFeedId: (int)RssFeedId.Hrt_Vijesti
+            ));
         }
     }
 }

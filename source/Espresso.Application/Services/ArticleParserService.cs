@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Espresso.Application.IService;
 using Espresso.Application.IServices;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.IValidators;
+using Espresso.Domain.Records;
 
 namespace Espresso.Application.Services
 {
@@ -17,31 +19,27 @@ namespace Espresso.Application.Services
         #region Fields
         private readonly IWebScrapingService _webScrapingService;
         private readonly IArticleValidator _articleValidator;
+        private readonly IHtmlParsingService _htmlParsingService;
         #endregion
 
         #region Constructors
         public ArticleParserService(
             IWebScrapingService webScrapingService,
-            IArticleValidator articleValidator
+            IArticleValidator articleValidator,
+            IHtmlParsingService htmlParsingService
         )
         {
             _webScrapingService = webScrapingService;
             _articleValidator = articleValidator;
+            _htmlParsingService = htmlParsingService;
         }
         #endregion
 
         #region Public Methods
         public async Task<Article> CreateArticleAsync(
-            RssFeed rssFeed,
+            RssFeedItem rssFeedItem,
             IEnumerable<Category> categories,
-            string? itemId,
-            IEnumerable<Uri?>? itemLinks,
-            string? itemTitle,
-            string? itemSummary,
-            string? itemContent,
-            DateTimeOffset itemPublishDateTime,
             TimeSpan maxAgeOfArticle,
-            IEnumerable<string?>? elementExtensions,
             CancellationToken cancellationToken
         )
         {
@@ -52,46 +50,46 @@ namespace Espresso.Application.Services
             var initialTrendingScore = 0;
 
             var url = GetUrl(
-                rssFeed: rssFeed,
-                itemLinks: itemLinks,
-                itemId: itemId
+                rssFeed: rssFeedItem.RssFeed,
+                itemLinks: rssFeedItem.Links,
+                itemId: rssFeedItem.Id
             );
 
             var webUrl = GetNormalUrl(
-                rssFeed: rssFeed,
-                itemLinks: itemLinks
+                rssFeed: rssFeedItem.RssFeed,
+                itemLinks: rssFeedItem.Links
             );
 
             var summary = GetSummary(
-                itemSummary: itemSummary,
-                itemTitle: itemTitle
+                itemSummary: rssFeedItem.Summary,
+                itemTitle: rssFeedItem.Title
             );
 
-            var title = itemTitle;
+            var title = rssFeedItem.Title;
 
             var imageUrl = await GetImageUrl(
-                itemLinks: itemLinks,
-                itemSummary: itemSummary,
-                itemContent: itemContent,
-                rssFeed: rssFeed,
+                itemLinks: rssFeedItem.Links,
+                itemSummary: rssFeedItem.Summary,
+                itemContent: rssFeedItem.Content,
+                rssFeed: rssFeedItem.RssFeed,
                 webUrl: webUrl,
-                elementExtensions: elementExtensions,
+                elementExtensions: rssFeedItem.ElementExtensions,
                 cancellationToken: cancellationToken
             );
 
             var publishDateTime = GetPublishDateTime(
-                itemPublishDateTime: itemPublishDateTime,
+                itemPublishDateTime: rssFeedItem.PublishDateTime,
                 utcNow: utcNow,
                 maxAgeOfArticle: maxAgeOfArticle
             );
 
             var articlecategories = GetArticleCategories(
                 categories: categories,
-                itemTitle: itemTitle,
+                itemTitle: rssFeedItem.Title,
                 itemSummary: summary,
                 articleId: id,
-                itemUrl: itemLinks.FirstOrDefault(),
-                rssFeed: rssFeed
+                itemUrl: rssFeedItem.Links.FirstOrDefault(),
+                rssFeed: rssFeedItem.RssFeed
             );
 
             var article = _articleValidator.Validate(
@@ -106,11 +104,11 @@ namespace Espresso.Application.Services
                 publishDateTime: publishDateTime,
                 numberOfClicks: initialNumberOfClicks,
                 trendingScore: initialTrendingScore,
-                newsPortalId: rssFeed.NewsPortalId,
-                rssFeedId: rssFeed.Id,
+                newsPortalId: rssFeedItem.RssFeed.NewsPortalId,
+                rssFeedId: rssFeedItem.RssFeed.Id,
                 articleCategories: articlecategories,
-                newsPortal: rssFeed.NewsPortal,
-                rssFeed: rssFeed
+                newsPortal: rssFeedItem.RssFeed.NewsPortal,
+                rssFeed: rssFeedItem.RssFeed
             );
 
             return article;
@@ -176,7 +174,7 @@ namespace Espresso.Application.Services
         #region Summary
         private string? GetSummary(string? itemSummary, string? itemTitle)
         {
-            var summary = _webScrapingService.GetText(html: itemSummary);
+            var summary = _htmlParsingService.GetText(html: itemSummary);
             return string.IsNullOrEmpty(summary) ? itemTitle : summary;
         }
         #endregion
@@ -200,15 +198,26 @@ namespace Espresso.Application.Services
                     imageUrl = itemLinks.Count() > 1 ? itemLinks.ElementAt(1)?.ToString() : null;
                     if (imageUrl is null)
                     {
-                        imageUrl = _webScrapingService.GetSrcAttributeFromFirstImgElement(itemSummary);
+                        imageUrl = _htmlParsingService.GetSrcAttributeFromFirstImgElement(itemSummary);
                     }
 
                     break;
                 case ImageUrlParseStrategy.FromContent:
-                    imageUrl = _webScrapingService.GetSrcAttributeFromFirstImgElement(itemContent);
+                    imageUrl = _htmlParsingService.GetSrcAttributeFromFirstImgElement(itemContent);
                     break;
-                case ImageUrlParseStrategy.FromElementExtension:
+                case ImageUrlParseStrategy.FromFirstElementExtension:
                     imageUrl = elementExtensions?.FirstOrDefault();
+                    break;
+                case ImageUrlParseStrategy.FromSecondElementExtension:
+                    if (elementExtensions != null)
+                    {
+                        var htmlString = elementExtensions.Count() > 1 ? elementExtensions?.ElementAt(1) : null;
+                        imageUrl = _htmlParsingService.GetSrcAttributeFromFirstImgElement(htmlString);
+                    }
+                    else
+                    {
+                        imageUrl = null;
+                    }
                     break;
             }
 

@@ -47,6 +47,7 @@ namespace Espresso.ParserDeleter
             services.AddScoped<IRssFeedLoadService, RssFeedLoadService>();
             services.AddScoped<IArticleParserService, ArticleParserService>();
             services.AddScoped<IWebScrapingService, WebScrapingService>();
+            services.AddScoped<IHtmlParsingService, HtmlParsingService>();
             #endregion
 
             #region Validators
