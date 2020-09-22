@@ -6,7 +6,7 @@ using Espresso.Domain.Enums.RssFeedEnums;
 
 namespace Espresso.Application.IServices
 {
-    public interface IWebScrapingService
+    public interface IScrapeWebService
     {
         public Task<string?> GetSrcAttributeFromElementDefinedByXPath(
             string? articleUrl,

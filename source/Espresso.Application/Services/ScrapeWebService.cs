@@ -20,25 +20,25 @@ using Microsoft.Extensions.Logging;
 
 namespace Espresso.Application.Services
 {
-    public class WebScrapingService : IWebScrapingService
+    public class ScrapeWebService : IScrapeWebService
     {
         #region Fields
-        private readonly ILogger<WebScrapingService> _logger;
+        private readonly ILogger<ScrapeWebService> _logger;
         private readonly HttpClient _httpClient;
-        private readonly IHtmlParsingService _htmlParsingService;
+        private readonly IParseHtmlService _parseHtmlService;
         #endregion
 
         #region Constructors
-        public WebScrapingService(
-            IHtmlParsingService htmlParsingService,
+        public ScrapeWebService(
+            IParseHtmlService parseHtmlService,
             IHttpClientFactory httpClientFactory,
             ILoggerFactory loggerFactory
         )
         {
-            _logger = loggerFactory.CreateLogger<WebScrapingService>();
+            _logger = loggerFactory.CreateLogger<ScrapeWebService>();
             _httpClient = httpClientFactory.CreateClient();
             _httpClient.Timeout = TimeSpan.FromSeconds(10);
-            _htmlParsingService = htmlParsingService;
+            _parseHtmlService = parseHtmlService;
         }
         #endregion
 
@@ -95,8 +95,8 @@ namespace Espresso.Application.Services
                     elementTags: elementTags,
                     propertyNames: propertyNames
                 ),
-                ImageUrlWebScrapeType.SrcAttribute => _htmlParsingService.GetImageUrlFromSrcAttribute(elementTags),
-                _ => _htmlParsingService.GetImageUrlFromSrcAttribute(elementTags),
+                ImageUrlWebScrapeType.SrcAttribute => _parseHtmlService.GetImageUrlFromSrcAttribute(elementTags),
+                _ => _parseHtmlService.GetImageUrlFromSrcAttribute(elementTags),
             };
 
             LogWebScrapeResult(

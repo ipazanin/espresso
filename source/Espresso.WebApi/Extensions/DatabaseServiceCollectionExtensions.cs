@@ -1,5 +1,4 @@
-﻿using System;
-using Espresso.Common.Enums;
+﻿using Espresso.Common.Enums;
 
 using Espresso.Persistence.Database;
 using Espresso.Persistence.IRepositories;

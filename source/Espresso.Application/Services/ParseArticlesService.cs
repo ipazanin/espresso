@@ -7,26 +7,25 @@ using System.Threading.Tasks;
 using Espresso.Application.IService;
 using Espresso.Application.IServices;
 using Espresso.Domain.Entities;
-using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.IValidators;
 using Espresso.Domain.Records;
 
 namespace Espresso.Application.Services
 {
-    public class ArticleParserService : IArticleParserService
+    public class ParseArticlesService : IParseArticlesService
     {
         #region Fields
-        private readonly IWebScrapingService _webScrapingService;
+        private readonly IScrapeWebService _webScrapingService;
         private readonly IArticleValidator _articleValidator;
-        private readonly IHtmlParsingService _htmlParsingService;
+        private readonly IParseHtmlService _htmlParsingService;
         #endregion
 
         #region Constructors
-        public ArticleParserService(
-            IWebScrapingService webScrapingService,
+        public ParseArticlesService(
+            IScrapeWebService webScrapingService,
             IArticleValidator articleValidator,
-            IHtmlParsingService htmlParsingService
+            IParseHtmlService htmlParsingService
         )
         {
             _webScrapingService = webScrapingService;

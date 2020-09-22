@@ -2,7 +2,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.ServiceModel.Syndication;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects;
@@ -28,10 +27,11 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
         private readonly IMemoryCache _memoryCache;
         private readonly IArticleRepository _articleRepository;
         private readonly IArticleCategoryRepository _articleCategoryRepository;
-        private readonly IArticleParserService _articleParserService;
+        private readonly IParseArticlesService _parseArticlesService;
         private readonly ISlackService _slackService;
-        private readonly IRssFeedLoadService _rssFeedLoadingService;
+        private readonly ILoadRssFeedsService _loadRssFeedsService;
         private readonly IHttpService _httpService;
+        private readonly ISortArticlesService _sortArticlesService;
         private readonly ILogger<ParseRssFeedsCommandHandler> _logger;
         #endregion
 
@@ -40,20 +40,22 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             IMemoryCache memoryCache,
             IArticleRepository articleRepository,
             IArticleCategoryRepository articleCategoryRepository,
-            IArticleParserService articleParserService,
+            IParseArticlesService parseArticlesService,
             ISlackService slackService,
             ILoggerFactory loggerFactory,
-            IRssFeedLoadService rssFeedService,
-            IHttpService httpService
+            ILoadRssFeedsService loadRssFeedsService,
+            IHttpService httpService,
+            ISortArticlesService sortArticlesService
         )
         {
             _memoryCache = memoryCache;
             _articleRepository = articleRepository;
             _articleCategoryRepository = articleCategoryRepository;
-            _articleParserService = articleParserService;
+            _parseArticlesService = parseArticlesService;
             _slackService = slackService;
-            _rssFeedLoadingService = rssFeedService;
+            _loadRssFeedsService = loadRssFeedsService;
             _httpService = httpService;
+            _sortArticlesService = sortArticlesService;
             _logger = loggerFactory.CreateLogger<ParseRssFeedsCommandHandler>();
         }
         #endregion
@@ -69,9 +71,8 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
             var categories = _memoryCache.Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey);
 
             var rssFeeds = _memoryCache.Get<IEnumerable<RssFeed>>(key: MemoryCacheConstants.RssFeedKey);
-            var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
 
-            var rssFeedItems = await _rssFeedLoadingService.ParseRssFeeds(
+            var rssFeedItems = await _loadRssFeedsService.ParseRssFeeds(
                 rssFeeds: rssFeeds,
                 appEnvironment: request.AppEnvironment,
                 currentApiVersion: request.CurrentApiVersion,
@@ -91,16 +92,20 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                 cancellationToken: cancellationToken
             );
 
-            var (createdArticles, updatedArticles) = CreateOrUpdateArticles(
-                articles: articles,
-                newsPortals: newsPortals,
-                categories: categories
+            var uniqueArticles = _sortArticlesService.RemoveDuplicateArticles(articles);
+
+            var (createArticles, updateArticles) = _sortArticlesService.SortArticles(
+                articles: uniqueArticles,
+                savedArticles: _memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey)
             );
+
+            CreateArticles(articles: createArticles);
+            UpdateArticles(articles: updateArticles);
 
             await CallWebServer(
                 request: request,
-                createdArticles: createdArticles,
-                updatedArticles: updatedArticles,
+                createArticles: createArticles,
+                updateArticles: updateArticles,
                 cancellationToken: cancellationToken
             );
 
@@ -118,9 +123,6 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
         {
             var initialCapacity = rssFeedItems.Count();
             var parsedArticles = new ConcurrentDictionary<Guid, Article>();
-            var articleIdArticleDictionary = new Dictionary<(int newsPortalId, string articleId), Guid>(initialCapacity);
-            var titleArticleDictionary = new Dictionary<(int newsPortalId, string title), Guid>(initialCapacity);
-            var summaryArticleDictionary = new Dictionary<(int newsPortalId, string summary), Guid>(initialCapacity);
 
             var tasks = new List<Task>();
             var random = new Random();
@@ -132,7 +134,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                     var initialNumberOfClicks = random.Next(0, 15);
                     try
                     {
-                        var article = await _articleParserService.CreateArticleAsync(
+                        var article = await _parseArticlesService.CreateArticleAsync(
                             rssFeedItem: rssFeedItem,
                             categories: categories,
                             maxAgeOfArticle: request.MaxAgeOfArticle,
@@ -206,98 +208,7 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
 
             await Task.WhenAll(tasks);
 
-            var uniqueArticles = new Dictionary<Guid, Article>(parsedArticles.Count);
-
-            foreach (var article in parsedArticles.Values)
-            {
-                if (
-                    articleIdArticleDictionary.TryGetValue((article.NewsPortalId, article.Url), out var alreadyParsedArticleId) ||
-                    titleArticleDictionary.TryGetValue((article.NewsPortalId, article.Title), out alreadyParsedArticleId) ||
-                    summaryArticleDictionary.TryGetValue((article.NewsPortalId, article.Summary), out alreadyParsedArticleId)
-                )
-                {
-                    if (uniqueArticles.TryGetValue(alreadyParsedArticleId, out var parsedArticle))
-                    {
-                        parsedArticle.UpdateArticleCategories(article.ArticleCategories);
-                    }
-                }
-                else
-                {
-                    _ = uniqueArticles.TryAdd(article.Id, article);
-                    _ = articleIdArticleDictionary.TryAdd((article.NewsPortalId, article.Url), article.Id);
-                    _ = titleArticleDictionary.TryAdd((article.NewsPortalId, article.Title), article.Id);
-                    _ = summaryArticleDictionary.TryAdd((article.NewsPortalId, article.Summary), article.Id);
-                }
-            }
-
-            return uniqueArticles.Values;
-        }
-
-        private (IEnumerable<ArticleDto> createdArticles, IEnumerable<ArticleDto> updatedArticles) CreateOrUpdateArticles(
-            IEnumerable<Article> articles,
-            IEnumerable<NewsPortal> newsPortals,
-            IEnumerable<Category> categories
-        )
-        {
-            _ = _memoryCache.Set(
-                key: MemoryCacheConstants.DeadLockLogKey,
-                value: $"Started {nameof(CreateOrUpdateArticles)}"
-            );
-            var createArticles = new List<Article>();
-            var updateArticles = new List<Article>();
-            var savedArticles = _memoryCache.Get<IEnumerable<Article>>(
-                key: MemoryCacheConstants.ArticleKey
-            );
-
-            var savedArticlesIdDictionary = savedArticles.ToDictionary(
-                keySelector: article => article.Id
-            );
-
-            var savedArticlesArticleIdDictionary = new Dictionary<(int newsPortalId, string articleId), Guid>();
-            var savedArticlesTitleDictionary = new Dictionary<(int newsPortalId, string title), Guid>();
-            var savedArticlesSummaryDictionary = new Dictionary<(int newsPortalId, string summary), Guid>();
-
-            foreach (var article in savedArticles)
-            {
-                _ = savedArticlesArticleIdDictionary.TryAdd((article.NewsPortalId, article.Url), article.Id);
-                _ = savedArticlesTitleDictionary.TryAdd((article.NewsPortalId, article.Title), article.Id);
-                _ = savedArticlesSummaryDictionary.TryAdd((article.NewsPortalId, article.Summary), article.Id);
-            }
-
-            foreach (var article in articles)
-            {
-                if (
-                    savedArticlesArticleIdDictionary.TryGetValue((article.NewsPortalId, article.Url), out var savedArticleId) ||
-                    savedArticlesTitleDictionary.TryGetValue((article.NewsPortalId, article.Title), out savedArticleId) ||
-                    savedArticlesSummaryDictionary.TryGetValue((article.NewsPortalId, article.Summary), out savedArticleId)
-                )
-                {
-                    var savedArticle = savedArticlesIdDictionary[savedArticleId];
-
-                    if (savedArticle.Update(article))
-                    {
-                        updateArticles.Add(savedArticle);
-                    }
-                }
-                else
-                {
-                    createArticles.Add(article);
-                }
-            }
-
-            CreateArticles(articles: createArticles);
-
-            UpdateArticles(articles: updateArticles);
-
-            var createdArticleDtos = createArticles.Select(ArticleDto.GetProjection().Compile());
-            var updatedArticleDtos = updateArticles.Select(ArticleDto.GetProjection().Compile());
-
-            _ = _memoryCache.Set(
-                key: MemoryCacheConstants.DeadLockLogKey,
-                value: $"Ended {nameof(CreateOrUpdateArticles)}"
-            );
-
-            return (createdArticleDtos, updatedArticleDtos);
+            return parsedArticles.Values;
         }
 
         private void CreateArticles(
@@ -399,15 +310,18 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
 
         private async Task CallWebServer(
             ParseRssFeedsCommand request,
-            IEnumerable<ArticleDto> createdArticles,
-            IEnumerable<ArticleDto> updatedArticles,
+            IEnumerable<Article> createArticles,
+            IEnumerable<Article> updateArticles,
             CancellationToken cancellationToken
         )
         {
-            if (!createdArticles.Any() && !updatedArticles.Any())
+            if (!createArticles.Any() && !updateArticles.Any())
             {
                 return;
             }
+
+            var createdArticleDtos = createArticles.Select(ArticleDto.GetProjection().Compile());
+            var updatedArticleDtos = updateArticles.Select(ArticleDto.GetProjection().Compile());
 
             var httpHeaders = new List<(string headerKey, string headerValue)>
             {
@@ -423,8 +337,8 @@ namespace Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds
                     url: $"{request.ServerUrl}/api/notifications/articles",
                     data: new ArticlesRequestObjectDto
                     {
-                        CreatedArticles = createdArticles,
-                        UpdatedArticles = updatedArticles
+                        CreatedArticles = createdArticleDtos,
+                        UpdatedArticles = updatedArticleDtos
                     },
                     httpHeaders: httpHeaders,
                     httpClientTimeout: TimeSpan.FromSeconds(30),

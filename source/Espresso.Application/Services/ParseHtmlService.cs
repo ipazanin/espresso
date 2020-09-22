@@ -1,33 +1,20 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.IService;
-using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
-using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
-using Espresso.Domain.Enums.RssFeedEnums;
-using Espresso.Domain.Extensions;
 using HtmlAgilityPack;
-using Microsoft.Extensions.Logging;
 
 namespace Espresso.Application.Services
 {
-    public class HtmlParsingService : IHtmlParsingService
+    public class ParseHtmlService : IParseHtmlService
     {
-        #region Fields
-        #endregion
-
-        #region Constructors
-        #endregion
-
-        #region Methods
         public string? GetSrcAttributeFromFirstImgElement(string? html)
         {
             if (string.IsNullOrEmpty(html))
@@ -119,6 +106,5 @@ namespace Espresso.Application.Services
 
             return imageUrl;
         }
-        #endregion
     }
 }

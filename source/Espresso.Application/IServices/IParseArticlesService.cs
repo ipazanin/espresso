@@ -8,7 +8,7 @@ using Espresso.Domain.Records;
 
 namespace Espresso.Application.IServices
 {
-    public interface IArticleParserService
+    public interface IParseArticlesService
     {
         public Task<Article> CreateArticleAsync(
             RssFeedItem rssFeedItem,
