@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using Espresso.WebApi.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
-using Espresso.WebApi.Application.Infrastructure.MediatorInfrastructure;
+using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 

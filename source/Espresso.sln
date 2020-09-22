@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.ParserDeleter.Appl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.WebApi.Application", "Espresso.WebApi.Application\Espresso.WebApi.Application.csproj", "{8F9EE600-2658-4EF5-A008-BB7FCAC90A5F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.Application", "Espresso.Application\Espresso.Application.csproj", "{F056471C-FA41-4019-939C-5C0B31C6D8DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -142,5 +144,17 @@ Global
 		{8F9EE600-2658-4EF5-A008-BB7FCAC90A5F}.Release|x64.Build.0 = Release|Any CPU
 		{8F9EE600-2658-4EF5-A008-BB7FCAC90A5F}.Release|x86.ActiveCfg = Release|Any CPU
 		{8F9EE600-2658-4EF5-A008-BB7FCAC90A5F}.Release|x86.Build.0 = Release|Any CPU
+		{F056471C-FA41-4019-939C-5C0B31C6D8DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F056471C-FA41-4019-939C-5C0B31C6D8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F056471C-FA41-4019-939C-5C0B31C6D8DA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F056471C-FA41-4019-939C-5C0B31C6D8DA}.Debug|x64.Build.0 = Debug|Any CPU
+		{F056471C-FA41-4019-939C-5C0B31C6D8DA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F056471C-FA41-4019-939C-5C0B31C6D8DA}.Debug|x86.Build.0 = Debug|Any CPU
+		{F056471C-FA41-4019-939C-5C0B31C6D8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F056471C-FA41-4019-939C-5C0B31C6D8DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F056471C-FA41-4019-939C-5C0B31C6D8DA}.Release|x64.ActiveCfg = Release|Any CPU
+		{F056471C-FA41-4019-939C-5C0B31C6D8DA}.Release|x64.Build.0 = Release|Any CPU
+		{F056471C-FA41-4019-939C-5C0B31C6D8DA}.Release|x86.ActiveCfg = Release|Any CPU
+		{F056471C-FA41-4019-939C-5C0B31C6D8DA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

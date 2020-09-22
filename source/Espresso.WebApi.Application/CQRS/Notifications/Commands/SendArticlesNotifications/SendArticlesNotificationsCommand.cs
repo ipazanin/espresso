@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Espresso.WebApi.Application.DataTransferObjects;
-using Espresso.WebApi.Application.Infrastructure.MediatorInfrastructure;
+using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using Espresso.Common.Enums;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using MediatR;
+using Espresso.Application.DataTransferObjects;
 
 namespace Espresso.WebApi.Application.CQRS.Notifications.Commands.SendArticlesNotifications
 {

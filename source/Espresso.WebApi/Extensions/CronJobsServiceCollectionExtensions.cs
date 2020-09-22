@@ -1,8 +1,8 @@
 ﻿using System;
 using Espresso.WebApi.Application.CronJobs;
-using Espresso.WebApi.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Common.Enums;
 using Microsoft.Extensions.DependencyInjection;
+using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 
 namespace Espresso.WebApi.Extensions
 {

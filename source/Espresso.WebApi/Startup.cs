@@ -52,7 +52,7 @@ namespace Espresso.WebApi
         /// <param name="webApiConfiguration"></param>
         public void Configure(
             IApplicationBuilder app,
-            IApplicationInit memoryCacheInit,
+            IWebApiInit memoryCacheInit,
             IWebHostEnvironment env,
             IWebApiConfiguration webApiConfiguration
         )

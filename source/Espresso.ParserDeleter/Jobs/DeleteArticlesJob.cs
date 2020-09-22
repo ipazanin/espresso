@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.WebApi.Application.CQRS.Articles.Commands.DeleteOldArticles;
-using Espresso.WebApi.Application.IServices;
+using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.Extensions;
+using Espresso.ParserDeleter.Application.DeleteOldArticles;
 using Espresso.ParserDeleter.Configuration;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Espresso.Jobs
+namespace Espresso.ParserDeleter.Jobs
 {
     public class DeleteArticlesJob : BackgroundService
     {

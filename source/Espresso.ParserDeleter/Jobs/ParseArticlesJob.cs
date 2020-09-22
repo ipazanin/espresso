@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.WebApi.Application.CQRS.RssFeeds.Commands.ParseRssFeeds;
-using Espresso.WebApi.Application.Initialization;
-using Espresso.WebApi.Application.IServices;
+using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
@@ -14,8 +12,10 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Espresso.ParserDeleter.Application.Initialization;
+using Espresso.ParserDeleter.ParseRssFeeds;
 
-namespace Espresso.Jobs
+namespace Espresso.ParserDeleter.Jobs
 {
     public class ParseArticlesJob : BackgroundService
     {
@@ -129,7 +129,7 @@ namespace Espresso.Jobs
         private async Task InitializeParser()
         {
             using var scope = _serviceScopeFactory.CreateScope();
-            var memoryCacheInit = scope.ServiceProvider.GetRequiredService<IApplicationInit>();
+            var memoryCacheInit = scope.ServiceProvider.GetRequiredService<IParserDeleterInit>();
             await memoryCacheInit.InitParserDeleter();
         }
         #endregion

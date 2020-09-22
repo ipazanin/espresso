@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
-using Espresso.WebApi.Application.DataTransferObjects;
+using Espresso.Application.DataTransferObjects;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 

@@ -25,7 +25,7 @@ namespace Espresso.WebApi.Extensions
         )
         {
             services.AddMemoryCache();
-            services.AddTransient<IApplicationInit, ApplicationInit>();
+            services.AddTransient<IWebApiInit, WebApiInit>();
             services.AddHttpClient();
             services.AddControllers()
                 .AddJsonOptions(jsonOptions =>
