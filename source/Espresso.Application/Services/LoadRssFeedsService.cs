@@ -16,7 +16,6 @@ using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
-using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.Extensions;
 using Espresso.Domain.Records;
@@ -25,17 +24,17 @@ using Microsoft.Extensions.Logging;
 
 namespace Espresso.Application.Services
 {
-    public class RssFeedLoadService : IRssFeedLoadService
+    public class LoadRssFeedsService : ILoadRssFeedsService
     {
         #region Fields
         private readonly IMemoryCache _memoryCache;
         private readonly ISlackService _slackService;
         private readonly HttpClient _httpClient;
-        private readonly ILogger<RssFeedLoadService> _logger;
+        private readonly ILogger<LoadRssFeedsService> _logger;
         #endregion
 
         #region Constructors
-        public RssFeedLoadService(
+        public LoadRssFeedsService(
             IHttpClientFactory httpClientFactory,
             IMemoryCache memoryCache,
             ISlackService slackService,
@@ -45,7 +44,7 @@ namespace Espresso.Application.Services
             _memoryCache = memoryCache;
             _slackService = slackService;
             _httpClient = httpClientFactory.CreateClient();
-            _logger = loggerFactory.CreateLogger<RssFeedLoadService>();
+            _logger = loggerFactory.CreateLogger<LoadRssFeedsService>();
         }
         #endregion
 

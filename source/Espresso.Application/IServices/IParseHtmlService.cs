@@ -1,10 +1,10 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 
 namespace Espresso.Application.IService
 {
-    public interface IHtmlParsingService
+    public interface IParseHtmlService
     {
         public string? GetSrcAttributeFromFirstImgElement(string? html);
 

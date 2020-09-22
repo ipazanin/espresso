@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds;
-using Espresso.Application.DataTransferObjects;
 using Espresso.Application.Initialization;
 using Espresso.Application.IServices;
-using Espresso.Application.Services;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;

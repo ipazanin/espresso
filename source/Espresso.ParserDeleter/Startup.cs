@@ -1,5 +1,4 @@
-﻿using Espresso.Application.CQRS.Articles.Commands.DeleteOldArticles;
-using Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds;
+﻿using Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using Espresso.Application.Initialization;
 using Espresso.Application.IService;
@@ -14,7 +13,6 @@ using Espresso.Persistence.Database;
 using Espresso.Persistence.IRepositories;
 using Espresso.Persistence.Repositories;
 using MediatR;
-using Microsoft.AspNetCore.WebSockets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,10 +42,11 @@ namespace Espresso.ParserDeleter
             #region Services
             services.AddScoped<ISlackService, SlackService>();
             services.AddScoped<IHttpService, HttpService>();
-            services.AddScoped<IRssFeedLoadService, RssFeedLoadService>();
-            services.AddScoped<IArticleParserService, ArticleParserService>();
-            services.AddScoped<IWebScrapingService, WebScrapingService>();
-            services.AddScoped<IHtmlParsingService, HtmlParsingService>();
+            services.AddScoped<ILoadRssFeedsService, LoadRssFeedsService>();
+            services.AddScoped<IParseArticlesService, ParseArticlesService>();
+            services.AddScoped<IScrapeWebService, ScrapeWebService>();
+            services.AddScoped<IParseHtmlService, ParseHtmlService>();
+            services.AddScoped<ISortArticlesService, SortArticlesService>();
             #endregion
 
             #region Validators

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ServiceModel.Syndication;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Enums;
@@ -8,7 +7,7 @@ using Espresso.Domain.Records;
 
 namespace Espresso.Application.IService
 {
-    public interface IRssFeedLoadService
+    public interface ILoadRssFeedsService
     {
         public Task<IEnumerable<RssFeedItem>> ParseRssFeeds(
             IEnumerable<RssFeed> rssFeeds,
