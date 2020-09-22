@@ -21,7 +21,7 @@
         ParserInit = 17,
         ParseArticlesJob = 18,
         RssFeedLoading = 19,
-        ArticleParsing = 20,
+        CreateArticle = 20,
         ParserDeleterNewArticlesRequest = 21,
         GetNewNewsPortalsQuery = 22,
         NewSourcesRequest = 23,

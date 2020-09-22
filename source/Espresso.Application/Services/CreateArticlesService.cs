@@ -6,36 +6,43 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.IService;
 using Espresso.Application.IServices;
+using Espresso.Common.Enums;
+using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.RssFeedEnums;
-using Espresso.Domain.IValidators;
+using Espresso.Domain.Extensions;
 using Espresso.Domain.Records;
+using FluentValidation;
+using Microsoft.Extensions.Logging;
 
 namespace Espresso.Application.Services
 {
-    public class ParseArticlesService : IParseArticlesService
+    public class CreateArticlesService : ICreateArticlesService
     {
         #region Fields
         private readonly IScrapeWebService _webScrapingService;
-        private readonly IArticleValidator _articleValidator;
         private readonly IParseHtmlService _htmlParsingService;
+        private readonly IValidator<ArticleData> _articleDataValidator;
+        private readonly ILogger<CreateArticlesService> _logger;
         #endregion
 
         #region Constructors
-        public ParseArticlesService(
+        public CreateArticlesService(
             IScrapeWebService webScrapingService,
-            IArticleValidator articleValidator,
-            IParseHtmlService htmlParsingService
+            IParseHtmlService htmlParsingService,
+            IValidator<ArticleData> articleDataValidator,
+            ILoggerFactory loggerFactory
         )
         {
             _webScrapingService = webScrapingService;
-            _articleValidator = articleValidator;
             _htmlParsingService = htmlParsingService;
+            _articleDataValidator = articleDataValidator;
+            _logger = loggerFactory.CreateLogger<CreateArticlesService>();
         }
         #endregion
 
         #region Public Methods
-        public async Task<Article> CreateArticleAsync(
+        public async Task<(Article? article, bool isValid)> CreateArticleAsync(
             RssFeedItem rssFeedItem,
             IEnumerable<Category> categories,
             TimeSpan maxAgeOfArticle,
@@ -46,7 +53,8 @@ namespace Espresso.Application.Services
             var id = Guid.NewGuid();
             var utcNow = DateTime.UtcNow;
             var initialNumberOfClicks = random.Next(0, 15);
-            var initialTrendingScore = 0;
+
+            var title = rssFeedItem.Title;
 
             var url = GetUrl(
                 rssFeed: rssFeedItem.RssFeed,
@@ -63,8 +71,6 @@ namespace Espresso.Application.Services
                 itemSummary: rssFeedItem.Summary,
                 itemTitle: rssFeedItem.Title
             );
-
-            var title = rssFeedItem.Title;
 
             var imageUrl = await GetImageUrl(
                 itemLinks: rssFeedItem.Links,
@@ -91,32 +97,88 @@ namespace Espresso.Application.Services
                 rssFeed: rssFeedItem.RssFeed
             );
 
-            var article = _articleValidator.Validate(
-                id: id,
-                url: url,
-                webUrl: webUrl,
-                summary: summary,
-                title: title,
-                imageUrl: imageUrl,
-                createDateTime: utcNow,
-                updateDateTime: utcNow,
-                publishDateTime: publishDateTime,
-                numberOfClicks: initialNumberOfClicks,
-                trendingScore: initialTrendingScore,
-                newsPortalId: rssFeedItem.RssFeed.NewsPortalId,
-                rssFeedId: rssFeedItem.RssFeed.Id,
-                articleCategories: articlecategories,
-                newsPortal: rssFeedItem.RssFeed.NewsPortal,
+            var articleData = new ArticleData
+            {
+                Id = id,
+                PublishDateTime = publishDateTime,
+                Summary = summary,
+                Title = title,
+                CreateDateTime = utcNow,
+                ImageUrl = imageUrl,
+                IsFeatured = Article.IsFeaturedDefaultValue,
+                IsHidden = Article.IsHiddenDefaultValue,
+                NumberOfClicks = initialNumberOfClicks,
+                TrendingScore = Article.TrendingScoreDefaultValue,
+                UpdateDateTime = utcNow,
+                Url = url,
+                WebUrl = webUrl,
+                ArticleCategories = articlecategories
+            };
+
+            return CreateArticle(
+                articleData: articleData,
                 rssFeed: rssFeedItem.RssFeed
             );
-
-            return article;
         }
         #endregion
 
         #region Private Methods
+        private (Article? article, bool isValid) CreateArticle(ArticleData articleData, RssFeed rssFeed)
+        {
+            var validationResult = _articleDataValidator.Validate(articleData);
 
-        #region Url
+            if (validationResult.IsValid)
+            {
+                var article = new Article(
+                    id: articleData.Id,
+                    url: articleData.Url!,
+                    webUrl: articleData.WebUrl!,
+                    summary: articleData.Summary!,
+                    title: articleData.Title!,
+                    imageUrl: articleData.ImageUrl,
+                    createDateTime: articleData.CreateDateTime,
+                    updateDateTime: articleData.UpdateDateTime,
+                    publishDateTime: articleData.PublishDateTime!.Value,
+                    numberOfClicks: articleData.NumberOfClicks,
+                    trendingScore: articleData.TrendingScore,
+                    isHidden: articleData.IsHidden,
+                    isFeatured: articleData.IsFeatured,
+                    newsPortalId: rssFeed.NewsPortalId,
+                    rssFeedId: rssFeed.Id,
+                    articleCategories: articleData.ArticleCategories,
+                    newsPortal: rssFeed.NewsPortal,
+                    rssFeed: rssFeed
+                );
+
+                return (article, true);
+            }
+            else
+            {
+                var rssFeedUrl = rssFeed.Url;
+                var exceptionMessage = validationResult.ToString();
+                var eventName = Event.CreateArticle.GetDisplayName();
+                var eventId = (int)Event.CreateArticle;
+                var message = $"RssFeedUrl: {rssFeedUrl}";
+
+                _logger.LogWarning(
+                    eventId: new EventId(id: eventId, name: eventName),
+                    message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
+                        $"{AnsiUtility.EncodeParameterName(nameof(message))}: " +
+                        $"{AnsiUtility.EncodeRequestParameters("{1}")}\n\t" +
+                        $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
+                        $"{AnsiUtility.EncodeErrorMessage("{2}")}\n\t",
+                    args: new object[]
+                    {
+                        eventName,
+                        message,
+                        exceptionMessage,
+                    }
+                );
+
+                return (null, false);
+            }
+        }
+
         private static string? GetUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks, string? itemId)
         {
             if (rssFeed.AmpConfiguration?.HasAmpArticles == true)
@@ -168,17 +230,13 @@ namespace Espresso.Application.Services
 
             return articleUrl;
         }
-        #endregion
 
-        #region Summary
         private string? GetSummary(string? itemSummary, string? itemTitle)
         {
             var summary = _htmlParsingService.GetText(html: itemSummary);
             return string.IsNullOrEmpty(summary) ? itemTitle : summary;
         }
-        #endregion
 
-        #region ImageUrl
         private async Task<string?> GetImageUrl(
             IEnumerable<Uri?>? itemLinks,
             string? itemSummary,
@@ -236,9 +294,7 @@ namespace Espresso.Application.Services
 
             return imageUrl;
         }
-        #endregion
 
-        #region PublishDateTime
         private static DateTime? GetPublishDateTime(DateTimeOffset itemPublishDateTime, DateTime utcNow, TimeSpan maxAgeOfArticle)
         {
             var invalidPublishdateTimeMinimum = utcNow - maxAgeOfArticle;
@@ -252,9 +308,7 @@ namespace Espresso.Application.Services
                 ? (DateTime?)utcNow
                 : (DateTime?)rssFeedPublishDateTime;
         }
-        #endregion
 
-        #region ArticleCategories
         private static IEnumerable<ArticleCategory> GetArticleCategories(
             IEnumerable<Category> categories,
             string? itemTitle,
@@ -376,9 +430,7 @@ namespace Espresso.Application.Services
                 category: rssFeed.Category
             );
         }
-        #endregion
 
-        #region Common
         private static string? AddBaseUrlToUrlFragment(string? urlFragmentOrFullUrl, string? baseUrl)
         {
             if (
@@ -397,8 +449,6 @@ namespace Espresso.Application.Services
                 return $"{baseUrl}{urlFragmentOrFullUrl}";
             }
         }
-        #endregion
-
         #endregion
     }
 }

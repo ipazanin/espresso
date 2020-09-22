@@ -5,8 +5,6 @@ using Espresso.Application.IService;
 using Espresso.Application.IServices;
 using Espresso.Application.Services;
 using Espresso.Common.Enums;
-using Espresso.Domain.IValidators;
-using Espresso.Domain.Validators;
 using Espresso.Jobs;
 using Espresso.ParserDeleter.Configuration;
 using Espresso.Persistence.Database;
@@ -16,6 +14,8 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using FluentValidation;
+using Espresso.Application.CQRS.RssFeeds.Commands.ParseRssFeeds.Validators;
 
 namespace Espresso.ParserDeleter
 {
@@ -39,18 +39,18 @@ namespace Espresso.ParserDeleter
             services.AddSingleton<IParserDeleterConfiguration, ParserDeleterConfiguration>();
             #endregion
 
+            #region Validators
+            services.AddValidatorsFromAssembly(typeof(ArticleDataValidator).Assembly);
+            #endregion
+
             #region Services
             services.AddScoped<ISlackService, SlackService>();
             services.AddScoped<IHttpService, HttpService>();
             services.AddScoped<ILoadRssFeedsService, LoadRssFeedsService>();
-            services.AddScoped<IParseArticlesService, ParseArticlesService>();
+            services.AddScoped<ICreateArticlesService, CreateArticlesService>();
             services.AddScoped<IScrapeWebService, ScrapeWebService>();
             services.AddScoped<IParseHtmlService, ParseHtmlService>();
             services.AddScoped<ISortArticlesService, SortArticlesService>();
-            #endregion
-
-            #region Validators
-            services.AddScoped<IArticleValidator, ArticleValidator>();
             #endregion
 
             #region MemoryCache

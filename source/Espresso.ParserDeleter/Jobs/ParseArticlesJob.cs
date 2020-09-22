@@ -50,12 +50,13 @@ namespace Espresso.Jobs
             {
                 using var scope = _serviceScopeFactory.CreateScope();
                 var slackService = scope.ServiceProvider.GetRequiredService<ISlackService>();
-                var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-
-                var cancellationToken = GetCancellationToken();
 
                 try
                 {
+                    var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+
+                    var cancellationToken = GetCancellationToken();
+
                     var parseRssFeedsCommandResponse = await mediator.Send(
                         request: new ParseRssFeedsCommand(
                             maxAgeOfArticle: _configuration.DateTimeConfiguration.MaxAgeOfArticles,
