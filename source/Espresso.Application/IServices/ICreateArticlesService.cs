@@ -8,9 +8,9 @@ using Espresso.Domain.Records;
 
 namespace Espresso.Application.IServices
 {
-    public interface IParseArticlesService
+    public interface ICreateArticlesService
     {
-        public Task<Article> CreateArticleAsync(
+        public Task<(Article? article, bool isValid)> CreateArticleAsync(
             RssFeedItem rssFeedItem,
             IEnumerable<Category> categories,
             TimeSpan maxAgeOfArticle,

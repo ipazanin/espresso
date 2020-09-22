@@ -1,7 +1,5 @@
 ﻿using Espresso.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
 using Espresso.Application.Initialization;
-using Espresso.Domain.IValidators;
-using Espresso.Domain.Validators;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Filters;
 using FluentValidation.AspNetCore;
@@ -28,7 +26,6 @@ namespace Espresso.WebApi.Extensions
         {
             services.AddMemoryCache();
             services.AddTransient<IApplicationInit, ApplicationInit>();
-            services.AddScoped<IArticleValidator, ArticleValidator>();
             services.AddHttpClient();
             services.AddControllers()
                 .AddJsonOptions(jsonOptions =>

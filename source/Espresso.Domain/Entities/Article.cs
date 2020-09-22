@@ -19,8 +19,8 @@ namespace Espresso.Domain.Entities
         public const int ImageUrlMaxLength = 500;
 
         public const bool IsHiddenDefaultValue = false;
-
         public const bool IsFeaturedDefaultValue = false;
+        public const decimal TrendingScoreDefaultValue = 0m;
         #endregion
 
         #region Properties
