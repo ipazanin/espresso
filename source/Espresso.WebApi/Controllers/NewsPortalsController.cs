@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Espresso.WebApi.Application.CQRS.NewsPortals.Commands.NewSourcesRequest;
-using Espresso.WebApi.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
+using Espresso.WebApi.Application.NewsPortals.Commands.NewSourcesRequest;
+using Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
@@ -12,6 +12,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals_1_3;
 
 namespace Espresso.WebApi.Controllers
 {
@@ -50,10 +51,9 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ApiVersion("1.3")]
-        [ApiVersion("1.2")]
+        [ApiVersion("1.4")]
         [HttpGet]
-        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
+        [Authorize(Roles = ApiKey.DevMobileAppRole)]
         [Route("api/newsportals")]
         public async Task<IActionResult> GetNewsPortals(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
@@ -62,6 +62,48 @@ namespace Espresso.WebApi.Controllers
         {
             var getNewsPortalsQueryResponse = await Mediator.Send(
                 request: new GetNewsPortalsQuery(
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    consumerVersion: basicInformationsHeaderParameters.Version,
+                    deviceType: basicInformationsHeaderParameters.DeviceType,
+                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
+                ),
+                cancellationToken: cancellationToken
+            );
+
+            return Ok(getNewsPortalsQueryResponse);
+        }
+
+        /// <summary>
+        /// Get all Espresso news portals
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///     Get /api/newsportals
+        /// </remarks>
+        /// <param name="cancellationToken"></param>
+        /// <param name="basicInformationsHeaderParameters"></param>
+        /// <returns>Response object containing Espresso newsportals</returns>
+        /// <response code="200">Response object containing Espresso newsportals</response>
+        /// <response code="401">If API Key is invalid or missing</response>
+        /// <response code="500">If unhandled exception occurred</response>
+        [Produces(MimeTypeConstants.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetNewsPortalsQueryResponse_1_3))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ApiVersion("1.3")]
+        [ApiVersion("1.2")]
+        [HttpGet]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
+        [Route("api/newsportals")]
+        public async Task<IActionResult> GetNewsPortals_1_3(
+            [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
+            CancellationToken cancellationToken
+        )
+        {
+            var getNewsPortalsQueryResponse = await Mediator.Send(
+                request: new GetNewsPortalsQuery_1_3(
                     currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,

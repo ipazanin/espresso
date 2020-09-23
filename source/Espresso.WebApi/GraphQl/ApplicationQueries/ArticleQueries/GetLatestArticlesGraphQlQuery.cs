@@ -1,5 +1,5 @@
 ﻿using System;
-using Espresso.WebApi.Application.CQRS.Articles.Queries.GetLatestArticles;
+using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetLatestArticlesTypes;

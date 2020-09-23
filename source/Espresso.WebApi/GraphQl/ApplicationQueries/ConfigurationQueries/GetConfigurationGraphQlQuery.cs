@@ -1,5 +1,5 @@
 ﻿using System;
-using Espresso.WebApi.Application.CQRS.Configuration.Queries.GetConfiguration;
+using Espresso.WebApi.Application.Configuration.Queries.GetConfiguration;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetConfigurationTypes;
 using Espresso.WebApi.GraphQl.Infrastructure;

@@ -1,4 +1,4 @@
-﻿using Espresso.WebApi.Application.CQRS.Articles.Queries.GetFeaturedArticles;
+﻿using Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles;
 using GraphQL.Types;
 
 namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetFeaturedArticlesTypes

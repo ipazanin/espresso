@@ -1,4 +1,4 @@
-﻿using Espresso.WebApi.Application.CQRS.NewsPortals.Queries.GetNewsPortals;
+﻿using Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals;
 using Espresso.WebApi.Application.Initialization;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Filters;

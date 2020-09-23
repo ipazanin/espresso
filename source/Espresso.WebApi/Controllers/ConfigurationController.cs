@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.WebApi.Application.CQRS.Configuration.Queries.GetConfiguration;
-using Espresso.WebApi.Application.CQRS.Configuration.Queries.GetConfiguration_1_3;
-using Espresso.WebApi.Application.CQRS.Configuration.Queries.GetWebConfiguration;
+using Espresso.WebApi.Application.Configuration.Queries.GetConfiguration;
+using Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3;
+using Espresso.WebApi.Application.Configuration.Queries.GetWebConfiguration;
 using Espresso.Common.Constants;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Authentication;
