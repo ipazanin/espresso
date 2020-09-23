@@ -172,10 +172,6 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
             {
                 return;
             }
-            _ = _memoryCache.Set(
-                key: MemoryCacheConstants.DeadLockLogKey,
-                value: $"Started {nameof(CreateArticles)}"
-            );
 
             var savedArticles = _memoryCache
                 .Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey)
@@ -203,10 +199,6 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
                 key: MemoryCacheConstants.ArticleKey,
                 value: savedArticles.Values.ToList()
             );
-            _ = _memoryCache.Set(
-                key: MemoryCacheConstants.DeadLockLogKey,
-                value: $"Ended {nameof(CreateArticles)}"
-            );
         }
 
         private void UpdateArticles(
@@ -217,10 +209,6 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
             {
                 return;
             }
-            _ = _memoryCache.Set(
-                key: MemoryCacheConstants.DeadLockLogKey,
-                value: $"Started {nameof(UpdateArticles)}"
-            );
 
             var savedArticles = _memoryCache
                 .Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey)
@@ -254,10 +242,6 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
             _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
                 value: savedArticles.Values.ToList()
-            );
-            _ = _memoryCache.Set(
-                key: MemoryCacheConstants.DeadLockLogKey,
-                value: $"Ended {nameof(UpdateArticles)}"
             );
         }
 

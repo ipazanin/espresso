@@ -20,7 +20,6 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
 
         #region Fields
         private readonly ISlackService _slackService;
-        private readonly IMemoryCache _memoryCache;
         #endregion
 
         #region Properties
@@ -36,12 +35,10 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
 
         #region Constructors
         public ApplicationLifeTimePipelineBehavior(
-            IMemoryCache memoryCache,
             ISlackService slackService
         )
         {
             _slackService = slackService;
-            _memoryCache = memoryCache;
         }
         #endregion
 
@@ -87,12 +84,6 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
 
         private void TerminateProcess(object source, ElapsedEventArgs e)
         {
-            var memoryCacheLogMessage = _memoryCache
-                .GetOrCreate(
-                    key: MemoryCacheConstants.DeadLockLogKey,
-                    factory: cacheEntry => ""
-                );
-
             _slackService
                 .LogRequestError(
                     requestName: RequestName,
@@ -101,7 +92,7 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
                     consumerVersion: ConsumerVersion,
                     deviceType: DeviceType,
                     requestParameters: RequestParameters,
-                    exception: new Exception($"Deadlocked at {memoryCacheLogMessage}!"),
+                    exception: new Exception($"Deadlocke!!!"),
                     appEnvironment: AppEnvironment,
                     cancellationToken: default
                 )
