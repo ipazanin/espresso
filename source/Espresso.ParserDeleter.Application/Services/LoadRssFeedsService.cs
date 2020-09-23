@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using System.Xml;
 using Espresso.Application.Extensions;
 using Espresso.Application.IServices;
-using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
@@ -19,7 +18,6 @@ using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.Extensions;
 using Espresso.Domain.Records;
 using Espresso.ParserDeleter.Application.IServices;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
 namespace Espresso.ParserDeleter.Application.Services
@@ -27,7 +25,6 @@ namespace Espresso.ParserDeleter.Application.Services
     public class LoadRssFeedsService : ILoadRssFeedsService
     {
         #region Fields
-        private readonly IMemoryCache _memoryCache;
         private readonly ISlackService _slackService;
         private readonly HttpClient _httpClient;
         private readonly ILogger<LoadRssFeedsService> _logger;
@@ -36,12 +33,10 @@ namespace Espresso.ParserDeleter.Application.Services
         #region Constructors
         public LoadRssFeedsService(
             IHttpClientFactory httpClientFactory,
-            IMemoryCache memoryCache,
             ISlackService slackService,
             ILoggerFactory loggerFactory
         )
         {
-            _memoryCache = memoryCache;
             _slackService = slackService;
             _httpClient = httpClientFactory.CreateClient();
             _logger = loggerFactory.CreateLogger<LoadRssFeedsService>();
@@ -56,11 +51,6 @@ namespace Espresso.ParserDeleter.Application.Services
             CancellationToken cancellationToken
         )
         {
-            _ = _memoryCache.Set(
-                key: MemoryCacheConstants.DeadLockLogKey,
-                value: $"Started {nameof(ParseRssFeeds)}"
-            );
-
             var parsedArticles = new ConcurrentQueue<RssFeedItem>();
 
             var getRssFeedRequestTasks = new List<Task>();
@@ -146,11 +136,6 @@ namespace Espresso.ParserDeleter.Application.Services
             }
 
             await Task.WhenAll(getRssFeedRequestTasks);
-
-            _ = _memoryCache.Set(
-                key: MemoryCacheConstants.DeadLockLogKey,
-                            value: $"Ended {nameof(ParseRssFeeds)}"
-            );
 
             return parsedArticles;
         }
