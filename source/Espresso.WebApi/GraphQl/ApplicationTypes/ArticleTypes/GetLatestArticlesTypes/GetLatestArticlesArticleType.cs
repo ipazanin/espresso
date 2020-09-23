@@ -1,4 +1,4 @@
-﻿using Espresso.WebApi.Application.CQRS.Articles.Queries.GetLatestArticles;
+﻿using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles;
 using GraphQL.Types;
 
 namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetLatestArticlesTypes

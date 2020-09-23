@@ -74,8 +74,8 @@ namespace Espresso.WebApi.Filters
 
             var exceptionModel = new UnhandledExceptionDto(
                 exceptionMessage: context.Exception.Message,
-                innerExceptionMessage: context.Exception.StackTrace,
-                exceptionStackTrace: context.Exception.InnerException?.Message,
+                exceptionStackTrace: context.Exception.StackTrace,
+                innerExceptionMessage: context.Exception.InnerException?.Message,
                 innerExceptionStackTrace: context.Exception.InnerException?.StackTrace,
                 errors: errors
             );

@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Espresso.WebApi.Application.CQRS.Categories.Queries.GetCategories;
+using Espresso.WebApi.Application.Categories.Queries.GetCategories;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;

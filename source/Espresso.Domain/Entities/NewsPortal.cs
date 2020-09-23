@@ -105,11 +105,6 @@ namespace Espresso.Domain.Entities
                     newsPortal.CreatedAt > newNewsPortalMinDate
                 );
         }
-
-        public static Expression<Func<NewsPortal, object>> GetOrderByExpression()
-        {
-            return newsPortal => newsPortal.Name;
-        }
         #endregion
     }
 }

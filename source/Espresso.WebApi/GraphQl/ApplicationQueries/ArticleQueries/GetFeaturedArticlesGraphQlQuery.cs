@@ -1,5 +1,5 @@
 ﻿using System;
-using Espresso.WebApi.Application.CQRS.Articles.Queries.GetFeaturedArticles;
+using Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetFeaturedArticlesTypes;

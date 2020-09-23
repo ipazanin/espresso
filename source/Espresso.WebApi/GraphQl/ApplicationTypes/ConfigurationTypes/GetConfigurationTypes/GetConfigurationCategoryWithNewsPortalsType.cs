@@ -1,4 +1,4 @@
-﻿using Espresso.WebApi.Application.CQRS.Configuration.Queries.GetConfiguration;
+﻿using Espresso.WebApi.Application.Configuration.Queries.GetConfiguration;
 using GraphQL.Types;
 
 namespace Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetConfigurationTypes

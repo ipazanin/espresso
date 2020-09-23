@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Espresso.WebApi.Application.CQRS.Articles.Commands.CalculateTrendingScore;
-using Espresso.WebApi.Application.CQRS.Articles.Commands.UpdateInMemoryArticles;
-using Espresso.WebApi.Application.CQRS.Notifications.Commands.SendArticlesNotifications;
-using Espresso.WebApi.Application.CQRS.Notifications.Commands.SendPushNotification;
-using Espresso.WebApi.Application.CQRS.Notifications.Queries.GetPushNotifications;
+using Espresso.WebApi.Application.Articles.Commands.CalculateTrendingScore;
+using Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles;
+using Espresso.WebApi.Application.Notifications.Commands.SendArticlesNotifications;
+using Espresso.WebApi.Application.Notifications.Commands.SendPushNotification;
+using Espresso.WebApi.Application.Notifications.Queries.GetPushNotifications;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
