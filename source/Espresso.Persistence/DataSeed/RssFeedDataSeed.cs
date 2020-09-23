@@ -313,6 +313,22 @@ namespace Espresso.Persistence.DataSeed
                     requestType: RequestType.Normal
                 ),
 
+                new RssFeed(
+                    id: (int)RssFeedId.Hcl,
+                    url: "https://www.hcl.hr/feed",
+                    newsPortalId: (int)NewsPortalId.Hcl,
+                    categoryId: (int)CategoryId.Tech,
+                    requestType: RequestType.Normal
+                ),
+
+                new RssFeed(
+                    id: (int)RssFeedId.ProfitirajHr,
+                    url: "https://profitiraj.hr/feed",
+                    newsPortalId: (int)NewsPortalId.ProfitirajHr,
+                    categoryId: (int)CategoryId.Biznis,
+                    requestType: RequestType.Normal
+                ),
+
             };
 
             builder.HasData(rssFeeds);
@@ -622,6 +638,19 @@ namespace Espresso.Persistence.DataSeed
                 CurrentSkip = 0
             });
 
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Hcl,
+                NumberOfSkips = 7,
+                CurrentSkip = 0
+            });
+
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.ProfitirajHr,
+                NumberOfSkips = 11,
+                CurrentSkip = 0
+            });
         }
 
         private static void SeedCategoryParseConfiguration(
@@ -1005,6 +1034,18 @@ namespace Espresso.Persistence.DataSeed
                 RssFeedId = (int)RssFeedId.IctBusiness,
                 ImgElementXPath = "//div[contains(@class, 'main-content')]//img",
                 ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary
+            });
+
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Hcl,
+                ImgElementXPath = "//div[contains(@class, 'article')]//img"
+            });
+
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.ProfitirajHr,
+                ImgElementXPath = "//div[contains(@class, 'site-content')]//img"
             });
         }
     }

@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200923084804_IPazanin_ChangedSkipParseConfiguration")]
+    partial class IPazanin_ChangedSkipParseConfiguration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -721,26 +723,6 @@ namespace Espresso.Persistence.Migrations
                             CreatedAt = new DateTime(2020, 9, 21, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/IctBusiness.png",
                             Name = "ICT Business",
-                            RegionId = 1
-                        },
-                        new
-                        {
-                            Id = 106,
-                            BaseUrl = "https://www.hcl.hr",
-                            CategoryId = 5,
-                            CreatedAt = new DateTime(2020, 9, 23, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/Hcl.png",
-                            Name = "HCL Gaming Portal",
-                            RegionId = 1
-                        },
-                        new
-                        {
-                            Id = 107,
-                            BaseUrl = "https://profitiraj.hr",
-                            CategoryId = 7,
-                            CreatedAt = new DateTime(2020, 9, 23, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/ProfitirajHr.png",
-                            Name = "Profitiraj.hr",
                             RegionId = 1
                         },
                         new
@@ -2108,22 +2090,6 @@ namespace Espresso.Persistence.Migrations
                             NewsPortalId = 105,
                             RequestType = 1,
                             Url = "https://www.ictbusiness.info/rss2.xml"
-                        },
-                        new
-                        {
-                            Id = 151,
-                            CategoryId = 5,
-                            NewsPortalId = 106,
-                            RequestType = 1,
-                            Url = "https://www.hcl.hr/feed"
-                        },
-                        new
-                        {
-                            Id = 152,
-                            CategoryId = 7,
-                            NewsPortalId = 107,
-                            RequestType = 1,
-                            Url = "https://profitiraj.hr/feed"
                         },
                         new
                         {
@@ -4237,16 +4203,6 @@ namespace Espresso.Persistence.Migrations
                                 },
                                 new
                                 {
-                                    RssFeedId = 151,
-                                    ImgElementXPath = "//div[contains(@class, 'article')]//img"
-                                },
-                                new
-                                {
-                                    RssFeedId = 152,
-                                    ImgElementXPath = "//div[contains(@class, 'site-content')]//img"
-                                },
-                                new
-                                {
                                     RssFeedId = 83,
                                     ImgElementXPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img"
                                 },
@@ -4434,18 +4390,6 @@ namespace Espresso.Persistence.Migrations
                                     RssFeedId = 82,
                                     CurrentSkip = 0,
                                     NumberOfSkips = 6
-                                },
-                                new
-                                {
-                                    RssFeedId = 151,
-                                    CurrentSkip = 0,
-                                    NumberOfSkips = 7
-                                },
-                                new
-                                {
-                                    RssFeedId = 152,
-                                    CurrentSkip = 0,
-                                    NumberOfSkips = 11
                                 },
                                 new
                                 {
