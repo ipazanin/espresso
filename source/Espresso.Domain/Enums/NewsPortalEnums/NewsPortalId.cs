@@ -210,5 +210,9 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         JoomBoos = 104,
         [Display(Name = "ICT Business")]
         IctBusiness = 105,
+        [Display(Name = "HCL Gaming Portal")]
+        Hcl = 106,
+        [Display(Name = "Profitiraj.hr")]
+        ProfitirajHr = 107,
     }
 }

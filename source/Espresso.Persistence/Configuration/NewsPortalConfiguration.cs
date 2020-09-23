@@ -40,6 +40,7 @@ namespace Espresso.Persistence.Configuration
                 .OnDelete(DeleteBehavior.Cascade);
 
             NewsPortalDataSeed.SeedData(builder);
+            LocalNewsPortalDataSeed.SeedData(builder);
         }
     }
 }
