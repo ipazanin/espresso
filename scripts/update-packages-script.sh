@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 function read_solution() {
     echo "Parsing solution $1"
 

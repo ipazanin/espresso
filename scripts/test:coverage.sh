@@ -1,0 +1,2 @@
+#!/bin/bash
+sudo dotnet test --logger 'trx;LogFileName=TestResults.trx' --logger 'xunit;LogFileName=TestResults.xml' --results-directory ./tests/UnitTests/TestReports/UnitTests /p:CollectCoverage=true /p:CoverletOutput=TestReports/Coverage/ /p:CoverletOutputFormat=cobertura ./source/Espresso.sln
