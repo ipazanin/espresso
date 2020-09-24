@@ -14,37 +14,7 @@
     "test-frontend:ci": "CI=true npm run test-frontend",
     "lint-frontend:base": "eslint --ext .ts,.tsx src/",
     "lint-frontend": "npm run lint-frontend:base --fix --cache --cache-location=./node_modules/.cache/",
-    "upgrade-frontend": "npm run upgrade",
-    "build-backend": "dotnet build ../../../source/Espresso.sln",
-    "compose-database:up": "docker-compose -f ../../../compose/docker-compose-database.yml up --build --remove-orphans ",
-    "compose-database:down": "docker-compose -f ../../../compose/docker-compose-database.yml down",
-    "compose-development:up": "sudo docker-compose -f ../../../compose/docker-compose-development.yml up --build",
-    "compose-development:down": "sudo docker-compose -f ../../../compose/docker-compose-development.yml down",
-    "compose-local:up": "docker-compose -f ../../../compose/docker-compose-local.yml up --build",
-    "compose-local:down": "docker-compose -f ../../../compose/docker-compose-local.yml down",
-    "docker-build:latest": "npm run docker-build-webapi:latest && npm run docker-build-parserdeleter:latest",
-    "docker-build:current": "npm run docker-build-webapi:current && npm run docker-build-parserdeleter:current",
-    "docker-build-webapi:latest": "docker build --force-rm -f ../../../source/Espresso.WebApi/Dockerfile -t ipazanin/espresso-webapi:latest --build-arg REACT_APP_ENVIRONMENT=\"production\" ../../../source && docker push ipazanin/espresso-webapi:latest",
-    "docker-build-webapi:current": "docker build --force-rm -f ../../../source/Espresso.WebApi/Dockerfile -t ipazanin/espresso-webapi:1.4.4 --build-arg REACT_APP_ENVIRONMENT=\"production\" ../../../source && docker push ipazanin/espresso-webapi:1.4.4",
-    "docker-build-parserdeleter:latest": "docker build --force-rm -f ../../../source/Espresso.ParserDeleter/Dockerfile -t ipazanin/espresso-parserdeleter:latest ../../../source && docker push ipazanin/espresso-parserdeleter:latest",
-    "docker-build-parserdeleter:current": "docker build --force-rm -f ../../../source/Espresso.ParserDeleter/Dockerfile -t ipazanin/espresso-parserdeleter:1.4.4 ../../../source && docker push ipazanin/espresso-parserdeleter:1.4.4",
-    "docker-purge": "docker stop $(docker ps -aq) && docker system prune --all",
-    "docker-stop": "docker stop $(docker ps -aq)",
-    "docker-remove-containers": "docker rm -vf $(docker ps -a -q)",
-    "docker-remove-images": "docker rmi -f $(docker images -a -q)",
-    "format-backend": "dotnet format ../../../source/Espresso.sln",
-    "migration-add": "ASPNETCORE_ENVIRONMENT=local-local-db dotnet ef migrations add -p ../../../source/Espresso.Persistence/Espresso.Persistence.csproj -v",
-    "migration-remove": "ASPNETCORE_ENVIRONMENT=local-local-db dotnet ef migrations remove -p ../../../source/Espresso.Persistence/Espresso.Persistence.csproj -v",
-    "update-database": "ASPNETCORE_ENVIRONMENT=local-production-db dotnet ef database update -p ../../../source/Espresso.Persistence/Espresso.Persistence.csproj -v",
-    "pre-commit": "cd ../../../ && ./.git/hooks/pre-commit",
-    "restore-backend": "dotnet restore ../../../source/Espresso.sln",
-    "start-webapi": "npm run compose-database:up -- -d && ASPNETCORE_ENVIRONMENT=local-local-db dotnet run --project ../../../source/Espresso.WebApi/Espresso.WebApi.csproj --urls \"http://localhost:8000/\" ",
-    "start-webapi:watch": "npm run compose-database:up -- -d && ASPNETCORE_ENVIRONMENT=local-local-db dotnet watch --project ../../../source/Espresso.WebApi/Espresso.WebApi.csproj run --urls \"http://localhost:8000/\" ",
-    "start-parserdeleter": "npm run compose-database:up -- -d && DOTNET_ENVIRONMENT=local-local-db dotnet run --project ../../../source/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj",
-    "start-parserdeleter:watch": "npm run compose-database:up -- -d && DOTNET_ENVIRONMENT=local-local-db dotnet watch --project ../../../source/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj run",
-    "test-backend": "dotnet test ../../../source/Espresso.sln",
-    "test-backend:coverage": "sudo dotnet test --logger 'trx;LogFileName=TestResults.trx' --logger 'xunit;LogFileName=TestResults.xml' --results-directory ../../../tests/UnitTests/TestReports/UnitTests /p:CollectCoverage=true /p:CoverletOutput=TestReports/Coverage/ /p:CoverletOutputFormat=cobertura ../../../source/Espresso.sln",
-    "update-backend-packages": "cd ../../../ && scripts/update-packages-script.sh"
+    "upgrade-frontend": "npm run upgrade"
   },
   "dependencies": {
     "@apollo/client": "^3.1.3",
@@ -113,7 +83,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run build-backend && npm run test-backend && npm run lint-frontend && npm run test-frontend:ci "
+      "pre-commit": "dotnet build ../../Espresso.sln && dotnet test ../../Espresso.sln && npm run lint-frontend && npm run test-frontend:ci "
     }
   },
   "jest": {
