@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Configuration;
+using Espresso.WebApi.Parameters.HeaderParameters;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -42,7 +44,7 @@ namespace Espresso.WebApi.Extensions
             {
                 Title = $"Espresso API",
                 Version = configuration.AppVersionConfiguration.EspressoWebApiCurrentVersion.ToString(),
-                Description = "Espresso APP Web Api"
+                Description = "Espresso APP Web Api",
             });
 
             options.SwaggerDoc(configuration.AppVersionConfiguration.EspressoWebApiVersion_1_3.ToString(), new OpenApiInfo
@@ -61,6 +63,15 @@ namespace Espresso.WebApi.Extensions
 
             options.DocInclusionPredicate((version, desc) =>
             {
+                var basicInformationHeaders = desc.ParameterDescriptions
+                    .FirstOrDefault(
+                        parameterDescription => parameterDescription.Name
+                            .Equals(
+                                nameof(BasicInformationsHeaderParameters),
+                                StringComparison.InvariantCultureIgnoreCase
+                            )
+                    );
+
                 var apiVersions = desc
                     .ActionDescriptor
                     .GetApiVersionModel()

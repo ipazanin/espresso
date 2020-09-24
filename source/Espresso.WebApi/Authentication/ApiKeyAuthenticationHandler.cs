@@ -6,6 +6,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
+using Espresso.WebApi.DataTransferObjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -98,9 +99,15 @@ namespace Espresso.WebApi.Authentication
         {
             Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             Response.ContentType = ProblemDetailsContentType;
-            var problemDetails = UnAuthenticatedApiKeyMessage;
+            var exceptionDto = new ExceptionDto(
+                exceptionMessage: UnAuthenticatedApiKeyMessage,
+                innerExceptionMessage: null,
+                exceptionStackTrace: null,
+                innerExceptionStackTrace: null,
+                errors: null
+            );
 
-            await Response.WriteAsync(JsonSerializer.Serialize(problemDetails));
+            await Response.WriteAsync(JsonSerializer.Serialize(exceptionDto));
         }
 
         /// <summary>
@@ -112,9 +119,15 @@ namespace Espresso.WebApi.Authentication
         {
             Response.StatusCode = (int)HttpStatusCode.Forbidden;
             Response.ContentType = ProblemDetailsContentType;
-            var problemDetails = ForbiddenMessage;
+            var exceptionDto = new ExceptionDto(
+                exceptionMessage: ForbiddenMessage,
+                innerExceptionMessage: null,
+                exceptionStackTrace: null,
+                innerExceptionStackTrace: null,
+                errors: null
+            );
 
-            await Response.WriteAsync(JsonSerializer.Serialize(problemDetails));
+            await Response.WriteAsync(JsonSerializer.Serialize(exceptionDto));
         }
     }
 }
