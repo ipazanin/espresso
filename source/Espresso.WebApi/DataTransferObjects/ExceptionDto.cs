@@ -6,7 +6,7 @@ namespace Espresso.WebApi.DataTransferObjects
     /// <summary>
     /// 
     /// </summary>
-    public class UnhandledExceptionDto
+    public class ExceptionDto
     {
         #region Properties
         /// <summary>
@@ -50,7 +50,7 @@ namespace Espresso.WebApi.DataTransferObjects
         /// <param name="exceptionStackTrace"></param>
         /// <param name="innerExceptionStackTrace"></param>
         /// <param name="errors"></param>
-        public UnhandledExceptionDto(
+        public ExceptionDto(
             string exceptionMessage,
             string? innerExceptionMessage,
             string? exceptionStackTrace,

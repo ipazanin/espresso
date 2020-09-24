@@ -13,6 +13,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Espresso.WebApi.DataTransferObjects;
 
 namespace Espresso.WebApi.Controllers
 {
@@ -41,13 +42,16 @@ namespace Espresso.WebApi.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <response code="200">Response object containing articles from provided category</response>
+        /// <response code="400">If validation failed</response>
         /// <response code="401">If API Key is invalid or missing</response>
+        /// <response code="403">If API Key is forbiden from requested resource</response>
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
         [ApiVersion("1.4")]
         [HttpPost]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
@@ -80,13 +84,16 @@ namespace Espresso.WebApi.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <response code="200">Response object containing articles from provided category</response>
+        /// <response code="400">If validation failed</response>
         /// <response code="401">If API Key is invalid or missing</response>
+        /// <response code="403">If API Key is forbiden from requested resource</response>
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
         [ApiVersion("1.3")]
         [HttpPost]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
@@ -122,12 +129,14 @@ namespace Espresso.WebApi.Controllers
         /// <response code="200">Response object containing articles from provided category</response>
         /// <response code="400">If <paramref name="mobileAppVersion"/> is empty or longer than 20 characters or deviceType is not 1 or 2</response>
         /// <response code="401">If API Key is invalid or missing</response>
+        /// <response code="403">If API Key is forbiden from requested resource</response>
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
         [ApiVersion("1.2")]
         [HttpPost]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
@@ -160,13 +169,16 @@ namespace Espresso.WebApi.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns>Response object containing articles from provided category</returns>
         /// <response code="200">Response object containing articles from popular news portals</response>
+        /// <response code="400">If validation failed</response>
         /// <response code="401">If API Key is invalid or missing</response>
+        /// <response code="403">If API Key is forbiden from requested resource</response>
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetApplicationDownloadStatisticsQueryResponse))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
         [ApiVersion("1.4")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
@@ -198,13 +210,16 @@ namespace Espresso.WebApi.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns>Response object containing articles from provided category</returns>
         /// <response code="200">Response object containing articles from popular news portals</response>
+        /// <response code="400">If validation failed</response>
         /// <response code="401">If API Key is invalid or missing</response>
+        /// <response code="403">If API Key is forbiden from requested resource</response>
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetApplicationDownloadStatisticsQueryResponse))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
         [ApiVersion("1.3")]
         [ApiVersion("1.2")]
         [HttpGet]
