@@ -441,6 +441,56 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Biznis,
                     regionId: (int)RegionId.Global
                 ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.MotoriHr,
+                    name: NewsPortalId.MotoriHr.GetDisplayName(),
+                    baseUrl: "https://www.motori.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.MotoriHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 24, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.AutoMoto,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.AutoportalHr,
+                    name: NewsPortalId.AutoportalHr.GetDisplayName(),
+                    baseUrl: "https://autoportal.hr",
+                    iconUrl: $"Icons/{NewsPortalId.AutoportalHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 24, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.AutoMoto,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.AutopressHr,
+                    name: NewsPortalId.AutopressHr.GetDisplayName(),
+                    baseUrl: "https://www.autopress.hr",
+                    iconUrl: $"Icons/{NewsPortalId.AutopressHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 24, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.AutoMoto,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.VozimHr,
+                    name: NewsPortalId.VozimHr.GetDisplayName(),
+                    baseUrl: "https://vozim.hr",
+                    iconUrl: $"Icons/{NewsPortalId.VozimHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 24, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.AutoMoto,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.AutoMotorSport,
+                    name: NewsPortalId.AutoMotorSport.GetDisplayName(),
+                    baseUrl: "https://ams.hr",
+                    iconUrl: $"Icons/{NewsPortalId.AutoMotorSport}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 24, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.AutoMoto,
+                    regionId: (int)RegionId.Global
+                ),
             };
 
             builder.HasData(newsPortals);
