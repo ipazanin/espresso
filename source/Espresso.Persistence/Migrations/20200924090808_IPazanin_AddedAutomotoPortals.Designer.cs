@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200924090808_IPazanin_AddedAutomotoPortals")]
+    partial class IPazanin_AddedAutomotoPortals
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -4338,7 +4340,6 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 153,
-                                    ImageUrlParseStrategy = 4,
                                     ImgElementXPath = "//div[contains(@class, 'content')]//img"
                                 },
                                 new

@@ -214,5 +214,15 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         Hcl = 106,
         [Display(Name = "Profitiraj.hr")]
         ProfitirajHr = 107,
+        [Display(Name = "motori.hr")]
+        MotoriHr = 108,
+        [Display(Name = "Autoportal.hr")]
+        AutoportalHr = 109,
+        [Display(Name = "AutopressHR")]
+        AutopressHr = 110,
+        [Display(Name = "Vozim.HR")]
+        VozimHr = 111,
+        [Display(Name = "AUTO MOTOR I SPORT")]
+        AutoMotorSport = 112,
     }
 }

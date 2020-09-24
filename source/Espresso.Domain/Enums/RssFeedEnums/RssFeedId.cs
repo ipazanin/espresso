@@ -151,5 +151,10 @@
         IctBusiness = 150,
         Hcl = 151,
         ProfitirajHr = 152,
+        MotoriHr = 153,
+        AutoportalHr = 154,
+        AutopressHr = 155,
+        VozimHr = 156,
+        AutoMotorSport = 157,
     }
 }

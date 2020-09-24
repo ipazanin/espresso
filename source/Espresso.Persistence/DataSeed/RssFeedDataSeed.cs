@@ -329,6 +329,46 @@ namespace Espresso.Persistence.DataSeed
                     requestType: RequestType.Normal
                 ),
 
+                new RssFeed(
+                    id: (int)RssFeedId.MotoriHr,
+                    url: "https://www.motori.hr/feed",
+                    newsPortalId: (int)NewsPortalId.MotoriHr,
+                    categoryId: (int)CategoryId.AutoMoto,
+                    requestType: RequestType.Normal
+                ),
+
+                new RssFeed(
+                    id: (int)RssFeedId.AutoportalHr,
+                    url: "https://autoportal.hr/feed",
+                    newsPortalId: (int)NewsPortalId.AutoportalHr,
+                    categoryId: (int)CategoryId.AutoMoto,
+                    requestType: RequestType.Normal
+                ),
+
+                new RssFeed(
+                    id: (int)RssFeedId.AutopressHr,
+                    url: "https://www.autopress.hr/feed",
+                    newsPortalId: (int)NewsPortalId.AutopressHr,
+                    categoryId: (int)CategoryId.AutoMoto,
+                    requestType: RequestType.Normal
+                ),
+
+                new RssFeed(
+                    id: (int)RssFeedId.VozimHr,
+                    url: "https://vozim.hr/feed",
+                    newsPortalId: (int)NewsPortalId.VozimHr,
+                    categoryId: (int)CategoryId.AutoMoto,
+                    requestType: RequestType.Normal
+                ),
+
+                new RssFeed(
+                    id: (int)RssFeedId.AutoMotorSport,
+                    url: "https://ams.hr/feed",
+                    newsPortalId: (int)NewsPortalId.AutoMotorSport,
+                    categoryId: (int)CategoryId.AutoMoto,
+                    requestType: RequestType.Normal
+                ),
+
             };
 
             builder.HasData(rssFeeds);
@@ -649,6 +689,41 @@ namespace Espresso.Persistence.DataSeed
             {
                 RssFeedId = (int)RssFeedId.ProfitirajHr,
                 NumberOfSkips = 11,
+                CurrentSkip = 0
+            });
+
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.MotoriHr,
+                NumberOfSkips = 17,
+                CurrentSkip = 0
+            });
+
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.AutoportalHr,
+                NumberOfSkips = 3,
+                CurrentSkip = 0
+            });
+
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.AutopressHr,
+                NumberOfSkips = 9,
+                CurrentSkip = 0
+            });
+
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.VozimHr,
+                NumberOfSkips = 8,
+                CurrentSkip = 0
+            });
+
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.AutoMotorSport,
+                NumberOfSkips = 17,
                 CurrentSkip = 0
             });
         }
@@ -1046,6 +1121,37 @@ namespace Espresso.Persistence.DataSeed
             {
                 RssFeedId = (int)RssFeedId.ProfitirajHr,
                 ImgElementXPath = "//div[contains(@class, 'site-content')]//img"
+            });
+
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.MotoriHr,
+                ImgElementXPath = "//div[contains(@class, 'content')]//img",
+                ImageUrlParseStrategy = ImageUrlParseStrategy.FromSecondElementExtension
+            });
+
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.AutoportalHr,
+                ImgElementXPath = "//div[contains(@class, 'td-post-content')]//img"
+            });
+
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.AutopressHr,
+                ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+            });
+
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.VozimHr,
+                ImgElementXPath = "//div[contains(@class, 'intro-image-over')]//img"
+            });
+
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.AutoMotorSport,
+                ImgElementXPath = "//main[contains(@class, 'main-content')]//img"
             });
         }
     }
