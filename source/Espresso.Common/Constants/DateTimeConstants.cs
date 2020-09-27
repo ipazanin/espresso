@@ -15,7 +15,6 @@ namespace Espresso.Common.Constants
         #endregion
 
         #region Timespans
-        // public static TimeSpan MaxAgeOfNewNewsPortal => TimeSpan.FromDays(30);
         public const int OneYearInSeconds = 60 * 60 * 24 * 365;
         #endregion
     }

@@ -28,8 +28,8 @@ namespace Espresso.WebApi.Extensions
         private static void ConfigureApiVersioning(ApiVersioningOptions apiVersioningOptions)
         {
             apiVersioningOptions.DefaultApiVersion = new ApiVersion(
-                majorVersion: ApiVersionConstants.DefaultMajorVersion,
-                minorVersion: ApiVersionConstants.DefaultMinorVersion
+                majorVersion: 1,
+                minorVersion: 2
             );
             apiVersioningOptions.AssumeDefaultVersionWhenUnspecified = true;
             apiVersioningOptions.ReportApiVersions = true;
