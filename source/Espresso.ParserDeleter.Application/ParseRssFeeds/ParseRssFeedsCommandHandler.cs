@@ -22,7 +22,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Espresso.ParserDeleter.ParseRssFeeds
 {
-    public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand>
+    public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand, ParseRssFeedsCommandResponse>
     {
         #region Fields
         private readonly IMemoryCache _memoryCache;
@@ -62,7 +62,7 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
         #endregion
 
         #region Methods
-        public async Task<Unit> Handle(
+        public async Task<ParseRssFeedsCommandResponse> Handle(
             ParseRssFeedsCommand request,
             CancellationToken cancellationToken
         )
@@ -108,7 +108,10 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
                 cancellationToken: cancellationToken
             );
 
-            return Unit.Value;
+            return new ParseRssFeedsCommandResponse(
+                createdArticles: createArticles.Count(),
+                updatedArticles: updateArticles.Count()
+            );
         }
 
         public async Task<IEnumerable<Article>> GetArticlesFromLoadedRssFeeds(
@@ -286,8 +289,8 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
             }
             catch (Exception exception)
             {
-                var eventName = Event.ParserDeleterNewArticlesRequest.GetDisplayName();
-                var eventId = (int)Event.ParserDeleterNewArticlesRequest;
+                var eventName = Event.SendNewAndUpdatedArticlesRequest.GetDisplayName();
+                var eventId = (int)Event.SendNewAndUpdatedArticlesRequest;
                 var version = request.CurrentApiVersion;
                 var exceptionMessage = exception.Message;
                 var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
@@ -320,7 +323,6 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
                         appEnvironment: request.AppEnvironment,
                         cancellationToken: default
                 );
-                await Task.Delay(request.WaitDurationAfterWebServerRequestError, cancellationToken);
             }
         }
         #endregion

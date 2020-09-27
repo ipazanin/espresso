@@ -11,7 +11,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace Espresso.Application.Infrastructure.MediatorInfrastructure
 {
-    public class ApplicationLifeTimePipelineBehavior<TRequest, TResponse> :
+    public class ApplicationLifeTimePipeline<TRequest, TResponse> :
         IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
     {
         #region Constants
@@ -34,7 +34,7 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
         #endregion
 
         #region Constructors
-        public ApplicationLifeTimePipelineBehavior(
+        public ApplicationLifeTimePipeline(
             ISlackService slackService
         )
         {

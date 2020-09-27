@@ -68,7 +68,7 @@ namespace Espresso.WebApi.Controllers
         {
             var categories = await Mediator.Send(
                 request: new GetCategoriesQuery(
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,

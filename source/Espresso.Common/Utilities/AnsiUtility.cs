@@ -51,7 +51,7 @@
             return Encode(value, GreenColor, Bold);
         }
 
-        public static string EncodeDuration(string value)
+        public static string EncodeTimespan(string value)
         {
             return Encode(value, CyanColor);
         }

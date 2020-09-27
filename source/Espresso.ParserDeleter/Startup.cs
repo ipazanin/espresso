@@ -16,8 +16,11 @@ using Espresso.ParserDeleter.Application.Services;
 using Espresso.Wepi.Application.IServices;
 using Espresso.ParserDeleter.ParseRssFeeds.Validators;
 using Espresso.ParserDeleter.ParseRssFeeds;
-using Espresso.ParserDeleter.Jobs;
 using FluentValidation;
+using Espresso.WebApi.Extensions;
+using System;
+using Espresso.ParserDeleter.CronJobs;
+using Microsoft.AspNetCore.Builder;
 
 namespace Espresso.ParserDeleter
 {
@@ -55,22 +58,6 @@ namespace Espresso.ParserDeleter
             services.AddScoped<ISortArticlesService, SortArticlesService>();
             #endregion
 
-            #region MemoryCache
-            services.AddMemoryCache();
-            services.AddTransient<IParserDeleterInit, ParserDeleterInit>();
-            #endregion
-
-            #region Http
-            services.AddHttpClient();
-            #endregion
-
-            #region MediatR
-            services.AddMediatR(typeof(ParseRssFeedsCommandHandler).Assembly);
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggerPipelineBehavior<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ApplicationLifeTimePipelineBehavior<,>));
-            #endregion
-
             #region Database
             services.AddDbContext<IApplicationDatabaseContext, ApplicationDatabaseContext>(options =>
              {
@@ -96,16 +83,72 @@ namespace Espresso.ParserDeleter
                  }
              });
 
-            services.AddScoped<IDatabaseConnectionFactory>(o => new DatabaseConnectionFactory(_parserDeleterConfiguration.DatabaseConfiguration.ConnectionString));
+            services.AddScoped<IDatabaseConnectionFactory>(o => new DatabaseConnectionFactory(
+                    connectionString: _parserDeleterConfiguration.DatabaseConfiguration.ConnectionString
+                )
+            );
             services.AddScoped<IApplicationDownloadRepository, ApplicationDownloadRepository>();
             services.AddScoped<IArticleCategoryRepository, ArticleCategoryRepository>();
             services.AddScoped<IArticleRepository, ArticleRepository>();
             #endregion
 
-            #region Jobs
-            services.AddHostedService<ParseArticlesJob>();
-            services.AddHostedService<DeleteArticlesJob>();
+            #region MemoryCache
+            services.AddMemoryCache();
+            services.AddTransient<IParserDeleterInit, ParserDeleterInit>();
             #endregion
+
+            #region Http
+            services.AddHttpClient();
+            #endregion
+
+            #region MediatR
+            services.AddMediatR(typeof(ParseRssFeedsCommandHandler).Assembly);
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggerPipeline<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ApplicationLifeTimePipeline<,>));
+            #endregion
+
+            #region Jobs
+            services.AddCronJob<DeleteArticlesCronJob>(cronJobConfiguration =>
+            {
+                cronJobConfiguration.CronExpression = _parserDeleterConfiguration
+                    .CronJobsConfiguration
+                    .DeleteArticlesCronExpression;
+                cronJobConfiguration.TimeZoneInfo = TimeZoneInfo.Utc;
+                cronJobConfiguration.AppEnvironment = _parserDeleterConfiguration.AppConfiguration.AppEnvironment;
+                cronJobConfiguration.Version = _parserDeleterConfiguration.AppConfiguration.Version;
+            });
+            services.AddCronJob<ParserDeleterPerformanceCronJob>(cronJobConfiguration =>
+            {
+                cronJobConfiguration.CronExpression = _parserDeleterConfiguration
+                    .CronJobsConfiguration
+                    .ParserDeleterPerformanceCronExpression;
+                cronJobConfiguration.TimeZoneInfo = TimeZoneInfo.Utc;
+                cronJobConfiguration.AppEnvironment = _parserDeleterConfiguration.AppConfiguration.AppEnvironment;
+                cronJobConfiguration.Version = _parserDeleterConfiguration.AppConfiguration.Version;
+            });
+            services.AddCronJob<ParseArticlesCronJob>(cronJobConfiguration =>
+            {
+                cronJobConfiguration.CronExpression = _parserDeleterConfiguration
+                    .CronJobsConfiguration
+                    .ParseArticlesCronExpression;
+                cronJobConfiguration.TimeZoneInfo = TimeZoneInfo.Utc;
+                cronJobConfiguration.AppEnvironment = _parserDeleterConfiguration.AppConfiguration.AppEnvironment;
+                cronJobConfiguration.Version = _parserDeleterConfiguration.AppConfiguration.Version;
+            });
+            #endregion
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="memoryCacheInit"></param>
+        public static void Configure(
+            IParserDeleterInit memoryCacheInit
+        )
+        {
+            memoryCacheInit.InitParserDeleter().GetAwaiter().GetResult();
         }
         #endregion
     }

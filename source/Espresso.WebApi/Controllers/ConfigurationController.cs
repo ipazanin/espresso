@@ -66,7 +66,7 @@ namespace Espresso.WebApi.Controllers
         {
             var request = new GetWebConfigurationQuery(
                 maxAgeOfNewNewsPortal: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                 targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                 consumerVersion: basicInformationsHeaderParameters.Version,
                 deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -112,7 +112,7 @@ namespace Espresso.WebApi.Controllers
         {
             var request = new GetConfigurationQuery(
                 maxAgeOfNewNewsPortal: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                 targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                 consumerVersion: basicInformationsHeaderParameters.Version,
                 deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -157,7 +157,7 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var request = new GetConfigurationQuery_1_3(
-                currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                 targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                 consumerVersion: basicInformationsHeaderParameters.Version,
                 deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -204,8 +204,8 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var request = new GetConfigurationQuery_1_3(
-                currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
-                targetedEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.EspressoWebApiVersion_1_2.ToString(),
+                currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
+                targetedEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.EspressoWebApiVersion_1_2.ToString(),
                 consumerVersion: mobileAppVersion,
                 deviceType: mobileDeviceType,
                 appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment

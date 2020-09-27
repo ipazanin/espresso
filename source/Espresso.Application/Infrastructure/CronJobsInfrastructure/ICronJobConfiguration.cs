@@ -21,6 +21,17 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
         /// <value></value>
         TimeZoneInfo? TimeZoneInfo { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        string Version { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
         AppEnvironment AppEnvironment { get; set; }
+
     }
 }

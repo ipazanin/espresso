@@ -9,12 +9,6 @@
         /// 
         /// </summary>
         /// <value></value>
-        public AppVersionConfiguration AppVersionConfiguration { get; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
         public AppConfiguration AppConfiguration { get; }
 
         /// <summary>
@@ -40,5 +34,11 @@
         /// </summary>
         /// <value></value>
         public DateTimeConfiguration DateTimeConfiguration { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public CronJobsConfiguration CronJobsConfiguration { get; }
     }
 }

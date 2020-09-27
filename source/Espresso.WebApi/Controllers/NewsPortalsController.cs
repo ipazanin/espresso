@@ -66,7 +66,7 @@ namespace Espresso.WebApi.Controllers
         {
             var getNewsPortalsQueryResponse = await Mediator.Send(
                 request: new GetNewsPortalsQuery(
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -111,7 +111,7 @@ namespace Espresso.WebApi.Controllers
         {
             var getNewsPortalsQueryResponse = await Mediator.Send(
                 request: new GetNewsPortalsQuery_1_3(
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -158,7 +158,7 @@ namespace Espresso.WebApi.Controllers
         {
             var getNewsPortalsQueryResponse = await Mediator.Send(
                 request: new NewsSourcesRequestCommand(
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,

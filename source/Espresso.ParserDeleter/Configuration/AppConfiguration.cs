@@ -1,4 +1,4 @@
-﻿using Espresso.Common.Constants;
+﻿using System;
 using Espresso.Common.Enums;
 using Microsoft.Extensions.Configuration;
 
@@ -11,20 +11,18 @@ namespace Espresso.ParserDeleter.Configuration
         #endregion
 
         #region Properties
-        public static string RssFeedParserVersion =>
-            $"{ApiVersionConstants.CurrentMajorVersion}." +
-            $"{ApiVersionConstants.CurrentMinorVersion}." +
-            $"{ApiVersionConstants.CurrentFixVersion}";
-
-        public static string RssFeedParserMajorMinorVersion =>
-            $"{ApiVersionConstants.CurrentMajorVersion}." +
-            $"{ApiVersionConstants.CurrentMinorVersion}";
+        public string RssFeedParserMajorMinorVersion => $"{_configuration.GetValue<int>("MajorVersion")}.{_configuration.GetValue<int>("MinorVersion")}";
 
         public string ServerUrl => _configuration.GetValue<string>("ServerUrl");
 
         public AppEnvironment AppEnvironment => _configuration.GetValue<AppEnvironment>("Environment");
 
-        public static string Version => RssFeedParserVersion;
+        public string Version => _configuration.GetValue<string>("Version");
+
+        public TimeSpan MaxAgeOfArticles =>
+            TimeSpan.FromDays(
+                value: _configuration.GetValue<int>("MaxAgeOfArticlesInDays")
+            );
         #endregion
 
         #region Constructors

@@ -84,7 +84,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             newNewsPortalsPosition: webApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                             titleSearchQuery: resolveContext.GetArgument<string?>("titleSearchQuery"),
                             maxAgeOfNewNewsPortal: webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                            currentEspressoWebApiVersion: webApiConfiguration.AppVersionConfiguration.Version,
+                            currentEspressoWebApiVersion: webApiConfiguration.AppConfiguration.Version,
                             targetedEspressoWebApiVersion: userContext.TargetedApiVersion,
                             consumerVersion: userContext.ConsumerVersion,
                             deviceType: userContext.DeviceType,

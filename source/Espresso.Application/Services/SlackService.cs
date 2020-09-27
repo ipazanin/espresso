@@ -46,11 +46,15 @@ namespace Espresso.Application.Services
         private const string NewNewsPortalRequestBotIconEmoji = ":email:";
         private const string NewNewsPortalRequestBotUsername = "new-source-bot";
         private const string NewNewsPortalRequestChannel = "#new-source-requests-bot";
+
+        private const string BackendStatisticsBotIconEmoji = ":bar_chart:";
+        private const string BackendStatisticsBotUsername = "backend-bot";
+        private const string BackendStatisticsChannel = "#backend-statistics";
         #endregion
 
         #region Fields
         private readonly IMemoryCache _memoryCache;
-        private readonly HttpClient _httpClient;
+        private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<SlackService> _logger;
         #endregion
 
@@ -62,7 +66,7 @@ namespace Espresso.Application.Services
         )
         {
             _memoryCache = memoryCache;
-            _httpClient = httpClientFactory.CreateClient();
+            _httpClientFactory = httpClientFactory;
             _logger = loggerFactory.CreateLogger<SlackService>();
         }
         #endregion
@@ -263,6 +267,29 @@ namespace Espresso.Application.Services
                 cancellationToken: cancellationToken
             );
         }
+
+        public Task LogParserDeleterPerformance(
+            TimeSpan parseRssFeedsPerformance,
+            TimeSpan deleteOldArticlesPerformance,
+            AppEnvironment appEnvironment,
+            CancellationToken cancellationToken
+        )
+        {
+            var text = $"Jobs performance\n" +
+                $"Parse Rss Feeds: {parseRssFeedsPerformance}\n" +
+                $"Delete Old Articles: {deleteOldArticlesPerformance}";
+
+            return Log(
+                data: new SlackWebHookDto(
+                    userName: BackendStatisticsBotUsername,
+                    iconEmoji: BackendStatisticsBotIconEmoji,
+                    text: text,
+                    channel: BackendStatisticsChannel
+                ),
+                appEnvironment: appEnvironment,
+                cancellationToken: cancellationToken
+            );
+        }
         #endregion
 
         #region Private Methods
@@ -276,6 +303,8 @@ namespace Espresso.Application.Services
             {
                 return;
             }
+
+            var httpClient = _httpClientFactory.CreateClient();
 
             _ = await _memoryCache.GetOrCreateAsync(data.Text, async entry =>
               {
@@ -293,7 +322,7 @@ namespace Espresso.Application.Services
                       var jsonString = await reader.ReadToEndAsync();
 
                       var content = new StringContent(jsonString, Encoding.UTF8, MimeTypeConstants.Json);
-                      var response = await _httpClient.PostAsync(
+                      var response = await httpClient.PostAsync(
                           requestUri: WebHookurl,
                           content: content,
                           cancellationToken: cancellationToken

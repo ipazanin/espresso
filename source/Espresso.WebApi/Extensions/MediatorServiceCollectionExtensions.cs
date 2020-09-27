@@ -19,9 +19,9 @@ namespace Espresso.WebApi.Extensions
         public static IServiceCollection AddMediatRServices(this IServiceCollection services)
         {
             services.AddMediatR(typeof(GetNewsPortalsQuery).GetTypeInfo().Assembly);
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggerPipelineBehavior<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ApplicationLifeTimePipelineBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggerPipeline<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ApplicationLifeTimePipeline<,>));
 
             return services;
         }

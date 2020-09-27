@@ -30,16 +30,16 @@ namespace Espresso.WebApi.Extensions
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint(
-                    url: $"/{SwaggerDocumentDefinitionRoutePrefix}/{configuration.AppVersionConfiguration.EspressoWebApiCurrentVersion}/{SwaggerDefinitionFileName}",
-                    name: $"{ApiDescriptionNamePrefix} {configuration.AppVersionConfiguration.EspressoWebApiCurrentVersion}"
+                    url: $"/{SwaggerDocumentDefinitionRoutePrefix}/{configuration.AppConfiguration.EspressoWebApiCurrentVersion}/{SwaggerDefinitionFileName}",
+                    name: $"{ApiDescriptionNamePrefix} {configuration.AppConfiguration.EspressoWebApiCurrentVersion}"
                 );
                 options.SwaggerEndpoint(
-                    url: $"/{SwaggerDocumentDefinitionRoutePrefix}/{configuration.AppVersionConfiguration.EspressoWebApiVersion_1_3}/{SwaggerDefinitionFileName}",
-                    name: $"{ApiDescriptionNamePrefix} {configuration.AppVersionConfiguration.EspressoWebApiVersion_1_3}"
+                    url: $"/{SwaggerDocumentDefinitionRoutePrefix}/{configuration.AppConfiguration.EspressoWebApiVersion_1_3}/{SwaggerDefinitionFileName}",
+                    name: $"{ApiDescriptionNamePrefix} {configuration.AppConfiguration.EspressoWebApiVersion_1_3}"
                 );
                 options.SwaggerEndpoint(
-                    url: $"/{SwaggerDocumentDefinitionRoutePrefix}/{configuration.AppVersionConfiguration.EspressoWebApiVersion_1_2}/{SwaggerDefinitionFileName}",
-                    name: $"{ApiDescriptionNamePrefix} {configuration.AppVersionConfiguration.EspressoWebApiVersion_1_2}"
+                    url: $"/{SwaggerDocumentDefinitionRoutePrefix}/{configuration.AppConfiguration.EspressoWebApiVersion_1_2}/{SwaggerDefinitionFileName}",
+                    name: $"{ApiDescriptionNamePrefix} {configuration.AppConfiguration.EspressoWebApiVersion_1_2}"
                 );
                 options.RoutePrefix = SwaggerApiExplorerRoute;
             });

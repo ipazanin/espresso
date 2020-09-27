@@ -1,16 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Espresso.Application.DataTransferObjects;
-
-namespace Espresso.ParserDeleter.ParseRssFeeds
+﻿namespace Espresso.ParserDeleter.ParseRssFeeds
 {
     public class ParseRssFeedsCommandResponse
     {
-        public IEnumerable<ArticleDto> CreatedArticles { get; }
+        public int CreatedArticles { get; }
 
-        public IEnumerable<ArticleDto> UpdatedArticles { get; }
+        public int UpdatedArticles { get; }
 
-        public ParseRssFeedsCommandResponse(IEnumerable<ArticleDto> createdArticles, IEnumerable<ArticleDto> updatedArticles)
+        public ParseRssFeedsCommandResponse(int createdArticles, int updatedArticles)
         {
             CreatedArticles = createdArticles;
             UpdatedArticles = updatedArticles;
@@ -18,7 +14,8 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
 
         public override string ToString()
         {
-            return $"{nameof(CreatedArticles)}:{CreatedArticles.Count()}, {nameof(UpdatedArticles)}:{UpdatedArticles.Count()}";
+            return $"{nameof(CreatedArticles)}:{CreatedArticles}, " +
+                $"{nameof(UpdatedArticles)}:{UpdatedArticles}";
         }
     }
 }

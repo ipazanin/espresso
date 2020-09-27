@@ -12,12 +12,6 @@ namespace Espresso.WebApi.Configuration
         /// 
         /// </summary>
         /// <value></value>
-        public AppVersionConfiguration AppVersionConfiguration { get; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
         public AppConfiguration AppConfiguration { get; }
 
         /// <summary>
@@ -43,6 +37,12 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         /// <value></value>
         public DateTimeConfiguration DateTimeConfiguration { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public CronJobsConfiguration CronJobsConfiguration { get; }
         #endregion
 
         #region Constructors
@@ -53,11 +53,11 @@ namespace Espresso.WebApi.Configuration
         public WebApiConfiguration(IConfiguration configuration)
         {
             AppConfiguration = new AppConfiguration(configuration.GetSection("AppConfiguration"));
-            AppVersionConfiguration = new AppVersionConfiguration();
             DatabaseConfiguration = new DatabaseConfiguration(configuration.GetSection("DatabaseConfiguration"));
             ApiKeysConfiguration = new ApiKeysConfiguration(configuration.GetSection("ApiKeysConfiguration"));
             SpaConfiguration = new SpaConfiguration(configuration.GetSection("SpaConfiguration"));
             DateTimeConfiguration = new DateTimeConfiguration(configuration.GetSection("DateTimeConfiguration"));
+            CronJobsConfiguration = new CronJobsConfiguration(configuration.GetSection("CronJobsConfiguration"));
         }
         #endregion
     }

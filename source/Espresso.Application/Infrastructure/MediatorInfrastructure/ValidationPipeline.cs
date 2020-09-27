@@ -7,11 +7,11 @@ using MediatR;
 
 namespace Espresso.Application.Infrastructure.MediatorInfrastructure
 {
-    public class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
+    public class ValidationPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-        public ValidationPipelineBehavior(IEnumerable<IValidator<TRequest>> validators)
+        public ValidationPipeline(IEnumerable<IValidator<TRequest>> validators)
         {
             _validators = validators;
         }

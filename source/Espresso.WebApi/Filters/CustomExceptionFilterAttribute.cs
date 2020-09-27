@@ -101,7 +101,7 @@ namespace Espresso.WebApi.Filters
 
             var eventName = Event.CustomExceptionFilterAttribute.GetDisplayName();
             var eventId = (int)Event.CustomExceptionFilterAttribute;
-            var version = _webApiConfiguration.AppVersionConfiguration.Version;
+            var version = _webApiConfiguration.AppConfiguration.Version;
             var message = context.Exception.Message;
             var exceptionMessage = context.Exception.Message;
             var innerExceptionMessage = context.Exception.InnerException?.Message ?? "";
