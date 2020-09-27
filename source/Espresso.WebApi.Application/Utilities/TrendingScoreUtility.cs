@@ -74,22 +74,5 @@ namespace Espresso.WebApi.Application.Utilities
 
             return normalisedTrendingScore;
         }
-
-        //public static long CalculateTrendingScore(int numberOfClicks, DateTime publishDateTime)
-        //{
-        //    var random = new Random();
-        //    var variance = 0.01;
-
-        //    var baseTimeScore = (publishDateTime - DateTimeConstants.TrendingReferentDateTime).TotalMinutes;
-        //    var timeScore = baseTimeScore + (baseTimeScore * random.NextDouble() * variance);
-
-        //    var timeScoreFor1DayAge = TimeSpan.FromDays(1).TotalMinutes;
-        //    var clickWeight = 100;
-        //    var baseClickScore = numberOfClicks * (timeScoreFor1DayAge / clickWeight);
-        //    var clickScore = baseClickScore + (baseClickScore * random.NextDouble() * variance);
-
-        //    var trendingScore = clickScore + timeScore;
-        //    return (long)trendingScore;
-        //}
     }
 }
