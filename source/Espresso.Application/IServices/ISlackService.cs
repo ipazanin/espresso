@@ -63,5 +63,12 @@ namespace Espresso.Application.IServices
             AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         );
+
+        public Task LogParserDeleterPerformance(
+            TimeSpan parseRssFeedsPerformance,
+            TimeSpan deleteOldArticlesPerformance,
+            AppEnvironment appEnvironment,
+            CancellationToken cancellationToken
+        );
     }
 }

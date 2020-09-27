@@ -34,7 +34,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries
                     return await mediator.Send(
                         request: new GetConfigurationQuery(
                             maxAgeOfNewNewsPortal: webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                            currentEspressoWebApiVersion: webApiConfiguration.AppVersionConfiguration.Version,
+                            currentEspressoWebApiVersion: webApiConfiguration.AppConfiguration.Version,
                             targetedEspressoWebApiVersion: userContext.TargetedApiVersion,
                             consumerVersion: userContext.ConsumerVersion,
                             deviceType: userContext.DeviceType,

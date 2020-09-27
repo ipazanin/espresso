@@ -93,7 +93,7 @@ namespace Espresso.WebApi.Controllers
                     newNewsPortalsPosition: WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                     titleSearchQuery: titleSearchQuery,
                     maxAgeOfNewNewsPortal: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -150,7 +150,7 @@ namespace Espresso.WebApi.Controllers
                     skip: skip,
                     newsPortalIdsString: newsPortalIds,
                     categoryIdsString: categoryIds,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     titleSearchQuery: null,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
@@ -214,7 +214,7 @@ namespace Espresso.WebApi.Controllers
                     newNewsPortalsPosition: WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                     titleSearchQuery: titleSearchQuery,
                     maxAgeOfNewNewsPortal: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -271,7 +271,7 @@ namespace Espresso.WebApi.Controllers
                     skip: skip,
                     categoryId: categoryId,
                     newsPortalIdsString: newsPortalIds,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -323,7 +323,7 @@ namespace Espresso.WebApi.Controllers
                     skip: paginationParameters.Skip,
                     firstArticleId: paginationParameters.FirstArticleId,
                     maxAgeOfTrendingArticle: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -380,7 +380,7 @@ namespace Espresso.WebApi.Controllers
                     newsPortalIdsString: newsPortalIds,
                     maxAgeOfFeaturedArticle: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,
                     maxAgeOfTrendingArticle: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -429,7 +429,7 @@ namespace Espresso.WebApi.Controllers
             await Mediator.Send(
                 request: new IncrementNumberOfClicksCommand(
                     id: articleId,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -440,7 +440,7 @@ namespace Espresso.WebApi.Controllers
 
             await Mediator.Send(
                 request: new CalculateTrendingScoreCommand(
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -490,7 +490,7 @@ namespace Espresso.WebApi.Controllers
             await Mediator.Send(
                 request: new IncrementNumberOfClicksCommand(
                     id: articleId,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -501,7 +501,7 @@ namespace Espresso.WebApi.Controllers
 
             await Mediator.Send(
                 request: new CalculateTrendingScoreCommand(
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -546,7 +546,7 @@ namespace Espresso.WebApi.Controllers
             await Mediator.Send(
                 request: new HideArticleCommand(
                     articleId: articleId,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -591,7 +591,7 @@ namespace Espresso.WebApi.Controllers
             await Mediator.Send(
                 request: new ToggleFeaturedArticleCommand(
                     articleId: articleId,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,

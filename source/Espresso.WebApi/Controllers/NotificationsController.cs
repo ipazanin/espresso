@@ -73,7 +73,7 @@ namespace Espresso.WebApi.Controllers
                     articlesRequest.CreatedArticles,
                     articlesRequest.UpdatedArticles,
                     maxAgeOfArticle: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfArticle,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -84,7 +84,7 @@ namespace Espresso.WebApi.Controllers
 
             await Mediator.Send(
                 request: new CalculateTrendingScoreCommand(
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -97,7 +97,7 @@ namespace Espresso.WebApi.Controllers
                 request: new SendArticlesNotificationsCommand(
                     articlesRequest.CreatedArticles,
                     articlesRequest.UpdatedArticles,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -146,7 +146,7 @@ namespace Espresso.WebApi.Controllers
                     topic: sendPushNotificationRequestObject.Topic,
                     articleUrl: sendPushNotificationRequestObject.ArticleUrl,
                     isSoundEnabled: sendPushNotificationRequestObject.IsSoundEnabled,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,
@@ -192,7 +192,7 @@ namespace Espresso.WebApi.Controllers
                 request: new GetPushNotificationsQuery(
                     take: take,
                     skip: skip,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppVersionConfiguration.Version,
+                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
                     targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
                     consumerVersion: basicInformationsHeaderParameters.Version,
                     deviceType: basicInformationsHeaderParameters.DeviceType,

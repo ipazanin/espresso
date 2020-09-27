@@ -1,4 +1,5 @@
 ﻿using Espresso.Common.Enums;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
 namespace Espresso.WebApi.Configuration
@@ -26,6 +27,29 @@ namespace Espresso.WebApi.Configuration
         /// <value></value>
         public int NewNewsPortalsPosition => _configuration.GetValue<int>("NewNewsPortalsPosition");
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string Version => _configuration.GetValue<string>("Version");
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ApiVersion EspressoWebApiVersion_1_2 => new ApiVersion(1, 2);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ApiVersion EspressoWebApiVersion_1_3 => new ApiVersion(1, 3);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ApiVersion EspressoWebApiCurrentVersion => new ApiVersion(
+            majorVersion: _configuration.GetValue<int>("MajorVersion"),
+            minorVersion: _configuration.GetValue<int>("MinorVersion")
+        );
         #endregion
 
         #region Constructors

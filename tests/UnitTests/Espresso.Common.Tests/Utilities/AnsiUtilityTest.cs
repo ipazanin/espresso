@@ -77,7 +77,7 @@ namespace Espresso.Common.Tests.Utilities
             #endregion
 
             #region Act
-            var actualAnsiStringValue = AnsiUtility.EncodeDuration(stringValue);
+            var actualAnsiStringValue = AnsiUtility.EncodeTimespan(stringValue);
             #endregion
 
             #region Assert

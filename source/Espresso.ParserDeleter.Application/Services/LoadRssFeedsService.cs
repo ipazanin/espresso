@@ -19,7 +19,6 @@ using Espresso.Domain.Extensions;
 using Espresso.Domain.Records;
 using Espresso.ParserDeleter.Application.IServices;
 using Microsoft.Extensions.Logging;
-using Espresso.Domain.Enums.NewsPortalEnums;
 
 namespace Espresso.ParserDeleter.Application.Services
 {
@@ -39,8 +38,9 @@ namespace Espresso.ParserDeleter.Application.Services
         )
         {
             _slackService = slackService;
-            _httpClient = httpClientFactory.CreateClient();
             _logger = loggerFactory.CreateLogger<LoadRssFeedsService>();
+            _httpClient = httpClientFactory.CreateClient();
+            _httpClient.Timeout = TimeSpan.FromSeconds(10);
         }
         #endregion
 

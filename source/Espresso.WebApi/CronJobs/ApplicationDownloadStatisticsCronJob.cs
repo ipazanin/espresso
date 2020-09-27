@@ -8,29 +8,51 @@ using Microsoft.Extensions.Logging;
 using Espresso.Application.IServices;
 using Microsoft.Extensions.DependencyInjection;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
+using Espresso.WebApi.Configuration;
 
-namespace Espresso.WebApi.Application.CronJobs
+namespace Espresso.WebApi.CronJobs
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ApplicationDownloadStatisticsCronJob : CronJob<ApplicationDownloadStatisticsCronJob>
     {
         #region Fields
         private readonly IServiceScopeFactory _scopeFactory;
-        private readonly ICronJobConfiguration<ApplicationDownloadStatisticsCronJob> _cronJobConfiguration;
+        private readonly IWebApiConfiguration _webApiConfiguration;
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="serviceScopeFactory"></param>
+        /// <param name="cronJobConfiguration"></param>
+        /// <param name="loggerFactory"></param>
+        /// <param name="webApiConfiguration"></param>
+        /// <returns></returns>
         public ApplicationDownloadStatisticsCronJob(
-            IServiceScopeFactory scopeFactory,
+            IServiceScopeFactory serviceScopeFactory,
             ICronJobConfiguration<ApplicationDownloadStatisticsCronJob> cronJobConfiguration,
-            ILoggerFactory loggerFactory
-        ) : base(cronJobConfiguration, loggerFactory)
+            ILoggerFactory loggerFactory,
+            IWebApiConfiguration webApiConfiguration
+        ) : base(
+            cronJobConfiguration: cronJobConfiguration,
+            loggerFactory: loggerFactory,
+            serviceScopeFactory: serviceScopeFactory
+        )
         {
-            _scopeFactory = scopeFactory;
-            _cronJobConfiguration = cronJobConfiguration;
+            _scopeFactory = serviceScopeFactory;
+            _webApiConfiguration = webApiConfiguration;
         }
         #endregion
 
         #region  Methods
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public override async Task DoWork(CancellationToken cancellationToken)
         {
             using var scope = _scopeFactory.CreateScope();
@@ -64,7 +86,7 @@ namespace Espresso.WebApi.Application.CronJobs
                     yesterdayIosCount: todayIosCount,
                     totalAndroidCount: totalAndroidCount,
                     totalIosCount: totalIosCount,
-                    appEnvironment: _cronJobConfiguration.AppEnvironment,
+                    appEnvironment: _webApiConfiguration.AppConfiguration.AppEnvironment,
                     cancellationToken: cancellationToken
             );
         }

@@ -171,7 +171,7 @@ namespace Espresso.WebApi.Application.Initialization
             var message =
                 $"{AnsiUtility.EncodeEventName($"{{@{nameof(eventName)}}}")}\n\t" +
                 $"{AnsiUtility.EncodeParameterName(nameof(duration))}: " +
-                $"{AnsiUtility.EncodeDuration($"{{@{nameof(duration)}}}")}\n\t" +
+                $"{AnsiUtility.EncodeTimespan($"{{@{nameof(duration)}}}")}\n\t" +
                 $"{AnsiUtility.EncodeParameterName(nameof(categoriesCount))}: " +
                 $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(categoriesCount)}}}")}\n\t" +
                 $"{AnsiUtility.EncodeParameterName(nameof(newsPortalsCount))}: " +

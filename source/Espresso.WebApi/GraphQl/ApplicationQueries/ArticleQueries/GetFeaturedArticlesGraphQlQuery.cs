@@ -79,7 +79,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             categoryIdsString: resolveContext.GetArgument<string?>("categoryIds"),
                             maxAgeOfFeaturedArticle: webApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,
                             maxAgeOfTrendingArticle: webApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
-                            currentEspressoWebApiVersion: webApiConfiguration.AppVersionConfiguration.Version,
+                            currentEspressoWebApiVersion: webApiConfiguration.AppConfiguration.Version,
                             targetedEspressoWebApiVersion: userContext.TargetedApiVersion,
                             consumerVersion: userContext.ConsumerVersion,
                             deviceType: userContext.DeviceType,

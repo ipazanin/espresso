@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -40,24 +39,24 @@ namespace Espresso.WebApi.Extensions
 
         private static void ConfigureSwaggerDocumentVersions(SwaggerGenOptions options, IWebApiConfiguration configuration)
         {
-            options.SwaggerDoc(configuration.AppVersionConfiguration.EspressoWebApiCurrentVersion.ToString(), new OpenApiInfo
+            options.SwaggerDoc(configuration.AppConfiguration.EspressoWebApiCurrentVersion.ToString(), new OpenApiInfo
             {
                 Title = $"Espresso API",
-                Version = configuration.AppVersionConfiguration.EspressoWebApiCurrentVersion.ToString(),
+                Version = configuration.AppConfiguration.EspressoWebApiCurrentVersion.ToString(),
                 Description = "Espresso APP Web Api",
             });
 
-            options.SwaggerDoc(configuration.AppVersionConfiguration.EspressoWebApiVersion_1_3.ToString(), new OpenApiInfo
+            options.SwaggerDoc(configuration.AppConfiguration.EspressoWebApiVersion_1_3.ToString(), new OpenApiInfo
             {
                 Title = $"Espresso API",
-                Version = configuration.AppVersionConfiguration.EspressoWebApiVersion_1_3.ToString(),
+                Version = configuration.AppConfiguration.EspressoWebApiVersion_1_3.ToString(),
                 Description = "Espresso APP Web Api"
             });
 
-            options.SwaggerDoc(configuration.AppVersionConfiguration.EspressoWebApiVersion_1_2.ToString(), new OpenApiInfo
+            options.SwaggerDoc(configuration.AppConfiguration.EspressoWebApiVersion_1_2.ToString(), new OpenApiInfo
             {
                 Title = $"Espresso API",
-                Version = configuration.AppVersionConfiguration.EspressoWebApiVersion_1_2.ToString(),
+                Version = configuration.AppConfiguration.EspressoWebApiVersion_1_2.ToString(),
                 Description = "Espresso APP Web Api"
             });
 

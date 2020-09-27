@@ -65,7 +65,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             skip: resolveContext.GetArgument<int>("skip"),
                             firstArticleId: firstArticleId,
                             maxAgeOfTrendingArticle: webApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
-                            currentEspressoWebApiVersion: webApiConfiguration.AppVersionConfiguration.Version,
+                            currentEspressoWebApiVersion: webApiConfiguration.AppConfiguration.Version,
                             targetedEspressoWebApiVersion: userContext.TargetedApiVersion,
                             consumerVersion: userContext.ConsumerVersion,
                             deviceType: userContext.DeviceType,

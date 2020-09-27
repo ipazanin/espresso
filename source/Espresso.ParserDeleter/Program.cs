@@ -1,5 +1,6 @@
 ﻿using System;
 using Espresso.Common.Constants;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -33,11 +34,9 @@ namespace Espresso.ParserDeleter
                         options.TimestampFormat = $"\n{DateTimeConstants.LoggerDateTimeFormat} - ";
                     });
                 })
-                .ConfigureServices((hostContext, services) =>
+                .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
-                    var startup = new Startup(configuration);
-                    startup.ConfigureServices(services);
+                    webBuilder.UseStartup<Startup>();
                 });
     }
 }

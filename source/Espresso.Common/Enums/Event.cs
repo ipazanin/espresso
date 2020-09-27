@@ -22,7 +22,7 @@
         ParseArticlesJob = 18,
         RssFeedLoading = 19,
         CreateArticle = 20,
-        ParserDeleterNewArticlesRequest = 21,
+        SendNewAndUpdatedArticlesRequest = 21,
         GetNewNewsPortalsQuery = 22,
         NewSourcesRequest = 23,
         SendPushNotification = 24,
@@ -36,5 +36,6 @@
         DeleteArticlesJob = 32,
         ImageUrlWebScrapingRequest = 33,
         ImageUrlWebScrapingData = 34,
+        ParseArticlesJobStop = 35,
     }
 }

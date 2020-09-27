@@ -49,15 +49,13 @@ namespace Espresso.WebApi
         /// <param name="app"></param>
         /// <param name="memoryCacheInit"></param>
         /// <param name="env"></param>
-        /// <param name="webApiConfiguration"></param>
         public void Configure(
             IApplicationBuilder app,
             IWebApiInit memoryCacheInit,
-            IWebHostEnvironment env,
-            IWebApiConfiguration webApiConfiguration
+            IWebHostEnvironment env
         )
         {
-            if (webApiConfiguration.SpaConfiguration.EnableCors)
+            if (_configuration.SpaConfiguration.EnableCors)
             {
                 app.UseCors("CustomCorsPolicy");
             }
@@ -70,7 +68,7 @@ namespace Espresso.WebApi
 
             app.UseHsts();
 
-            app.UseSwaggerServices(webApiConfiguration);
+            app.UseSwaggerServices(_configuration);
             app.UseGraphQLPlayground(new GraphQLPlaygroundOptions
             {
                 Path = "/graphql-playground",
@@ -78,7 +76,7 @@ namespace Espresso.WebApi
                 Headers = new Dictionary<string, object>
                 {
                   { "espresso-api-key", "" },
-                  { "espresso-api-version", webApiConfiguration.AppVersionConfiguration.EspressoWebApiCurrentVersion.ToString() },
+                  { "espresso-api-version", _configuration.AppConfiguration.EspressoWebApiCurrentVersion.ToString() },
                   { "device-type", DeviceType.WebApp },
                   { "version", "1.0.0" }
                 },
