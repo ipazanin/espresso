@@ -1,5 +1,4 @@
 using System;
-using Espresso.Common.Enums;
 using Microsoft.Extensions.DependencyInjection;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 

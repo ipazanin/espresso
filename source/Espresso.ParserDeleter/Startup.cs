@@ -20,7 +20,6 @@ using FluentValidation;
 using Espresso.WebApi.Extensions;
 using System;
 using Espresso.ParserDeleter.CronJobs;
-using Microsoft.AspNetCore.Builder;
 
 namespace Espresso.ParserDeleter
 {

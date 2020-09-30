@@ -2,66 +2,67 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text.Json.Serialization;
 using Espresso.Domain.Entities;
 
 namespace Espresso.Application.DataTransferObjects
 {
-    public class ArticleDto
+    public record ArticleDto
     {
         #region Properties
 
         /// <summary>
         /// ID created by app
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid Id { get; init; }
 
         /// <summary>
         /// Article Url provided by RSS Feed or AMP Url
         /// </summary>
-        public string Url { get; set; }
+        public string Url { get; init; }
 
 
         /// <summary>
         /// Article Url provided by RSS Feed
         /// </summary>
-        public string WebUrl { get; set; }
+        public string WebUrl { get; init; }
 
         /// <summary>
         /// Article Title Parsed from RSS Feed
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; init; }
 
         /// <summary>
         /// Image URL parsed from src attribute of first img element or second rss feed link, first is 
         /// </summary>
-        public string? ImageUrl { get; set; }
+        public string? ImageUrl { get; init; }
 
         /// <summary>
         /// Article Publish time provided by RSS Feed
         /// </summary>
-        public DateTime PublishDateTime { get; set; }
+        public DateTime PublishDateTime { get; init; }
 
-        public DateTime CreateDateTime { get; set; }
+        public DateTime CreateDateTime { get; init; }
 
-        public DateTime UpdateDateTime { get; set; }
+        public DateTime UpdateDateTime { get; init; }
 
-        public decimal TrendingScore { get; set; }
+        public decimal TrendingScore { get; init; }
 
-        public int NumberOfClicks { get; set; }
+        public int NumberOfClicks { get; init; }
 
-        public string Summary { get; set; }
+        public string Summary { get; init; }
 
-        public int RssFeedId { get; set; }
+        public int RssFeedId { get; init; }
 
         /// <summary>
         /// News Portal ID
         /// </summary>
-        public NewsPortalDto NewsPortal { get; set; }
+        public NewsPortalDto NewsPortal { get; init; }
 
         /// <summary>
         /// List Of Categories article belongs to
         /// </summary>
-        public IEnumerable<CategoryDto> Categories { get; set; } = new List<CategoryDto>();
+        public IEnumerable<CategoryDto> Categories { get; init; } = new List<CategoryDto>();
 
         #endregion
 
@@ -69,6 +70,7 @@ namespace Espresso.Application.DataTransferObjects
         /// <summary>
         /// Used by JSON serializer
         /// </summary>
+        // [JsonConstructor]
         public ArticleDto()
         {
             Url = null!;
@@ -76,39 +78,6 @@ namespace Espresso.Application.DataTransferObjects
             Title = null!;
             Summary = null!;
             NewsPortal = null!;
-        }
-
-        public ArticleDto(
-            Guid id,
-            string url,
-            string webUrl,
-            string title,
-            string? imageUrl,
-            DateTime publishDateTime,
-            DateTime createDateTime,
-            DateTime updateDateTime,
-            decimal trendingScore,
-            int numberOfClicks,
-            string summary,
-            int rssFeedId,
-            NewsPortalDto newsPortal,
-            IEnumerable<CategoryDto> categories
-        )
-        {
-            Id = id;
-            Url = url;
-            WebUrl = webUrl;
-            Title = title;
-            ImageUrl = imageUrl;
-            PublishDateTime = publishDateTime;
-            CreateDateTime = createDateTime;
-            UpdateDateTime = updateDateTime;
-            TrendingScore = trendingScore;
-            NumberOfClicks = numberOfClicks;
-            Summary = summary;
-            RssFeedId = rssFeedId;
-            NewsPortal = newsPortal;
-            Categories = categories;
         }
 
         #endregion
@@ -193,18 +162,6 @@ namespace Espresso.Application.DataTransferObjects
                 );
                 return createdArticle;
             };
-        }
-
-        public override bool Equals(object? obj)
-        {
-            return obj is ArticleDto other &&
-            Title.Equals(other.Title) &&
-            NewsPortal.Id.Equals(other.NewsPortal.Id);
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(NewsPortal.Id, Title);
         }
         #endregion
     }

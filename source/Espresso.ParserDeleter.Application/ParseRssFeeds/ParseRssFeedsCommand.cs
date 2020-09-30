@@ -7,12 +7,12 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
 {
     public class ParseRssFeedsCommand : Request<ParseRssFeedsCommandResponse>
     {
-        public TimeSpan MaxAgeOfArticle { get; }
+        public TimeSpan MaxAgeOfArticle { get; init; }
 
-        public string ParserApiKey { get; }
+        public string ParserApiKey { get; init; }
 
 
-        public string ServerUrl { get; }
+        public string ServerUrl { get; init; }
 
         public ParseRssFeedsCommand(
             TimeSpan maxAgeOfArticle,

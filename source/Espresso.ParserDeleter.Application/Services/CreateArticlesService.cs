@@ -92,7 +92,7 @@ namespace Espresso.ParserDeleter.Application.Services
                 itemTitle: rssFeedItem.Title,
                 itemSummary: summary,
                 articleId: id,
-                itemUrl: rssFeedItem.Links.FirstOrDefault(),
+                itemUrl: rssFeedItem.Links?.FirstOrDefault(),
                 rssFeed: rssFeedItem.RssFeed
             );
 
@@ -251,7 +251,7 @@ namespace Espresso.ParserDeleter.Application.Services
             {
                 case ImageUrlParseStrategy.SecondLinkOrFromSummary:
                 default:
-                    imageUrl = itemLinks.Count() > 1 ? itemLinks.ElementAt(1)?.ToString() : null;
+                    imageUrl = itemLinks?.Count() > 1 ? itemLinks.ElementAt(1)?.ToString() : null;
                     if (imageUrl is null)
                     {
                         imageUrl = _htmlParsingService.GetSrcAttributeFromFirstImgElement(itemSummary);
@@ -399,6 +399,7 @@ namespace Espresso.ParserDeleter.Application.Services
 
                     if (
                         !string.IsNullOrEmpty(rssFeedCategory.UrlRegex) &&
+                        !string.IsNullOrEmpty(secondUrlSegment) &&
                         Regex.IsMatch(secondUrlSegment, rssFeedCategory.UrlRegex, RegexOptions.IgnoreCase)
                     )
                     {
