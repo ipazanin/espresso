@@ -1,34 +1,36 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Text.Json.Serialization;
 using Espresso.Domain.Entities;
 
 namespace Espresso.Application.DataTransferObjects
 {
-    public class NewsPortalDto
+    public record NewsPortalDto
     {
         #region Properties
-        public int Id { get; set; }
+        public int Id { get; init; }
 
-        public string Name { get; set; }
+        public string Name { get; init; }
 
-        public string IconUrl { get; set; }
+        public string IconUrl { get; init; }
 
-        public string BaseUrl { get; set; }
+        public string BaseUrl { get; init; }
 
-        public bool? IsNewOverride { get; set; }
+        public bool? IsNewOverride { get; init; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; init; }
 
-        public int CategoryId { get; set; }
+        public int CategoryId { get; init; }
 
-        public int RegionId { get; set; }
+        public int RegionId { get; init; }
         #endregion
 
         #region Constructors
         /// <summary>
         /// Used by JSON serializer
         /// </summary>
-        private NewsPortalDto()
+        // [JsonConstructor]
+        public NewsPortalDto()
         {
             Name = null!;
             IconUrl = null!;

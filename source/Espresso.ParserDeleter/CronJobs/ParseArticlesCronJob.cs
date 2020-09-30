@@ -1,12 +1,7 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.IServices;
-using Espresso.Common.Constants;
-using Espresso.Common.Enums;
-using Espresso.Common.Utilities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
-using Espresso.Domain.Extensions;
 using Espresso.ParserDeleter.Configuration;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

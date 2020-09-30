@@ -165,7 +165,7 @@ namespace Espresso.ParserDeleter.Application.Services
                         {
                             using var response = await _httpClient.SendAsync(request: request, cancellationToken: cancellationToken);
                             _ = response.EnsureSuccessStatusCode();
-                            var pageContent = await response.Content.ReadAsStringAsync();
+                            var pageContent = await response.Content.ReadAsStringAsync(cancellationToken);
                             return pageContent;
                         }
                     case RequestType.Browser:
@@ -173,7 +173,7 @@ namespace Espresso.ParserDeleter.Application.Services
                             request.AddBrowserHeadersToHttpRequestMessage();
                             using var response = await _httpClient.SendAsync(request: request, cancellationToken: cancellationToken);
                             _ = response.EnsureSuccessStatusCode();
-                            using var responseStream = await response.Content.ReadAsStreamAsync();
+                            using var responseStream = await response.Content.ReadAsStreamAsync(cancellationToken);
                             using var decompressedStream = new GZipStream(responseStream, CompressionMode.Decompress);
                             using var streamReader = new StreamReader(decompressedStream);
                             var pageContent = await streamReader.ReadToEndAsync();

@@ -6,7 +6,6 @@ using Espresso.Application.IServices;
 using Espresso.ParserDeleter.Application.DeleteOldArticles;
 using Espresso.ParserDeleter.Configuration;
 using Espresso.ParserDeleter.ParseRssFeeds;
-using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

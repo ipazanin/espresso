@@ -108,10 +108,11 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
                 cancellationToken: cancellationToken
             );
 
-            return new ParseRssFeedsCommandResponse(
-                createdArticles: createArticles.Count(),
-                updatedArticles: updateArticles.Count()
-            );
+            return new ParseRssFeedsCommandResponse
+            {
+                CreatedArticles = createArticles.Count(),
+                UpdatedArticles = updateArticles.Count()
+            };
         }
 
         public async Task<IEnumerable<Article>> GetArticlesFromLoadedRssFeeds(

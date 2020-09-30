@@ -1,35 +1,37 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Text.Json.Serialization;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
 
 namespace Espresso.Application.DataTransferObjects
 {
-    public class CategoryDto
+    public record CategoryDto
     {
         #region Properties
-        public int Id { get; set; }
+        public int Id { get; init; }
 
-        public string Name { get; set; }
+        public string Name { get; init; }
 
-        public string Color { get; set; }
+        public string Color { get; init; }
 
-        public string? KeyWordsRegexPattern { get; set; }
+        public string? KeyWordsRegexPattern { get; init; }
 
-        public int? SortIndex { get; set; }
+        public int? SortIndex { get; init; }
 
-        public int? Position { get; set; }
+        public int? Position { get; init; }
 
-        public CategoryType CategoryType { get; set; }
+        public CategoryType CategoryType { get; init; }
 
-        public string Url { get; set; }
+        public string Url { get; init; }
         #endregion
 
         #region Contructors
         /// <summary>
         /// Used by JSON serializer
         /// </summary>
-        private CategoryDto()
+        // [JsonConstructor]
+        public CategoryDto()
         {
             Name = null!;
             Color = null!;

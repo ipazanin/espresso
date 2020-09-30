@@ -3,7 +3,6 @@ using Espresso.Common.Constants;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace Espresso.WebApi
 {
@@ -36,14 +35,6 @@ namespace Espresso.WebApi
                         .AddJsonFile($"appsettings.{environmentName}.json", optional: false)
                         .AddEnvironmentVariables()
                         .Build();
-                })
-                .ConfigureLogging(loggingBuilder =>
-                {
-                    loggingBuilder.ClearProviders();
-                    loggingBuilder.AddConsole(options =>
-                    {
-                        options.TimestampFormat = $"\n{DateTimeConstants.LoggerDateTimeFormat} - ";
-                    });
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

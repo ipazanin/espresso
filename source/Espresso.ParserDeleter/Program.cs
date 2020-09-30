@@ -2,9 +2,7 @@
 using Espresso.Common.Constants;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace Espresso.ParserDeleter
 {
@@ -25,14 +23,6 @@ namespace Espresso.ParserDeleter
                         .AddJsonFile($"appsettings.{environmentName}.json", optional: false)
                         .AddEnvironmentVariables()
                         .Build();
-                })
-                .ConfigureLogging(loggingBuilder =>
-                {
-                    loggingBuilder.ClearProviders();
-                    loggingBuilder.AddConsole(options =>
-                    {
-                        options.TimestampFormat = $"\n{DateTimeConstants.LoggerDateTimeFormat} - ";
-                    });
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
