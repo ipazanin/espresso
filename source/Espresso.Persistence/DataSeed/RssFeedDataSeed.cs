@@ -369,6 +369,15 @@ namespace Espresso.Persistence.DataSeed
                     requestType: RequestType.Normal
                 ),
 
+                new RssFeed(
+                    id: (int)RssFeedId.Hoopster,
+                    url: "http://hoopster.hr/feed",
+                    newsPortalId: (int)NewsPortalId.Hoopster,
+                    categoryId: (int)CategoryId.Sport,
+                    requestType: RequestType.Normal
+                ),
+
+
             };
 
             builder.HasData(rssFeeds);
@@ -511,7 +520,6 @@ namespace Espresso.Persistence.DataSeed
 
         private static void SeedSkipParseConfiguration(OwnedNavigationBuilder<RssFeed, SkipParseConfiguration> skipParseConfigurationBuilder)
         {
-
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.JutarnjiList,
@@ -724,6 +732,13 @@ namespace Espresso.Persistence.DataSeed
             {
                 RssFeedId = (int)RssFeedId.AutoMotorSport,
                 NumberOfSkips = 17,
+                CurrentSkip = 0
+            });
+
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Hoopster,
+                NumberOfSkips = 19,
                 CurrentSkip = 0
             });
         }
@@ -1152,6 +1167,12 @@ namespace Espresso.Persistence.DataSeed
             {
                 RssFeedId = (int)RssFeedId.AutoMotorSport,
                 ImgElementXPath = "//main[contains(@class, 'main-content')]//img"
+            });
+
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Hoopster,
+                ImgElementXPath = "//div[contains(@class, 'post-img')]//img"
             });
         }
     }

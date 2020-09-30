@@ -491,6 +491,16 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.AutoMoto,
                     regionId: (int)RegionId.Global
                 ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.Hoopster,
+                    name: NewsPortalId.Hoopster.GetDisplayName(),
+                    baseUrl: "http://hoopster.hr",
+                    iconUrl: $"Icons/{NewsPortalId.Hoopster}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 9, 30, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Sport,
+                    regionId: (int)RegionId.Global
+                ),
             };
 
             builder.HasData(newsPortals);
