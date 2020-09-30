@@ -224,5 +224,7 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         VozimHr = 111,
         [Display(Name = "AUTO MOTOR I SPORT")]
         AutoMotorSport = 112,
+        [Display(Name = "Hoopster.hr")]
+        Hoopster = 113,
     }
 }
