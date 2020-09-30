@@ -156,5 +156,6 @@
         AutopressHr = 155,
         VozimHr = 156,
         AutoMotorSport = 157,
+        Hoopster = 158,
     }
 }
