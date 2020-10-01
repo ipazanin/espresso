@@ -1,17 +1,7 @@
 ﻿namespace Espresso.ParserDeleter.Application.DeleteOldArticles
 {
-    public class DeleteOldArticlesCommandResponse
+    public record DeleteOldArticlesCommandResponse
     {
-        public int NumberOfDeletedAricles { get; }
-
-        public DeleteOldArticlesCommandResponse(int numberOfDeletedAricles)
-        {
-            NumberOfDeletedAricles = numberOfDeletedAricles;
-        }
-
-        public override string ToString()
-        {
-            return $"{nameof(NumberOfDeletedAricles)}:{NumberOfDeletedAricles}";
-        }
+        public int NumberOfDeletedAricles { get; init; }
     }
 }

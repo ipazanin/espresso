@@ -43,9 +43,12 @@ namespace Espresso.ParserDeleter.Application.DeleteOldArticles
                 .ToList();
             _ = _memoryCache.Set(key: MemoryCacheConstants.ArticleKey, value: notOldMemoryCacheArticles);
 
-            var numberOfArticlesToDelete = _articleRepository.DeleteArticles(maxArticleAge);
+            var numberOfDeletedArticles = _articleRepository.DeleteArticles(maxArticleAge);
 
-            var response = new DeleteOldArticlesCommandResponse(numberOfArticlesToDelete);
+            var response = new DeleteOldArticlesCommandResponse
+            {
+                NumberOfDeletedAricles = numberOfDeletedArticles
+            };
             return Task.FromResult(response);
         }
         #endregion

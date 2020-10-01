@@ -34,7 +34,12 @@ namespace Espresso.WebApi.Application.ApplicationDownloads.Queries.GetApplicatio
             var iosCount = applicationDownloads.Count(
                 predicate: applicationDownload => applicationDownload.MobileDeviceType == DeviceType.Ios
             );
-            var response = new GetApplicationDownloadStatisticsQueryResponse(androidCount, iosCount, androidCount + iosCount);
+            var response = new GetApplicationDownloadStatisticsQueryResponse
+            {
+                AndroidDownloadsCount = androidCount,
+                IosDownloadsCount = iosCount,
+                TotalDownloadCount = androidCount + iosCount
+            };
 
             return response;
         }
