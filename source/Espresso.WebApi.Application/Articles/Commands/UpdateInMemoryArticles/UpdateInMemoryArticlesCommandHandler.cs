@@ -36,7 +36,12 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
             UpdateArticles(request.UpdatedArticles);
 
             RemoveOldArticles(request.MaxAgeOfArticle);
-            var response = new UpdateInMemoryArticlesCommandResponse(request.UpdatedArticles.Count(), request.CreatedArticles.Count());
+
+            var response = new UpdateInMemoryArticlesCommandResponse
+            {
+                NumberOfUpdatedArticles = request.UpdatedArticles.Count(),
+                NumberOfCreatedArticles = request.CreatedArticles.Count()
+            };
 
             return Task.FromResult(result: response);
         }
