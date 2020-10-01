@@ -4,7 +4,7 @@ using Espresso.Domain.Entities;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
 {
-    public class GetCategoryArticlesNewsPortal
+    public record GetCategoryArticlesNewsPortal
     {
         #region Properties
         /// <summary>
@@ -15,17 +15,9 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
         /// <summary>
         /// News Portal Name
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; private set; } = "";
 
-        public string IconUrl { get; private set; }
-        #endregion
-
-        #region Constructors
-        private GetCategoryArticlesNewsPortal()
-        {
-            Name = null!;
-            IconUrl = null!;
-        }
+        public string IconUrl { get; private set; } = "";
         #endregion
 
         #region Methods

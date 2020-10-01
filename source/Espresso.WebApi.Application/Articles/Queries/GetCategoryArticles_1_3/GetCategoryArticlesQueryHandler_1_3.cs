@@ -45,9 +45,10 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
                 .Take(request.Take)
                 .Select(GetCategoryArticlesArticle_1_3.GetProjection().Compile());
 
-            var response = new GetCategoryArticlesQueryResponse_1_3(
-                articles: articleDtos
-            );
+            var response = new GetCategoryArticlesQueryResponse_1_3
+            {
+                Articles = articleDtos
+            };
 
             return Task.FromResult(result: response);
         }

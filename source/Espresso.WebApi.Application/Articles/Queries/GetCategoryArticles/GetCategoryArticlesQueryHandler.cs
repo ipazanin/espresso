@@ -71,11 +71,12 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
 
             var random = new Random();
 
-            var response = new GetCategoryArticlesQueryResponse(
-                articles: articleDtos,
-                newNewsPortals: newsPortalDtos.OrderBy(newsPortal => random.Next()),
-                newNewsPortalsPosition: request.NewNewsPortalsPosition
-            );
+            var response = new GetCategoryArticlesQueryResponse
+            {
+                Articles = articleDtos,
+                NewNewsPortals = newsPortalDtos.OrderBy(newsPortal => random.Next()),
+                NewNewsPortalsPosition = request.NewNewsPortalsPosition
+            };
 
             return Task.FromResult(result: response);
         }

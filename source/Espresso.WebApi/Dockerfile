@@ -2,11 +2,12 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /source
-COPY ["Espresso.WebApi/Espresso.WebApi.csproj", "Espresso.WebApi/"]
-COPY ["Espresso.Domain/Espresso.Domain.csproj", "Espresso.Domain/"]
+COPY ["Espresso.Application/Espresso.Application.csproj", "Espresso.Application/"]
 COPY ["Espresso.Common/Espresso.Common.csproj", "Espresso.Common/"]
+COPY ["Espresso.Domain/Espresso.Domain.csproj", "Espresso.Domain/"]
 COPY ["Espresso.Persistence/Espresso.Persistence.csproj", "Espresso.Persistence/"]
 COPY ["Espresso.WebApi.Application/Espresso.WebApi.Application.csproj", "Espresso.WebApi.Application/"]
+COPY ["Espresso.WebApi/Espresso.WebApi.csproj", "Espresso.WebApi/"]
 RUN dotnet restore "Espresso.WebApi/Espresso.WebApi.csproj"
 COPY . .
 WORKDIR "/source/Espresso.WebApi"
