@@ -2,10 +2,11 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /source
-COPY ["Espresso.ParserDeleter/Espresso.ParserDeleter.csproj", "Espresso.ParserDeleter/"]
+COPY ["Espresso.Application/Espresso.Application.csproj", "Espresso.Application/"]
 COPY ["Espresso.Common/Espresso.Common.csproj", "Espresso.Common/"]
-COPY ["Espresso.ParserDeleter.Application/Espresso.ParserDeleter.Application.csproj", "Espresso.ParserDeleter.Application/"]
 COPY ["Espresso.Domain/Espresso.Domain.csproj", "Espresso.Domain/"]
+COPY ["Espresso.ParserDeleter.Application/Espresso.ParserDeleter.Application.csproj", "Espresso.ParserDeleter.Application/"]
+COPY ["Espresso.ParserDeleter/Espresso.ParserDeleter.csproj", "Espresso.ParserDeleter/"]
 COPY ["Espresso.Persistence/Espresso.Persistence.csproj", "Espresso.Persistence/"]
 RUN dotnet restore "Espresso.ParserDeleter/Espresso.ParserDeleter.csproj"
 COPY . .

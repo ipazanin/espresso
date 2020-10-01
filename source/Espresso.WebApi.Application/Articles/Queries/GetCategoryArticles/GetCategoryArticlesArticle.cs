@@ -7,73 +7,43 @@ using Espresso.Domain.Entities;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
 {
-    public class GetCategoryArticlesArticle
+    public record GetCategoryArticlesArticle
     {
         #region Properties
         /// <summary>
         /// ID created by app
         /// </summary>
-        public Guid Id { get; private set; }
+        public Guid Id { get; init; }
 
         /// <summary>
         /// Article Url provided by RSS Feed
         /// </summary>
-        public string Url { get; private set; }
+        public string Url { get; init; } = "";
 
         /// <summary>
         /// Article Title Parsed from RSS Feed
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get; init; } = "";
 
         /// <summary>
         /// Image URL parsed from src attribute of first img element or second rss feed link, first is 
         /// </summary>
-        public string? ImageUrl { get; private set; }
+        public string? ImageUrl { get; init; }
 
         /// <summary>
         /// Article Publish time provided by RSS Feed
         /// </summary>
-        public string PublishDateTime { get; private set; }
+        public string PublishDateTime { get; init; } = "";
 
         /// <summary>
         /// News Portal ID
         /// </summary>
-        public GetCategoryArticlesNewsPortal NewsPortal { get; private set; }
+        public GetCategoryArticlesNewsPortal? NewsPortal { get; init; }
 
         /// <summary>
         /// List Of Categories article belongs to
         /// </summary>
-        public IEnumerable<GetCategoryArticlesCategory> Categories { get; private set; } = new List<GetCategoryArticlesCategory>();
-
-        #endregion
-
-        #region Constructors
-        private GetCategoryArticlesArticle()
-        {
-            Url = null!;
-            Title = null!;
-            PublishDateTime = null!;
-            NewsPortal = null!;
-        }
-
-        public GetCategoryArticlesArticle(
-            Guid id,
-            string url,
-            string title,
-            string? imageUrl,
-            string publishDateTime,
-            GetCategoryArticlesNewsPortal newsPortal,
-            IEnumerable<GetCategoryArticlesCategory> categories
-        )
-        {
-            Id = id;
-            Url = url;
-            Title = title;
-            ImageUrl = imageUrl;
-            PublishDateTime = publishDateTime;
-            NewsPortal = newsPortal;
-            Categories = categories;
-        }
+        public IEnumerable<GetCategoryArticlesCategory> Categories { get; init; } = new List<GetCategoryArticlesCategory>();
         #endregion
 
         #region Methods
