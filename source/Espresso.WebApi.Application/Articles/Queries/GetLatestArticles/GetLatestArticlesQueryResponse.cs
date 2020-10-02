@@ -3,36 +3,14 @@ using System.Linq;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
 {
-    public class GetLatestArticlesQueryResponse
+    public record GetLatestArticlesQueryResponse
     {
         #region Properties
-        public IEnumerable<GetLatestArticlesArticle> Articles { get; }
+        public IEnumerable<GetLatestArticlesArticle> Articles { get; init; } = new List<GetLatestArticlesArticle>();
 
-        public IEnumerable<GetLatestArticlesNewsPortal> NewNewsPortals { get; set; }
+        public IEnumerable<GetLatestArticlesNewsPortal> NewNewsPortals { get; init; } = new List<GetLatestArticlesNewsPortal>();
 
-        public int NewNewsPortalsPosition { get; }
-        #endregion
-
-        #region Constructors
-        public GetLatestArticlesQueryResponse(
-            IEnumerable<GetLatestArticlesArticle> articles,
-            IEnumerable<GetLatestArticlesNewsPortal> newNewsPortals,
-            int newNewsPortalsPosition
-        )
-        {
-            Articles = articles;
-            NewNewsPortals = newNewsPortals;
-            NewNewsPortalsPosition = newNewsPortalsPosition;
-        }
-        #endregion
-
-        #region Methods
-        public override string ToString()
-        {
-            return $"{nameof(Articles)}:{Articles.Count()}, " +
-            $"{nameof(NewNewsPortals)}:{NewNewsPortals.Count()}, " +
-            $"{nameof(NewNewsPortalsPosition)}:{NewNewsPortalsPosition}";
-        }
+        public int NewNewsPortalsPosition { get; init; }
         #endregion
     }
 }

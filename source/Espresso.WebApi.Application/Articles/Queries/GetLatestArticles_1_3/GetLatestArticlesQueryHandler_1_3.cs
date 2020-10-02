@@ -35,12 +35,24 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_3
                 key: MemoryCacheConstants.ArticleKey
             );
 
+            var newsPortalIds = request.NewsPortalIds
+                ?.Replace(" ", "")
+                ?.Split(',')
+                ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
+                ?.Where(newsPortalId => newsPortalId != default);
+
+            var categoryIds = request.CategoryIds
+                ?.Replace(" ", "")
+                ?.Split(',')
+                ?.Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
+                ?.Where(categoryId => categoryId != default);
+
             var articleDtos = articles
                 .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
                 .Where(
                     predicate: Article.GetFilteredArticlesPredicate(
-                        categoryIds: request.CategoryIds,
-                        newsPortalIds: request.NewsPortalIds,
+                        categoryIds: categoryIds,
+                        newsPortalIds: newsPortalIds,
                         titleSearchQuery: request.TitleSearchQuery,
                         articleCreateDateTime: null
                     ).Compile()
@@ -53,9 +65,10 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_3
                 .Take(request.Take)
                 .Select(GetLatestArticlesArticle_1_3.GetProjection().Compile());
 
-            var response = new GetLatestArticlesQueryResponse_1_3(
-                articles: articleDtos
-            );
+            var response = new GetLatestArticlesQueryResponse_1_3
+            {
+                Articles = articleDtos
+            };
 
             return Task.FromResult(result: response);
         }

@@ -5,32 +5,24 @@ using Espresso.Domain.Enums.CategoryEnums;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
 {
-    public class GetFeaturedArticlesCategory
+    public record GetFeaturedArticlesCategory
     {
         #region Properties
         /// <summary>
         /// Category ID
         /// </summary>
-        public int Id { get; private set; }
+        public int Id { get; init; }
 
         /// <summary>
         /// Category Name
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; init; } = "";
 
-        public string Color { get; private set; }
+        public string Color { get; init; } = "";
 
-        public int? Position { get; private set; }
+        public int? Position { get; init; }
 
-        public CategoryType CategoryType { get; private set; }
-        #endregion
-
-        #region Constructors
-        private GetFeaturedArticlesCategory()
-        {
-            Name = null!;
-            Color = null!;
-        }
+        public CategoryType CategoryType { get; init; }
         #endregion
 
         #region Methods

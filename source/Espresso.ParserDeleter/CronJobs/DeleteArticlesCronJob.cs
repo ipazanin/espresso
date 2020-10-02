@@ -65,14 +65,15 @@ namespace Espresso.ParserDeleter.CronJobs
             {
 
                 await mediator.Send(
-                    request: new DeleteOldArticlesCommand(
-                        maxAgeOfOldArticles: _configuration.AppConfiguration.MaxAgeOfArticles,
-                        currentEspressoWebApiVersion: _configuration.AppConfiguration.Version,
-                        targetedEspressoWebApiVersion: _configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
-                        consumerVersion: _configuration.AppConfiguration.Version,
-                        deviceType: DeviceType.RssFeedParser,
-                        appEnvironment: _configuration.AppConfiguration.AppEnvironment
-                    ),
+                    request: new DeleteOldArticlesCommand
+                    {
+                        MaxAgeOfOldArticles = _configuration.AppConfiguration.MaxAgeOfArticles,
+                        CurrentApiVersion = _configuration.AppConfiguration.Version,
+                        TargetedApiVersion = _configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
+                        ConsumerVersion = _configuration.AppConfiguration.Version,
+                        DeviceType = DeviceType.RssFeedParser,
+                        AppEnvironment = _configuration.AppConfiguration.AppEnvironment
+                    },
                     cancellationToken: cancellationToken
                 );
             }

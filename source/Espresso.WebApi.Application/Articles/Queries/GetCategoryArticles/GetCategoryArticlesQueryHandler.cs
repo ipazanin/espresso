@@ -39,12 +39,18 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
                 article => article.Id.Equals(request.FirstArticleId)
             );
 
+            var newsPortalIds = request.NewsPortalIds
+                ?.Replace(" ", "")
+                ?.Split(',')
+                ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
+                ?.Where(newsPortalId => newsPortalId != default);
+
             var articleDtos = articles
                 .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
                 .Where(
                     predicate: Article.GetFilteredArticlesPredicate(
                         categoryId: request.CategoryId,
-                        newsPortalIds: request.NewsPortalIds,
+                        newsPortalIds: newsPortalIds,
                         titleSearchQuery: request.TitleSearchQuery,
                         articleCreateDateTime: firstArticle?.CreateDateTime
                     ).Compile()
@@ -60,7 +66,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
             var newsPortalDtos = newsPortals
                 .Where(
                     NewsPortal.GetCategorySugestedNewsPortalsPredicate(
-                        newsPortalIds: request.NewsPortalIds,
+                        newsPortalIds: newsPortalIds,
                         categoryId: request.CategoryId,
                         regionId: request.RegionId,
                         maxAgeOfNewNewsPortal: request.MaxAgeOfNewNewsPortal

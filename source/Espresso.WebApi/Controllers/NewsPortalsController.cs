@@ -65,13 +65,14 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var getNewsPortalsQueryResponse = await Mediator.Send(
-                request: new GetNewsPortalsQuery(
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType,
-                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-                ),
+                request: new GetNewsPortalsQuery
+                {
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+                },
                 cancellationToken: cancellationToken
             );
 
@@ -110,13 +111,14 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var getNewsPortalsQueryResponse = await Mediator.Send(
-                request: new GetNewsPortalsQuery_1_3(
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType,
-                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-                ),
+                request: new GetNewsPortalsQuery_1_3
+                {
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+                },
                 cancellationToken: cancellationToken
             );
 
@@ -157,16 +159,17 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var getNewsPortalsQueryResponse = await Mediator.Send(
-                request: new NewsSourcesRequestCommand(
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType,
-                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment,
-                    newsPortalName: requestNewsPortalRequestObject.NewsPortalName ?? "",
-                    email: requestNewsPortalRequestObject.Email ?? "",
-                    url: requestNewsPortalRequestObject.Url
-                ),
+                request: new NewsSourcesRequestCommand
+                {
+                    NewsPortalName = requestNewsPortalRequestObject.NewsPortalName ?? "",
+                    Email = requestNewsPortalRequestObject.Email ?? "",
+                    Url = requestNewsPortalRequestObject.Url,
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment,
+                },
                 cancellationToken: cancellationToken
             );
 

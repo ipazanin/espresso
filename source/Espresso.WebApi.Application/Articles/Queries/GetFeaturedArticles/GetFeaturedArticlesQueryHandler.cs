@@ -36,11 +36,23 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
                 article => article.Id.Equals(request.FirstArticleId)
             );
 
+            var newsPortalIds = request.NewsPortalIds
+                ?.Replace(" ", "")
+                ?.Split(',')
+                ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
+                ?.Where(newsPortalId => newsPortalId != default);
+
+            var categoryIds = request.CategoryIds
+                ?.Replace(" ", "")
+                ?.Split(',')
+                ?.Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
+                ?.Where(categoryId => categoryId != default);
+
             var featuredArticleDtos = articles
                 .Where(
                     predicate: Article.GetFilteredFeaturedArticlesPredicate(
-                        categoryIds: request.CategoryIds,
-                        newsPortalIds: request.NewsPortalIds,
+                        categoryIds: categoryIds,
+                        newsPortalIds: newsPortalIds,
                         titleSearchQuery: null,
                         maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
                         articleCreateDateTime: firstArticle?.CreateDateTime
@@ -78,9 +90,10 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
                 .Skip(request.Skip)
                 .Take(request.Take);
 
-            var response = new GetFeaturedArticlesQueryResponse(
-                articles: articleDtos
-            );
+            var response = new GetFeaturedArticlesQueryResponse
+            {
+                Articles = articleDtos
+            };
 
             return Task.FromResult(result: response);
         }

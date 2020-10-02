@@ -60,17 +60,18 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                     }
 
                     return await mediator.Send(
-                        request: new GetTrendingArticlesQuery(
-                            take: resolveContext.GetArgument<int>("take"),
-                            skip: resolveContext.GetArgument<int>("skip"),
-                            firstArticleId: firstArticleId,
-                            maxAgeOfTrendingArticle: webApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
-                            currentEspressoWebApiVersion: webApiConfiguration.AppConfiguration.Version,
-                            targetedEspressoWebApiVersion: userContext.TargetedApiVersion,
-                            consumerVersion: userContext.ConsumerVersion,
-                            deviceType: userContext.DeviceType,
-                            appEnvironment: webApiConfiguration.AppConfiguration.AppEnvironment
-                        ),
+                        request: new GetTrendingArticlesQuery
+                        {
+                            Take = resolveContext.GetArgument<int>("take"),
+                            Skip = resolveContext.GetArgument<int>("skip"),
+                            FirstArticleId = firstArticleId,
+                            MaxAgeOfTrendingArticle = webApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
+                            CurrentApiVersion = webApiConfiguration.AppConfiguration.Version,
+                            TargetedApiVersion = userContext.TargetedApiVersion,
+                            ConsumerVersion = userContext.ConsumerVersion,
+                            DeviceType = userContext.DeviceType,
+                            AppEnvironment = webApiConfiguration.AppConfiguration.AppEnvironment
+                        },
                         cancellationToken: resolveContext.CancellationToken
                     );
                 },

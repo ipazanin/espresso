@@ -5,40 +5,12 @@ using MediatR;
 
 namespace Espresso.WebApi.Application.NewsPortals.Commands.NewSourcesRequest
 {
-    public class NewsSourcesRequestCommand : Request<Unit>
+    public record NewsSourcesRequestCommand : Request<Unit>
     {
-        public string NewsPortalName { get; }
+        public string NewsPortalName { get; init; } = "";
 
-        public string Email { get; }
+        public string Email { get; init; } = "";
 
-        public string? Url { get; }
-
-        public NewsSourcesRequestCommand(
-            string currentEspressoWebApiVersion,
-            string targetedEspressoWebApiVersion,
-            string consumerVersion,
-            DeviceType deviceType,
-            AppEnvironment appEnvironment,
-            string newsPortalName,
-            string email,
-            string? url
-        ) : base(
-            currentEspressoWebApiVersion: currentEspressoWebApiVersion,
-            targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
-            consumerVersion: consumerVersion,
-            deviceType: deviceType,
-            appEnvironment: appEnvironment,
-            Event.NewSourcesRequest
-        )
-        {
-            NewsPortalName = newsPortalName;
-            Email = email;
-            Url = url;
-        }
-
-        public override string ToString()
-        {
-            return $"{nameof(NewsPortalName)}:{NewsPortalName}, {nameof(Email)}:{Email}, {nameof(Url)}:{Url}";
-        }
+        public string? Url { get; init; }
     }
 }

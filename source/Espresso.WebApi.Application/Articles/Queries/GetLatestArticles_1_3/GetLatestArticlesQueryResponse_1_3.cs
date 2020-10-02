@@ -3,26 +3,8 @@ using System.Linq;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_3
 {
-    public class GetLatestArticlesQueryResponse_1_3
+    public record GetLatestArticlesQueryResponse_1_3
     {
-        #region Properties
-        public IEnumerable<GetLatestArticlesArticle_1_3> Articles { get; }
-        #endregion
-
-        #region Constructors
-        public GetLatestArticlesQueryResponse_1_3(
-            IEnumerable<GetLatestArticlesArticle_1_3> articles
-        )
-        {
-            Articles = articles;
-        }
-        #endregion
-
-        #region Methods
-        public override string ToString()
-        {
-            return $"{nameof(Articles)}:{Articles.Count()}";
-        }
-        #endregion
+        public IEnumerable<GetLatestArticlesArticle_1_3> Articles { get; init; } = new List<GetLatestArticlesArticle_1_3>();
     }
 }

@@ -7,7 +7,7 @@ using Espresso.Domain.Entities;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
 {
-    public class GetCategoryArticlesArticle_1_3
+    public record GetCategoryArticlesArticle_1_3
     {
         #region Properties
         /// <summary>

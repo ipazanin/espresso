@@ -46,16 +46,17 @@ namespace Espresso.ParserDeleter.CronJobs
             var parseArticlesCancellationToken = GetParseArticlesCancellationToken();
 
             var parseRssFeedsCommandResponse = await mediator.Send(
-                request: new ParseRssFeedsCommand(
-                    maxAgeOfArticle: _configuration.AppConfiguration.MaxAgeOfArticles,
-                    parserApiKey: _configuration.ApiKeysConfiguration.ParserApiKey,
-                    serverUrl: _configuration.AppConfiguration.ServerUrl,
-                    currentEspressoWebApiVersion: _configuration.AppConfiguration.Version,
-                    targetedEspressoWebApiVersion: _configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
-                    consumerVersion: _configuration.AppConfiguration.Version,
-                    deviceType: DeviceType.RssFeedParser,
-                    appEnvironment: _configuration.AppConfiguration.AppEnvironment
-                ),
+                request: new ParseRssFeedsCommand
+                {
+                    MaxAgeOfArticle = _configuration.AppConfiguration.MaxAgeOfArticles,
+                    ParserApiKey = _configuration.ApiKeysConfiguration.ParserApiKey,
+                    ServerUrl = _configuration.AppConfiguration.ServerUrl,
+                    CurrentApiVersion = _configuration.AppConfiguration.Version,
+                    TargetedApiVersion = _configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
+                    ConsumerVersion = _configuration.AppConfiguration.Version,
+                    DeviceType = DeviceType.RssFeedParser,
+                    AppEnvironment = _configuration.AppConfiguration.AppEnvironment
+                },
                 cancellationToken: parseArticlesCancellationToken
             );
         }

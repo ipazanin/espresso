@@ -6,27 +6,8 @@ using MediatR;
 
 namespace Espresso.WebApi.Application.Articles.Commands.ToggleFeaturedArticle
 {
-    public class ToggleFeaturedArticleCommand : Request<Unit>
+    public record ToggleFeaturedArticleCommand : Request<Unit>
     {
-        public Guid ArticleId { get; }
-
-        public ToggleFeaturedArticleCommand(
-            Guid articleId,
-            string currentEspressoWebApiVersion,
-            string targetedEspressoWebApiVersion,
-            string consumerVersion,
-            DeviceType deviceType,
-            AppEnvironment appEnvironment
-        ) : base(
-            currentEspressoWebApiVersion: currentEspressoWebApiVersion,
-            targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
-            consumerVersion: consumerVersion,
-            deviceType: deviceType,
-            appEnvironment: appEnvironment,
-            eventIdEnum: Event.ToggleFeaturedArticle
-        )
-        {
-            ArticleId = articleId;
-        }
+        public Guid ArticleId { get; init; }
     }
 }

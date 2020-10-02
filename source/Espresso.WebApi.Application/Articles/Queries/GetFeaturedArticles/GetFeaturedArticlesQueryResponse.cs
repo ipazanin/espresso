@@ -3,26 +3,8 @@ using System.Linq;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
 {
-    public class GetFeaturedArticlesQueryResponse
+    public record GetFeaturedArticlesQueryResponse
     {
-        #region Properties
-        public IEnumerable<GetFeaturedArticlesArticle> Articles { get; }
-        #endregion
-
-        #region Constructors
-        public GetFeaturedArticlesQueryResponse(
-            IEnumerable<GetFeaturedArticlesArticle> articles
-        )
-        {
-            Articles = articles;
-        }
-        #endregion
-
-        #region Methods
-        public override string ToString()
-        {
-            return $"{nameof(Articles)}:{Articles.Count()}";
-        }
-        #endregion
+        public IEnumerable<GetFeaturedArticlesArticle> Articles { get; init; } = new List<GetFeaturedArticlesArticle>();
     }
 }

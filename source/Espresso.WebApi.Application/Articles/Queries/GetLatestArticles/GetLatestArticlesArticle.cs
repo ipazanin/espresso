@@ -7,60 +7,49 @@ using Espresso.Domain.Entities;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
 {
-    public class GetLatestArticlesArticle
+    public record GetLatestArticlesArticle
     {
         #region Properties
         /// <summary>
         /// ID created by app
         /// </summary>
-        public Guid Id { get; private set; }
+        public Guid Id { get; init; }
 
         /// <summary>
         /// Article Url provided by RSS Feed
         /// </summary>
-        public string Url { get; private set; }
+        public string Url { get; init; } = "";
 
         /// <summary>
         /// Article Url provided by RSS Feed
         /// </summary>
-        public string WebUrl { get; private set; }
+        public string WebUrl { get; init; } = "";
 
         /// <summary>
         /// Article Title Parsed from RSS Feed
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get; init; } = "";
 
         /// <summary>
         /// Image URL parsed from src attribute of first img element or second rss feed link, first is 
         /// </summary>
-        public string? ImageUrl { get; private set; }
+        public string? ImageUrl { get; init; }
 
         /// <summary>
         /// Article Publish time provided by RSS Feed
         /// </summary>
-        public string PublishDateTime { get; private set; }
+        public string PublishDateTime { get; init; } = "";
 
         /// <summary>
         /// News Portal ID
         /// </summary>
-        public GetLatestArticlesNewsPortal NewsPortal { get; private set; }
+        public GetLatestArticlesNewsPortal? NewsPortal { get; init; }
 
         /// <summary>
         /// List Of Categories article belongs to
         /// </summary>
-        public IEnumerable<GetLatestArticlesCategory> Categories { get; private set; } = new List<GetLatestArticlesCategory>();
+        public IEnumerable<GetLatestArticlesCategory> Categories { get; init; } = new List<GetLatestArticlesCategory>();
 
-        #endregion
-
-        #region Constructors
-        private GetLatestArticlesArticle()
-        {
-            Url = null!;
-            WebUrl = null!;
-            Title = null!;
-            PublishDateTime = null!;
-            NewsPortal = null!;
-        }
         #endregion
 
         #region Methods
