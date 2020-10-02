@@ -84,21 +84,22 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var response = await Mediator.Send(
-                request: new GetLatestArticlesQuery(
-                    take: paginationParameters.Take,
-                    skip: paginationParameters.Skip,
-                    firstArticleId: paginationParameters.FirstArticleId,
-                    newsPortalIdsString: newsPortalIds,
-                    categoryIdsString: categoryIds,
-                    newNewsPortalsPosition: WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
-                    titleSearchQuery: titleSearchQuery,
-                    maxAgeOfNewNewsPortal: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType,
-                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-                ),
+                request: new GetLatestArticlesQuery
+                {
+                    Take = paginationParameters.Take,
+                    Skip = paginationParameters.Skip,
+                    FirstArticleId = paginationParameters.FirstArticleId,
+                    NewsPortalIds = newsPortalIds,
+                    CategoryIds = categoryIds,
+                    NewNewsPortalsPosition = WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
+                    TitleSearchQuery = titleSearchQuery,
+                    MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+                },
                 cancellationToken: cancellationToken
             );
 
@@ -145,18 +146,19 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var response = await Mediator.Send(
-                request: new GetLatestArticlesQuery_1_3(
-                    take: take,
-                    skip: skip,
-                    newsPortalIdsString: newsPortalIds,
-                    categoryIdsString: categoryIds,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                    titleSearchQuery: null,
-                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType,
-                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-                ),
+                request: new GetLatestArticlesQuery_1_3
+                {
+                    Take = take,
+                    Skip = skip,
+                    NewsPortalIds = newsPortalIds,
+                    CategoryIds = categoryIds,
+                    TitleSearchQuery = null,
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+                },
                 cancellationToken: cancellationToken
             );
 
@@ -204,22 +206,23 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var articles = await Mediator.Send(
-                request: new GetCategoryArticlesQuery(
-                    take: paginationParameters.Take,
-                    skip: paginationParameters.Skip,
-                    firstArticleId: paginationParameters.FirstArticleId,
-                    categoryId: categoryId,
-                    newsPortalIdsString: newsPortalIds,
-                    regionId: regionId,
-                    newNewsPortalsPosition: WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
-                    titleSearchQuery: titleSearchQuery,
-                    maxAgeOfNewNewsPortal: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType,
-                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-                ),
+                request: new GetCategoryArticlesQuery
+                {
+                    Take = paginationParameters.Take,
+                    Skip = paginationParameters.Skip,
+                    FirstArticleId = paginationParameters.FirstArticleId,
+                    CategoryId = categoryId,
+                    NewsPortalIds = newsPortalIds,
+                    RegionId = regionId,
+                    NewNewsPortalsPosition = WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
+                    TitleSearchQuery = titleSearchQuery,
+                    MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+                },
                 cancellationToken: cancellationToken
             );
 
@@ -266,17 +269,18 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var articles = await Mediator.Send(
-                request: new GetCategoryArticlesQuery_1_3(
-                    take: take,
-                    skip: skip,
-                    categoryId: categoryId,
-                    newsPortalIdsString: newsPortalIds,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType,
-                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-                ),
+                request: new GetCategoryArticlesQuery_1_3
+                {
+                    Take = take,
+                    Skip = skip,
+                    CategoryId = categoryId,
+                    NewsPortalIds = newsPortalIds,
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+                },
                 cancellationToken: cancellationToken
             );
 
@@ -318,17 +322,18 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var response = await Mediator.Send(
-                request: new GetTrendingArticlesQuery(
-                    take: paginationParameters.Take,
-                    skip: paginationParameters.Skip,
-                    firstArticleId: paginationParameters.FirstArticleId,
-                    maxAgeOfTrendingArticle: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType,
-                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-                ),
+                request: new GetTrendingArticlesQuery
+                {
+                    Take = paginationParameters.Take,
+                    Skip = paginationParameters.Skip,
+                    FirstArticleId = paginationParameters.FirstArticleId,
+                    MaxAgeOfTrendingArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+                },
                 cancellationToken: cancellationToken
             );
 
@@ -372,20 +377,21 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var response = await Mediator.Send(
-                request: new GetFeaturedArticlesQuery(
-                    take: paginationParameters.Take,
-                    skip: paginationParameters.Skip,
-                    firstArticleId: paginationParameters.FirstArticleId,
-                    categoryIdsString: categoryIds,
-                    newsPortalIdsString: newsPortalIds,
-                    maxAgeOfFeaturedArticle: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,
-                    maxAgeOfTrendingArticle: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType,
-                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-                ),
+                request: new GetFeaturedArticlesQuery
+                {
+                    Take = paginationParameters.Take,
+                    Skip = paginationParameters.Skip,
+                    FirstArticleId = paginationParameters.FirstArticleId,
+                    CategoryIds = categoryIds,
+                    NewsPortalIds = newsPortalIds,
+                    MaxAgeOfFeaturedArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,
+                    MaxAgeOfTrendingArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+                },
                 cancellationToken: cancellationToken
             );
 
@@ -427,25 +433,27 @@ namespace Espresso.WebApi.Controllers
         )
         {
             await Mediator.Send(
-                request: new IncrementNumberOfClicksCommand(
-                    id: articleId,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType,
-                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-                ),
+                request: new IncrementNumberOfClicksCommand
+                {
+                    Id = articleId,
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+                },
                 cancellationToken: cancellationToken
             );
 
             await Mediator.Send(
-                request: new CalculateTrendingScoreCommand(
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType,
-                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-                ),
+                request: new CalculateTrendingScoreCommand
+                {
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+                },
                 cancellationToken: cancellationToken
             );
 
@@ -488,25 +496,27 @@ namespace Espresso.WebApi.Controllers
         )
         {
             await Mediator.Send(
-                request: new IncrementNumberOfClicksCommand(
-                    id: articleId,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType,
-                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-                ),
+                request: new IncrementNumberOfClicksCommand
+                {
+                    Id = articleId,
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+                },
                 cancellationToken: cancellationToken
             );
 
             await Mediator.Send(
-                request: new CalculateTrendingScoreCommand(
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType,
-                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-                ),
+                request: new CalculateTrendingScoreCommand
+                {
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+                },
                 cancellationToken: cancellationToken
             );
 
@@ -544,14 +554,15 @@ namespace Espresso.WebApi.Controllers
         )
         {
             await Mediator.Send(
-                request: new HideArticleCommand(
-                    articleId: articleId,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType,
-                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-                ),
+                request: new HideArticleCommand
+                {
+                    ArticleId = articleId,
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+                },
                 cancellationToken: cancellationToken
             );
 
@@ -589,14 +600,15 @@ namespace Espresso.WebApi.Controllers
         )
         {
             await Mediator.Send(
-                request: new ToggleFeaturedArticleCommand(
-                    articleId: articleId,
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType,
-                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-                ),
+                request: new ToggleFeaturedArticleCommand
+                {
+                    ArticleId = articleId,
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+                },
                 cancellationToken: cancellationToken
             );
 

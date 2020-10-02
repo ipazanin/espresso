@@ -5,51 +5,14 @@ using Espresso.Domain.Enums.ApplicationDownloadEnums;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles
 {
-    public class GetTrendingArticlesQuery : Request<GetTrendingArticlesQueryResponse>
+    public record GetTrendingArticlesQuery : Request<GetTrendingArticlesQueryResponse>
     {
         #region Properties
-        public int Take { get; }
-        public int Skip { get; }
-        public Guid? FirstArticleId { get; }
+        public int Take { get; init; }
+        public int Skip { get; init; }
+        public Guid? FirstArticleId { get; init; }
 
-        public TimeSpan MaxAgeOfTrendingArticle { get; }
-        #endregion
-
-        #region Constructors
-        public GetTrendingArticlesQuery(
-            int take,
-            int skip,
-            Guid? firstArticleId,
-            string currentEspressoWebApiVersion,
-            string targetedEspressoWebApiVersion,
-            string consumerVersion,
-            DeviceType deviceType,
-            AppEnvironment appEnvironment,
-            TimeSpan maxAgeOfTrendingArticle
-        ) : base(
-            currentEspressoWebApiVersion: currentEspressoWebApiVersion,
-            targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
-            consumerVersion: consumerVersion,
-            deviceType: deviceType,
-            appEnvironment: appEnvironment,
-            Event.GetTrendingArticlesQuery
-        )
-        {
-            Take = take;
-            Skip = skip;
-            FirstArticleId = firstArticleId;
-            MaxAgeOfTrendingArticle = maxAgeOfTrendingArticle;
-        }
-        #endregion
-
-        #region Methods
-        public override string ToString()
-        {
-            return $"{nameof(Take)}:{Take}, " +
-                $"{nameof(Skip)}:{Skip}, " +
-                $"{nameof(FirstArticleId)}:{FirstArticleId}, " +
-                $"{nameof(MaxAgeOfTrendingArticle)}:{MaxAgeOfTrendingArticle}";
-        }
+        public TimeSpan MaxAgeOfTrendingArticle { get; init; }
         #endregion
     }
 }

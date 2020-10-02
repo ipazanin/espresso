@@ -61,18 +61,19 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            var command = new CreateApplicationDownloadCommand(
-                currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                consumerVersion: basicInformationsHeaderParameters.Version,
-                deviceType: basicInformationsHeaderParameters.DeviceType,
-                appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-            );
+            var command = new CreateApplicationDownloadCommand
+            {
+                CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                ConsumerVersion = basicInformationsHeaderParameters.Version,
+                DeviceType = basicInformationsHeaderParameters.DeviceType,
+                AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+            };
 
             await Mediator.Send(
-                request: command,
-                cancellationToken: cancellationToken
-            );
+                    request: command,
+                    cancellationToken: cancellationToken
+                );
 
             return Ok();
         }
@@ -103,13 +104,14 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            var command = new CreateApplicationDownloadCommand(
-                currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                consumerVersion: basicInformationsHeaderParameters.Version,
-                deviceType: basicInformationsHeaderParameters.DeviceType,
-                appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-            );
+            var command = new CreateApplicationDownloadCommand
+            {
+                CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                ConsumerVersion = basicInformationsHeaderParameters.Version,
+                DeviceType = basicInformationsHeaderParameters.DeviceType,
+                AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+            };
 
             await Mediator.Send(
                 request: command,
@@ -147,13 +149,14 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            var command = new CreateApplicationDownloadCommand(
-                currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                targetedEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.EspressoWebApiVersion_1_2.ToString(),
-                consumerVersion: mobileAppVersion,
-                deviceType: mobileDeviceType,
-                appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-            );
+            var command = new CreateApplicationDownloadCommand
+            {
+                CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                TargetedApiVersion = "1.2",
+                ConsumerVersion = mobileAppVersion,
+                DeviceType = mobileDeviceType,
+                AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+            };
             await Mediator.Send(
                 request: command,
                 cancellationToken: cancellationToken
@@ -189,13 +192,14 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var response = await Mediator.Send(
-                request: new GetApplicationDownloadStatisticsQuery(
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType,
-                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-                ),
+                request: new GetApplicationDownloadStatisticsQuery
+                {
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+                },
                 cancellationToken: cancellationToken
             );
 
@@ -231,13 +235,14 @@ namespace Espresso.WebApi.Controllers
         )
         {
             var response = await Mediator.Send(
-                request: new GetApplicationDownloadStatisticsQuery(
-                    currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                    targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    consumerVersion: basicInformationsHeaderParameters.Version,
-                    deviceType: basicInformationsHeaderParameters.DeviceType,
-                    appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-                ),
+                request: new GetApplicationDownloadStatisticsQuery
+                {
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+                },
                 cancellationToken: cancellationToken
             );
 

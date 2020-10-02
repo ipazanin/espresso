@@ -71,20 +71,21 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                     }
 
                     return await mediator.Send(
-                        request: new GetFeaturedArticlesQuery(
-                            take: resolveContext.GetArgument<int>("take"),
-                            skip: resolveContext.GetArgument<int>("skip"),
-                            firstArticleId: firstArticleId,
-                            newsPortalIdsString: resolveContext.GetArgument<string?>("newsPortalIds"),
-                            categoryIdsString: resolveContext.GetArgument<string?>("categoryIds"),
-                            maxAgeOfFeaturedArticle: webApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,
-                            maxAgeOfTrendingArticle: webApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
-                            currentEspressoWebApiVersion: webApiConfiguration.AppConfiguration.Version,
-                            targetedEspressoWebApiVersion: userContext.TargetedApiVersion,
-                            consumerVersion: userContext.ConsumerVersion,
-                            deviceType: userContext.DeviceType,
-                            appEnvironment: webApiConfiguration.AppConfiguration.AppEnvironment
-                        ),
+                        request: new GetFeaturedArticlesQuery
+                        {
+                            Take = resolveContext.GetArgument<int>("take"),
+                            Skip = resolveContext.GetArgument<int>("skip"),
+                            FirstArticleId = firstArticleId,
+                            NewsPortalIds = resolveContext.GetArgument<string?>("newsPortalIds"),
+                            CategoryIds = resolveContext.GetArgument<string?>("categoryIds"),
+                            MaxAgeOfFeaturedArticle = webApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,
+                            MaxAgeOfTrendingArticle = webApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
+                            CurrentApiVersion = webApiConfiguration.AppConfiguration.Version,
+                            TargetedApiVersion = userContext.TargetedApiVersion,
+                            ConsumerVersion = userContext.ConsumerVersion,
+                            DeviceType = userContext.DeviceType,
+                            AppEnvironment = webApiConfiguration.AppConfiguration.AppEnvironment
+                        },
                         cancellationToken: resolveContext.CancellationToken
                     );
                 },

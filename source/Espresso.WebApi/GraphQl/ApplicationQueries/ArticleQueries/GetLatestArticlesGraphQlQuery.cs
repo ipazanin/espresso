@@ -75,21 +75,22 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                     }
 
                     return await mediator.Send(
-                        request: new GetLatestArticlesQuery(
-                            take: resolveContext.GetArgument<int>("take"),
-                            skip: resolveContext.GetArgument<int>("skip"),
-                            firstArticleId: firstArticleId,
-                            newsPortalIdsString: resolveContext.GetArgument<string?>("newsPortalIds"),
-                            categoryIdsString: resolveContext.GetArgument<string?>("categoryIds"),
-                            newNewsPortalsPosition: webApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
-                            titleSearchQuery: resolveContext.GetArgument<string?>("titleSearchQuery"),
-                            maxAgeOfNewNewsPortal: webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                            currentEspressoWebApiVersion: webApiConfiguration.AppConfiguration.Version,
-                            targetedEspressoWebApiVersion: userContext.TargetedApiVersion,
-                            consumerVersion: userContext.ConsumerVersion,
-                            deviceType: userContext.DeviceType,
-                            appEnvironment: webApiConfiguration.AppConfiguration.AppEnvironment
-                        ),
+                        request: new GetLatestArticlesQuery
+                        {
+                            Take = resolveContext.GetArgument<int>("take"),
+                            Skip = resolveContext.GetArgument<int>("skip"),
+                            FirstArticleId = firstArticleId,
+                            NewsPortalIds = resolveContext.GetArgument<string?>("newsPortalIds"),
+                            CategoryIds = resolveContext.GetArgument<string?>("categoryIds"),
+                            NewNewsPortalsPosition = webApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
+                            TitleSearchQuery = resolveContext.GetArgument<string?>("titleSearchQuery"),
+                            MaxAgeOfNewNewsPortal = webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
+                            CurrentApiVersion = webApiConfiguration.AppConfiguration.Version,
+                            TargetedApiVersion = userContext.TargetedApiVersion,
+                            ConsumerVersion = userContext.ConsumerVersion,
+                            DeviceType = userContext.DeviceType,
+                            AppEnvironment = webApiConfiguration.AppConfiguration.AppEnvironment
+                        },
                         cancellationToken: resolveContext.CancellationToken
                     );
                 },

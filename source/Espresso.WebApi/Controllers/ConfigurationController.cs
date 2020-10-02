@@ -64,18 +64,20 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            var request = new GetWebConfigurationQuery(
-                maxAgeOfNewNewsPortal: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                consumerVersion: basicInformationsHeaderParameters.Version,
-                deviceType: basicInformationsHeaderParameters.DeviceType,
-                appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-            );
+            var request = new GetWebConfigurationQuery
+            {
+                MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
+                CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                ConsumerVersion = basicInformationsHeaderParameters.Version,
+                DeviceType = basicInformationsHeaderParameters.DeviceType,
+                AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+            };
+
             var getNewsPortalsQueryResponse = await Mediator.Send(
-                request: request,
-                cancellationToken: cancellationToken
-            );
+                    request: request,
+                    cancellationToken: cancellationToken
+                );
 
             return Ok(getNewsPortalsQueryResponse);
         }
@@ -110,14 +112,15 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            var request = new GetConfigurationQuery(
-                maxAgeOfNewNewsPortal: WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                consumerVersion: basicInformationsHeaderParameters.Version,
-                deviceType: basicInformationsHeaderParameters.DeviceType,
-                appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-            );
+            var request = new GetConfigurationQuery
+            {
+                MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
+                CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                ConsumerVersion = basicInformationsHeaderParameters.Version,
+                DeviceType = basicInformationsHeaderParameters.DeviceType,
+                AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+            };
             var getNewsPortalsQueryResponse = await Mediator.Send(
                 request: request,
                 cancellationToken: cancellationToken
@@ -156,13 +159,14 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            var request = new GetConfigurationQuery_1_3(
-                currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                targetedEspressoWebApiVersion: basicInformationsHeaderParameters.EspressoWebApiVersion,
-                consumerVersion: basicInformationsHeaderParameters.Version,
-                deviceType: basicInformationsHeaderParameters.DeviceType,
-                appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-            );
+            var request = new GetConfigurationQuery_1_3
+            {
+                CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                ConsumerVersion = basicInformationsHeaderParameters.Version,
+                DeviceType = basicInformationsHeaderParameters.DeviceType,
+                AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+            };
             var getNewsPortalsQueryResponse = await Mediator.Send(
                 request: request,
                 cancellationToken: cancellationToken
@@ -203,18 +207,19 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            var request = new GetConfigurationQuery_1_3(
-                currentEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.Version,
-                targetedEspressoWebApiVersion: WebApiConfiguration.AppConfiguration.EspressoWebApiVersion_1_2.ToString(),
-                consumerVersion: mobileAppVersion,
-                deviceType: mobileDeviceType,
-                appEnvironment: WebApiConfiguration.AppConfiguration.AppEnvironment
-            );
+            var request = new GetConfigurationQuery_1_3
+            {
+                CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                TargetedApiVersion = WebApiConfiguration.AppConfiguration.EspressoWebApiVersion_1_2.ToString(),
+                ConsumerVersion = mobileAppVersion,
+                DeviceType = mobileDeviceType,
+                AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+            };
 
             var getNewsPortalsQueryResponse = await Mediator.Send(
-                request: request,
-                cancellationToken: cancellationToken
-            );
+                    request: request,
+                    cancellationToken: cancellationToken
+                );
             return Ok(getNewsPortalsQueryResponse);
         }
 

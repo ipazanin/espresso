@@ -1,8 +1,8 @@
 ﻿namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
 {
-    public class UpdateInMemoryArticlesCommandResponse
+    public record UpdateInMemoryArticlesCommandResponse
     {
-        public int NumberOfUpdatedArticles { get; set; }
-        public int NumberOfCreatedArticles { get; set; }
+        public int NumberOfUpdatedArticles { get; init; }
+        public int NumberOfCreatedArticles { get; init; }
     }
 }

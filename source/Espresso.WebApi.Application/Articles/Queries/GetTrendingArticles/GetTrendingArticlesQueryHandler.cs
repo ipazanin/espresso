@@ -49,7 +49,10 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles
                 .Take(request.Take)
                 .Select(GetTrendingArticlesArticle.GetProjection().Compile());
 
-            var response = new GetTrendingArticlesQueryResponse(articleDtos);
+            var response = new GetTrendingArticlesQueryResponse
+            {
+                Articles = articleDtos
+            };
 
             return Task.FromResult(result: response);
         }

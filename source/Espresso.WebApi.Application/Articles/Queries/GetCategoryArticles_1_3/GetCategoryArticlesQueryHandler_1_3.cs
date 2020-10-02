@@ -31,12 +31,18 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
                 key: MemoryCacheConstants.ArticleKey
             );
 
+            var newsPortalIds = request.NewsPortalIds
+                ?.Replace(" ", "")
+                ?.Split(',')
+                ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
+                ?.Where(newsPortalId => newsPortalId != default);
+
             var articleDtos = articles
                 .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
                 .Where(
                     predicate: Article.GetFilteredArticlesPredicate(
                         categoryId: request.CategoryId,
-                        newsPortalIds: request.NewsPortalIds,
+                        newsPortalIds: newsPortalIds,
                         titleSearchQuery: null,
                         articleCreateDateTime: null
                     ).Compile()

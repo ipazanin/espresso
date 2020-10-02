@@ -7,80 +7,69 @@ using Espresso.Domain.Enums.ApplicationDownloadEnums;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
 {
-    public class GetCategoryArticlesQuery : Request<GetCategoryArticlesQueryResponse>
+    public record GetCategoryArticlesQuery : Request<GetCategoryArticlesQueryResponse>
     {
         #region Properties
-        public int Take { get; }
+        public int Take { get; init; }
 
-        public int Skip { get; }
+        public int Skip { get; init; }
 
-        public Guid? FirstArticleId { get; }
+        public Guid? FirstArticleId { get; init; }
 
-        public int CategoryId { get; }
+        public int CategoryId { get; init; }
 
-        public int? RegionId { get; }
+        public int? RegionId { get; init; }
 
-        public IEnumerable<int>? NewsPortalIds { get; }
+        public string? NewsPortalIds { get; init; }
 
-        public int NewNewsPortalsPosition { get; }
+        public int NewNewsPortalsPosition { get; init; }
 
-        public string? TitleSearchQuery { get; }
+        public string? TitleSearchQuery { get; init; }
 
-        public TimeSpan MaxAgeOfNewNewsPortal { get; }
+        public TimeSpan MaxAgeOfNewNewsPortal { get; init; }
         #endregion
 
         #region Constructors
-        public GetCategoryArticlesQuery(
-            int take,
-            int skip,
-            Guid? firstArticleId,
-            int categoryId,
-            string? newsPortalIdsString,
-            int? regionId,
-            TimeSpan maxAgeOfNewNewsPortal,
-            string currentEspressoWebApiVersion,
-            string targetedEspressoWebApiVersion,
-            string consumerVersion,
-            DeviceType deviceType,
-            AppEnvironment appEnvironment,
-            int newNewsPortalsPosition,
-            string? titleSearchQuery
-        ) : base(
-            currentEspressoWebApiVersion: currentEspressoWebApiVersion,
-            targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
-            consumerVersion: consumerVersion,
-            deviceType: deviceType,
-            appEnvironment: appEnvironment,
-            Event.GetCategoryArticlesQuery
-        )
-        {
-            Take = take;
-            Skip = skip;
-            FirstArticleId = firstArticleId;
-            CategoryId = categoryId;
-            RegionId = regionId;
-            MaxAgeOfNewNewsPortal = maxAgeOfNewNewsPortal;
-            var newsPortalIds = newsPortalIdsString
-                ?.Replace(" ", "")
-                ?.Split(',')
-                ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
-                ?.Where(newsPortalId => newsPortalId != default);
+        // public GetCategoryArticlesQuery(
+        //     int take,
+        //     int skip,
+        //     Guid? firstArticleId,
+        //     int categoryId,
+        //     string? newsPortalIdsString,
+        //     int? regionId,
+        //     TimeSpan maxAgeOfNewNewsPortal,
+        //     string currentEspressoWebApiVersion,
+        //     string targetedEspressoWebApiVersion,
+        //     string consumerVersion,
+        //     DeviceType deviceType,
+        //     AppEnvironment appEnvironment,
+        //     int newNewsPortalsPosition,
+        //     string? titleSearchQuery
+        // ) : base(
+        //     currentEspressoWebApiVersion: currentEspressoWebApiVersion,
+        //     targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
+        //     consumerVersion: consumerVersion,
+        //     deviceType: deviceType,
+        //     appEnvironment: appEnvironment,
+        //     Event.GetCategoryArticlesQuery
+        // )
+        // {
+        //     Take = take;
+        //     Skip = skip;
+        //     FirstArticleId = firstArticleId;
+        //     CategoryId = categoryId;
+        //     RegionId = regionId;
+        //     MaxAgeOfNewNewsPortal = maxAgeOfNewNewsPortal;
+        //     var newsPortalIds = newsPortalIdsString
+        //         ?.Replace(" ", "")
+        //         ?.Split(',')
+        //         ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
+        //         ?.Where(newsPortalId => newsPortalId != default);
 
-            NewsPortalIds = newsPortalIds == null || newsPortalIds.Any() ? newsPortalIds : null;
-            NewNewsPortalsPosition = newNewsPortalsPosition;
-            TitleSearchQuery = titleSearchQuery;
-        }
-        #endregion
-
-        #region Methods
-        public override string ToString()
-        {
-            return $"{nameof(Take)}:{Take}, " +
-                $"{nameof(Skip)}:{Skip}, " +
-                $"{nameof(FirstArticleId)}:{FirstArticleId}, " +
-                $"{nameof(CategoryId)}:{CategoryId}, " +
-                $"{nameof(NewsPortalIds)}:{(NewsPortalIds is null ? "" : string.Join(",", NewsPortalIds))}";
-        }
+        //     NewsPortalIds = newsPortalIds == null || newsPortalIds.Any() ? newsPortalIds : null;
+        //     NewNewsPortalsPosition = newNewsPortalsPosition;
+        //     TitleSearchQuery = titleSearchQuery;
+        // }
         #endregion
     }
 }

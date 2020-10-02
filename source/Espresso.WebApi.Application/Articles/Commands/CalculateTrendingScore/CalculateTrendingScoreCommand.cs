@@ -5,28 +5,7 @@ using MediatR;
 
 namespace Espresso.WebApi.Application.Articles.Commands.CalculateTrendingScore
 {
-    public class CalculateTrendingScoreCommand : Request<Unit>
+    public record CalculateTrendingScoreCommand : Request<Unit>
     {
-        public CalculateTrendingScoreCommand(
-            string currentEspressoWebApiVersion,
-            string targetedEspressoWebApiVersion,
-            string consumerVersion,
-            DeviceType deviceType,
-            AppEnvironment appEnvironment
-        ) : base(
-            currentEspressoWebApiVersion: currentEspressoWebApiVersion,
-            targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
-            consumerVersion: consumerVersion,
-            deviceType: deviceType,
-            appEnvironment: appEnvironment,
-            Event.CalculateTrendingScoreCommand
-        )
-        {
-        }
-
-        public override string ToString()
-        {
-            return "";
-        }
     }
 }

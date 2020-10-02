@@ -39,12 +39,24 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                 article => article.Id.Equals(request.FirstArticleId)
             );
 
+            var newsPortalIds = request.NewsPortalIds
+                ?.Replace(" ", "")
+                ?.Split(',')
+                ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
+                ?.Where(newsPortalId => newsPortalId != default);
+
+            var categoryIds = request.CategoryIds
+                ?.Replace(" ", "")
+                ?.Split(',')
+                ?.Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
+                ?.Where(categoryId => categoryId != default);
+
             var articleDtos = articles
                 .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
                 .Where(
                     predicate: Article.GetFilteredArticlesPredicate(
-                        categoryIds: request.CategoryIds,
-                        newsPortalIds: request.NewsPortalIds,
+                        categoryIds: categoryIds,
+                        newsPortalIds: newsPortalIds,
                         titleSearchQuery: request.TitleSearchQuery,
                         articleCreateDateTime: firstArticle?.CreateDateTime
                     ).Compile()
@@ -60,8 +72,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
             var newsPortalDtos = newsPortals
                 .Where(
                     predicate: NewsPortal.GetLatestSugestedNewsPortalsPredicate(
-                        newsPortalIds: request.NewsPortalIds,
-                        categoryIds: request.CategoryIds,
+                        newsPortalIds: newsPortalIds,
+                        categoryIds: categoryIds,
                         maxAgeOfNewNewsPortal: request.MaxAgeOfNewNewsPortal
                     ).Compile()
                 )
@@ -69,11 +81,12 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
 
             var random = new Random();
 
-            var response = new GetLatestArticlesQueryResponse(
-                articles: articleDtos,
-                newNewsPortals: newsPortalDtos.OrderBy(newsPortal => random.Next()),
-                newNewsPortalsPosition: request.NewNewsPortalsPosition
-            );
+            var response = new GetLatestArticlesQueryResponse
+            {
+                Articles = articleDtos,
+                NewNewsPortals = newsPortalDtos.OrderBy(newsPortal => random.Next()),
+                NewNewsPortalsPosition = request.NewNewsPortalsPosition
+            };
 
             return Task.FromResult(result: response);
         }

@@ -7,85 +7,24 @@ using Espresso.Domain.Enums.ApplicationDownloadEnums;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
 {
-    public class GetLatestArticlesQuery : Request<GetLatestArticlesQueryResponse>
+    public record GetLatestArticlesQuery : Request<GetLatestArticlesQueryResponse>
     {
         #region Properties
-        public int Take { get; }
+        public int Take { get; init; }
 
-        public int Skip { get; }
+        public int Skip { get; init; }
 
-        public Guid? FirstArticleId { get; }
+        public Guid? FirstArticleId { get; init; }
 
-        public IEnumerable<int>? NewsPortalIds { get; }
+        public string? NewsPortalIds { get; init; }
 
-        public IEnumerable<int>? CategoryIds { get; }
+        public string? CategoryIds { get; init; }
 
-        public int NewNewsPortalsPosition { get; }
+        public int NewNewsPortalsPosition { get; init; }
 
-        public string? TitleSearchQuery { get; }
+        public string? TitleSearchQuery { get; init; }
 
-        public TimeSpan MaxAgeOfNewNewsPortal { get; }
-        #endregion
-
-        #region Constructors
-        public GetLatestArticlesQuery(
-            int take,
-            int skip,
-            Guid? firstArticleId,
-            string? newsPortalIdsString,
-            string? categoryIdsString,
-            int newNewsPortalsPosition,
-            string? titleSearchQuery,
-            TimeSpan maxAgeOfNewNewsPortal,
-            string currentEspressoWebApiVersion,
-            string targetedEspressoWebApiVersion,
-            string consumerVersion,
-            DeviceType deviceType,
-            AppEnvironment appEnvironment
-        ) : base(
-            currentEspressoWebApiVersion: currentEspressoWebApiVersion,
-            targetedEspressoWebApiVersion: targetedEspressoWebApiVersion,
-            consumerVersion: consumerVersion,
-            deviceType: deviceType,
-            appEnvironment: appEnvironment,
-            Event.GetLatestArticlesQuery
-        )
-        {
-            Take = take;
-            Skip = skip;
-            FirstArticleId = firstArticleId;
-            var newsPortalIds = newsPortalIdsString
-                ?.Replace(" ", "")
-                ?.Split(',')
-                ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
-                ?.Where(newsPortalId => newsPortalId != default);
-
-            NewsPortalIds = newsPortalIds is null || newsPortalIds.Any() ? newsPortalIds : null;
-
-            var categoryIds = categoryIdsString
-                ?.Replace(" ", "")
-                ?.Split(',')
-                ?.Select(categoryIdString => int.TryParse(categoryIdString, out var newsPortalId) ? newsPortalId : default)
-                ?.Where(categoryId => categoryId != default);
-
-            CategoryIds = categoryIds == null || categoryIds.Any() ? categoryIds : null;
-
-            NewNewsPortalsPosition = newNewsPortalsPosition;
-            TitleSearchQuery = titleSearchQuery;
-            MaxAgeOfNewNewsPortal = maxAgeOfNewNewsPortal;
-        }
-        #endregion
-
-        #region Methods
-        public override string ToString()
-        {
-            return $"{nameof(Take)}:{Take}, " +
-                $"{nameof(Skip)}:{Skip}, " +
-                $"{nameof(FirstArticleId)}:{FirstArticleId}, " +
-                $"{nameof(NewsPortalIds)}:{(NewsPortalIds is null ? "" : string.Join(",", NewsPortalIds))}, " +
-                $"{nameof(CategoryIds)}:{(CategoryIds is null ? "" : string.Join(",", CategoryIds))}, " +
-                $"{nameof(TitleSearchQuery)}:{TitleSearchQuery}";
-        }
+        public TimeSpan MaxAgeOfNewNewsPortal { get; init; }
         #endregion
     }
 }

@@ -32,14 +32,15 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries
                         throw new Exception("Invalid GraphQL User Context");
 
                     return await mediator.Send(
-                        request: new GetConfigurationQuery(
-                            maxAgeOfNewNewsPortal: webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                            currentEspressoWebApiVersion: webApiConfiguration.AppConfiguration.Version,
-                            targetedEspressoWebApiVersion: userContext.TargetedApiVersion,
-                            consumerVersion: userContext.ConsumerVersion,
-                            deviceType: userContext.DeviceType,
-                            appEnvironment: webApiConfiguration.AppConfiguration.AppEnvironment
-                        ),
+                        request: new GetConfigurationQuery
+                        {
+                            MaxAgeOfNewNewsPortal = webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
+                            CurrentApiVersion = webApiConfiguration.AppConfiguration.Version,
+                            TargetedApiVersion = userContext.TargetedApiVersion,
+                            ConsumerVersion = userContext.ConsumerVersion,
+                            DeviceType = userContext.DeviceType,
+                            AppEnvironment = webApiConfiguration.AppConfiguration.AppEnvironment
+                        },
                         cancellationToken: resolveContext.CancellationToken
                     );
                 },

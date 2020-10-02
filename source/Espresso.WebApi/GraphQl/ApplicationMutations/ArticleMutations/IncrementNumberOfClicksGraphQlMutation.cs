@@ -41,14 +41,15 @@ namespace Espresso.WebApi.GraphQl.ApplicationMutations.ArticlesQueries
 
                     var articleIdString = resolveContext.GetArgument<string>("articleId");
                     await mediator.Send(
-                           request: new IncrementNumberOfClicksCommand(
-                            id: Guid.Parse(articleIdString),
-                            currentEspressoWebApiVersion: webApiConfiguration.AppConfiguration.Version,
-                            targetedEspressoWebApiVersion: userContext.TargetedApiVersion,
-                            consumerVersion: userContext.ConsumerVersion,
-                            deviceType: userContext.DeviceType,
-                            appEnvironment: webApiConfiguration.AppConfiguration.AppEnvironment
-                           ),
+                           request: new IncrementNumberOfClicksCommand
+                           {
+                               Id = Guid.Parse(articleIdString),
+                               CurrentApiVersion = webApiConfiguration.AppConfiguration.Version,
+                               TargetedApiVersion = userContext.TargetedApiVersion,
+                               ConsumerVersion = userContext.ConsumerVersion,
+                               DeviceType = userContext.DeviceType,
+                               AppEnvironment = webApiConfiguration.AppConfiguration.AppEnvironment
+                           },
                            cancellationToken: resolveContext.CancellationToken
                         );
                     return articleIdString;
