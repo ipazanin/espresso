@@ -32,6 +32,16 @@ namespace Espresso.WebApi.Extensions
                 cronJobConfiguration.AppEnvironment = webApiConfiguration.AppConfiguration.AppEnvironment;
             });
 
+            services.AddCronJob<WebApiPerformanceCronJob>(cronJobConfiguration =>
+            {
+                cronJobConfiguration.CronExpression = webApiConfiguration
+                    .CronJobsConfiguration
+                    .WebApiPerformanceCronExpression;
+                cronJobConfiguration.TimeZoneInfo = TimeZoneInfo.Utc;
+                cronJobConfiguration.Version = webApiConfiguration.AppConfiguration.Version;
+                cronJobConfiguration.AppEnvironment = webApiConfiguration.AppConfiguration.AppEnvironment;
+            });
+
             return services;
         }
     }

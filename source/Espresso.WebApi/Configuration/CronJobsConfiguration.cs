@@ -19,6 +19,13 @@ namespace Espresso.WebApi.Configuration
         /// <value></value>
         public string ApplicationDownloadStatisticsCronExpression =>
             _configuration.GetValue<string>("ApplicationDownloadStatisticsCronExpression");
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public string WebApiPerformanceCronExpression =>
+            _configuration.GetValue<string>("WebApiPerformanceCronExpression");
         #endregion
 
         #region Constructors

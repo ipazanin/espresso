@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -268,22 +270,29 @@ namespace Espresso.Application.Services
             );
         }
 
-        public Task LogParserDeleterPerformance(
-            TimeSpan parseRssFeedsPerformance,
-            TimeSpan deleteOldArticlesPerformance,
+        public Task LogPerformance(
+            string applicationName,
+            IEnumerable<(string name, int count, TimeSpan duration)> data,
             AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         )
         {
-            var text = $"Jobs performance\n" +
-                $"Parse Rss Feeds: {parseRssFeedsPerformance}\n" +
-                $"Delete Old Articles: {deleteOldArticlesPerformance}";
+            var textBuilder = new StringBuilder($"{applicationName} Performance\n");
+
+            foreach (var (name, count, duration) in data)
+            {
+                textBuilder.Append(
+                    $"\t:label: {name}\n" +
+                    $"\t\t:chart_with_upwards_trend: Count: {count}\n" +
+                    $"\t\t:clock1: Duration: {duration}\n"
+                );
+            }
 
             return Log(
                 data: new SlackWebHookDto(
                     userName: BackendStatisticsBotUsername,
                     iconEmoji: BackendStatisticsBotIconEmoji,
-                    text: text,
+                    text: textBuilder.ToString(),
                     channel: BackendStatisticsChannel
                 ),
                 appEnvironment: appEnvironment,
