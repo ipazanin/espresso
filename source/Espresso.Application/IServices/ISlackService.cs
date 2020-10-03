@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Enums;
@@ -64,9 +65,9 @@ namespace Espresso.Application.IServices
             CancellationToken cancellationToken
         );
 
-        public Task LogParserDeleterPerformance(
-            TimeSpan parseRssFeedsPerformance,
-            TimeSpan deleteOldArticlesPerformance,
+        public Task LogPerformance(
+            string applicationName,
+            IEnumerable<(string name, int count, TimeSpan duration)> data,
             AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         );

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
@@ -14,6 +15,14 @@ namespace Espresso.ParserDeleter.CronJobs
 {
     public class ParserDeleterPerformanceCronJob : CronJob<ParserDeleterPerformanceCronJob>
     {
+        #region Constants
+        private static readonly List<string> s_requestNames = new List<string>
+        {
+            nameof(ParseRssFeedsCommand),
+            nameof(DeleteOldArticlesCommand),
+        };
+        #endregion
+
         #region Fields
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly ICronJobConfiguration<ParserDeleterPerformanceCronJob> _cronJobConfiguration;
@@ -41,11 +50,6 @@ namespace Espresso.ParserDeleter.CronJobs
         #region Methods
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
-            // await Task.Delay(
-            //     delay: TimeSpan.FromSeconds(60),
-            //     cancellationToken: cancellationToken
-            // );
-
             await base.StartAsync(cancellationToken);
         }
 
@@ -55,24 +59,27 @@ namespace Espresso.ParserDeleter.CronJobs
             var slackService = scope.ServiceProvider.GetRequiredService<ISlackService>();
             var memoryCache = scope.ServiceProvider.GetRequiredService<IMemoryCache>();
 
-            var parseRssFeedsPerformance = CalculateAveragePerformance(
-                memoryCache: memoryCache,
-                requestName: nameof(ParseRssFeedsCommand)
-            );
-            var deleteOldArticlesPerformance = CalculateAveragePerformance(
-                memoryCache: memoryCache,
-                requestName: nameof(DeleteOldArticlesCommand)
-            );
+            var data = new List<(string name, int count, TimeSpan duration)>();
 
-            await slackService.LogParserDeleterPerformance(
-                parseRssFeedsPerformance: parseRssFeedsPerformance,
-                deleteOldArticlesPerformance: deleteOldArticlesPerformance,
+
+            foreach (var requestName in s_requestNames)
+            {
+                var requestData = CalculatePerformance(
+                    memoryCache: memoryCache,
+                    requestName: requestName
+                );
+                data.Add(requestData);
+            }
+
+            await slackService.LogPerformance(
+                applicationName: "Parser Deleter",
+                data: data,
                 appEnvironment: _parserDeleterConfiguration.AppConfiguration.AppEnvironment,
                 cancellationToken: stoppingToken
             );
         }
 
-        private static TimeSpan CalculateAveragePerformance(
+        private static (string name, int count, TimeSpan duration) CalculatePerformance(
             IMemoryCache memoryCache,
             string requestName
         )
@@ -90,10 +97,9 @@ namespace Espresso.ParserDeleter.CronJobs
 
             if (count == 0)
             {
-                return total;
+                return (requestName, count, total);
             }
-
-            return total / count;
+            return (requestName, count, total / count);
         }
         #endregion
     }
