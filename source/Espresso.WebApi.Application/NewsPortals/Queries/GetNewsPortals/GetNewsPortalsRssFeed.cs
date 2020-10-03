@@ -11,7 +11,7 @@ namespace Espresso.Application.NewsPortals
         #region Properties
         public int Id { get; private set; }
 
-        public string Url { get; private set; }
+        public string Url { get; private set; } = "";
 
         public IEnumerable<GetNewsPortalsRssFeedContentModifier> RssFeedContentModifiers { get; private set; } = new List<GetNewsPortalsRssFeedContentModifier>();
         public IEnumerable<GetNewsPortalsRssFeedCategory> RssFeedCategories { get; private set; } = new List<GetNewsPortalsRssFeedCategory>();
@@ -20,7 +20,6 @@ namespace Espresso.Application.NewsPortals
         #region Constructors
         private GetNewsPortalsRssFeed()
         {
-            Url = null!;
         }
         #endregion
 

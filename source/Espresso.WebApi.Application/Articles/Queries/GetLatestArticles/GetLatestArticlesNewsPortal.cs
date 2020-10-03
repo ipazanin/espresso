@@ -10,14 +10,20 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
         /// <summary>
         /// News Portal ID
         /// </summary>
-        public int Id { get; init; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// News Portal Name
         /// </summary>
-        public string Name { get; init; } = "";
+        public string Name { get; private set; } = "";
 
-        public string IconUrl { get; init; } = "";
+        public string IconUrl { get; private set; } = "";
+        #endregion
+
+        #region Constructors
+        private GetLatestArticlesNewsPortal()
+        {
+        }
         #endregion
 
         #region Methods

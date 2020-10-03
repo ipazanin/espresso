@@ -11,18 +11,24 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
         /// <summary>
         /// Category ID
         /// </summary>
-        public int Id { get; init; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// Category Name
         /// </summary>
-        public string Name { get; init; } = "";
+        public string Name { get; private set; } = "";
 
-        public string Color { get; init; } = "";
+        public string Color { get; private set; } = "";
 
-        public int? Position { get; init; }
+        public int? Position { get; private set; }
 
-        public CategoryType CategoryType { get; init; }
+        public CategoryType CategoryType { get; private set; }
+        #endregion
+
+        #region Constructors
+        private GetCategoryArticlesCategory()
+        {
+        }
         #endregion
 
         #region Methods

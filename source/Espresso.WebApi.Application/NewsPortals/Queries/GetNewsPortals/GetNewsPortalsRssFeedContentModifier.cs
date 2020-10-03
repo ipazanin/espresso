@@ -10,16 +10,14 @@ namespace Espresso.Application.NewsPortals
         #region Properties
         public int Id { get; private set; }
 
-        public string SourceValue { get; private set; }
+        public string SourceValue { get; private set; } = "";
 
-        public string ReplacementValue { get; private set; }
+        public string ReplacementValue { get; private set; } = "";
         #endregion
 
         #region Constructors
         private GetNewsPortalsRssFeedContentModifier()
         {
-            SourceValue = null!;
-            ReplacementValue = null!;
         }
         #endregion
 

@@ -41,10 +41,11 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3
                 .Where(predicate: category => !category.Id.Equals((int)CategoryId.Local))
                 .Select(selector: GetConfigurationCategory_1_3.GetProjection().Compile());
 
-            var response = new GetConfigurationQueryResponse_1_3(
-                categories: categoryDtos,
-                newsPortals: newsPortalDtos
-            );
+            var response = new GetConfigurationQueryResponse_1_3
+            {
+                Categories = categoryDtos,
+                NewsPortals = newsPortalDtos
+            };
 
             return Task.FromResult(result: response);
         }

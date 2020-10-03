@@ -10,7 +10,7 @@ namespace Espresso.Application.NewsPortals
         #region Properties
         public int Id { get; private set; }
 
-        public string UrlRegex { get; private set; }
+        public string UrlRegex { get; private set; } = "";
 
         public int UrlSegmentIndex { get; private set; }
         #endregion
@@ -18,7 +18,6 @@ namespace Espresso.Application.NewsPortals
         #region Constructors
         private GetNewsPortalsRssFeedCategory()
         {
-            UrlRegex = null!;
         }
         #endregion
 

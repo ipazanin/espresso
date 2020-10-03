@@ -25,6 +25,12 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles
         public CategoryType CategoryType { get; private set; }
         #endregion
 
+        #region Constructors
+        private GetTrendingArticlesCategory()
+        {
+        }
+        #endregion
+
         #region Methods
         public static Expression<Func<Category, GetTrendingArticlesCategory>> GetProjection()
         {

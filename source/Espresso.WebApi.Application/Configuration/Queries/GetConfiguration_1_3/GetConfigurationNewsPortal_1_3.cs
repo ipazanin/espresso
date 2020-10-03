@@ -4,7 +4,7 @@ using Espresso.Domain.Entities;
 
 namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3
 {
-    public class GetConfigurationNewsPortal_1_3
+    public record GetConfigurationNewsPortal_1_3
     {
         #region Properties
         /// <summary>
@@ -15,10 +15,18 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3
         /// <summary>
         /// News Portal Name
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; private set; } = "";
 
-        public string IconUrl { get; private set; }
+        public string IconUrl { get; private set; } = "";
+        #endregion
 
+        #region Constructors
+        private GetConfigurationNewsPortal_1_3()
+        {
+        }
+        #endregion
+
+        #region Methods
         public static Expression<Func<NewsPortal, GetConfigurationNewsPortal_1_3>> GetProjection()
         {
             return newsPortal => new GetConfigurationNewsPortal_1_3
@@ -28,17 +36,6 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3
                 IconUrl = newsPortal.IconUrl,
             };
         }
-        #endregion
-
-        #region Constructors
-        private GetConfigurationNewsPortal_1_3()
-        {
-            Name = null!;
-            IconUrl = null!;
-        }
-        #endregion
-
-        #region Methods
         #endregion
     }
 }

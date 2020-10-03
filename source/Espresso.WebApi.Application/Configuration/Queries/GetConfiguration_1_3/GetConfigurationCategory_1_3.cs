@@ -4,7 +4,7 @@ using Espresso.Domain.Entities;
 
 namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3
 {
-    public class GetConfigurationCategory_1_3
+    public record GetConfigurationCategory_1_3
     {
         #region Properties
         /// <summary>
@@ -15,16 +15,14 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3
         /// <summary>
         /// Category Name
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; private set; } = "";
 
-        public string Color { get; private set; }
+        public string Color { get; private set; } = "";
         #endregion
 
         #region Constructors
         private GetConfigurationCategory_1_3()
         {
-            Name = null!;
-            Color = null!;
         }
         #endregion
 

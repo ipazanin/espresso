@@ -5,7 +5,7 @@ using Espresso.Domain.Enums.CategoryEnums;
 
 namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
 {
-    public class GetConfigurationCategory
+    public record GetConfigurationCategory
     {
         #region Properties
         /// <summary>
@@ -16,9 +16,9 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
         /// <summary>
         /// Category Name
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; private set; } = "";
 
-        public string Color { get; private set; }
+        public string Color { get; private set; } = "";
 
         public int? Position { get; private set; }
 
@@ -28,23 +28,6 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
         #region Constructors
         private GetConfigurationCategory()
         {
-            Name = null!;
-            Color = null!;
-        }
-
-        public GetConfigurationCategory(
-            int id,
-            string name,
-            string color,
-            int? position,
-            CategoryType categoryType
-        )
-        {
-            Id = id;
-            Name = name;
-            Color = color;
-            Position = position;
-            CategoryType = categoryType;
         }
         #endregion
 

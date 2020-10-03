@@ -32,7 +32,10 @@ namespace Espresso.WebApi.Application.Categories.Queries.GetCategories
                 .Where(predicate: Category.GetAllCategoriesExceptGeneralExpression().Compile())
                 .Select(GetCategoriesCategory.GetProjection().Compile());
 
-            var response = new GetCategoriesQueryResponse(categoryDtos);
+            var response = new GetCategoriesQueryResponse
+            {
+                Categories = categoryDtos
+            };
 
             return Task.FromResult(result: response);
         }

@@ -5,14 +5,14 @@ using Espresso.Domain.Enums.CategoryEnums;
 
 namespace Espresso.Application.NewsPortals
 {
-    public class GetNewsPortalsCategory
+    public record GetNewsPortalsCategory
     {
         #region Properties
         public int Id { get; private set; }
 
-        public string Name { get; private set; }
+        public string Name { get; private set; } = "";
 
-        public string Color { get; private set; }
+        public string Color { get; private set; } = "";
 
         public string? KeyWordsRegexPattern { get; private set; }
 
@@ -26,8 +26,6 @@ namespace Espresso.Application.NewsPortals
         #region Constructors
         private GetNewsPortalsCategory()
         {
-            Name = null!;
-            Color = null!;
         }
         #endregion
 
