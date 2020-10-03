@@ -13,37 +13,43 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
         /// <summary>
         /// ID created by app
         /// </summary>
-        public Guid Id { get; init; }
+        public Guid Id { get; private set; }
 
         /// <summary>
         /// Article Url provided by RSS Feed
         /// </summary>
-        public string Url { get; init; } = "";
+        public string Url { get; private set; } = "";
 
         /// <summary>
         /// Article Title Parsed from RSS Feed
         /// </summary>
-        public string Title { get; init; } = "";
+        public string Title { get; private set; } = "";
 
         /// <summary>
         /// Image URL parsed from src attribute of first img element or second rss feed link, first is 
         /// </summary>
-        public string? ImageUrl { get; init; }
+        public string? ImageUrl { get; private set; }
 
         /// <summary>
         /// Article Publish time provided by RSS Feed
         /// </summary>
-        public string PublishDateTime { get; init; } = "";
+        public string PublishDateTime { get; private set; } = "";
 
         /// <summary>
         /// News Portal ID
         /// </summary>
-        public GetCategoryArticlesNewsPortal_1_3? NewsPortal { get; init; }
+        public GetCategoryArticlesNewsPortal_1_3? NewsPortal { get; private set; }
 
         /// <summary>
         /// List Of Categories article belongs to
         /// </summary>
-        public IEnumerable<GetCategoryArticlesCategory_1_3> Categories { get; init; } = new List<GetCategoryArticlesCategory_1_3>();
+        public IEnumerable<GetCategoryArticlesCategory_1_3> Categories { get; private set; } = new List<GetCategoryArticlesCategory_1_3>();
+        #endregion
+
+        #region Constructors
+        private GetCategoryArticlesArticle_1_3()
+        {
+        }
         #endregion
 
         #region Methods

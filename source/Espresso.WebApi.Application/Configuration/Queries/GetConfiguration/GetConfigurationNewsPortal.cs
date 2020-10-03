@@ -4,7 +4,7 @@ using Espresso.Domain.Entities;
 
 namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
 {
-    public class GetConfigurationNewsPortal
+    public record GetConfigurationNewsPortal
     {
         #region Properties
         /// <summary>
@@ -15,16 +15,24 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
         /// <summary>
         /// News Portal Name
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; private set; } = "";
 
-        public string IconUrl { get; private set; }
+        public string IconUrl { get; private set; } = "";
 
         public bool IsNew { get; private set; }
 
         public int CategoryId { get; private set; }
 
         public int RegionId { get; private set; }
+        #endregion
 
+        #region Constructors
+        private GetConfigurationNewsPortal()
+        {
+        }
+        #endregion
+
+        #region Methods
         public static Expression<Func<NewsPortal, GetConfigurationNewsPortal>> GetProjection(TimeSpan maxAgeOfNewNewsPortal)
         {
             var newNewsPortalMinDate = DateTime.UtcNow - maxAgeOfNewNewsPortal;
@@ -40,17 +48,6 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
                 RegionId = newsPortal.RegionId
             };
         }
-        #endregion
-
-        #region Constructors
-        private GetConfigurationNewsPortal()
-        {
-            Name = null!;
-            IconUrl = null!;
-        }
-        #endregion
-
-        #region Methods
         #endregion
     }
 }

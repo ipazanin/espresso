@@ -20,6 +20,12 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
         public string IconUrl { get; private set; } = "";
         #endregion
 
+        #region Constructors
+        private GetCategoryArticlesNewsPortal()
+        {
+        }
+        #endregion
+
         #region Methods
         public static Expression<Func<NewsPortal, GetCategoryArticlesNewsPortal>> GetProjection()
         {

@@ -15,16 +15,14 @@ namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals_1_3
         /// <summary>
         /// News Portal Name
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; private set; } = "";
 
-        public string IconUrl { get; private set; }
+        public string IconUrl { get; private set; } = "";
         #endregion
 
         #region Constructors
         private GetNewsPortalsNewsPortal_1_3()
         {
-            Name = null!;
-            IconUrl = null!;
         }
         #endregion
 

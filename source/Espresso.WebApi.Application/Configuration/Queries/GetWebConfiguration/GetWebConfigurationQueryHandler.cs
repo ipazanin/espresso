@@ -40,14 +40,15 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetWebConfiguration
             if (request.DeviceType.Equals(DeviceType.WebApp))
             {
                 var categoryDtosList = categoryDtos.ToList();
-                var sveVijesticategoryDto = new GetWebConfigurationCategory(
-                    id: -1,
-                    name: "Sve Vijesti",
-                    color: "",
-                    position: null,
-                    categoryType: Domain.Enums.CategoryEnums.CategoryType.General,
-                    url: "/"
-                );
+                var sveVijesticategoryDto = new GetWebConfigurationCategory
+                {
+                    Id = -1,
+                    Name = "Sve Vijesti",
+                    Color = "",
+                    Position = null,
+                    CategoryType = CategoryType.General,
+                    Url = "/"
+                };
 
                 categoryDtosList.Insert(0, sveVijesticategoryDto);
                 categoryDtos = categoryDtosList;
@@ -57,10 +58,11 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetWebConfiguration
                 .Where(newsPortal => !newsPortal.CategoryId.Equals((int)CategoryId.Local))
                 .Select(newsPortal => newsPortal.Id);
 
-            var response = new GetWebConfigurationQueryResponse(
-                categories: categoryDtos,
-                newsPortalIds: newsPortalIds
-            );
+            var response = new GetWebConfigurationQueryResponse
+            {
+                Categories = categoryDtos,
+                NewsPortalIds = newsPortalIds
+            };
 
             return Task.FromResult(result: response);
         }

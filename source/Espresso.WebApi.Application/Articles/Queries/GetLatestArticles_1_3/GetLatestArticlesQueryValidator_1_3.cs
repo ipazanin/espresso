@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
+namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_3
 {
-    public class GetLatestArticleQueryValidator : AbstractValidator<GetLatestArticlesQuery>
+    public class GetLatestArticlesQueryValidator_1_3 : AbstractValidator<GetLatestArticlesQuery_1_3>
     {
-        public GetLatestArticleQueryValidator()
+        public GetLatestArticlesQueryValidator_1_3()
         {
             _ = RuleFor(query => query.Take).GreaterThan(0).LessThan(100);
             _ = RuleFor(query => query.Skip).GreaterThanOrEqualTo(0);

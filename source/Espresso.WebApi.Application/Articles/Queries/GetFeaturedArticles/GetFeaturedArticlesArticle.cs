@@ -13,42 +13,48 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
         /// <summary>
         /// ID created by app
         /// </summary>
-        public Guid Id { get; init; }
+        public Guid Id { get; private set; }
 
         /// <summary>
         /// Article Url provided by RSS Feed
         /// </summary>
-        public string Url { get; init; } = "";
+        public string Url { get; private set; } = "";
 
         /// <summary>
         /// Article Url provided by RSS Feed
         /// </summary>
-        public string WebUrl { get; init; } = "";
+        public string WebUrl { get; private set; } = "";
 
         /// <summary>
         /// Article Title Parsed from RSS Feed
         /// </summary>
-        public string Title { get; init; } = "";
+        public string Title { get; private set; } = "";
 
         /// <summary>
         /// Image URL parsed from src attribute of first img element or second rss feed link, first is 
         /// </summary>
-        public string? ImageUrl { get; init; }
+        public string? ImageUrl { get; private set; }
 
         /// <summary>
         /// Article Publish time provided by RSS Feed
         /// </summary>
-        public string PublishDateTime { get; init; } = "";
+        public string PublishDateTime { get; private set; } = "";
 
         /// <summary>
         /// News Portal
         /// </summary>
-        public GetFeaturedArticlesNewsPortal? NewsPortal { get; init; }
+        public GetFeaturedArticlesNewsPortal? NewsPortal { get; private set; }
 
         /// <summary>
         /// List Of Categories article belongs to
         /// </summary>
-        public IEnumerable<GetFeaturedArticlesCategory> Categories { get; init; } = new List<GetFeaturedArticlesCategory>();
+        public IEnumerable<GetFeaturedArticlesCategory> Categories { get; private set; } = new List<GetFeaturedArticlesCategory>();
+        #endregion
+
+        #region Constructors
+        private GetFeaturedArticlesArticle()
+        {
+        }
         #endregion
 
         #region Methods

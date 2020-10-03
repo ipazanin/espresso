@@ -7,7 +7,7 @@ using Espresso.Domain.Enums.CategoryEnums;
 
 namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
 {
-    public class GetConfigurationCategoryWithNewsPortals
+    public record GetConfigurationCategoryWithNewsPortals
     {
         #region Properties
         /// <summary>
@@ -18,9 +18,9 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
         /// <summary>
         /// Category Name
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; private set; } = "";
 
-        public string Color { get; private set; }
+        public string Color { get; private set; } = "";
 
         public int? Position { get; private set; }
 
@@ -32,8 +32,6 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
         #region Constructors
         private GetConfigurationCategoryWithNewsPortals()
         {
-            Name = null!;
-            Color = null!;
         }
         #endregion
 

@@ -5,52 +5,26 @@ using Espresso.Domain.Enums.CategoryEnums;
 
 namespace Espresso.WebApi.Application.Configuration.Queries.GetWebConfiguration
 {
-    public class GetWebConfigurationCategory
+    public record GetWebConfigurationCategory
     {
         #region Properties
         /// <summary>
         /// Category ID
         /// </summary>
-        public int Id { get; private set; }
+        public int Id { get; init; }
 
         /// <summary>
         /// Category Name
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; init; } = "";
 
-        public string Color { get; private set; }
+        public string Color { get; init; } = "";
 
-        public int? Position { get; private set; }
+        public int? Position { get; init; }
 
-        public CategoryType CategoryType { get; private set; }
+        public CategoryType CategoryType { get; init; }
 
-        public string Url { get; private set; }
-        #endregion
-
-        #region Constructors
-        private GetWebConfigurationCategory()
-        {
-            Name = null!;
-            Color = null!;
-            Url = null!;
-        }
-
-        public GetWebConfigurationCategory(
-            int id,
-            string name,
-            string color,
-            int? position,
-            CategoryType categoryType,
-            string url
-        )
-        {
-            Id = id;
-            Name = name;
-            Color = color;
-            Position = position;
-            CategoryType = categoryType;
-            Url = url;
-        }
+        public string Url { get; init; } = "";
         #endregion
 
         #region Methods

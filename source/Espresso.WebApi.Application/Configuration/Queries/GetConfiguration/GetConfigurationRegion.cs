@@ -6,14 +6,14 @@ using Espresso.Domain.Entities;
 
 namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
 {
-    public class GetConfigurationRegion
+    public record GetConfigurationRegion
     {
         #region Properties
         public int Id { get; private set; }
 
-        public string Name { get; private set; }
+        public string Name { get; private set; } = "";
 
-        public string Subtitle { get; private set; }
+        public string Subtitle { get; private set; } = "";
 
         public IEnumerable<GetConfigurationNewsPortal> NewsPortals { get; private set; } = new List<GetConfigurationNewsPortal>();
         #endregion
@@ -21,8 +21,6 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
         #region Constructors
         private GetConfigurationRegion()
         {
-            Name = null!;
-            Subtitle = null!;
         }
         #endregion
 

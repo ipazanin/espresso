@@ -19,13 +19,13 @@ namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals
         /// <summary>
         /// News Portal Name
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; private set; } = "";
 
-        public string IconUrl { get; private set; }
+        public string IconUrl { get; private set; } = "";
 
-        public GetNewsPortalsCategory Category { get; private set; }
+        public GetNewsPortalsCategory Category { get; private set; } = null!;
 
-        public GetNewsPortalsRegion Region { get; private set; }
+        public GetNewsPortalsRegion Region { get; private set; } = null!;
 
         public IEnumerable<GetNewsPortalsRssFeed> RssFeeds { get; private set; } = new List<GetNewsPortalsRssFeed>();
         #endregion
@@ -33,10 +33,6 @@ namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals
         #region Constructors
         private GetNewsPortalsNewsPortal()
         {
-            Name = null!;
-            IconUrl = null!;
-            Category = null!;
-            Region = null!;
         }
         #endregion
 

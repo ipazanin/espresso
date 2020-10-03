@@ -9,16 +9,14 @@ namespace Espresso.Application.NewsPortals
         #region Properties
         public int Id { get; private set; }
 
-        public string Name { get; private set; }
+        public string Name { get; private set; } = "";
 
-        public string Subtitle { get; private set; }
+        public string Subtitle { get; private set; } = "";
         #endregion
 
         #region Constructors
         private GetNewsPortalsRegion()
         {
-            Name = null!;
-            Subtitle = null!;
         }
         #endregion
 

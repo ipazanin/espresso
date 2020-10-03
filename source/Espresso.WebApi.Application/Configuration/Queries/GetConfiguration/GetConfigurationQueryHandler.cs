@@ -66,11 +66,12 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
                         .Compile()
                 );
 
-            var response = new GetConfigurationQueryResponse(
-                categoriesWithNewsPortals: categoriesWithNewsPortals,
-                categories: categoryDtos,
-                regions: regionGroupedNewsPortals
-            );
+            var response = new GetConfigurationQueryResponse
+            {
+                CategoriesWithNewsPortals = categoriesWithNewsPortals,
+                Categories = categoryDtos,
+                Regions = regionGroupedNewsPortals
+            };
 
             return Task.FromResult(result: response);
         }

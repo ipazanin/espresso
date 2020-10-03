@@ -13,42 +13,48 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles
         /// <summary>
         /// ID created by app
         /// </summary>
-        public Guid Id { get; init; }
+        public Guid Id { get; private set; }
 
         /// <summary>
         /// Article Url provided by RSS Feed
         /// </summary>
-        public string Url { get; init; } = "";
+        public string Url { get; private set; } = "";
 
         /// <summary>
         /// Article Title Parsed from RSS Feed
         /// </summary>
-        public string Title { get; init; } = "";
+        public string Title { get; private set; } = "";
 
         /// <summary>
         /// Image URL parsed from src attribute of first img element or second rss feed link, first is 
         /// </summary>
-        public string? ImageUrl { get; init; }
+        public string? ImageUrl { get; private set; }
 
         /// <summary>
         /// Article Publish time provided by RSS Feed
         /// </summary>
-        public string PublishDateTime { get; init; } = "";
+        public string PublishDateTime { get; private set; } = "";
 
         /// <summary>
         /// Trending Score
         /// </summary>
-        public int TrendingScore { get; init; }
+        public int TrendingScore { get; private set; }
 
         /// <summary>
         /// News Portal
         /// </summary>
-        public GetTrendingArticlesNewsPortal? NewsPortal { get; init; }
+        public GetTrendingArticlesNewsPortal? NewsPortal { get; private set; }
 
         /// <summary>
         /// List Of Categories article belongs to
         /// </summary>
-        public IEnumerable<GetTrendingArticlesCategory> Categories { get; init; } = new List<GetTrendingArticlesCategory>();
+        public IEnumerable<GetTrendingArticlesCategory> Categories { get; private set; } = new List<GetTrendingArticlesCategory>();
+        #endregion
+
+        #region Constructors
+        private GetTrendingArticlesArticle()
+        {
+        }
         #endregion
 
         #region Methods
