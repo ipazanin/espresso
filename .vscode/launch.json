@@ -9,7 +9,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build web-api",
-      "program": "${workspaceFolder}/source/Espresso.WebApi/bin/Debug/netcoreapp3.1/Espresso.WebApi.dll",
+      "program": "${workspaceFolder}/source/Espresso.WebApi/bin/Debug/net5.0/Espresso.WebApi.dll",
       "args": ["--urls", "http://localhost:8000/", "watch"],
       "cwd": "${workspaceFolder}/source/Espresso.WebApi",
       "stopAtEntry": false,
@@ -28,14 +28,15 @@
         "moduleLoad": false,
         "exceptions": false,
         "browserStdOut": false
-      }
+      },
+      "requireExactSource": false
     },
     {
       "name": "Parser",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build parser",
-      "program": "${workspaceFolder}/source/Espresso.ParserDeleter/bin/Debug/netcoreapp3.1/Espresso.ParserDeleter.dll",
+      "program": "${workspaceFolder}/source/Espresso.ParserDeleter/bin/Debug/net5.0/Espresso.ParserDeleter.dll",
       "args": [],
       "cwd": "${workspaceFolder}/source/Espresso.ParserDeleter",
       "stopAtEntry": false,
