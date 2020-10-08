@@ -1,6 +1,4 @@
 ﻿using Espresso.Application.Infrastructure.MediatorInfrastructure;
-using Espresso.Common.Enums;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
 
 namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3
 {

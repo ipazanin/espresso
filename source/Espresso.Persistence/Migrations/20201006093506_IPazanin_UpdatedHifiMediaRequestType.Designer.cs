@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20201006093506_IPazanin_UpdatedHifiMediaRequestType")]
+    partial class IPazanin_UpdatedHifiMediaRequestType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -841,36 +843,6 @@ namespace Espresso.Persistence.Migrations
                             CreatedAt = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/GeekHr.png",
                             Name = "Geek.hr",
-                            RegionId = 1
-                        },
-                        new
-                        {
-                            Id = 118,
-                            BaseUrl = "https://vizkultura.hr",
-                            CategoryId = 9,
-                            CreatedAt = new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/VizKultura.png",
-                            Name = "vizkultura.hr",
-                            RegionId = 1
-                        },
-                        new
-                        {
-                            Id = 119,
-                            BaseUrl = "https://zivotumjetnosti.ipu.hr",
-                            CategoryId = 9,
-                            CreatedAt = new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/ZivotUmjetnosti.png",
-                            Name = "Život umjetnosti",
-                            RegionId = 1
-                        },
-                        new
-                        {
-                            Id = 120,
-                            BaseUrl = "https://svijetkulture.com",
-                            CategoryId = 9,
-                            CreatedAt = new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/SvijetKulture.png",
-                            Name = "SVIJET KULTURE",
                             RegionId = 1
                         },
                         new
@@ -2334,30 +2306,6 @@ namespace Espresso.Persistence.Migrations
                             NewsPortalId = 117,
                             RequestType = 1,
                             Url = "https://geek.hr/feed"
-                        },
-                        new
-                        {
-                            Id = 163,
-                            CategoryId = 9,
-                            NewsPortalId = 118,
-                            RequestType = 1,
-                            Url = "https://vizkultura.hr/feed"
-                        },
-                        new
-                        {
-                            Id = 164,
-                            CategoryId = 9,
-                            NewsPortalId = 119,
-                            RequestType = 1,
-                            Url = "https://zivotumjetnosti.ipu.hr/feed"
-                        },
-                        new
-                        {
-                            Id = 165,
-                            CategoryId = 9,
-                            NewsPortalId = 120,
-                            RequestType = 1,
-                            Url = "https://svijetkulture.com/feed"
                         },
                         new
                         {
@@ -4049,8 +3997,10 @@ namespace Espresso.Persistence.Migrations
                                 .HasMaxLength(300)
                                 .HasColumnType("nvarchar(300)");
 
-                            b1.Property<bool?>("ShouldImageUrlBeWebScraped")
-                                .HasColumnType("bit");
+                            b1.Property<bool>("ShouldImageUrlBeWebScraped")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("bit")
+                                .HasDefaultValue(false);
 
                             b1.HasKey("RssFeedId");
 
@@ -4531,29 +4481,12 @@ namespace Espresso.Persistence.Migrations
                                 new
                                 {
                                     RssFeedId = 161,
-                                    ImgElementXPath = "//figure[contains(@class, 'post-gallery')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ImgElementXPath = "//figure[contains(@class, 'post-gallery')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 162,
-                                    ImgElementXPath = "//div[contains(@class, 'zox-post-main')]//img"
-                                },
-                                new
-                                {
-                                    RssFeedId = 163,
-                                    ImgElementXPath = "//div[contains(@class, 'content')]//img"
-                                },
-                                new
-                                {
-                                    RssFeedId = 164,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
-                                },
-                                new
-                                {
-                                    RssFeedId = 165,
-                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                    ImgElementXPath = "//figure[contains(@class, 'zox-post-main')]//img"
                                 },
                                 new
                                 {
@@ -4810,24 +4743,6 @@ namespace Espresso.Persistence.Migrations
                                     RssFeedId = 162,
                                     CurrentSkip = 0,
                                     NumberOfSkips = 5
-                                },
-                                new
-                                {
-                                    RssFeedId = 163,
-                                    CurrentSkip = 0,
-                                    NumberOfSkips = 7
-                                },
-                                new
-                                {
-                                    RssFeedId = 164,
-                                    CurrentSkip = 0,
-                                    NumberOfSkips = 27
-                                },
-                                new
-                                {
-                                    RssFeedId = 165,
-                                    CurrentSkip = 0,
-                                    NumberOfSkips = 7
                                 },
                                 new
                                 {

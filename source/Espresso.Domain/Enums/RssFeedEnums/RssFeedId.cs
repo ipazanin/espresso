@@ -157,5 +157,12 @@
         VozimHr = 156,
         AutoMotorSport = 157,
         Hoopster = 158,
+        PrvaHnl = 159,
+        AlJazeera = 160,
+        HifiMedia = 161,
+        GeekHr = 162,
+        VizKultura = 163,
+        ZivotUmjetnosti = 164,
+        SvijetKulture = 165,
     }
 }

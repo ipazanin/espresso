@@ -501,6 +501,76 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Sport,
                     regionId: (int)RegionId.Global
                 ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.PrvaHnl,
+                    name: NewsPortalId.PrvaHnl.GetDisplayName(),
+                    baseUrl: "http://prvahnl.hr",
+                    iconUrl: $"Icons/{NewsPortalId.PrvaHnl}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 10, 6, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Sport,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.AlJazeera,
+                    name: NewsPortalId.AlJazeera.GetDisplayName(),
+                    baseUrl: "http://balkans.aljazeera.net",
+                    iconUrl: $"Icons/{NewsPortalId.AlJazeera}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 10, 6, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Vijesti,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.HifiMedia,
+                    name: NewsPortalId.HifiMedia.GetDisplayName(),
+                    baseUrl: "https://www.hifimedia.hr",
+                    iconUrl: $"Icons/{NewsPortalId.HifiMedia}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 10, 6, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Tech,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.GeekHr,
+                    name: NewsPortalId.GeekHr.GetDisplayName(),
+                    baseUrl: "https://geek.hr",
+                    iconUrl: $"Icons/{NewsPortalId.GeekHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 10, 6, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Tech,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.VizKultura,
+                    name: NewsPortalId.VizKultura.GetDisplayName(),
+                    baseUrl: "https://vizkultura.hr",
+                    iconUrl: $"Icons/{NewsPortalId.VizKultura}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 10, 8, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Kultura,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.ZivotUmjetnosti,
+                    name: NewsPortalId.ZivotUmjetnosti.GetDisplayName(),
+                    baseUrl: "https://zivotumjetnosti.ipu.hr",
+                    iconUrl: $"Icons/{NewsPortalId.ZivotUmjetnosti}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 10, 8, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Kultura,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.SvijetKulture,
+                    name: NewsPortalId.SvijetKulture.GetDisplayName(),
+                    baseUrl: "https://svijetkulture.com",
+                    iconUrl: $"Icons/{NewsPortalId.SvijetKulture}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 10, 8, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Kultura,
+                    regionId: (int)RegionId.Global
+                ),
             };
 
             builder.HasData(newsPortals);

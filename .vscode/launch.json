@@ -10,7 +10,7 @@
       "request": "launch",
       "preLaunchTask": "build web-api",
       "program": "${workspaceFolder}/source/Espresso.WebApi/bin/Debug/net5.0/Espresso.WebApi.dll",
-      "args": ["--urls", "http://localhost:8000/", "watch"],
+      "args": ["--urls", "http://localhost:8000/"],
       "cwd": "${workspaceFolder}/source/Espresso.WebApi",
       "stopAtEntry": false,
       "serverReadyAction": {
@@ -37,7 +37,7 @@
       "request": "launch",
       "preLaunchTask": "build parser",
       "program": "${workspaceFolder}/source/Espresso.ParserDeleter/bin/Debug/net5.0/Espresso.ParserDeleter.dll",
-      "args": [],
+      "args": ["--urls", "http://localhost:9000/"],
       "cwd": "${workspaceFolder}/source/Espresso.ParserDeleter",
       "stopAtEntry": false,
       "serverReadyAction": {

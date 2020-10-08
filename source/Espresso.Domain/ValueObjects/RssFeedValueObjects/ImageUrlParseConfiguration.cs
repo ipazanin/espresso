@@ -15,7 +15,7 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         public const string ImgElementXPathDefaultValue = "";
         public const int ImgElementXPathHasMaxLength = 300;
 
-        public const bool ShouldImageUrlBeWebScrapedDefaultValue = false;
+        public static bool? ShouldImageUrlBeWebScrapedDefaultValue => null;
 
         public const ImageUrlWebScrapeType ImageUrlWebScrapeTypeDefaultValue = ImageUrlWebScrapeType.SrcAttribute;
 
@@ -28,7 +28,7 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
 
         public string ImgElementXPath { get; private set; }
 
-        public bool ShouldImageUrlBeWebScraped { get; private set; }
+        public bool? ShouldImageUrlBeWebScraped { get; private set; }
 
         public ImageUrlWebScrapeType ImageUrlWebScrapeType { get; private set; }
 
