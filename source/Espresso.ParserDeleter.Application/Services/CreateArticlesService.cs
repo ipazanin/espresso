@@ -277,7 +277,10 @@ namespace Espresso.ParserDeleter.Application.Services
                     break;
             }
 
-            if (string.IsNullOrEmpty(imageUrl) || rssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped)
+            var shouldImageBeWebScraped = rssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped is null ?
+                string.IsNullOrEmpty(imageUrl) : rssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped.Value;
+
+            if (shouldImageBeWebScraped)
             {
                 imageUrl = await _webScrapingService.GetSrcAttributeFromElementDefinedByXPath(
                     articleUrl: webUrl,

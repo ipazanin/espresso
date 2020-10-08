@@ -226,5 +226,19 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         AutoMotorSport = 112,
         [Display(Name = "Hoopster.hr")]
         Hoopster = 113,
+        [Display(Name = "Hrvatski Telekom Prva liga")]
+        PrvaHnl = 114,
+        [Display(Name = "Al Jazeera Balkans")]
+        AlJazeera = 115,
+        [Display(Name = "hifimedia")]
+        HifiMedia = 116,
+        [Display(Name = "Geek.hr")]
+        GeekHr = 117,
+        [Display(Name = "vizkultura.hr")]
+        VizKultura = 118,
+        [Display(Name = "Život umjetnosti")]
+        ZivotUmjetnosti = 119,
+        [Display(Name = "SVIJET KULTURE")]
+        SvijetKulture = 120,
     }
 }

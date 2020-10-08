@@ -51,8 +51,12 @@ namespace Espresso.Persistence.Configuration
             #endregion
 
             #region Data Seed
-            RssFeedDataSeed.Seed(builder: builder);
-            LocalRssFeedDataSeed.Seed(builder: builder);
+            RssFeedDataSeed.Seed(builder);
+            RssFeedAmpConfigurationSeed.Seed(builder);
+            RssFeedSkipParseConfigurationSeed.Seed(builder);
+            RssFeedCategoryParseConfigurationSeed.Seed(builder);
+            RssFeedImageUrlParseConfigurationSeed.Seed(builder);
+            LocalRssFeedDataSeed.Seed(builder);
             #endregion
         }
 
