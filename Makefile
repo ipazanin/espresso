@@ -158,7 +158,7 @@ install:
 build-frontend:
 	cd $(FRONTEND_DIRECTORY); \
 	REACT_APP_ENVIRONMENT=production \
-	react-scripts build
+	./node_modules/.bin/react-scripts build
 
 lint:
 	cd $(FRONTEND_DIRECTORY); \
