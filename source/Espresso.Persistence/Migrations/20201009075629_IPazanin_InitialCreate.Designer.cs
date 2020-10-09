@@ -10,39 +10,39 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    [Migration("20200922092236_IPazanin_AddedHrtRssFeedContentModifiers")]
-    partial class IPazanin_AddedHrtRssFeedContentModifiers
+    [Migration("20201009075629_IPazanin_InitialCreate")]
+    partial class IPazanin_InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.8")
+                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "5.0.0-rc.1.20451.13");
 
             modelBuilder.Entity("Espresso.Domain.Entities.ApplicationDownload", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("DownloadedTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MobileAppVersion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("MobileDeviceType")
                         .HasColumnType("int");
 
                     b.Property<string>("WebApiVersion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.HasKey("Id");
 
@@ -85,13 +85,13 @@ namespace Espresso.Persistence.Migrations
 
                     b.Property<string>("Summary")
                         .IsRequired()
-                        .HasColumnType("nvarchar(2000)")
-                        .HasMaxLength(2000);
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(500)")
-                        .HasMaxLength(500);
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<decimal>("TrendingScore")
                         .HasColumnType("decimal(18,2)");
@@ -101,13 +101,13 @@ namespace Espresso.Persistence.Migrations
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasColumnType("nvarchar(500)")
-                        .HasMaxLength(500);
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("WebUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(500)")
-                        .HasMaxLength(500);
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 
@@ -146,24 +146,24 @@ namespace Espresso.Persistence.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("CategoryType")
                         .HasColumnType("int");
 
                     b.Property<string>("Color")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("KeyWordsRegexPattern")
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int?>("Position")
                         .HasColumnType("int");
@@ -173,8 +173,8 @@ namespace Espresso.Persistence.Migrations
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -287,12 +287,12 @@ namespace Espresso.Persistence.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("BaseUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -302,16 +302,16 @@ namespace Espresso.Persistence.Migrations
 
                     b.Property<string>("IconUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool?>("IsNewOverride")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("RegionId")
                         .HasColumnType("int");
@@ -723,6 +723,156 @@ namespace Espresso.Persistence.Migrations
                             CreatedAt = new DateTime(2020, 9, 21, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/IctBusiness.png",
                             Name = "ICT Business",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 106,
+                            BaseUrl = "https://www.hcl.hr",
+                            CategoryId = 5,
+                            CreatedAt = new DateTime(2020, 9, 23, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/Hcl.png",
+                            Name = "HCL Gaming Portal",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 107,
+                            BaseUrl = "https://profitiraj.hr",
+                            CategoryId = 7,
+                            CreatedAt = new DateTime(2020, 9, 23, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/ProfitirajHr.png",
+                            Name = "Profitiraj.hr",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 108,
+                            BaseUrl = "https://www.motori.hr/",
+                            CategoryId = 8,
+                            CreatedAt = new DateTime(2020, 9, 24, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/MotoriHr.png",
+                            Name = "motori.hr",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 109,
+                            BaseUrl = "https://autoportal.hr",
+                            CategoryId = 8,
+                            CreatedAt = new DateTime(2020, 9, 24, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/AutoportalHr.png",
+                            Name = "Autoportal.hr",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 110,
+                            BaseUrl = "https://www.autopress.hr",
+                            CategoryId = 8,
+                            CreatedAt = new DateTime(2020, 9, 24, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/AutopressHr.png",
+                            Name = "AutopressHR",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 111,
+                            BaseUrl = "https://vozim.hr",
+                            CategoryId = 8,
+                            CreatedAt = new DateTime(2020, 9, 24, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/VozimHr.png",
+                            Name = "Vozim.HR",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 112,
+                            BaseUrl = "https://ams.hr",
+                            CategoryId = 8,
+                            CreatedAt = new DateTime(2020, 9, 24, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/AutoMotorSport.png",
+                            Name = "AUTO MOTOR I SPORT",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 113,
+                            BaseUrl = "http://hoopster.hr",
+                            CategoryId = 2,
+                            CreatedAt = new DateTime(2020, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/Hoopster.png",
+                            Name = "Hoopster.hr",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 114,
+                            BaseUrl = "http://prvahnl.hr",
+                            CategoryId = 2,
+                            CreatedAt = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/PrvaHnl.png",
+                            Name = "Hrvatski Telekom Prva liga",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 115,
+                            BaseUrl = "http://balkans.aljazeera.net",
+                            CategoryId = 1,
+                            CreatedAt = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/AlJazeera.png",
+                            Name = "Al Jazeera Balkans",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 116,
+                            BaseUrl = "https://www.hifimedia.hr",
+                            CategoryId = 5,
+                            CreatedAt = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/HifiMedia.png",
+                            Name = "hifimedia",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 117,
+                            BaseUrl = "https://geek.hr",
+                            CategoryId = 5,
+                            CreatedAt = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/GeekHr.png",
+                            Name = "Geek.hr",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 118,
+                            BaseUrl = "https://vizkultura.hr",
+                            CategoryId = 9,
+                            CreatedAt = new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/VizKultura.png",
+                            Name = "vizkultura.hr",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 119,
+                            BaseUrl = "https://zivotumjetnosti.ipu.hr",
+                            CategoryId = 9,
+                            CreatedAt = new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/ZivotUmjetnosti.png",
+                            Name = "Život umjetnosti",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 120,
+                            BaseUrl = "https://svijetkulture.com",
+                            CategoryId = 9,
+                            CreatedAt = new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/SvijetKulture.png",
+                            Name = "SVIJET KULTURE",
                             RegionId = 1
                         },
                         new
@@ -1305,34 +1455,34 @@ namespace Espresso.Persistence.Migrations
 
                     b.Property<string>("ArticleUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasMaxLength(5000);
+                        .HasMaxLength(5000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("InternalName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<bool>("IsSoundEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("Message")
                         .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("Topic")
                         .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.HasKey("Id");
 
@@ -1344,17 +1494,17 @@ namespace Espresso.Persistence.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Subtitle")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -1410,7 +1560,7 @@ namespace Espresso.Persistence.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -1423,8 +1573,8 @@ namespace Espresso.Persistence.Migrations
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasColumnType("nvarchar(300)")
-                        .HasMaxLength(300);
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.HasKey("Id");
 
@@ -2093,6 +2243,126 @@ namespace Espresso.Persistence.Migrations
                         },
                         new
                         {
+                            Id = 151,
+                            CategoryId = 5,
+                            NewsPortalId = 106,
+                            RequestType = 1,
+                            Url = "https://www.hcl.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 152,
+                            CategoryId = 7,
+                            NewsPortalId = 107,
+                            RequestType = 1,
+                            Url = "https://profitiraj.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 153,
+                            CategoryId = 8,
+                            NewsPortalId = 108,
+                            RequestType = 1,
+                            Url = "https://www.motori.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 154,
+                            CategoryId = 8,
+                            NewsPortalId = 109,
+                            RequestType = 1,
+                            Url = "https://autoportal.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 155,
+                            CategoryId = 8,
+                            NewsPortalId = 110,
+                            RequestType = 1,
+                            Url = "https://www.autopress.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 156,
+                            CategoryId = 8,
+                            NewsPortalId = 111,
+                            RequestType = 1,
+                            Url = "https://vozim.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 157,
+                            CategoryId = 8,
+                            NewsPortalId = 112,
+                            RequestType = 1,
+                            Url = "https://ams.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 158,
+                            CategoryId = 2,
+                            NewsPortalId = 113,
+                            RequestType = 1,
+                            Url = "http://hoopster.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 159,
+                            CategoryId = 2,
+                            NewsPortalId = 114,
+                            RequestType = 1,
+                            Url = "http://prvahnl.hr/rss"
+                        },
+                        new
+                        {
+                            Id = 160,
+                            CategoryId = 1,
+                            NewsPortalId = 115,
+                            RequestType = 1,
+                            Url = "http://balkans.aljazeera.net/mobile/articles"
+                        },
+                        new
+                        {
+                            Id = 161,
+                            CategoryId = 5,
+                            NewsPortalId = 116,
+                            RequestType = 2,
+                            Url = "https://www.hifimedia.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 162,
+                            CategoryId = 5,
+                            NewsPortalId = 117,
+                            RequestType = 1,
+                            Url = "https://geek.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 163,
+                            CategoryId = 9,
+                            NewsPortalId = 118,
+                            RequestType = 1,
+                            Url = "https://vizkultura.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 164,
+                            CategoryId = 9,
+                            NewsPortalId = 119,
+                            RequestType = 1,
+                            Url = "https://zivotumjetnosti.ipu.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 165,
+                            CategoryId = 9,
+                            NewsPortalId = 120,
+                            RequestType = 1,
+                            Url = "https://svijetkulture.com/feed"
+                        },
+                        new
+                        {
                             Id = 83,
                             CategoryId = 12,
                             NewsPortalId = 37,
@@ -2554,7 +2824,7 @@ namespace Espresso.Persistence.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -2564,8 +2834,8 @@ namespace Espresso.Persistence.Migrations
 
                     b.Property<string>("UrlRegex")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("UrlSegmentIndex")
                         .HasColumnType("int");
@@ -3306,20 +3576,20 @@ namespace Espresso.Persistence.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ReplacementValue")
                         .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<int>("RssFeedId")
                         .HasColumnType("int");
 
                     b.Property<string>("SourceValue")
                         .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.HasKey("Id");
 
@@ -3483,6 +3753,10 @@ namespace Espresso.Persistence.Migrations
                         .HasForeignKey("RssFeedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("NewsPortal");
+
+                    b.Navigation("RssFeed");
                 });
 
             modelBuilder.Entity("Espresso.Domain.Entities.ArticleCategory", b =>
@@ -3498,6 +3772,10 @@ namespace Espresso.Persistence.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Espresso.Domain.Entities.NewsPortal", b =>
@@ -3513,6 +3791,10 @@ namespace Espresso.Persistence.Migrations
                         .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Region");
                 });
 
             modelBuilder.Entity("Espresso.Domain.Entities.RssFeed", b =>
@@ -3534,14 +3816,14 @@ namespace Espresso.Persistence.Migrations
                             b1.Property<int>("RssFeedId")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                                .UseIdentityColumn();
 
                             b1.Property<bool>("HasAmpArticles")
                                 .HasColumnType("bit");
 
                             b1.Property<string>("TemplateUrl")
-                                .HasColumnType("nvarchar(300)")
-                                .HasMaxLength(300);
+                                .HasMaxLength(300)
+                                .HasColumnType("nvarchar(300)");
 
                             b1.HasKey("RssFeedId");
 
@@ -3654,7 +3936,7 @@ namespace Espresso.Persistence.Migrations
                             b1.Property<int>("RssFeedId")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                                .UseIdentityColumn();
 
                             b1.Property<int>("CategoryParseStrategy")
                                 .ValueGeneratedOnAdd()
@@ -3746,7 +4028,7 @@ namespace Espresso.Persistence.Migrations
                             b1.Property<int>("RssFeedId")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                                .UseIdentityColumn();
 
                             b1.Property<int>("ImageUrlParseStrategy")
                                 .ValueGeneratedOnAdd()
@@ -3761,20 +4043,16 @@ namespace Espresso.Persistence.Migrations
                             b1.Property<string>("ImgElementXPath")
                                 .IsRequired()
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("nvarchar(300)")
                                 .HasMaxLength(300)
+                                .HasColumnType("nvarchar(300)")
                                 .HasDefaultValue("");
 
                             b1.Property<string>("JsonWebScrapePropertyNames")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("nvarchar(300)")
                                 .HasMaxLength(300)
-                                .HasDefaultValue(null);
+                                .HasColumnType("nvarchar(300)");
 
-                            b1.Property<bool>("ShouldImageUrlBeWebScraped")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("bit")
-                                .HasDefaultValue(false);
+                            b1.Property<bool?>("ShouldImageUrlBeWebScraped")
+                                .HasColumnType("bit");
 
                             b1.HasKey("RssFeedId");
 
@@ -4203,6 +4481,84 @@ namespace Espresso.Persistence.Migrations
                                 },
                                 new
                                 {
+                                    RssFeedId = 151,
+                                    ImgElementXPath = "//div[contains(@class, 'article')]//img"
+                                },
+                                new
+                                {
+                                    RssFeedId = 152,
+                                    ImgElementXPath = "//div[contains(@class, 'site-content')]//img"
+                                },
+                                new
+                                {
+                                    RssFeedId = 153,
+                                    ImageUrlParseStrategy = 4,
+                                    ImgElementXPath = "//div[contains(@class, 'content')]//img"
+                                },
+                                new
+                                {
+                                    RssFeedId = 154,
+                                    ImgElementXPath = "//div[contains(@class, 'td-post-content')]//img"
+                                },
+                                new
+                                {
+                                    RssFeedId = 155,
+                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                },
+                                new
+                                {
+                                    RssFeedId = 156,
+                                    ImgElementXPath = "//div[contains(@class, 'intro-image-over')]//img"
+                                },
+                                new
+                                {
+                                    RssFeedId = 157,
+                                    ImgElementXPath = "//main[contains(@class, 'main-content')]//img"
+                                },
+                                new
+                                {
+                                    RssFeedId = 158,
+                                    ImgElementXPath = "//div[contains(@class, 'post-img')]//img"
+                                },
+                                new
+                                {
+                                    RssFeedId = 159,
+                                    ImgElementXPath = "//div[contains(@class, 'news')]//img"
+                                },
+                                new
+                                {
+                                    RssFeedId = 160,
+                                    ImgElementXPath = "//div[contains(@class, 'field-items')]//img"
+                                },
+                                new
+                                {
+                                    RssFeedId = 161,
+                                    ImgElementXPath = "//figure[contains(@class, 'post-gallery')]//img",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 162,
+                                    ImgElementXPath = "//div[contains(@class, 'zox-post-main')]//img"
+                                },
+                                new
+                                {
+                                    RssFeedId = 163,
+                                    ImgElementXPath = "//div[contains(@class, 'content')]//img"
+                                },
+                                new
+                                {
+                                    RssFeedId = 164,
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
+                                },
+                                new
+                                {
+                                    RssFeedId = 165,
+                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                },
+                                new
+                                {
                                     RssFeedId = 83,
                                     ImgElementXPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img"
                                 },
@@ -4219,7 +4575,7 @@ namespace Espresso.Persistence.Migrations
                             b1.Property<int>("RssFeedId")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                                .UseIdentityColumn();
 
                             b1.Property<int?>("CurrentSkip")
                                 .HasColumnType("int");
@@ -4369,18 +4725,6 @@ namespace Espresso.Persistence.Migrations
                                 },
                                 new
                                 {
-                                    RssFeedId = 111,
-                                    CurrentSkip = 0,
-                                    NumberOfSkips = 5
-                                },
-                                new
-                                {
-                                    RssFeedId = 112,
-                                    CurrentSkip = 0,
-                                    NumberOfSkips = 5
-                                },
-                                new
-                                {
                                     RssFeedId = 148,
                                     CurrentSkip = 0,
                                     NumberOfSkips = 5
@@ -4402,8 +4746,118 @@ namespace Espresso.Persistence.Migrations
                                     RssFeedId = 82,
                                     CurrentSkip = 0,
                                     NumberOfSkips = 6
+                                },
+                                new
+                                {
+                                    RssFeedId = 151,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 7
+                                },
+                                new
+                                {
+                                    RssFeedId = 152,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 11
+                                },
+                                new
+                                {
+                                    RssFeedId = 153,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 17
+                                },
+                                new
+                                {
+                                    RssFeedId = 154,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 3
+                                },
+                                new
+                                {
+                                    RssFeedId = 155,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 9
+                                },
+                                new
+                                {
+                                    RssFeedId = 156,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 8
+                                },
+                                new
+                                {
+                                    RssFeedId = 157,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 17
+                                },
+                                new
+                                {
+                                    RssFeedId = 158,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 19
+                                },
+                                new
+                                {
+                                    RssFeedId = 159,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 6
+                                },
+                                new
+                                {
+                                    RssFeedId = 161,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 7
+                                },
+                                new
+                                {
+                                    RssFeedId = 162,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 5
+                                },
+                                new
+                                {
+                                    RssFeedId = 163,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 7
+                                },
+                                new
+                                {
+                                    RssFeedId = 164,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 27
+                                },
+                                new
+                                {
+                                    RssFeedId = 165,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 7
+                                },
+                                new
+                                {
+                                    RssFeedId = 111,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 5
+                                },
+                                new
+                                {
+                                    RssFeedId = 112,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 5
                                 });
                         });
+
+                    b.Navigation("AmpConfiguration");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("CategoryParseConfiguration")
+                        .IsRequired();
+
+                    b.Navigation("ImageUrlParseConfiguration")
+                        .IsRequired();
+
+                    b.Navigation("NewsPortal");
+
+                    b.Navigation("SkipParseConfiguration");
                 });
 
             modelBuilder.Entity("Espresso.Domain.Entities.RssFeedCategory", b =>
@@ -4419,6 +4873,10 @@ namespace Espresso.Persistence.Migrations
                         .HasForeignKey("RssFeedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("RssFeed");
                 });
 
             modelBuilder.Entity("Espresso.Domain.Entities.RssFeedContentModifier", b =>
@@ -4428,6 +4886,43 @@ namespace Espresso.Persistence.Migrations
                         .HasForeignKey("RssFeedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("RssFeed");
+                });
+
+            modelBuilder.Entity("Espresso.Domain.Entities.Article", b =>
+                {
+                    b.Navigation("ArticleCategories");
+                });
+
+            modelBuilder.Entity("Espresso.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("ArticleCategories");
+
+                    b.Navigation("NewsPortals");
+
+                    b.Navigation("RssFeeds");
+                });
+
+            modelBuilder.Entity("Espresso.Domain.Entities.NewsPortal", b =>
+                {
+                    b.Navigation("Articles");
+
+                    b.Navigation("RssFeeds");
+                });
+
+            modelBuilder.Entity("Espresso.Domain.Entities.Region", b =>
+                {
+                    b.Navigation("NewsPortals");
+                });
+
+            modelBuilder.Entity("Espresso.Domain.Entities.RssFeed", b =>
+                {
+                    b.Navigation("Articles");
+
+                    b.Navigation("RssFeedCategories");
+
+                    b.Navigation("RssFeedContentModifiers");
                 });
 #pragma warning restore 612, 618
         }
