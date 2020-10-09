@@ -49,7 +49,7 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
                 Request<TResponse> baseType => baseType,
                 _ => throw new Exception($"Request:{typeof(TRequest).Name} does not implement Request abstract class!")
             };
-            var requestId = (int)(requestBase?.EventIdEnum ?? Event.Undefined);
+            var requestId = (int)Event.MediatorRequest;
             var requestName = typeof(TRequest).Name;
             var apiVersion = requestBase?.CurrentApiVersion ?? "";
             var targetedApiVersion = requestBase?.TargetedApiVersion ?? "";

@@ -54,7 +54,7 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
             };
 
             RequestName = typeof(TRequest).Name;
-            RequestId = (int)(requestBase?.EventIdEnum ?? Event.Undefined);
+            RequestId = (int)Event.MediatorRequest;
             RequestParameters = request?.ToString() ?? "";
             WebApiVersion = requestBase?.CurrentApiVersion ?? "";
             TargetedWebApiVersion = requestBase?.TargetedApiVersion ?? "";

@@ -15,8 +15,6 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
 
         public DeviceType DeviceType { get; init; }
 
-        public Event EventIdEnum { get; init; }
-
         public AppEnvironment AppEnvironment { get; init; }
         #endregion
     }
