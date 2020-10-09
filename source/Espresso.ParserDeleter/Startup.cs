@@ -117,11 +117,11 @@ namespace Espresso.ParserDeleter
                 cronJobConfiguration.AppEnvironment = _parserDeleterConfiguration.AppConfiguration.AppEnvironment;
                 cronJobConfiguration.Version = _parserDeleterConfiguration.AppConfiguration.Version;
             });
-            services.AddCronJob<ParserDeleterPerformanceCronJob>(cronJobConfiguration =>
+            services.AddCronJob<ParserDeleterReportCronJob>(cronJobConfiguration =>
             {
                 cronJobConfiguration.CronExpression = _parserDeleterConfiguration
                     .CronJobsConfiguration
-                    .ParserDeleterPerformanceCronExpression;
+                    .ParserDeleterReportCronExpression;
                 cronJobConfiguration.TimeZoneInfo = TimeZoneInfo.Utc;
                 cronJobConfiguration.AppEnvironment = _parserDeleterConfiguration.AppConfiguration.AppEnvironment;
                 cronJobConfiguration.Version = _parserDeleterConfiguration.AppConfiguration.Version;

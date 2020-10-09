@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -282,9 +281,39 @@ namespace Espresso.Application.Services
             foreach (var (name, count, duration) in data)
             {
                 textBuilder.Append(
-                    $"\t:label: {name}\n" +
-                    $"\t\t:chart_with_upwards_trend: Count: {count}\n" +
-                    $"\t\t:clock1: Duration: {duration}\n"
+                    $"{name}\n" +
+                    $"\t:chart_with_upwards_trend: Daily Count: {count}\n" +
+                    $"\t:clock1: Duration: {duration}\n\n"
+                );
+            }
+
+            return Log(
+                data: new SlackWebHookDto(
+                    userName: BackendStatisticsBotUsername,
+                    iconEmoji: BackendStatisticsBotIconEmoji,
+                    text: textBuilder.ToString(),
+                    channel: BackendStatisticsChannel
+                ),
+                appEnvironment: appEnvironment,
+                cancellationToken: cancellationToken
+            );
+        }
+
+        public Task LogTopArticles(
+            IEnumerable<(string title, int numberOfClicks, string newsPortalName, DateTime publishDateTime)> topArticles,
+            AppEnvironment appEnvironment,
+            CancellationToken cancellationToken
+        )
+        {
+            var textBuilder = new StringBuilder($"Top Articles:\n");
+
+            foreach (var (title, numberOfClicks, newsPortalName, publishDateTime) in topArticles)
+            {
+                textBuilder.Append(
+                    $"Title: {title}\n" +
+                    $"Number Of Clicks: {numberOfClicks}\n" +
+                    $"Source Name: {newsPortalName}\n" +
+                    $"Publish Date: {publishDateTime.ToShortDateString()}\n\n"
                 );
             }
 
@@ -303,10 +332,10 @@ namespace Espresso.Application.Services
 
         #region Private Methods
         private async Task Log(
-            SlackWebHookDto data,
-            AppEnvironment appEnvironment,
-            CancellationToken cancellationToken
-        )
+                SlackWebHookDto data,
+                AppEnvironment appEnvironment,
+                CancellationToken cancellationToken
+            )
         {
             if (!appEnvironment.Equals(AppEnvironment.Prod))
             {

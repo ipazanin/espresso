@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Espresso.ParserDeleter.CronJobs
 {
-    public class ParserDeleterPerformanceCronJob : CronJob<ParserDeleterPerformanceCronJob>
+    public class ParserDeleterReportCronJob : CronJob<ParserDeleterReportCronJob>
     {
         #region Constants
         private static readonly List<string> s_requestNames = new List<string>
@@ -25,15 +25,15 @@ namespace Espresso.ParserDeleter.CronJobs
 
         #region Fields
         private readonly IServiceScopeFactory _serviceScopeFactory;
-        private readonly ICronJobConfiguration<ParserDeleterPerformanceCronJob> _cronJobConfiguration;
+        private readonly ICronJobConfiguration<ParserDeleterReportCronJob> _cronJobConfiguration;
         private readonly IParserDeleterConfiguration _parserDeleterConfiguration;
         #endregion
 
         #region Constructors
-        public ParserDeleterPerformanceCronJob(
+        public ParserDeleterReportCronJob(
             IServiceScopeFactory serviceScopeFactory,
             ILoggerFactory loggerFactory,
-            ICronJobConfiguration<ParserDeleterPerformanceCronJob> cronJobConfiguration,
+            ICronJobConfiguration<ParserDeleterReportCronJob> cronJobConfiguration,
             IParserDeleterConfiguration parserDeleterConfiguration
         ) : base(
             cronJobConfiguration: cronJobConfiguration,

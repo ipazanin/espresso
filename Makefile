@@ -117,7 +117,7 @@ test-coverage:
 	/p:CoverletOutputFormat=cobertura ./source/Espresso.sln
 
 test:
-	dotnet test --verbosity normal source/Espresso.sln
+	dotnet test --verbosity minimal source/Espresso.sln
 
 # Frontend Scripts
 FRONTEND_DIRECTORY=./source/Espresso.WebApi/ClientApp
