@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text.Json.Serialization;
 using Espresso.Domain.Entities;
 
 namespace Espresso.Application.DataTransferObjects

@@ -13,8 +13,8 @@ namespace Espresso.ParserDeleter.Configuration
         public string DeleteArticlesCronExpression =>
             _configuration.GetValue<string>("DeleteArticlesCronExpression");
 
-        public string ParserDeleterPerformanceCronExpression =>
-            _configuration.GetValue<string>("ParserDeleterPerformanceCronExpression");
+        public string ParserDeleterReportCronExpression =>
+            _configuration.GetValue<string>("ParserDeleterReportCronExpression");
 
         public string ParseArticlesCronExpression =>
             _configuration.GetValue<string>("ParseArticlesCronExpression");

@@ -1,4 +1,5 @@
-﻿using Espresso.Common.Enums;
+﻿using System;
+using Espresso.Common.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -50,6 +51,12 @@ namespace Espresso.WebApi.Configuration
             majorVersion: _configuration.GetValue<int>("MajorVersion"),
             minorVersion: _configuration.GetValue<int>("MinorVersion")
         );
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public TimeSpan Uptime => TimeSpan.FromMilliseconds(Environment.TickCount64);
         #endregion
 
         #region Constructors

@@ -71,5 +71,11 @@ namespace Espresso.Application.IServices
             AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         );
+
+        public Task LogTopArticles(
+            IEnumerable<(string title, int numberOfClicks, string newsPortalName, DateTime publishDateTime)> topArticles,
+            AppEnvironment appEnvironment,
+            CancellationToken cancellationToken
+        );
     }
 }

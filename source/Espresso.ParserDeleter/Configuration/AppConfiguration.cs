@@ -23,6 +23,8 @@ namespace Espresso.ParserDeleter.Configuration
             TimeSpan.FromDays(
                 value: _configuration.GetValue<int>("MaxAgeOfArticlesInDays")
             );
+
+        public static TimeSpan Uptime => TimeSpan.FromMilliseconds(Environment.TickCount64);
         #endregion
 
         #region Constructors
