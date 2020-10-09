@@ -83,7 +83,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "cd ../../..; make pre-commit"
+      "pre-commit": "cd ../../..; make health-check"
     }
   },
   "jest": {
