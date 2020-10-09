@@ -9,7 +9,6 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
 
         public string ParserApiKey { get; init; } = "";
 
-
         public string ServerUrl { get; init; } = "";
     }
 }

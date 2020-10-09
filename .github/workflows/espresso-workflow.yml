@@ -16,9 +16,9 @@ jobs:
       - name: Install .NET Dependencies
         run: dotnet restore source/Espresso.sln
       - name: Build .NET
-        run: dotnet build --configuration Release --no-restore source/Espresso.sln
+        run: make build
       - name: Test .NET
-        run: dotnet test --no-restore --verbosity normal source/Espresso.sln
+        run: make test
 
       - uses: actions/checkout@v2
       - name: Setup Node.js 14.x
@@ -29,11 +29,11 @@ jobs:
         working-directory: ./source/Espresso.WebApi/ClientApp
         run: npm install
       - name: Lint React
-        working-directory: ./source/Espresso.WebApi/ClientApp
-        run: npm run lint-frontend
+        # working-directory: ./source/Espresso.WebApi/ClientApp
+        run: make lint
       - name: Test React
-        working-directory: ./source/Espresso.WebApi/ClientApp
-        run: npm run test-frontend:ci
+        # working-directory: ./source/Espresso.WebApi/ClientApp
+        run: make test-frontend
 
       - uses: actions/checkout@v2
       - name: Failure Slack Notification
@@ -46,8 +46,8 @@ jobs:
           SLACK_TITLE: Failure
           SLACK_MESSAGE: Workflow Failure
           SLACK_USERNAME: Backend CI/CD
-
         if: ${{ failure() }}
+
       - name: Success Slack Notification
         uses: rtCamp/action-slack-notify@master
         env:

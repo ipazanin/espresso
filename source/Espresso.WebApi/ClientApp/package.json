@@ -83,7 +83,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "dotnet build ../../Espresso.sln && dotnet test ../../Espresso.sln && npm run lint-frontend && npm run test-frontend:ci "
+      "pre-commit": "cd ../../..; make pre-commit"
     }
   },
   "jest": {
