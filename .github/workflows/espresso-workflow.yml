@@ -13,27 +13,16 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '5.0.100-rc.1.20452.10'
-      - name: Install .NET Dependencies
-        run: make restore
-      - name: Build .NET
-        run: make build
-      - name: Test .NET
-        run: make test
+      - name: .NET HealthCheck
+        run: make health-check-backend
 
       - uses: actions/checkout@v2
       - name: Setup Node.js 14.x
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
-      - name: Install React Dependencies
-        working-directory: ./source/Espresso.WebApi/ClientApp
-        run: npm install
-      - name: Lint React
-        # working-directory: ./source/Espresso.WebApi/ClientApp
-        run: make lint
-      - name: Test React
-        # working-directory: ./source/Espresso.WebApi/ClientApp
-        run: make test-frontend
+      - name: React HealthCheck
+        run: make health-check-frontend
 
       - uses: actions/checkout@v2
       - name: Failure Slack Notification

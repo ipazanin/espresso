@@ -1,12 +1,13 @@
 # Common
-all : 
-	list pre-commit \
-	build compose-database compose-development \
+all: 
+	list health-check rebuild \
+	health-check-backend rebuild-backend build \
+	compose-database compose-development \
 	compose-local database-update docker-build-webapi \
 	docker-build-parserdeleter docker-build migration-add \
 	migration-remove update restore start-p start-w \
 	test-coverage test \
-	lint test-frontend
+	health-check-frontend rebuild-frontend install build-frontend lint test-frontend 
 
 .PHONY : all
 list:
@@ -14,15 +15,26 @@ list:
 	awk -v RS= -F: '/^# File/,/^# Finished Make data base/ \
 	{if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
 
-pre-commit:
-	make build
-	make test
-	make lint
-	make test-frontend
+health-check:
+	make health-check-backend
+	make health-check-frontend
+
+rebuild:
+	make rebuild-backend
+	make rebuild-frontend
 
 # Backend
+health-check-backend:
+	make restore
+	make build
+	make test
+
+rebuild-backend:
+	dotnet clean --configuration Release --verbosity minimal source/Espresso.sln
+	make build
+
 build:
-	dotnet build --configuration Release --no-restore source/Espresso.sln
+	dotnet build --configuration Release source/Espresso.sln
 
 compose-database:
 ifeq ($(arg1), up)
@@ -59,13 +71,13 @@ database-update:
 
 docker-build-webapi:
 	docker build --force-rm -f ./source/Espresso.WebApi/Dockerfile -t \
-	ipazanin/espresso-webapi:$(v) --build-arg REACT_APP_ENVIRONMENT=production ./source \
-	&& docker push ipazanin/espresso-webapi:$(v)
+	ipazanin/espresso-webapi:$(v) --build-arg REACT_APP_ENVIRONMENT=production ./source
+	docker push ipazanin/espresso-webapi:$(v)
 
 docker-build-parserdeleter:
 	docker build --force-rm -f ./source/Espresso.ParserDeleter/Dockerfile -t \
-	ipazanin/espresso-parserdeleter:$(v) ./source \
-	&& docker push ipazanin/espresso-parserdeleter:$(v)
+	ipazanin/espresso-parserdeleter:$(v) ./source
+	docker push ipazanin/espresso-parserdeleter:$(v)
 
 docker-build:
 	make docker-build-webapi v=$(v)
@@ -117,12 +129,37 @@ test-coverage:
 	/p:CoverletOutputFormat=cobertura ./source/Espresso.sln
 
 test:
+ifeq ($(strip $(verbosity)),)
 	dotnet test --verbosity minimal source/Espresso.sln
+else
+	dotnet test --verbosity $(verbosity) source/Espresso.sln
+endif
 
 # Frontend Scripts
 FRONTEND_DIRECTORY=./source/Espresso.WebApi/ClientApp
 
-.PHONY: lint
+health-check-frontend:
+	make install
+	make build-frontend
+	make lint
+	make test-frontend
+
+rebuild-frontend:
+	cd $(FRONTEND_DIRECTORY); \
+	rm -rf node_modules \
+	rm -rf build
+	make install
+	make build-frontend
+
+install:
+	cd $(FRONTEND_DIRECTORY); \
+	npm install
+
+build-frontend:
+	cd $(FRONTEND_DIRECTORY); \
+	REACT_APP_ENVIRONMENT=production \
+	react-scripts build
+
 lint:
 	cd $(FRONTEND_DIRECTORY); \
 	./node_modules/.bin/eslint --ext .ts,.tsx src/ \
@@ -132,4 +169,3 @@ test-frontend:
 	cd $(FRONTEND_DIRECTORY); \
 	CI=true REACT_APP_ENVIRONMENT=test \
 	./node_modules/.bin/react-scripts test
-
