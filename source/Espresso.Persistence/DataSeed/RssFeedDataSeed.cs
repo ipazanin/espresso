@@ -423,6 +423,14 @@ namespace Espresso.Persistence.DataSeed
                     requestType: RequestType.Normal
                 ),
 
+                new RssFeed(
+                    id: (int)RssFeedId.GamerHr,
+                    url: "http://www.gamer.hr/feed",
+                    newsPortalId: (int)NewsPortalId.GamerHr,
+                    categoryId: (int)CategoryId.Tech,
+                    requestType: RequestType.Normal
+                ),
+
             };
 
             builder.HasData(rssFeeds);

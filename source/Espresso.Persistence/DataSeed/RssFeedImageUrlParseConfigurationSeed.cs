@@ -392,6 +392,12 @@ namespace Espresso.Persistence.DataSeed
                 RssFeedId = (int)RssFeedId.SvijetKulture,
                 ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
             });
+
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.GamerHr,
+                ImgElementXPath = "//div[contains(@class, 'site-featured-image')]//img"
+            });
         }
     }
 }

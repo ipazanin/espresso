@@ -281,6 +281,13 @@ namespace Espresso.Persistence.DataSeed
                 NumberOfSkips = 7,
                 CurrentSkip = 0
             });
+
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.GamerHr,
+                NumberOfSkips = 31,
+                CurrentSkip = 0
+            });
         }
     }
 }

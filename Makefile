@@ -70,14 +70,26 @@ database-update:
 	./source/Espresso.Persistence/Espresso.Persistence.csproj -v
 
 docker-build-webapi:
+ifeq ($(strip $(v)),)
 	docker build --force-rm -f ./source/Espresso.WebApi/Dockerfile -t \
-	ipazanin/espresso-webapi:$(v) --build-arg REACT_APP_ENVIRONMENT=production ./source
-	docker push ipazanin/espresso-webapi:$(v)
+	docker.pkg.github.com/espressonews/espresso-backend/espresso-webapi:latest --build-arg REACT_APP_ENVIRONMENT=production ./source
+	docker push docker.pkg.github.com/espressonews/espresso-backend/espresso-webapi:latest
+else
+	docker build --force-rm -f ./source/Espresso.WebApi/Dockerfile -t \
+	docker.pkg.github.com/espressonews/espresso-backend/espresso-webapi:$(v) --build-arg REACT_APP_ENVIRONMENT=production ./source
+	docker push docker.pkg.github.com/espressonews/espresso-backend/espresso-webapi:$(v)
+endif
 
 docker-build-parserdeleter:
+ifeq ($(strip $(v)),)
 	docker build --force-rm -f ./source/Espresso.ParserDeleter/Dockerfile -t \
-	ipazanin/espresso-parserdeleter:$(v) ./source
-	docker push ipazanin/espresso-parserdeleter:$(v)
+	docker.pkg.github.com/espressonews/espresso-backend/espresso-parserdeleter:latest ./source
+	docker push docker.pkg.github.com/espressonews/espresso-backend/espresso-parserdeleter:latest
+else
+	docker build --force-rm -f ./source/Espresso.ParserDeleter/Dockerfile -t \
+	docker.pkg.github.com/espressonews/espresso-backend/espresso-parserdeleter:$(v) ./source
+	docker push docker.pkg.github.com/espressonews/espresso-backend/espresso-parserdeleter:$(v)
+endif
 
 docker-build:
 	make docker-build-webapi v=$(v)
