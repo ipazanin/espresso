@@ -571,6 +571,16 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Kultura,
                     regionId: (int)RegionId.Global
                 ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.GamerHr,
+                    name: NewsPortalId.GamerHr.GetDisplayName(),
+                    baseUrl: "http://www.gamer.hr",
+                    iconUrl: $"Icons/{NewsPortalId.GamerHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 10, 9, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Tech,
+                    regionId: (int)RegionId.Global
+                ),
             };
 
             builder.HasData(newsPortals);
