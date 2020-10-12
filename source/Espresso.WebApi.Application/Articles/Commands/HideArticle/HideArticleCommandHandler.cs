@@ -41,10 +41,8 @@ namespace Espresso.WebApi.Application.Articles.Commands.HideArticle
 
             if (databaseArticle != null)
             {
-                databaseArticle.HideArticle();
-                _ = await _espressoDatabaseContext
-                    .SaveChangesAsync(cancellationToken)
-                    ;
+                databaseArticle.SetIsHidden(request.IsHidden);
+                _ = await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
             }
             else
             {
@@ -56,7 +54,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.HideArticle
 
             if (memoryCacheArticles.TryGetValue(key: request.ArticleId, value: out var memoryCacheArticle))
             {
-                memoryCacheArticle.HideArticle();
+                memoryCacheArticle.SetIsHidden(request.IsHidden);
                 _ = _memoryCache.Set(
                     key: MemoryCacheConstants.ArticleKey,
                     value: memoryCacheArticles.Values.ToList()

@@ -1,39 +1,39 @@
-﻿namespace Espresso.WebApi.RequestObject
+﻿namespace Espresso.WebApi.RequestObjects
 {
     /// <summary>
     /// 
     /// </summary>
-    public class SendPushNotificationRequestObject
+    public record SendPushNotificationRequestBody
     {
         /// <summary>
         /// 
         /// </summary>
-        public string? InternalName { get; set; }
+        public string? InternalName { get; init; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string? Title { get; set; }
+        public string? Title { get; init; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string? Message { get; set; }
+        public string? Message { get; init; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string? Topic { get; set; }
+        public string? Topic { get; init; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string? ArticleUrl { get; set; }
+        public string? ArticleUrl { get; init; }
 
         /// <summary>
         /// 
         /// </summary>
-        public bool IsSoundEnabled { get; set; }
+        public bool IsSoundEnabled { get; init; }
 
     }
 }

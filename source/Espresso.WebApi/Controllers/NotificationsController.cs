@@ -10,13 +10,13 @@ using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Infrastructure;
 using Espresso.WebApi.Parameters.HeaderParameters;
-using Espresso.WebApi.RequestObject;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Espresso.Application.DataTransferObjects;
 using Espresso.WebApi.DataTransferObjects;
+using Espresso.WebApi.RequestObjects;
 
 namespace Espresso.WebApi.Controllers
 {
@@ -58,6 +58,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.0")]
         [ApiVersion("1.4")]
         [HttpPost]
         [Authorize(Roles = ApiKey.ParserRole)]
@@ -131,13 +132,14 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.0")]
         [ApiVersion("1.4")]
         [HttpPost]
         [Authorize(Roles = ApiKey.DevMobileAppRole)]
         [Route("api/notifications")]
         public async Task<IActionResult> SendPushNotificition(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            [FromBody] SendPushNotificationRequestObject sendPushNotificationRequestObject,
+            [FromBody] SendPushNotificationRequestBody sendPushNotificationRequestObject,
             CancellationToken cancellationToken
         )
         {
@@ -181,6 +183,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.0")]
         [ApiVersion("1.4")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole)]

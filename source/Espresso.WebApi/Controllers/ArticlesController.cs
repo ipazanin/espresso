@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Espresso.WebApi.DataTransferObjects;
+using Espresso.WebApi.RequestObjects;
 
 namespace Espresso.WebApi.Controllers
 {
@@ -70,6 +71,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.0")]
         [ApiVersion("1.4")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
@@ -191,6 +193,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.0")]
         [ApiVersion("1.4")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
@@ -309,6 +312,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.0")]
         [ApiVersion("1.4")]
         [ApiVersion("1.3")]
         [ApiVersion("1.2")]
@@ -364,6 +368,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.0")]
         [ApiVersion("1.4")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
@@ -422,6 +427,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.0")]
         [ApiVersion("1.4")]
         [HttpPatch]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
@@ -528,6 +534,7 @@ namespace Espresso.WebApi.Controllers
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <param name="articleId">Article Id</param>
+        /// <param name="isHidden"></param>
         /// <param name="basicInformationsHeaderParameters">Basic App Informations</param>
         /// <returns></returns>
         /// <response code="200">When operation is sucessfull</response>
@@ -543,13 +550,14 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
-        [ApiVersion("1.4")]
+        [ApiVersion("2.0")]
         [HttpDelete]
         [Authorize(Roles = ApiKey.DevMobileAppRole)]
         [Route("api/articles/{articleId}")]
         public async Task<IActionResult> HideArticle(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             [FromRoute][Required] Guid articleId,
+            [FromQuery][Required] bool isHidden,
             CancellationToken cancellationToken
         )
         {
@@ -557,6 +565,7 @@ namespace Espresso.WebApi.Controllers
                 request: new HideArticleCommand
                 {
                     ArticleId = articleId,
+                    IsHidden = isHidden,
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
@@ -574,6 +583,7 @@ namespace Espresso.WebApi.Controllers
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <param name="articleId">Article Id</param>
+        /// <param name="requestBody"></param>
         /// <param name="basicInformationsHeaderParameters">Basic App Informations</param>
         /// <returns></returns>
         /// <response code="200">When operation is sucessfull</response>
@@ -589,13 +599,14 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
-        [ApiVersion("1.4")]
+        [ApiVersion("2.0")]
         [HttpPatch]
         [Authorize(Roles = ApiKey.DevMobileAppRole)]
         [Route("api/articles/{articleId}/featured")]
-        public async Task<IActionResult> ToggleFeaturedArticle(
+        public async Task<IActionResult> SetArticleFeaturedConfiguration(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             [FromRoute][Required] Guid articleId,
+            [FromBody][Required] SetArticleFeaturedConfigurationRequestBody requestBody,
             CancellationToken cancellationToken
         )
         {
@@ -603,6 +614,8 @@ namespace Espresso.WebApi.Controllers
                 request: new ToggleFeaturedArticleCommand
                 {
                     ArticleId = articleId,
+                    IsFeatured = requestBody.IsFeatured,
+                    FeraturedPosition = requestBody.FeaturedPosition,
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,

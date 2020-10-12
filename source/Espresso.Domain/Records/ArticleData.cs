@@ -28,10 +28,6 @@ namespace Espresso.Domain.Records
 
         public decimal TrendingScore { get; set; }
 
-        public bool IsHidden { get; set; }
-
-        public bool IsFeatured { get; set; }
-
         public IEnumerable<ArticleCategory>? ArticleCategories { get; set; }
     }
 }

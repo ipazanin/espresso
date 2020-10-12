@@ -10,6 +10,7 @@ using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.Extensions;
 using Espresso.Domain.Records;
+using Espresso.Domain.ValueObjects.ArticleValueObjects;
 using Espresso.ParserDeleter.Application.IServices;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
@@ -104,8 +105,6 @@ namespace Espresso.ParserDeleter.Application.Services
                 Title = title,
                 CreateDateTime = utcNow,
                 ImageUrl = imageUrl,
-                IsFeatured = Article.IsFeaturedDefaultValue,
-                IsHidden = Article.IsHiddenDefaultValue,
                 NumberOfClicks = initialNumberOfClicks,
                 TrendingScore = Article.TrendingScoreDefaultValue,
                 UpdateDateTime = utcNow,
@@ -140,8 +139,7 @@ namespace Espresso.ParserDeleter.Application.Services
                     publishDateTime: articleData.PublishDateTime!.Value,
                     numberOfClicks: articleData.NumberOfClicks,
                     trendingScore: articleData.TrendingScore,
-                    isHidden: articleData.IsHidden,
-                    isFeatured: articleData.IsFeatured,
+                    editorConfiguration: new EditorConfiguration(),
                     newsPortalId: rssFeed.NewsPortalId,
                     rssFeedId: rssFeed.Id,
                     articleCategories: articleData.ArticleCategories,

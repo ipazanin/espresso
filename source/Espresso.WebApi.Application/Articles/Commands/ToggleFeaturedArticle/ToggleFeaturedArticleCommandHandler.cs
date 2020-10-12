@@ -46,10 +46,8 @@ namespace Espresso.WebApi.Application.Articles.Commands.ToggleFeaturedArticle
 
             if (databaseArticle != null)
             {
-                databaseArticle.ToggleFeatured();
-                _ = _context
-                    .SaveChangesAsync(cancellationToken: default)
-                    ;
+                databaseArticle.SetIsFeaturedValue(request.IsFeatured, request.FeraturedPosition);
+                _ = _context.SaveChangesAsync(cancellationToken: default);
             }
             else
             {
@@ -61,7 +59,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.ToggleFeaturedArticle
 
             if (memoryCacheArticles.TryGetValue(request.ArticleId, out var memoryCacheArticle))
             {
-                memoryCacheArticle.ToggleFeatured();
+                memoryCacheArticle.SetIsFeaturedValue(request.IsFeatured, request.FeraturedPosition);
                 _ = _memoryCache.Set(
                     key: MemoryCacheConstants.ArticleKey,
                     value: memoryCacheArticles.Values.ToList()
