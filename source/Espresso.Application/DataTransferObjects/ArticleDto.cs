@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Espresso.Domain.Entities;
+using Espresso.Domain.ValueObjects.ArticleValueObjects;
 
 namespace Espresso.Application.DataTransferObjects
 {
@@ -51,6 +52,8 @@ namespace Espresso.Application.DataTransferObjects
 
         public string Summary { get; init; }
 
+        public EditorConfiguration EditorConfiguration { get; init; }
+
         public int RssFeedId { get; init; }
 
         /// <summary>
@@ -77,6 +80,7 @@ namespace Espresso.Application.DataTransferObjects
             Title = null!;
             Summary = null!;
             NewsPortal = null!;
+            EditorConfiguration = null!;
         }
 
         #endregion
@@ -100,6 +104,7 @@ namespace Espresso.Application.DataTransferObjects
                     .Select(CategoryDto.GetProjection().Compile()!),
                 TrendingScore = article.TrendingScore,
                 NumberOfClicks = article.NumberOfClicks,
+                EditorConfiguration = article.EditorConfiguration,
                 Summary = article.Summary,
                 RssFeedId = article.RssFeedId,
             };
@@ -151,8 +156,7 @@ namespace Espresso.Application.DataTransferObjects
                     publishDateTime: article.PublishDateTime,
                     numberOfClicks: article.NumberOfClicks,
                     trendingScore: article.TrendingScore,
-                    isHidden: Article.IsHiddenDefaultValue,
-                    isFeatured: Article.IsFeaturedDefaultValue,
+                    editorConfiguration: article.EditorConfiguration,
                     newsPortalId: article.NewsPortal.Id,
                     rssFeedId: article.RssFeedId,
                     articleCategories: articleCategories,

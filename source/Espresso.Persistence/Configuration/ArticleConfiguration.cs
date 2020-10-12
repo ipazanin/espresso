@@ -1,4 +1,5 @@
 ﻿using Espresso.Domain.Entities;
+using Espresso.Domain.ValueObjects.ArticleValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -24,15 +25,22 @@ namespace Espresso.Persistence.Configuration
             builder.Property(article => article.Title)
                 .HasMaxLength(Article.ImageUrlMaxLength);
 
-            builder.Property(article => article.IsHidden)
-                .HasDefaultValue(Article.IsHiddenDefaultValue);
-
-            builder.Property(article => article.IsFeatured)
-                .HasDefaultValue(Article.IsFeaturedDefaultValue);
-
             // TODO: get rid of these properties
             builder.Ignore(article => article.CreateArticleCategories);
             builder.Ignore(article => article.DeleteArticleCategories);
+            #endregion
+
+            #region ValueObjects
+            var editorConfigurationBuilder = builder.OwnsOne(article => article.EditorConfiguration);
+
+            editorConfigurationBuilder.Property(editorConfiguration => editorConfiguration.IsHidden)
+                .HasDefaultValue(EditorConfiguration.IsHiddenDefaultValue);
+
+            editorConfigurationBuilder.Property(editorConfiguration => editorConfiguration.IsFeatured)
+                .HasDefaultValue(EditorConfiguration.IsFeaturedDefaultValue);
+
+            editorConfigurationBuilder.Property(editorConfiguration => editorConfiguration.FeaturedPosition)
+                .HasDefaultValue(EditorConfiguration.FeaturedPositionDefaultValue);
             #endregion
 
             #region Indices

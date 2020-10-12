@@ -1,27 +1,27 @@
-﻿namespace Espresso.WebApi.RequestObject
+﻿namespace Espresso.WebApi.RequestObjects
 {
     /// <summary>
     /// 
     /// </summary>
-    public class RequestNewsPortalRequestObject
+    public record RequestNewsPortalRequestBody
     {
         /// <summary>
         /// 
         /// </summary>
         /// <value></value>
-        public string? NewsPortalName { get; set; }
+        public string? NewsPortalName { get; init; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <value></value>
-        public string? Email { get; set; }
+        public string? Email { get; init; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <value></value>
-        public string? Url { get; set; }
+        public string? Url { get; init; }
 
     }
 }

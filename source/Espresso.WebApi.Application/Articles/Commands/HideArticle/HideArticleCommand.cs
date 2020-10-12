@@ -7,5 +7,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.HideArticle
     public record HideArticleCommand : Request<Unit>
     {
         public Guid ArticleId { get; init; }
+
+        public bool IsHidden { get; init; }
     }
 }

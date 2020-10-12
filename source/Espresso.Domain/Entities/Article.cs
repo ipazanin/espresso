@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Infrastructure;
+using Espresso.Domain.ValueObjects.ArticleValueObjects;
 
 namespace Espresso.Domain.Entities
 {
@@ -18,8 +19,6 @@ namespace Espresso.Domain.Entities
         public const int WebUrlMaxLength = 500;
         public const int ImageUrlMaxLength = 500;
 
-        public const bool IsHiddenDefaultValue = false;
-        public const bool IsFeaturedDefaultValue = false;
         public const decimal TrendingScoreDefaultValue = 0m;
         #endregion
 
@@ -49,9 +48,7 @@ namespace Espresso.Domain.Entities
 
         public decimal TrendingScore { get; private set; }
 
-        public bool IsHidden { get; private set; }
-
-        public bool IsFeatured { get; private set; }
+        public EditorConfiguration EditorConfiguration { get; private set; }
 
         #region Relationships
         public int NewsPortalId { get; private set; }
@@ -82,6 +79,7 @@ namespace Espresso.Domain.Entities
             Summary = null!;
             Title = null!;
             WebUrl = null!;
+            EditorConfiguration = null!;
         }
 
         public Article(
@@ -96,8 +94,7 @@ namespace Espresso.Domain.Entities
             DateTime publishDateTime,
             int numberOfClicks,
             decimal trendingScore,
-            bool isHidden,
-            bool isFeatured,
+            EditorConfiguration editorConfiguration,
             int newsPortalId,
             int rssFeedId,
             IEnumerable<ArticleCategory>? articleCategories,
@@ -116,8 +113,7 @@ namespace Espresso.Domain.Entities
             PublishDateTime = publishDateTime;
             NumberOfClicks = numberOfClicks;
             TrendingScore = trendingScore;
-            IsHidden = isHidden;
-            IsFeatured = isFeatured;
+            EditorConfiguration = editorConfiguration;
             NewsPortalId = newsPortalId;
             RssFeedId = rssFeedId;
             ArticleCategories = articleCategories?.ToList() ?? ArticleCategories;
@@ -138,9 +134,13 @@ namespace Espresso.Domain.Entities
         /// <summary>
         /// 
         /// </summary>
-        public void ToggleFeatured()
+        public void SetIsFeaturedValue(bool? isFeatured, int? featuredPosition)
         {
-            IsFeatured = !IsFeatured;
+            EditorConfiguration = EditorConfiguration with
+            {
+                IsFeatured = isFeatured,
+                FeaturedPosition = featuredPosition
+            };
         }
 
         /// <summary>
@@ -155,9 +155,9 @@ namespace Espresso.Domain.Entities
         /// <summary>
         /// 
         /// </summary>
-        public void HideArticle()
+        public void SetIsHidden(bool isHidden)
         {
-            IsHidden = true;
+            EditorConfiguration = EditorConfiguration with { IsHidden = isHidden };
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace Espresso.Domain.Entities
             var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
 
             return article =>
-                !article.IsHidden &&
+                !article.EditorConfiguration.IsHidden &&
                 article.CreateDateTime <= articleMinimumAge &&
                 (categoryIds == null || article
                     .ArticleCategories
@@ -291,7 +291,7 @@ namespace Espresso.Domain.Entities
             var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
 
             return article =>
-                !article.IsHidden &&
+                !article.EditorConfiguration.IsHidden &&
                 article.CreateDateTime <= articleMinimumAge &&
                 article.ArticleCategories.Any(articleCategory => articleCategory.CategoryId.Equals(categoryId)) &&
                 (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)) &&
@@ -311,8 +311,8 @@ namespace Espresso.Domain.Entities
             var maxDateTimeOfFeaturedArticle = DateTime.UtcNow - maxAgeOfFeaturedArticle;
 
             return article =>
-                !article.IsHidden &&
-                article.IsFeatured &&
+                !article.EditorConfiguration.IsHidden &&
+                article.EditorConfiguration.IsFeatured == true &&
                 article.CreateDateTime <= articleMinimumAge &&
                 article.PublishDateTime > maxDateTimeOfFeaturedArticle &&
                 (categoryIds == null || article
@@ -333,7 +333,7 @@ namespace Espresso.Domain.Entities
             var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
 
             return article =>
-                !article.IsHidden &&
+                !article.EditorConfiguration.IsHidden &&
                 article.CreateDateTime <= articleMinimumAge &&
                 article.PublishDateTime > maxTrendingDateTime &&
                 !article.NewsPortal!.CategoryId.Equals((int)CategoryId.Local);

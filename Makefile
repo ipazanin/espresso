@@ -40,6 +40,9 @@ compose-database:
 ifeq ($(arg1), up)
 	docker-compose -f ./compose/docker-compose-database.yml up \
 	--build --remove-orphans $(arg2)
+else ifeq ($(strip $(arg1)),)
+	docker-compose -f ./compose/docker-compose-database.yml up \
+	--build --remove-orphans $(arg2)
 else ifeq ($(arg1), down)
 	docker-compose -f ./compose/docker-compose-database.yml down
 else
@@ -50,6 +53,8 @@ compose-development:
 ifeq ($(arg), up)
 	sudo docker-compose -f ./compose/docker-compose-development.yml up \
 	--build --remove-orphans 
+else ifeq ($(strip $(arg)),)
+	sudo docker-compose -f ./compose/docker-compose-development.yml up \
 else ifeq ($(arg), down)
 	sudo docker-compose -f ./compose/docker-compose-development.yml down
 else
@@ -58,6 +63,8 @@ endif
 
 compose-local:
 ifeq ($(arg), up)
+	docker-compose -f ./compose/docker-compose-local.yml up --build --remove-orphans
+else ifeq ($(strip $(arg)),)
 	docker-compose -f ./compose/docker-compose-local.yml up --build --remove-orphans
 else ifeq ($(arg), down)
 	docker-compose -f ./compose/docker-compose-local.yml down

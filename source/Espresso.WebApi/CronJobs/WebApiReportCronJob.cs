@@ -39,7 +39,6 @@ namespace Espresso.WebApi.CronJobs
             nameof(GetLatestArticlesQuery),
             nameof(GetLatestArticlesQuery_1_3),
             nameof(GetTrendingArticlesQuery),
-            nameof(GetCategoriesQuery),
             nameof(GetConfigurationQuery),
             nameof(GetConfigurationQuery_1_3),
             nameof(GetNewsPortalsQuery),
@@ -158,7 +157,9 @@ namespace Espresso.WebApi.CronJobs
         {
             var articles = memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey);
 
-            var topArticles = articles.OrderByDescending(article => article.NumberOfClicks)
+            var topArticles = articles
+                .Where(article => article.PublishDateTime > DateTime.UtcNow.AddDays(-2))
+                .OrderByDescending(article => article.NumberOfClicks)
                 .ThenByDescending(article => article.PublishDateTime)
                 .Take(5);
 
