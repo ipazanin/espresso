@@ -51,10 +51,9 @@ endif
 
 compose-development:
 ifeq ($(arg), up)
-	sudo docker-compose -f ./compose/docker-compose-development.yml up \
-	--build --remove-orphans 
+	sudo docker-compose -f ./compose/docker-compose-development.yml up --build --remove-orphans 
 else ifeq ($(strip $(arg)),)
-	sudo docker-compose -f ./compose/docker-compose-development.yml up \
+	sudo docker-compose -f ./compose/docker-compose-development.yml up
 else ifeq ($(arg), down)
 	sudo docker-compose -f ./compose/docker-compose-development.yml down
 else

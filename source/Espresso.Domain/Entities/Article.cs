@@ -348,6 +348,18 @@ namespace Espresso.Domain.Entities
         {
             return article => article.PublishDateTime;
         }
+
+        public static Expression<Func<Article, bool>> GetAutocompleteArticleTitleExpression(
+            string? titleSearchQuery
+        )
+        {
+            if (string.IsNullOrWhiteSpace(titleSearchQuery))
+            {
+                return article => false;
+            }
+            return article => article.Title.StartsWith(titleSearchQuery, StringComparison.InvariantCultureIgnoreCase) ||
+                article.Title.Contains($" {titleSearchQuery}", StringComparison.InvariantCultureIgnoreCase);
+        }
         #endregion
 
         #endregion
