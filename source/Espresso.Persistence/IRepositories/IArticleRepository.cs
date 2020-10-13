@@ -7,8 +7,6 @@ namespace Espresso.Persistence.IRepositories
 {
     public interface IArticleRepository
     {
-        public Task<IEnumerable<Article>> GetArticles();
-
         public void InsertArticles(IEnumerable<Article> articles);
 
         public void UpdateArticles(IEnumerable<Article> articles);

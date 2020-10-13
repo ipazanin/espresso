@@ -31,8 +31,6 @@ namespace Espresso.WebApi.Application.Initialization
 
         #region Fileds
         private readonly IMemoryCache _memoryCache;
-        private readonly IArticleCategoryRepository _articleCategoryRepository;
-        private readonly IArticleRepository _articleRepository;
         private readonly IApplicationDatabaseContext _context;
         private readonly ILogger<WebApiInit> _logger;
         #endregion
@@ -46,15 +44,11 @@ namespace Espresso.WebApi.Application.Initialization
         /// <param name="loggerFactory"></param>
         public WebApiInit(
             IMemoryCache memoryCache,
-            IArticleCategoryRepository articleCategoryRepository,
-            IArticleRepository articleRepository,
             IApplicationDatabaseContext context,
             ILoggerFactory loggerFactory
         )
         {
             _memoryCache = memoryCache;
-            _articleCategoryRepository = articleCategoryRepository;
-            _articleRepository = articleRepository;
             _context = context;
             _logger = loggerFactory.CreateLogger<WebApiInit>();
         }
@@ -112,48 +106,16 @@ namespace Espresso.WebApi.Application.Initialization
             );
             #endregion
 
-            #region Article Categories
-            var articleCategories = await _articleCategoryRepository
-                .GetArticleCategories()
-                ;
-            var articleCategoriesToAdd = new List<ArticleCategory>();
-
-            foreach (var articleCategory in articleCategories)
-            {
-                if (categoryDictionary.TryGetValue(articleCategory.CategoryId, out var category))
-                {
-                    articleCategory.SetCategory(category: category);
-                    articleCategoriesToAdd.Add(articleCategory);
-                }
-            }
-            #endregion
-
             #region Articles
-            var articleCategoriesDictionary = articleCategoriesToAdd
-                .GroupBy(keySelector: articleCategory => articleCategory.ArticleId)
-                .ToDictionary(keySelector: grouping => grouping.Key);
-
-            var allArticles = await _articleRepository.GetArticles();
-            var articlesToAdd = new List<Article>();
-
-            foreach (var article in allArticles)
-            {
-                if (
-                    newsPortalsDictionary.TryGetValue(article.NewsPortalId, out var newsPortal) &&
-                    articleCategoriesDictionary.TryGetValue(article.Id, out var articleArticleCategories)
-                )
-                {
-                    article.UpdateNewsPortalAndArticlecategories(
-                        newsPortal: newsPortal,
-                        articleCategories: articleArticleCategories
-                    );
-                    articlesToAdd.Add(article);
-                }
-            }
+            var articles = await _context.Articles
+                .Include(article => article.ArticleCategories)
+                .ThenInclude(articleCategory => articleCategory.Category)
+                .Include(article => article.NewsPortal)
+                .ToListAsync();
 
             _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
-                value: articlesToAdd
+                value: articles
             );
             #endregion
 
@@ -164,9 +126,7 @@ namespace Espresso.WebApi.Application.Initialization
             var duration = stopwatch.Elapsed;
             var categoriesCount = categories.Count;
             var newsPortalsCount = newsPortals.Count;
-            var articleCategoriesCount = articleCategories.Count();
-            var allArticlesCount = allArticles.Count();
-            var articlesToAddCount = articlesToAdd.Count;
+            var allArticlesCount = articles.Count;
 
             var message =
                 $"{AnsiUtility.EncodeEventName($"{{@{nameof(eventName)}}}")}\n\t" +
@@ -176,12 +136,8 @@ namespace Espresso.WebApi.Application.Initialization
                 $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(categoriesCount)}}}")}\n\t" +
                 $"{AnsiUtility.EncodeParameterName(nameof(newsPortalsCount))}: " +
                 $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(newsPortalsCount)}}}")}\n\t" +
-                $"{AnsiUtility.EncodeParameterName(nameof(articleCategoriesCount))}: " +
-                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(articleCategoriesCount)}}}")}\n\t" +
                 $"{AnsiUtility.EncodeParameterName(nameof(allArticlesCount))}: " +
-                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(allArticlesCount)}}}")}\n\t" +
-                $"{AnsiUtility.EncodeParameterName(nameof(articlesToAddCount))}: " +
-                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(articlesToAddCount)}}}")}\n\t";
+                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(allArticlesCount)}}}")}\n\t";
 
             var args = new object[]
             {
@@ -189,9 +145,7 @@ namespace Espresso.WebApi.Application.Initialization
                 duration,
                 categoriesCount,
                 newsPortalsCount,
-                articleCategoriesCount,
                 allArticlesCount,
-                articlesToAddCount,
             };
 
             _logger.LogInformation(

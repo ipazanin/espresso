@@ -55,17 +55,6 @@ namespace Espresso.Persistence.Repositories
         #endregion
 
         #region Methods
-        public async Task<IEnumerable<Article>> GetArticles()
-        {
-            var commandText = $"SELECT * FROM {TableName}";
-            using var connection = _databaseConnectionFactory.CreateDatabaseConnection();
-            var articles = await connection.QueryAsync<Article>(
-                sql: commandText
-            );
-
-            return articles;
-        }
-
         public void InsertArticles(IEnumerable<Article> articles)
         {
             if (!articles.Any())
