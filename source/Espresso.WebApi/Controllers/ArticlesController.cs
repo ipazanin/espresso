@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Espresso.WebApi.DataTransferObjects;
 using Espresso.WebApi.RequestObjects;
+using Espresso.WebApi.Application.Articles.AutoCompleteArticle;
 
 namespace Espresso.WebApi.Controllers
 {
@@ -579,7 +580,7 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Hide article with <paramref name="articleId"/>
+        /// Feature Article with <paramref name="articleId"/>
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <param name="articleId">Article Id</param>
@@ -626,6 +627,51 @@ namespace Espresso.WebApi.Controllers
             );
 
             return Ok();
+        }
+
+        /// <summary>
+        /// Auto Complete Article Titles
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <param name="basicInformationsHeaderParameters">Basic App Informations</param>
+        /// <param name="titleSearchQuery"></param>
+        /// <returns></returns>
+        /// <response code="200">When operation is sucessfull</response>
+        /// <response code="400">If validation fails</response>
+        /// <response code="401">If API Key is invalid or missing</response>
+        /// <response code="403">If API Key is forbiden from requested resource</response>
+        /// <response code="404">If resource is nout found</response>
+        /// <response code="500">If unhandled exception occurred</response>
+        [Produces(MimeTypeConstants.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.0")]
+        [HttpGet]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
+        [Route("api/articles/autocomplete")]
+        public async Task<IActionResult> AutoCompleteArticleTitles(
+            [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
+            [FromQuery] string? titleSearchQuery,
+            CancellationToken cancellationToken
+        )
+        {
+            var request = new AutoCompleteArticleQuery
+            {
+                TitleSearchQuery = titleSearchQuery,
+                Take = WebApiConfiguration.AppConfiguration.AutoCompleteResultsTake,
+                TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                ConsumerVersion = basicInformationsHeaderParameters.Version,
+                DeviceType = basicInformationsHeaderParameters.DeviceType,
+                AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+            };
+
+            var response = await Mediator.Send(request, cancellationToken);
+
+            return Ok(response);
         }
     }
 }

@@ -57,6 +57,12 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         /// <returns></returns>
         public TimeSpan Uptime => TimeSpan.FromMilliseconds(Environment.TickCount64);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public int AutoCompleteResultsTake => _configuration.GetValue<int>("AutoCompleteResultsTake");
         #endregion
 
         #region Constructors
