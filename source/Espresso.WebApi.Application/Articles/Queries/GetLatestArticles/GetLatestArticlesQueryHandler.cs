@@ -31,6 +31,35 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
             CancellationToken cancellationToken
         )
         {
+            var articles = GetLatestArticles(
+                request: request
+            );
+
+            var newNewsPortals = GetNewNewsPortals(
+                request: request
+            );
+
+            var featuredArticles = GetFeaturedArticles(
+                request: request
+            );
+
+            var response = new GetLatestArticlesQueryResponse
+            {
+                Articles = articles,
+                FeaturedArticles = featuredArticles,
+                NewNewsPortals = newNewsPortals,
+                NewNewsPortalsPosition = request.NewNewsPortalsPosition
+            };
+
+            return Task.FromResult(result: response);
+        }
+
+        private IEnumerable<GetLatestArticlesArticle> GetLatestArticles(
+            GetLatestArticlesQuery request
+        )
+        {
+            var (newsPortalIds, categoryIds) = ParseIds(request);
+
             var articles = _memoryCache.Get<IEnumerable<Article>>(
                 key: MemoryCacheConstants.ArticleKey
             );
@@ -38,18 +67,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
             var firstArticle = articles.FirstOrDefault(
                 article => article.Id.Equals(request.FirstArticleId)
             );
-
-            var newsPortalIds = request.NewsPortalIds
-                ?.Replace(" ", "")
-                ?.Split(',')
-                ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
-                ?.Where(newsPortalId => newsPortalId != default);
-
-            var categoryIds = request.CategoryIds
-                ?.Replace(" ", "")
-                ?.Split(',')
-                ?.Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
-                ?.Where(categoryId => categoryId != default);
 
             var articleDtos = articles
                 .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
@@ -65,6 +82,66 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                 .Take(request.Take)
                 .Select(GetLatestArticlesArticle.GetProjection().Compile());
 
+            return articleDtos;
+        }
+
+        private IEnumerable<GetLatestArticlesArticle> GetFeaturedArticles(
+            GetLatestArticlesQuery request
+        )
+        {
+            var articles = _memoryCache.Get<IEnumerable<Article>>(
+                key: MemoryCacheConstants.ArticleKey
+            );
+
+            var featuredArticleDtos = articles
+                .Where(
+                    predicate: Article.GetFilteredFeaturedArticlesPredicate(
+                        categoryIds: null,
+                        newsPortalIds: null,
+                        titleSearchQuery: null,
+                        maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
+                        articleCreateDateTime: null
+                    ).Compile()
+                )
+                .OrderByDescending(
+                    keySelector: Article
+                        .GetOrderByDescendingTrendingScoreExpression()
+                        .Compile()
+                )
+                .ThenByDescending(
+                    keySelector: Article
+                        .GetOrderByDescendingTrendingScoreExpression()
+                        .Compile()
+                )
+                .Select(GetLatestArticlesArticle.GetProjection().Compile());
+
+            var trendingArticleDtos = articles
+                .Where(
+                    predicate: Article.GetTrendingArticlePredicate(
+                        maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
+                        articleCreateDateTime: null
+                    )
+                    .Compile()
+                )
+                .OrderByDescending(
+                    keySelector: Article
+                        .GetOrderByDescendingTrendingScoreExpression()
+                        .Compile()
+                    )
+                .Select(GetLatestArticlesArticle.GetProjection().Compile());
+
+            var articleDtos = featuredArticleDtos
+                .Union(trendingArticleDtos)
+                .Take(request.Take);
+
+            return articleDtos;
+        }
+
+        private IEnumerable<GetLatestArticlesNewsPortal> GetNewNewsPortals(
+            GetLatestArticlesQuery request
+        )
+        {
+            var (newsPortalIds, categoryIds) = ParseIds(request);
             var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
                 key: MemoryCacheConstants.NewsPortalKey
             );
@@ -81,15 +158,26 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
 
             var random = new Random();
 
-            var response = new GetLatestArticlesQueryResponse
-            {
-                Articles = articleDtos,
-                NewNewsPortals = newsPortalDtos.OrderBy(newsPortal => random.Next()),
-                NewNewsPortalsPosition = request.NewNewsPortalsPosition
-            };
-
-            return Task.FromResult(result: response);
+            return newsPortalDtos.OrderBy(newsPortal => random.Next());
         }
+
+        private static (IEnumerable<int>? newsPortalIds, IEnumerable<int>? categoryIds) ParseIds(GetLatestArticlesQuery request)
+        {
+            var newsPortalIds = request.NewsPortalIds
+                ?.Replace(" ", "")
+                ?.Split(',')
+                ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
+                ?.Where(newsPortalId => newsPortalId != default);
+
+            var categoryIds = request.CategoryIds
+                ?.Replace(" ", "")
+                ?.Split(',')
+                ?.Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
+                ?.Where(categoryId => categoryId != default);
+
+            return (newsPortalIds, categoryIds);
+        }
+
         #endregion
     }
 }

@@ -63,6 +63,12 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         /// <returns></returns>
         public int AutoCompleteResultsTake => _configuration.GetValue<int>("AutoCompleteResultsTake");
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public int FeaturedArticlesTake => _configuration.GetValue<int>("FeaturedArticlesTake");
         #endregion
 
         #region Constructors
