@@ -22,15 +22,12 @@ namespace Espresso.WebApi.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="mediator"></param>
+        /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>
         public CategoriesController(
-            IMediator mediator,
-            IWebApiConfiguration webApiConfiguration)
-         : base(
-             mediator,
-            webApiConfiguration
-        )
+            ISender sender,
+            IWebApiConfiguration webApiConfiguration
+        ) : base(sender, webApiConfiguration)
         {
         }
 
@@ -66,7 +63,7 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            var categories = await Mediator.Send(
+            var categories = await Sender.Send(
                 request: new GetCategoriesQuery
                 {
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,

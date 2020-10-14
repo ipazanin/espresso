@@ -27,10 +27,12 @@ namespace Espresso.WebApi.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="mediator"></param>
+        /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>
-        public ConfigurationController(IMediator mediator, IWebApiConfiguration webApiConfiguration)
-            : base(mediator, webApiConfiguration)
+        public ConfigurationController(
+            ISender sender,
+            IWebApiConfiguration webApiConfiguration
+        ) : base(sender, webApiConfiguration)
         {
         }
 
@@ -75,7 +77,7 @@ namespace Espresso.WebApi.Controllers
                 AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
             };
 
-            var getNewsPortalsQueryResponse = await Mediator.Send(
+            var getNewsPortalsQueryResponse = await Sender.Send(
                     request: request,
                     cancellationToken: cancellationToken
                 );
@@ -123,7 +125,7 @@ namespace Espresso.WebApi.Controllers
                 DeviceType = basicInformationsHeaderParameters.DeviceType,
                 AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
             };
-            var getNewsPortalsQueryResponse = await Mediator.Send(
+            var getNewsPortalsQueryResponse = await Sender.Send(
                 request: request,
                 cancellationToken: cancellationToken
             );
@@ -169,7 +171,7 @@ namespace Espresso.WebApi.Controllers
                 DeviceType = basicInformationsHeaderParameters.DeviceType,
                 AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
             };
-            var getNewsPortalsQueryResponse = await Mediator.Send(
+            var getNewsPortalsQueryResponse = await Sender.Send(
                 request: request,
                 cancellationToken: cancellationToken
             );
@@ -218,7 +220,7 @@ namespace Espresso.WebApi.Controllers
                 AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
             };
 
-            var getNewsPortalsQueryResponse = await Mediator.Send(
+            var getNewsPortalsQueryResponse = await Sender.Send(
                     request: request,
                     cancellationToken: cancellationToken
                 );
