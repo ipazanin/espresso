@@ -21,6 +21,12 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
         public string? TitleSearchQuery { get; init; }
 
         public TimeSpan MaxAgeOfNewNewsPortal { get; init; }
+
+        public TimeSpan MaxAgeOfTrendingArticle { get; init; }
+
+        public int FeaturedArticlesTake { get; init; }
+
+        public TimeSpan MaxAgeOfFeaturedArticle { get; init; }
         #endregion
     }
 }
