@@ -25,12 +25,12 @@ namespace Espresso.WebApi.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="mediator"></param>
+        /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>
         public NewsPortalsController(
-            IMediator mediator,
+            ISender sender,
             IWebApiConfiguration webApiConfiguration
-        ) : base(mediator, webApiConfiguration)
+        ) : base(sender, webApiConfiguration)
         {
         }
 
@@ -65,7 +65,7 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            var getNewsPortalsQueryResponse = await Mediator.Send(
+            var getNewsPortalsQueryResponse = await Sender.Send(
                 request: new GetNewsPortalsQuery
                 {
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
@@ -111,7 +111,7 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            var getNewsPortalsQueryResponse = await Mediator.Send(
+            var getNewsPortalsQueryResponse = await Sender.Send(
                 request: new GetNewsPortalsQuery_1_3
                 {
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
@@ -160,7 +160,7 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            var getNewsPortalsQueryResponse = await Mediator.Send(
+            var getNewsPortalsQueryResponse = await Sender.Send(
                 request: new NewsSourcesRequestCommand
                 {
                     NewsPortalName = requestNewsPortalRequestObject.NewsPortalName ?? "",

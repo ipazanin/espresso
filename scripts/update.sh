@@ -22,9 +22,10 @@ function read_project() {
     
     while IFS='' read -r line || [[ -n "$line" ]]; do
             if [[ $line =~ $package_regex ]]; then
-                    name="${BASH_REMATCH[2]}"
-                    version="${BASH_REMATCH[3]}"
+                    name="${BASH_REMATCH[1]}"
+                    version="${BASH_REMATCH[2]}"
                     if [[ $version != *-* ]]; then
+                            echo dotnet add "$1" package "$name"
                             dotnet add "$1" package "$name"
                     fi
             fi

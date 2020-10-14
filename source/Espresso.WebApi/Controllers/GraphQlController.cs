@@ -32,17 +32,17 @@ namespace Espresso.WebApi.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="mediator"></param>
+        /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>
         /// <param name="schema"></param>
         /// <param name="executer"></param>
         /// <returns></returns>
         public GraphQlController(
-            IMediator mediator,
+            ISender sender,
             IWebApiConfiguration webApiConfiguration,
             ISchema schema,
             IDocumentExecuter executer
-        ) : base(mediator, webApiConfiguration)
+        ) : base(sender, webApiConfiguration)
         {
             _schema = schema;
             _executer = executer;

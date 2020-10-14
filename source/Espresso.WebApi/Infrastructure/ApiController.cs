@@ -13,7 +13,7 @@ namespace Espresso.WebApi.Infrastructure
         /// <summary>
         /// 
         /// </summary>
-        protected readonly IMediator Mediator;
+        protected readonly ISender Sender;
 
         /// <summary>
         /// 
@@ -23,11 +23,11 @@ namespace Espresso.WebApi.Infrastructure
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="mediator"></param>
+        /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>
-        public ApiController(IMediator mediator, IWebApiConfiguration webApiConfiguration)
+        public ApiController(ISender sender, IWebApiConfiguration webApiConfiguration)
         {
-            Mediator = mediator;
+            Sender = sender;
             WebApiConfiguration = webApiConfiguration;
         }
     }

@@ -29,14 +29,12 @@ namespace Espresso.WebApi.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="mediator"></param>
+        /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>
         public NotificationsController(
-            IMediator mediator,
+            ISender sender,
             IWebApiConfiguration webApiConfiguration
-        ) : base(
-            mediator, webApiConfiguration
-        )
+        ) : base(sender, webApiConfiguration)
         {
         }
 
@@ -69,7 +67,7 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            await Mediator.Send(
+            await Sender.Send(
                 request: new UpdateInMemoryArticlesCommand
                 {
                     CreatedArticles = articlesRequest.CreatedArticles,
@@ -84,7 +82,7 @@ namespace Espresso.WebApi.Controllers
                 cancellationToken: cancellationToken
             );
 
-            await Mediator.Send(
+            await Sender.Send(
                 request: new CalculateTrendingScoreCommand
                 {
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
@@ -96,7 +94,7 @@ namespace Espresso.WebApi.Controllers
                 cancellationToken: cancellationToken
             );
 
-            await Mediator.Send(
+            await Sender.Send(
                 request: new SendArticlesNotificationsCommand
                 {
                     CreatedArticles = articlesRequest.CreatedArticles,
@@ -143,7 +141,7 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            await Mediator.Send(
+            await Sender.Send(
                 request: new SendPushNotificationCommand
                 {
                     InternalName = sendPushNotificationRequestObject.InternalName ?? "",
@@ -195,7 +193,7 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            var response = await Mediator.Send(
+            var response = await Sender.Send(
                 request: new GetPushNotificationsQuery
                 {
                     Take = take,

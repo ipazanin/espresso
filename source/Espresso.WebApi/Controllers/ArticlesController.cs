@@ -37,14 +37,12 @@ namespace Espresso.WebApi.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="mediator"></param>
+        /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>
         public ArticlesController(
-            IMediator mediator,
+            ISender sender,
             IWebApiConfiguration webApiConfiguration
-        ) : base(
-            mediator, webApiConfiguration
-        )
+        ) : base(sender, webApiConfiguration)
         {
         }
 
@@ -87,7 +85,7 @@ namespace Espresso.WebApi.Controllers
             [FromQuery] string? titleSearchQuery = null
         )
         {
-            var response = await Mediator.Send(
+            var response = await Sender.Send(
                 request: new GetLatestArticlesQuery
                 {
                     Take = paginationParameters.Take,
@@ -148,7 +146,7 @@ namespace Espresso.WebApi.Controllers
             [FromQuery] string? titleSearchQuery = null
         )
         {
-            var response = await Mediator.Send(
+            var response = await Sender.Send(
                 request: new GetLatestArticlesQuery_1_4
                 {
                     Take = paginationParameters.Take,
@@ -210,7 +208,7 @@ namespace Espresso.WebApi.Controllers
             [FromQuery] string? categoryIds = null
         )
         {
-            var response = await Mediator.Send(
+            var response = await Sender.Send(
                 request: new GetLatestArticlesQuery_1_3
                 {
                     Take = take,
@@ -271,7 +269,7 @@ namespace Espresso.WebApi.Controllers
             [FromQuery] string? titleSearchQuery = null
         )
         {
-            var articles = await Mediator.Send(
+            var articles = await Sender.Send(
                 request: new GetCategoryArticlesQuery
                 {
                     Take = paginationParameters.Take,
@@ -334,7 +332,7 @@ namespace Espresso.WebApi.Controllers
             [FromQuery] string? newsPortalIds = null
         )
         {
-            var articles = await Mediator.Send(
+            var articles = await Sender.Send(
                 request: new GetCategoryArticlesQuery_1_3
                 {
                     Take = take,
@@ -388,7 +386,7 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            var response = await Mediator.Send(
+            var response = await Sender.Send(
                 request: new GetTrendingArticlesQuery
                 {
                     Take = paginationParameters.Take,
@@ -444,7 +442,7 @@ namespace Espresso.WebApi.Controllers
             [FromQuery] string? categoryIds = null
         )
         {
-            var response = await Mediator.Send(
+            var response = await Sender.Send(
                 request: new GetFeaturedArticlesQuery
                 {
                     Take = paginationParameters.Take,
@@ -501,7 +499,7 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            await Mediator.Send(
+            await Sender.Send(
                 request: new IncrementNumberOfClicksCommand
                 {
                     Id = articleId,
@@ -514,7 +512,7 @@ namespace Espresso.WebApi.Controllers
                 cancellationToken: cancellationToken
             );
 
-            await Mediator.Send(
+            await Sender.Send(
                 request: new CalculateTrendingScoreCommand
                 {
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
@@ -564,7 +562,7 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            await Mediator.Send(
+            await Sender.Send(
                 request: new IncrementNumberOfClicksCommand
                 {
                     Id = articleId,
@@ -577,7 +575,7 @@ namespace Espresso.WebApi.Controllers
                 cancellationToken: cancellationToken
             );
 
-            await Mediator.Send(
+            await Sender.Send(
                 request: new CalculateTrendingScoreCommand
                 {
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
@@ -624,7 +622,7 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            await Mediator.Send(
+            await Sender.Send(
                 request: new HideArticleCommand
                 {
                     ArticleId = articleId,
@@ -673,7 +671,7 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            await Mediator.Send(
+            await Sender.Send(
                 request: new ToggleFeaturedArticleCommand
                 {
                     ArticleId = articleId,
@@ -731,7 +729,7 @@ namespace Espresso.WebApi.Controllers
                 AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
             };
 
-            var response = await Mediator.Send(request, cancellationToken);
+            var response = await Sender.Send(request, cancellationToken);
 
             return Ok(response);
         }

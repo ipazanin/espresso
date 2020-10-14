@@ -25,12 +25,12 @@ namespace Espresso.WebApi.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="mediator"></param>
+        /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>
         public ApplicationDownloadsController(
-            IMediator mediator,
+            ISender sender,
             IWebApiConfiguration webApiConfiguration
-        ) : base(mediator, webApiConfiguration)
+        ) : base(sender, webApiConfiguration)
         {
         }
 
@@ -71,7 +71,7 @@ namespace Espresso.WebApi.Controllers
                 AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
             };
 
-            await Mediator.Send(
+            await Sender.Send(
                     request: command,
                     cancellationToken: cancellationToken
                 );
@@ -114,7 +114,7 @@ namespace Espresso.WebApi.Controllers
                 AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
             };
 
-            await Mediator.Send(
+            await Sender.Send(
                 request: command,
                 cancellationToken: cancellationToken
             );
@@ -158,7 +158,7 @@ namespace Espresso.WebApi.Controllers
                 DeviceType = mobileDeviceType,
                 AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
             };
-            await Mediator.Send(
+            await Sender.Send(
                 request: command,
                 cancellationToken: cancellationToken
             );
@@ -193,7 +193,7 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            var response = await Mediator.Send(
+            var response = await Sender.Send(
                 request: new GetApplicationDownloadStatisticsQuery
                 {
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
@@ -236,7 +236,7 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            var response = await Mediator.Send(
+            var response = await Sender.Send(
                 request: new GetApplicationDownloadStatisticsQuery
                 {
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
