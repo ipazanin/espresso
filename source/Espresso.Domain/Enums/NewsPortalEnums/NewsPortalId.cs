@@ -242,5 +242,7 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         SvijetKulture = 120,
         [Display(Name = "Gamer.hr")]
         GamerHr = 121,
+        [Display(Name = "OG Portal")]
+        OgPortal = 122,
     }
 }

@@ -239,7 +239,13 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal
                 ),
-
+               new RssFeed(
+                    id: (int)RssFeedId.OgPortal,
+                    url: "https://ogportal.com/feed",
+                    newsPortalId: (int)NewsPortalId.OgPortal,
+                    categoryId: (int)CategoryId.Local,
+                    requestType: RequestType.Normal
+                ),
 
 
                 new RssFeed(
@@ -453,6 +459,13 @@ namespace Espresso.Persistence.DataSeed
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Split,
+                NumberOfSkips = 5,
+                CurrentSkip = 0
+            });
+
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.OgPortal,
                 NumberOfSkips = 5,
                 CurrentSkip = 0
             });

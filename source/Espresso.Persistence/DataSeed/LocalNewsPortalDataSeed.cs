@@ -338,7 +338,17 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Lika
-                ),                  
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.OgPortal,
+                    name: NewsPortalId.OgPortal.GetDisplayName(),
+                    baseUrl: "https://ogportal.com",
+                    iconUrl: $"Icons/{NewsPortalId.OgPortal}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 10, 15, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Lika
+                ),                                  
                 #endregion
 
                 #region Zagreb
