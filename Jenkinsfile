@@ -32,6 +32,6 @@ pipeline {
         //         sh 'chmod a+rw -R .'
         //         stash name: 'Jenkins-out', includes: 'Jenkins/out/**'
         //     }
-        }
+        // }
     }
 }
