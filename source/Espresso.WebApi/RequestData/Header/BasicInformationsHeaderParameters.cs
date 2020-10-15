@@ -2,7 +2,7 @@
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Espresso.WebApi.Parameters.HeaderParameters
+namespace Espresso.WebApi.RequestData.Header
 {
     /// <summary>
     /// 

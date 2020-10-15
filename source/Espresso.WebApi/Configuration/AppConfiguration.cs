@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Espresso.Common.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -56,13 +57,7 @@ namespace Espresso.WebApi.Configuration
         /// 
         /// </summary>
         /// <returns></returns>
-        public TimeSpan Uptime => TimeSpan.FromMilliseconds(Environment.TickCount64);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public int AutoCompleteResultsTake => _configuration.GetValue<int>("AutoCompleteResultsTake");
+        public TimeSpan Uptime => DateTime.UtcNow - Process.GetCurrentProcess().StartTime.ToUniversalTime();
 
         /// <summary>
         /// 

@@ -6,14 +6,14 @@ using Espresso.Common.Constants;
 using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Infrastructure;
-using Espresso.WebApi.Parameters.HeaderParameters;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals_1_3;
 using Espresso.WebApi.DataTransferObjects;
-using Espresso.WebApi.RequestObjects;
+using Espresso.WebApi.RequestData.Header;
+using Espresso.WebApi.RequestData.Body;
 
 namespace Espresso.WebApi.Controllers
 {

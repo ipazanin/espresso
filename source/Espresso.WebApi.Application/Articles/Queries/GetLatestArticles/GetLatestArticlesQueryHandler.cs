@@ -95,39 +95,28 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
 
             var featuredArticleDtos = articles
                 .Where(
-                    predicate: Article.GetFilteredFeaturedArticlesPredicate(
+                    Article.GetFilteredFeaturedArticlesPredicate(
                         categoryIds: null,
                         newsPortalIds: null,
                         titleSearchQuery: null,
                         maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
                         articleCreateDateTime: null
-                    ).Compile()
+                    )
+                    .Compile()
                 )
-                .OrderByDescending(
-                    keySelector: Article
-                        .GetOrderByDescendingTrendingScoreExpression()
-                        .Compile()
-                )
-                .ThenByDescending(
-                    keySelector: Article
-                        .GetOrderByDescendingTrendingScoreExpression()
-                        .Compile()
-                )
+                .OrderByDescending(Article.GetOrderByFeaturedArticlesExpression().Compile())
+                .ThenByDescending(Article.GetOrderByDescendingTrendingScoreExpression().Compile())
                 .Select(GetLatestArticlesArticle.GetProjection().Compile());
 
             var trendingArticleDtos = articles
                 .Where(
-                    predicate: Article.GetTrendingArticlePredicate(
+                    Article.GetTrendingArticlePredicate(
                         maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
                         articleCreateDateTime: null
                     )
                     .Compile()
                 )
-                .OrderByDescending(
-                    keySelector: Article
-                        .GetOrderByDescendingTrendingScoreExpression()
-                        .Compile()
-                    )
+                .OrderByDescending(Article.GetOrderByDescendingTrendingScoreExpression().Compile())
                 .Select(GetLatestArticlesArticle.GetProjection().Compile());
 
             var articleDtos = featuredArticleDtos

@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using GraphQL.SystemTextJson;
 
-namespace Espresso.WebApi.Parameters.BodyParameters
+namespace Espresso.WebApi.RequestData.Body
 {
     /// <summary>
     /// 

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using Espresso.Common.Extensions;
 using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Infrastructure;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
@@ -335,6 +337,7 @@ namespace Espresso.Domain.Entities
 
             return article =>
                 !article.EditorConfiguration.IsHidden &&
+                article.EditorConfiguration.IsFeatured != false &&
                 article.CreateDateTime <= articleMinimumAge &&
                 article.PublishDateTime > maxTrendingDateTime &&
                 !article.NewsPortal!.CategoryId.Equals((int)CategoryId.Local);
@@ -358,8 +361,15 @@ namespace Espresso.Domain.Entities
             {
                 return article => false;
             }
-            return article => article.Title.StartsWith(titleSearchQuery, StringComparison.InvariantCultureIgnoreCase) ||
-                article.Title.Contains($" {titleSearchQuery}", StringComparison.InvariantCultureIgnoreCase);
+            var keywords = titleSearchQuery.RemoveExtraWhiteSpaceCharacters().Split(" ");
+
+            return article => keywords.Any(keyword => article.Title.StartsWith(keyword, StringComparison.InvariantCultureIgnoreCase)) &&
+                keywords.Any(keyword => article.Title.Contains($" {keyword}", StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        public static Expression<Func<Article, object?>> GetOrderByFeaturedArticlesExpression()
+        {
+            return article => article.EditorConfiguration.FeaturedPosition;
         }
         #endregion
 
