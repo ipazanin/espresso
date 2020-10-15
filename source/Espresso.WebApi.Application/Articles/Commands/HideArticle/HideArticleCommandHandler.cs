@@ -39,18 +39,17 @@ namespace Espresso.WebApi.Application.Articles.Commands.HideArticle
                 cancellationToken: cancellationToken
             );
 
-            if (databaseArticle != null)
-            {
-                databaseArticle.SetIsHidden(request.IsHidden);
-                _ = await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
-            }
-            else
+            if (databaseArticle is null)
             {
                 throw new NotFoundException(
                     typeName: nameof(Article),
                     id: request.ArticleId.ToString()
                 );
             }
+
+            databaseArticle.SetIsHidden(request.IsHidden);
+            _espressoDatabaseContext.Articles.Update(databaseArticle);
+            _ = await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
 
             if (memoryCacheArticles.TryGetValue(key: request.ArticleId, value: out var memoryCacheArticle))
             {

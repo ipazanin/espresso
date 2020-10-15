@@ -90,6 +90,8 @@ namespace Espresso.ParserDeleter.Application.Initialization
                 .Include(article => article.ArticleCategories)
                 .ThenInclude(articleCategory => articleCategory.Category)
                 .Include(article => article.NewsPortal)
+                .AsNoTracking()
+                .AsSplitQuery()
                 .ToListAsync();
 
             _ = _memoryCache.Set(
@@ -105,6 +107,7 @@ namespace Espresso.ParserDeleter.Application.Initialization
                 .Include(rssFeed => rssFeed.RssFeedCategories)
                 .ThenInclude(rssFeedCategory => rssFeedCategory.Category)
                 .Include(rssFeed => rssFeed.RssFeedContentModifiers)
+                .AsSplitQuery()
                 .AsNoTracking()
                 .ToListAsync();
 

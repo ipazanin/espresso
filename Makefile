@@ -51,11 +51,11 @@ endif
 
 compose-development:
 ifeq ($(arg), up)
-	sudo docker-compose -f ./compose/docker-compose-development.yml up --build --remove-orphans 
+	docker-compose -f ./compose/docker-compose-development.yml up --build --remove-orphans 
 else ifeq ($(strip $(arg)),)
-	sudo docker-compose -f ./compose/docker-compose-development.yml up --build --remove-orphans 
+	docker-compose -f ./compose/docker-compose-development.yml up --build --remove-orphans 
 else ifeq ($(arg), down)
-	sudo docker-compose -f ./compose/docker-compose-development.yml down
+	docker-compose -f ./compose/docker-compose-development.yml down
 else
 	echo "Invalid Argument. Accepted arguments: up, down"
 endif

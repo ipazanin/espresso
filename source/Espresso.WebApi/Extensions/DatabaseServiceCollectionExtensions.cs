@@ -42,19 +42,9 @@ namespace Espresso.WebApi.Extensions
                         sqlServerOptions.CommandTimeout(webApiConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
                     }
                 );
-                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-                switch (webApiConfiguration.AppConfiguration.AppEnvironment)
-                {
-                    case AppEnvironment.Undefined:
-                    case AppEnvironment.Local:
-                    case AppEnvironment.Dev:
-                    default:
-                        options.EnableDetailedErrors();
-                        options.EnableSensitiveDataLogging(true);
-                        break;
-                    case AppEnvironment.Prod:
-                        break;
-                }
+                options.UseQueryTrackingBehavior(webApiConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
+                options.EnableDetailedErrors(webApiConfiguration.DatabaseConfiguration.EnableDetailedErrors);
+                options.EnableSensitiveDataLogging(webApiConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
             });
 
             services.AddScoped<IDatabaseConnectionFactory>(serviceProvider => new DatabaseConnectionFactory(webApiConfiguration.DatabaseConfiguration.ConnectionString));

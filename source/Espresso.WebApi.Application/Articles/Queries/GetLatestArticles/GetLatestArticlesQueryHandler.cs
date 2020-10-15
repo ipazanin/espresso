@@ -93,7 +93,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                 key: MemoryCacheConstants.ArticleKey
             );
 
-            var featuredArticleDtos = articles
+            var featuredArticles = articles
                 .Where(
                     Article.GetFilteredFeaturedArticlesPredicate(
                         categoryIds: null,
@@ -105,10 +105,9 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                     .Compile()
                 )
                 .OrderByDescending(Article.GetOrderByFeaturedArticlesExpression().Compile())
-                .ThenByDescending(Article.GetOrderByDescendingTrendingScoreExpression().Compile())
-                .Select(GetLatestArticlesArticle.GetProjection().Compile());
+                .ThenByDescending(Article.GetOrderByDescendingTrendingScoreExpression().Compile());
 
-            var trendingArticleDtos = articles
+            var trendingArticles = articles
                 .Where(
                     Article.GetTrendingArticlePredicate(
                         maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
@@ -116,12 +115,12 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                     )
                     .Compile()
                 )
-                .OrderByDescending(Article.GetOrderByDescendingTrendingScoreExpression().Compile())
-                .Select(GetLatestArticlesArticle.GetProjection().Compile());
+                .OrderByDescending(Article.GetOrderByDescendingTrendingScoreExpression().Compile());
 
-            var articleDtos = featuredArticleDtos
-                .Union(trendingArticleDtos)
-                .Take(request.Take);
+            var articleDtos = featuredArticles
+                .Union(trendingArticles)
+                .Take(request.Take)
+                .Select(GetLatestArticlesArticle.GetProjection().Compile());
 
             return articleDtos;
         }

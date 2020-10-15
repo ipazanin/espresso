@@ -4,6 +4,7 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
 {
     public record AutoCompleteArticleQueryResponse
     {
-        public IEnumerable<string> ArticleTitles { get; init; } = new List<string>();
+        public IEnumerable<AutoCompleteArticleResult> AutoCompleteArticleResults { get; init; }
+            = new List<AutoCompleteArticleResult>();
     }
 }

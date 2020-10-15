@@ -67,19 +67,9 @@ namespace Espresso.ParserDeleter
                          sqlServerOptions.CommandTimeout(_parserDeleterConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
                      }
                  );
-                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-                 switch (_parserDeleterConfiguration.AppConfiguration.AppEnvironment)
-                 {
-                     case AppEnvironment.Undefined:
-                     case AppEnvironment.Local:
-                     case AppEnvironment.Dev:
-                     default:
-                         options.EnableDetailedErrors();
-                         options.EnableSensitiveDataLogging(true);
-                         break;
-                     case AppEnvironment.Prod:
-                         break;
-                 }
+                 options.UseQueryTrackingBehavior(_parserDeleterConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
+                 options.EnableDetailedErrors(_parserDeleterConfiguration.DatabaseConfiguration.EnableDetailedErrors);
+                 options.EnableSensitiveDataLogging(_parserDeleterConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
              });
 
             services.AddScoped<IDatabaseConnectionFactory>(o => new DatabaseConnectionFactory(
