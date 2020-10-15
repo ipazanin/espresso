@@ -2,9 +2,9 @@
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using MediatR;
 
-namespace Espresso.WebApi.Application.Articles.Commands.ToggleFeaturedArticle
+namespace Espresso.WebApi.Application.Articles.Commands.SetFeaturedArticle
 {
-    public record ToggleFeaturedArticleCommand : Request<Unit>
+    public record SetFeaturedArticleCommand : Request<Unit>
     {
         public Guid ArticleId { get; init; }
 

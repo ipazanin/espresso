@@ -361,10 +361,41 @@ namespace Espresso.Domain.Entities
             {
                 return article => false;
             }
-            var keywords = titleSearchQuery.RemoveExtraWhiteSpaceCharacters().Split(" ");
 
-            return article => keywords.Any(keyword => article.Title.StartsWith(keyword, StringComparison.InvariantCultureIgnoreCase)) &&
-                keywords.Any(keyword => article.Title.Contains($" {keyword}", StringComparison.InvariantCultureIgnoreCase));
+            var keywords = titleSearchQuery
+                .RemoveExtraWhiteSpaceCharacters()
+                .Split(" ")
+                .Where(keyword => !string.IsNullOrEmpty(keyword))
+                .Select(keyword => keyword
+                    .ToLower()
+                    .Replace("č", "c")
+                    .Replace("ć", "c")
+                    .Replace("ž", "z")
+                    .Replace("š", "s")
+                    .Replace("đ", "d")
+                );
+
+            return article => keywords
+                .All(keyword =>
+                    article
+                        .Title
+                        .ToLower()
+                        .Replace("č", "c")
+                        .Replace("ć", "c")
+                        .Replace("ž", "z")
+                        .Replace("š", "s")
+                        .Replace("đ", "d")
+                        .StartsWith(keyword, StringComparison.InvariantCultureIgnoreCase) ||
+                    article
+                        .Title
+                        .ToLower()
+                        .Replace("č", "c")
+                        .Replace("ć", "c")
+                        .Replace("ž", "z")
+                        .Replace("š", "s")
+                        .Replace("đ", "d")
+                        .Contains($" {keyword}", StringComparison.InvariantCultureIgnoreCase)
+                );
         }
 
         public static Expression<Func<Article, object?>> GetOrderByFeaturedArticlesExpression()

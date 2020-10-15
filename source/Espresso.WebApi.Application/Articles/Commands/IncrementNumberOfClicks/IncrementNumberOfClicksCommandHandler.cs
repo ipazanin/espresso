@@ -44,16 +44,14 @@ namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticle
                 cancellationToken: cancellationToken
             );
 
-            if (databaseArticle != null)
-            {
-                databaseArticle.IncrementNumberOfClicks();
-                _context.Articles.Update(databaseArticle);
-                await _context.SaveChangesAsync(cancellationToken);
-            }
-            else
+            if (databaseArticle is null)
             {
                 throw new NotFoundException(typeName: nameof(Article), id: request.Id.ToString());
             }
+
+            databaseArticle.IncrementNumberOfClicks();
+            _context.Articles.Update(databaseArticle);
+            await _context.SaveChangesAsync(cancellationToken);
 
             if (memoryCacheArticles.TryGetValue(request.Id, out var memoryCacheArticle))
             {

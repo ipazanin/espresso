@@ -111,6 +111,8 @@ namespace Espresso.WebApi.Application.Initialization
                 .Include(article => article.ArticleCategories)
                 .ThenInclude(articleCategory => articleCategory.Category)
                 .Include(article => article.NewsPortal)
+                .AsSplitQuery()
+                .AsNoTracking()
                 .ToListAsync();
 
             _ = _memoryCache.Set(

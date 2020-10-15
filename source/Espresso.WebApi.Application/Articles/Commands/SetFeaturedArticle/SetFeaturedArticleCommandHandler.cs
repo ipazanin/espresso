@@ -8,10 +8,11 @@ using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.EntityFrameworkCore;
 
-namespace Espresso.WebApi.Application.Articles.Commands.ToggleFeaturedArticle
+namespace Espresso.WebApi.Application.Articles.Commands.SetFeaturedArticle
 {
-    public class ToggleFeaturedArticleCommandHandler : IRequestHandler<ToggleFeaturedArticleCommand>
+    public class SetFeaturedArticleCommandHandler : IRequestHandler<SetFeaturedArticleCommand>
     {
         #region Fields
         private readonly IMemoryCache _memoryCache;
@@ -19,7 +20,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.ToggleFeaturedArticle
         #endregion
 
         #region Constructors
-        public ToggleFeaturedArticleCommandHandler(
+        public SetFeaturedArticleCommandHandler(
             IMemoryCache memoryCache,
             IApplicationDatabaseContext context
         )
@@ -31,7 +32,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.ToggleFeaturedArticle
 
         #region Methods
         public async Task<Unit> Handle(
-            ToggleFeaturedArticleCommand request,
+            SetFeaturedArticleCommand request,
             CancellationToken cancellationToken
         )
         {
@@ -44,18 +45,17 @@ namespace Espresso.WebApi.Application.Articles.Commands.ToggleFeaturedArticle
                 cancellationToken: default
             );
 
-            if (databaseArticle != null)
-            {
-                databaseArticle.SetIsFeaturedValue(request.IsFeatured, request.FeraturedPosition);
-                _ = _context.SaveChangesAsync(cancellationToken: default);
-            }
-            else
+            if (databaseArticle is null)
             {
                 throw new NotFoundException(
                     typeName: nameof(Article),
                     id: request.ArticleId.ToString()
                 );
             }
+
+            databaseArticle.SetIsFeaturedValue(request.IsFeatured, request.FeraturedPosition);
+            _context.Articles.Update(databaseArticle);
+            _ = _context.SaveChangesAsync(cancellationToken: default);
 
             if (memoryCacheArticles.TryGetValue(request.ArticleId, out var memoryCacheArticle))
             {

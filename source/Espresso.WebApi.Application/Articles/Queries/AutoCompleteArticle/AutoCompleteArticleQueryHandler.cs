@@ -30,14 +30,18 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
             var candidateArticles = articles
                 .Where(Article.GetAutocompleteArticleTitleExpression(request.TitleSearchQuery).Compile());
 
-            var articleTitles = candidateArticles
-                .Select(article => article.Title)
+            var autoCompleteArticleResults = candidateArticles
                 .Skip(request.Skip)
-                .Take(request.Take);
+                .Take(request.Take)
+                .Select(article => new AutoCompleteArticleResult
+                {
+                    Title = article.Title,
+                    Url = article.Url
+                });
 
             var result = new AutoCompleteArticleQueryResponse
             {
-                ArticleTitles = articleTitles
+                AutoCompleteArticleResults = autoCompleteArticleResults
             };
 
             return Task.FromResult(result);

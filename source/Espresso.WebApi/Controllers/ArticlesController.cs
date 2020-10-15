@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Espresso.WebApi.Application.Articles.Commands.CalculateTrendingScore;
 using Espresso.WebApi.Application.Articles.Commands.HideArticle;
 using Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticleScore;
-using Espresso.WebApi.Application.Articles.Commands.ToggleFeaturedArticle;
+using Espresso.WebApi.Application.Articles.Commands.SetFeaturedArticle;
 using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles;
 using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3;
 using Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles;
@@ -97,6 +97,7 @@ namespace Espresso.WebApi.Controllers
                     TitleSearchQuery = titleSearchQuery,
                     MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
                     MaxAgeOfTrendingArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
+                    MaxAgeOfFeaturedArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,
                     FeaturedArticlesTake = WebApiConfiguration.AppConfiguration.FeaturedArticlesTake,
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
@@ -674,7 +675,7 @@ namespace Espresso.WebApi.Controllers
         )
         {
             await Sender.Send(
-                request: new ToggleFeaturedArticleCommand
+                request: new SetFeaturedArticleCommand
                 {
                     ArticleId = articleId,
                     IsFeatured = requestBody.IsFeatured,
