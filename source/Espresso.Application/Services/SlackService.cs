@@ -10,7 +10,7 @@ using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
-using Espresso.Domain.DataTransferObjects;
+using Espresso.Application.DataTransferObjects;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Espresso.Domain.DataTransferObjects
+namespace Espresso.Application.DataTransferObjects
 {
     public class SlackWebHookDto
     {
@@ -16,7 +16,12 @@ namespace Espresso.Domain.DataTransferObjects
         [JsonPropertyName("channel")]
         public string Channel { get; }
 
-        public SlackWebHookDto(string userName, string iconEmoji, string text, string channel)
+        public SlackWebHookDto(
+            string userName,
+            string iconEmoji,
+            string text,
+            string channel
+        )
         {
             Username = userName;
             IconEmoji = iconEmoji;

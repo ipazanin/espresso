@@ -16,16 +16,16 @@ using Espresso.Common.Constants;
 using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Infrastructure;
-using Espresso.WebApi.Parameters.HeaderParameters;
-using Espresso.WebApi.QueryParameters;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Espresso.WebApi.DataTransferObjects;
-using Espresso.WebApi.RequestObjects;
 using Espresso.WebApi.Application.Articles.AutoCompleteArticle;
 using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4;
+using Espresso.WebApi.RequestData.Header;
+using Espresso.WebApi.RequestData.Query;
+using Espresso.WebApi.RequestData.Body;
 
 namespace Espresso.WebApi.Controllers
 {
@@ -59,7 +59,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored</param>
         /// <param name="titleSearchQuery">Article Title Search Query</param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <param name="paginationParameters">Parameters used for pagination</param>
+        /// <param name="articlePaginationParameters">Parameters used for pagination</param>
         /// <returns>Response object containing articles</returns>
         /// <response code="200">Response object containing articles</response>
         /// <response code="400">If validation fails</response>
@@ -78,7 +78,7 @@ namespace Espresso.WebApi.Controllers
         [Route("api/articles")]
         public async Task<IActionResult> GetLatestArticles(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            [FromQuery] PaginationParameters paginationParameters,
+            [FromQuery] ArticlePaginationParameters articlePaginationParameters,
             CancellationToken cancellationToken,
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] string? categoryIds = null,
@@ -88,9 +88,9 @@ namespace Espresso.WebApi.Controllers
             var response = await Sender.Send(
                 request: new GetLatestArticlesQuery
                 {
-                    Take = paginationParameters.Take,
-                    Skip = paginationParameters.Skip,
-                    FirstArticleId = paginationParameters.FirstArticleId,
+                    Take = articlePaginationParameters.Take,
+                    Skip = articlePaginationParameters.Skip,
+                    FirstArticleId = articlePaginationParameters.FirstArticleId,
                     NewsPortalIds = newsPortalIds,
                     CategoryIds = categoryIds,
                     NewNewsPortalsPosition = WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
@@ -122,7 +122,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored</param>
         /// <param name="titleSearchQuery">Article Title Search Query</param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <param name="paginationParameters">Parameters used for pagination</param>
+        /// <param name="articlePaginationParameters">Parameters used for pagination</param>
         /// <returns>Response object containing articles</returns>
         /// <response code="200">Response object containing articles</response>
         /// <response code="400">If validation fails</response>
@@ -141,7 +141,7 @@ namespace Espresso.WebApi.Controllers
         [Route("api/articles")]
         public async Task<IActionResult> GetLatestArticles_1_4(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            [FromQuery] PaginationParameters paginationParameters,
+            [FromQuery] ArticlePaginationParameters articlePaginationParameters,
             CancellationToken cancellationToken,
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] string? categoryIds = null,
@@ -151,9 +151,9 @@ namespace Espresso.WebApi.Controllers
             var response = await Sender.Send(
                 request: new GetLatestArticlesQuery_1_4
                 {
-                    Take = paginationParameters.Take,
-                    Skip = paginationParameters.Skip,
-                    FirstArticleId = paginationParameters.FirstArticleId,
+                    Take = articlePaginationParameters.Take,
+                    Skip = articlePaginationParameters.Skip,
+                    FirstArticleId = articlePaginationParameters.FirstArticleId,
                     NewsPortalIds = newsPortalIds,
                     CategoryIds = categoryIds,
                     NewNewsPortalsPosition = WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
@@ -240,7 +240,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="cancellationToken"></param>
         /// <param name="categoryId">Category Id</param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <param name="paginationParameters">Parameters used for pagination</param>
+        /// <param name="articlePaginationParameters">Parameters used for pagination</param>
         /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
         /// <param name="regionId">Region ID</param>
         /// <param name="titleSearchQuery">Article Title Search Query</param>
@@ -264,7 +264,7 @@ namespace Espresso.WebApi.Controllers
         public async Task<IActionResult> GetCategoryArticles(
             [FromRoute] int categoryId,
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            [FromQuery] PaginationParameters paginationParameters,
+            [FromQuery] ArticlePaginationParameters articlePaginationParameters,
             CancellationToken cancellationToken,
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] int? regionId = null,
@@ -274,9 +274,9 @@ namespace Espresso.WebApi.Controllers
             var articles = await Sender.Send(
                 request: new GetCategoryArticlesQuery
                 {
-                    Take = paginationParameters.Take,
-                    Skip = paginationParameters.Skip,
-                    FirstArticleId = paginationParameters.FirstArticleId,
+                    Take = articlePaginationParameters.Take,
+                    Skip = articlePaginationParameters.Skip,
+                    FirstArticleId = articlePaginationParameters.FirstArticleId,
                     CategoryId = categoryId,
                     NewsPortalIds = newsPortalIds,
                     RegionId = regionId,
@@ -362,7 +362,7 @@ namespace Espresso.WebApi.Controllers
         /// </remarks>
         /// <param name="cancellationToken"></param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <param name="paginationParameters">Parameters used for pagination</param>
+        /// <param name="articlePaginationParameters">Parameters used for pagination</param>
         /// <returns>Response object containing articles</returns>
         /// <response code="200">Response object containing articles</response>
         /// <response code="400">If validation fails</response>
@@ -384,16 +384,16 @@ namespace Espresso.WebApi.Controllers
         [Route("api/articles/trending")]
         public async Task<IActionResult> GetTrendingArticles(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            [FromQuery] PaginationParameters paginationParameters,
+            [FromQuery] ArticlePaginationParameters articlePaginationParameters,
             CancellationToken cancellationToken
         )
         {
             var response = await Sender.Send(
                 request: new GetTrendingArticlesQuery
                 {
-                    Take = paginationParameters.Take,
-                    Skip = paginationParameters.Skip,
-                    FirstArticleId = paginationParameters.FirstArticleId,
+                    Take = articlePaginationParameters.Take,
+                    Skip = articlePaginationParameters.Skip,
+                    FirstArticleId = articlePaginationParameters.FirstArticleId,
                     MaxAgeOfTrendingArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
@@ -418,7 +418,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="newsPortalIds">NewsPortal Ids comma delimited</param>
         /// <param name="categoryIds">Category Ids comma delimited</param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <param name="paginationParameters">Parameters used for pagination</param>
+        /// <param name="articlePaginationParameters">Parameters used for pagination</param>
         /// <returns>Response object containing articles</returns>
         /// <response code="200">Response object containing articles</response>
         /// <response code="400">If validation fails</response>
@@ -438,7 +438,7 @@ namespace Espresso.WebApi.Controllers
         [Route("api/articles/featured")]
         public async Task<IActionResult> GetFeaturedArticles(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            [FromQuery] PaginationParameters paginationParameters,
+            [FromQuery] ArticlePaginationParameters articlePaginationParameters,
             CancellationToken cancellationToken,
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] string? categoryIds = null
@@ -447,9 +447,9 @@ namespace Espresso.WebApi.Controllers
             var response = await Sender.Send(
                 request: new GetFeaturedArticlesQuery
                 {
-                    Take = paginationParameters.Take,
-                    Skip = paginationParameters.Skip,
-                    FirstArticleId = paginationParameters.FirstArticleId,
+                    Take = articlePaginationParameters.Take,
+                    Skip = articlePaginationParameters.Skip,
+                    FirstArticleId = articlePaginationParameters.FirstArticleId,
                     CategoryIds = categoryIds,
                     NewsPortalIds = newsPortalIds,
                     MaxAgeOfFeaturedArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,
@@ -697,6 +697,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="cancellationToken"></param>
         /// <param name="basicInformationsHeaderParameters">Basic App Informations</param>
         /// <param name="titleSearchQuery"></param>
+        /// <param name="paginationParameters"></param>
         /// <returns></returns>
         /// <response code="200">When operation is sucessfull</response>
         /// <response code="400">If validation fails</response>
@@ -718,13 +719,15 @@ namespace Espresso.WebApi.Controllers
         public async Task<IActionResult> AutoCompleteArticleTitles(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             [FromQuery] string? titleSearchQuery,
+            [FromQuery] PaginationParameters paginationParameters,
             CancellationToken cancellationToken
         )
         {
             var request = new AutoCompleteArticleQuery
             {
                 TitleSearchQuery = titleSearchQuery,
-                Take = WebApiConfiguration.AppConfiguration.AutoCompleteResultsTake,
+                Take = paginationParameters.Take,
+                Skip = paginationParameters.Skip,
                 TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                 ConsumerVersion = basicInformationsHeaderParameters.Version,
                 DeviceType = basicInformationsHeaderParameters.DeviceType,

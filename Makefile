@@ -6,7 +6,7 @@ all:
 	compose-local database-update docker-build-webapi \
 	docker-build-parserdeleter docker-build migration-add \
 	migration-remove update restore start-p start-w \
-	test-coverage test \
+	test-backend-coverage test-backend \
 	health-check-frontend rebuild-frontend install build-frontend lint test-frontend 
 
 .PHONY : all
@@ -27,7 +27,7 @@ rebuild:
 health-check-backend:
 	make restore
 	make build
-	make test
+	make test-backend
 
 rebuild-backend:
 	dotnet clean --configuration Release --verbosity minimal source/Espresso.sln
@@ -139,14 +139,14 @@ else
 	echo "Invalid Argument. Accepted arguments: {empty}, watch}"
 endif
 
-test-coverage:
+test-backend-coverage:
 	sudo dotnet test --logger 'trx;LogFileName=TestResults.trx' \
 	--logger 'xunit;LogFileName=TestResults.xml' \
 	--results-directory ./tests/UnitTests/TestReports/UnitTests \
 	/p:CollectCoverage=true /p:CoverletOutput=TestReports/Coverage/ \
 	/p:CoverletOutputFormat=cobertura ./source/Espresso.sln
 
-test:
+test-backend:
 ifeq ($(strip $(verbosity)),)
 	dotnet test --verbosity minimal source/Espresso.sln
 else

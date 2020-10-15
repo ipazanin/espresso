@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Espresso.Common.Enums;
 using Microsoft.Extensions.Configuration;
 
@@ -24,7 +25,7 @@ namespace Espresso.ParserDeleter.Configuration
                 value: _configuration.GetValue<int>("MaxAgeOfArticlesInDays")
             );
 
-        public static TimeSpan Uptime => TimeSpan.FromMilliseconds(Environment.TickCount64);
+        public TimeSpan Uptime => DateTime.UtcNow - Process.GetCurrentProcess().StartTime.ToUniversalTime();
         #endregion
 
         #region Constructors

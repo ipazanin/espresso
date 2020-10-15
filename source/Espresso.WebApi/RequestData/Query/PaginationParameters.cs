@@ -1,7 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Espresso.WebApi.QueryParameters
+namespace Espresso.WebApi.RequestData.Query
 {
     /// <summary>
     /// 
@@ -21,12 +21,5 @@ namespace Espresso.WebApi.QueryParameters
         /// <value></value>
         [FromQuery(Name = "skip")]
         public int Skip { get; set; } = 0;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        [FromQuery(Name = "firstArticleId")]
-        public Guid? FirstArticleId { get; set; } = null;
     }
 }

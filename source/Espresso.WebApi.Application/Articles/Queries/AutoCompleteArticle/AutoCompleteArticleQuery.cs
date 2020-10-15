@@ -8,5 +8,7 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
         public string? TitleSearchQuery { get; init; }
 
         public int Take { get; init; }
+
+        public int Skip { get; init; }
     }
 }

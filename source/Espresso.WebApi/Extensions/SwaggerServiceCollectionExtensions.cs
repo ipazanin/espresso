@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Configuration;
-using Espresso.WebApi.Parameters.HeaderParameters;
+using Espresso.WebApi.RequestData.Header;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;

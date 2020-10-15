@@ -27,10 +27,12 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
         {
             var articles = _memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey);
 
-            var candidateArticles = articles.Where(Article.GetAutocompleteArticleTitleExpression(request.TitleSearchQuery).Compile());
+            var candidateArticles = articles
+                .Where(Article.GetAutocompleteArticleTitleExpression(request.TitleSearchQuery).Compile());
 
             var articleTitles = candidateArticles
                 .Select(article => article.Title)
+                .Skip(request.Skip)
                 .Take(request.Take);
 
             var result = new AutoCompleteArticleQueryResponse

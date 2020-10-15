@@ -12,8 +12,8 @@ using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles;
 using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3;
 using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles;
 using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_3;
+using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4;
 using Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles;
-using Espresso.WebApi.Application.Categories.Queries.GetCategories;
 using Espresso.WebApi.Application.Configuration.Queries.GetConfiguration;
 using Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3;
 using Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals;
@@ -37,6 +37,7 @@ namespace Espresso.WebApi.CronJobs
             nameof(GetCategoryArticlesQuery),
             nameof(GetCategoryArticlesQuery_1_3),
             nameof(GetLatestArticlesQuery),
+            nameof(GetLatestArticlesQuery_1_4),
             nameof(GetLatestArticlesQuery_1_3),
             nameof(GetTrendingArticlesQuery),
             nameof(GetConfigurationQuery),
@@ -148,6 +149,7 @@ namespace Espresso.WebApi.CronJobs
                 return (requestName, count, total);
             }
             var dailyCount = (int)(count / _webApiConfiguration.AppConfiguration.Uptime.TotalDays);
+
             return (requestName, dailyCount, total / count);
         }
 
@@ -158,7 +160,7 @@ namespace Espresso.WebApi.CronJobs
             var articles = memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey);
 
             var topArticles = articles
-                .Where(article => article.PublishDateTime > DateTime.UtcNow.AddDays(-2))
+                .Where(article => article.PublishDateTime > DateTime.UtcNow.AddDays(-1))
                 .OrderByDescending(article => article.NumberOfClicks)
                 .ThenByDescending(article => article.PublishDateTime)
                 .Take(5);
