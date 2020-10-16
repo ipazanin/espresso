@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Clean') {
             steps {
-                bash "dotnet clean source\\Espresso.sln"
+                sh "dotnet clean source\\Espresso.sln"
             }
         }
     }
