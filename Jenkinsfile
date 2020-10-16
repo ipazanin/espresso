@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clean') {
             steps {
-                sh "dotnet clean source/Espresso.sln"
+                sh "make restore"
             }
         }
     }
