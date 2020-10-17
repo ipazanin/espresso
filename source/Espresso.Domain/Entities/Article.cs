@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using Espresso.Common.Extensions;
+using Espresso.Common.Utilities;
 using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Infrastructure;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
@@ -267,7 +268,7 @@ namespace Espresso.Domain.Entities
         public static Expression<Func<Article, bool>> GetFilteredArticlesPredicate(
             IEnumerable<int>? categoryIds,
             IEnumerable<int>? newsPortalIds,
-            string? titleSearchQuery,
+            IEnumerable<string>? searchTerms,
             DateTime? articleCreateDateTime
         )
         {
@@ -280,13 +281,13 @@ namespace Espresso.Domain.Entities
                     .ArticleCategories
                     .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
                 (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)) &&
-                (string.IsNullOrEmpty(titleSearchQuery) || article.Title.Contains(titleSearchQuery));
+                (searchTerms == null || searchTerms.All(searchTerm => article.Title.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase)));
         }
 
         public static Expression<Func<Article, bool>> GetFilteredArticlesPredicate(
             int categoryId,
             IEnumerable<int>? newsPortalIds,
-            string? titleSearchQuery,
+            IEnumerable<string>? searchTerms,
             DateTime? articleCreateDateTime
         )
         {
@@ -297,19 +298,18 @@ namespace Espresso.Domain.Entities
                 article.CreateDateTime <= articleMinimumAge &&
                 article.ArticleCategories.Any(articleCategory => articleCategory.CategoryId.Equals(categoryId)) &&
                 (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)) &&
-                (string.IsNullOrEmpty(titleSearchQuery) || article.Title.Contains(titleSearchQuery));
+                (searchTerms == null || searchTerms.All(searchTerm => article.Title.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase)));
         }
 
         public static Expression<Func<Article, bool>> GetFilteredFeaturedArticlesPredicate(
             IEnumerable<int>? categoryIds,
             IEnumerable<int>? newsPortalIds,
-            string? titleSearchQuery,
+            IEnumerable<string>? searchTerms,
             TimeSpan maxAgeOfFeaturedArticle,
             DateTime? articleCreateDateTime
         )
         {
             var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
-
             var maxDateTimeOfFeaturedArticle = DateTime.UtcNow - maxAgeOfFeaturedArticle;
 
             return article =>
@@ -322,7 +322,7 @@ namespace Espresso.Domain.Entities
                     .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
                 (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)) &&
                 !article.NewsPortal!.CategoryId.Equals((int)CategoryId.Local) &&
-                (string.IsNullOrEmpty(titleSearchQuery) || article.Title.Contains(titleSearchQuery));
+                (searchTerms == null || searchTerms.All(searchTerm => article.Title.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase)));
         }
 
 
@@ -351,51 +351,6 @@ namespace Espresso.Domain.Entities
         public static Expression<Func<Article, object>> GetOrderByDescendingPublishDateExpression()
         {
             return article => article.PublishDateTime;
-        }
-
-        public static Expression<Func<Article, bool>> GetAutocompleteArticleTitleExpression(
-            string? titleSearchQuery
-        )
-        {
-            if (string.IsNullOrWhiteSpace(titleSearchQuery))
-            {
-                return article => false;
-            }
-
-            var keywords = titleSearchQuery
-                .RemoveExtraWhiteSpaceCharacters()
-                .Split(" ")
-                .Where(keyword => !string.IsNullOrEmpty(keyword))
-                .Select(keyword => keyword
-                    .ToLower()
-                    .Replace("č", "c")
-                    .Replace("ć", "c")
-                    .Replace("ž", "z")
-                    .Replace("š", "s")
-                    .Replace("đ", "d")
-                );
-
-            return article => keywords
-                .All(keyword =>
-                    article
-                        .Title
-                        .ToLower()
-                        .Replace("č", "c")
-                        .Replace("ć", "c")
-                        .Replace("ž", "z")
-                        .Replace("š", "s")
-                        .Replace("đ", "d")
-                        .StartsWith(keyword, StringComparison.InvariantCultureIgnoreCase) ||
-                    article
-                        .Title
-                        .ToLower()
-                        .Replace("č", "c")
-                        .Replace("ć", "c")
-                        .Replace("ž", "z")
-                        .Replace("š", "s")
-                        .Replace("đ", "d")
-                        .Contains($" {keyword}", StringComparison.InvariantCultureIgnoreCase)
-                );
         }
 
         public static Expression<Func<Article, object?>> GetOrderByFeaturedArticlesExpression()

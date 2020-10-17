@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
+using Espresso.WebApi.Application.Utilities;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -53,7 +54,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
                     predicate: Article.GetFilteredFeaturedArticlesPredicate(
                         categoryIds: categoryIds,
                         newsPortalIds: newsPortalIds,
-                        titleSearchQuery: null,
+                        searchTerms: null,
                         maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
                         articleCreateDateTime: firstArticle?.CreateDateTime
                     ).Compile()
