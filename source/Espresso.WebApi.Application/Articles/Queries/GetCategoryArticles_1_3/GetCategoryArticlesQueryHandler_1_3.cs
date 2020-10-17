@@ -43,7 +43,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
                     predicate: Article.GetFilteredArticlesPredicate(
                         categoryId: request.CategoryId,
                         newsPortalIds: newsPortalIds,
-                        titleSearchQuery: null,
+                        searchTerms: null,
                         articleCreateDateTime: null
                     ).Compile()
                 )

@@ -9,13 +9,12 @@
         /// <returns></returns>
         public static string RemoveExtraWhiteSpaceCharacters(this string input)
         {
-            int len = input.Length,
-                index = 0,
-                i = 0;
+            var len = input.Length;
+            var index = 0;
             var src = input.ToCharArray();
             var skip = false;
             char ch;
-            for (; i < len; i++)
+            for (var i = 0; i < len; i++)
             {
                 ch = src[i];
                 switch (ch)
@@ -58,6 +57,34 @@
                         src[index++] = ch;
                         continue;
                 }
+            }
+
+            return new string(src, 0, index);
+        }
+
+        public static string ReplaceCroatianCharacters(this string input)
+        {
+            var len = input.Length;
+            var index = 0;
+            var src = input.ToCharArray();
+            char ch;
+            for (var i = 0; i < len; i++)
+            {
+                ch = src[i];
+                src[index++] = ch switch
+                {
+                    'ć' => 'c',
+                    'Ć' => 'C',
+                    'č' => 'c',
+                    'Č' => 'C',
+                    'ž' => 'z',
+                    'Ž' => 'Z',
+                    'š' => 's',
+                    'Š' => 'S',
+                    'đ' => 'd',
+                    'Đ' => 'D',
+                    _ => ch,
+                };
             }
 
             return new string(src, 0, index);
