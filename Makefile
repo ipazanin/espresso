@@ -16,8 +16,8 @@ list:
 	{if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
 
 health-check:
-	# make health-check-backend
-	# make health-check-frontend
+	make health-check-backend
+	make health-check-frontend
 
 rebuild:
 	make rebuild-backend
