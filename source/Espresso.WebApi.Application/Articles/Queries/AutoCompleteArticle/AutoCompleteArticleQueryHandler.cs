@@ -31,7 +31,7 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
         {
             var articles = _memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey);
 
-            var matchedWords = GetMatchedWords(request.TitleSearchQuery, articles);
+            var matchedWords = GetMatchedWords(request, articles);
 
             var result = new AutoCompleteArticleQueryResponse
             {
@@ -42,38 +42,36 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
         }
 
         public static IEnumerable<string> GetMatchedWords(
-            string? titleSearchTerm,
+            AutoCompleteArticleQuery request,
             IEnumerable<Article> articles
         )
         {
-            if (titleSearchTerm is null)
+            if (request.TitleSearchQuery is null)
             {
                 return Array.Empty<string>();
             }
 
-            var searchTerms = titleSearchTerm
-                .RemoveExtraWhiteSpaceCharacters()
-                .Split(" ")
-                .Where(keyword => !string.IsNullOrEmpty(keyword))
-                .Select(keyword => keyword.ReplaceCroatianCharacters());
-
             var matchedWords = new List<string>();
-            foreach (var searchTerm in searchTerms)
-            {
-                var searchRegexPattern = $"(^| |\n){searchTerm}([a-z])*( |\\.|;|:|,)";
-                var replaceDelimiterCharactersRegexPatter = "( |\\.|;|:|,)";
-                var matchedArticleTitleWords = articles
-                    .Select(article => Regex.Matches(article.Title.ReplaceCroatianCharacters(), searchRegexPattern, RegexOptions.IgnoreCase))
-                    .SelectMany(matches => matches.Select(match => match.Value));
+            var matches = Regex
+                .Matches(request.TitleSearchQuery, "([a-z]|[A-Z]|ž|Ž|đ|Đ|ć|Ć|č|Č|š|Š)+")
+                .Select(match => match.Value);
+            var searchTerm = string.Join(" ", matches);
+            var searchRegexPattern = $"(^| |\n){searchTerm}([a-z])*( |\\.|;|:|,)";
+            var replaceDelimiterCharactersRegexPatter = "( |\\.|;|:|,)";
+            var matchedArticleTitleWords = articles
+                .Select(article => Regex.Matches(article.Title.ReplaceCroatianCharacters(), searchRegexPattern, RegexOptions.IgnoreCase))
+                .SelectMany(matches => matches.Select(match => match.Value));
 
-                var matchesWithReplacedDelimiterCharacter = matchedArticleTitleWords
-                    .Select(word => Regex.Replace(word, replaceDelimiterCharactersRegexPatter, ""));
+            var matchesWithReplacedDelimiterCharacter = matchedArticleTitleWords
+                .Select(word => Regex.Replace(word, replaceDelimiterCharactersRegexPatter, ""));
 
-                matchedWords.AddRange(matchesWithReplacedDelimiterCharacter);
-            }
+            matchedWords.AddRange(matchesWithReplacedDelimiterCharacter);
 
 
-            return matchedWords.Distinct(StringComparer.InvariantCultureIgnoreCase);
+            return matchedWords
+                .Distinct(StringComparer.InvariantCultureIgnoreCase)
+                .Skip(request.Skip)
+                .Take(request.Take);
         }
         #endregion
     }
