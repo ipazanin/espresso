@@ -1,4 +1,6 @@
-﻿namespace Espresso.Common.Extensions
+﻿using System.Text;
+
+namespace Espresso.Common.Extensions
 {
     public static class StringExtensions
     {
@@ -89,5 +91,44 @@
 
             return new string(src, 0, index);
         }
+
+        public static string ReplaceCroatianCharactersRegex(this string input)
+        {
+            var len = input.Length;
+            var src = input.ToCharArray();
+            char ch;
+            var builder = new StringBuilder();
+            for (var i = 0; i < len; i++)
+            {
+                ch = src[i];
+                var regexExpression = ch switch
+                {
+                    'ć' => "(ć|c|č)",
+                    'Ć' => "(Ć|C|Č)",
+                    'č' => "(č|c|ć)",
+                    'Č' => "(Č|C|Ć)",
+                    'ž' => "(ž|z)",
+                    'Ž' => "(Ž|Z)",
+                    'š' => "(š|s)",
+                    'Š' => "(Š|S)",
+                    'đ' => "(đ|d)",
+                    'Đ' => "(Đ|D)",
+                    'c' => "(ć|c|č)",
+                    'C' => "(Ć|C|Č)",
+                    'z' => "(ž|z)",
+                    'Z' => "(Ž|Z)",
+                    's' => "(š|s)",
+                    'S' => "(Š|S)",
+                    'd' => "(đ|d)",
+                    'D' => "(Đ|D)",
+                    _ => ch.ToString(),
+                };
+
+                builder.Append(regexExpression);
+            }
+
+            return builder.ToString();
+        }
+
     }
 }
