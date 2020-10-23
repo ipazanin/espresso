@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
+using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
+using Espresso.WebApi.Application.Exceptions;
 using FirebaseAdmin.Messaging;
 using MediatR;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotification
 {
@@ -20,20 +25,43 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
 
         #region Fields
         private readonly IApplicationDatabaseContext _espressoDatabaseContext;
+        private readonly IMemoryCache _memoryCache;
         #endregion
 
         #region Constructors
         public SendPushNotificationCommandHandler(
-            IApplicationDatabaseContext espressoDatabaseContext
+            IApplicationDatabaseContext espressoDatabaseContext,
+            IMemoryCache memoryCache
         )
         {
             _espressoDatabaseContext = espressoDatabaseContext;
+            _memoryCache = memoryCache;
         }
         #endregion
 
         #region Methods
         public async Task<Unit> Handle(SendPushNotificationCommand request, CancellationToken cancellationToken)
         {
+            if (request.AppEnvironment != Common.Enums.AppEnvironment.Prod)
+            {
+                return Unit.Value;
+            }
+
+            var articles = _memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey);
+            var pushNotificationArticle = articles.FirstOrDefault(article => article.Id == request.ArticleId);
+
+            if (pushNotificationArticle is null)
+            {
+                throw new NotFoundException("Article was not found!");
+            }
+
+            var articleDto = SendPushNotificationArticle
+                .GetProjection()
+                .Compile()
+                .Invoke(pushNotificationArticle);
+
+            var articleDtoJsonString = await JsonUtility.Serialize(articleDto, cancellationToken);
+
             var internalName = GetInternalName(request.InternalName);
             var message = new Message()
             {
@@ -42,7 +70,8 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
                     Title = request.Title,
                     Body = request.Message,
                 },
-                Topic = request.Topic,
+                // Topic = request.Topic,
+                Token = request.Topic,
                 Apns = new ApnsConfig
                 {
                     Aps = new Aps
@@ -61,6 +90,7 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
                         { "title", request.Title },
                         { "message", request.Message },
                         { "url", request.ArticleUrl },
+                        { "article", articleDtoJsonString },
                     },
 
                 },
@@ -70,6 +100,7 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
                     { "title", request.Title },
                     { "message", request.Message },
                     { "url", request.ArticleUrl },
+                    { "article", articleDtoJsonString },
                 }
             };
 

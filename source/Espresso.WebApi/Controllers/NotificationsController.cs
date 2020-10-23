@@ -117,7 +117,7 @@ namespace Espresso.WebApi.Controllers
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <param name="sendPushNotificationRequestObject"></param>
+        /// <param name="sendPushNotificationRequestBody"></param>
         /// <returns>OK</returns>
         /// <response code="200">Response object containing app configuration</response>
         /// <response code="400">If Request body is invalid</response>
@@ -131,25 +131,25 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
         [ApiVersion("2.0")]
-        [ApiVersion("1.4")]
         [HttpPost]
         [Authorize(Roles = ApiKey.DevMobileAppRole)]
         [Route("api/notifications")]
         public async Task<IActionResult> SendPushNotificition(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            [FromBody] SendPushNotificationRequestBody sendPushNotificationRequestObject,
+            [FromBody] SendPushNotificationRequestBody sendPushNotificationRequestBody,
             CancellationToken cancellationToken
         )
         {
             await Sender.Send(
                 request: new SendPushNotificationCommand
                 {
-                    InternalName = sendPushNotificationRequestObject.InternalName ?? "",
-                    Title = sendPushNotificationRequestObject.Title ?? "",
-                    Message = sendPushNotificationRequestObject.Message ?? "",
-                    Topic = sendPushNotificationRequestObject.Topic ?? "",
-                    ArticleUrl = sendPushNotificationRequestObject.ArticleUrl ?? "",
-                    IsSoundEnabled = sendPushNotificationRequestObject.IsSoundEnabled,
+                    ArticleId = sendPushNotificationRequestBody.ArticleId,
+                    InternalName = sendPushNotificationRequestBody.InternalName ?? "",
+                    Title = sendPushNotificationRequestBody.Title ?? "",
+                    Message = sendPushNotificationRequestBody.Message ?? "",
+                    Topic = sendPushNotificationRequestBody.Topic ?? "",
+                    ArticleUrl = sendPushNotificationRequestBody.ArticleUrl ?? "",
+                    IsSoundEnabled = sendPushNotificationRequestBody.IsSoundEnabled,
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,

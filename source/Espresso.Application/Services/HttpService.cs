@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.Extensions;
 using Espresso.Common.Constants;
+using Espresso.Common.Utilities;
 using Espresso.Wepi.Application.IServices;
 
 namespace Espresso.Application.Services
@@ -62,25 +61,14 @@ namespace Espresso.Application.Services
             CancellationToken cancellationToken
         )
         {
-            var stream = new MemoryStream();
-            await JsonSerializer.SerializeAsync(
-                utf8Json: stream,
-                value: data,
-                options: null,
-                cancellationToken: cancellationToken
-            );
-
-            stream.Position = 0;
-            using var reader = new StreamReader(stream);
-            var jsonString = await reader
-                .ReadToEndAsync()
-                ;
+            var jsonString = await JsonUtility.Serialize(data, cancellationToken);
 
             var content = new StringContent(
                 content: jsonString,
                 encoding: Encoding.UTF8,
                 mediaType: MimeTypeConstants.Json
             );
+
             return content;
         }
         #endregion

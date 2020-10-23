@@ -92,7 +92,8 @@ namespace Espresso.ParserDeleter.Application.Services
             {
                 ImageUrlWebScrapeType.JsonObjectInScriptElement => await GetImageUrlFromJsonObjectFromScriptTag(
                     elementTags: elementTags,
-                    propertyNames: propertyNames
+                    propertyNames: propertyNames,
+                    cancellationToken: cancellationToken
                 ),
                 ImageUrlWebScrapeType.SrcAttribute => _parseHtmlService.GetImageUrlFromSrcAttribute(elementTags),
                 _ => _parseHtmlService.GetImageUrlFromSrcAttribute(elementTags),
@@ -113,7 +114,8 @@ namespace Espresso.ParserDeleter.Application.Services
         #region Private Methods
         private static async Task<string?> GetImageUrlFromJsonObjectFromScriptTag(
             HtmlNodeCollection elementTags,
-            IEnumerable<string> propertyNames
+            IEnumerable<string> propertyNames,
+            CancellationToken cancellationToken
         )
         {
             var jsonText = elementTags.FirstOrDefault()?.InnerText;
@@ -121,8 +123,7 @@ namespace Espresso.ParserDeleter.Application.Services
             {
                 return null;
             }
-            var jsonMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(jsonText));
-            var data = await JsonSerializer.DeserializeAsync<JsonElement>(jsonMemoryStream);
+            var data = await JsonUtility.Deserialize<JsonElement>(jsonText, cancellationToken);
             try
             {
                 JsonElement property = default;
