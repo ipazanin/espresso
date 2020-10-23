@@ -157,10 +157,10 @@ endif
 FRONTEND_DIRECTORY=./source/Espresso.WebApi/ClientApp
 
 health-check-frontend:
-	make install
-	make build-frontend
+	# make install
+	# make build-frontend
 	make lint
-	make test-frontend
+	# make test-frontend
 
 rebuild-frontend:
 	cd $(FRONTEND_DIRECTORY); \

@@ -1,10 +1,12 @@
-﻿using Espresso.Application.Infrastructure.MediatorInfrastructure;
+﻿using System;
+using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using MediatR;
 
 namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotification
 {
     public record SendPushNotificationCommand : Request<Unit>
     {
+        public Guid ArticleId { get; init; }
         public string InternalName { get; init; } = "";
         public string Title { get; init; } = "";
         public string Message { get; init; } = "";

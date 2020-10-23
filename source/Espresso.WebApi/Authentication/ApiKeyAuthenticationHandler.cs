@@ -6,6 +6,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
+using Espresso.Common.Utilities;
 using Espresso.WebApi.DataTransferObjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -107,7 +108,9 @@ namespace Espresso.WebApi.Authentication
                 errors: null
             );
 
-            await Response.WriteAsync(JsonSerializer.Serialize(exceptionDto));
+            var json = await JsonUtility.Serialize(exceptionDto, default);
+
+            await Response.WriteAsync(json);
         }
 
         /// <summary>
@@ -127,7 +130,9 @@ namespace Espresso.WebApi.Authentication
                 errors: null
             );
 
-            await Response.WriteAsync(JsonSerializer.Serialize(exceptionDto));
+            var json = await JsonUtility.Serialize(exceptionDto, default);
+
+            await Response.WriteAsync(json);
         }
     }
 }

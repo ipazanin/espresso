@@ -1,10 +1,18 @@
-﻿namespace Espresso.WebApi.RequestData.Body
+﻿using System;
+
+namespace Espresso.WebApi.RequestData.Body
 {
     /// <summary>
     /// 
     /// </summary>
     public record SendPushNotificationRequestBody
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public Guid ArticleId { get; init; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -34,6 +42,5 @@
         /// 
         /// </summary>
         public bool IsSoundEnabled { get; init; }
-
     }
 }

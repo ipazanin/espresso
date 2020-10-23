@@ -349,15 +349,7 @@ namespace Espresso.Application.Services
                   entry.AbsoluteExpirationRelativeToNow = s_exceptionMessageCooldownInterval;
                   try
                   {
-                      var stream = new MemoryStream();
-                      await JsonSerializer.SerializeAsync(
-                          stream,
-                          data,
-                          cancellationToken: cancellationToken);
-
-                      stream.Position = 0;
-                      using var reader = new StreamReader(stream);
-                      var jsonString = await reader.ReadToEndAsync();
+                      var jsonString = await JsonUtility.Serialize(data, cancellationToken);
 
                       var content = new StringContent(jsonString, Encoding.UTF8, MimeTypeConstants.Json);
                       var response = await httpClient.PostAsync(

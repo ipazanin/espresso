@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Extensions;
+using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
 using Espresso.ParserDeleter.Application.IServices;
 using HtmlAgilityPack;
@@ -63,7 +65,8 @@ namespace Espresso.ParserDeleter.Application.Services
 
         public async Task<string?> GetImageUrlFromJsonObjectFromScriptTag(
             HtmlNodeCollection elementTags,
-            IEnumerable<string> propertyNames
+            IEnumerable<string> propertyNames,
+            CancellationToken cancellationToken
         )
         {
             var jsonText = elementTags.FirstOrDefault()?.InnerText;
@@ -71,8 +74,9 @@ namespace Espresso.ParserDeleter.Application.Services
             {
                 return null;
             }
-            var jsonMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(jsonText));
-            var data = await JsonSerializer.DeserializeAsync<JsonElement>(jsonMemoryStream);
+
+            var data = await JsonUtility.Deserialize<JsonElement>(jsonText, cancellationToken);
+
             try
             {
                 JsonElement property = default;
