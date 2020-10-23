@@ -1,5 +1,5 @@
 # Common
-all: 
+all:: 
 	list health-check rebuild \
 	health-check-backend rebuild-backend build \
 	compose-database compose-development \
@@ -9,34 +9,33 @@ all:
 	test-backend-coverage test-backend \
 	health-check-frontend rebuild-frontend install build-frontend lint test-frontend 
 
-.PHONY : all
-list:
+list::
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | \
 	awk -v RS= -F: '/^# File/,/^# Finished Make data base/ \
 	{if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
 
-health-check:
+health-check::
 	make health-check-backend
 	make health-check-frontend
 
-rebuild:
+rebuild::
 	make rebuild-backend
 	make rebuild-frontend
 
 # Backend
-health-check-backend:
+health-check-backend::
 	make restore
 	make build
 	make test-backend
 
-rebuild-backend:
+rebuild-backend::
 	dotnet clean --configuration Release --verbosity minimal source/Espresso.sln
 	make build
 
-build:
+build::
 	dotnet build --configuration Release source/Espresso.sln
 
-compose-database:
+compose-database::
 ifeq ($(arg1), up)
 	docker-compose -f ./compose/docker-compose-database.yml up \
 	--build --remove-orphans $(arg2)
@@ -49,7 +48,7 @@ else
 	echo "Invalid Argument. Accepted arguments: up, down"
 endif
 
-compose-development:
+compose-development::
 ifeq ($(arg), up)
 	docker-compose -f ./compose/docker-compose-development.yml up --build --remove-orphans 
 else ifeq ($(strip $(arg)),)
@@ -60,7 +59,7 @@ else
 	echo "Invalid Argument. Accepted arguments: up, down"
 endif
 
-compose-local:
+compose-local::
 ifeq ($(arg), up)
 	docker-compose -f ./compose/docker-compose-local.yml up --build --remove-orphans
 else ifeq ($(strip $(arg)),)
@@ -71,11 +70,11 @@ else
 	echo "Invalid Argument. Accepted arguments: up, down"
 endif
 
-database-update:
+database-update::
 	ASPNETCORE_ENVIRONMENT=local-local-db dotnet ef database update -p \
 	./source/Espresso.Persistence/Espresso.Persistence.csproj -v
 
-docker-build-webapi:
+docker-build-webapi::
 ifeq ($(strip $(v)),)
 	docker build --force-rm -f ./source/Espresso.WebApi/Dockerfile -t \
 	docker.pkg.github.com/espressonews/espresso-backend/espresso-webapi:latest --build-arg REACT_APP_ENVIRONMENT=production ./source
@@ -86,7 +85,7 @@ else
 	docker push docker.pkg.github.com/espressonews/espresso-backend/espresso-webapi:$(v)
 endif
 
-docker-build-parserdeleter:
+docker-build-parserdeleter::
 ifeq ($(strip $(v)),)
 	docker build --force-rm -f ./source/Espresso.ParserDeleter/Dockerfile -t \
 	docker.pkg.github.com/espressonews/espresso-backend/espresso-parserdeleter:latest ./source
@@ -97,25 +96,25 @@ else
 	docker push docker.pkg.github.com/espressonews/espresso-backend/espresso-parserdeleter:$(v)
 endif
 
-docker-build:
+docker-build::
 	make docker-build-webapi v=$(v)
 	make docker-build-parserdeleter v=$(v)
 
-migration-add:
+migration-add::
 	ASPNETCORE_ENVIRONMENT=local-local-db dotnet ef migrations \
 	add -p ./source/Espresso.Persistence/Espresso.Persistence.csproj -v $(name)
 
-migration-remove:
+migration-remove::
 	ASPNETCORE_ENVIRONMENT=local-local-db dotnet ef migrations \
 	remove -p ./source/Espresso.Persistence/Espresso.Persistence.csproj -v
 
-update:
+update::
 	./scripts/update.sh
 
-restore:
+restore::
 	dotnet restore ./source/Espresso.sln
 
-start-p:
+start-p::
 	make compose-database arg1=up arg2="-d"
 ifeq ($(strip $(arg)),)
 	ASPNETCORE_ENVIRONMENT=local-local-db dotnet run --project \
@@ -127,7 +126,7 @@ else
 	echo "Invalid Argument. Accepted arguments: {empty}, watch}"
 endif
 
-start-w:
+start-w::
 	make compose-database arg1=up arg2="-d"
 ifeq ($(strip $(arg)),)
 	ASPNETCORE_ENVIRONMENT=local-local-db dotnet run --project \
@@ -139,14 +138,14 @@ else
 	echo "Invalid Argument. Accepted arguments: {empty}, watch}"
 endif
 
-test-backend-coverage:
+test-backend-coverage::
 	sudo dotnet test --logger 'trx;LogFileName=TestResults.trx' \
 	--logger 'xunit;LogFileName=TestResults.xml' \
 	--results-directory ./tests/UnitTests/TestReports/UnitTests \
 	/p:CollectCoverage=true /p:CoverletOutput=TestReports/Coverage/ \
 	/p:CoverletOutputFormat=cobertura ./source/Espresso.sln
 
-test-backend:
+test-backend::
 ifeq ($(strip $(verbosity)),)
 	dotnet test --verbosity minimal source/Espresso.sln
 else
@@ -156,34 +155,34 @@ endif
 # Frontend Scripts
 FRONTEND_DIRECTORY=./source/Espresso.WebApi/ClientApp
 
-health-check-frontend:
+health-check-frontend::
 	# make install
 	# make build-frontend
 	make lint
 	# make test-frontend
 
-rebuild-frontend:
+rebuild-frontend::
 	cd $(FRONTEND_DIRECTORY); \
 	rm -rf node_modules \
 	rm -rf build
 	make install
 	make build-frontend
 
-install:
+install::
 	cd $(FRONTEND_DIRECTORY); \
 	npm install
 
-build-frontend:
+build-frontend::
 	cd $(FRONTEND_DIRECTORY); \
 	REACT_APP_ENVIRONMENT=production \
 	./node_modules/.bin/react-scripts build
 
-lint:
+lint::
 	cd $(FRONTEND_DIRECTORY); \
 	./node_modules/.bin/eslint --ext .ts,.tsx src/ \
 	--fix --cache --cache-location=./node_modules/.cache/
 
-test-frontend:
+test-frontend::
 	cd $(FRONTEND_DIRECTORY); \
 	CI=true REACT_APP_ENVIRONMENT=test \
 	./node_modules/.bin/react-scripts test
