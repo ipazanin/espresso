@@ -77,23 +77,23 @@ database-update::
 docker-build-webapi::
 ifeq ($(strip $(v)),)
 	docker build --force-rm -f ./source/Espresso.WebApi/Dockerfile -t \
-	docker.pkg.github.com/espressonews/espresso-backend/espresso-webapi:latest --build-arg REACT_APP_ENVIRONMENT=production ./source
-	docker push docker.pkg.github.com/espressonews/espresso-backend/espresso-webapi:latest
+	docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi:latest --build-arg REACT_APP_ENVIRONMENT=production ./source
+	docker push docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi:latest
 else
 	docker build --force-rm -f ./source/Espresso.WebApi/Dockerfile -t \
-	docker.pkg.github.com/espressonews/espresso-backend/espresso-webapi:$(v) --build-arg REACT_APP_ENVIRONMENT=production ./source
-	docker push docker.pkg.github.com/espressonews/espresso-backend/espresso-webapi:$(v)
+	docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi:$(v) --build-arg REACT_APP_ENVIRONMENT=production ./source
+	docker push docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi:$(v)
 endif
 
 docker-build-parserdeleter::
 ifeq ($(strip $(v)),)
 	docker build --force-rm -f ./source/Espresso.ParserDeleter/Dockerfile -t \
-	docker.pkg.github.com/espressonews/espresso-backend/espresso-parserdeleter:latest ./source
-	docker push docker.pkg.github.com/espressonews/espresso-backend/espresso-parserdeleter:latest
+	docker.pkg.github.com/espresso-news/espresso-backend/espresso-parserdeleter:latest ./source
+	docker push docker.pkg.github.com/espresso-news/espresso-backend/espresso-parserdeleter:latest
 else
 	docker build --force-rm -f ./source/Espresso.ParserDeleter/Dockerfile -t \
-	docker.pkg.github.com/espressonews/espresso-backend/espresso-parserdeleter:$(v) ./source
-	docker push docker.pkg.github.com/espressonews/espresso-backend/espresso-parserdeleter:$(v)
+	docker.pkg.github.com/espresso-news/espresso-backend/espresso-parserdeleter:$(v) ./source
+	docker push docker.pkg.github.com/espresso-news/espresso-backend/espresso-parserdeleter:$(v)
 endif
 
 docker-build::
