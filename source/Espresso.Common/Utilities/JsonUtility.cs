@@ -16,6 +16,10 @@ namespace Espresso.Common.Utilities
             await JsonSerializer.SerializeAsync(
                 utf8Json: stream,
                 value: value,
+                options: new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                },
                 cancellationToken: cancellationToken
             );
 

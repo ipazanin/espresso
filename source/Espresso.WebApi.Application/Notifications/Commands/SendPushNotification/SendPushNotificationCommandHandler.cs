@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -63,6 +66,15 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
             var articleDtoJsonString = await JsonUtility.Serialize(articleDto, cancellationToken);
 
             var internalName = GetInternalName(request.InternalName);
+            var customData = new Dictionary<string, string>
+            {
+                { "internalName", internalName },
+                { "title", request.Title },
+                { "message", request.Message },
+                { "url", request.ArticleUrl },
+                { "article", articleDtoJsonString },
+            };
+
             var message = new Message()
             {
                 Notification = new Notification
@@ -70,8 +82,7 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
                     Title = request.Title,
                     Body = request.Message,
                 },
-                // Topic = request.Topic,
-                Token = request.Topic,
+                Topic = request.Topic,
                 Apns = new ApnsConfig
                 {
                     Aps = new Aps
@@ -84,24 +95,9 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
                 },
                 Android = new AndroidConfig
                 {
-                    Data = new Dictionary<string, string>
-                    {
-                        { "internalName", internalName },
-                        { "title", request.Title },
-                        { "message", request.Message },
-                        { "url", request.ArticleUrl },
-                        { "article", articleDtoJsonString },
-                    },
-
+                    Data = customData
                 },
-                Data = new Dictionary<string, string>
-                {
-                    { "internalName", internalName },
-                    { "title", request.Title },
-                    { "message", request.Message },
-                    { "url", request.ArticleUrl },
-                    { "article", articleDtoJsonString },
-                }
+                Data = customData
             };
 
             var messaging = FirebaseMessaging.DefaultInstance;
