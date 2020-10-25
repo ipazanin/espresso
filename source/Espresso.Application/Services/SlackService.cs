@@ -22,7 +22,6 @@ namespace Espresso.Application.Services
         #region Constants
         private const int EspressoDownloadsMileStone = 10000;
         private static readonly TimeSpan s_exceptionMessageCooldownInterval = TimeSpan.FromHours(4);
-        private const string WebHookurl = "https://hooks.slack.com/services/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";
 
         private const string ErrorsBotIconEmoji = ":no_entry:";
         private const string ErrorBotUsername = "error-bot";
@@ -56,6 +55,7 @@ namespace Espresso.Application.Services
         #region Fields
         private readonly IMemoryCache _memoryCache;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly string _webHookUrl;
         private readonly ILogger<SlackService> _logger;
         #endregion
 
@@ -63,11 +63,13 @@ namespace Espresso.Application.Services
         public SlackService(
             IMemoryCache memoryCache,
             IHttpClientFactory httpClientFactory,
-            ILoggerFactory loggerFactory
+            ILoggerFactory loggerFactory,
+            string webHookUrl
         )
         {
             _memoryCache = memoryCache;
             _httpClientFactory = httpClientFactory;
+            _webHookUrl = webHookUrl;
             _logger = loggerFactory.CreateLogger<SlackService>();
         }
         #endregion
@@ -353,10 +355,12 @@ namespace Espresso.Application.Services
 
                       var content = new StringContent(jsonString, Encoding.UTF8, MimeTypeConstants.Json);
                       var response = await httpClient.PostAsync(
-                          requestUri: WebHookurl,
+                          requestUri: _webHookUrl,
                           content: content,
                           cancellationToken: cancellationToken
                       );
+
+                      response.EnsureSuccessStatusCode();
                   }
                   catch (Exception exception)
                   {

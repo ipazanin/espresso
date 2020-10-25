@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
 {
@@ -12,6 +13,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
         public IEnumerable<GetLatestArticlesNewsPortal> NewNewsPortals { get; init; } = new List<GetLatestArticlesNewsPortal>();
 
         public int NewNewsPortalsPosition { get; init; }
+
+        public string LastAddedNewsPortalDate { get; init; } = "";
         #endregion
     }
 }

@@ -68,7 +68,7 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
                 ImageUrl = article.ImageUrl,
                 Url = article.Url,
                 WebUrl = article.WebUrl,
-                PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.ArticleDateTimeFormat),
+                PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.MobileAppDateTimeFormat),
                 NewsPortal = SendPushNotificationNewsPortal.GetProjection()
                     .Compile()
                     .Invoke(article.NewsPortal!),

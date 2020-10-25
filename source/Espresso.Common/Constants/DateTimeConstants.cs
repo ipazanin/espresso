@@ -10,7 +10,7 @@ namespace Espresso.Common.Constants
 
         #region Formats
         public const string LoggerDateTimeFormat = "HH:mm:ss.ff";
-        public const string ArticleDateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss";
+        public const string MobileAppDateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss";
         public const string PushNotificationInternalNameFormat = "yyyy-MM-dd'T'HH:mm:ss";
         #endregion
 

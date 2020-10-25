@@ -40,6 +40,10 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                 article => article.Id.Equals(request.FirstArticleId)
             );
 
+            var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
+                key: MemoryCacheConstants.NewsPortalKey
+            );
+
             var articles = GetLatestArticles(
                 savedArticles: savedArticles,
                 firstArticleCreateDateTime: firstArticle?.CreateDateTime,
@@ -47,6 +51,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
             );
 
             var newNewsPortals = GetNewNewsPortals(
+                newsPortals: newsPortals,
                 request: request
             );
 
@@ -61,7 +66,12 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                 Articles = articles,
                 FeaturedArticles = featuredArticles,
                 NewNewsPortals = newNewsPortals,
-                NewNewsPortalsPosition = request.NewNewsPortalsPosition
+                NewNewsPortalsPosition = request.NewNewsPortalsPosition,
+                LastAddedNewsPortalDate = newsPortals
+                    .OrderByDescending(newsPortal => newsPortal.CreatedAt)
+                    .First()
+                    .CreatedAt
+                    .ToString(DateTimeConstants.MobileAppDateTimeFormat)
             };
 
             return Task.FromResult(result: response);
@@ -139,14 +149,13 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
             return articleDtos;
         }
 
-        private IEnumerable<GetLatestArticlesNewsPortal> GetNewNewsPortals(
+        private static IEnumerable<GetLatestArticlesNewsPortal> GetNewNewsPortals(
+            IEnumerable<NewsPortal> newsPortals,
             GetLatestArticlesQuery request
         )
         {
             var (newsPortalIds, categoryIds) = ParseIds(request);
-            var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
-                key: MemoryCacheConstants.NewsPortalKey
-            );
+
 
             var newsPortalDtos = newsPortals
                 .Where(

@@ -64,6 +64,12 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         /// <returns></returns>
         public int FeaturedArticlesTake => _configuration.GetValue<int>("FeaturedArticlesTake");
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string SlackWebHook => _configuration.GetValue<string>("SlackWebHook");
         #endregion
 
         #region Constructors
