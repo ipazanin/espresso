@@ -352,7 +352,9 @@ namespace Espresso.Domain.Entities
 
         public static Expression<Func<Article, object?>> GetOrderByFeaturedArticlesExpression()
         {
-            return article => article.EditorConfiguration.FeaturedPosition;
+            return article => article.EditorConfiguration.FeaturedPosition == null ?
+                int.MaxValue :
+                article.EditorConfiguration.FeaturedPosition;
         }
         #endregion
 

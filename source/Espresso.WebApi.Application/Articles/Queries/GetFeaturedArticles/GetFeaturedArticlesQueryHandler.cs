@@ -59,7 +59,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
                     )
                     .Compile()
                 )
-                .OrderByDescending(Article.GetOrderByFeaturedArticlesExpression().Compile())
+                .OrderBy(Article.GetOrderByFeaturedArticlesExpression().Compile())
                 .ThenByDescending(Article.GetOrderByDescendingTrendingScoreExpression().Compile());
 
             var trendingArticles = articles

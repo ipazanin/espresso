@@ -71,7 +71,7 @@ else
 endif
 
 database-update::
-	ASPNETCORE_ENVIRONMENT=local-local-db dotnet ef database update -p \
+	ASPNETCORE_ENVIRONMENT=local-production-db dotnet ef database update -p \
 	./source/Espresso.Persistence/Espresso.Persistence.csproj -v
 
 docker-build-webapi::

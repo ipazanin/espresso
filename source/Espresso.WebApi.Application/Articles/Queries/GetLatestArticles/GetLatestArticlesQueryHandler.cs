@@ -128,7 +128,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                     )
                     .Compile()
                 )
-                .OrderByDescending(Article.GetOrderByFeaturedArticlesExpression().Compile())
+                .OrderBy(Article.GetOrderByFeaturedArticlesExpression().Compile())
                 .ThenByDescending(Article.GetOrderByDescendingTrendingScoreExpression().Compile());
 
             var trendingArticles = savedArticles
