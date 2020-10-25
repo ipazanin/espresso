@@ -36,7 +36,7 @@ namespace Espresso.WebApi.Application.Notifications.Queries.GetPushNotifications
                 Topic = pushNotification.Topic,
                 ArticleUrl = pushNotification.ArticleUrl,
                 IsSoundEnabled = pushNotification.IsSoundEnabled,
-                CreatedAt = pushNotification.CreatedAt.ToString(DateTimeConstants.ArticleDateTimeFormat)
+                CreatedAt = pushNotification.CreatedAt.ToString(DateTimeConstants.MobileAppDateTimeFormat)
             };
         }
     }

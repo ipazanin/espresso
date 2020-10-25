@@ -318,7 +318,7 @@ namespace Espresso.Domain.Entities
                     .ArticleCategories
                     .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
                 (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)) &&
-                !article.NewsPortal!.CategoryId.Equals((int)CategoryId.Local) &&
+                // !article.NewsPortal!.CategoryId.Equals((int)CategoryId.Local) &&
                 (searchTerms == null || searchTerms.All(searchTerm => article.Title.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase)));
         }
 

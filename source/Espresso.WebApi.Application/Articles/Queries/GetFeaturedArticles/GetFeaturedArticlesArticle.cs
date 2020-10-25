@@ -67,7 +67,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
                 ImageUrl = article.ImageUrl,
                 Url = article.Url,
                 WebUrl = article.WebUrl,
-                PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.ArticleDateTimeFormat),
+                PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.MobileAppDateTimeFormat),
                 NewsPortal = GetFeaturedArticlesNewsPortal.GetProjection()
                     .Compile()
                     .Invoke(article.NewsPortal!),

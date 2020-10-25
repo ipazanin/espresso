@@ -55,7 +55,7 @@ namespace Espresso.WebApi.Extensions
             services.AddGraphQlServices();
             services.AddApiVersioningServices();
             services.AddAppConfiguration();
-            services.AddServices();
+            services.AddServices(webApiConfiguration);
             services.AddAuthServices();
             services.AddMediatRServices();
             services.AddDatabaseServices(webApiConfiguration);

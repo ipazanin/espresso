@@ -26,6 +26,8 @@ namespace Espresso.ParserDeleter.Configuration
             );
 
         public TimeSpan Uptime => DateTime.UtcNow - Process.GetCurrentProcess().StartTime.ToUniversalTime();
+
+        public string SlackWebHook => _configuration.GetValue<string>("SlackWebHook");
         #endregion
 
         #region Constructors

@@ -61,7 +61,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_3
                 Title = article.Title,
                 ImageUrl = article.ImageUrl,
                 Url = article.Url,
-                PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.ArticleDateTimeFormat),
+                PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.MobileAppDateTimeFormat),
                 NewsPortal = GetLatestArticlesNewsPortal_1_3.GetProjection()
                     .Compile()
                     .Invoke(article.NewsPortal!),

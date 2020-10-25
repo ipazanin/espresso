@@ -20,6 +20,9 @@ using FluentValidation;
 using Espresso.WebApi.Extensions;
 using System;
 using Espresso.ParserDeleter.CronJobs;
+using Microsoft.Extensions.Caching.Memory;
+using System.Net.Http;
+using Microsoft.Extensions.Logging;
 
 namespace Espresso.ParserDeleter
 {
@@ -48,7 +51,12 @@ namespace Espresso.ParserDeleter
             #endregion
 
             #region Services
-            services.AddScoped<ISlackService, SlackService>();
+            services.AddScoped<ISlackService, SlackService>(o => new SlackService(
+                memoryCache: o.GetRequiredService<IMemoryCache>(),
+                httpClientFactory: o.GetRequiredService<IHttpClientFactory>(),
+                loggerFactory: o.GetRequiredService<ILoggerFactory>(),
+                webHookUrl: _parserDeleterConfiguration.AppConfiguration.SlackWebHook
+            ));
             services.AddScoped<IHttpService, HttpService>();
             services.AddScoped<ILoadRssFeedsService, LoadRssFeedsService>();
             services.AddScoped<ICreateArticlesService, CreateArticlesService>();
