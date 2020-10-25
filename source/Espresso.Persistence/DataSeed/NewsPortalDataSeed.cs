@@ -577,7 +577,7 @@ namespace Espresso.Persistence.DataSeed
                     baseUrl: "http://www.gamer.hr",
                     iconUrl: $"Icons/{NewsPortalId.GamerHr}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 10, 9, 0, 0, 0, DateTimeKind.Utc),
+                    createdAt: new DateTime(2020, 10, 10, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global
                 ),

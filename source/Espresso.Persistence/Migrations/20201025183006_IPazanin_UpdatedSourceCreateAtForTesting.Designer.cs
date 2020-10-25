@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20201025183006_IPazanin_UpdatedSourceCreateAtForTesting")]
+    partial class IPazanin_UpdatedSourceCreateAtForTesting
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1178,7 +1180,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 122,
                             BaseUrl = "https://ogportal.com",
                             CategoryId = 12,
-                            CreatedAt = new DateTime(2020, 10, 17, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedAt = new DateTime(2020, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/OgPortal.png",
                             Name = "OG Portal",
                             RegionId = 4

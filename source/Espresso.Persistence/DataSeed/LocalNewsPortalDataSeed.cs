@@ -345,7 +345,7 @@ namespace Espresso.Persistence.DataSeed
                     baseUrl: "https://ogportal.com",
                     iconUrl: $"Icons/{NewsPortalId.OgPortal}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 10, 15, 0, 0, 0, DateTimeKind.Utc),
+                    createdAt: new DateTime(2020, 10, 17, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Lika
                 ),                                  

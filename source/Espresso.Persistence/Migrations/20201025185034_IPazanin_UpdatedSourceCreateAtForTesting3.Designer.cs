@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20201025185034_IPazanin_UpdatedSourceCreateAtForTesting3")]
+    partial class IPazanin_UpdatedSourceCreateAtForTesting3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
