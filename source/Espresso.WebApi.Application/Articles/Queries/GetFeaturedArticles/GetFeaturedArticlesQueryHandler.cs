@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
-using Espresso.WebApi.Application.Utilities;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -49,47 +48,34 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
                 ?.Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
                 ?.Where(categoryId => categoryId != default);
 
-            var featuredArticleDtos = articles
+            var featuredArticles = articles
                 .Where(
-                    predicate: Article.GetFilteredFeaturedArticlesPredicate(
-                        categoryIds: categoryIds,
-                        newsPortalIds: newsPortalIds,
+                    Article.GetFilteredFeaturedArticlesPredicate(
+                        categoryIds: null,
+                        newsPortalIds: null,
                         searchTerms: null,
                         maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
-                        articleCreateDateTime: firstArticle?.CreateDateTime
-                    ).Compile()
-                )
-                .OrderByDescending(
-                    keySelector: Article
-                        .GetOrderByDescendingTrendingScoreExpression()
-                        .Compile()
-                )
-                .ThenByDescending(
-                    keySelector: Article
-                        .GetOrderByDescendingTrendingScoreExpression()
-                        .Compile()
-                )
-                .Select(GetFeaturedArticlesArticle.GetProjection().Compile());
-
-            var trendingArticleDtos = articles
-                .Where(
-                    predicate: Article.GetTrendingArticlePredicate(
-                        maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
-                        articleCreateDateTime: firstArticle?.CreateDateTime
+                        articleCreateDateTime: null
                     )
                     .Compile()
                 )
-                .OrderByDescending(
-                    keySelector: Article
-                        .GetOrderByDescendingTrendingScoreExpression()
-                        .Compile()
-                    )
-                .Select(GetFeaturedArticlesArticle.GetProjection().Compile());
+                .OrderByDescending(Article.GetOrderByFeaturedArticlesExpression().Compile())
+                .ThenByDescending(Article.GetOrderByDescendingTrendingScoreExpression().Compile());
 
-            var articleDtos = featuredArticleDtos
-                .Union(trendingArticleDtos)
-                .Skip(request.Skip)
-                .Take(request.Take);
+            var trendingArticles = articles
+                .Where(
+                    Article.GetTrendingArticlePredicate(
+                        maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
+                        articleCreateDateTime: null
+                    )
+                    .Compile()
+                )
+                .OrderByDescending(Article.GetOrderByDescendingTrendingScoreExpression().Compile());
+
+            var articleDtos = featuredArticles
+                .Union(trendingArticles)
+                .Take(request.Take)
+                .Select(GetFeaturedArticlesArticle.GetProjection().Compile());
 
             var response = new GetFeaturedArticlesQueryResponse
             {

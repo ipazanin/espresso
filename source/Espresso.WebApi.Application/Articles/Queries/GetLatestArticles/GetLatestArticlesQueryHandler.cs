@@ -32,7 +32,17 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
             CancellationToken cancellationToken
         )
         {
+            var savedArticles = _memoryCache.Get<IEnumerable<Article>>(
+                key: MemoryCacheConstants.ArticleKey
+            );
+
+            var firstArticle = savedArticles.FirstOrDefault(
+                article => article.Id.Equals(request.FirstArticleId)
+            );
+
             var articles = GetLatestArticles(
+                savedArticles: savedArticles,
+                firstArticleCreateDateTime: firstArticle?.CreateDateTime,
                 request: request
             );
 
@@ -41,6 +51,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
             );
 
             var featuredArticles = GetFeaturedArticles(
+                savedArticles: savedArticles,
+                firstArticleCreateDateTime: firstArticle?.CreateDateTime,
                 request: request
             );
 
@@ -55,62 +67,61 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
             return Task.FromResult(result: response);
         }
 
-        private IEnumerable<GetLatestArticlesArticle> GetLatestArticles(
+        private static IEnumerable<GetLatestArticlesArticle> GetLatestArticles(
+            IEnumerable<Article> savedArticles,
+            DateTime? firstArticleCreateDateTime,
             GetLatestArticlesQuery request
         )
         {
             var (newsPortalIds, categoryIds) = ParseIds(request);
 
-            var articles = _memoryCache.Get<IEnumerable<Article>>(
-                key: MemoryCacheConstants.ArticleKey
-            );
-
-            var firstArticle = articles.FirstOrDefault(
-                article => article.Id.Equals(request.FirstArticleId)
-            );
-
             var searchTerms = AutoCompleteUtility.GetSearchTerms(request.TitleSearchQuery);
 
-            var articleDtos = articles
+            var articles = savedArticles
                 .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
                 .Where(
                     predicate: Article.GetFilteredArticlesPredicate(
                         categoryIds: categoryIds,
                         newsPortalIds: newsPortalIds,
                         searchTerms: searchTerms,
-                        articleCreateDateTime: firstArticle?.CreateDateTime
+                        articleCreateDateTime: firstArticleCreateDateTime
                     ).Compile()
                 )
                 .Skip(request.Skip)
-                .Take(request.Take)
+                .Take(request.Take);
+
+            var articleDtos = articles
                 .Select(GetLatestArticlesArticle.GetProjection().Compile());
 
             return articleDtos;
         }
 
-        private IEnumerable<GetLatestArticlesArticle> GetFeaturedArticles(
+        private static IEnumerable<GetLatestArticlesArticle> GetFeaturedArticles(
+            IEnumerable<Article> savedArticles,
+            DateTime? firstArticleCreateDateTime,
             GetLatestArticlesQuery request
         )
         {
-            var articles = _memoryCache.Get<IEnumerable<Article>>(
-                key: MemoryCacheConstants.ArticleKey
-            );
+            if (request.Skip != 0)
+            {
+                return Array.Empty<GetLatestArticlesArticle>();
+            }
 
-            var featuredArticles = articles
+            var featuredArticles = savedArticles
                 .Where(
                     Article.GetFilteredFeaturedArticlesPredicate(
                         categoryIds: null,
                         newsPortalIds: null,
                         searchTerms: null,
                         maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
-                        articleCreateDateTime: null
+                        articleCreateDateTime: firstArticleCreateDateTime
                     )
                     .Compile()
                 )
                 .OrderByDescending(Article.GetOrderByFeaturedArticlesExpression().Compile())
                 .ThenByDescending(Article.GetOrderByDescendingTrendingScoreExpression().Compile());
 
-            var trendingArticles = articles
+            var trendingArticles = savedArticles
                 .Where(
                     Article.GetTrendingArticlePredicate(
                         maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,

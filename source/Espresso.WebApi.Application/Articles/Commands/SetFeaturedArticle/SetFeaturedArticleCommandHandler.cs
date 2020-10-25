@@ -40,31 +40,37 @@ namespace Espresso.WebApi.Application.Articles.Commands.SetFeaturedArticle
                 .Get<IEnumerable<Article>>(key: MemoryCacheConstants.ArticleKey)
                 .ToDictionary(article => article.Id);
 
-            var databaseArticle = await _context.Articles.FindAsync(
-                keyValues: new object?[] { request.ArticleId },
-                cancellationToken: default
+            var articleIds = request.FeaturedArticleConfigurations.Select(featuredArticleConfiguration => featuredArticleConfiguration.articleId);
+
+            var databaseArticles = await _context
+                .Articles
+                .Where(article => articleIds.Contains(article.Id))
+                .ToDictionaryAsync(article => article.Id, cancellationToken);
+
+            foreach (var (articleId, isFeatured, featuredPosition) in request.FeaturedArticleConfigurations)
+            {
+                if (!databaseArticles.TryGetValue(articleId, out var databaseArticle))
+                {
+                    throw new NotFoundException(
+                        typeName: nameof(Article),
+                        id: articleId.ToString()
+                    );
+                }
+
+                databaseArticle.SetIsFeaturedValue(isFeatured, featuredPosition);
+                _context.Articles.Update(databaseArticle);
+
+                if (memoryCacheArticles.TryGetValue(articleId, out var memoryCacheArticle))
+                {
+                    memoryCacheArticle.SetIsFeaturedValue(isFeatured, featuredPosition);
+                }
+            }
+
+            await _context.SaveChangesAsync(cancellationToken: default);
+            _memoryCache.Set(
+                key: MemoryCacheConstants.ArticleKey,
+                value: memoryCacheArticles.Values.ToList()
             );
-
-            if (databaseArticle is null)
-            {
-                throw new NotFoundException(
-                    typeName: nameof(Article),
-                    id: request.ArticleId.ToString()
-                );
-            }
-
-            databaseArticle.SetIsFeaturedValue(request.IsFeatured, request.FeraturedPosition);
-            _context.Articles.Update(databaseArticle);
-            _ = _context.SaveChangesAsync(cancellationToken: default);
-
-            if (memoryCacheArticles.TryGetValue(request.ArticleId, out var memoryCacheArticle))
-            {
-                memoryCacheArticle.SetIsFeaturedValue(request.IsFeatured, request.FeraturedPosition);
-                _ = _memoryCache.Set(
-                    key: MemoryCacheConstants.ArticleKey,
-                    value: memoryCacheArticles.Values.ToList()
-                );
-            }
 
             return Unit.Value;
         }
