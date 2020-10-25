@@ -49,12 +49,12 @@ namespace Espresso.WebApi.Application.Articles.Commands.HideArticle
 
             databaseArticle.SetIsHidden(request.IsHidden);
             _espressoDatabaseContext.Articles.Update(databaseArticle);
-            _ = await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
+            await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
 
             if (memoryCacheArticles.TryGetValue(key: request.ArticleId, value: out var memoryCacheArticle))
             {
                 memoryCacheArticle.SetIsHidden(request.IsHidden);
-                _ = _memoryCache.Set(
+                _memoryCache.Set(
                     key: MemoryCacheConstants.ArticleKey,
                     value: memoryCacheArticles.Values.ToList()
                 );

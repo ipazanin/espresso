@@ -26,6 +26,8 @@ using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4;
 using Espresso.WebApi.RequestData.Header;
 using Espresso.WebApi.RequestData.Query;
 using Espresso.WebApi.RequestData.Body;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Espresso.WebApi.Controllers
 {
@@ -643,15 +645,14 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Feature Article with <paramref name="articleId"/>
+        /// Set featured articles configuration
         /// </summary>
         /// <param name="cancellationToken"></param>
-        /// <param name="articleId">Article Id</param>
         /// <param name="requestBody"></param>
         /// <param name="basicInformationsHeaderParameters">Basic App Informations</param>
         /// <returns></returns>
         /// <response code="200">When operation is sucessfull</response>
-        /// <response code="400">If <paramref name="articleId"/> is not valid Guid</response>
+        /// <response code="400">If validation fails</response>
         /// <response code="401">If API Key is invalid or missing</response>
         /// <response code="403">If API Key is forbiden from requested resource</response>
         /// <response code="404">If resource is nout found</response>
@@ -666,20 +667,25 @@ namespace Espresso.WebApi.Controllers
         [ApiVersion("2.0")]
         [HttpPatch]
         [Authorize(Roles = ApiKey.DevMobileAppRole)]
-        [Route("api/articles/{articleId}/featured")]
+        [Route("api/articles/featured")]
         public async Task<IActionResult> SetArticleFeaturedConfiguration(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            [FromRoute][Required] Guid articleId,
-            [FromBody][Required] SetArticleFeaturedConfigurationRequestBody requestBody,
+            [FromBody][Required] IEnumerable<SetArticleFeaturedConfigurationRequestBody> requestBody,
             CancellationToken cancellationToken
         )
         {
             await Sender.Send(
                 request: new SetFeaturedArticleCommand
                 {
-                    ArticleId = articleId,
-                    IsFeatured = requestBody.IsFeatured,
-                    FeraturedPosition = requestBody.FeaturedPosition,
+                    FeaturedArticleConfigurations = requestBody
+                        .Select(
+                            featuredConfiguration =>
+                            (
+                                articleId: featuredConfiguration.Id,
+                                isFeatured: featuredConfiguration.IsFeatured,
+                                featuredPosition: featuredConfiguration.FeaturedPosition
+                            )
+                        ),
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,

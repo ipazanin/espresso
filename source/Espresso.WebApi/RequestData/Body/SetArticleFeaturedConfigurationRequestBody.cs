@@ -1,3 +1,5 @@
+using System;
+
 namespace Espresso.WebApi.RequestData.Body
 {
     /// <summary>
@@ -5,6 +7,12 @@ namespace Espresso.WebApi.RequestData.Body
     /// </summary>
     public record SetArticleFeaturedConfigurationRequestBody
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public Guid Id { get; init; }
+
         /// <summary>
         /// 
         /// </summary>

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
-using Espresso.Common.Extensions;
-using Espresso.Common.Utilities;
 using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Infrastructure;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
