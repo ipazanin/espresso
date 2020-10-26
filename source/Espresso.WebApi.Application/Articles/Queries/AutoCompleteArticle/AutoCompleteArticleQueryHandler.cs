@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
-using Espresso.WebApi.Application.Utilities;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -16,9 +15,10 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
     public class AutoCompleteArticleQueryHandler : IRequestHandler<AutoCompleteArticleQuery, AutoCompleteArticleQueryResponse>
     {
         #region Constants
-        private const string AllowedCharactersRegex = "([a-z]|[A-Z][0-9]|ž|Ž|đ|Đ|ć|Ć|č|Č|š|Š)";
+        private const string AllowedCharactersRegex = "([a-z]|[A-Z]|[0-9]|ž|Ž|đ|Đ|ć|Ć|č|Č|š|Š)";
         private const string DelimiterCharacters = "( |\\.|;|:|,)";
         private const string StartOfWordCharacters = "(^| |\n)";
+        private const string EscapedAutoCompleteWords = "(ako|ili|da|ne)";
         #endregion
 
         #region Fields
@@ -57,6 +57,7 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
                 return Array.Empty<string>();
             }
 
+            var result = new List<string> { request.TitleSearchQuery };
 
             var matchedWords = new List<string>();
             var matches = Regex
@@ -68,7 +69,7 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
 
             if (string.IsNullOrEmpty(searchTerm))
             {
-                return Array.Empty<string>();
+                return result;
             }
 
             var searchRegexPattern = $"{StartOfWordCharacters}{searchTerm}{AllowedCharactersRegex}*{DelimiterCharacters}";
@@ -82,11 +83,16 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
 
             matchedWords.AddRange(matchesWithReplacedDelimiterCharacter);
 
-
-            return matchedWords
+            var filteredMatches = matchedWords
+                .Where(matchedWord => !Regex.IsMatch(matchedWord, EscapedAutoCompleteWords, RegexOptions.IgnoreCase))
                 .Distinct(StringComparer.InvariantCultureIgnoreCase)
+                .OrderBy(matchedWord => matchedWord)
                 .Skip(request.Skip)
                 .Take(request.Take);
+
+            result.AddRange(filteredMatches);
+
+            return result;
         }
         #endregion
     }

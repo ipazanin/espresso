@@ -628,7 +628,17 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Slavonija
-                ),                                                                                                                                                              
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.Zupanjac,
+                    name: NewsPortalId.Zupanjac.GetDisplayName(),
+                    baseUrl: "https://zupanjac.net",
+                    iconUrl: $"Icons/{NewsPortalId.Zupanjac}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2020, 10, 26, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Slavonija
+                ),                    
                 #endregion                                            
             };
 

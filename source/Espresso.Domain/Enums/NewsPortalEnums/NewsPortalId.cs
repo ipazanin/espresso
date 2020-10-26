@@ -88,7 +88,7 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         KulturIstra = 42,
         [Display(Name = "iPazin")]
         IPazin = 43,
-        [Display(Name = "NL")]
+        [Display(Name = "Novi list")]
         NoviList = 44,
         [Display(Name = "Parentium")]
         Parentium = 45,
@@ -244,5 +244,7 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         GamerHr = 121,
         [Display(Name = "OG Portal")]
         OgPortal = 122,
+        [Display(Name = "Županjac.net")]
+        Zupanjac = 123,
     }
 }

@@ -49,10 +49,9 @@ namespace Espresso.ParserDeleter.Application.Services
             CancellationToken cancellationToken
         )
         {
-            var random = new Random();
             var id = Guid.NewGuid();
             var utcNow = DateTime.UtcNow;
-            var initialNumberOfClicks = random.Next(0, 15);
+            var initialNumberOfClicks = 0;
 
             var title = rssFeedItem.Title;
 
