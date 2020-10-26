@@ -439,7 +439,13 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal
                 ),
-
+                new RssFeed(
+                    id: (int)RssFeedId.Zupanjac,
+                    url: "https://zupanjac.net/feed",
+                    newsPortalId: (int)NewsPortalId.Zupanjac,
+                    categoryId: (int)CategoryId.Local,
+                    requestType: RequestType.Normal
+                ),
 
             };
 
@@ -467,6 +473,13 @@ namespace Espresso.Persistence.DataSeed
             {
                 RssFeedId = (int)RssFeedId.OgPortal,
                 NumberOfSkips = 5,
+                CurrentSkip = 0
+            });
+
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Zupanjac,
+                NumberOfSkips = 4,
                 CurrentSkip = 0
             });
         }
