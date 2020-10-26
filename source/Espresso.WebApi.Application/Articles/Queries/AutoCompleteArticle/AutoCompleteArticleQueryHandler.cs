@@ -15,6 +15,12 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
 {
     public class AutoCompleteArticleQueryHandler : IRequestHandler<AutoCompleteArticleQuery, AutoCompleteArticleQueryResponse>
     {
+        #region Constants
+        private const string AllowedCharactersRegex = "([a-z]|[A-Z][0-9]|ž|Ž|đ|Đ|ć|Ć|č|Č|š|Š)";
+        private const string DelimiterCharacters = "( |\\.|;|:|,)";
+        private const string StartOfWordCharacters = "(^| |\n)";
+        #endregion
+
         #region Fields
         private readonly IMemoryCache _memoryCache;
         #endregion
@@ -51,10 +57,12 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
                 return Array.Empty<string>();
             }
 
+
             var matchedWords = new List<string>();
             var matches = Regex
-                .Matches(request.TitleSearchQuery, "([a-z]|[A-Z]|ž|Ž|đ|Đ|ć|Ć|č|Č|š|Š)+")
+                .Matches(request.TitleSearchQuery, $"{AllowedCharactersRegex}+")
                 .Select(match => match.Value);
+
             var searchTerm = string.Join(" ", matches)
                 .ReplaceCroatianCharactersRegex();
 
@@ -63,8 +71,8 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
                 return Array.Empty<string>();
             }
 
-            var searchRegexPattern = $"(^| |\n){searchTerm}([a-z])*( |\\.|;|:|,)";
-            var replaceDelimiterCharactersRegexPatter = "( |\\.|;|:|,)";
+            var searchRegexPattern = $"{StartOfWordCharacters}{searchTerm}{AllowedCharactersRegex}*{DelimiterCharacters}";
+            var replaceDelimiterCharactersRegexPatter = DelimiterCharacters;
             var matchedArticleTitleWords = articles
                 .Select(article => Regex.Matches(article.Title, searchRegexPattern, RegexOptions.IgnoreCase))
                 .SelectMany(matches => matches.Select(match => match.Value));

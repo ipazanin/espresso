@@ -46,21 +46,46 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
                 ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
                 ?.Where(newsPortalId => newsPortalId != default);
 
-            var searchTerms = AutoCompleteUtility.GetSearchTerms(request.TitleSearchQuery);
-
             var articleDtos = articles
                 .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
                 .Where(
-                    predicate: Article.GetFilteredArticlesPredicate(
+                    predicate: Article.GetFilteredCategoryArticlesPredicate(
                         categoryId: request.CategoryId,
                         newsPortalIds: newsPortalIds,
-                        searchTerms: searchTerms,
+                        searchTerm: request.TitleSearchQuery,
                         articleCreateDateTime: firstArticle?.CreateDateTime
                     ).Compile()
                 )
                 .Skip(request.Skip)
                 .Take(request.Take)
                 .Select(GetCategoryArticlesArticle.GetProjection().Compile());
+
+            var newsPortalDtos = GetNewNewsPortals(
+                newsPortalIds: newsPortalIds,
+                request: request
+            );
+
+            var random = new Random();
+
+            var response = new GetCategoryArticlesQueryResponse
+            {
+                Articles = articleDtos,
+                NewNewsPortals = newsPortalDtos.OrderBy(newsPortal => random.Next()),
+                NewNewsPortalsPosition = request.NewNewsPortalsPosition
+            };
+
+            return Task.FromResult(result: response);
+        }
+
+        private IEnumerable<GetCategoryArticlesNewsPortal> GetNewNewsPortals(
+            IEnumerable<int>? newsPortalIds,
+            GetCategoryArticlesQuery request
+        )
+        {
+            if (request.Skip != 0)
+            {
+                return Array.Empty<GetCategoryArticlesNewsPortal>();
+            }
 
             var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
                 key: MemoryCacheConstants.NewsPortalKey
@@ -78,17 +103,10 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
                 )
                 .Select(selector: GetCategoryArticlesNewsPortal.GetProjection().Compile());
 
-            var random = new Random();
-
-            var response = new GetCategoryArticlesQueryResponse
-            {
-                Articles = articleDtos,
-                NewNewsPortals = newsPortalDtos.OrderBy(newsPortal => random.Next()),
-                NewNewsPortalsPosition = request.NewNewsPortalsPosition
-            };
-
-            return Task.FromResult(result: response);
+            return newsPortalDtos;
         }
+
+
         #endregion
     }
 }

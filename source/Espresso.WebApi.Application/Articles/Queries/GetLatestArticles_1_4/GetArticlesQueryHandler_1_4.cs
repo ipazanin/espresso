@@ -54,15 +54,13 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4
                 ?.Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
                 ?.Where(categoryId => categoryId != default);
 
-            var searchTerms = AutoCompleteUtility.GetSearchTerms(request.TitleSearchQuery);
-
             var articleDtos = articles
                 .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
                 .Where(
-                    predicate: Article.GetFilteredArticlesPredicate(
+                    predicate: Article.GetFilteredLatestArticlesPredicate(
                         categoryIds: categoryIds,
                         newsPortalIds: newsPortalIds,
-                        searchTerms: searchTerms,
+                        titleSearchTerm: request.TitleSearchQuery,
                         articleCreateDateTime: firstArticle?.CreateDateTime
                     ).Compile()
                 )

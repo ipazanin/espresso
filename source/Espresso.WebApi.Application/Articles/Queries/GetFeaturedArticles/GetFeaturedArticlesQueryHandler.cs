@@ -53,7 +53,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
                     Article.GetFilteredFeaturedArticlesPredicate(
                         categoryIds: null,
                         newsPortalIds: null,
-                        searchTerms: null,
                         maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
                         articleCreateDateTime: null
                     )
