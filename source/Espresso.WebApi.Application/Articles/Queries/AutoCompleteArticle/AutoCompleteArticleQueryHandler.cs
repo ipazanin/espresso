@@ -92,7 +92,7 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
 
             result.AddRange(filteredMatches);
 
-            return result;
+            return result.Distinct(StringComparer.InvariantCultureIgnoreCase);
         }
         #endregion
     }
