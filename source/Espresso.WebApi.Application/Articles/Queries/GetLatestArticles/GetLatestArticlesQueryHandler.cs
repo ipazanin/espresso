@@ -85,15 +85,13 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
         {
             var (newsPortalIds, categoryIds) = ParseIds(request);
 
-            var searchTerms = AutoCompleteUtility.GetSearchTerms(request.TitleSearchQuery);
-
             var articles = savedArticles
                 .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
                 .Where(
-                    predicate: Article.GetFilteredArticlesPredicate(
+                    predicate: Article.GetFilteredLatestArticlesPredicate(
                         categoryIds: categoryIds,
                         newsPortalIds: newsPortalIds,
-                        searchTerms: searchTerms,
+                        titleSearchTerm: request.TitleSearchQuery,
                         articleCreateDateTime: firstArticleCreateDateTime
                     ).Compile()
                 )
@@ -122,7 +120,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                     Article.GetFilteredFeaturedArticlesPredicate(
                         categoryIds: null,
                         newsPortalIds: null,
-                        searchTerms: null,
                         maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
                         articleCreateDateTime: firstArticleCreateDateTime
                     )
@@ -154,8 +151,12 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
             GetLatestArticlesQuery request
         )
         {
-            var (newsPortalIds, categoryIds) = ParseIds(request);
+            if (request.Skip != 0)
+            {
+                return Array.Empty<GetLatestArticlesNewsPortal>();
+            }
 
+            var (newsPortalIds, categoryIds) = ParseIds(request);
 
             var newsPortalDtos = newsPortals
                 .Where(

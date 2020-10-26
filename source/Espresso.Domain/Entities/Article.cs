@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
+using Espresso.Common.Extensions;
 using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Infrastructure;
+using Espresso.Domain.Utilities;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
 
 namespace Espresso.Domain.Entities
@@ -262,14 +265,15 @@ namespace Espresso.Domain.Entities
         }
 
         #region Expressions
-        public static Expression<Func<Article, bool>> GetFilteredArticlesPredicate(
+        public static Expression<Func<Article, bool>> GetFilteredLatestArticlesPredicate(
             IEnumerable<int>? categoryIds,
             IEnumerable<int>? newsPortalIds,
-            IEnumerable<string>? searchTerms,
+            string? titleSearchTerm,
             DateTime? articleCreateDateTime
         )
         {
             var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
+            var searchTerms = AutoCompleteUtility.GetSearchTerms(titleSearchTerm);
 
             return article =>
                 !article.EditorConfiguration.IsHidden &&
@@ -278,30 +282,35 @@ namespace Espresso.Domain.Entities
                     .ArticleCategories
                     .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
                 (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)) &&
-                (searchTerms == null || searchTerms.All(searchTerm => article.Title.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase)));
+                (
+                    searchTerms == null ||
+                    searchTerms
+                        .All(searchTerm => article
+                            .Title
+                            .ReplaceCroatianCharacters()
+                            .Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase)
+                        )
+                );
         }
 
-        public static Expression<Func<Article, bool>> GetFilteredArticlesPredicate(
+        public static Expression<Func<Article, bool>> GetFilteredCategoryArticlesPredicate(
             int categoryId,
             IEnumerable<int>? newsPortalIds,
-            IEnumerable<string>? searchTerms,
+            string? searchTerm,
             DateTime? articleCreateDateTime
         )
         {
-            var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
-
-            return article =>
-                !article.EditorConfiguration.IsHidden &&
-                article.CreateDateTime <= articleMinimumAge &&
-                article.ArticleCategories.Any(articleCategory => articleCategory.CategoryId.Equals(categoryId)) &&
-                (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)) &&
-                (searchTerms == null || searchTerms.All(searchTerm => article.Title.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase)));
+            return GetFilteredLatestArticlesPredicate(
+                categoryIds: new List<int> { categoryId },
+                newsPortalIds: newsPortalIds,
+                titleSearchTerm: searchTerm,
+                articleCreateDateTime: articleCreateDateTime
+            );
         }
 
         public static Expression<Func<Article, bool>> GetFilteredFeaturedArticlesPredicate(
             IEnumerable<int>? categoryIds,
             IEnumerable<int>? newsPortalIds,
-            IEnumerable<string>? searchTerms,
             TimeSpan maxAgeOfFeaturedArticle,
             DateTime? articleCreateDateTime
         )
@@ -317,9 +326,8 @@ namespace Espresso.Domain.Entities
                 (categoryIds == null || article
                     .ArticleCategories
                     .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
-                (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)) &&
-                // !article.NewsPortal!.CategoryId.Equals((int)CategoryId.Local) &&
-                (searchTerms == null || searchTerms.All(searchTerm => article.Title.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase)));
+            // !article.NewsPortal!.CategoryId.Equals((int)CategoryId.Local) &&
+                (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId));
         }
 
 
