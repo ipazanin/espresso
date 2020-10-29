@@ -93,10 +93,6 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
                             DisabledSoundName
                     }
                 },
-                Android = new AndroidConfig
-                {
-                    Data = customData
-                },
                 Data = customData
             };
 

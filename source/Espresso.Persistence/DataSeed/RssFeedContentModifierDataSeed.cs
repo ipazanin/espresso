@@ -136,6 +136,32 @@ namespace Espresso.Persistence.DataSeed
                 replacementValue: "</link>",
                 rssFeedId: (int)RssFeedId.Hrt_Vijesti
             ));
+
+            builder.HasData(new RssFeedContentModifier(
+                id: id++,
+                sourceValue: "<description>",
+                replacementValue: "<notused>",
+                rssFeedId: (int)RssFeedId.Netokracija
+            ));
+            builder.HasData(new RssFeedContentModifier(
+                id: id++,
+                sourceValue: "</description>",
+                replacementValue: "</notused>",
+                rssFeedId: (int)RssFeedId.Netokracija
+            ));
+
+            builder.HasData(new RssFeedContentModifier(
+                id: id++,
+                sourceValue: "<content:encoded>",
+                replacementValue: "<description>",
+                rssFeedId: (int)RssFeedId.Netokracija
+            ));
+            builder.HasData(new RssFeedContentModifier(
+                id: id++,
+                sourceValue: "</content:encoded>",
+                replacementValue: "</description>",
+                rssFeedId: (int)RssFeedId.Netokracija
+            ));
         }
     }
 }

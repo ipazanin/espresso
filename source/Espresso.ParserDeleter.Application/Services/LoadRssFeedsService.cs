@@ -14,6 +14,7 @@ using Espresso.Application.IServices;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.Extensions;
 using Espresso.Domain.Records;
@@ -151,7 +152,6 @@ namespace Espresso.ParserDeleter.Application.Services
             };
 
             var modifiedFeedContent = rssFeed.ModifyContent(feedContent);
-
 
             var reader = XmlReader.Create(
                 input: new StringReader(modifiedFeedContent)

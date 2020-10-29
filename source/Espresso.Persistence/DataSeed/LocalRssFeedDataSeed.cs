@@ -500,6 +500,12 @@ namespace Espresso.Persistence.DataSeed
                 ImgElementXPath = "//figure[contains(@class, 'img-container')]//img",
                 ImageUrlParseStrategy = ImageUrlParseStrategy.FromContent
             });
+
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Zupanjac,
+                ImgElementXPath = "//div[contains(@class, 'feature-img')]//img"
+            });
         }
 
     }

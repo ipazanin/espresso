@@ -28,7 +28,7 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
         private readonly IMemoryCache _memoryCache;
         private readonly IArticleRepository _articleRepository;
         private readonly IArticleCategoryRepository _articleCategoryRepository;
-        private readonly ICreateArticlesService _parseArticlesService;
+        private readonly ICreateArticleService _parseArticlesService;
         private readonly ISlackService _slackService;
         private readonly ILoadRssFeedsService _loadRssFeedsService;
         private readonly IHttpService _httpService;
@@ -41,7 +41,7 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
             IMemoryCache memoryCache,
             IArticleRepository articleRepository,
             IArticleCategoryRepository articleCategoryRepository,
-            ICreateArticlesService parseArticlesService,
+            ICreateArticleService parseArticlesService,
             ISlackService slackService,
             ILoggerFactory loggerFactory,
             ILoadRssFeedsService loadRssFeedsService,
