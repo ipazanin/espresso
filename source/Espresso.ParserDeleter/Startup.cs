@@ -59,7 +59,7 @@ namespace Espresso.ParserDeleter
             ));
             services.AddScoped<IHttpService, HttpService>();
             services.AddScoped<ILoadRssFeedsService, LoadRssFeedsService>();
-            services.AddScoped<ICreateArticlesService, CreateArticlesService>();
+            services.AddScoped<ICreateArticleService, CreateArticleService>();
             services.AddScoped<IScrapeWebService, ScrapeWebService>();
             services.AddScoped<IParseHtmlService, ParseHtmlService>();
             services.AddScoped<ISortArticlesService, SortArticlesService>();

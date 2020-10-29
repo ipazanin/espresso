@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.Extensions;
 using Espresso.Domain.Records;
@@ -17,17 +18,17 @@ using Microsoft.Extensions.Logging;
 
 namespace Espresso.ParserDeleter.Application.Services
 {
-    public class CreateArticlesService : ICreateArticlesService
+    public class CreateArticleService : ICreateArticleService
     {
         #region Fields
         private readonly IScrapeWebService _webScrapingService;
         private readonly IParseHtmlService _htmlParsingService;
         private readonly IValidator<ArticleData> _articleDataValidator;
-        private readonly ILogger<CreateArticlesService> _logger;
+        private readonly ILogger<CreateArticleService> _logger;
         #endregion
 
         #region Constructors
-        public CreateArticlesService(
+        public CreateArticleService(
             IScrapeWebService webScrapingService,
             IParseHtmlService htmlParsingService,
             IValidator<ArticleData> articleDataValidator,
@@ -37,7 +38,7 @@ namespace Espresso.ParserDeleter.Application.Services
             _webScrapingService = webScrapingService;
             _htmlParsingService = htmlParsingService;
             _articleDataValidator = articleDataValidator;
-            _logger = loggerFactory.CreateLogger<CreateArticlesService>();
+            _logger = loggerFactory.CreateLogger<CreateArticleService>();
         }
         #endregion
 

@@ -7,7 +7,7 @@ using Espresso.Domain.Records;
 
 namespace Espresso.ParserDeleter.Application.IServices
 {
-    public interface ICreateArticlesService
+    public interface ICreateArticleService
     {
         public Task<(Article? article, bool isValid)> CreateArticleAsync(
             RssFeedItem rssFeedItem,

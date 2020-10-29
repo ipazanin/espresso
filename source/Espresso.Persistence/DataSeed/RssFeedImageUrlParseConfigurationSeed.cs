@@ -119,25 +119,25 @@ namespace Espresso.Persistence.DataSeed
 
 
 
-            imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Netokracija, ImgElementXPath = "//div[contains(@class, 'post__hero')]//img", });
-
-
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Netokracija,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.FromContent,
+                ImgElementXPath = "//div[contains(@class, 'post__hero')]//img",
+            });
 
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.PoslovniPuls, ImgElementXPath = "//div[contains(@class, 'postFeaturedImg postFeaturedImg--single')]//img", });
 
-
-
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.PcChip, ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img", });
-
-
 
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Cosmopolitan, ImgElementXPath = "//div[contains(@class, 'first-image')]//img", });
 
-
-
-            imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.WallHr, ImageUrlParseStrategy = ImageUrlParseStrategy.FromContent, ImgElementXPath = "//figure[contains(@class, 'dcms-image article-image')]//img", });
-
-
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.WallHr,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.FromContent,
+                ImgElementXPath = "//figure[contains(@class, 'dcms-image article-image')]//img",
+            });
 
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.LjepotaIZdravlje, ImgElementXPath = "//div[contains(@class, 'post-thumbnail')]//img", });
 
