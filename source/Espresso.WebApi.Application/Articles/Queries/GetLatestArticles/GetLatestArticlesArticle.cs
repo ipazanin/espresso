@@ -41,6 +41,12 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
         public string PublishDateTime { get; private set; } = "";
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public int NumberOfClicks { get; private set; }
+
+        /// <summary>
         /// News Portal ID
         /// </summary>
         public GetLatestArticlesNewsPortal? NewsPortal { get; private set; }
@@ -69,6 +75,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                 Url = article.Url,
                 WebUrl = article.WebUrl,
                 PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.MobileAppDateTimeFormat),
+                NumberOfClicks = article.NumberOfClicks,
                 NewsPortal = GetLatestArticlesNewsPortal.GetProjection()
                     .Compile()
                     .Invoke(article.NewsPortal!),

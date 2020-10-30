@@ -22,10 +22,10 @@ namespace Espresso.WebApi.Extensions
         /// <returns></returns>
         public static IServiceCollection AddServices(this IServiceCollection services, IWebApiConfiguration webApiConfiguration)
         {
-            services.AddScoped<ISlackService, SlackService>(o => new SlackService(
-                memoryCache: o.GetRequiredService<IMemoryCache>(),
-                httpClientFactory: o.GetRequiredService<IHttpClientFactory>(),
-                loggerFactory: o.GetRequiredService<ILoggerFactory>(),
+            services.AddScoped<ISlackService, SlackService>(serviceProvider => new SlackService(
+                memoryCache: serviceProvider.GetRequiredService<IMemoryCache>(),
+                httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
+                loggerFactory: serviceProvider.GetRequiredService<ILoggerFactory>(),
                 webHookUrl: webApiConfiguration.AppConfiguration.SlackWebHook
             ));
             services.AddScoped<IHttpService, HttpService>();

@@ -36,6 +36,12 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
         public string PublishDateTime { get; private set; } = "";
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public int NumberOfClicks { get; private set; }
+
+        /// <summary>
         /// News Portal ID
         /// </summary>
         public GetCategoryArticlesNewsPortal? NewsPortal { get; private set; }
@@ -62,6 +68,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
                 ImageUrl = article.ImageUrl,
                 Url = article.Url,
                 PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.MobileAppDateTimeFormat),
+                NumberOfClicks = article.NumberOfClicks,
                 NewsPortal = GetCategoryArticlesNewsPortal.GetProjection()
                     .Compile()
                     .Invoke(article.NewsPortal!),

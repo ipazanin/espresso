@@ -41,6 +41,12 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
         public string PublishDateTime { get; private set; } = "";
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public int NumberOfClicks { get; private set; }
+
+        /// <summary>
         /// News Portal
         /// </summary>
         public GetFeaturedArticlesNewsPortal? NewsPortal { get; private set; }
@@ -68,6 +74,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
                 Url = article.Url,
                 WebUrl = article.WebUrl,
                 PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.MobileAppDateTimeFormat),
+                NumberOfClicks = article.NumberOfClicks,
                 NewsPortal = GetFeaturedArticlesNewsPortal.GetProjection()
                     .Compile()
                     .Invoke(article.NewsPortal!),
