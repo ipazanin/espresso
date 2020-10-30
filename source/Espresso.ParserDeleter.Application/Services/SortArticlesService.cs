@@ -8,14 +8,20 @@ namespace Espresso.ParserDeleter.Application.Services
 {
     public class SortArticlesService : ISortArticlesService
     {
-        public (IEnumerable<Article> createdArticles, IEnumerable<Article> updatedArticles) SortArticles(
+        public (
+            IEnumerable<Article> createdArticles,
+            IEnumerable<Article> updatedArticles,
+            IEnumerable<ArticleCategory> articleCategoriesToCreate,
+            IEnumerable<ArticleCategory> articleCategoriesToDelete
+        ) SortArticles(
             IEnumerable<Article> articles,
             IEnumerable<Article> savedArticles
         )
         {
             var createArticles = new List<Article>();
             var updateArticles = new List<Article>();
-
+            var articleCategoriesToCreate = new List<ArticleCategory>();
+            var articleCategoriesToDelete = new List<ArticleCategory>();
 
             var savedArticlesIdDictionary = savedArticles.ToDictionary(
                 keySelector: article => article.Id
@@ -41,19 +47,22 @@ namespace Espresso.ParserDeleter.Application.Services
                 )
                 {
                     var savedArticle = savedArticlesIdDictionary[savedArticleId];
-
-                    if (savedArticle.Update(article))
+                    var (shouldUpdate, createArticleCategories, deleteArticleCategories) = savedArticle.Update(article);
+                    if (shouldUpdate)
                     {
+                        articleCategoriesToCreate.AddRange(createArticleCategories);
+                        articleCategoriesToDelete.AddRange(deleteArticleCategories);
                         updateArticles.Add(savedArticle);
                     }
                 }
                 else
                 {
                     createArticles.Add(article);
+                    articleCategoriesToCreate.AddRange(article.ArticleCategories);
                 }
             }
 
-            return (createArticles, updateArticles);
+            return (createArticles, updateArticles, articleCategoriesToCreate, articleCategoriesToDelete);
         }
 
         public IEnumerable<Article> RemoveDuplicateArticles(IEnumerable<Article> articles)
