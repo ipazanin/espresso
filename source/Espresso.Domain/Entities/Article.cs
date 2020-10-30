@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text.RegularExpressions;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Infrastructure;
@@ -63,11 +62,6 @@ namespace Espresso.Domain.Entities
         public RssFeed? RssFeed { get; private set; }
 
         public ICollection<ArticleCategory> ArticleCategories { get; private set; } = new List<ArticleCategory>();
-        #endregion
-
-        #region NotMapped In Database
-        public IEnumerable<ArticleCategory> CreateArticleCategories { get; private set; } = new List<ArticleCategory>();
-        public IEnumerable<ArticleCategory> DeleteArticleCategories { get; private set; } = new List<ArticleCategory>();
         #endregion
 
         #endregion
@@ -168,7 +162,13 @@ namespace Espresso.Domain.Entities
         /// </summary>
         /// <param name="other"></param>
         /// <returns>If article should be upadted</returns>
-        public bool Update(Article other)
+        public
+        (
+            bool shouldUpdate,
+            IEnumerable<ArticleCategory> articleCategoriesToCreate,
+            IEnumerable<ArticleCategory> articleCategoriesToDelete
+        )
+        Update(Article other)
         {
             var shouldUpdate = false;
             if (!Url.Equals(other.Url))
@@ -197,9 +197,8 @@ namespace Espresso.Domain.Entities
                 shouldUpdate = true;
             }
 
-            CreateArticleCategories = new List<ArticleCategory>();
-            DeleteArticleCategories = new List<ArticleCategory>();
             var articleCategoriesToDelete = new List<ArticleCategory>();
+            var articleCategoriesToCreate = new List<ArticleCategory>();
 
             foreach (var articleCategory in ArticleCategories)
             {
@@ -208,7 +207,6 @@ namespace Espresso.Domain.Entities
                 )
                 {
                     articleCategoriesToDelete.Add(articleCategory);
-                    DeleteArticleCategories = DeleteArticleCategories.Append(articleCategory);
                     shouldUpdate = true;
                 }
             }
@@ -231,13 +229,13 @@ namespace Espresso.Domain.Entities
                         article: null,
                         category: otherArticleCategory.Category
                     );
-                    CreateArticleCategories = CreateArticleCategories.Append(newArticleCategory);
+                    articleCategoriesToCreate.Add(newArticleCategory);
                     ArticleCategories.Add(newArticleCategory);
                     shouldUpdate = true;
                 }
             }
 
-            return shouldUpdate;
+            return (shouldUpdate, articleCategoriesToCreate, articleCategoriesToDelete);
         }
 
         public void UpdateNewsPortalAndArticlecategories(

@@ -5,7 +5,12 @@ namespace Espresso.ParserDeleter.Application.IServices
 {
     public interface ISortArticlesService
     {
-        public (IEnumerable<Article> createdArticles, IEnumerable<Article> updatedArticles) SortArticles(
+        public (
+            IEnumerable<Article> createdArticles,
+            IEnumerable<Article> updatedArticles,
+            IEnumerable<ArticleCategory> articleCategoriesToCreate,
+            IEnumerable<ArticleCategory> articleCategoriesToDelete
+        ) SortArticles(
             IEnumerable<Article> articles,
             IEnumerable<Article> savedArticles
         );

@@ -24,10 +24,6 @@ namespace Espresso.Persistence.Configuration
 
             builder.Property(article => article.Title)
                 .HasMaxLength(Article.ImageUrlMaxLength);
-
-            // TODO: get rid of these properties
-            builder.Ignore(article => article.CreateArticleCategories);
-            builder.Ignore(article => article.DeleteArticleCategories);
             #endregion
 
             #region ValueObjects

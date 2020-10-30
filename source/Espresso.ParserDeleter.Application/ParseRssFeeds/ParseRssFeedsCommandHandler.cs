@@ -93,13 +93,15 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
 
             var uniqueArticles = _sortArticlesService.RemoveDuplicateArticles(articles);
 
-            var (createArticles, updateArticles) = _sortArticlesService.SortArticles(
+            var (createArticles, updateArticles, articleCategoriesToCreate, articleCategoriesToDelete) = _sortArticlesService.SortArticles(
                 articles: uniqueArticles,
                 savedArticles: _memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey)
             );
 
             CreateArticles(articles: createArticles);
             UpdateArticles(articles: updateArticles);
+            _articleCategoryRepository.InsertArticleCategories(articleCategoriesToCreate);
+            _articleCategoryRepository.DeleteArticleCategories(articleCategoriesToDelete.Select(articleCategory => articleCategory.Id));
 
             await CallWebServer(
                 request: request,
@@ -182,7 +184,6 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
                 .ToDictionary(article => article.Id);
 
             var articlesToCreate = new List<Article>();
-            var articleCategoriesToCreate = new List<ArticleCategory>();
 
             foreach (var article in articles)
             {
@@ -193,11 +194,9 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
                 savedArticles.Add(article.Id, article);
 
                 articlesToCreate.Add(article);
-                articleCategoriesToCreate.AddRange(article.ArticleCategories);
             }
 
             _articleRepository.InsertArticles(articlesToCreate);
-            _articleCategoryRepository.InsertArticleCategories(articleCategoriesToCreate);
 
             _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
@@ -229,19 +228,8 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
                     articlesToUpdate.Add(article);
                 }
             }
-            var createArticleCategories = articlesToUpdate
-                .SelectMany(article => article.CreateArticleCategories);
-
-            var deleteArticleCategoryIds = articlesToUpdate
-                .SelectMany(
-                    article => article
-                        .DeleteArticleCategories
-                        .Select(deleteArticleCategory => deleteArticleCategory.Id)
-                );
 
             _articleRepository.UpdateArticles(articlesToUpdate);
-            _articleCategoryRepository.InsertArticleCategories(createArticleCategories);
-            _articleCategoryRepository.DeleteArticleCategories(deleteArticleCategoryIds);
 
             _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
