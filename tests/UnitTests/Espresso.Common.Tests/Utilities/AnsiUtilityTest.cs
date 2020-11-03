@@ -18,7 +18,7 @@ namespace Espresso.Common.Tests.Utilities
                 "\u001b[" +
                 "33;1;4" +
                 "m" +
-                value +
+                $"{{{value}}}" +
                 "\u001b[0m";
             #endregion
 
@@ -72,7 +72,7 @@ namespace Espresso.Common.Tests.Utilities
                 "\u001b[" +
                 "36" +
                 "m" +
-                value +
+                $"{{{value}}}" +
                 "\u001b[0m";
             #endregion
 
@@ -99,7 +99,7 @@ namespace Espresso.Common.Tests.Utilities
                 "\u001b[" +
                 "34" +
                 "m" +
-                value +
+                $"{{{value}}}" +
                 "\u001b[0m";
             #endregion
 
@@ -126,7 +126,7 @@ namespace Espresso.Common.Tests.Utilities
                 "\u001b[" +
                 "33" +
                 "m" +
-                value +
+                $"{{{value}}}" +
                 "\u001b[0m";
             #endregion
 
@@ -153,7 +153,7 @@ namespace Espresso.Common.Tests.Utilities
                 "\u001b[" +
                 "31" +
                 "m" +
-                value +
+                $"{{{value}}}" +
                 "\u001b[0m";
             #endregion
 
