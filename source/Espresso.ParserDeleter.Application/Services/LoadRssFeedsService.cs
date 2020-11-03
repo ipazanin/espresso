@@ -12,7 +12,6 @@ using System.Xml;
 using Espresso.Application.Extensions;
 using Espresso.Application.IServices;
 using Espresso.Common.Enums;
-using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.Extensions;
@@ -25,22 +24,19 @@ namespace Espresso.ParserDeleter.Application.Services
     public class LoadRssFeedsService : ILoadRssFeedsService
     {
         #region Fields
-        private readonly ISlackService _slackService;
+        private readonly ILoggerService<LoadRssFeedsService> _loggerService;
         private readonly HttpClient _httpClient;
-        private readonly ILogger<LoadRssFeedsService> _logger;
         #endregion
 
         #region Constructors
         public LoadRssFeedsService(
             IHttpClientFactory httpClientFactory,
-            ISlackService slackService,
-            ILoggerFactory loggerFactory
+            ILoggerService<LoadRssFeedsService> loggerService
         )
         {
-            _slackService = slackService;
-            _logger = loggerFactory.CreateLogger<LoadRssFeedsService>();
             _httpClient = httpClientFactory.CreateClient();
             _httpClient.Timeout = TimeSpan.FromSeconds(10);
+            _loggerService = loggerService;
         }
         #endregion
 
@@ -102,36 +98,10 @@ namespace Espresso.ParserDeleter.Application.Services
                         var rssFeedUrl = rssFeed.Url;
                         var exceptionMessage = exception.Message;
                         var eventName = Event.RssFeedLoading.GetDisplayName();
-                        var eventId = (int)Event.RssFeedLoading;
-                        var message = $"RssFeedUrl: {rssFeedUrl}";
                         var innerExceptionMessage = exception.InnerException?.Message ?? "";
+                        var arguments = new (string, object)[] { (nameof(rssFeedUrl), rssFeedUrl) };
 
-                        _logger.LogWarning(
-                            eventId: new EventId(id: eventId, name: eventName),
-                            message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
-                                $"{AnsiUtility.EncodeParameterName(nameof(message))}: " +
-                                $"{AnsiUtility.EncodeRequestParameters("{1}")}\n\t" +
-                                $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
-                                $"{AnsiUtility.EncodeErrorMessage("{2}")}\n\t" +
-                                $"{AnsiUtility.EncodeParameterName(nameof(innerExceptionMessage))}: " +
-                                $"{AnsiUtility.EncodeErrorMessage("{3}")}",
-                            args: new object[]
-                            {
-                                eventName,
-                                message,
-                                exceptionMessage,
-                                innerExceptionMessage,
-                            }
-                        );
-
-                        await _slackService.LogWarning(
-                            eventName: eventName,
-                            version: currentApiVersion,
-                            message: message,
-                            exception: exception,
-                            appEnvironment: appEnvironment,
-                            cancellationToken: cancellationToken
-                        );
+                        _loggerService.Log(eventName, exception, LogLevel.Error, arguments);
                     }
                 }, cancellationToken));
             }

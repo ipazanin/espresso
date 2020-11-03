@@ -9,15 +9,6 @@ namespace Espresso.Application.IServices
 {
     public interface ISlackService
     {
-        public Task LogWarning(
-            string eventName,
-            string version,
-            string message,
-            Exception exception,
-            AppEnvironment appEnvironment,
-            CancellationToken cancellationToken
-        );
-
         public Task LogError(
             string eventName,
             string version,

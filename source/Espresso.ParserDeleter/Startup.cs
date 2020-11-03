@@ -54,7 +54,7 @@ namespace Espresso.ParserDeleter
             services.AddScoped<ISlackService, SlackService>(serviceProvider => new SlackService(
                 memoryCache: serviceProvider.GetRequiredService<IMemoryCache>(),
                 httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
-                loggerFactory: serviceProvider.GetRequiredService<ILoggerFactory>(),
+                loggerService: serviceProvider.GetRequiredService<ILoggerService<SlackService>>(),
                 webHookUrl: _parserDeleterConfiguration.AppConfiguration.SlackWebHook
             ));
             services.AddScoped<IHttpService, HttpService>();
@@ -63,6 +63,7 @@ namespace Espresso.ParserDeleter
             services.AddScoped<IScrapeWebService, ScrapeWebService>();
             services.AddScoped<IParseHtmlService, ParseHtmlService>();
             services.AddScoped<ISortArticlesService, SortArticlesService>();
+            services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
             #endregion
 
             #region Database

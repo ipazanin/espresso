@@ -58,18 +58,18 @@ namespace Espresso.WebApi.CronJobs
         /// 
         /// </summary>
         /// <param name="serviceScopeFactory"></param>
-        /// <param name="loggerFactory"></param>
+        /// <param name="loggerService"></param>
         /// <param name="cronJobConfiguration"></param>
         /// <param name="webApiConfiguration"></param>
         /// <returns></returns>
         public WebApiReportCronJob(
             IServiceScopeFactory serviceScopeFactory,
-            ILoggerFactory loggerFactory,
+            ILoggerService<CronJob<WebApiReportCronJob>> loggerService,
             ICronJobConfiguration<WebApiReportCronJob> cronJobConfiguration,
             IWebApiConfiguration webApiConfiguration
         ) : base(
             cronJobConfiguration: cronJobConfiguration,
-            loggerFactory: loggerFactory,
+            loggerService: loggerService,
             serviceScopeFactory: serviceScopeFactory
         )
         {

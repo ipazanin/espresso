@@ -32,12 +32,12 @@ namespace Espresso.ParserDeleter.CronJobs
         #region Constructors
         public ParserDeleterReportCronJob(
             IServiceScopeFactory serviceScopeFactory,
-            ILoggerFactory loggerFactory,
             ICronJobConfiguration<ParserDeleterReportCronJob> cronJobConfiguration,
-            IParserDeleterConfiguration parserDeleterConfiguration
+            IParserDeleterConfiguration parserDeleterConfiguration,
+            ILoggerService<CronJob<ParserDeleterReportCronJob>> loggerService
         ) : base(
             cronJobConfiguration: cronJobConfiguration,
-            loggerFactory: loggerFactory,
+            loggerService: loggerService,
             serviceScopeFactory: serviceScopeFactory
         )
         {

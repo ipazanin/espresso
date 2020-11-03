@@ -9,7 +9,7 @@ namespace Espresso.WebApi.Application.Utilities
         #region Constants
 
         private const int HalfOfMaxTrendingScoreValue = 500;
-        private const decimal AgeWeight = 1;
+        private const decimal AgeWeight = 0.9M;
 
         #endregion
 

@@ -33,7 +33,7 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
         private readonly ILoadRssFeedsService _loadRssFeedsService;
         private readonly IHttpService _httpService;
         private readonly ISortArticlesService _sortArticlesService;
-        private readonly ILogger<ParseRssFeedsCommandHandler> _logger;
+        private readonly ILoggerService<ParseRssFeedsCommandHandler> _loggerService;
         #endregion
 
         #region Constructors
@@ -43,10 +43,10 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
             IArticleCategoryRepository articleCategoryRepository,
             ICreateArticleService parseArticlesService,
             ISlackService slackService,
-            ILoggerFactory loggerFactory,
             ILoadRssFeedsService loadRssFeedsService,
             IHttpService httpService,
-            ISortArticlesService sortArticlesService
+            ISortArticlesService sortArticlesService,
+            ILoggerService<ParseRssFeedsCommandHandler> loggerService
         )
         {
             _memoryCache = memoryCache;
@@ -57,7 +57,7 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
             _loadRssFeedsService = loadRssFeedsService;
             _httpService = httpService;
             _sortArticlesService = sortArticlesService;
-            _logger = loggerFactory.CreateLogger<ParseRssFeedsCommandHandler>();
+            _loggerService = loggerService;
         }
         #endregion
 
@@ -149,18 +149,8 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
                     }
                     catch (Exception exception)
                     {
-                        var eventName = "CreateArticleUnhandledException";
-                        var message = exception.Message;
-                        _logger.LogError(
-                            message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
-                                $"{AnsiUtility.EncodeParameterName(nameof(message))}: " +
-                                $"{AnsiUtility.EncodeErrorMessage("{1}")}\n\t",
-                            args: new object[]
-                            {
-                                eventName,
-                                message
-                            }
-                        );
+                        var eventName = "CreatecArticle Unhandled Exception";
+                        _loggerService.Log(eventName, exception, LogLevel.Error);
                     }
                 }, cancellationToken));
             }
@@ -279,31 +269,14 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
             catch (Exception exception)
             {
                 var eventName = Event.SendNewAndUpdatedArticlesRequest.GetDisplayName();
-                var eventId = (int)Event.SendNewAndUpdatedArticlesRequest;
                 var version = request.CurrentApiVersion;
-                var exceptionMessage = exception.Message;
-                var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
-                _logger.LogError(
-                    eventId: new EventId(
-                        id: eventId,
-                        name: eventName
-                    ),
-                    exception: exception,
-                    message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(version))}: " +
-                        $"{AnsiUtility.EncodeVersion("{1}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
-                        $"{AnsiUtility.EncodeErrorMessage("{2}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(innerExceptionMessage))}: " +
-                        $"{AnsiUtility.EncodeErrorMessage("{3}")}",
-                    args: new object[]
-                    {
-                            eventName,
-                            version,
-                            exceptionMessage,
-                            innerExceptionMessage,
-                    }
-                );
+                var arguments = new (string parameterName, object parameterValue)[]
+                {
+                    (nameof(version), version)
+                };
+
+                _loggerService.Log(eventName, exception, LogLevel.Error, arguments);
+
                 await _slackService.LogError(
                         eventName: eventName,
                         version: request.TargetedApiVersion,
