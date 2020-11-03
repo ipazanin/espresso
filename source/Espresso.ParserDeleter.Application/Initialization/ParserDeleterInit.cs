@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Espresso.Application.IServices;
+using Espresso.Application.Services;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
@@ -23,7 +25,7 @@ namespace Espresso.ParserDeleter.Application.Initialization
         #region Fileds
         private readonly IMemoryCache _memoryCache;
         private readonly IApplicationDatabaseContext _context;
-        private readonly ILogger<ParserDeleterInit> _logger;
+        private readonly ILoggerService<ParserDeleterInit> _loggerService;
         #endregion
 
         #region Constructors
@@ -36,12 +38,12 @@ namespace Espresso.ParserDeleter.Application.Initialization
         public ParserDeleterInit(
             IMemoryCache memoryCache,
             IApplicationDatabaseContext context,
-            ILoggerFactory loggerFactory
+            ILoggerService<ParserDeleterInit> loggerService
         )
         {
             _memoryCache = memoryCache;
             _context = context;
-            _logger = loggerFactory.CreateLogger<ParserDeleterInit>();
+            _loggerService = loggerService;
         }
         #endregion
 
@@ -118,7 +120,6 @@ namespace Espresso.ParserDeleter.Application.Initialization
             #endregion
             stopwatch.Stop();
 
-            var eventId = (int)Event.ParserInit;
             var eventName = Event.ParserInit.GetDisplayName();
             var duration = stopwatch.Elapsed;
             var categoriesCount = categories.Count;
@@ -126,34 +127,16 @@ namespace Espresso.ParserDeleter.Application.Initialization
             var allArticlesCount = articles.Count;
             var rssFeedCount = rssFeeds.Count;
 
-            var message =
-                $"{AnsiUtility.EncodeEventName($"{{@{nameof(eventName)}}}")}\n\t" +
-                $"{AnsiUtility.EncodeParameterName(nameof(duration))}: " +
-                $"{AnsiUtility.EncodeTimespan($"{{@{nameof(duration)}}}")}\n\t" +
-                $"{AnsiUtility.EncodeParameterName(nameof(categoriesCount))}: " +
-                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(categoriesCount)}}}")}\n\t" +
-                $"{AnsiUtility.EncodeParameterName(nameof(newsPortalsCount))}: " +
-                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(newsPortalsCount)}}}")}\n\t" +
-                $"{AnsiUtility.EncodeParameterName(nameof(allArticlesCount))}: " +
-                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(allArticlesCount)}}}")}\n\t" +
-                $"{AnsiUtility.EncodeParameterName(nameof(rssFeedCount))}: " +
-                $"{AnsiUtility.EncodeRequestParameters($"{{@{nameof(rssFeedCount)}}}")}\n\t";
-
-            var args = new object[]
+            var arguments = new List<(string parameterName, object parameterValue)>
             {
-                eventName,
-                duration,
-                categoriesCount,
-                newsPortalsCount,
-                allArticlesCount,
-                rssFeedCount
+                (nameof(duration), duration),
+                (nameof(categoriesCount), categoriesCount),
+                (nameof(newsPortalsCount), newsPortalsCount),
+                (nameof(allArticlesCount), allArticlesCount),
+                (nameof(rssFeedCount), rssFeedCount)
             };
 
-            _logger.LogInformation(
-                eventId: new EventId(id: eventId, name: eventName),
-                message: message,
-                args: args
-            );
+            _loggerService.Log(eventName, LogLevel.Information, arguments);
         }
         #endregion
     }

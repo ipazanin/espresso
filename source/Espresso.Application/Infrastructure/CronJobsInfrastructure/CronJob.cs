@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Cronos;
@@ -17,22 +18,22 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
         #region Fields
         private Timer? _timer;
         private readonly CronExpression _expression;
-        private readonly ILogger<T> _logger;
         private readonly ICronJobConfiguration<T> _cronJobConfiguration;
         private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly ILoggerService<CronJob<T>> _loggerService;
         #endregion
 
         #region Constructors
         protected CronJob(
             ICronJobConfiguration<T> cronJobConfiguration,
-            ILoggerFactory loggerFactory,
-            IServiceScopeFactory serviceScopeFactory
+            IServiceScopeFactory serviceScopeFactory,
+            ILoggerService<CronJob<T>> loggerService
         )
         {
             _expression = CronExpression.Parse(cronJobConfiguration.CronExpression);
-            _logger = loggerFactory.CreateLogger<T>();
             _cronJobConfiguration = cronJobConfiguration;
             _serviceScopeFactory = serviceScopeFactory;
+            _loggerService = loggerService;
         }
         #endregion
 
@@ -75,16 +76,12 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
             _timer.Start();
 
             var eventName = $"{typeof(T).Name} scheduled";
-            _logger.LogInformation(
-                eventId: new EventId(
-                    id: (int)Event.CronJob,
-                    name: eventName
-                ),
-                message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameter(nameof(ocurrence))}: " +
-                    $"{AnsiUtility.EncodeDateTime("{1}")}",
-                args: new object[] { eventName, ocurrence.Value }
-            );
+            var arguments = new List<(string argumentName, object argumentValue)>
+            {
+                (nameof(ocurrence), ocurrence)
+            };
+
+            _loggerService.Log(eventName, LogLevel.Information, arguments);
         }
 
         public abstract Task DoWork(CancellationToken cancellationToken);
@@ -92,14 +89,7 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
         public virtual Task StopAsync(CancellationToken cancellationToken)
         {
             var eventName = $"{typeof(T).Name} stopped";
-            _logger.LogInformation(
-                eventId: new EventId(
-                    id: (int)Event.CronJob,
-                    name: eventName
-                ),
-                message: $"{AnsiUtility.EncodeEventName("{0}")}",
-                args: new object[] { eventName }
-            );
+            _loggerService.Log(eventName, LogLevel.Information);
 
             _timer?.Stop();
 
@@ -123,39 +113,25 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
 
                 var eventName = $"{typeof(T).Name} work ended";
                 var nextOccurence = _expression.GetNextOccurrence(DateTimeOffset.Now, _cronJobConfiguration.TimeZoneInfo) ?? ocurrence;
-                _logger.LogInformation(
-                    eventId: new EventId(
-                        id: (int)Event.CronJob,
-                        name: eventName
-                    ),
-                    message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(ocurrence))}: " +
-                        $"{AnsiUtility.EncodeDateTime("{1}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(nextOccurence))}: " +
-                        $"{AnsiUtility.EncodeDateTime("{2}")}\n\t",
-                    args: new object[] { eventName, ocurrence, nextOccurence }
-                );
+
+                var arguments = new (string argumentName, object argumentValue)[]
+                {
+                    (nameof(ocurrence),ocurrence),
+                    (nameof(nextOccurence),nextOccurence)
+                };
+                _loggerService.Log(eventName, LogLevel.Information, arguments);
+
             }
             catch (Exception exception)
             {
                 var eventName = $"{typeof(T).Name} error";
-                var exceptionMessage = exception.Message;
-                var innerExceptionMessage = exception.InnerException?.Message ?? "";
-                _logger.LogError(
-                    eventId: new EventId(
-                        id: (int)Event.CronJob,
-                        name: eventName
-                    ),
-                    exception: exception,
-                    message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
-                         $"{AnsiUtility.EncodeParameterName(nameof(ocurrence))}: " +
-                         $"{AnsiUtility.EncodeDateTime("{1}")}\n\t" +
-                         $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
-                         $"{AnsiUtility.EncodeErrorMessage("{2}")}\n\t" +
-                         $"{AnsiUtility.EncodeParameterName(nameof(innerExceptionMessage))}: " +
-                         $"{AnsiUtility.EncodeErrorMessage("{3}")}",
-                    args: new object[] { eventName, ocurrence, exceptionMessage, innerExceptionMessage }
-                );
+
+                var arguments = new (string argumentName, object argumentValue)[]
+                {
+                    (nameof(ocurrence),ocurrence),
+                };
+
+                _loggerService.Log(eventName, exception, LogLevel.Error, arguments);
 
                 using var scope = _serviceScopeFactory.CreateScope();
                 var slackService = scope.ServiceProvider.GetRequiredService<ISlackService>();

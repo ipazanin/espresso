@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.IServices;
@@ -55,60 +53,28 @@ namespace Espresso.Application.Services
         #region Fields
         private readonly IMemoryCache _memoryCache;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ILoggerService<SlackService> _loggerService;
         private readonly string _webHookUrl;
-        private readonly ILogger<SlackService> _logger;
         #endregion
 
         #region Contructor
         public SlackService(
             IMemoryCache memoryCache,
             IHttpClientFactory httpClientFactory,
-            ILoggerFactory loggerFactory,
+            ILoggerService<SlackService> loggerService,
             string webHookUrl
         )
         {
             _memoryCache = memoryCache;
             _httpClientFactory = httpClientFactory;
+            _loggerService = loggerService;
             _webHookUrl = webHookUrl;
-            _logger = loggerFactory.CreateLogger<SlackService>();
         }
         #endregion
 
         #region Methods
 
         #region  Public Methods
-        public Task LogWarning(
-            string eventName,
-            string version,
-            string message,
-            Exception exception,
-            AppEnvironment appEnvironment,
-            CancellationToken cancellationToken
-        )
-        {
-            var exceptionMessage = exception.Message;
-            var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
-#pragma warning disable IDE0059
-            var text = $":blue_book: Event Name: {eventName}\n" +
-                $":label: Version: {version}\n" +
-                $":email: Message: {message}\n" +
-                $":exclamation: Exception Message: {exceptionMessage}\n" +
-                $":exclamation: Inner Exception Message: {innerExceptionMessage}";
-#pragma warning restore IDE0059
-
-            return Task.CompletedTask;
-            // await Log(
-            //     data: new SlackWebHookDto(
-            //         userName: WarningBotUsername,
-            //         iconEmoji: WarningBotIconEmoji,
-            //         text: text,
-            //         channel: WarningsChannel
-            //     ),
-            //     appEnvironment: appEnvironment,
-            //     cancellationToken: cancellationToken
-            // );
-        }
-
         public Task LogError(
             string eventName,
             string version,
@@ -215,36 +181,32 @@ namespace Espresso.Application.Services
             }
         }
 
-        public Task LogMissingCategoriesError(
-            string version,
-            string rssFeedUrl,
-            string articleUrl,
-            string urlCategories,
-            AppEnvironment appEnvironment,
-            CancellationToken cancellationToken
-        )
-        {
-#pragma warning disable IDE0059
+                public Task LogMissingCategoriesError(
+                    string version,
+                    string rssFeedUrl,
+                    string articleUrl,
+                    string urlCategories,
+                    AppEnvironment appEnvironment,
+                    CancellationToken cancellationToken
+                )
+                {
+                    var text = $":blue_book: Request Name: Missing Categories\n" +
+                        $":label: Version: {version}\n" +
+                        $":email: Rss Feed Url: {rssFeedUrl}\n" +
+                        $":email: Article Url: {articleUrl}\n" +
+                        $":email: Url-SegmentIndex:Category Map: {urlCategories}\n";
 
-            var text = $":blue_book: Request Name: Missing Categories\n" +
-                $":label: Version: {version}\n" +
-                $":email: Rss Feed Url: {rssFeedUrl}\n" +
-                $":email: Article Url: {articleUrl}\n" +
-                $":email: Url-SegmentIndex:Category Map: {urlCategories}\n";
-#pragma warning restore IDE0059
-
-            return Task.CompletedTask;
-            // return Log(
-            //     data: new SlackWebHookDto(
-            //         userName: MissingCategoriesErrorsBotUsername,
-            //         iconEmoji: MissingCategoriesErrorsBotIconEmoji,
-            //         text: text,
-            //         channel: MissingCategoriesErrorsChannel
-            //     ),
-            //     appEnvironment: appEnvironment,
-            //     cancellationToken: cancellationToken
-            // );
-        }
+                    return Log(
+                        data: new SlackWebHookDto(
+                            userName: MissingCategoriesErrorsBotUsername,
+                            iconEmoji: MissingCategoriesErrorsBotIconEmoji,
+                            text: text,
+                            channel: MissingCategoriesErrorsChannel
+                        ),
+                        appEnvironment: appEnvironment,
+                        cancellationToken: cancellationToken
+                    );
+                }
 
         public Task LogNewNewsPortalRequest(
             string newsPortalName,
@@ -368,30 +330,13 @@ namespace Espresso.Application.Services
                       var exceptionMessage = exception.Message;
                       var innerExceptionMessage = exception.InnerException?.Message ?? "";
 
-                      var formattedMessage =
-                        $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
-                        $"{AnsiUtility.EncodeErrorMessage("{2}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(innerExceptionMessage))}: " +
-                        $"{AnsiUtility.EncodeErrorMessage("{3}")}";
-
-
-                      var args = new object[]
+                      var arguments = new List<(string parameterName, object parameterValue)>
                       {
-                          eventName,
-                          exceptionMessage,
-                          innerExceptionMessage,
+                          (nameof(exceptionMessage),exceptionMessage),
+                          (nameof(innerExceptionMessage),innerExceptionMessage),
                       };
 
-                      _logger.LogError(
-                          eventId: new EventId(
-                              id: (int)Event.SlackServiceException,
-                              name: eventName
-                          ),
-                          exception: exception,
-                          message: formattedMessage,
-                          args: args
-                      );
+                      _loggerService.Log(eventName, exception, LogLevel.Error, arguments);
                   }
 
                   return "";

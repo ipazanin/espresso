@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Espresso.Application.IServices;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
@@ -24,7 +25,7 @@ namespace Espresso.ParserDeleter.Application.Services
         private readonly IScrapeWebService _webScrapingService;
         private readonly IParseHtmlService _htmlParsingService;
         private readonly IValidator<ArticleData> _articleDataValidator;
-        private readonly ILogger<CreateArticleService> _logger;
+        private readonly ILoggerService<CreateArticleService> _loggerService;
         #endregion
 
         #region Constructors
@@ -32,13 +33,13 @@ namespace Espresso.ParserDeleter.Application.Services
             IScrapeWebService webScrapingService,
             IParseHtmlService htmlParsingService,
             IValidator<ArticleData> articleDataValidator,
-            ILoggerFactory loggerFactory
+            ILoggerService<CreateArticleService> loggerService
         )
         {
             _webScrapingService = webScrapingService;
             _htmlParsingService = htmlParsingService;
             _articleDataValidator = articleDataValidator;
-            _logger = loggerFactory.CreateLogger<CreateArticleService>();
+            _loggerService = loggerService;
         }
         #endregion
 
@@ -154,23 +155,12 @@ namespace Espresso.ParserDeleter.Application.Services
                 var rssFeedUrl = rssFeed.Url;
                 var exceptionMessage = validationResult.ToString();
                 var eventName = Event.CreateArticle.GetDisplayName();
-                var eventId = (int)Event.CreateArticle;
-                var message = $"RssFeedUrl: {rssFeedUrl}";
+                var parameters = new (string, object)[]
+                {
+                    (nameof(rssFeedUrl), rssFeedUrl)
+                };
 
-                _logger.LogWarning(
-                    eventId: new EventId(id: eventId, name: eventName),
-                    message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(message))}: " +
-                        $"{AnsiUtility.EncodeRequestParameters("{1}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
-                        $"{AnsiUtility.EncodeErrorMessage("{2}")}\n\t",
-                    args: new object[]
-                    {
-                        eventName,
-                        message,
-                        exceptionMessage,
-                    }
-                );
+                _loggerService.Log(eventName, exceptionMessage, LogLevel.Error, parameters);
 
                 return (null, false);
             }
@@ -288,6 +278,17 @@ namespace Espresso.ParserDeleter.Application.Services
                     requestType: rssFeed.RequestType,
                     cancellationToken: cancellationToken
                 );
+
+                var eventName = Event.ImageUrlWebScrapingData.GetDisplayName();
+                var rssFeedUrl = rssFeed.Url;
+                var newsPortalName = rssFeed.NewsPortal?.Name ?? "";
+                var arguments = new (string, object)[]{
+                    (nameof(rssFeedUrl), rssFeedUrl),
+                    (nameof(newsPortalName), newsPortalName),
+                    (nameof(imageUrl), imageUrl ?? "")
+                };
+
+                _loggerService.Log(eventName, LogLevel.Information, arguments);
             }
 
             imageUrl = AddBaseUrlToUrlFragment(imageUrl, rssFeed.NewsPortal?.BaseUrl);

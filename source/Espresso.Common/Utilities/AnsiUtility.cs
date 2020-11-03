@@ -17,7 +17,7 @@
         private const string GreenColor = "32";
         private const string YellowColor = "33";
         private const string BlueColor = "34";
-        // private const string MagentaColor = "35";
+        private const string MagentaColor = "35";
         private const string CyanColor = "36";
         private const string WhiteColor = "37";
         #endregion
@@ -41,54 +41,48 @@
             return $"\u001b[{string.Join(";", parameters)}m{value}\u001b[0m";
         }
 
-        public static string EncodeEventName(string value)
-        {
-            return Encode(value, YellowColor, Bold, Underline);
-        }
-
         public static string EncodeParameterName(string value)
         {
             return Encode(value, GreenColor, Bold);
         }
-
-        public static string EncodeTimespan(string value)
+        public static string EncodeEventName(int parameterNumber)
         {
-            return Encode(value, CyanColor);
+            return Encode($"{{{parameterNumber}}}", YellowColor, Bold, Underline);
         }
 
-        public static string EncodeDateTime(string value)
+        public static string EncodeErrorMessage(int parameterNumber)
         {
-            return Encode(value, BlueColor);
+            return Encode($"{{{parameterNumber}}}", RedColor);
         }
 
-        public static string EncodeVersion(string value)
+        public static string EncodeTimespan(int parameterNumber)
         {
-            return Encode(value, WhiteColor, Italic);
+            return Encode($"{{{parameterNumber}}}", CyanColor);
         }
 
-        public static string EncodeParameter(string value)
+        public static string EncodeDateTime(int parameterNumber)
         {
-            return Encode(value, WhiteColor, Italic);
+            return Encode($"{{{parameterNumber}}}", BlueColor);
         }
 
-        public static string EncodeEnum(string value)
+        public static string EncodeString(int parameterNumber)
         {
-            return Encode(value, YellowColor);
+            return Encode($"{{{parameterNumber}}}", WhiteColor, Italic);
         }
 
-        public static string EncodeRequestParameters(string value)
+        public static string EncodeEnum(int parameterNumber)
         {
-            return Encode(value, WhiteColor);
+            return Encode($"{{{parameterNumber}}}", YellowColor);
         }
 
-        public static string EncodeResponse(string value)
+        public static string EncodeNumber(int parameterNumber)
         {
-            return Encode(value, WhiteColor);
+            return Encode($"{{{parameterNumber}}}", MagentaColor);
         }
 
-        public static string EncodeErrorMessage(string value)
+        public static string EncodeObject(int parameterNumber)
         {
-            return Encode(value, RedColor);
+            return Encode($"{{{parameterNumber}}}", MagentaColor);
         }
         #endregion
     }

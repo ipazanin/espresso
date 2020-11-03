@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.Extensions;
+using Espresso.Application.IServices;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Enums.RssFeedEnums;
@@ -21,22 +22,22 @@ namespace Espresso.ParserDeleter.Application.Services
     public class ScrapeWebService : IScrapeWebService
     {
         #region Fields
-        private readonly ILogger<ScrapeWebService> _logger;
         private readonly HttpClient _httpClient;
         private readonly IParseHtmlService _parseHtmlService;
+        private readonly ILoggerService<ScrapeWebService> _loggerService;
         #endregion
 
         #region Constructors
         public ScrapeWebService(
             IParseHtmlService parseHtmlService,
             IHttpClientFactory httpClientFactory,
-            ILoggerFactory loggerFactory
+            ILoggerService<ScrapeWebService> loggerService
         )
         {
-            _logger = loggerFactory.CreateLogger<ScrapeWebService>();
             _httpClient = httpClientFactory.CreateClient();
             _httpClient.Timeout = TimeSpan.FromSeconds(10);
             _parseHtmlService = parseHtmlService;
+            _loggerService = loggerService;
         }
         #endregion
 
@@ -64,11 +65,6 @@ namespace Espresso.ParserDeleter.Application.Services
 
             if (htmlString is null)
             {
-                LogWebScrapingEmptyResponse(
-                    articleUrl: articleUrl,
-                    requestType: requestType,
-                    imageUrlWebScrapeType: imageUrlWebScrapeType
-                );
                 return null;
             }
 
@@ -78,12 +74,6 @@ namespace Espresso.ParserDeleter.Application.Services
 
             if (elementTags is null)
             {
-                LogWebScrapingResponseNotBeingValidHtml(
-                    articleUrl: articleUrl,
-                    requestType: requestType,
-                    imageUrlWebScrapeType: imageUrlWebScrapeType,
-                    htmlString: htmlString
-                );
                 return null;
             }
 
@@ -97,14 +87,6 @@ namespace Espresso.ParserDeleter.Application.Services
                 ImageUrlWebScrapeType.SrcAttribute => _parseHtmlService.GetImageUrlFromSrcAttribute(elementTags),
                 _ => _parseHtmlService.GetImageUrlFromSrcAttribute(elementTags),
             };
-
-            LogWebScrapeResult(
-                imageUrl: imageUrl,
-                articleUrl: articleUrl,
-                xPath: xPath,
-                requestType: requestType,
-                imageUrlWebScrapeType: imageUrlWebScrapeType
-            );
 
             return imageUrl;
         }
@@ -194,144 +176,14 @@ namespace Espresso.ParserDeleter.Application.Services
 
         private void LogImageUrlWebScrapingRequestError(Exception exception, string articleUrl, RequestType requestType)
         {
-            var exceptionMessage = exception.Message;
-            var innerExceptionMessage = exception.InnerException?.Message ?? "";
             var eventName = Event.ImageUrlWebScrapingRequest.GetDisplayName();
-            _logger.LogWarning(
-                eventId: new EventId(
-                    id: (int)Event.ImageUrlWebScrapingRequest,
-                    name: eventName
-                ),
-                exception: exception,
-                message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(articleUrl))}: " +
-                    $"{AnsiUtility.EncodeParameter("{1}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(requestType))}: " +
-                    $"{AnsiUtility.EncodeEnum("{2}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
-                    $"{AnsiUtility.EncodeErrorMessage("{3}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(innerExceptionMessage))}: " +
-                    $"{AnsiUtility.EncodeErrorMessage("{4}")}",
-                args: new object[]
-                {
-                        eventName,
-                        articleUrl,
-                        requestType,
-                        exceptionMessage,
-                        innerExceptionMessage
-                }
-            );
-        }
+            var arguments = new (string, object)[]
+            {
+                (nameof(articleUrl), articleUrl),
+                (nameof(requestType), requestType),
+            };
 
-        private void LogWebScrapingResponseNotBeingValidHtml(
-            string articleUrl,
-            RequestType requestType,
-            ImageUrlWebScrapeType imageUrlWebScrapeType,
-            string htmlString
-        )
-        {
-            var errorMessage = "ImageUrl web scraping response is not html page!";
-            var eventName = Event.ImageUrlWebScrapingData.GetDisplayName();
-            _logger.LogWarning(
-                eventId: new EventId(
-                    id: (int)Event.ImageUrlWebScrapingData,
-                    name: eventName
-                ),
-                message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(articleUrl))}: " +
-                    $"{AnsiUtility.EncodeParameter("{1}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(requestType))}: " +
-                    $"{AnsiUtility.EncodeEnum("{2}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(imageUrlWebScrapeType))}: " +
-                    $"{AnsiUtility.EncodeEnum("{3}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(htmlString))}: " +
-                    $"{AnsiUtility.EncodeParameter("{4}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(errorMessage))}: " +
-                    $"{AnsiUtility.EncodeErrorMessage("{5}")}",
-                args: new object[]
-                {
-                        eventName,
-                        articleUrl,
-                        requestType,
-                        imageUrlWebScrapeType,
-                        htmlString.Take(50),
-                        errorMessage
-                }
-            );
-        }
-
-        private void LogWebScrapingEmptyResponse(
-            string articleUrl,
-            RequestType requestType,
-            ImageUrlWebScrapeType imageUrlWebScrapeType
-        )
-        {
-            var errorMessage = "ImageUrl web scraping response is null!";
-            var eventName = Event.ImageUrlWebScrapingData.GetDisplayName();
-            _logger.LogWarning(
-                eventId: new EventId(
-                    id: (int)Event.ImageUrlWebScrapingData,
-                    name: eventName
-                ),
-                message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(articleUrl))}: " +
-                    $"{AnsiUtility.EncodeParameter("{1}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(requestType))}: " +
-                    $"{AnsiUtility.EncodeEnum("{2}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(imageUrlWebScrapeType))}: " +
-                    $"{AnsiUtility.EncodeEnum("{3}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(errorMessage))}: " +
-                    $"{AnsiUtility.EncodeErrorMessage("{4}")}",
-                args: new object[]
-                {
-                        eventName,
-                        articleUrl,
-                        requestType,
-                        imageUrlWebScrapeType,
-                        errorMessage
-                }
-            );
-        }
-
-        private void LogWebScrapeResult(
-            string? imageUrl,
-            string? articleUrl,
-            string xPath,
-            RequestType requestType,
-            ImageUrlWebScrapeType imageUrlWebScrapeType
-        )
-        {
-            var message = "ImageUrl web scraping successful";
-            var eventName = Event.ImageUrlWebScrapingData.GetDisplayName();
-            _logger.LogInformation(
-                eventId: new EventId(
-                    id: (int)Event.ImageUrlWebScrapingData,
-                    name: eventName
-                ),
-                message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(imageUrl))}: " +
-                    $"{AnsiUtility.EncodeParameter("{1}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(articleUrl))}: " +
-                    $"{AnsiUtility.EncodeParameter("{2}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(xPath))}: " +
-                    $"{AnsiUtility.EncodeParameter("{3}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(requestType))}: " +
-                    $"{AnsiUtility.EncodeEnum("{4}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(imageUrlWebScrapeType))}: " +
-                    $"{AnsiUtility.EncodeEnum("{5}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(message))}: " +
-                    $"{AnsiUtility.EncodeParameter("{6}")}",
-                args: new object[]
-                {
-                        eventName,
-                        imageUrl ?? "",
-                        articleUrl ?? "",
-                        xPath,
-                        requestType,
-                        imageUrlWebScrapeType,
-                        message
-                }
-            );
+            _loggerService.Log(eventName, exception, LogLevel.Error, arguments);
         }
         #endregion
     }

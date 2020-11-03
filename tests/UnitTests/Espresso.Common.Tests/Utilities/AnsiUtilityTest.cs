@@ -13,23 +13,23 @@ namespace Espresso.Common.Tests.Utilities
         public void EncodeRequestName_EncodesStringWithYellowColorBoldAndUnderline()
         {
             #region Arrange
-            var stringValue = "value";
-            var expectedAnsiStringValue =
+            var value = 0;
+            var expectedAnsivalue =
                 "\u001b[" +
                 "33;1;4" +
                 "m" +
-                stringValue +
+                value +
                 "\u001b[0m";
             #endregion
 
             #region Act
-            var actualAnsiStringValue = AnsiUtility.EncodeEventName(stringValue);
+            var actualAnsivalue = AnsiUtility.EncodeEventName(value);
             #endregion
 
             #region Assert
             Assert.Equal(
-                expected: expectedAnsiStringValue,
-                actual: actualAnsiStringValue
+                expected: expectedAnsivalue,
+                actual: actualAnsivalue
             );
             #endregion
         }
@@ -40,23 +40,23 @@ namespace Espresso.Common.Tests.Utilities
         public void EncodeParameterName_EncodesStringWithGreenColorAndBold()
         {
             #region Arrange
-            var stringValue = "value";
-            var expectedAnsiStringValue =
+            var parameterName = "parameterName";
+            var expectedAnsivalue =
                 "\u001b[" +
                 "32;1" +
                 "m" +
-                stringValue +
+                parameterName +
                 "\u001b[0m";
             #endregion
 
             #region Act
-            var actualAnsiStringValue = AnsiUtility.EncodeParameterName(stringValue);
+            var actualAnsivalue = AnsiUtility.EncodeParameterName(parameterName);
             #endregion
 
             #region Assert
             Assert.Equal(
-                expected: expectedAnsiStringValue,
-                actual: actualAnsiStringValue
+                expected: expectedAnsivalue,
+                actual: actualAnsivalue
             );
             #endregion
         }
@@ -67,23 +67,23 @@ namespace Espresso.Common.Tests.Utilities
         public void EncodeDuration_EncodesStringWithCyanColor()
         {
             #region Arrange
-            var stringValue = "value";
-            var expectedAnsiStringValue =
+            var value = 0;
+            var expectedAnsivalue =
                 "\u001b[" +
                 "36" +
                 "m" +
-                stringValue +
+                value +
                 "\u001b[0m";
             #endregion
 
             #region Act
-            var actualAnsiStringValue = AnsiUtility.EncodeTimespan(stringValue);
+            var actualAnsivalue = AnsiUtility.EncodeTimespan(value);
             #endregion
 
             #region Assert
             Assert.Equal(
-                expected: expectedAnsiStringValue,
-                actual: actualAnsiStringValue
+                expected: expectedAnsivalue,
+                actual: actualAnsivalue
             );
             #endregion
         }
@@ -94,51 +94,23 @@ namespace Espresso.Common.Tests.Utilities
         public void EncodeDateTime_EncodesStringWithBlueColor()
         {
             #region Arrange
-            var stringValue = "value";
-            var expectedAnsiStringValue =
+            var value = 0;
+            var expectedAnsivalue =
                 "\u001b[" +
                 "34" +
                 "m" +
-                stringValue +
+                value +
                 "\u001b[0m";
             #endregion
 
             #region Act
-            var actualAnsiStringValue = AnsiUtility.EncodeDateTime(stringValue);
+            var actualAnsivalue = AnsiUtility.EncodeDateTime(value);
             #endregion
 
             #region Assert
             Assert.Equal(
-                expected: expectedAnsiStringValue,
-                actual: actualAnsiStringValue
-            );
-            #endregion
-        }
-        #endregion
-
-        #region EncodeVersion
-        [Fact]
-        public void EncodeVersion_EncodesStringWithWhiteColorAndItalic()
-        {
-            #region Arrange
-            var stringValue = "value";
-            var expectedAnsiStringValue =
-                "\u001b[" +
-                "37;" +
-                "3" +
-                "m" +
-                stringValue +
-                "\u001b[0m";
-            #endregion
-
-            #region Act
-            var actualAnsiStringValue = AnsiUtility.EncodeVersion(stringValue);
-            #endregion
-
-            #region Assert
-            Assert.Equal(
-                expected: expectedAnsiStringValue,
-                actual: actualAnsiStringValue
+                expected: expectedAnsivalue,
+                actual: actualAnsivalue
             );
             #endregion
         }
@@ -149,77 +121,23 @@ namespace Espresso.Common.Tests.Utilities
         public void EncodeDeviceType_EncodesStringWithYellowColor()
         {
             #region Arrange
-            var stringValue = "value";
-            var expectedAnsiStringValue =
+            var value = 0;
+            var expectedAnsivalue =
                 "\u001b[" +
                 "33" +
                 "m" +
-                stringValue +
+                value +
                 "\u001b[0m";
             #endregion
 
             #region Act
-            var actualAnsiStringValue = AnsiUtility.EncodeEnum(stringValue);
+            var actualAnsivalue = AnsiUtility.EncodeEnum(value);
             #endregion
 
             #region Assert
             Assert.Equal(
-                expected: expectedAnsiStringValue,
-                actual: actualAnsiStringValue
-            );
-            #endregion
-        }
-        #endregion
-
-        #region EncodeRequestParameters
-        [Fact]
-        public void EncodeRequestParameters_EncodesStringWithWhiteColor()
-        {
-            #region Arrange
-            var stringValue = "value";
-            var expectedAnsiStringValue =
-                "\u001b[" +
-                "37" +
-                "m" +
-                stringValue +
-                "\u001b[0m";
-            #endregion
-
-            #region Act
-            var actualAnsiStringValue = AnsiUtility.EncodeRequestParameters(stringValue);
-            #endregion
-
-            #region Assert
-            Assert.Equal(
-                expected: expectedAnsiStringValue,
-                actual: actualAnsiStringValue
-            );
-            #endregion
-        }
-        #endregion
-
-        #region EncodeResponse
-        [Fact]
-        public void EncodeResponse_EncodesStringWithWhiteColor()
-        {
-            #region Arrange
-            var stringValue = "value";
-            var expectedAnsiStringValue =
-                "\u001b[" +
-                "37" +
-                "m" +
-                stringValue +
-                "\u001b[0m";
-            #endregion
-
-            #region Act
-            var actualAnsiStringValue = AnsiUtility.EncodeResponse(stringValue);
-            #endregion
-
-            #region Assert
-            Assert.Equal(
-                expected: expectedAnsiStringValue,
-                actual: actualAnsiStringValue
+                expected: expectedAnsivalue,
+                actual: actualAnsivalue
             );
             #endregion
         }
@@ -230,27 +148,27 @@ namespace Espresso.Common.Tests.Utilities
         public void EncodeErrorMessage_EncodesStringWithRedColor()
         {
             #region Arrange
-            var stringValue = "value";
-            var expectedAnsiStringValue =
+            var value = 0;
+            var expectedAnsivalue =
                 "\u001b[" +
                 "31" +
                 "m" +
-                stringValue +
+                value +
                 "\u001b[0m";
             #endregion
 
             #region Act
-            var actualAnsiStringValue = AnsiUtility.EncodeErrorMessage(stringValue);
+            var actualAnsivalue = AnsiUtility.EncodeErrorMessage(value);
             #endregion
 
             #region Assert
             Assert.Equal(
-                expected: expectedAnsiStringValue,
-                actual: actualAnsiStringValue
+                expected: expectedAnsivalue,
+                actual: actualAnsivalue
             );
             #endregion
         }
-        #endregion
+        #endregion     
 
         #endregion
 

@@ -23,10 +23,10 @@ namespace Espresso.ParserDeleter.CronJobs
             ICronJobConfiguration<ParseArticlesCronJob> cronJobConfiguration,
             IServiceScopeFactory serviceScopeFactory,
             IParserDeleterConfiguration configuration,
-            ILoggerFactory loggerFactory
+            ILoggerService<CronJob<ParseArticlesCronJob>> loggerService
         ) : base(
             cronJobConfiguration: cronJobConfiguration,
-            loggerFactory: loggerFactory,
+            loggerService: loggerService,
             serviceScopeFactory: serviceScopeFactory
         )
         {

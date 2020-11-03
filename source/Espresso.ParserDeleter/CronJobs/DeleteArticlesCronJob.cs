@@ -21,24 +21,22 @@ namespace Espresso.ParserDeleter.CronJobs
         #region Fields
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IParserDeleterConfiguration _configuration;
-        private readonly ILogger<DeleteArticlesCronJob> _logger;
         #endregion
 
         #region Constructors
         public DeleteArticlesCronJob(
             IServiceScopeFactory serviceScopeFactory,
             IParserDeleterConfiguration parserDeleterConfiguration,
-            ILoggerFactory loggerFactory,
+            ILoggerService<CronJob<DeleteArticlesCronJob>> loggerService,
             ICronJobConfiguration<DeleteArticlesCronJob> cronJobConfiguration
         ) : base(
             cronJobConfiguration: cronJobConfiguration,
-            loggerFactory: loggerFactory,
+            loggerService: loggerService,
             serviceScopeFactory: serviceScopeFactory
         )
         {
             _serviceScopeFactory = serviceScopeFactory;
             _configuration = parserDeleterConfiguration;
-            _logger = loggerFactory.CreateLogger<DeleteArticlesCronJob>();
         }
         #endregion
 
@@ -61,61 +59,18 @@ namespace Espresso.ParserDeleter.CronJobs
 
             var cancellationToken = GetCancellationToken();
 
-            try
-            {
-
-                await mediator.Send(
-                    request: new DeleteOldArticlesCommand
-                    {
-                        MaxAgeOfOldArticles = _configuration.AppConfiguration.MaxAgeOfArticles,
-                        CurrentApiVersion = _configuration.AppConfiguration.Version,
-                        TargetedApiVersion = _configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
-                        ConsumerVersion = _configuration.AppConfiguration.Version,
-                        DeviceType = DeviceType.RssFeedParser,
-                        AppEnvironment = _configuration.AppConfiguration.AppEnvironment
-                    },
-                    cancellationToken: cancellationToken
-                );
-            }
-            catch (Exception exception)
-            {
-                var eventName = Event.DeleteArticlesJob.GetDisplayName();
-                var eventId = (int)Event.DeleteArticlesJob;
-                var version = _configuration.AppConfiguration.Version;
-                var exceptionMessage = exception.Message;
-                var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
-
-                _logger.LogError(
-                    eventId: new EventId(
-                        id: eventId,
-                        name: eventName
-                    ),
-                    exception: exception,
-                    message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(version))}: " +
-                        $"{AnsiUtility.EncodeVersion("{1}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
-                        $"{AnsiUtility.EncodeErrorMessage("{2}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(innerExceptionMessage))}: " +
-                        $"{AnsiUtility.EncodeErrorMessage("{3}")}",
-                    args: new object[]
-                    {
-                            eventName,
-                            version,
-                            exceptionMessage,
-                            innerExceptionMessage,
-                    }
-                );
-
-                await slackService.LogError(
-                        eventName: eventName,
-                        version: _configuration.AppConfiguration.Version,
-                        message: exception.Message,
-                        exception: exception,
-                        appEnvironment: _configuration.AppConfiguration.AppEnvironment,
-                        cancellationToken: default
-                );
-            }
+            await mediator.Send(
+                request: new DeleteOldArticlesCommand
+                {
+                    MaxAgeOfOldArticles = _configuration.AppConfiguration.MaxAgeOfArticles,
+                    CurrentApiVersion = _configuration.AppConfiguration.Version,
+                    TargetedApiVersion = _configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
+                    ConsumerVersion = _configuration.AppConfiguration.Version,
+                    DeviceType = DeviceType.RssFeedParser,
+                    AppEnvironment = _configuration.AppConfiguration.AppEnvironment
+                },
+                cancellationToken: cancellationToken
+            );
         }
 
         private CancellationToken GetCancellationToken()

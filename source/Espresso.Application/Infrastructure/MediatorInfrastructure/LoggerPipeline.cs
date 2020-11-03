@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.IServices;
@@ -20,20 +22,20 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
         private readonly Stopwatch _stopWatch;
         private readonly ISlackService _slackService;
         private readonly IMemoryCache _memoryCache;
-        private readonly ILogger<LoggerPipeline<TRequest, TResponse>> _logger;
+        private readonly ILoggerService<LoggerPipeline<TRequest, TResponse>> _loggerService;
         #endregion
 
         #region Constructors
         public LoggerPipeline(
             ISlackService slackService,
-            ILoggerFactory loggerFactory,
-            IMemoryCache memoryCache
+            IMemoryCache memoryCache,
+            ILoggerService<LoggerPipeline<TRequest, TResponse>> loggerService
         )
         {
             _stopWatch = new Stopwatch();
             _slackService = slackService;
             _memoryCache = memoryCache;
-            _logger = loggerFactory.CreateLogger<LoggerPipeline<TRequest, TResponse>>();
+            _loggerService = loggerService;
         }
         #endregion
 
@@ -49,13 +51,11 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
                 Request<TResponse> baseType => baseType,
                 _ => throw new Exception($"Request:{typeof(TRequest).Name} does not implement Request abstract class!")
             };
-            var requestId = (int)Event.MediatorRequest;
             var requestName = typeof(TRequest).Name;
             var apiVersion = requestBase?.CurrentApiVersion ?? "";
             var targetedApiVersion = requestBase?.TargetedApiVersion ?? "";
             var consumerVersion = requestBase?.ConsumerVersion ?? "";
             var deviceType = requestBase?.DeviceType ?? DeviceType.Undefined;
-            var requestParameters = request?.ToString() ?? "";
             var appEnvironment = requestBase?.AppEnvironment ?? AppEnvironment.Undefined;
 
             try
@@ -65,54 +65,33 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
                 _stopWatch.Stop();
 
                 var duration = _stopWatch.Elapsed;
-                var responseData = response?.ToString() ?? "";
                 var averageDuration = CalculateAveragePerformance(duration: duration, requestName: requestName);
 
+                var arguments = new List<(string argumentName, object argumentValue)>
+                {
+                    (nameof(apiVersion), apiVersion),
+                    (nameof(targetedApiVersion), targetedApiVersion),
+                    (nameof(consumerVersion), consumerVersion),
+                    (nameof(deviceType), deviceType),
+                    (nameof(request), request),
+                    (nameof(duration), duration),
+                    (nameof(averageDuration), averageDuration),
+                    (nameof(response), response!),
+                };
 
-                _logger.LogInformation(
-                    eventId: new EventId(id: requestId, name: requestName),
-                    message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(apiVersion))}: " +
-                        $"{AnsiUtility.EncodeVersion("{1}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(targetedApiVersion))}: " +
-                        $"{AnsiUtility.EncodeVersion("{2}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(consumerVersion))}: " +
-                        $"{AnsiUtility.EncodeVersion("{3}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(deviceType))}: " +
-                        $"{AnsiUtility.EncodeEnum("{4}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(requestParameters))}: " +
-                        $"{AnsiUtility.EncodeRequestParameters("{5}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(duration))}: " +
-                        $"{AnsiUtility.EncodeTimespan("{6}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(averageDuration))}: " +
-                        $"{AnsiUtility.EncodeTimespan("{7}")}\n\t" +
-                        $"{AnsiUtility.EncodeParameterName(nameof(responseData))}: " +
-                        $"{AnsiUtility.EncodeResponse("{8}")}",
-                    args: new object[]
-                    {
-                        requestName,
-                        apiVersion,
-                        targetedApiVersion,
-                        consumerVersion,
-                        deviceType.GetDisplayName(),
-                        requestParameters,
-                        duration,
-                        averageDuration,
-                        responseData
-                    }
-                );
+                _loggerService.Log(requestName, LogLevel.Information, arguments);
+
                 return response;
             }
             catch (Exception exception)
             {
                 await LogError(
-                    requestId: requestId,
                     requestName: requestName,
                     apiVersion: apiVersion,
                     targetedApiVersion: targetedApiVersion,
                     consumerVersion: consumerVersion,
                     deviceType: deviceType,
-                    requestParameters: requestParameters,
+                    request: request,
                     appEnvironment: appEnvironment,
                     exception: exception
                 );
@@ -122,50 +101,26 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
         }
 
         private Task LogError(
-            int requestId,
             string requestName,
             string apiVersion,
             string targetedApiVersion,
             string consumerVersion,
             DeviceType deviceType,
-            string requestParameters,
+            TRequest request,
             AppEnvironment appEnvironment,
             Exception exception
         )
         {
-            var exceptionMessage = exception.Message;
-            var innerExceptionMessage = exception.InnerException?.Message ?? "";
+            var arguments = new List<(string argumentName, object argumentValue)>
+            {
+                (nameof(apiVersion), apiVersion),
+                (nameof(targetedApiVersion), targetedApiVersion),
+                (nameof(consumerVersion), consumerVersion),
+                (nameof(deviceType), deviceType),
+                (nameof(request), request),
+            };
 
-            _logger.LogError(
-                eventId: new EventId(id: requestId, name: requestName),
-                exception: exception,
-                message: $"{AnsiUtility.EncodeEventName("{0}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(apiVersion))}: " +
-                    $"{AnsiUtility.EncodeVersion("{1}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(targetedApiVersion))}: " +
-                    $"{AnsiUtility.EncodeVersion("{2}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(consumerVersion))}: " +
-                    $"{AnsiUtility.EncodeVersion("{3}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(deviceType))}: " +
-                    $"{AnsiUtility.EncodeEnum("{4}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(requestParameters))}: " +
-                    $"{AnsiUtility.EncodeRequestParameters("{5}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(exceptionMessage))}: " +
-                    $"{AnsiUtility.EncodeErrorMessage("{6}")}\n\t" +
-                    $"{AnsiUtility.EncodeParameterName(nameof(innerExceptionMessage))}: " +
-                    $"{AnsiUtility.EncodeErrorMessage("{7}")}",
-                args: new object[]
-                {
-                        requestName,
-                        apiVersion,
-                        targetedApiVersion,
-                        consumerVersion,
-                        deviceType.GetDisplayName(),
-                        requestParameters,
-                        exceptionMessage,
-                        innerExceptionMessage
-                }
-            );
+            _loggerService.Log(requestName, exception, LogLevel.Error, arguments);
 
             return _slackService
                 .LogRequestError(
@@ -174,7 +129,7 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
                     targetedApiVersion: targetedApiVersion,
                     consumerVersion: consumerVersion,
                     deviceType: deviceType,
-                    requestParameters: requestParameters,
+                    requestParameters: request.ToString() ?? "",
                     exception: exception,
                     appEnvironment: appEnvironment,
                     cancellationToken: default
