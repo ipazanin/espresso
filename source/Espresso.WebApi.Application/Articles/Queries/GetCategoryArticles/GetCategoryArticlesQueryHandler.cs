@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Application.Utilities;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
@@ -115,15 +116,17 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
         )
         {
             if (
-                request.DeviceType != Domain.Enums.ApplicationDownloadEnums.DeviceType.Ios ||
-                request.TargetedApiVersion != "2.0"
+                !(
+                    request.DeviceType == DeviceType.Ios &&
+                    request.TargetedApiVersion == "2.0"
+                )
             )
             {
                 return articles;
             }
 
             return articles.Where(
-                article => DefaultValueConstants.BannedKeywords.Any(
+                article => !DefaultValueConstants.BannedKeywords.Any(
                     bannedKeyword => article.Title.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase) ||
                         article.Summary.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase)
                 )

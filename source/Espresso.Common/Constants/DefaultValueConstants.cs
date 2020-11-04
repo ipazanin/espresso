@@ -30,6 +30,16 @@ namespace Espresso.Common.Constants
                 "prva pomoć",
                 "hitna",
                 "zabran",
+                "pozitiv",
+                "testir",
+                "slučaj",
+                "slucaj",
+                "covid",
+                "stozer",
+                "stožer",
+                "respirator",
+                "bolest",
+                "ambulant"
             };
     }
 }
