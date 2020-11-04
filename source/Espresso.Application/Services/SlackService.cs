@@ -181,32 +181,32 @@ namespace Espresso.Application.Services
             }
         }
 
-                public Task LogMissingCategoriesError(
-                    string version,
-                    string rssFeedUrl,
-                    string articleUrl,
-                    string urlCategories,
-                    AppEnvironment appEnvironment,
-                    CancellationToken cancellationToken
-                )
-                {
-                    var text = $":blue_book: Request Name: Missing Categories\n" +
-                        $":label: Version: {version}\n" +
-                        $":email: Rss Feed Url: {rssFeedUrl}\n" +
-                        $":email: Article Url: {articleUrl}\n" +
-                        $":email: Url-SegmentIndex:Category Map: {urlCategories}\n";
+        public Task LogMissingCategoriesError(
+            string version,
+            string rssFeedUrl,
+            string articleUrl,
+            string urlCategories,
+            AppEnvironment appEnvironment,
+            CancellationToken cancellationToken
+        )
+        {
+            var text = $":blue_book: Request Name: Missing Categories\n" +
+                $":label: Version: {version}\n" +
+                $":email: Rss Feed Url: {rssFeedUrl}\n" +
+                $":email: Article Url: {articleUrl}\n" +
+                $":email: Url-SegmentIndex:Category Map: {urlCategories}\n";
 
-                    return Log(
-                        data: new SlackWebHookDto(
-                            userName: MissingCategoriesErrorsBotUsername,
-                            iconEmoji: MissingCategoriesErrorsBotIconEmoji,
-                            text: text,
-                            channel: MissingCategoriesErrorsChannel
-                        ),
-                        appEnvironment: appEnvironment,
-                        cancellationToken: cancellationToken
-                    );
-                }
+            return Log(
+                data: new SlackWebHookDto(
+                    userName: MissingCategoriesErrorsBotUsername,
+                    iconEmoji: MissingCategoriesErrorsBotIconEmoji,
+                    text: text,
+                    channel: MissingCategoriesErrorsChannel
+                ),
+                appEnvironment: appEnvironment,
+                cancellationToken: cancellationToken
+            );
+        }
 
         public Task LogNewNewsPortalRequest(
             string newsPortalName,

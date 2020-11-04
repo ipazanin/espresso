@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
-using Espresso.WebApi.Application.Utilities;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -98,7 +97,9 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                 .Skip(request.Skip)
                 .Take(request.Take);
 
-            var articleDtos = articles
+            var filteredArticles = FilterArticlesWithCoronaVirusContentForIosRelease(articles, request);
+
+            var articleDtos = filteredArticles
                 .Select(GetLatestArticlesArticle.GetProjection().Compile());
 
             return articleDtos;
@@ -138,8 +139,13 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                 )
                 .OrderByDescending(Article.GetOrderByDescendingTrendingScoreExpression().Compile());
 
-            var articleDtos = featuredArticles
+            var joinedArticles = featuredArticles
                 .Union(trendingArticles)
+                .ToList();
+
+            var filteredArticles = FilterArticlesWithCoronaVirusContentForIosRelease(joinedArticles, request).ToList();
+
+            var articleDtos = filteredArticles
                 .Take(request.Take)
                 .Select(GetLatestArticlesArticle.GetProjection().Compile());
 
@@ -190,6 +196,26 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
             return (newsPortalIds, categoryIds);
         }
 
+        private static IEnumerable<Article> FilterArticlesWithCoronaVirusContentForIosRelease(
+            IEnumerable<Article> articles,
+            GetLatestArticlesQuery request
+        )
+        {
+            if (
+                request.DeviceType != Domain.Enums.ApplicationDownloadEnums.DeviceType.Ios ||
+                request.TargetedApiVersion != "2.0"
+            )
+            {
+                return articles;
+            }
+
+            return articles.Where(
+                article => DefaultValueConstants.BannedKeywords.Any(
+                    bannedKeyword => article.Title.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase) ||
+                        article.Summary.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase)
+                )
+            );
+        }
         #endregion
     }
 }
