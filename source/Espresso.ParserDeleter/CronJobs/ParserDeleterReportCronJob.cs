@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Application.IServices;
+using Espresso.Domain.IServices;
 using Espresso.ParserDeleter.Application.DeleteOldArticles;
 using Espresso.ParserDeleter.Configuration;
 using Espresso.ParserDeleter.ParseRssFeeds;

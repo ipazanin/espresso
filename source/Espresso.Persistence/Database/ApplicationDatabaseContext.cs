@@ -16,6 +16,7 @@ namespace Espresso.Persistence.Database
         public DbSet<RssFeedCategory> RssFeedCategory { get; set; } = null!;
         public DbSet<PushNotification> PushNotifications { get; set; } = null!;
         public DbSet<Region> Regions { get; set; } = null!;
+        public DbSet<SimilarArticle> SimilarArticles { get; set; } = null!;
         #endregion
 
         #region Constructors

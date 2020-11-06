@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Extensions;
+using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
 using Espresso.Persistence.IRepositories;
 using Microsoft.EntityFrameworkCore;
@@ -92,14 +94,27 @@ namespace Espresso.ParserDeleter.Application.Initialization
                 .Include(article => article.ArticleCategories)
                 .ThenInclude(articleCategory => articleCategory.Category)
                 .Include(article => article.NewsPortal)
+                .Include(article => article.MainArticle)
+                .ThenInclude(mainArticle => mainArticle!.MainArticle)
                 .AsNoTracking()
                 .AsSplitQuery()
                 .ToListAsync();
 
-            _ = _memoryCache.Set(
+            _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
                 value: articles
             );
+
+            var groupedArticles = articles
+                .Where(article => article.MainArticle is not null);
+
+            var lastSimilarityGroupingTime = groupedArticles
+                .OrderByDescending(groupedArticle => groupedArticle.CreateDateTime)
+                .FirstOrDefault()
+                ?.CreateDateTime
+                ?? new DateTime();
+
+            _memoryCache.Set(MemoryCacheConstants.LastSimilarityGroupingTime, lastSimilarityGroupingTime);
             #endregion
 
             #region RssFeeds

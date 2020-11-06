@@ -7,6 +7,7 @@ using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
+using Espresso.Domain.IServices;
 using Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticleScore;
 using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles;
 using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3;

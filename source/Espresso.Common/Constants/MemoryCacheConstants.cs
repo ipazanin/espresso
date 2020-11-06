@@ -8,5 +8,6 @@
         public const string ArticleKey = nameof(ArticleKey);
         public const string RegionKey = "Region";
         public const string DeadLockLogKey = nameof(DeadLockLogKey);
+        public const string LastSimilarityGroupingTime = nameof(LastSimilarityGroupingTime);
     }
 }

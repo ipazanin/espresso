@@ -62,6 +62,10 @@ namespace Espresso.Domain.Entities
         public RssFeed? RssFeed { get; private set; }
 
         public ICollection<ArticleCategory> ArticleCategories { get; private set; } = new List<ArticleCategory>();
+
+        public ICollection<SimilarArticle> SubordinateArticles { get; private set; } = new List<SimilarArticle>();
+
+        public SimilarArticle? MainArticle { get; private set; }
         #endregion
 
         #endregion
@@ -96,7 +100,9 @@ namespace Espresso.Domain.Entities
             int rssFeedId,
             IEnumerable<ArticleCategory>? articleCategories,
             NewsPortal? newsPortal,
-            RssFeed? rssFeed
+            RssFeed? rssFeed,
+            IEnumerable<SimilarArticle>? subordinateArticles,
+            SimilarArticle? mainArticle
         )
         {
             Id = id;
@@ -116,6 +122,8 @@ namespace Espresso.Domain.Entities
             ArticleCategories = articleCategories?.ToList() ?? ArticleCategories;
             NewsPortal = newsPortal;
             RssFeed = rssFeed;
+            SubordinateArticles = subordinateArticles?.ToList() ?? SubordinateArticles;
+            MainArticle = mainArticle;
         }
         #endregion
 
@@ -262,6 +270,11 @@ namespace Espresso.Domain.Entities
                 .ToList();
         }
 
+        public void SetMainArticle(SimilarArticle mainArticle)
+        {
+            MainArticle = mainArticle;
+        }
+
         #region Expressions
         public static Expression<Func<Article, bool>> GetFilteredLatestArticlesPredicate(
             IEnumerable<int>? categoryIds,
@@ -271,7 +284,36 @@ namespace Espresso.Domain.Entities
         )
         {
             var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
-            var searchTerms = AutoCompleteUtility.GetSearchTerms(titleSearchTerm);
+            var searchTerms = LanguageUtility.GetSearchTerms(titleSearchTerm);
+
+            return article =>
+                !article.EditorConfiguration.IsHidden &&
+                article.CreateDateTime <= articleMinimumAge &&
+                article.MainArticle == null &&
+                (categoryIds == null || article
+                    .ArticleCategories
+                    .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
+                (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)) &&
+                (
+                    searchTerms == null ||
+                    searchTerms
+                        .All(searchTerm => article
+                            .Title
+                            .ReplaceCroatianCharacters()
+                            .Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase)
+                        )
+                );
+        }
+
+        public static Expression<Func<Article, bool>> GetFilteredLatestArticlesPredicate_2_0(
+            IEnumerable<int>? categoryIds,
+            IEnumerable<int>? newsPortalIds,
+            string? titleSearchTerm,
+            DateTime? articleCreateDateTime
+        )
+        {
+            var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
+            var searchTerms = LanguageUtility.GetSearchTerms(titleSearchTerm);
 
             return article =>
                 !article.EditorConfiguration.IsHidden &&
@@ -298,7 +340,7 @@ namespace Espresso.Domain.Entities
             DateTime? articleCreateDateTime
         )
         {
-            return GetFilteredLatestArticlesPredicate(
+            return GetFilteredLatestArticlesPredicate_2_0(
                 categoryIds: new List<int> { categoryId },
                 newsPortalIds: newsPortalIds,
                 titleSearchTerm: searchTerm,

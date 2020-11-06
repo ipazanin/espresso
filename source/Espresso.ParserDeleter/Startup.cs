@@ -13,7 +13,6 @@ using Espresso.ParserDeleter.Application.Initialization;
 using Espresso.ParserDeleter.Application.IServices;
 using Espresso.Application.Services;
 using Espresso.ParserDeleter.Application.Services;
-using Espresso.Wepi.Application.IServices;
 using Espresso.ParserDeleter.ParseRssFeeds.Validators;
 using Espresso.ParserDeleter.ParseRssFeeds;
 using FluentValidation;
@@ -23,6 +22,8 @@ using Espresso.ParserDeleter.CronJobs;
 using Microsoft.Extensions.Caching.Memory;
 using System.Net.Http;
 using Microsoft.Extensions.Logging;
+using Espresso.Domain.IServices;
+using Espresso.Domain.Services;
 
 namespace Espresso.ParserDeleter
 {
@@ -57,13 +58,22 @@ namespace Espresso.ParserDeleter
                 loggerService: serviceProvider.GetRequiredService<ILoggerService<SlackService>>(),
                 webHookUrl: _parserDeleterConfiguration.AppConfiguration.SlackWebHook
             ));
-            services.AddScoped<IHttpService, HttpService>();
             services.AddScoped<ILoadRssFeedsService, LoadRssFeedsService>();
             services.AddScoped<ICreateArticleService, CreateArticleService>();
             services.AddScoped<IScrapeWebService, ScrapeWebService>();
             services.AddScoped<IParseHtmlService, ParseHtmlService>();
             services.AddScoped<ISortArticlesService, SortArticlesService>();
             services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
+
+            services.AddScoped<IGroupSimilarArticlesService, GroupSimilarArticlesService>(
+                serviceProvider => new GroupSimilarArticlesService(
+                    similarityScoreThreshold: _parserDeleterConfiguration.ArticleSimilarityConfiguration.SimilarityScoreThreshold,
+                    articlePublishDateTimeDiferenceThreshold: _parserDeleterConfiguration.ArticleSimilarityConfiguration.ArticlePublishDateTimeDiferenceThreshold,
+                    loggerService: serviceProvider.GetRequiredService<ILoggerService<GroupSimilarArticlesService>>(),
+                    maxAgeOfSimilarArticleChecking: _parserDeleterConfiguration.ArticleSimilarityConfiguration.MaxAgeOfSimilarArticleChecking,
+                    groupSimilarArticlesBatchSize: _parserDeleterConfiguration.ArticleSimilarityConfiguration.GroupSimilarArticlesBatchSize
+                )
+            );
             #endregion
 
             #region Database
@@ -88,6 +98,7 @@ namespace Espresso.ParserDeleter
             services.AddScoped<IApplicationDownloadRepository, ApplicationDownloadRepository>();
             services.AddScoped<IArticleCategoryRepository, ArticleCategoryRepository>();
             services.AddScoped<IArticleRepository, ArticleRepository>();
+            services.AddScoped<ISimilarArticleRepository, SimilarArticleRepository>();
             #endregion
 
             #region MemoryCache
@@ -133,6 +144,16 @@ namespace Espresso.ParserDeleter
                 cronJobConfiguration.TimeZoneInfo = TimeZoneInfo.Utc;
                 cronJobConfiguration.AppEnvironment = _parserDeleterConfiguration.AppConfiguration.AppEnvironment;
                 cronJobConfiguration.Version = _parserDeleterConfiguration.AppConfiguration.Version;
+            });
+
+            services.AddCronJob<GroupSimilarArticlesCronJob>(cronJobConfiguration =>
+            {
+                cronJobConfiguration.CronExpression = _parserDeleterConfiguration
+                    .CronJobsConfiguration
+                    .GroupSimilarArticlesCronExpression;
+                cronJobConfiguration.TimeZoneInfo = TimeZoneInfo.Utc;
+                cronJobConfiguration.Version = _parserDeleterConfiguration.AppConfiguration.Version;
+                cronJobConfiguration.AppEnvironment = _parserDeleterConfiguration.AppConfiguration.AppEnvironment;
             });
             #endregion
         }

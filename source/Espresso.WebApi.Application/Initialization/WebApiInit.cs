@@ -10,6 +10,7 @@ using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Extensions;
+using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
 using Espresso.Persistence.IRepositories;
 using FirebaseAdmin;
@@ -112,6 +113,15 @@ namespace Espresso.WebApi.Application.Initialization
                 .Include(article => article.ArticleCategories)
                 .ThenInclude(articleCategory => articleCategory.Category)
                 .Include(article => article.NewsPortal)
+                .Include(article => article.MainArticle)
+                .ThenInclude(mainArticle => mainArticle!.MainArticle)
+                .Include(article => article.SubordinateArticles)
+                .ThenInclude(subordinateArticle => subordinateArticle!.SubordinateArticle)
+                .ThenInclude(article => article!.NewsPortal)
+                .Include(article => article.SubordinateArticles)
+                .ThenInclude(subordinateArticle => subordinateArticle!.SubordinateArticle)
+                .ThenInclude(article => article!.ArticleCategories)
+                .ThenInclude(articleCategory => articleCategory.Category)
                 .AsSplitQuery()
                 .AsNoTracking()
                 .ToListAsync();

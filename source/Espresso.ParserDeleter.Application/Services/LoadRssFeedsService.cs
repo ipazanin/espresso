@@ -15,6 +15,7 @@ using Espresso.Common.Enums;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.Extensions;
+using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
 using Espresso.ParserDeleter.Application.IServices;
 using Microsoft.Extensions.Logging;

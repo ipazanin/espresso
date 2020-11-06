@@ -19,6 +19,8 @@ namespace Espresso.Domain.Enums.ApplicationDownloadEnums
         [Display(Name = "Apple Watch")]
         AppleWatch = 6,
         [Display(Name = "Web App")]
-        WebApp = 7
+        WebApp = 7,
+        [Display(Name = "Web Api")]
+        WebApi = 8,
     }
 }

@@ -11,6 +11,7 @@ using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.Extensions;
+using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
 using Espresso.ParserDeleter.Application.IServices;
@@ -145,7 +146,9 @@ namespace Espresso.ParserDeleter.Application.Services
                     rssFeedId: rssFeed.Id,
                     articleCategories: articleData.ArticleCategories,
                     newsPortal: rssFeed.NewsPortal,
-                    rssFeed: rssFeed
+                    rssFeed: rssFeed,
+                    subordinateArticles: null,
+                    mainArticle: null
                 );
 
                 return (article, true);

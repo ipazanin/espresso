@@ -77,7 +77,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
             return Task.FromResult(result: response);
         }
 
-        private static IEnumerable<GetLatestArticlesArticle> GetLatestArticles(
+        private static IEnumerable<IEnumerable<GetLatestArticlesArticle>> GetLatestArticles(
             IEnumerable<Article> savedArticles,
             DateTime? firstArticleCreateDateTime,
             GetLatestArticlesQuery request
@@ -100,8 +100,12 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
 
             var filteredArticles = FilterArticlesWithCoronaVirusContentForIosRelease(articles, request);
 
+            var projection = GetLatestArticlesArticle.GetProjection().Compile();
             var articleDtos = filteredArticles
-                .Select(GetLatestArticlesArticle.GetProjection().Compile());
+                .Select(article => new List<GetLatestArticlesArticle>()
+                {
+                    projection.Invoke(article)
+                }.Union(article.SubordinateArticles.Select(similarArticle => projection.Invoke(similarArticle.SubordinateArticle!))));
 
             return articleDtos;
         }

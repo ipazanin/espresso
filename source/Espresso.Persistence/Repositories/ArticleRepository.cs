@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Dapper;
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
 using Espresso.Persistence.IRepositories;
@@ -14,7 +12,13 @@ namespace Espresso.Persistence.Repositories
     {
         #region Constants
         private const string TableName = "Articles";
+        private const string SimilarArticlesTableName = "SimilarArticles";
+
         private const string IdColumnName = nameof(Article.Id);
+        private const string PublishDateTimeColumnName = nameof(Article.PublishDateTime);
+
+        private const string MainArticleIdColumnName = nameof(SimilarArticle.MainArticleId);
+        private const string SubordinateArticleIdColumnName = nameof(SimilarArticle.SubordinateArticleId);
         #endregion
 
         #region Fields
@@ -138,10 +142,18 @@ namespace Espresso.Persistence.Repositories
             connection.Close();
         }
 
-        public int DeleteArticles(DateTime maxArticleAge)
+        public int DeleteArticlesAndSimilarArticles(DateTime maxArticleAge)
         {
-            var parameterName = $"@{nameof(Article.PublishDateTime)}";
-            var commandText = $"DELETE FROM {TableName} WHERE {nameof(Article.PublishDateTime)} < {parameterName}";
+            var numberOfDeletedRows = DeleteArticles(maxArticleAge);
+            DeleteSimilarArticles(maxArticleAge);
+
+            return numberOfDeletedRows;
+        }
+
+        private int DeleteArticles(DateTime maxArticleAge)
+        {
+            var parameterName = $"@{PublishDateTimeColumnName}";
+            var commandText = $"DELETE FROM {TableName} WHERE {PublishDateTimeColumnName} < {parameterName}";
 
             using var connection = _databaseConnectionFactory.CreateDatabaseConnection();
             using var command = connection.CreateCommand();
@@ -153,6 +165,25 @@ namespace Espresso.Persistence.Repositories
             connection.Close();
 
             return numberOfDeletedRows;
+        }
+
+        private void DeleteSimilarArticles(DateTime maxArticleAge)
+        {
+            var parameterName = $"@{PublishDateTimeColumnName}";
+            var commandText = $"DELETE FROM {SimilarArticlesTableName} " +
+                $"WHERE {SimilarArticlesTableName}.{MainArticleIdColumnName} " +
+                $"IN(SELECT {TableName}.{IdColumnName} FROM {TableName} WHERE {TableName}.{PublishDateTimeColumnName} < {parameterName}) " +
+                $"OR {SimilarArticlesTableName}.{SubordinateArticleIdColumnName} " +
+                $"IN(SELECT {TableName}.{IdColumnName} FROM {TableName} WHERE {TableName}.{PublishDateTimeColumnName} < {parameterName}) ";
+
+            using var connection = _databaseConnectionFactory.CreateDatabaseConnection();
+            using var command = connection.CreateCommand();
+            command.CommandText = commandText;
+            command.Parameters.Add(new SqlParameter(parameterName, maxArticleAge));
+
+            connection.Open();
+            var numberOfDeletedRows = command.ExecuteNonQuery();
+            connection.Close();
         }
         #endregion
     }

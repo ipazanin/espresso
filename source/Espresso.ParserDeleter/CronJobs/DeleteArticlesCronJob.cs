@@ -8,6 +8,7 @@ using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.Extensions;
+using Espresso.Domain.IServices;
 using Espresso.ParserDeleter.Application.DeleteOldArticles;
 using Espresso.ParserDeleter.Configuration;
 using MediatR;

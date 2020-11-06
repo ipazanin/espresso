@@ -9,6 +9,7 @@ namespace Espresso.ParserDeleter.Configuration
         public AppConfiguration AppConfiguration { get; }
         public DatabaseConfiguration DatabaseConfiguration { get; }
         public CronJobsConfiguration CronJobsConfiguration { get; }
+        public ArticleSimilarityConfiguration ArticleSimilarityConfiguration { get; }
         #endregion
 
         #region Constructors
@@ -18,6 +19,7 @@ namespace Espresso.ParserDeleter.Configuration
             AppConfiguration = new AppConfiguration(configuration.GetSection("AppConfiguration"));
             DatabaseConfiguration = new DatabaseConfiguration(configuration.GetSection("DatabaseConfiguration"));
             CronJobsConfiguration = new CronJobsConfiguration(configuration.GetSection("CronJobsConfiguration"));
+            ArticleSimilarityConfiguration = new ArticleSimilarityConfiguration(configuration.GetSection("ArticleSimilarityConfiguration"));
         }
         #endregion
     }

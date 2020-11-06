@@ -28,6 +28,7 @@ using Espresso.WebApi.RequestData.Query;
 using Espresso.WebApi.RequestData.Body;
 using System.Collections.Generic;
 using System.Linq;
+using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0;
 
 namespace Espresso.WebApi.Controllers
 {
@@ -74,7 +75,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
-        [ApiVersion("2.0")]
+        [ApiVersion("2.1")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/articles")]
@@ -89,6 +90,70 @@ namespace Espresso.WebApi.Controllers
         {
             var response = await Sender.Send(
                 request: new GetLatestArticlesQuery
+                {
+                    Take = articlePaginationParameters.Take,
+                    Skip = articlePaginationParameters.Skip,
+                    FirstArticleId = articlePaginationParameters.FirstArticleId,
+                    NewsPortalIds = newsPortalIds,
+                    CategoryIds = categoryIds,
+                    NewNewsPortalsPosition = WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
+                    TitleSearchQuery = titleSearchQuery,
+                    MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
+                    MaxAgeOfTrendingArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
+                    MaxAgeOfFeaturedArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,
+                    FeaturedArticlesTake = WebApiConfiguration.AppConfiguration.FeaturedArticlesTake,
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+                },
+                cancellationToken: cancellationToken
+            );
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Get articles from selected <paramref name="newsPortalIds"/> and <paramref name="categoryIds"/>
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///     Get /api/articles
+        /// </remarks>
+        /// <param name="cancellationToken"></param>
+        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
+        /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored</param>
+        /// <param name="titleSearchQuery">Article Title Search Query</param>
+        /// <param name="basicInformationsHeaderParameters"></param>
+        /// <param name="articlePaginationParameters">Parameters used for pagination</param>
+        /// <returns>Response object containing articles</returns>
+        /// <response code="200">Response object containing articles</response>
+        /// <response code="400">If validation fails</response>
+        /// <response code="401">If API Key is invalid or missing</response>
+        /// <response code="403">If API Key is forbiden from requested resource</response>
+        /// <response code="500">If unhandled exception occurred</response>
+        [Produces(MimeTypeConstants.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetLatestArticlesQueryResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.0")]
+        [HttpGet]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
+        [Route("api/articles")]
+        public async Task<IActionResult> GetLatestArticles_2_0(
+            [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
+            [FromQuery] ArticlePaginationParameters articlePaginationParameters,
+            CancellationToken cancellationToken,
+            [FromQuery] string? newsPortalIds = null,
+            [FromQuery] string? categoryIds = null,
+            [FromQuery] string? titleSearchQuery = null
+        )
+        {
+            var response = await Sender.Send(
+                request: new GetLatestArticlesQuery_2_0
                 {
                     Take = articlePaginationParameters.Take,
                     Skip = articlePaginationParameters.Skip,
@@ -259,6 +324,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.1")]
         [ApiVersion("2.0")]
         [ApiVersion("1.4")]
         [HttpGet]
@@ -378,6 +444,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.1")]
         [ApiVersion("2.0")]
         [ApiVersion("1.4")]
         [ApiVersion("1.3")]
@@ -434,6 +501,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.1")]
         [ApiVersion("2.0")]
         [ApiVersion("1.4")]
         [HttpGet]
@@ -493,6 +561,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.1")]
         [ApiVersion("2.0")]
         [ApiVersion("1.4")]
         [HttpPatch]
@@ -616,6 +685,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.1")]
         [ApiVersion("2.0")]
         [HttpDelete]
         [Authorize(Roles = ApiKey.DevMobileAppRole)]
@@ -664,6 +734,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.1")]
         [ApiVersion("2.0")]
         [HttpPatch]
         [Authorize(Roles = ApiKey.DevMobileAppRole)]
@@ -719,6 +790,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.1")]
         [ApiVersion("2.0")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]

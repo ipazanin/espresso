@@ -9,6 +9,7 @@ using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.Extensions;
+using Espresso.Domain.IServices;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -65,6 +66,8 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
                 _stopWatch.Stop();
 
                 var duration = _stopWatch.Elapsed;
+                _stopWatch.Reset();
+
                 var averageDuration = CalculateAveragePerformance(duration: duration, requestName: requestName);
 
                 var arguments = new List<(string argumentName, object argumentValue)>

@@ -43,6 +43,7 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         /// <value></value>
         public CronJobsConfiguration CronJobsConfiguration { get; }
+
         #endregion
 
         #region Constructors

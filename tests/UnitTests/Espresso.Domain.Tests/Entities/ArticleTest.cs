@@ -1,7 +1,7 @@
 using Xunit;
 using Espresso.Domain.Entities;
 
-namespace Espresso.Domain.Tests
+namespace Espresso.Domain.Tests.Entities
 {
     public class AnsiUtilityTest
     {
@@ -28,7 +28,9 @@ namespace Espresso.Domain.Tests
                 rssFeedId: default,
                 articleCategories: default,
                 newsPortal: default,
-                rssFeed: default
+                rssFeed: default,
+                subordinateArticles: default,
+                mainArticle: default
             );
             #endregion
 

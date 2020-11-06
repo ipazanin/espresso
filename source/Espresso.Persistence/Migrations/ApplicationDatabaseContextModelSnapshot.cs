@@ -3810,6 +3810,31 @@ namespace Espresso.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Espresso.Domain.Entities.SimilarArticle", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MainArticleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("SimilarityScore")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("SubordinateArticleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MainArticleId");
+
+                    b.HasIndex("SubordinateArticleId")
+                        .IsUnique();
+
+                    b.ToTable("SimilarArticles");
+                });
+
             modelBuilder.Entity("Espresso.Domain.Entities.Article", b =>
                 {
                     b.HasOne("Espresso.Domain.Entities.NewsPortal", "NewsPortal")
@@ -5016,9 +5041,32 @@ namespace Espresso.Persistence.Migrations
                     b.Navigation("RssFeed");
                 });
 
+            modelBuilder.Entity("Espresso.Domain.Entities.SimilarArticle", b =>
+                {
+                    b.HasOne("Espresso.Domain.Entities.Article", "MainArticle")
+                        .WithMany("SubordinateArticles")
+                        .HasForeignKey("MainArticleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Espresso.Domain.Entities.Article", "SubordinateArticle")
+                        .WithOne("MainArticle")
+                        .HasForeignKey("Espresso.Domain.Entities.SimilarArticle", "SubordinateArticleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("MainArticle");
+
+                    b.Navigation("SubordinateArticle");
+                });
+
             modelBuilder.Entity("Espresso.Domain.Entities.Article", b =>
                 {
                     b.Navigation("ArticleCategories");
+
+                    b.Navigation("MainArticle");
+
+                    b.Navigation("SubordinateArticles");
                 });
 
             modelBuilder.Entity("Espresso.Domain.Entities.Category", b =>

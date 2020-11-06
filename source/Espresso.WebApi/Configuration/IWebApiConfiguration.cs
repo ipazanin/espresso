@@ -40,5 +40,6 @@
         /// </summary>
         /// <value></value>
         public CronJobsConfiguration CronJobsConfiguration { get; }
+
     }
 }

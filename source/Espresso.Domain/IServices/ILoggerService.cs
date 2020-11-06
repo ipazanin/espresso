@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 
-namespace Espresso.Application.IServices
+namespace Espresso.Domain.IServices
 {
     public interface ILoggerService<TCaller> where TCaller : class
     {
