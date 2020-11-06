@@ -21,21 +21,18 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
         private Timer? _timer;
         private readonly CronExpression _expression;
         private readonly ICronJobConfiguration<T> _cronJobConfiguration;
-        private readonly IServiceScopeFactory _serviceScopeFactory;
-        private readonly ILoggerService<CronJob<T>> _loggerService;
+        protected readonly IServiceScopeFactory ServiceScopeFactory;
         #endregion
 
         #region Constructors
         protected CronJob(
             ICronJobConfiguration<T> cronJobConfiguration,
-            IServiceScopeFactory serviceScopeFactory,
-            ILoggerService<CronJob<T>> loggerService
+            IServiceScopeFactory serviceScopeFactory
         )
         {
             _expression = CronExpression.Parse(cronJobConfiguration.CronExpression);
             _cronJobConfiguration = cronJobConfiguration;
-            _serviceScopeFactory = serviceScopeFactory;
-            _loggerService = loggerService;
+            ServiceScopeFactory = serviceScopeFactory;
         }
         #endregion
 
@@ -83,15 +80,21 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
                 (nameof(ocurrence), ocurrence)
             };
 
-            _loggerService.Log(eventName, LogLevel.Information, arguments);
+            using var scope = ServiceScopeFactory.CreateScope();
+            var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService<CronJob<T>>>();
+
+            loggerService.Log(eventName, LogLevel.Information, arguments);
         }
 
         public abstract Task DoWork(CancellationToken cancellationToken);
 
         public virtual Task StopAsync(CancellationToken cancellationToken)
         {
+            using var scope = ServiceScopeFactory.CreateScope();
+            var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService<CronJob<T>>>();
+
             var eventName = $"{typeof(T).Name} stopped";
-            _loggerService.Log(eventName, LogLevel.Information);
+            loggerService.Log(eventName, LogLevel.Information);
 
             _timer?.Stop();
 
@@ -107,6 +110,9 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
             {
                 return;
             }
+
+            using var scope = ServiceScopeFactory.CreateScope();
+            var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService<CronJob<T>>>();
 
             try
             {
@@ -125,7 +131,7 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
                     (nameof(nextOccurence),nextOccurence),
                     (nameof(elapsed),elapsed),
                 };
-                _loggerService.Log(eventName, LogLevel.Information, arguments);
+                loggerService.Log(eventName, LogLevel.Information, arguments);
 
             }
             catch (Exception exception)
@@ -137,9 +143,8 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
                     (nameof(ocurrence),ocurrence),
                 };
 
-                _loggerService.Log(eventName, exception, LogLevel.Error, arguments);
+                loggerService.Log(eventName, exception, LogLevel.Error, arguments);
 
-                using var scope = _serviceScopeFactory.CreateScope();
                 var slackService = scope.ServiceProvider.GetRequiredService<ISlackService>();
                 await slackService.LogError(
                     eventName: eventName,
