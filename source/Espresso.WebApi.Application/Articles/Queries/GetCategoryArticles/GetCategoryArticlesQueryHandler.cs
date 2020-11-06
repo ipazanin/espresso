@@ -55,11 +55,12 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
                         searchTerm: request.TitleSearchQuery,
                         articleCreateDateTime: firstArticle?.CreateDateTime
                     ).Compile()
-                )
+                );
+
+
+            var coronaFilteredArticles = FilterArticlesWithCoronaVirusContentForIosRelease(filteredArticles, request)
                 .Skip(request.Skip)
                 .Take(request.Take);
-
-            var coronaFilteredArticles = FilterArticlesWithCoronaVirusContentForIosRelease(filteredArticles, request);
 
             var articleDtos = coronaFilteredArticles.Select(GetCategoryArticlesArticle.GetProjection().Compile());
 

@@ -94,13 +94,12 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                         titleSearchTerm: request.TitleSearchQuery,
                         articleCreateDateTime: firstArticleCreateDateTime
                     ).Compile()
-                )
+                );
+
+            var filteredArticles = FilterArticlesWithCoronaVirusContentForIosRelease(articles, request)
                 .Skip(request.Skip)
                 .Take(request.Take);
 
-            var filteredArticles = FilterArticlesWithCoronaVirusContentForIosRelease(articles, request);
-
-            var projection = GetLatestArticlesArticle.GetProjection().Compile();
             var articleDtos = filteredArticles
                 .Select(article => new List<GetLatestArticlesArticle>()
                 {
