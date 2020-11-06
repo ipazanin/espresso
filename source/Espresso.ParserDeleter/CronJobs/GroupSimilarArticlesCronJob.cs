@@ -2,7 +2,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
-using Espresso.Domain.IServices;
 using Espresso.ParserDeleter.Application.GroupSimilarArticles;
 using Espresso.ParserDeleter.Configuration;
 using MediatR;
@@ -16,7 +15,6 @@ namespace Espresso.ParserDeleter.CronJobs
     public class GroupSimilarArticlesCronJob : CronJob<GroupSimilarArticlesCronJob>
     {
         #region Fields
-        private readonly ISender _sender;
         private readonly IParserDeleterConfiguration _parserDeleterConfiguration;
         #endregion
 
@@ -26,23 +24,17 @@ namespace Espresso.ParserDeleter.CronJobs
         /// </summary>
         /// <param name="cronJobConfiguration"></param>
         /// <param name="serviceScopeFactory"></param>
-        /// <param name="loggerService"></param>
-        /// <param name="sender"></param>
         /// <param name="parserDeleterConfiguration"></param>
         /// <returns></returns>
         public GroupSimilarArticlesCronJob(
             ICronJobConfiguration<GroupSimilarArticlesCronJob> cronJobConfiguration,
             IServiceScopeFactory serviceScopeFactory,
-            ILoggerService<CronJob<GroupSimilarArticlesCronJob>> loggerService,
-            ISender sender,
             IParserDeleterConfiguration parserDeleterConfiguration
         ) : base(
             cronJobConfiguration,
-            serviceScopeFactory,
-            loggerService
+            serviceScopeFactory
         )
         {
-            _sender = sender;
             _parserDeleterConfiguration = parserDeleterConfiguration;
         }
         #endregion
@@ -55,7 +47,10 @@ namespace Espresso.ParserDeleter.CronJobs
         /// <returns></returns>
         public override Task DoWork(CancellationToken cancellationToken)
         {
-            return _sender.Send(
+            using var scope = ServiceScopeFactory.CreateScope();
+            var sender = scope.ServiceProvider.GetRequiredService<ISender>();
+
+            return sender.Send(
                 request: new GroupSimilarArticlesCommand
                 {
                     ParserApiKey = _parserDeleterConfiguration.ApiKeysConfiguration.ParserApiKey,

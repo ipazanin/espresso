@@ -65,12 +65,10 @@ namespace Espresso.WebApi.CronJobs
         /// <returns></returns>
         public WebApiReportCronJob(
             IServiceScopeFactory serviceScopeFactory,
-            ILoggerService<CronJob<WebApiReportCronJob>> loggerService,
             ICronJobConfiguration<WebApiReportCronJob> cronJobConfiguration,
             IWebApiConfiguration webApiConfiguration
         ) : base(
             cronJobConfiguration: cronJobConfiguration,
-            loggerService: loggerService,
             serviceScopeFactory: serviceScopeFactory
         )
         {

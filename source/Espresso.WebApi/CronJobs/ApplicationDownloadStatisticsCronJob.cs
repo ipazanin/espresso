@@ -29,17 +29,14 @@ namespace Espresso.WebApi.CronJobs
         /// </summary>
         /// <param name="serviceScopeFactory"></param>
         /// <param name="cronJobConfiguration"></param>
-        /// <param name="loggerService"></param>
         /// <param name="webApiConfiguration"></param>
         /// <returns></returns>
         public ApplicationDownloadStatisticsCronJob(
             IServiceScopeFactory serviceScopeFactory,
             ICronJobConfiguration<ApplicationDownloadStatisticsCronJob> cronJobConfiguration,
-            ILoggerService<CronJob<ApplicationDownloadStatisticsCronJob>> loggerService,
             IWebApiConfiguration webApiConfiguration
         ) : base(
             cronJobConfiguration: cronJobConfiguration,
-            loggerService: loggerService,
             serviceScopeFactory: serviceScopeFactory
         )
         {

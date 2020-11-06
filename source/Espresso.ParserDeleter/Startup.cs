@@ -63,7 +63,7 @@ namespace Espresso.ParserDeleter
             services.AddScoped<IScrapeWebService, ScrapeWebService>();
             services.AddScoped<IParseHtmlService, ParseHtmlService>();
             services.AddScoped<ISortArticlesService, SortArticlesService>();
-            services.AddSingleton(typeof(ILoggerService<>), typeof(LoggerService<>));
+            services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
 
             services.AddScoped<IGroupSimilarArticlesService, GroupSimilarArticlesService>(
                 serviceProvider => new GroupSimilarArticlesService(
