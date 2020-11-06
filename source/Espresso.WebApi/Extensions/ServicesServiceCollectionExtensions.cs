@@ -29,7 +29,7 @@ namespace Espresso.WebApi.Extensions
                 webHookUrl: webApiConfiguration.AppConfiguration.SlackWebHook
             ));
 
-            services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
+            services.AddSingleton(typeof(ILoggerService<>), typeof(LoggerService<>));
 
             return services;
         }
