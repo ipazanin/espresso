@@ -51,7 +51,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_3
             var articleDtos = articles
                 .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
                 .Where(
-                    predicate: Article.GetFilteredLatestArticlesPredicate(
+                    predicate: Article.GetFilteredLatestArticlesPredicate_2_0(
                         categoryIds: categoryIds,
                         newsPortalIds: newsPortalIds,
                         titleSearchTerm: request.TitleSearchQuery,

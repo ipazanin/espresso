@@ -6,7 +6,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
     public record GetLatestArticlesQueryResponse
     {
         #region Properties
-        public IEnumerable<GetLatestArticlesArticle> Articles { get; init; } = new List<GetLatestArticlesArticle>();
+        public IEnumerable<IEnumerable<GetLatestArticlesArticle>> Articles { get; init; } = new List<IEnumerable<GetLatestArticlesArticle>>();
 
         public IEnumerable<GetLatestArticlesArticle> FeaturedArticles { get; init; } = new List<GetLatestArticlesArticle>();
 

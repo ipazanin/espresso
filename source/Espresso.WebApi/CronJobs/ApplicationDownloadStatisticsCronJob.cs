@@ -9,6 +9,7 @@ using Espresso.Application.IServices;
 using Microsoft.Extensions.DependencyInjection;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.WebApi.Configuration;
+using Espresso.Domain.IServices;
 
 namespace Espresso.WebApi.CronJobs
 {

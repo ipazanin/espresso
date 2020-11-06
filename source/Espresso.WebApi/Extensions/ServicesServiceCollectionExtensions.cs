@@ -1,11 +1,11 @@
 ﻿using System.Net.Http;
 using Espresso.Application.IServices;
 using Espresso.Application.Services;
+using Espresso.Domain.IServices;
+using Espresso.Domain.Services;
 using Espresso.WebApi.Configuration;
-using Espresso.Wepi.Application.IServices;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Espresso.WebApi.Extensions
 {
@@ -28,7 +28,7 @@ namespace Espresso.WebApi.Extensions
                 loggerService: serviceProvider.GetRequiredService<ILoggerService<SlackService>>(),
                 webHookUrl: webApiConfiguration.AppConfiguration.SlackWebHook
             ));
-            services.AddScoped<IHttpService, HttpService>();
+
             services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
 
             return services;

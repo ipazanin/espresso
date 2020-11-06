@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Espresso.ParserDeleter.ParseRssFeeds;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
+using Espresso.Domain.IServices;
 
 namespace Espresso.ParserDeleter.CronJobs
 {

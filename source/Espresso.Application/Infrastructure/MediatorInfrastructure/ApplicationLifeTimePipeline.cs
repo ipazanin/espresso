@@ -13,7 +13,8 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
         IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
     {
         #region Constants
-        private static TimeSpan DeadLockThreshold => TimeSpan.FromMinutes(15);
+        private static TimeSpan DeadLockThreshold => TimeSpan.FromHours(3);
+        // private static TimeSpan DeadLockThreshold => TimeSpan.FromMinutes(15);
         #endregion
 
         #region Fields

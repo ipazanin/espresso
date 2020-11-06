@@ -58,6 +58,16 @@ namespace Espresso.Persistence.Configuration
                 .WithOne(articleCatgory => articleCatgory!.Article!)
                 .HasForeignKey(articleCategory => articleCategory.ArticleId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(article => article.SubordinateArticles)
+                .WithOne(similarArticle => similarArticle!.MainArticle!)
+                .HasForeignKey(similarArticle => similarArticle.MainArticleId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(article => article.MainArticle)
+                .WithOne(similarArticle => similarArticle!.SubordinateArticle!)
+                .HasForeignKey<SimilarArticle>(similarArticle => similarArticle.SubordinateArticleId)
+                .OnDelete(DeleteBehavior.Restrict);
             #endregion
         }
     }

@@ -7,14 +7,9 @@ namespace Espresso.Application.Extensions
     {
         public static HttpClient AddHeadersToHttpClient(
             this HttpClient httpClient,
-            IEnumerable<(string headerKey, string headerValue)>? httpHeaders
+            IEnumerable<(string headerKey, string headerValue)> httpHeaders
         )
         {
-            if (httpHeaders is null)
-            {
-                return httpClient;
-            }
-
             foreach (var (headerKey, headerValue) in httpHeaders)
             {
                 httpClient.DefaultRequestHeaders.Add(headerKey, headerValue);

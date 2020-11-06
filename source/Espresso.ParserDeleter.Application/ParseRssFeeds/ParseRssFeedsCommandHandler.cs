@@ -2,9 +2,12 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects;
+using Espresso.Application.Extensions;
 using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
@@ -12,10 +15,10 @@ using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.Extensions;
+using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
 using Espresso.ParserDeleter.Application.IServices;
 using Espresso.Persistence.IRepositories;
-using Espresso.Wepi.Application.IServices;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -31,7 +34,7 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
         private readonly ICreateArticleService _parseArticlesService;
         private readonly ISlackService _slackService;
         private readonly ILoadRssFeedsService _loadRssFeedsService;
-        private readonly IHttpService _httpService;
+        private readonly HttpClient _httpClient;
         private readonly ISortArticlesService _sortArticlesService;
         private readonly ILoggerService<ParseRssFeedsCommandHandler> _loggerService;
         #endregion
@@ -44,7 +47,7 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
             ICreateArticleService parseArticlesService,
             ISlackService slackService,
             ILoadRssFeedsService loadRssFeedsService,
-            IHttpService httpService,
+            IHttpClientFactory httpClientFactory,
             ISortArticlesService sortArticlesService,
             ILoggerService<ParseRssFeedsCommandHandler> loggerService
         )
@@ -55,7 +58,7 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
             _parseArticlesService = parseArticlesService;
             _slackService = slackService;
             _loadRssFeedsService = loadRssFeedsService;
-            _httpService = httpService;
+            _httpClient = httpClientFactory.CreateClient();
             _sortArticlesService = sortArticlesService;
             _loggerService = loggerService;
         }
@@ -252,15 +255,14 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
 
             try
             {
-                await _httpService.PostJsonAsync(
-                    url: $"{request.ServerUrl}/api/notifications/articles",
-                    data: new ArticlesBodyDto
+                _httpClient.AddHeadersToHttpClient(httpHeaders);
+                await _httpClient.PostAsJsonAsync(
+                    requestUri: $"{request.ServerUrl}/api/notifications/articles",
+                    value: new ArticlesBodyDto
                     {
                         CreatedArticles = createdArticleDtos,
                         UpdatedArticles = updatedArticleDtos
                     },
-                    httpHeaders: httpHeaders,
-                    httpClientTimeout: TimeSpan.FromSeconds(30),
                     cancellationToken: cancellationToken
                 );
 

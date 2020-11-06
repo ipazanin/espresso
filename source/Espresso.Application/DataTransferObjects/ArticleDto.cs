@@ -65,7 +65,6 @@ namespace Espresso.Application.DataTransferObjects
         /// List Of Categories article belongs to
         /// </summary>
         public IEnumerable<CategoryDto> Categories { get; init; } = new List<CategoryDto>();
-
         #endregion
 
         #region Constructors
@@ -161,8 +160,11 @@ namespace Espresso.Application.DataTransferObjects
                     rssFeedId: article.RssFeedId,
                     articleCategories: articleCategories,
                     newsPortal: newsPortal,
-                    rssFeed: null
+                    rssFeed: null,
+                    subordinateArticles: null,
+                    mainArticle: null
                 );
+
                 return createdArticle;
             };
         }

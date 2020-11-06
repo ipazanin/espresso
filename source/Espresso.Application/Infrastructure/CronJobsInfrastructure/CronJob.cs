@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Cronos;
 using Espresso.Application.IServices;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
+using Espresso.Domain.IServices;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -108,7 +110,10 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
 
             try
             {
+                var stopwatch = Stopwatch.StartNew();
                 await DoWork(cancellationToken);
+                var elapsed = stopwatch.Elapsed;
+
                 await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
 
                 var eventName = $"{typeof(T).Name} work ended";
@@ -117,7 +122,8 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
                 var arguments = new (string argumentName, object argumentValue)[]
                 {
                     (nameof(ocurrence),ocurrence),
-                    (nameof(nextOccurence),nextOccurence)
+                    (nameof(nextOccurence),nextOccurence),
+                    (nameof(elapsed),elapsed),
                 };
                 _loggerService.Log(eventName, LogLevel.Information, arguments);
 

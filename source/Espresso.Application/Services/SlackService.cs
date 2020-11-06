@@ -12,6 +12,7 @@ using Espresso.Application.DataTransferObjects;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using Espresso.Domain.IServices;
 
 namespace Espresso.Application.Services
 {

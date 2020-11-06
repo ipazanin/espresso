@@ -11,6 +11,6 @@ namespace Espresso.Persistence.IRepositories
 
         public void UpdateArticles(IEnumerable<Article> articles);
 
-        public int DeleteArticles(DateTime maxArticleAge);
+        public int DeleteArticlesAndSimilarArticles(DateTime maxArticleAge);
     }
 }

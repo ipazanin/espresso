@@ -14,6 +14,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
+using Espresso.Domain.IServices;
 
 namespace Espresso.WebApi.Filters
 {

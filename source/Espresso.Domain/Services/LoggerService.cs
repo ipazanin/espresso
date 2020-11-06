@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Espresso.Application.IServices;
+using Espresso.Domain.IServices;
 using Espresso.Common.Utilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 
-namespace Espresso.Application.Services
+namespace Espresso.Domain.Services
 {
     public class LoggerService<TCaller> : ILoggerService<TCaller> where TCaller : class
     {
