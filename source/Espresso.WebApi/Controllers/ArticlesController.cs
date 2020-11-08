@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.WebApi.Application.Articles.Commands.CalculateTrendingScore;
 using Espresso.WebApi.Application.Articles.Commands.HideArticle;
 using Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticleScore;
 using Espresso.WebApi.Application.Articles.Commands.SetFeaturedArticle;
@@ -586,18 +585,6 @@ namespace Espresso.WebApi.Controllers
                 cancellationToken: cancellationToken
             );
 
-            await Sender.Send(
-                request: new CalculateTrendingScoreCommand
-                {
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
-                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    ConsumerVersion = basicInformationsHeaderParameters.Version,
-                    DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
-                },
-                cancellationToken: cancellationToken
-            );
-
             return Ok();
         }
 
@@ -640,18 +627,6 @@ namespace Espresso.WebApi.Controllers
                 request: new IncrementNumberOfClicksCommand
                 {
                     Id = articleId,
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
-                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    ConsumerVersion = basicInformationsHeaderParameters.Version,
-                    DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
-                },
-                cancellationToken: cancellationToken
-            );
-
-            await Sender.Send(
-                request: new CalculateTrendingScoreCommand
-                {
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,

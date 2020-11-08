@@ -5,7 +5,7 @@ using Espresso.Common.Enums;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Records;
 
-namespace Espresso.ParserDeleter.Application.IServices
+namespace Espresso.Domain.IServices
 {
     public interface ILoadRssFeedsService
     {

@@ -31,11 +31,13 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
         private readonly IMemoryCache _memoryCache;
         private readonly IArticleRepository _articleRepository;
         private readonly IArticleCategoryRepository _articleCategoryRepository;
+        private readonly ISimilarArticleRepository _similarArticleRepository;
         private readonly ICreateArticleService _parseArticlesService;
         private readonly ISlackService _slackService;
         private readonly ILoadRssFeedsService _loadRssFeedsService;
         private readonly HttpClient _httpClient;
         private readonly ISortArticlesService _sortArticlesService;
+        private readonly IGroupSimilarArticlesService _groupSimilarArticlesService;
         private readonly ILoggerService<ParseRssFeedsCommandHandler> _loggerService;
         #endregion
 
@@ -44,22 +46,26 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
             IMemoryCache memoryCache,
             IArticleRepository articleRepository,
             IArticleCategoryRepository articleCategoryRepository,
+            ISimilarArticleRepository similarArticleRepository,
             ICreateArticleService parseArticlesService,
             ISlackService slackService,
             ILoadRssFeedsService loadRssFeedsService,
             IHttpClientFactory httpClientFactory,
             ISortArticlesService sortArticlesService,
+            IGroupSimilarArticlesService groupSimilarArticlesService,
             ILoggerService<ParseRssFeedsCommandHandler> loggerService
         )
         {
             _memoryCache = memoryCache;
             _articleRepository = articleRepository;
             _articleCategoryRepository = articleCategoryRepository;
+            _similarArticleRepository = similarArticleRepository;
             _parseArticlesService = parseArticlesService;
             _slackService = slackService;
             _loadRssFeedsService = loadRssFeedsService;
             _httpClient = httpClientFactory.CreateClient();
             _sortArticlesService = sortArticlesService;
+            _groupSimilarArticlesService = groupSimilarArticlesService;
             _loggerService = loggerService;
         }
         #endregion
@@ -103,8 +109,11 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
 
             CreateArticles(articles: createArticles);
             UpdateArticles(articles: updateArticles);
+
             _articleCategoryRepository.InsertArticleCategories(articleCategoriesToCreate);
             _articleCategoryRepository.DeleteArticleCategories(articleCategoriesToDelete.Select(articleCategory => articleCategory.Id));
+
+            CreateSimilarArticles();
 
             await CallWebServer(
                 request: request,
@@ -172,7 +181,7 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
                 return;
             }
 
-            var savedArticles = _memoryCache
+            var articlesDictionary = _memoryCache
                 .Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey)
                 .ToDictionary(article => article.Id);
 
@@ -180,11 +189,11 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
 
             foreach (var article in articles)
             {
-                if (savedArticles.ContainsKey(article.Id))
+                if (articlesDictionary.ContainsKey(article.Id))
                 {
                     continue;
                 }
-                savedArticles.Add(article.Id, article);
+                articlesDictionary.Add(article.Id, article);
 
                 articlesToCreate.Add(article);
             }
@@ -193,7 +202,7 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
 
             _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
-                value: savedArticles.Values.ToList()
+                value: articlesDictionary.Values.ToList()
             );
         }
 
@@ -206,7 +215,7 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
                 return;
             }
 
-            var savedArticles = _memoryCache
+            var articlesDictionary = _memoryCache
                 .Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey)
                 .ToDictionary(article => article.Id);
 
@@ -214,10 +223,10 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
 
             foreach (var article in articles)
             {
-                if (savedArticles.ContainsKey(article.Id))
+                if (articlesDictionary.ContainsKey(article.Id))
                 {
-                    _ = savedArticles.Remove(article.Id);
-                    savedArticles.Add(article.Id, article);
+                    _ = articlesDictionary.Remove(article.Id);
+                    articlesDictionary.Add(article.Id, article);
                     articlesToUpdate.Add(article);
                 }
             }
@@ -226,8 +235,38 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
 
             _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
-                value: savedArticles.Values.ToList()
+                value: articlesDictionary.Values.ToList()
             );
+        }
+
+        private void CreateSimilarArticles()
+        {
+            var articles = _memoryCache.Get<IEnumerable<Article>>(key: MemoryCacheConstants.ArticleKey);
+            var lastSimilarityGroupingTime = _memoryCache.Get<DateTime>(key: MemoryCacheConstants.LastSimilarityGroupingTime);
+
+            var similarArticles = _groupSimilarArticlesService.GroupSimilarArticles(
+                articles,
+                lastSimilarityGroupingTime
+            );
+
+            _similarArticleRepository.InsertSimilarArticles(similarArticles);
+
+            var articlesDictionary = articles.ToDictionary(article => article.Id);
+
+            foreach (var similarArticle in similarArticles)
+            {
+                if (
+                    articlesDictionary.TryGetValue(similarArticle.MainArticleId, out var mainArticle) &&
+                    articlesDictionary.TryGetValue(similarArticle.SubordinateArticleId, out var subordinateArticle)
+                )
+                {
+                    mainArticle.SubordinateArticles.Add(similarArticle);
+                    subordinateArticle.SetMainArticle(similarArticle);
+                }
+            }
+
+            _memoryCache.Set(key: MemoryCacheConstants.ArticleKey, value: articlesDictionary.Values.ToList());
+            _memoryCache.Set(key: MemoryCacheConstants.LastSimilarityGroupingTime, value: DateTime.UtcNow);
         }
 
         private async Task CallWebServer(
@@ -242,8 +281,8 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
                 return;
             }
 
-            var createdArticleDtos = createArticles.Select(ArticleDto.GetProjection().Compile());
-            var updatedArticleDtos = updateArticles.Select(ArticleDto.GetProjection().Compile());
+            var createdArticleIds = createArticles.Select(article => article.Id);
+            var updatedArticleIds = updateArticles.Select(article => article.Id);
 
             var httpHeaders = new List<(string headerKey, string headerValue)>
             {
@@ -260,8 +299,8 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
                     requestUri: $"{request.ServerUrl}/api/notifications/articles",
                     value: new ArticlesBodyDto
                     {
-                        CreatedArticles = createdArticleDtos,
-                        UpdatedArticles = updatedArticleDtos
+                        CreatedArticles = createdArticleIds,
+                        UpdatedArticleIds = updatedArticleIds
                     },
                     cancellationToken: cancellationToken
                 );

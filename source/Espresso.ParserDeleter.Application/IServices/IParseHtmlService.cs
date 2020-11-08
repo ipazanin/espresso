@@ -11,12 +11,6 @@ namespace Espresso.ParserDeleter.Application.IServices
 
         public string? GetText(string? html);
 
-        public Task<string?> GetImageUrlFromJsonObjectFromScriptTag(
-            HtmlNodeCollection elementTags,
-            IEnumerable<string> propertyNames,
-            CancellationToken cancellationToken
-        );
-
         public string? GetImageUrlFromSrcAttribute(HtmlNodeCollection elementTags);
     }
 }

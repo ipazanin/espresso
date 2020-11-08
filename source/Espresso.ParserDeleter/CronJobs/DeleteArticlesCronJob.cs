@@ -40,23 +40,11 @@ namespace Espresso.ParserDeleter.CronJobs
         #endregion
 
         #region Methods
-        public override async Task StartAsync(CancellationToken cancellationToken)
-        {
-            // await Task.Delay(
-            //     delay: TimeSpan.FromSeconds(60),
-            //     cancellationToken: cancellationToken
-            // );
-
-            await base.StartAsync(cancellationToken);
-        }
-
-        public override async Task DoWork(CancellationToken stoppingToken)
+        public override async Task DoWork(CancellationToken cancellationToken)
         {
             using var scope = _serviceScopeFactory.CreateScope();
             var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
             var slackService = scope.ServiceProvider.GetRequiredService<ISlackService>();
-
-            var cancellationToken = GetCancellationToken();
 
             await mediator.Send(
                 request: new DeleteOldArticlesCommand
@@ -70,14 +58,6 @@ namespace Espresso.ParserDeleter.CronJobs
                 },
                 cancellationToken: cancellationToken
             );
-        }
-
-        private CancellationToken GetCancellationToken()
-        {
-            var cancellationTokeSource = new CancellationTokenSource(
-                delay: _configuration.CronJobsConfiguration.DeleteArticlesCancellation
-            );
-            return cancellationTokeSource.Token;
         }
         #endregion
     }

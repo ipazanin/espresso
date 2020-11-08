@@ -39,6 +39,12 @@
         /// 
         /// </summary>
         /// <value></value>
+        public TrendingScoreConfiguration TrendingScoreConfiguration { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
         public CronJobsConfiguration CronJobsConfiguration { get; }
 
     }

@@ -44,6 +44,12 @@ namespace Espresso.WebApi.Configuration
         /// <value></value>
         public CronJobsConfiguration CronJobsConfiguration { get; }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public TrendingScoreConfiguration TrendingScoreConfiguration { get; }
         #endregion
 
         #region Constructors
@@ -59,6 +65,7 @@ namespace Espresso.WebApi.Configuration
             SpaConfiguration = new SpaConfiguration(configuration.GetSection("SpaConfiguration"));
             DateTimeConfiguration = new DateTimeConfiguration(configuration.GetSection("DateTimeConfiguration"));
             CronJobsConfiguration = new CronJobsConfiguration(configuration.GetSection("CronJobsConfiguration"));
+            TrendingScoreConfiguration = new TrendingScoreConfiguration(configuration.GetSection("TrendingScoreConfiguration"));
         }
         #endregion
     }

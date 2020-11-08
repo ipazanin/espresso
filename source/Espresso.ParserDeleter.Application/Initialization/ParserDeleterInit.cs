@@ -96,6 +96,11 @@ namespace Espresso.ParserDeleter.Application.Initialization
                 .Include(article => article.NewsPortal)
                 .Include(article => article.MainArticle)
                 .ThenInclude(mainArticle => mainArticle!.MainArticle)
+                .ThenInclude(article => article!.NewsPortal)
+                .Include(article => article.MainArticle)
+                .ThenInclude(mainArticle => mainArticle!.MainArticle)
+                .ThenInclude(article => article!.ArticleCategories)
+                .ThenInclude(articleCategory => articleCategory.Category)
                 .AsNoTracking()
                 .AsSplitQuery()
                 .ToListAsync();

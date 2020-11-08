@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Espresso.Domain.Entities;
-using Espresso.ParserDeleter.Application.IServices;
+using Espresso.Domain.IServices;
 
-namespace Espresso.ParserDeleter.Application.Services
+namespace Espresso.Domain.Services
 {
     public class SortArticlesService : ISortArticlesService
     {
@@ -33,9 +33,9 @@ namespace Espresso.ParserDeleter.Application.Services
 
             foreach (var article in savedArticles)
             {
-                _ = savedArticlesArticleIdDictionary.TryAdd((article.NewsPortalId, article.Url), article.Id);
-                _ = savedArticlesTitleDictionary.TryAdd((article.NewsPortalId, article.Title), article.Id);
-                _ = savedArticlesSummaryDictionary.TryAdd((article.NewsPortalId, article.Summary), article.Id);
+                savedArticlesArticleIdDictionary.TryAdd((article.NewsPortalId, article.Url), article.Id);
+                savedArticlesTitleDictionary.TryAdd((article.NewsPortalId, article.Title), article.Id);
+                savedArticlesSummaryDictionary.TryAdd((article.NewsPortalId, article.Summary), article.Id);
             }
 
             foreach (var article in articles)

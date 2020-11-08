@@ -59,7 +59,6 @@ namespace Espresso.WebApi.CronJobs
         /// 
         /// </summary>
         /// <param name="serviceScopeFactory"></param>
-        /// <param name="loggerService"></param>
         /// <param name="cronJobConfiguration"></param>
         /// <param name="webApiConfiguration"></param>
         /// <returns></returns>

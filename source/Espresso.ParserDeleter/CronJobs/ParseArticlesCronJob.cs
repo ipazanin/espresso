@@ -42,8 +42,6 @@ namespace Espresso.ParserDeleter.CronJobs
 
             var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
-            var parseArticlesCancellationToken = GetParseArticlesCancellationToken();
-
             var parseRssFeedsCommandResponse = await mediator.Send(
                 request: new ParseRssFeedsCommand
                 {
@@ -56,16 +54,8 @@ namespace Espresso.ParserDeleter.CronJobs
                     DeviceType = DeviceType.RssFeedParser,
                     AppEnvironment = _configuration.AppConfiguration.AppEnvironment
                 },
-                cancellationToken: parseArticlesCancellationToken
+                cancellationToken: cancellationToken
             );
-        }
-
-        private CancellationToken GetParseArticlesCancellationToken()
-        {
-            var cancellationTokeSource = new CancellationTokenSource(
-                delay: _configuration.CronJobsConfiguration.ParseArticlesCancellation
-            );
-            return cancellationTokeSource.Token;
         }
         #endregion
     }

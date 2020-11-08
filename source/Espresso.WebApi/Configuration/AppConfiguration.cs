@@ -48,6 +48,16 @@ namespace Espresso.WebApi.Configuration
         /// <summary>
         /// 
         /// </summary>
+        public ApiVersion EspressoWebApiVersion_1_4 => new ApiVersion(1, 4);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ApiVersion EspressoWebApiVersion_2_0 => new ApiVersion(2, 0);
+
+        /// <summary>
+        /// 
+        /// </summary>
         public ApiVersion EspressoWebApiCurrentVersion => new ApiVersion(
             majorVersion: _configuration.GetValue<int>("MajorVersion"),
             minorVersion: _configuration.GetValue<int>("MinorVersion")

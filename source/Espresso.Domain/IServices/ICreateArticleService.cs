@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Records;
 
-namespace Espresso.ParserDeleter.Application.IServices
+namespace Espresso.Domain.IServices
 {
     public interface ICreateArticleService
     {
