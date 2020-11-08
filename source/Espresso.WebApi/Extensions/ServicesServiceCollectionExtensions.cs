@@ -29,6 +29,12 @@ namespace Espresso.WebApi.Extensions
                 webHookUrl: webApiConfiguration.AppConfiguration.SlackWebHook
             ));
 
+            services.AddTransient<ITrendingScoreService, TrendingScoreService>(serviceProvider => new TrendingScoreService(
+                halfOfMaxTrendingScoreValue: webApiConfiguration.TrendingScoreConfiguration.HalfOfMaxTrendingScoreValue,
+                ageWeight: webApiConfiguration.TrendingScoreConfiguration.AgeWeight
+            ));
+
+
             services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
 
             return services;

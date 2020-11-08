@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Espresso.WebApi.Application.Articles.Commands.CalculateTrendingScore;
 using Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles;
 using Espresso.WebApi.Application.Notifications.Commands.SendArticlesNotifications;
 using Espresso.WebApi.Application.Notifications.Commands.SendPushNotification;
@@ -71,21 +70,9 @@ namespace Espresso.WebApi.Controllers
             await Sender.Send(
                 request: new UpdateInMemoryArticlesCommand
                 {
-                    CreatedArticles = articlesRequest.CreatedArticles,
-                    UpdatedArticles = articlesRequest.UpdatedArticles,
+                    CreatedArticleIds = articlesRequest.CreatedArticles,
+                    UpdatedArticleIds = articlesRequest.UpdatedArticleIds,
                     MaxAgeOfArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfArticle,
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
-                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    ConsumerVersion = basicInformationsHeaderParameters.Version,
-                    DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
-                },
-                cancellationToken: cancellationToken
-            );
-
-            await Sender.Send(
-                request: new CalculateTrendingScoreCommand
-                {
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
@@ -98,8 +85,8 @@ namespace Espresso.WebApi.Controllers
             await Sender.Send(
                 request: new SendArticlesNotificationsCommand
                 {
-                    CreatedArticles = articlesRequest.CreatedArticles,
-                    UpdatedArticles = articlesRequest.UpdatedArticles,
+                    CreatedArticleIds = articlesRequest.CreatedArticles,
+                    UpdatedArticleIds = articlesRequest.UpdatedArticleIds,
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,

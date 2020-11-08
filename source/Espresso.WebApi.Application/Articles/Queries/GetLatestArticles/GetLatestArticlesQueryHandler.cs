@@ -105,7 +105,9 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                 .Select(article => new List<GetLatestArticlesArticle>()
                 {
                     projection.Invoke(article)
-                }.Union(article.SubordinateArticles.Select(similarArticle => projection.Invoke(similarArticle.SubordinateArticle!))));
+                }.Union(
+                    article.SubordinateArticles.Select(similarArticle => projection.Invoke(similarArticle.SubordinateArticle!)))
+                );
 
             return articleDtos;
         }

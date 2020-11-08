@@ -18,15 +18,6 @@ namespace Espresso.ParserDeleter.Configuration
 
         public string ParseArticlesCronExpression =>
             _configuration.GetValue<string>("ParseArticlesCronExpression");
-
-        public string GroupSimilarArticlesCronExpression =>
-            _configuration.GetValue<string>("GroupSimilarArticlesCronExpression");
-
-        public TimeSpan DeleteArticlesCancellation =>
-            TimeSpan.FromSeconds(_configuration.GetValue<int>("DeleteArticlesCancellationInSeconds"));
-
-        public TimeSpan ParseArticlesCancellation =>
-            TimeSpan.FromSeconds(_configuration.GetValue<int>("ParseArticlesCancellationInSeconds"));
         #endregion
 
         #region Constructors

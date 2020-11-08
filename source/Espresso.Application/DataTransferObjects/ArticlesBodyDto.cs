@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 
 namespace Espresso.Application.DataTransferObjects
 {
-    public class ArticlesBodyDto
+    public record ArticlesBodyDto
     {
-        public IEnumerable<ArticleDto> CreatedArticles { get; set; } = new List<ArticleDto>();
+        public IEnumerable<Guid> CreatedArticles { get; init; } = new List<Guid>();
 
-        public IEnumerable<ArticleDto> UpdatedArticles { get; set; } = new List<ArticleDto>();
+        public IEnumerable<Guid> UpdatedArticleIds { get; init; } = new List<Guid>();
     }
 }

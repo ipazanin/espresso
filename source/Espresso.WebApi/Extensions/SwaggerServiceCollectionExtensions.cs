@@ -46,6 +46,20 @@ namespace Espresso.WebApi.Extensions
                 Description = "Espresso APP Web Api",
             });
 
+            options.SwaggerDoc(configuration.AppConfiguration.EspressoWebApiVersion_2_0.ToString(), new OpenApiInfo
+            {
+                Title = $"Espresso API",
+                Version = configuration.AppConfiguration.EspressoWebApiVersion_2_0.ToString(),
+                Description = "Espresso APP Web Api"
+            });
+
+            options.SwaggerDoc(configuration.AppConfiguration.EspressoWebApiVersion_1_4.ToString(), new OpenApiInfo
+            {
+                Title = $"Espresso API",
+                Version = configuration.AppConfiguration.EspressoWebApiVersion_1_4.ToString(),
+                Description = "Espresso APP Web Api"
+            });
+
             options.SwaggerDoc(configuration.AppConfiguration.EspressoWebApiVersion_1_3.ToString(), new OpenApiInfo
             {
                 Title = $"Espresso API",

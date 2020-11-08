@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.DataTransferObjects;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
-
+using Espresso.Domain.IServices;
+using Espresso.Persistence.Database;
 using MediatR;
-
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
@@ -18,97 +18,155 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
     {
         #region Fields
         private readonly IMemoryCache _memoryCache;
+        private readonly IApplicationDatabaseContext _applicationDatabaseContext;
+        private readonly ITrendingScoreService _trendingScoreService;
         #endregion
 
         #region Constructors
         public UpdateInMemoryArticlesCommandHandler(
-            IMemoryCache memoryCache
+            IMemoryCache memoryCache,
+            IApplicationDatabaseContext applicationDatabaseContext,
+            ITrendingScoreService trendingScoreService
         )
         {
             _memoryCache = memoryCache;
+            _applicationDatabaseContext = applicationDatabaseContext;
+            _trendingScoreService = trendingScoreService;
         }
         #endregion
 
         #region Methods
-        public Task<UpdateInMemoryArticlesCommandResponse> Handle(UpdateInMemoryArticlesCommand request, CancellationToken cancellationToken)
+        public async Task<UpdateInMemoryArticlesCommandResponse> Handle(UpdateInMemoryArticlesCommand request, CancellationToken cancellationToken)
         {
-            CreateArticles(request.CreatedArticles);
-            UpdateArticles(request.UpdatedArticles);
+            var savedArticlesDictionary = _memoryCache
+                .Get<IEnumerable<Article>>(key: MemoryCacheConstants.ArticleKey)
+                .ToDictionary(article => article.Id);
 
-            RemoveOldArticles(request.MaxAgeOfArticle);
+            await CreateArticles(savedArticlesDictionary, request.CreatedArticleIds, cancellationToken);
+            await UpdateArticles(savedArticlesDictionary, request.UpdatedArticleIds, cancellationToken);
+
+            RemoveOldArticles(savedArticlesDictionary, request.MaxAgeOfArticle);
+
+            var articles = savedArticlesDictionary
+                .Select(articleKeyValuePair => articleKeyValuePair.Value)
+                .ToList();
+
+            var articlesToSave = _trendingScoreService.CalculateTrendingScore(articles);
+
+            _memoryCache.Set(
+                key: MemoryCacheConstants.ArticleKey,
+                value: articlesToSave
+            );
 
             var response = new UpdateInMemoryArticlesCommandResponse
             {
-                NumberOfUpdatedArticles = request.UpdatedArticles.Count(),
-                NumberOfCreatedArticles = request.CreatedArticles.Count()
+                NumberOfUpdatedArticles = request.CreatedArticleIds.Count(),
+                NumberOfCreatedArticles = request.UpdatedArticleIds.Count()
             };
 
-            return Task.FromResult(result: response);
+            return response;
         }
 
-        private void CreateArticles(IEnumerable<ArticleDto> createArticles)
+        private async Task CreateArticles(
+            IDictionary<Guid, Article> savedArticlesDictionary,
+            IEnumerable<Guid> createdArticleIds,
+            CancellationToken cancellationToken
+        )
         {
-            var createArticlesDictionary = createArticles
-                .Select(ArticleDto.GetToArticleProjection())
-                .ToDictionary(article => article.Id);
 
-            var savedArticles = _memoryCache
-                .Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey)
-                .ToDictionary(article => article.Id);
+            var articlesToCreate = await _applicationDatabaseContext
+                .Articles
+                .Include(article => article.ArticleCategories)
+                .ThenInclude(articleCategory => articleCategory.Category)
+                .Include(article => article.NewsPortal)
+                .Include(article => article.MainArticle)
+                .ThenInclude(mainArticle => mainArticle!.MainArticle)
+                .Include(article => article.SubordinateArticles)
+                .ThenInclude(subordinateArticle => subordinateArticle!.SubordinateArticle)
+                .ThenInclude(article => article!.NewsPortal)
+                .Include(article => article.SubordinateArticles)
+                .ThenInclude(subordinateArticle => subordinateArticle!.SubordinateArticle)
+                .ThenInclude(article => article!.ArticleCategories)
+                .ThenInclude(articleCategory => articleCategory.Category)
+                .Where(article => createdArticleIds.Contains(article.Id))
+                .AsSplitQuery()
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
 
-            var articlesToSave = savedArticles
-                .Union(createArticlesDictionary)
-                .Select(articleKeyValuePair => articleKeyValuePair.Value)
-                .ToList();
 
-            _ = _memoryCache.Set(
-                key: MemoryCacheConstants.ArticleKey,
-                value: articlesToSave
-            );
+            foreach (var article in articlesToCreate)
+            {
+                if (savedArticlesDictionary.ContainsKey(article.Id))
+                {
+                    _ = savedArticlesDictionary.Remove(article.Id);
+                    savedArticlesDictionary.Add(article.Id, article);
+                }
+                else
+                {
+                    savedArticlesDictionary.Add(article.Id, article);
+                }
+            }
         }
 
-        private void UpdateArticles(IEnumerable<ArticleDto> updateArticles)
+        private async Task UpdateArticles(
+            IDictionary<Guid, Article> savedArticlesDictionary,
+            IEnumerable<Guid> updatedArticleIds,
+            CancellationToken cancellationToken
+        )
         {
-            var articlesToUpdate = updateArticles
-                .Select(ArticleDto.GetToArticleProjection());
-
-            var savedArticles = _memoryCache
-                .Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey)
-                .ToDictionary(article => article.Id);
+            var articlesToUpdate = await _applicationDatabaseContext
+                .Articles
+                .Include(article => article.ArticleCategories)
+                .ThenInclude(articleCategory => articleCategory.Category)
+                .Include(article => article.NewsPortal)
+                .Include(article => article.MainArticle)
+                .ThenInclude(mainArticle => mainArticle!.MainArticle)
+                .Include(article => article.SubordinateArticles)
+                .ThenInclude(subordinateArticle => subordinateArticle!.SubordinateArticle)
+                .ThenInclude(article => article!.NewsPortal)
+                .Include(article => article.SubordinateArticles)
+                .ThenInclude(subordinateArticle => subordinateArticle!.SubordinateArticle)
+                .ThenInclude(article => article!.ArticleCategories)
+                .ThenInclude(articleCategory => articleCategory.Category)
+                .Where(article => updatedArticleIds.Contains(article.Id))
+                .AsSplitQuery()
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
 
             foreach (var article in articlesToUpdate)
             {
-                if (savedArticles.ContainsKey(article.Id))
+                if (savedArticlesDictionary.ContainsKey(article.Id))
                 {
-                    _ = savedArticles.Remove(article.Id);
-                    savedArticles.Add(article.Id, article);
+                    savedArticlesDictionary.Remove(article.Id);
+                    savedArticlesDictionary.Add(article.Id, article);
+                }
+                else
+                {
+                    savedArticlesDictionary.Add(article.Id, article);
                 }
             }
-
-            var articlesToSave = savedArticles
-                .Select(articleKeyValuePair => articleKeyValuePair.Value)
-                .ToList();
-
-            _ = _memoryCache.Set(
-                key: MemoryCacheConstants.ArticleKey,
-                value: articlesToSave
-            );
         }
 
-        private void RemoveOldArticles(TimeSpan maxAgeOfArticle)
+        private void RemoveOldArticles(
+            IDictionary<Guid, Article> savedArticlesDictionary,
+            TimeSpan maxAgeOfArticle
+        )
         {
             var maxAge = DateTime.UtcNow - maxAgeOfArticle;
 
-            var savedArticles = _memoryCache
-                .Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey);
-
-            var savedArticlesWithoutOldArticles = savedArticles
-                .Where(article => article.CreateDateTime > maxAge)
+            var articlesToRemove = savedArticlesDictionary
+                .Values
+                .Where(article => article.CreateDateTime < maxAge)
                 .ToList();
 
-            _ = _memoryCache.Set(
+            foreach (var articleToRemove in articlesToRemove)
+            {
+                savedArticlesDictionary.Remove(articleToRemove.Id);
+            }
+
+            _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
-                value: savedArticlesWithoutOldArticles
+                value: articlesToRemove
             );
         }
         #endregion

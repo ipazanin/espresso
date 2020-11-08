@@ -2,15 +2,14 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
 using Espresso.WebApi.Application.Exceptions;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
-
 using MediatR;
 
 using Microsoft.Extensions.Caching.Memory;
+using Espresso.Domain.IServices;
 
 namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticleScore
 {
@@ -19,16 +18,19 @@ namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticle
         #region Fields
         private readonly IMemoryCache _memoryCache;
         private readonly IApplicationDatabaseContext _context;
+        private readonly ITrendingScoreService _trendingScoreService;
         #endregion
 
         #region Constructors
         public IncrementNumberOfClicksCommandHandler(
             IMemoryCache memoryCache,
-            IApplicationDatabaseContext context
+            IApplicationDatabaseContext context,
+            ITrendingScoreService trendingScoreService
         )
         {
             _memoryCache = memoryCache;
             _context = context;
+            _trendingScoreService = trendingScoreService;
         }
         #endregion
 
@@ -56,9 +58,12 @@ namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticle
             if (memoryCacheArticles.TryGetValue(request.Id, out var memoryCacheArticle))
             {
                 memoryCacheArticle.IncrementNumberOfClicks();
+
+                var articlesWithUpdatedTrendingScore = _trendingScoreService.CalculateTrendingScore(articles: memoryCacheArticles.Values);
+
                 _ = _memoryCache.Set(
                     key: MemoryCacheConstants.ArticleKey,
-                    value: memoryCacheArticles.Values.ToList()
+                    value: articlesWithUpdatedTrendingScore.ToList()
                 );
             }
 

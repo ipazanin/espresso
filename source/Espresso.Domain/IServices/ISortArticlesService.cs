@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Espresso.Domain.Entities;
 
-namespace Espresso.ParserDeleter.Application.IServices
+namespace Espresso.Domain.IServices
 {
     public interface ISortArticlesService
     {
