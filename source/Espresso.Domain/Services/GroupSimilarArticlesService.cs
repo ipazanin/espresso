@@ -57,14 +57,8 @@ namespace Espresso.Domain.Services
             var notMatchedArticles = orderedArticles.ToList();
             var similarArticles = new List<SimilarArticle>();
 
-            var totalCount = orderedArticles.Count();
-
-            var totalStopwatch = Stopwatch.StartNew();
-            var stopwatch = Stopwatch.StartNew();
-
             foreach (var article in orderedArticles)
             {
-                stopwatch.Restart();
                 var articlesSimilarArticles = GetSimilarArticlesForArticle(
                     mainArticle: article,
                     notMatchedArticles: notMatchedArticles,
