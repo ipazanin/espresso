@@ -30,32 +30,6 @@
         "browserStdOut": false
       },
       "requireExactSource": false
-    },
-    {
-      "name": "Parser",
-      "type": "coreclr",
-      "request": "launch",
-      "preLaunchTask": "build parser",
-      "program": "${workspaceFolder}/source/Espresso.ParserDeleter/bin/Debug/net5.0/Espresso.ParserDeleter.dll",
-      "args": ["--urls", "http://localhost:9000/"],
-      "cwd": "${workspaceFolder}/source/Espresso.ParserDeleter",
-      "stopAtEntry": false,
-      "serverReadyAction": {
-        "action": "openExternally",
-        "pattern": "Started Parser"
-      },
-      "env": {
-        "DOTNET_ENVIRONMENT": "local-local-db"
-      },
-      "sourceFileMap": {
-        "/Views": "${workspaceFolder}/Views"
-      },
-      "logging": {
-        "engineLogging": false,
-        "moduleLoad": false,
-        "exceptions": false,
-        "browserStdOut": false
-      }
     }
   ]
 }
