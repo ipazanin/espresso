@@ -1,0 +1,8 @@
+﻿{
+  "Logging": {
+    "Console": {
+      "TimestampFormat": "\nHH:mm:ss.ff - ",
+      "UseUtcTimestamp": true
+    }
+  }
+}

@@ -11,12 +11,6 @@
     "MaxAgeOfSimilarArticleCheckingInHours": 26,
     "GroupSimilarArticlesBatchSize": 5000
   },
-  "DatabaseConfiguration": {
-    "CommandTimeoutInSeconds": 120,
-    "QueryTrackingBehavior": 1,
-    "EnableDetailedErrors": false,
-    "EnableSensitiveDataLogging": false
-  },
   "CronJobsConfiguration": {
     "DeleteArticlesCronExpression": "0 * * * *",
     "ParserDeleterReportCronExpression": "1 8 * * *",

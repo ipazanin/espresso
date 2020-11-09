@@ -3,8 +3,6 @@ using Espresso.Common.Constants;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 
 namespace Espresso.ParserDeleter
 {
@@ -19,10 +17,16 @@ namespace Espresso.ParserDeleter
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(configureOptions =>
                 {
-                    var environmentName = Environment.GetEnvironmentVariable(EnviromentVariableNamesConstants.DotnetEnvironment) ?? "";
+                    var environmentName = Environment.GetEnvironmentVariable(EnviromentVariableNamesConstants.AspNetCoreEnvironment) ?? "";
+                    var databaseName = Environment.GetEnvironmentVariable(EnviromentVariableNamesConstants.DatabaseName) ?? "";
+
                     var configuration = configureOptions
-                        .AddJsonFile($"appsettings.json", optional: false)
-                        .AddJsonFile($"appsettings.{environmentName}.json", optional: false)
+                        .AddJsonFile(path: $"AppSettings/GeneralSettings/app-settings.json", optional: false)
+                        .AddJsonFile(path: $"AppSettings/GeneralSettings/app-settings.{environmentName}.json", optional: false)
+                        .AddJsonFile(path: $"AppSettings/LoggingSettings/logging-settings.json", optional: false)
+                        .AddJsonFile(path: $"AppSettings/LoggingSettings/logging-settings.{environmentName}.json", optional: false)
+                        .AddJsonFile(path: $"AppSettings/DatabaseSettings/database-settings.json", optional: false)
+                        .AddJsonFile(path: $"AppSettings/DatabaseSettings/database-settings.{databaseName}.json", optional: false)
                         .AddEnvironmentVariables()
                         .Build();
                 })
