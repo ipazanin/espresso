@@ -1,7 +1,4 @@
 ﻿{
-  "DatabaseConfiguration": {
-    "DefaultConnectionString": "DefaultConnectionStringPlaceholder"
-  },
   "AppConfiguration": {
     "ServerUrl": "https://espressonews.co",
     "Environment": 3

@@ -1,0 +1,13 @@
+﻿{
+  "AppConfiguration": {
+    "Environment": 1
+  },
+  "CronJobsConfiguration": {
+    "ApplicationDownloadStatisticsCronExpression": "* * * * *",
+    "WebApiReportCronExpression": "* * * * *"
+  },
+  "SpaConfiguration": {
+    "UseSpaProxyServer": false,
+    "SpaProxyServerUrl": "http://docker.for.mac.localhost:3000"
+  }
+}

@@ -4,11 +4,6 @@
     "Environment": 2,
     "MaxAgeOfArticlesInDays": 3
   },
-  "DatabaseConfiguration": {
-    "DefaultConnectionString": "DefaultConnectionStringPlaceholder",
-    "EnableDetailedErrors": true,
-    "EnableSensitiveDataLogging": true
-  },
   "CronJobsConfiguration": {
     "ParserDeleterReportCronExpression": "0 8 1 * *",
     "DeleteArticlesCronExpression": "0 * * * *",

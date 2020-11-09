@@ -11,12 +11,6 @@
     "EnableCors": false,
     "SpaProxyServerUrl": ""
   },
-  "DatabaseConfiguration": {
-    "CommandTimeoutInSeconds": 120,
-    "QueryTrackingBehavior": 1,
-    "EnableDetailedErrors": false,
-    "EnableSensitiveDataLogging": false
-  },
   "DateTimeConfiguration": {
     "MaxAgeOfArticlesInDays": 5,
     "MaxAgeOfTrendingArticlesInHours": 24,
@@ -31,11 +25,5 @@
     "ApplicationDownloadStatisticsCronExpression": "0 8 * * *",
     "WebApiReportCronExpression": "2 8 * * *"
   },
-  "AllowedHosts": "*",
-  "Logging": {
-    "Console": {
-      "TimestampFormat": "\nHH:mm:ss.ff - ",
-      "UseUtcTimestamp": true
-    }
-  }
+  "AllowedHosts": "*"
 }

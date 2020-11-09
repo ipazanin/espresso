@@ -3,19 +3,19 @@
     "Espresso.ParserDeleter Local Db": {
       "commandName": "Project",
       "environmentVariables": {
-        "DOTNET_ENVIRONMENT": "local-local-db"
+        "ASPNETCORE_ENVIRONMENT": "local-local-db"
       }
     },
     "Espresso.ParserDeleter Production Db": {
       "commandName": "Project",
       "environmentVariables": {
-        "DOTNET_ENVIRONMENT": "local-production-db"
+        "ASPNETCORE_ENVIRONMENT": "local-production-db"
       }
     },
     "Espresso.ParserDeleter Development": {
       "commandName": "Project",
       "environmentVariables": {
-        "DOTNET_ENVIRONMENT": "development"
+        "ASPNETCORE_ENVIRONMENT": "development"
       }
     }
   }

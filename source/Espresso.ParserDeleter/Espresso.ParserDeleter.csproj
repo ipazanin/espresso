@@ -19,23 +19,46 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="appsettings.development.json">
+      <Content Update="AppSettings/DatabaseSettings/database-settings.development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="appsettings.docker-development.json">
+    <Content Update="AppSettings/DatabaseSettings/database-settings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="appsettings.json">
+    <Content Update="AppSettings/DatabaseSettings/database-settings.local-production.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="appsettings.local-local-db.json">
+    <Content Update="AppSettings/DatabaseSettings/database-settings.local.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="appsettings.local-production-db.json">
+    <Content Update="AppSettings/DatabaseSettings/database-settings.production.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="appsettings.production.json">
+
+    <Content Update="AppSettings/GeneralSettings/app-settings.development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="AppSettings/GeneralSettings/app-settings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="AppSettings/GeneralSettings/app-settings.local.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="AppSettings/GeneralSettings/app-settings.production.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+
+    <Content Update="AppSettings/LoggingSettings/logging-settings.development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="AppSettings/LoggingSettings/logging-settings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="AppSettings/LoggingSettings/logging-settings.local.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="AppSettings/LoggingSettings/logging-settings.production.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>    
   </ItemGroup>
 </Project>

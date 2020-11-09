@@ -1,9 +1,4 @@
 ﻿{
-  "DatabaseConfiguration": {
-    "DefaultConnectionString": "Server=database,1433;Database=EspressoDb;Application Name=Espresso;User=sa;Password=Opatija1;",
-    "EnableDetailedErrors": true,
-    "EnableSensitiveDataLogging": true
-  },
   "AppConfiguration": {
     "ServerUrl": "http://webapi:80",
     "Environment": 1

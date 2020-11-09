@@ -1,0 +1,7 @@
+﻿{
+  "DatabaseConfiguration": {
+    "DefaultConnectionString": "LocalConnectionStringPlaceHolder",
+    "EnableDetailedErrors": true,
+    "EnableSensitiveDataLogging": true
+  }
+}
