@@ -71,7 +71,8 @@ namespace Espresso.ParserDeleter
                     articlePublishDateTimeDiferenceThreshold: _parserDeleterConfiguration.ArticleSimilarityConfiguration.ArticlePublishDateTimeDiferenceThreshold,
                     loggerService: serviceProvider.GetRequiredService<ILoggerService<GroupSimilarArticlesService>>(),
                     maxAgeOfSimilarArticleChecking: _parserDeleterConfiguration.ArticleSimilarityConfiguration.MaxAgeOfSimilarArticleChecking,
-                    groupSimilarArticlesBatchSize: _parserDeleterConfiguration.ArticleSimilarityConfiguration.GroupSimilarArticlesBatchSize
+                    groupSimilarArticlesBatchSize: _parserDeleterConfiguration.ArticleSimilarityConfiguration.GroupSimilarArticlesBatchSize,
+                    minimalNumberOfWordsForArticleToBeComparable: _parserDeleterConfiguration.ArticleSimilarityConfiguration.MinimalNumberOfWordsForArticleToBeComparable
                 )
             );
             #endregion

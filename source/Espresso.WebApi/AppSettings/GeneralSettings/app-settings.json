@@ -12,10 +12,10 @@
     "SpaProxyServerUrl": ""
   },
   "DateTimeConfiguration": {
-    "MaxAgeOfArticlesInDays": 5,
+    "MaxAgeOfArticlesInDays": 7,
     "MaxAgeOfTrendingArticlesInHours": 24,
     "MaxAgeOfFeaturedArticlesInHours": 24,
-    "MaxAgeOfNewNewsPortalInDays": 30
+    "MaxAgeOfNewNewsPortalInDays": 60
   },
   "TrendingScoreConfiguration": {
     "HalfOfMaxTrendingScoreValue": 500,

@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -94,19 +93,17 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                         titleSearchTerm: request.TitleSearchQuery,
                         articleCreateDateTime: firstArticleCreateDateTime
                     ).Compile()
-                );
-
-            var filteredArticles = FilterArticlesWithCoronaVirusContentForIosRelease(articles, request)
+                )
                 .Skip(request.Skip)
                 .Take(request.Take);
 
+
             var projection = GetLatestArticlesArticle.GetProjection().Compile();
-            var articleDtos = filteredArticles
+            var articleDtos = articles
                 .Select(article => new List<GetLatestArticlesArticle>()
-                {
-                    projection.Invoke(article)
-                }.Union(
-                    article.SubordinateArticles.Select(similarArticle => projection.Invoke(similarArticle.SubordinateArticle!)))
+                    {
+                        projection.Invoke(article)
+                    }.Union(article.SubordinateArticles.Select(similarArticle => projection.Invoke(similarArticle.SubordinateArticle!)))
                 );
 
             return articleDtos;
@@ -150,9 +147,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                 .Union(trendingArticles)
                 .ToList();
 
-            var filteredArticles = FilterArticlesWithCoronaVirusContentForIosRelease(joinedArticles, request).ToList();
-
-            var articleDtos = filteredArticles
+            var articleDtos = joinedArticles
                 .Take(request.Take)
                 .Select(GetLatestArticlesArticle.GetProjection().Compile());
 
@@ -201,29 +196,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                 ?.Where(categoryId => categoryId != default);
 
             return (newsPortalIds, categoryIds);
-        }
-
-        private static IEnumerable<Article> FilterArticlesWithCoronaVirusContentForIosRelease(
-            IEnumerable<Article> articles,
-            GetLatestArticlesQuery request
-        )
-        {
-            if (
-                !(
-                    request.DeviceType == DeviceType.Ios &&
-                    request.TargetedApiVersion == "2.0"
-                )
-            )
-            {
-                return articles;
-            }
-
-            return articles.Where(
-                article => !DefaultValueConstants.BannedKeywords.Any(
-                    bannedKeyword => article.Title.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase) ||
-                        article.Summary.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase)
-                )
-            );
         }
         #endregion
     }

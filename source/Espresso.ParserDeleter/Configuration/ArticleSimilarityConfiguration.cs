@@ -42,6 +42,12 @@ namespace Espresso.ParserDeleter.Configuration
         /// </summary>
         /// <returns></returns>
         public int GroupSimilarArticlesBatchSize => _configuration.GetValue<int>("GroupSimilarArticlesBatchSize");
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public int MinimalNumberOfWordsForArticleToBeComparable => _configuration.GetValue<int>("MinimalNumberOfWordsForArticleToBeComparable");
         #endregion
 
         #region Constructors

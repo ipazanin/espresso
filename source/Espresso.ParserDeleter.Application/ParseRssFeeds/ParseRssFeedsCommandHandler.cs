@@ -63,7 +63,10 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
             _parseArticlesService = parseArticlesService;
             _slackService = slackService;
             _loadRssFeedsService = loadRssFeedsService;
+
             _httpClient = httpClientFactory.CreateClient();
+            _httpClient.Timeout = TimeSpan.FromSeconds(120);
+
             _sortArticlesService = sortArticlesService;
             _groupSimilarArticlesService = groupSimilarArticlesService;
             _loggerService = loggerService;

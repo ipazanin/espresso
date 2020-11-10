@@ -339,6 +339,21 @@ namespace Espresso.Domain.Entities
             DateTime? articleCreateDateTime
         )
         {
+            return GetFilteredLatestArticlesPredicate(
+                categoryIds: new List<int> { categoryId },
+                newsPortalIds: newsPortalIds,
+                titleSearchTerm: searchTerm,
+                articleCreateDateTime: articleCreateDateTime
+            );
+        }
+
+        public static Expression<Func<Article, bool>> GetFilteredCategoryArticlesPredicate_2_0(
+            int categoryId,
+            IEnumerable<int>? newsPortalIds,
+            string? searchTerm,
+            DateTime? articleCreateDateTime
+        )
+        {
             return GetFilteredLatestArticlesPredicate_2_0(
                 categoryIds: new List<int> { categoryId },
                 newsPortalIds: newsPortalIds,
