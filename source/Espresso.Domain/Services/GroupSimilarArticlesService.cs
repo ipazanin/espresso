@@ -54,7 +54,7 @@ namespace Espresso.Domain.Services
                 .Where(
                     article => article.PublishDateTime > maxAgeOfSimilarArticleCheckingDateTime &&
                         article.MainArticle is null &&
-                        LanguageUtility.SeparateWords(article.Title).Count() >= _minimalNumberOfWordsForArticleToBeComparable
+                        LanguageUtility.SeparateWords(article.Title).RemoveUnimpactfulCroatianWords().Count() >= _minimalNumberOfWordsForArticleToBeComparable
                 )
                 .OrderBy(article => article.PublishDateTime)
                 .Take(_groupSimilarArticlesBatchSize);

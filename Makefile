@@ -1,14 +1,4 @@
 # Common
-all:: 
-	list health-check rebuild \
-	health-check-backend rebuild-backend build \
-	compose-database compose-development \
-	compose-local database-update docker-build-webapi \
-	docker-build-parserdeleter docker-build migration-add \
-	migration-remove update restore start-p start-w \
-	test-backend-coverage test-backend \
-	health-check-frontend rebuild-frontend install build-frontend lint test-frontend 
-
 list::
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | \
 	awk -v RS= -F: '/^# File/,/^# Finished Make data base/ \
@@ -113,30 +103,6 @@ update::
 
 restore::
 	dotnet restore ./source/Espresso.sln
-
-start-p::
-	make compose-database arg1=up arg2="-d"
-ifeq ($(strip $(arg)),)
-	ASPNETCORE_ENVIRONMENT=local-local-db dotnet run --project \
-	./source/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj --urls "http://localhost:9000"
-else ifeq ($(arg), watch)
-	ASPNETCORE_ENVIRONMENT=local-local-db dotnet watch --project \
-	./source/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj run --urls "http://localhost:9000" 
-else
-	echo "Invalid Argument. Accepted arguments: {empty}, watch}"
-endif
-
-start-w::
-	make compose-database arg1=up arg2="-d"
-ifeq ($(strip $(arg)),)
-	ASPNETCORE_ENVIRONMENT=local-local-db dotnet run --project \
-	./source/Espresso.WebApi/Espresso.WebApi.csproj --urls "http://localhost:8000"
-else ifeq ($(arg), watch)
-	ASPNETCORE_ENVIRONMENT=local-local-db dotnet watch --project \
-	./source/Espresso.WebApi/Espresso.WebApi.csproj run --urls "http://localhost:8000" 
-else
-	echo "Invalid Argument. Accepted arguments: {empty}, watch}"
-endif
 
 test-backend-coverage::
 	sudo dotnet test --logger 'trx;LogFileName=TestResults.trx' \
