@@ -6,7 +6,7 @@
     "MaxAgeOfArticlesInDays": 7
   },
   "ArticleSimilarityConfiguration": {
-    "SimilarityScoreThreshold": 0.55,
+    "SimilarityScoreThreshold": 0.65,
     "ArticlePublishDateTimeDiferenceThresholdInHours": 24,
     "MaxAgeOfSimilarArticleCheckingInHours": 26,
     "GroupSimilarArticlesBatchSize": 5000,
