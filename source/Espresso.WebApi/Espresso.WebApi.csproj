@@ -38,4 +38,48 @@
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
+<ItemGroup>
+      <Content Update="AppSettings/DatabaseSettings/database-settings.development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="AppSettings/DatabaseSettings/database-settings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="AppSettings/DatabaseSettings/database-settings.local-production.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="AppSettings/DatabaseSettings/database-settings.local.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="AppSettings/DatabaseSettings/database-settings.production.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+
+    <Content Update="AppSettings/GeneralSettings/app-settings.development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="AppSettings/GeneralSettings/app-settings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="AppSettings/GeneralSettings/app-settings.local.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="AppSettings/GeneralSettings/app-settings.production.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+
+    <Content Update="AppSettings/LoggingSettings/logging-settings.development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="AppSettings/LoggingSettings/logging-settings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="AppSettings/LoggingSettings/logging-settings.local.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="AppSettings/LoggingSettings/logging-settings.production.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>    
+  </ItemGroup>
+  
 </Project>

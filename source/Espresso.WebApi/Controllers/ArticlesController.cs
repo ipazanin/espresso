@@ -28,6 +28,7 @@ using Espresso.WebApi.RequestData.Body;
 using System.Collections.Generic;
 using System.Linq;
 using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0;
+using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0;
 
 namespace Espresso.WebApi.Controllers
 {
@@ -48,7 +49,7 @@ namespace Espresso.WebApi.Controllers
         {
         }
 
-
+        #region GetLatestArticles
         /// <summary>
         /// Get articles from selected <paramref name="newsPortalIds"/> and <paramref name="categoryIds"/>
         /// </summary>
@@ -296,7 +297,9 @@ namespace Espresso.WebApi.Controllers
 
             return Ok(response);
         }
+        #endregion
 
+        #region GetCategoryArticles
         /// <summary>
         /// Get articles from provided <paramref name="categoryId"/>
         /// </summary>
@@ -324,8 +327,6 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
         [ApiVersion("2.1")]
-        [ApiVersion("2.0")]
-        [ApiVersion("1.4")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/categories/{categoryId}/articles")]
@@ -341,6 +342,71 @@ namespace Espresso.WebApi.Controllers
         {
             var articles = await Sender.Send(
                 request: new GetCategoryArticlesQuery
+                {
+                    Take = articlePaginationParameters.Take,
+                    Skip = articlePaginationParameters.Skip,
+                    FirstArticleId = articlePaginationParameters.FirstArticleId,
+                    CategoryId = categoryId,
+                    NewsPortalIds = newsPortalIds,
+                    RegionId = regionId,
+                    NewNewsPortalsPosition = WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
+                    TitleSearchQuery = titleSearchQuery,
+                    MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
+                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
+                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                    ConsumerVersion = basicInformationsHeaderParameters.Version,
+                    DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
+                },
+                cancellationToken: cancellationToken
+            );
+
+            return Ok(articles);
+        }
+
+        /// <summary>
+        /// Get articles from provided <paramref name="categoryId"/>
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///     Get /api/articles/category
+        /// </remarks>
+        /// <param name="cancellationToken"></param>
+        /// <param name="categoryId">Category Id</param>
+        /// <param name="basicInformationsHeaderParameters"></param>
+        /// <param name="articlePaginationParameters">Parameters used for pagination</param>
+        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
+        /// <param name="regionId">Region ID</param>
+        /// <param name="titleSearchQuery">Article Title Search Query</param>
+        /// <returns>Response object containing articles</returns>
+        /// <response code="200">Response object containing articles</response>
+        /// <response code="400">If validation fails</response>
+        /// <response code="401">If API Key is invalid or missing</response>
+        /// <response code="403">If API Key is forbiden from requested resource</response>
+        /// <response code="500">If unhandled exception occurred</response>
+        [Produces(MimeTypeConstants.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetCategoryArticlesQueryResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.0")]
+        [ApiVersion("1.4")]
+        [HttpGet]
+        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
+        [Route("api/categories/{categoryId}/articles")]
+        public async Task<IActionResult> GetCategoryArticles_2_0(
+            [FromRoute] int categoryId,
+            [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
+            [FromQuery] ArticlePaginationParameters articlePaginationParameters,
+            CancellationToken cancellationToken,
+            [FromQuery] string? newsPortalIds = null,
+            [FromQuery] int? regionId = null,
+            [FromQuery] string? titleSearchQuery = null
+        )
+        {
+            var articles = await Sender.Send(
+                request: new GetCategoryArticlesQuery_2_0
                 {
                     Take = articlePaginationParameters.Take,
                     Skip = articlePaginationParameters.Skip,
@@ -420,6 +486,7 @@ namespace Espresso.WebApi.Controllers
 
             return Ok(articles);
         }
+        #endregion
 
         /// <summary>
         /// Get trending articles
@@ -443,7 +510,6 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
-        [ApiVersion("2.1")]
         [ApiVersion("2.0")]
         [ApiVersion("1.4")]
         [ApiVersion("1.3")]

@@ -14,12 +14,14 @@ namespace Espresso.Domain.Services
         #region Constants
         private const double MaxSimilarityScore = 1;
         #endregion
+
         #region Fields
         private readonly double _similarityScoreThreshold;
         private readonly TimeSpan _articlePublishDateTimeDiferenceThreshold;
         private readonly ILoggerService<GroupSimilarArticlesService> _loggerService;
         private readonly TimeSpan _maxAgeOfSimilarArticleChecking;
         private readonly int _groupSimilarArticlesBatchSize;
+        private readonly int _minimalNumberOfWordsForArticleToBeComparable;
         #endregion
 
         #region Constructors
@@ -28,7 +30,8 @@ namespace Espresso.Domain.Services
             TimeSpan articlePublishDateTimeDiferenceThreshold,
             ILoggerService<GroupSimilarArticlesService> loggerService,
             TimeSpan maxAgeOfSimilarArticleChecking,
-            int groupSimilarArticlesBatchSize
+            int groupSimilarArticlesBatchSize,
+            int minimalNumberOfWordsForArticleToBeComparable
         )
         {
             _similarityScoreThreshold = similarityScoreThreshold;
@@ -36,6 +39,7 @@ namespace Espresso.Domain.Services
             _loggerService = loggerService;
             _maxAgeOfSimilarArticleChecking = maxAgeOfSimilarArticleChecking;
             _groupSimilarArticlesBatchSize = groupSimilarArticlesBatchSize;
+            _minimalNumberOfWordsForArticleToBeComparable = minimalNumberOfWordsForArticleToBeComparable;
         }
         #endregion
 
@@ -49,13 +53,17 @@ namespace Espresso.Domain.Services
             var orderedArticles = articles
                 .Where(
                     article => article.PublishDateTime > maxAgeOfSimilarArticleCheckingDateTime &&
-                        article.MainArticle is null
+                        article.MainArticle is null &&
+                        LanguageUtility.SeparateWords(article.Title).Count() >= _minimalNumberOfWordsForArticleToBeComparable
                 )
                 .OrderBy(article => article.PublishDateTime)
                 .Take(_groupSimilarArticlesBatchSize);
 
             var notMatchedArticles = orderedArticles.ToList();
             var similarArticles = new List<SimilarArticle>();
+
+            var totalCount = orderedArticles.Count();
+            var count = 0;
 
             foreach (var article in orderedArticles)
             {
@@ -72,6 +80,16 @@ namespace Espresso.Domain.Services
                 {
                     notMatchedArticles.Remove(articlesSimilarArticle.SubordinateArticle!);
                 }
+
+                _loggerService.Log(
+                    eventName: "GroupSimilarArticles Batch",
+                    logLevel: LogLevel.Trace,
+                    namedArguments: new (string argumentName, object argumentValue)[]
+                    {
+                        ("Total Number Of Articles", totalCount),
+                        ("Current Batch", count++),
+                    }
+                );
             }
             return similarArticles;
         }

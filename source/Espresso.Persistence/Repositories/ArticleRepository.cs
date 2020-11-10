@@ -144,8 +144,8 @@ namespace Espresso.Persistence.Repositories
 
         public int DeleteArticlesAndSimilarArticles(DateTime maxArticleAge)
         {
-            var numberOfDeletedRows = DeleteArticles(maxArticleAge);
             DeleteSimilarArticles(maxArticleAge);
+            var numberOfDeletedRows = DeleteArticles(maxArticleAge);
 
             return numberOfDeletedRows;
         }

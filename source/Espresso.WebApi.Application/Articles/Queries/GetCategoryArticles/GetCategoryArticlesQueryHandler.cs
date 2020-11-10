@@ -32,49 +32,26 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
             CancellationToken cancellationToken
         )
         {
-            var articles = _memoryCache.Get<IEnumerable<Article>>(
-                key: MemoryCacheConstants.ArticleKey
-            );
-
-            var firstArticle = articles.FirstOrDefault(
-                article => article.Id.Equals(request.FirstArticleId)
-            );
-
             var newsPortalIds = request.NewsPortalIds
                 ?.Replace(" ", "")
                 ?.Split(',')
                 ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
                 ?.Where(newsPortalId => newsPortalId != default);
 
-            var filteredArticles = articles
-                .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
-                .Where(
-                    predicate: Article.GetFilteredCategoryArticlesPredicate(
-                        categoryId: request.CategoryId,
-                        newsPortalIds: newsPortalIds,
-                        searchTerm: request.TitleSearchQuery,
-                        articleCreateDateTime: firstArticle?.CreateDateTime
-                    ).Compile()
-                );
-
-
-            var coronaFilteredArticles = FilterArticlesWithCoronaVirusContentForIosRelease(filteredArticles, request)
-                .Skip(request.Skip)
-                .Take(request.Take);
-
-            var articleDtos = coronaFilteredArticles.Select(GetCategoryArticlesArticle.GetProjection().Compile());
-
             var newsPortalDtos = GetNewNewsPortals(
                 newsPortalIds: newsPortalIds,
                 request: request
             );
 
-            var random = new Random();
+            var articleDtos = GetArticles(
+                request: request,
+                newsPortalIds: newsPortalIds
+            );
 
             var response = new GetCategoryArticlesQueryResponse
             {
                 Articles = articleDtos,
-                NewNewsPortals = newsPortalDtos.OrderBy(newsPortal => random.Next()),
+                NewNewsPortals = newsPortalDtos,
                 NewNewsPortalsPosition = request.NewNewsPortalsPosition
             };
 
@@ -95,6 +72,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
                 key: MemoryCacheConstants.NewsPortalKey
             );
 
+            var random = new Random();
+
             var newsPortalDtos = newsPortals
                 .Where(
                     NewsPortal.GetCategorySugestedNewsPortalsPredicate(
@@ -105,32 +84,47 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
                     )
                     .Compile()
                 )
-                .Select(selector: GetCategoryArticlesNewsPortal.GetProjection().Compile());
+                .Select(selector: GetCategoryArticlesNewsPortal.GetProjection().Compile())
+                .OrderBy(newsPortal => random.Next());
 
             return newsPortalDtos;
         }
 
-        private static IEnumerable<Article> FilterArticlesWithCoronaVirusContentForIosRelease(
-            IEnumerable<Article> articles,
-            GetCategoryArticlesQuery request
+        private IEnumerable<IEnumerable<GetCategoryArticlesArticle>> GetArticles(
+            GetCategoryArticlesQuery request,
+            IEnumerable<int>? newsPortalIds
         )
         {
-            if (
-                !(
-                    request.DeviceType == DeviceType.Ios &&
-                    request.TargetedApiVersion == "2.0"
-                )
-            )
-            {
-                return articles;
-            }
-
-            return articles.Where(
-                article => !DefaultValueConstants.BannedKeywords.Any(
-                    bannedKeyword => article.Title.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase) ||
-                        article.Summary.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase)
-                )
+            var articles = _memoryCache.Get<IEnumerable<Article>>(
+                key: MemoryCacheConstants.ArticleKey
             );
+
+            var firstArticle = articles.FirstOrDefault(
+                article => article.Id.Equals(request.FirstArticleId)
+            );
+
+            var filteredArticles = articles
+                .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
+                .Where(
+                    predicate: Article.GetFilteredCategoryArticlesPredicate(
+                        categoryId: request.CategoryId,
+                        newsPortalIds: newsPortalIds,
+                        searchTerm: request.TitleSearchQuery,
+                        articleCreateDateTime: firstArticle?.CreateDateTime
+                    ).Compile()
+                )
+                .Skip(request.Skip)
+                .Take(request.Take);
+
+            var projection = GetCategoryArticlesArticle.GetProjection().Compile();
+            var articleDtos = filteredArticles
+                .Select(article => new List<GetCategoryArticlesArticle>()
+                    {
+                        projection.Invoke(article)
+                    }.Union(article.SubordinateArticles.Select(similarArticle => projection.Invoke(similarArticle.SubordinateArticle!)))
+                );
+
+            return articleDtos;
         }
         #endregion
     }

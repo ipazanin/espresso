@@ -3,13 +3,14 @@
     "Version": "2.1.0",
     "MajorVersion": 2,
     "MinorVersion": 1,
-    "MaxAgeOfArticlesInDays": 5
+    "MaxAgeOfArticlesInDays": 7
   },
   "ArticleSimilarityConfiguration": {
-    "SimilarityScoreThreshold": 0.61,
+    "SimilarityScoreThreshold": 0.55,
     "ArticlePublishDateTimeDiferenceThresholdInHours": 24,
-    "MaxAgeOfSimilarArticleCheckingInHours": 32,
-    "GroupSimilarArticlesBatchSize": 5000
+    "MaxAgeOfSimilarArticleCheckingInHours": 26,
+    "GroupSimilarArticlesBatchSize": 5000,
+    "MinimalNumberOfWordsForArticleToBeComparable": 4
   },
   "CronJobsConfiguration": {
     "DeleteArticlesCronExpression": "0 * * * *",

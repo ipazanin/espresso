@@ -40,7 +40,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
             var articleDtos = articles
                 .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
                 .Where(
-                    predicate: Article.GetFilteredCategoryArticlesPredicate(
+                    predicate: Article.GetFilteredCategoryArticlesPredicate_2_0(
                         categoryId: request.CategoryId,
                         newsPortalIds: newsPortalIds,
                         searchTerm: null,

@@ -28,7 +28,7 @@ namespace Espresso.Domain.Utilities
             var searchTermsWithoutCroatianCharacters = searchTerms
                 .Select(searchTerm => searchTerm.ReplaceCroatianCharacters());
 
-            return searchTerms;
+            return searchTermsWithoutCroatianCharacters;
         }
 
         public static IEnumerable<string> SeparateWords(string sentence)
