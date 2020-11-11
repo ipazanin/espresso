@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
+using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using MediatR;
@@ -47,7 +48,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
                 ?.Where(newsPortalId => newsPortalId != default);
 
             var filteredArticles = articles
-                .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
+                .OrderArticlesByPublishDate()
                 .Where(
                     predicate: Article.GetFilteredCategoryArticlesPredicate_2_0(
                         categoryId: request.CategoryId,
@@ -55,14 +56,15 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
                         searchTerm: request.TitleSearchQuery,
                         articleCreateDateTime: firstArticle?.CreateDateTime
                     ).Compile()
-                );
-
-
-            var coronaFilteredArticles = FilterArticlesWithCoronaVirusContentForIosRelease(filteredArticles, request)
+                )
+                .FilterArticlesWithCoronaVirusContentForIosRelease(
+                    deviceType: request.DeviceType,
+                    targetedApiVersion: request.TargetedApiVersion
+                )
                 .Skip(request.Skip)
                 .Take(request.Take);
 
-            var articleDtos = coronaFilteredArticles.Select(GetCategoryArticlesArticle_2_0.GetProjection().Compile());
+            var articleDtos = filteredArticles.Select(GetCategoryArticlesArticle_2_0.GetProjection().Compile());
 
             var newsPortalDtos = GetNewNewsPortals(
                 newsPortalIds: newsPortalIds,
@@ -108,29 +110,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
                 .Select(selector: GetCategoryArticlesNewsPortal_2_0.GetProjection().Compile());
 
             return newsPortalDtos;
-        }
-
-        private static IEnumerable<Article> FilterArticlesWithCoronaVirusContentForIosRelease(
-            IEnumerable<Article> articles,
-            GetCategoryArticlesQuery_2_0 request
-        )
-        {
-            if (
-                !(
-                    request.DeviceType == DeviceType.Ios &&
-                    request.TargetedApiVersion == "2.0"
-                )
-            )
-            {
-                return articles;
-            }
-
-            return articles.Where(
-                article => !DefaultValueConstants.BannedKeywords.Any(
-                    bannedKeyword => article.Title.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase) ||
-                        article.Summary.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase)
-                )
-            );
         }
         #endregion
     }

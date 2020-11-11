@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
-using Espresso.Domain.Extensions;
+using Espresso.Common.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

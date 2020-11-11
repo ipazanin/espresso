@@ -5,7 +5,7 @@ using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RegionEnums;
-using Espresso.Domain.Extensions;
+using Espresso.Common.Extensions;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Espresso.Persistence.DataSeed

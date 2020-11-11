@@ -5,7 +5,6 @@
     "MaxAgeOfArticlesInDays": 3
   },
   "CronJobsConfiguration": {
-    "ParserDeleterReportCronExpression": "0 8 1 * *",
     "DeleteArticlesCronExpression": "0 * * * *",
     "ParseArticlesCronExpression": "*/10 * * * *"
   },

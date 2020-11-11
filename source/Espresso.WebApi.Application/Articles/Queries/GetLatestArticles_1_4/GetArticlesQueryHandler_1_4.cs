@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
+using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
@@ -53,7 +54,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4
                 ?.Where(categoryId => categoryId != default);
 
             var articleDtos = articles
-                .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
+                .OrderArticlesByPublishDate()
                 .Where(
                     predicate: Article.GetFilteredLatestArticlesPredicate_2_0(
                         categoryIds: categoryIds,

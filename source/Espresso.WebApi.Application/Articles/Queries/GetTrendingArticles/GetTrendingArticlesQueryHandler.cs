@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
+using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
@@ -44,7 +45,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles
                     )
                     .Compile()
                 )
-                .OrderByDescending(keySelector: Article.GetOrderByDescendingTrendingScoreExpression().Compile())
+                .OrderArticlesByTrendingScore()
                 .Skip(request.Skip)
                 .Take(request.Take)
                 .Select(GetTrendingArticlesArticle.GetProjection().Compile());

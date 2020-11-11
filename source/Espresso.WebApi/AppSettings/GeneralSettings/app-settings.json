@@ -23,7 +23,7 @@
   },
   "CronJobsConfiguration": {
     "ApplicationDownloadStatisticsCronExpression": "0 8 * * *",
-    "WebApiReportCronExpression": "2 8 * * *"
+    "WebApiReportCronExpression": "0 8 * * *"
   },
   "AllowedHosts": "*"
 }

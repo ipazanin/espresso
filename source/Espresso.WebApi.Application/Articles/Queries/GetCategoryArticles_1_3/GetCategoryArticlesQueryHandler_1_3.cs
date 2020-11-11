@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
+using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
@@ -38,7 +39,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
                 ?.Where(newsPortalId => newsPortalId != default);
 
             var articleDtos = articles
-                .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
+                .OrderArticlesByPublishDate()
                 .Where(
                     predicate: Article.GetFilteredCategoryArticlesPredicate_2_0(
                         categoryId: request.CategoryId,

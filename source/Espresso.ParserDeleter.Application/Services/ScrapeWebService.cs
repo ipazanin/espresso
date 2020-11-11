@@ -11,7 +11,7 @@ using Espresso.Application.Extensions;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Enums.RssFeedEnums;
-using Espresso.Domain.Extensions;
+using Espresso.Common.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.ParserDeleter.Application.IServices;
 using HtmlAgilityPack;

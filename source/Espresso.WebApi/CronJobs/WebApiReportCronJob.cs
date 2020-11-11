@@ -8,6 +8,7 @@ using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
+using Espresso.Domain.Utilities;
 using Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticleScore;
 using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles;
 using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3;
@@ -101,70 +102,117 @@ namespace Espresso.WebApi.CronJobs
 
             var data = new List<(string name, int count, TimeSpan duration)>();
 
-            foreach (var requestName in s_requestNames)
-            {
-                var requestData = CalculatePerformance(
-                    memoryCache: memoryCache,
-                    requestName: requestName
-                );
-                data.Add(requestData);
-            }
-
-            await slackService.LogPerformance(
-                applicationName: "Web Api",
-                data: data,
-                appEnvironment: _webApiConfiguration.AppConfiguration.AppEnvironment,
-                cancellationToken: stoppingToken
-            );
-
-            var topArticles = GetTopArticles(memoryCache);
-
-            await slackService.LogTopArticles(
-                topArticles: topArticles,
-                appEnvironment: _webApiConfiguration.AppConfiguration.AppEnvironment,
-                cancellationToken: stoppingToken
-            );
-        }
-
-        private (string name, int count, TimeSpan duration) CalculatePerformance(
-            IMemoryCache memoryCache,
-            string requestName
-        )
-        {
-            var performanceMeasurementKey = $"{requestName}PerformanceKey";
-            var (total, count) = memoryCache.GetOrCreate(
-                key: performanceMeasurementKey,
-                factory: entry =>
-                {
-                    var total = new TimeSpan();
-                    var count = 0;
-                    return (total, count);
-                }
-            );
-
-            if (count == 0)
-            {
-                return (requestName, count, total);
-            }
-            var dailyCount = (int)(count / _webApiConfiguration.AppConfiguration.Uptime.TotalDays);
-
-            return (requestName, dailyCount, total / count);
-        }
-
-        private static IEnumerable<(string title, int numberOfClicks, string newsPortalName, DateTime publishDateTime)> GetTopArticles(
-            IMemoryCache memoryCache
-        )
-        {
             var articles = memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey);
+            var newsPortals = memoryCache.Get<IEnumerable<NewsPortal>>(MemoryCacheConstants.NewsPortalKey);
+            var topArticles = GetTopArticles(articles);
+            var totalNumberOfClicks = GetTotalClicksForYesterday(articles);
+            var topNewsPortals = GetTop10NewsPortalsByNumberOfClicks(
+                articles,
+                newsPortals
+            );
+            var categoriesWithNumberOfClicks = GetCategoriesWithNumberOfClicks(articles);
 
+            await slackService.LogYesterdaysStatistics(
+                topArticles: topArticles,
+                totalNumberOfClicks: totalNumberOfClicks,
+                topNewsPortals: topNewsPortals,
+                categoriesWithNumberOfClicks: categoriesWithNumberOfClicks,
+                appEnvironment: _webApiConfiguration.AppConfiguration.AppEnvironment,
+                cancellationToken: stoppingToken
+            );
+        }
+
+        private static IEnumerable<Article> GetTopArticles(
+            IEnumerable<Article> articles
+        )
+        {
             var topArticles = articles
-                .Where(article => article.PublishDateTime > DateTime.UtcNow.AddDays(-1))
+                .Where(article => article.PublishDateTime.Date == DateTimeUtility.YesterdaysDate)
                 .OrderByDescending(article => article.NumberOfClicks)
                 .ThenByDescending(article => article.PublishDateTime)
                 .Take(5);
 
-            return topArticles.Select(article => (article.Title, article.NumberOfClicks, article.NewsPortal!.Name, article.PublishDateTime));
+            return topArticles;
         }
+
+        private static int GetTotalClicksForYesterday(
+            IEnumerable<Article> articles
+        )
+        {
+            var totalClicks = articles
+                .Where(article => article.PublishDateTime.Date == DateTimeUtility.YesterdaysDate)
+                .Sum(article => article.NumberOfClicks);
+
+            return totalClicks;
+        }
+
+        private static IEnumerable<(NewsPortal newsPortal, int numberOfClicks)> GetTop10NewsPortalsByNumberOfClicks(
+            IEnumerable<Article> articles,
+            IEnumerable<NewsPortal> newsPortals
+        )
+        {
+            var topNewsPortals = articles
+                .Where(article => article.PublishDateTime.Date == DateTimeUtility.YesterdaysDate)
+                .GroupBy(article => article.NewsPortal!.Id)
+                .Select(articlesGroupedByNewsPortal =>
+                    (
+                        newsPortal: newsPortals.FirstOrDefault(newsPortal => newsPortal.Id == articlesGroupedByNewsPortal.Key),
+                        numberOfClicks: articlesGroupedByNewsPortal.Sum(article => article.NumberOfClicks)
+                    )
+                )
+                .Where(articleClicksGroupedByNewsPortal => articleClicksGroupedByNewsPortal.newsPortal is not null)
+                .OrderByDescending(articleClicksGroupedByNewsPortal => articleClicksGroupedByNewsPortal.numberOfClicks)
+                .Take(10);
+
+            return topNewsPortals!;
+        }
+
+        private static IEnumerable<(Category category, int numberOfClicks)> GetCategoriesWithNumberOfClicks(
+            IEnumerable<Article> articles
+        )
+        {
+            var categoriesOrderedByNumberOfClicks = articles
+                .Where(article => article.PublishDateTime.Date == DateTimeUtility.YesterdaysDate)
+                .GroupBy(article => article.ArticleCategories.First().Category!.Id)
+                .Select(articlesGroupedByCategory =>
+                    (
+                        category: articlesGroupedByCategory.FirstOrDefault()?.ArticleCategories.FirstOrDefault()?.Category,
+                        numberOfClicks: articlesGroupedByCategory.Sum(article => article.NumberOfClicks)
+                    )
+                )
+                .Where(articlesGroupedByCategory => articlesGroupedByCategory.category is not null)
+                .OrderByDescending(articleClicksGroupedByCategory => articleClicksGroupedByCategory.numberOfClicks)
+                .Take(10);
+
+            return categoriesOrderedByNumberOfClicks!;
+        }
+        #endregion
+
+        #region Maybe wil be used later
+        // private (string name, int count, TimeSpan duration) CalculatePerformance(
+        //     IMemoryCache memoryCache,
+        //     string requestName
+        // )
+        // {
+        //     var performanceMeasurementKey = $"{requestName}PerformanceKey";
+        //     var (total, count) = memoryCache.GetOrCreate(
+        //         key: performanceMeasurementKey,
+        //         factory: entry =>
+        //         {
+        //             var total = new TimeSpan();
+        //             var count = 0;
+        //             return (total, count);
+        //         }
+        //     );
+
+        //     if (count == 0)
+        //     {
+        //         return (requestName, count, total);
+        //     }
+        //     var dailyCount = (int)(count / _webApiConfiguration.AppConfiguration.Uptime.TotalDays);
+
+        //     return (requestName, dailyCount, total / count);
+        // }
         #endregion
     }
 }

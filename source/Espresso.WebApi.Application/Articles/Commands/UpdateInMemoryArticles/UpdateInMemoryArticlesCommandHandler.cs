@@ -93,7 +93,6 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
 
-
             foreach (var article in articlesToCreate)
             {
                 if (savedArticlesDictionary.ContainsKey(article.Id))

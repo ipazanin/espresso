@@ -18,7 +18,8 @@ namespace Espresso.Common.Utilities
                 value: value,
                 options: new JsonSerializerOptions
                 {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    MaxDepth = 100
                 },
                 cancellationToken: cancellationToken
             );

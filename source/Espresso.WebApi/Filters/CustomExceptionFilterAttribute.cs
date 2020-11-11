@@ -7,7 +7,7 @@ using Espresso.WebApi.Application.Exceptions;
 using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
-using Espresso.Domain.Extensions;
+using Espresso.Common.Extensions;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.DataTransferObjects;
 using FluentValidation;

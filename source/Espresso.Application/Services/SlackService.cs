@@ -13,6 +13,13 @@ using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Espresso.Domain.IServices;
+using Espresso.Domain.Entities;
+using System.Linq;
+using Espresso.Domain.Enums.CategoryEnums;
+using Espresso.Application.DataTransferObjects.SlackDataTransferObjects;
+using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
+using System.Net.Http.Json;
 
 namespace Espresso.Application.Services
 {
@@ -94,11 +101,12 @@ namespace Espresso.Application.Services
                 $":exclamation: Inner Exception Message: {innerExceptionMessage}\n";
 
             return Log(
-                data: new SlackWebHookDto(
+                data: new SlackWebHookRequestBodyDto(
                     userName: ErrorBotUsername,
                     iconEmoji: ErrorsBotIconEmoji,
                     text: text,
-                    channel: ErrorsChannel
+                    channel: ErrorsChannel,
+                    blocks: Array.Empty<SlackBlock>()
                 ),
                 appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
@@ -129,11 +137,12 @@ namespace Espresso.Application.Services
                 $":exclamation: Inner Exception Message: {innerExceptionMessage}\n";
 
             return Log(
-                data: new SlackWebHookDto(
+                data: new SlackWebHookRequestBodyDto(
                     userName: ErrorBotUsername,
                     iconEmoji: ErrorsBotIconEmoji,
                     text: text,
-                    channel: ErrorsChannel
+                    channel: ErrorsChannel,
+                    blocks: Array.Empty<SlackBlock>()
                 ),
                 appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
@@ -156,11 +165,12 @@ namespace Espresso.Application.Services
                 $":chart_with_upwards_trend: Lifetime: {totalAndroidCount + totalIosCount}";
 
             await Log(
-                data: new SlackWebHookDto(
+                data: new SlackWebHookRequestBodyDto(
                     userName: AppDownloadsBotUsername,
                     iconEmoji: AppDownloadsBotIconEmoji,
                     text: text,
-                    channel: AppDownloadsChannel
+                    channel: AppDownloadsChannel,
+                    blocks: Array.Empty<SlackBlock>()
                 ),
                 appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
@@ -169,12 +179,13 @@ namespace Espresso.Application.Services
             if (totalAndroidCount + totalIosCount == EspressoDownloadsMileStone)
             {
                 await Log(
-                    data: new SlackWebHookDto(
+                    data: new SlackWebHookRequestBodyDto(
                         userName: "Alkos-Bot",
                         iconEmoji: ":fire:",
                         text: $"@channel {EspressoDownloadsMileStone} Downloadova, Woooooo espresso ide pit " +
                         ":champagne::beer::beers::tropical_drink::clinking_glasses::wine_glass::cocktail::tumbler_glass:",
-                        channel: AppDownloadsChannel
+                        channel: AppDownloadsChannel,
+                    blocks: Array.Empty<SlackBlock>()
                     ),
                     appEnvironment: appEnvironment,
                     cancellationToken: cancellationToken
@@ -198,11 +209,12 @@ namespace Espresso.Application.Services
                 $":email: Url-SegmentIndex:Category Map: {urlCategories}\n";
 
             return Log(
-                data: new SlackWebHookDto(
+                data: new SlackWebHookRequestBodyDto(
                     userName: MissingCategoriesErrorsBotUsername,
                     iconEmoji: MissingCategoriesErrorsBotIconEmoji,
                     text: text,
-                    channel: MissingCategoriesErrorsChannel
+                    channel: MissingCategoriesErrorsChannel,
+                    blocks: Array.Empty<SlackBlock>()
                 ),
                 appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
@@ -223,11 +235,12 @@ namespace Espresso.Application.Services
                 $"Url: {url}";
 
             return Log(
-                data: new SlackWebHookDto(
+                data: new SlackWebHookRequestBodyDto(
                     userName: NewNewsPortalRequestBotUsername,
                     iconEmoji: NewNewsPortalRequestBotIconEmoji,
                     text: text,
-                    channel: NewNewsPortalRequestChannel
+                    channel: NewNewsPortalRequestChannel,
+                    blocks: Array.Empty<SlackBlock>()
                 ),
                 appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
@@ -253,41 +266,135 @@ namespace Espresso.Application.Services
             }
 
             return Log(
-                data: new SlackWebHookDto(
+                data: new SlackWebHookRequestBodyDto(
                     userName: BackendStatisticsBotUsername,
                     iconEmoji: BackendStatisticsBotIconEmoji,
                     text: textBuilder.ToString(),
-                    channel: BackendStatisticsChannel
+                    channel: BackendStatisticsChannel,
+                    blocks: Array.Empty<SlackBlock>()
                 ),
                 appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
             );
         }
 
-        public Task LogTopArticles(
-            IEnumerable<(string title, int numberOfClicks, string newsPortalName, DateTime publishDateTime)> topArticles,
+        public async Task LogYesterdaysStatistics(
+            IEnumerable<Article> topArticles,
+            int totalNumberOfClicks,
+            IEnumerable<(NewsPortal newsPortal, int numberOfClicks)> topNewsPortals,
+            IEnumerable<(Category category, int numberOfClicks)> categoriesWithNumberOfClicks,
             AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         )
         {
-            var textBuilder = new StringBuilder($"Top Articles:\n");
-
-            foreach (var (title, numberOfClicks, newsPortalName, publishDateTime) in topArticles)
+            var blocks = new List<SlackBlock>
             {
-                textBuilder.Append(
-                    $"Title: {title}\n" +
-                    $"Number Of Clicks: {numberOfClicks}\n" +
-                    $"Source Name: {newsPortalName}\n" +
-                    $"Publish Date: {publishDateTime.ToShortDateString()}\n\n"
+                new SlackHeaderBlock(new SlackPlainTextBlock("Total clicks yesterday:")),
+                new SlackTextSectionBlock(new SlackMarkdownTextBlock(totalNumberOfClicks.ToString())),
+                new SlackHeaderBlock(new SlackPlainTextBlock("Top Articles")),
+            };
+
+            foreach (var article in topArticles)
+            {
+                var articleBlock = new SlackTextFieldsImageSectionBlock(
+                    text: new SlackMarkdownTextBlock($"<{article.Url}|{article.Title}>"),
+                    fields: new List<SlackMarkdownTextBlock>()
+                    {
+                        new SlackMarkdownTextBlock($"*Source*"),
+                        new SlackMarkdownTextBlock($"<{article.NewsPortal!.BaseUrl}|{article.NewsPortal!.Name}>"),
+                        new SlackMarkdownTextBlock($"*Category*"),
+                        new SlackMarkdownTextBlock(article.ArticleCategories.First().Category!.Name),
+                        new SlackMarkdownTextBlock($"*Publish Time*"),
+                        new SlackMarkdownTextBlock(article.PublishDateTime.ToShortTimeString()),
+                        new SlackMarkdownTextBlock($"*Number Of Clicks*"),
+                        new SlackMarkdownTextBlock(article.NumberOfClicks.ToString()),
+                        new SlackMarkdownTextBlock($"*Is Featured*"),
+                        new SlackMarkdownTextBlock(article.EditorConfiguration?.IsFeatured?.ToString() ?? "undefined"),
+
+                    },
+                    accessory: new SlackImageBlock(
+                        imageUrl: article.ImageUrl ?? article.NewsPortal?.IconUrl ?? "https://via.placeholder.com/350x150.jpg",
+                        altText: "article image"
+                    )
                 );
+
+                blocks.Add(articleBlock);
+                blocks.Add(new SlackDividerBlock());
             }
 
-            return Log(
-                data: new SlackWebHookDto(
+            await Log(
+                data: new SlackWebHookRequestBodyDto(
                     userName: BackendStatisticsBotUsername,
                     iconEmoji: BackendStatisticsBotIconEmoji,
-                    text: textBuilder.ToString(),
-                    channel: BackendStatisticsChannel
+                    text: "Articles",
+                    channel: BackendStatisticsChannel,
+                    blocks: blocks
+                ),
+                appEnvironment: appEnvironment,
+                cancellationToken: cancellationToken
+            );
+
+            blocks.Clear();
+            blocks.Add(new SlackHeaderBlock(new SlackPlainTextBlock("Top News Portals")));
+
+            foreach (var (newsPortal, numberOfClicks) in topNewsPortals)
+            {
+                var newsPortalsBlock = new SlackTextFieldsImageSectionBlock(
+                    text: new SlackMarkdownTextBlock($"<{newsPortal.BaseUrl}|{newsPortal.Name}>"),
+                    fields: new List<SlackMarkdownTextBlock>
+                    {
+                        new SlackMarkdownTextBlock("*Number Of Clicks*"),
+                        new SlackMarkdownTextBlock(numberOfClicks.ToString()),
+                        new SlackMarkdownTextBlock("*Category*"),
+                        new SlackMarkdownTextBlock(newsPortal.Category!.Name),
+                    },
+                    accessory: new SlackImageBlock(
+                        imageUrl: $"https://espressonews.co/{newsPortal.IconUrl}" ?? "https://via.placeholder.com/350x150.jpg",
+                        altText: "news portal image"
+                    )
+                );
+
+                blocks.Add(newsPortalsBlock);
+                blocks.Add(new SlackDividerBlock());
+            }
+
+            await Log(
+                data: new SlackWebHookRequestBodyDto(
+                    userName: BackendStatisticsBotUsername,
+                    iconEmoji: BackendStatisticsBotIconEmoji,
+                    text: "News Portals",
+                    channel: BackendStatisticsChannel,
+                    blocks: blocks
+                ),
+                appEnvironment: appEnvironment,
+                cancellationToken: cancellationToken
+            );
+            blocks.Clear();
+
+            blocks.Add(new SlackHeaderBlock(new SlackPlainTextBlock("Categories")));
+
+
+            foreach (var (category, numberOfClicks) in categoriesWithNumberOfClicks)
+            {
+                var categoriesBlock = new SlackTextFieldsSectionBlock(
+                    text: new SlackMarkdownTextBlock($"*{category.Name}*"),
+                    fields: new List<SlackMarkdownTextBlock>
+                    {
+                        new SlackMarkdownTextBlock("*Number Of Clicks*"),
+                        new SlackMarkdownTextBlock(numberOfClicks.ToString()),
+                    }
+                );
+                blocks.Add(categoriesBlock);
+                blocks.Add(new SlackDividerBlock());
+            }
+
+            await Log(
+                data: new SlackWebHookRequestBodyDto(
+                    userName: BackendStatisticsBotUsername,
+                    iconEmoji: BackendStatisticsBotIconEmoji,
+                    text: "Categories",
+                    channel: BackendStatisticsChannel,
+                    blocks: blocks
                 ),
                 appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
@@ -297,7 +404,7 @@ namespace Espresso.Application.Services
 
         #region Private Methods
         private async Task Log(
-                SlackWebHookDto data,
+                SlackWebHookRequestBodyDto data,
                 AppEnvironment appEnvironment,
                 CancellationToken cancellationToken
             )

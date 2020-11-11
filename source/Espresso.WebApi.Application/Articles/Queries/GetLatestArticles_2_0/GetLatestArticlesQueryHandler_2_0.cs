@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
+using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using MediatR;
@@ -32,6 +33,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
             CancellationToken cancellationToken
         )
         {
+            var (newsPortalIds, categoryIds) = ParseIds(request);
+
             var savedArticles = _memoryCache.Get<IEnumerable<Article>>(
                 key: MemoryCacheConstants.ArticleKey
             );
@@ -47,7 +50,9 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
             var articles = GetLatestArticles(
                 savedArticles: savedArticles,
                 firstArticleCreateDateTime: firstArticle?.CreateDateTime,
-                request: request
+                request: request,
+                categoryIds: categoryIds,
+                newsPortalIds: newsPortalIds
             );
 
             var newNewsPortals = GetNewNewsPortals(
@@ -58,7 +63,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
             var featuredArticles = GetFeaturedArticles(
                 savedArticles: savedArticles,
                 firstArticleCreateDateTime: firstArticle?.CreateDateTime,
-                request: request
+                request: request,
+                categoryIds: categoryIds
             );
 
             var response = new GetLatestArticlesQueryResponse_2_0
@@ -80,13 +86,14 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
         private static IEnumerable<GetLatestArticlesArticle_2_0> GetLatestArticles(
             IEnumerable<Article> savedArticles,
             DateTime? firstArticleCreateDateTime,
-            GetLatestArticlesQuery_2_0 request
+            GetLatestArticlesQuery_2_0 request,
+            IEnumerable<int>? categoryIds,
+            IEnumerable<int>? newsPortalIds
         )
         {
-            var (newsPortalIds, categoryIds) = ParseIds(request);
 
             var articles = savedArticles
-                .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
+                .OrderArticlesByPublishDate()
                 .Where(
                     predicate: Article.GetFilteredLatestArticlesPredicate_2_0(
                         categoryIds: categoryIds,
@@ -95,12 +102,14 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                         articleCreateDateTime: firstArticleCreateDateTime
                     ).Compile()
                 )
+                .FilterArticlesWithCoronaVirusContentForIosRelease(
+                    deviceType: request.DeviceType,
+                    targetedApiVersion: request.TargetedApiVersion
+                )
                 .Skip(request.Skip)
                 .Take(request.Take);
 
-            var filteredArticles = FilterArticlesWithCoronaVirusContentForIosRelease(articles, request);
-
-            var articleDtos = filteredArticles
+            var articleDtos = articles
                 .Select(GetLatestArticlesArticle_2_0.GetProjection().Compile());
 
             return articleDtos;
@@ -109,7 +118,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
         private static IEnumerable<GetLatestArticlesArticle_2_0> GetFeaturedArticles(
             IEnumerable<Article> savedArticles,
             DateTime? firstArticleCreateDateTime,
-            GetLatestArticlesQuery_2_0 request
+            GetLatestArticlesQuery_2_0 request,
+            IEnumerable<int>? categoryIds
         )
         {
             if (request.Skip != 0)
@@ -127,8 +137,11 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                     )
                     .Compile()
                 )
-                .OrderBy(Article.GetOrderByFeaturedArticlesExpression().Compile())
-                .ThenByDescending(Article.GetOrderByDescendingTrendingScoreExpression().Compile());
+                .OrderFeaturedArticles(categoryIds);
+
+            var trendingArticlesTake = request.FeaturedArticlesTake - featuredArticles.Count() <= 0 ?
+                0 :
+                request.FeaturedArticlesTake - featuredArticles.Count();
 
             var trendingArticles = savedArticles
                 .Where(
@@ -138,16 +151,17 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                     )
                     .Compile()
                 )
-                .OrderByDescending(Article.GetOrderByDescendingTrendingScoreExpression().Compile());
+                .OrderArticlesByTrendingScore()
+                .Take(trendingArticlesTake)
+                .OrderArticlesByCategory(categoryIds);
 
-            var joinedArticles = featuredArticles
+            var articleDtos = featuredArticles
                 .Union(trendingArticles)
-                .ToList();
-
-            var filteredArticles = FilterArticlesWithCoronaVirusContentForIosRelease(joinedArticles, request).ToList();
-
-            var articleDtos = filteredArticles
-                .Take(request.Take)
+                .FilterArticlesWithCoronaVirusContentForIosRelease(
+                    deviceType: request.DeviceType,
+                    targetedApiVersion: request.TargetedApiVersion
+                )
+                .Take(request.FeaturedArticlesTake)
                 .Select(GetLatestArticlesArticle_2_0.GetProjection().Compile());
 
             return articleDtos;
@@ -195,29 +209,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                 ?.Where(categoryId => categoryId != default);
 
             return (newsPortalIds, categoryIds);
-        }
-
-        private static IEnumerable<Article> FilterArticlesWithCoronaVirusContentForIosRelease(
-            IEnumerable<Article> articles,
-            GetLatestArticlesQuery_2_0 request
-        )
-        {
-            if (
-                !(
-                    request.DeviceType == DeviceType.Ios &&
-                    request.TargetedApiVersion == "2.0"
-                )
-            )
-            {
-                return articles;
-            }
-
-            return articles.Where(
-                article => !DefaultValueConstants.BannedKeywords.Any(
-                    bannedKeyword => article.Title.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase) ||
-                        article.Summary.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase)
-                )
-            );
         }
         #endregion
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
+using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using MediatR;
@@ -104,7 +105,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
             );
 
             var filteredArticles = articles
-                .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
+                .OrderArticlesByPublishDate()
                 .Where(
                     predicate: Article.GetFilteredCategoryArticlesPredicate(
                         categoryId: request.CategoryId,

@@ -9,7 +9,7 @@ using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
-using Espresso.Domain.Extensions;
+using Espresso.Common.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
 using Espresso.Persistence.IRepositories;
