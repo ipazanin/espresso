@@ -3,9 +3,11 @@
     "ServerUrl": "http://webapi:80",
     "Environment": 1
   },
+  "ArticleSimilarityConfiguration": {
+    "GroupSimilarArticlesBatchSize": 500
+  },
   "CronJobsConfiguration": {
     "DeleteArticlesCronExpression": "* * * * *",
-    "ParserDeleterReportCronExpression": "* * * * *",
     "ParseArticlesCronExpression": "* * * * *"
   },
   "Logging": {

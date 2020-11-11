@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Espresso.Common.Enums;
-using Espresso.Domain.Extensions;
+using Espresso.Common.Extensions;
 using Espresso.Domain.Utilities;
 using Xunit;
 

@@ -4,7 +4,7 @@ using System.Linq;
 
 using Espresso.Common.Constants;
 
-namespace Espresso.Domain.Extensions
+namespace Espresso.Common.Extensions
 {
     public static class EnumExtensions
     {

@@ -401,23 +401,6 @@ namespace Espresso.Domain.Entities
                 article.PublishDateTime > maxTrendingDateTime &&
                 !article.NewsPortal!.CategoryId.Equals((int)CategoryId.Local);
         }
-
-        public static Expression<Func<Article, object>> GetOrderByDescendingTrendingScoreExpression()
-        {
-            return article => article.TrendingScore;
-        }
-
-        public static Expression<Func<Article, object>> GetOrderByDescendingPublishDateExpression()
-        {
-            return article => article.PublishDateTime;
-        }
-
-        public static Expression<Func<Article, object?>> GetOrderByFeaturedArticlesExpression()
-        {
-            return article => article.EditorConfiguration.FeaturedPosition == null ?
-                int.MaxValue :
-                article.EditorConfiguration.FeaturedPosition;
-        }
         #endregion
 
         #endregion

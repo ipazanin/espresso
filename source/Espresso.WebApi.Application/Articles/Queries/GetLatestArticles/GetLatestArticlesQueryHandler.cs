@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
+using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
@@ -31,6 +32,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
             CancellationToken cancellationToken
         )
         {
+            var (newsPortalIds, categoryIds) = ParseIds(request);
+
             var savedArticles = _memoryCache.Get<IEnumerable<Article>>(
                 key: MemoryCacheConstants.ArticleKey
             );
@@ -46,18 +49,23 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
             var articles = GetLatestArticles(
                 savedArticles: savedArticles,
                 firstArticleCreateDateTime: firstArticle?.CreateDateTime,
-                request: request
+                request: request,
+                categoryIds: categoryIds,
+                newsPortalIds: newsPortalIds
             );
 
             var newNewsPortals = GetNewNewsPortals(
                 newsPortals: newsPortals,
-                request: request
+                request: request,
+                categoryIds: categoryIds,
+                newsPortalIds: newsPortalIds
             );
 
             var featuredArticles = GetFeaturedArticles(
                 savedArticles: savedArticles,
                 firstArticleCreateDateTime: firstArticle?.CreateDateTime,
-                request: request
+                request: request,
+                categoryIds: categoryIds
             );
 
             var response = new GetLatestArticlesQueryResponse
@@ -79,13 +87,14 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
         private static IEnumerable<IEnumerable<GetLatestArticlesArticle>> GetLatestArticles(
             IEnumerable<Article> savedArticles,
             DateTime? firstArticleCreateDateTime,
-            GetLatestArticlesQuery request
+            GetLatestArticlesQuery request,
+            IEnumerable<int>? categoryIds,
+            IEnumerable<int>? newsPortalIds
         )
         {
-            var (newsPortalIds, categoryIds) = ParseIds(request);
 
             var articles = savedArticles
-                .OrderByDescending(keySelector: Article.GetOrderByDescendingPublishDateExpression().Compile())
+                .OrderArticlesByPublishDate()
                 .Where(
                     predicate: Article.GetFilteredLatestArticlesPredicate(
                         categoryIds: categoryIds,
@@ -112,7 +121,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
         private static IEnumerable<GetLatestArticlesArticle> GetFeaturedArticles(
             IEnumerable<Article> savedArticles,
             DateTime? firstArticleCreateDateTime,
-            GetLatestArticlesQuery request
+            GetLatestArticlesQuery request,
+            IEnumerable<int>? categoryIds
         )
         {
             if (request.Skip != 0)
@@ -130,8 +140,11 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                     )
                     .Compile()
                 )
-                .OrderBy(Article.GetOrderByFeaturedArticlesExpression().Compile())
-                .ThenByDescending(Article.GetOrderByDescendingTrendingScoreExpression().Compile());
+                .OrderFeaturedArticles(categoryIds);
+
+            var trendingArticlesTake = request.FeaturedArticlesTake - featuredArticles.Count() <= 0 ?
+                0 :
+                request.FeaturedArticlesTake - featuredArticles.Count();
 
             var trendingArticles = savedArticles
                 .Where(
@@ -141,14 +154,15 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                     )
                     .Compile()
                 )
-                .OrderByDescending(Article.GetOrderByDescendingTrendingScoreExpression().Compile());
+                .OrderArticlesByTrendingScore()
+                .Take(trendingArticlesTake)
+                .OrderArticlesByCategory(categoryIds);
 
             var joinedArticles = featuredArticles
-                .Union(trendingArticles)
-                .ToList();
+                .Union(trendingArticles);
 
             var articleDtos = joinedArticles
-                .Take(request.Take)
+                .Take(request.FeaturedArticlesTake)
                 .Select(GetLatestArticlesArticle.GetProjection().Compile());
 
             return articleDtos;
@@ -156,6 +170,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
 
         private static IEnumerable<GetLatestArticlesNewsPortal> GetNewNewsPortals(
             IEnumerable<NewsPortal> newsPortals,
+            IEnumerable<int>? newsPortalIds,
+            IEnumerable<int>? categoryIds,
             GetLatestArticlesQuery request
         )
         {
@@ -163,8 +179,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
             {
                 return Array.Empty<GetLatestArticlesNewsPortal>();
             }
-
-            var (newsPortalIds, categoryIds) = ParseIds(request);
 
             var newsPortalDtos = newsPortals
                 .Where(

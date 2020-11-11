@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Enums;
+using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 
 namespace Espresso.Application.IServices
@@ -56,15 +57,11 @@ namespace Espresso.Application.IServices
             CancellationToken cancellationToken
         );
 
-        public Task LogPerformance(
-            string applicationName,
-            IEnumerable<(string name, int count, TimeSpan duration)> data,
-            AppEnvironment appEnvironment,
-            CancellationToken cancellationToken
-        );
-
-        public Task LogTopArticles(
-            IEnumerable<(string title, int numberOfClicks, string newsPortalName, DateTime publishDateTime)> topArticles,
+        public Task LogYesterdaysStatistics(
+            IEnumerable<Article> topArticles,
+            int totalNumberOfClicks,
+            IEnumerable<(NewsPortal newsPortal, int numberOfClicks)> topNewsPortals,
+            IEnumerable<(Category category, int numberOfClicks)> categoriesWithNumberOfClicks,
             AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         );

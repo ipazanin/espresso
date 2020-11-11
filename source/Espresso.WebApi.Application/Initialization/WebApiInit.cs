@@ -9,7 +9,7 @@ using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
-using Espresso.Domain.Extensions;
+using Espresso.Common.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
 using Espresso.Persistence.IRepositories;
@@ -82,10 +82,9 @@ namespace Espresso.WebApi.Application.Initialization
             #region NewsPortals
             var newsPortals = await _context
                 .NewsPortals
+                .Include(newsPortal => newsPortal.Category)
                 .AsNoTracking()
                 .ToListAsync();
-
-            var newsPortalsDictionary = newsPortals.ToDictionary(newsPortal => newsPortal.Id);
 
             _ = _memoryCache.Set(
                 key: MemoryCacheConstants.NewsPortalKey,

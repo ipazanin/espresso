@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
+using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
@@ -58,8 +59,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
                     )
                     .Compile()
                 )
-                .OrderBy(Article.GetOrderByFeaturedArticlesExpression().Compile())
-                .ThenByDescending(Article.GetOrderByDescendingTrendingScoreExpression().Compile());
+                .OrderFeaturedArticles(categoryIds);
 
             var trendingArticles = articles
                 .Where(
@@ -69,7 +69,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
                     )
                     .Compile()
                 )
-                .OrderByDescending(Article.GetOrderByDescendingTrendingScoreExpression().Compile());
+                .OrderArticlesByTrendingScore();
 
             var articleDtos = featuredArticles
                 .Union(trendingArticles)

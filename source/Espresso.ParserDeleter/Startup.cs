@@ -128,15 +128,6 @@ namespace Espresso.ParserDeleter
                 cronJobConfiguration.AppEnvironment = _parserDeleterConfiguration.AppConfiguration.AppEnvironment;
                 cronJobConfiguration.Version = _parserDeleterConfiguration.AppConfiguration.Version;
             });
-            services.AddCronJob<ParserDeleterReportCronJob>(cronJobConfiguration =>
-            {
-                cronJobConfiguration.CronExpression = _parserDeleterConfiguration
-                    .CronJobsConfiguration
-                    .ParserDeleterReportCronExpression;
-                cronJobConfiguration.TimeZoneInfo = TimeZoneInfo.Utc;
-                cronJobConfiguration.AppEnvironment = _parserDeleterConfiguration.AppConfiguration.AppEnvironment;
-                cronJobConfiguration.Version = _parserDeleterConfiguration.AppConfiguration.Version;
-            });
             services.AddCronJob<ParseArticlesCronJob>(cronJobConfiguration =>
             {
                 cronJobConfiguration.CronExpression = _parserDeleterConfiguration

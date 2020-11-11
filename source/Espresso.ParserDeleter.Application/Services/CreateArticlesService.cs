@@ -8,7 +8,7 @@ using Espresso.Domain.IServices;
 using Espresso.Common.Enums;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.RssFeedEnums;
-using Espresso.Domain.Extensions;
+using Espresso.Common.Extensions;
 using Espresso.Domain.Records;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
 using Espresso.ParserDeleter.Application.IServices;
