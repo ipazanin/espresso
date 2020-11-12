@@ -137,6 +137,10 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                     )
                     .Compile()
                 )
+                .FilterArticlesWithCoronaVirusContentForIosRelease(
+                    deviceType: request.DeviceType,
+                    targetedApiVersion: request.TargetedApiVersion
+                )
                 .OrderFeaturedArticles(categoryIds);
 
             var trendingArticlesTake = request.FeaturedArticlesTake - featuredArticles.Count() <= 0 ?
@@ -152,15 +156,15 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                     .Compile()
                 )
                 .OrderArticlesByTrendingScore()
+                .FilterArticlesWithCoronaVirusContentForIosRelease(
+                    deviceType: request.DeviceType,
+                    targetedApiVersion: request.TargetedApiVersion
+                )
                 .Take(trendingArticlesTake)
                 .OrderArticlesByCategory(categoryIds);
 
             var articleDtos = featuredArticles
                 .Union(trendingArticles)
-                .FilterArticlesWithCoronaVirusContentForIosRelease(
-                    deviceType: request.DeviceType,
-                    targetedApiVersion: request.TargetedApiVersion
-                )
                 .Take(request.FeaturedArticlesTake)
                 .Select(GetLatestArticlesArticle_2_0.GetProjection().Compile());
 

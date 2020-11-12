@@ -15,17 +15,5 @@
   "CronJobsConfiguration": {
     "DeleteArticlesCronExpression": "0 * * * *",
     "ParseArticlesCronExpression": "*/1 * * * *"
-  },
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft": "Warning",
-      "Microsoft.Hosting.Lifetime": "Information",
-      "System": "Warning"
-    },
-    "Console": {
-      "TimestampFormat": "\nHH:mm:ss.ff - ",
-      "UseUtcTimestamp": true
-    }
   }
 }

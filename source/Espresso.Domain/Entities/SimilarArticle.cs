@@ -34,5 +34,11 @@ namespace Espresso.Domain.Entities
             SubordinateArticleId = subordinateArticleId;
             SubordinateArticle = subordinateArticle;
         }
+
+        public void SetMainArticle(Article mainArticle)
+        {
+            MainArticle = mainArticle;
+            MainArticleId = mainArticle.Id;
+        }
     }
 }

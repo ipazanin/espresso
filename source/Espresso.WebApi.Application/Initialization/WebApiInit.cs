@@ -83,8 +83,12 @@ namespace Espresso.WebApi.Application.Initialization
             var newsPortals = await _context
                 .NewsPortals
                 .Include(newsPortal => newsPortal.Category)
+                .Include(newsPortal => newsPortal.Region)
                 .AsNoTracking()
                 .ToListAsync();
+
+            var newsPortalsDictionary = newsPortals
+                .ToDictionary(newsPortal => newsPortal.Id);
 
             _ = _memoryCache.Set(
                 key: MemoryCacheConstants.NewsPortalKey,
@@ -99,33 +103,43 @@ namespace Espresso.WebApi.Application.Initialization
                 .AsNoTracking()
                 .ToListAsync();
 
-            var categoryDictionary = categories.ToDictionary(category => category.Id);
+            var categoriesDictionary = categories.ToDictionary(category => category.Id);
 
             _ = _memoryCache.Set(
                 key: MemoryCacheConstants.CategoryKey,
-                value: categories.ToList()
+                value: categories
             );
             #endregion
 
             #region Articles
             var articles = await _context.Articles
                 .Include(article => article.ArticleCategories)
-                .ThenInclude(articleCategory => articleCategory.Category)
-                .Include(article => article.NewsPortal)
                 .Include(article => article.MainArticle)
-                .ThenInclude(mainArticle => mainArticle!.MainArticle)
-                .Include(article => article.SubordinateArticles)
-                .ThenInclude(subordinateArticle => subordinateArticle!.SubordinateArticle)
-                .ThenInclude(article => article!.NewsPortal)
-                .Include(article => article.SubordinateArticles)
-                .ThenInclude(subordinateArticle => subordinateArticle!.SubordinateArticle)
-                .ThenInclude(article => article!.ArticleCategories)
-                .ThenInclude(articleCategory => articleCategory.Category)
                 .AsSplitQuery()
                 .AsNoTracking()
                 .ToListAsync();
 
-            _ = _memoryCache.Set(
+            var articlesDictionary = articles.ToDictionary(article => article.Id);
+
+            foreach (var article in articles)
+            {
+                var newsPortal = newsPortalsDictionary[article.NewsPortalId];
+                article.SetNewsPortal(newsPortal);
+
+                foreach (var articleCategory in article.ArticleCategories)
+                {
+                    var category = categoriesDictionary[articleCategory.CategoryId];
+                    articleCategory.SetCategory(category);
+                }
+                if (article.MainArticle is not null)
+                {
+                    var mainArticle = articlesDictionary[article.MainArticle.MainArticleId];
+                    mainArticle.SubordinateArticles.Add(article.MainArticle);
+                    article.MainArticle.SetMainArticle(mainArticle);
+                }
+            }
+
+            _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
                 value: articles
             );
@@ -153,14 +167,14 @@ namespace Espresso.WebApi.Application.Initialization
         #region Private Methods
         private static void InitializeFireBase()
         {
-            _ = FirebaseApp.Create(new AppOptions()
+            FirebaseApp.Create(new AppOptions()
             {
                 Credential = GoogleCredential.FromFile(
-                path: Path.Combine(
-                    path1: AppDomain.CurrentDomain.BaseDirectory ?? "",
-                    path2: ConfigurationFileName
-                )
-            ),
+                    path: Path.Combine(
+                        path1: AppDomain.CurrentDomain.BaseDirectory ?? "",
+                        path2: ConfigurationFileName
+                    )
+                ),
             });
         }
         #endregion

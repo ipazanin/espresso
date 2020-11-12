@@ -281,8 +281,8 @@ namespace Espresso.Application.Services
         public async Task LogYesterdaysStatistics(
             IEnumerable<Article> topArticles,
             int totalNumberOfClicks,
-            IEnumerable<(NewsPortal newsPortal, int numberOfClicks)> topNewsPortals,
-            IEnumerable<(Category category, int numberOfClicks)> categoriesWithNumberOfClicks,
+            IEnumerable<(NewsPortal newsPortal, int numberOfClicks, IEnumerable<Article> articles)> topNewsPortals,
+            IEnumerable<(Category category, int numberOfClicks, IEnumerable<Article> articles)> categoriesWithNumberOfClicks,
             AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         )
@@ -308,8 +308,8 @@ namespace Espresso.Application.Services
                         new SlackMarkdownTextBlock(article.PublishDateTime.ToShortTimeString()),
                         new SlackMarkdownTextBlock($"*Number Of Clicks*"),
                         new SlackMarkdownTextBlock(article.NumberOfClicks.ToString()),
-                        new SlackMarkdownTextBlock($"*Is Featured*"),
-                        new SlackMarkdownTextBlock(article.EditorConfiguration?.IsFeatured?.ToString() ?? "undefined"),
+                        new SlackMarkdownTextBlock($"*Clicks ‰*"),
+                        new SlackMarkdownTextBlock($"{Math.Round(totalNumberOfClicks == 0 ? 0 : 100 * article.NumberOfClicks / (double)totalNumberOfClicks, 2)}‰"),
 
                     },
                     accessory: new SlackImageBlock(
@@ -337,16 +337,21 @@ namespace Espresso.Application.Services
             blocks.Clear();
             blocks.Add(new SlackHeaderBlock(new SlackPlainTextBlock("Top News Portals")));
 
-            foreach (var (newsPortal, numberOfClicks) in topNewsPortals)
+            foreach (var (newsPortal, numberOfClicks, articles) in topNewsPortals)
             {
+                var numberOfArticles = articles.Count();
                 var newsPortalsBlock = new SlackTextFieldsImageSectionBlock(
                     text: new SlackMarkdownTextBlock($"<{newsPortal.BaseUrl}|{newsPortal.Name}>"),
                     fields: new List<SlackMarkdownTextBlock>
                     {
-                        new SlackMarkdownTextBlock("*Number Of Clicks*"),
-                        new SlackMarkdownTextBlock(numberOfClicks.ToString()),
                         new SlackMarkdownTextBlock("*Category*"),
                         new SlackMarkdownTextBlock(newsPortal.Category!.Name),
+                        new SlackMarkdownTextBlock("*Number Of Clicks*"),
+                        new SlackMarkdownTextBlock(numberOfClicks.ToString()),
+                        new SlackMarkdownTextBlock("*Clicks %*"),
+                        new SlackMarkdownTextBlock($"{Math.Round(totalNumberOfClicks == 0 ? 0 : 100 * numberOfClicks / (double)totalNumberOfClicks, 2)}%"),
+                        new SlackMarkdownTextBlock("*Clicks Per Article*"),
+                        new SlackMarkdownTextBlock($"{Math.Round(numberOfArticles == 0 ? 0 : numberOfClicks / (double)numberOfArticles, 2)}"),
                     },
                     accessory: new SlackImageBlock(
                         imageUrl: $"https://espressonews.co/{newsPortal.IconUrl}" ?? "https://via.placeholder.com/350x150.jpg",
@@ -374,14 +379,19 @@ namespace Espresso.Application.Services
             blocks.Add(new SlackHeaderBlock(new SlackPlainTextBlock("Categories")));
 
 
-            foreach (var (category, numberOfClicks) in categoriesWithNumberOfClicks)
+            foreach (var (category, numberOfClicks, articles) in categoriesWithNumberOfClicks)
             {
+                var numberOfArticles = articles.Count();
                 var categoriesBlock = new SlackTextFieldsSectionBlock(
                     text: new SlackMarkdownTextBlock($"*{category.Name}*"),
                     fields: new List<SlackMarkdownTextBlock>
                     {
                         new SlackMarkdownTextBlock("*Number Of Clicks*"),
                         new SlackMarkdownTextBlock(numberOfClicks.ToString()),
+                        new SlackMarkdownTextBlock("*Clicks %*"),
+                        new SlackMarkdownTextBlock($"{Math.Round(totalNumberOfClicks == 0 ? 0 : 100 * numberOfClicks / (double)totalNumberOfClicks, 2)}%"),
+                        new SlackMarkdownTextBlock("*Clicks Per Article*"),
+                        new SlackMarkdownTextBlock($"{Math.Round(numberOfArticles == 0 ? 0 : numberOfClicks / (double)numberOfArticles, 2)}"),                        
                     }
                 );
                 blocks.Add(categoriesBlock);

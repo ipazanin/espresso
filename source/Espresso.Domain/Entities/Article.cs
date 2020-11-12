@@ -274,6 +274,12 @@ namespace Espresso.Domain.Entities
             MainArticle = mainArticle;
         }
 
+        public void SetNewsPortal(NewsPortal newsPortal)
+        {
+            NewsPortal = newsPortal;
+            NewsPortalId = newsPortal.Id;
+        }
+
         #region Expressions
         public static Expression<Func<Article, bool>> GetFilteredLatestArticlesPredicate(
             IEnumerable<int>? categoryIds,
