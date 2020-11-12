@@ -60,8 +60,8 @@ namespace Espresso.Application.IServices
         public Task LogYesterdaysStatistics(
             IEnumerable<Article> topArticles,
             int totalNumberOfClicks,
-            IEnumerable<(NewsPortal newsPortal, int numberOfClicks)> topNewsPortals,
-            IEnumerable<(Category category, int numberOfClicks)> categoriesWithNumberOfClicks,
+            IEnumerable<(NewsPortal newsPortal, int numberOfClicks, IEnumerable<Article> articles)> topNewsPortals,
+            IEnumerable<(Category category, int numberOfClicks, IEnumerable<Article> articles)> categoriesWithNumberOfClicks,
             AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         );

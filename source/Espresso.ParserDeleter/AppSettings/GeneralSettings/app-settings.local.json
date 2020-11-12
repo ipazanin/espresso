@@ -4,25 +4,10 @@
     "Environment": 1
   },
   "ArticleSimilarityConfiguration": {
-    "GroupSimilarArticlesBatchSize": 500
+    "GroupSimilarArticlesBatchSize": 5000
   },
   "CronJobsConfiguration": {
     "DeleteArticlesCronExpression": "* * * * *",
     "ParseArticlesCronExpression": "* * * * *"
-  },
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft": "Warning",
-      "Microsoft.EntityFrameworkCore": "None",
-      "System": "Warning",
-      "Espresso.Application.Infrastructure.MediatorInfrastructure.LoggerPipeline": "Information",
-      "Espresso.ParserDeleter.Application.CQRS.RssFeeds.Commands.ParseRssFeeds.ParseRssFeedsCommandHandler": "Information",
-      "Espresso.ParserDeleter.Application.Services.ScrapeWebService": "None",
-      "Espresso.ParserDeleter.Application.Services.LoadRssFeedsService": "None",
-      "Espresso.ParserDeleter.Application.Services.CreateArticleService": "None",
-      "Espresso.Application.Infrastructure.CronJobsInfrastructure.CronJob": "Information",
-      "Espresso.Domain.Services.GroupSimilarArticlesService": "Information"
-    }
   }
 }

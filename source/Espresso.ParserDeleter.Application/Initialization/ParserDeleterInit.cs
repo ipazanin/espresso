@@ -67,11 +67,12 @@ namespace Espresso.ParserDeleter.Application.Initialization
                 .NewsPortals
                 .AsNoTracking()
                 .ToListAsync();
+
             var newsPortalsDictionary = newsPortals.ToDictionary(newsPortal => newsPortal.Id);
 
             _ = _memoryCache.Set(
                 key: MemoryCacheConstants.NewsPortalKey,
-                value: newsPortals.ToList()
+                value: newsPortals
             );
             #endregion
 
@@ -81,40 +82,49 @@ namespace Espresso.ParserDeleter.Application.Initialization
                 .AsNoTracking()
                 .ToListAsync();
 
-            var categoryDictionary = categories.ToDictionary(category => category.Id);
+            var categoriesDictionary = categories.ToDictionary(category => category.Id);
 
             _ = _memoryCache.Set(
                 key: MemoryCacheConstants.CategoryKey,
-                value: categories.ToList()
+                value: categories
             );
             #endregion
 
             #region Articles
             var articles = await _context.Articles
                 .Include(article => article.ArticleCategories)
-                .ThenInclude(articleCategory => articleCategory.Category)
-                .Include(article => article.NewsPortal)
                 .Include(article => article.MainArticle)
-                .ThenInclude(mainArticle => mainArticle!.MainArticle)
-                .ThenInclude(article => article!.NewsPortal)
-                .Include(article => article.MainArticle)
-                .ThenInclude(mainArticle => mainArticle!.MainArticle)
-                .ThenInclude(article => article!.ArticleCategories)
-                .ThenInclude(articleCategory => articleCategory.Category)
                 .AsNoTracking()
                 .AsSplitQuery()
                 .ToListAsync();
+
+            var articlesDictionary = articles.ToDictionary(article => article.Id);
+
+            foreach (var article in articles)
+            {
+                var newsPortal = newsPortalsDictionary[article.NewsPortalId];
+                article.SetNewsPortal(newsPortal);
+
+                foreach (var articleCategory in article.ArticleCategories)
+                {
+                    var category = categoriesDictionary[articleCategory.CategoryId];
+                    articleCategory.SetCategory(category);
+                }
+                if (article.MainArticle is not null)
+                {
+                    var mainArticle = articlesDictionary[article.MainArticle.MainArticleId];
+                    mainArticle.SubordinateArticles.Add(article.MainArticle);
+                    article.MainArticle.SetMainArticle(mainArticle);
+                }
+            }
 
             _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
                 value: articles
             );
 
-            var groupedArticles = articles
-                .Where(article => article.MainArticle is not null);
-
-            var lastSimilarityGroupingTime = groupedArticles
-                .OrderByDescending(groupedArticle => groupedArticle.CreateDateTime)
+            var lastSimilarityGroupingTime = articles
+                .OrderByDescending(article => article.CreateDateTime)
                 .FirstOrDefault()
                 ?.CreateDateTime
                 ?? new DateTime();

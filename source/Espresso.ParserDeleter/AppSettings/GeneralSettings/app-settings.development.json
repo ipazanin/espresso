@@ -7,19 +7,5 @@
   "CronJobsConfiguration": {
     "DeleteArticlesCronExpression": "0 * * * *",
     "ParseArticlesCronExpression": "*/10 * * * *"
-  },
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft": "Warning",
-      "System": "Warning",
-      "Espresso.Application.Infrastructure.MediatorInfrastructure.LoggerPipeline": "Information",
-      "Espresso.ParserDeleter.Application.CQRS.RssFeeds.Commands.ParseRssFeeds.ParseRssFeedsCommandHandler": "None",
-      "Espresso.ParserDeleter.Application.Services.ScrapeWebService": "None",
-      "Espresso.ParserDeleter.Application.Services.LoadRssFeedsService": "None",
-      "Espresso.ParserDeleter.Application.Services.CreateArticleService": "None",
-      "Espresso.Application.Infrastructure.CronJobsInfrastructure.CronJob": "Information",
-      "Espresso.Domain.Services.GroupSimilarArticlesService": "Information"
-    }
   }
 }

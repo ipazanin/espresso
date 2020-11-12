@@ -146,7 +146,7 @@ namespace Espresso.WebApi.CronJobs
             return totalClicks;
         }
 
-        private static IEnumerable<(NewsPortal newsPortal, int numberOfClicks)> GetTop10NewsPortalsByNumberOfClicks(
+        private static IEnumerable<(NewsPortal newsPortal, int numberOfClicks, IEnumerable<Article> articles)> GetTop10NewsPortalsByNumberOfClicks(
             IEnumerable<Article> articles,
             IEnumerable<NewsPortal> newsPortals
         )
@@ -157,7 +157,8 @@ namespace Espresso.WebApi.CronJobs
                 .Select(articlesGroupedByNewsPortal =>
                     (
                         newsPortal: newsPortals.FirstOrDefault(newsPortal => newsPortal.Id == articlesGroupedByNewsPortal.Key),
-                        numberOfClicks: articlesGroupedByNewsPortal.Sum(article => article.NumberOfClicks)
+                        numberOfClicks: articlesGroupedByNewsPortal.Sum(article => article.NumberOfClicks),
+                        articles = articlesGroupedByNewsPortal.ToList().AsEnumerable()
                     )
                 )
                 .Where(articleClicksGroupedByNewsPortal => articleClicksGroupedByNewsPortal.newsPortal is not null)
@@ -167,7 +168,7 @@ namespace Espresso.WebApi.CronJobs
             return topNewsPortals!;
         }
 
-        private static IEnumerable<(Category category, int numberOfClicks)> GetCategoriesWithNumberOfClicks(
+        private static IEnumerable<(Category category, int numberOfClicks, IEnumerable<Article> articles)> GetCategoriesWithNumberOfClicks(
             IEnumerable<Article> articles
         )
         {
@@ -177,7 +178,8 @@ namespace Espresso.WebApi.CronJobs
                 .Select(articlesGroupedByCategory =>
                     (
                         category: articlesGroupedByCategory.FirstOrDefault()?.ArticleCategories.FirstOrDefault()?.Category,
-                        numberOfClicks: articlesGroupedByCategory.Sum(article => article.NumberOfClicks)
+                        numberOfClicks: articlesGroupedByCategory.Sum(article => article.NumberOfClicks),
+                        articles = articlesGroupedByCategory.ToList().AsEnumerable()
                     )
                 )
                 .Where(articlesGroupedByCategory => articlesGroupedByCategory.category is not null)
