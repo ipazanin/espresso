@@ -7,23 +7,10 @@ using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
-using Espresso.Domain.IServices;
 using Espresso.Domain.Utilities;
-using Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticleScore;
-using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles;
-using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3;
-using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles;
-using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_3;
-using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4;
-using Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles;
-using Espresso.WebApi.Application.Configuration.Queries.GetConfiguration;
-using Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3;
-using Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals;
-using Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals_1_3;
 using Espresso.WebApi.Configuration;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Espresso.WebApi.CronJobs
 {
@@ -32,26 +19,8 @@ namespace Espresso.WebApi.CronJobs
     /// </summary>
     public class WebApiReportCronJob : CronJob<WebApiReportCronJob>
     {
-        #region Constants
-        private static readonly List<string> s_requestNames = new List<string>
-        {
-            nameof(IncrementNumberOfClicksCommand),
-            nameof(GetCategoryArticlesQuery),
-            nameof(GetCategoryArticlesQuery_1_3),
-            nameof(GetLatestArticlesQuery),
-            nameof(GetLatestArticlesQuery_1_4),
-            nameof(GetLatestArticlesQuery_1_3),
-            nameof(GetTrendingArticlesQuery),
-            nameof(GetConfigurationQuery),
-            nameof(GetConfigurationQuery_1_3),
-            nameof(GetNewsPortalsQuery),
-            nameof(GetNewsPortalsQuery_1_3),
-        };
-        #endregion
-
         #region Fields
         private readonly IServiceScopeFactory _serviceScopeFactory;
-        private readonly ICronJobConfiguration<WebApiReportCronJob> _cronJobConfiguration;
         private readonly IWebApiConfiguration _webApiConfiguration;
         #endregion
 
@@ -73,7 +42,6 @@ namespace Espresso.WebApi.CronJobs
         )
         {
             _serviceScopeFactory = serviceScopeFactory;
-            _cronJobConfiguration = cronJobConfiguration;
             _webApiConfiguration = webApiConfiguration;
         }
         #endregion
@@ -188,33 +156,6 @@ namespace Espresso.WebApi.CronJobs
 
             return categoriesOrderedByNumberOfClicks!;
         }
-        #endregion
-
-        #region Maybe wil be used later
-        // private (string name, int count, TimeSpan duration) CalculatePerformance(
-        //     IMemoryCache memoryCache,
-        //     string requestName
-        // )
-        // {
-        //     var performanceMeasurementKey = $"{requestName}PerformanceKey";
-        //     var (total, count) = memoryCache.GetOrCreate(
-        //         key: performanceMeasurementKey,
-        //         factory: entry =>
-        //         {
-        //             var total = new TimeSpan();
-        //             var count = 0;
-        //             return (total, count);
-        //         }
-        //     );
-
-        //     if (count == 0)
-        //     {
-        //         return (requestName, count, total);
-        //     }
-        //     var dailyCount = (int)(count / _webApiConfiguration.AppConfiguration.Uptime.TotalDays);
-
-        //     return (requestName, dailyCount, total / count);
-        // }
         #endregion
     }
 }
