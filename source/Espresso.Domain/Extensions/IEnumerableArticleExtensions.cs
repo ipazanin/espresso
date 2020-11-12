@@ -69,7 +69,7 @@ namespace Espresso.Common.Extensions
         #endregion
 
         #region Order
-        public static IEnumerable<Article> OrderFeaturedArticles(
+        public static IOrderedEnumerable<Article> OrderFeaturedArticles(
             this IEnumerable<Article> articles,
             IEnumerable<int>? categoryIds
         )
@@ -89,7 +89,11 @@ namespace Espresso.Common.Extensions
                         (
                             categoriesWithOrderIndex == null ?
                                 halfOfMaxValue :
-                                halfOfMaxValue + categoriesWithOrderIndex[article.ArticleCategories.First().CategoryId]
+                                (
+                                    categoriesWithOrderIndex.ContainsKey(article.ArticleCategories.First().CategoryId) ?
+                                        halfOfMaxValue + categoriesWithOrderIndex[article.ArticleCategories.First().CategoryId] :
+                                        int.MaxValue
+                                )
                         ) :
                         article.EditorConfiguration.FeaturedPosition
                 )
@@ -115,14 +119,24 @@ namespace Espresso.Common.Extensions
                     categoryWithOrderIndex => categoryWithOrderIndex.index
                 );
 
+            var halfOfMaxValue = int.MaxValue / 2;
+
             var orderedArticles = articles
-                .OrderBy(article => categoriesWithOrderIndex[article.ArticleCategories.First().CategoryId])
+                .OrderBy(
+                    article => categoriesWithOrderIndex == null ?
+                        halfOfMaxValue :
+                        (
+                            categoriesWithOrderIndex.ContainsKey(article.ArticleCategories.First().CategoryId) ?
+                                halfOfMaxValue + categoriesWithOrderIndex[article.ArticleCategories.First().CategoryId] :
+                                int.MaxValue
+                        )
+                )
                 .OrderArticlesByTrendingScore();
 
             return orderedArticles;
         }
 
-        public static IEnumerable<Article> OrderArticlesByPublishDate(
+        public static IOrderedEnumerable<Article> OrderArticlesByPublishDate(
             this IEnumerable<Article> articles
         )
         {
@@ -131,11 +145,20 @@ namespace Espresso.Common.Extensions
             return orderedArticles;
         }
 
-        public static IEnumerable<Article> OrderArticlesByTrendingScore(
+        public static IOrderedEnumerable<Article> OrderArticlesByTrendingScore(
             this IEnumerable<Article> articles
         )
         {
             var orderedArticles = articles.OrderByDescending(article => article.TrendingScore);
+
+            return orderedArticles;
+        }
+
+        public static IOrderedEnumerable<Article> OrderArticlesByTrendingScore(
+            this IOrderedEnumerable<Article> articles
+        )
+        {
+            var orderedArticles = articles.ThenByDescending(article => article.TrendingScore);
 
             return orderedArticles;
         }
