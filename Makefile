@@ -27,35 +27,65 @@ build::
 
 compose-database::
 ifeq ($(arg1), up)
-	docker-compose -f ./compose/docker-compose-database.yml up \
+	docker-compose -f ./compose/database.yml up \
 	--build --remove-orphans $(arg2)
 else ifeq ($(strip $(arg1)),)
-	docker-compose -f ./compose/docker-compose-database.yml up \
+	docker-compose -f ./compose/database.yml up \
 	--build --remove-orphans $(arg2)
 else ifeq ($(arg1), down)
-	docker-compose -f ./compose/docker-compose-database.yml down
+	docker-compose -f ./compose/database.yml down
 else
 	echo "Invalid Argument. Accepted arguments: up, down"
 endif
 
 compose-development::
 ifeq ($(arg), up)
-	docker-compose -f ./compose/docker-compose-development.yml up --build --remove-orphans 
+	docker-compose \
+	-f ./compose/database.yml \
+	-f ./compose/webapi.yml \
+	-f ./compose/parser.yml \
+	-f ./compose/development-environment.yml \
+	up --build --remove-orphans 
 else ifeq ($(strip $(arg)),)
-	docker-compose -f ./compose/docker-compose-development.yml up --build --remove-orphans 
+	docker-compose \
+	-f ./compose/database.yml \
+	-f ./compose/webapi.yml \
+	-f ./compose/parser.yml \
+	-f ./compose/development-environment.yml \
+	up --build --remove-orphans 
 else ifeq ($(arg), down)
-	docker-compose -f ./compose/docker-compose-development.yml down
+	docker-compose \
+	-f ./compose/database.yml \
+	-f ./compose/webapi.yml \
+	-f ./compose/parser.yml \
+	-f ./compose/development-environment.yml \
+	down
 else
 	echo "Invalid Argument. Accepted arguments: up, down"
 endif
 
 compose-local::
 ifeq ($(arg), up)
-	docker-compose -f ./compose/docker-compose-local.yml up --build --remove-orphans
+	docker-compose \
+	-f ./compose/database.yml \
+	-f ./compose/webapi.yml \
+	-f ./compose/parser.yml \
+	-f ./compose/local-environment.yml \
+	up --build --remove-orphans
 else ifeq ($(strip $(arg)),)
-	docker-compose -f ./compose/docker-compose-local.yml up --build --remove-orphans
+	docker-compose \
+	-f ./compose/database.yml \
+	-f ./compose/webapi.yml \
+	-f ./compose/parser.yml \
+	-f ./compose/local-environment.yml \
+	up --build --remove-orphans
 else ifeq ($(arg), down)
-	docker-compose -f ./compose/docker-compose-local.yml down
+	docker-compose \
+	-f ./compose/database.yml \
+	-f ./compose/webapi.yml \
+	-f ./compose/parser.yml \
+	-f ./compose/local-environment.yml \
+	down
 else
 	echo "Invalid Argument. Accepted arguments: up, down"
 endif
