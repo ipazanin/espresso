@@ -11,13 +11,11 @@ using Espresso.Application.Extensions;
 using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
-using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Common.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
-using Espresso.ParserDeleter.Application.IServices;
 using Espresso.Persistence.IRepositories;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
@@ -65,7 +63,7 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
             _loadRssFeedsService = loadRssFeedsService;
 
             _httpClient = httpClientFactory.CreateClient();
-            _httpClient.Timeout = TimeSpan.FromSeconds(120);
+            _httpClient.Timeout = TimeSpan.FromMinutes(4);
 
             _sortArticlesService = sortArticlesService;
             _groupSimilarArticlesService = groupSimilarArticlesService;

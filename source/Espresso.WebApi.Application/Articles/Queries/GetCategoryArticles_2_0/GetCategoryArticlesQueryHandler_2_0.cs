@@ -7,6 +7,7 @@ using Espresso.Common.Constants;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.Domain.Extensions;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -49,13 +50,11 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
 
             var filteredArticles = articles
                 .OrderArticlesByPublishDate()
-                .Where(
-                    predicate: Article.GetFilteredCategoryArticlesPredicate_2_0(
-                        categoryId: request.CategoryId,
-                        newsPortalIds: newsPortalIds,
-                        searchTerm: request.TitleSearchQuery,
-                        articleCreateDateTime: firstArticle?.CreateDateTime
-                    ).Compile()
+                .FilterArticles(
+                    categoryId: request.CategoryId,
+                    newsPortalIds: newsPortalIds,
+                    titleSearchTerm: request.TitleSearchQuery,
+                    articleCreateDateTime: firstArticle?.CreateDateTime
                 )
                 .FilterArticlesWithCoronaVirusContentForIosRelease(
                     deviceType: request.DeviceType,
