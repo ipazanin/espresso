@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  database:
+    container_name: database
+    image: 'microsoft/mssql-server-linux:2017-latest'
+    ports:
+      - '1433:1433'
+    volumes:
+      - mssql-server-linux-data:/var/opt/mssql/data
+
+volumes:
+  mssql-server-linux-data:

@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  parser:
+    container_name: parser
+    build:
+      context: ../source
+      dockerfile: Espresso.ParserDeleter/Dockerfile
+    restart: always

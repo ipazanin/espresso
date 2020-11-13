@@ -6,9 +6,10 @@ database-settings.local-production.json
 
 # Docker Compose
 docker-compose-local.yml
-docker-compose-parser.yml
 docker-compose-development.yml
 docker-compose-database.yml
+development-environment.yml
+local-environment.yml
 
 # Firebase OAuth Configuration
 firebase-key.json
