@@ -143,6 +143,8 @@ namespace Espresso.WebApi.Application.Initialization
                 key: MemoryCacheConstants.ArticleKey,
                 value: articles
             );
+
+            DisplaySimilarArticles(articles);
             #endregion
 
             stopwatch.Stop();
@@ -176,6 +178,27 @@ namespace Espresso.WebApi.Application.Initialization
                     )
                 ),
             });
+        }
+
+        private void DisplaySimilarArticles(
+            IEnumerable<Article> articles
+        )
+        {
+            #region For Viewwing Similar Articles
+            // var mainArticles = articles.Where(article => article.SubordinateArticles.Count != 0);
+
+            // foreach (var mainArticle in mainArticles)
+            // {
+            //     var subordinateArticleTitles = mainArticle
+            //         .SubordinateArticles
+            //         .Select((article, index) => ($"Similar Article {index}", article.SubordinateArticle.Title as object));
+
+            //     _loggerService.Log("Similar Articles", LogLevel.Information, new (string, object)[]
+            //     {
+            //         ("Main Article", mainArticle.Title)
+            //     }.Union(subordinateArticleTitles));
+            // }
+            #endregion
         }
         #endregion
     }
