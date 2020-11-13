@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.WebApi.Configuration;
 using Espresso.Domain.IServices;
+using Espresso.Domain.Utilities;
 
 namespace Espresso.WebApi.CronJobs
 {
@@ -60,23 +61,23 @@ namespace Espresso.WebApi.CronJobs
 
             var applicationDownloads = await applicationDownloadRepository.GetApplicationDownloads();
 
-            var yesterday = DateTime.UtcNow.AddDays(-1);
-
             var todayAndroidCount = applicationDownloads.Count(applicationDownloads =>
                 applicationDownloads.MobileDeviceType == DeviceType.Android &&
-                applicationDownloads.DownloadedTime.Date == yesterday.Date
+                applicationDownloads.DownloadedTime.Date == DateTimeUtility.YesterdaysDate
             );
 
             var todayIosCount = applicationDownloads.Count(applicationDownloads =>
                 applicationDownloads.MobileDeviceType == DeviceType.Ios &&
-                applicationDownloads.DownloadedTime.Date == yesterday.Date
+                applicationDownloads.DownloadedTime.Date == DateTimeUtility.YesterdaysDate
             );
 
             var totalIosCount = applicationDownloads.Count(applicationDownloads =>
-                applicationDownloads.MobileDeviceType == DeviceType.Ios
+                applicationDownloads.MobileDeviceType == DeviceType.Ios &&
+                applicationDownloads.DownloadedTime.Date <= DateTimeUtility.YesterdaysDate
             );
             var totalAndroidCount = applicationDownloads.Count(applicationDownloads =>
-                applicationDownloads.MobileDeviceType == DeviceType.Android
+                applicationDownloads.MobileDeviceType == DeviceType.Android &&
+                applicationDownloads.DownloadedTime.Date <= DateTimeUtility.YesterdaysDate
             );
 
             await slackService.LogAppDownloadStatistics(

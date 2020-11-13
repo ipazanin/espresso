@@ -7,6 +7,7 @@ using Espresso.Common.Constants;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.Domain.Extensions;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -94,13 +95,11 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
 
             var articles = savedArticles
                 .OrderArticlesByPublishDate()
-                .Where(
-                    predicate: Article.GetFilteredLatestArticlesPredicate_2_0(
-                        categoryIds: categoryIds,
-                        newsPortalIds: newsPortalIds,
-                        titleSearchTerm: request.TitleSearchQuery,
-                        articleCreateDateTime: firstArticleCreateDateTime
-                    ).Compile()
+                .FilterArticles_2_0(
+                    categoryIds: categoryIds,
+                    newsPortalIds: newsPortalIds,
+                    titleSearchTerm: request.TitleSearchQuery,
+                    articleCreateDateTime: firstArticleCreateDateTime
                 )
                 .FilterArticlesWithCoronaVirusContentForIosRelease(
                     deviceType: request.DeviceType,
@@ -128,14 +127,11 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
             }
 
             var featuredArticles = savedArticles
-                .Where(
-                    Article.GetFilteredFeaturedArticlesPredicate(
-                        categoryIds: null,
-                        newsPortalIds: null,
-                        maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
-                        articleCreateDateTime: firstArticleCreateDateTime
-                    )
-                    .Compile()
+                .FiltereFeaturedArticles(
+                    categoryIds: null,
+                    newsPortalIds: null,
+                    maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
+                    articleCreateDateTime: firstArticleCreateDateTime
                 )
                 .FilterArticlesWithCoronaVirusContentForIosRelease(
                     deviceType: request.DeviceType,
@@ -148,12 +144,9 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                 request.FeaturedArticlesTake - featuredArticles.Count();
 
             var trendingArticles = savedArticles
-                .Where(
-                    Article.GetTrendingArticlePredicate(
-                        maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
-                        articleCreateDateTime: null
-                    )
-                    .Compile()
+                .FiltereTrendingArticles(
+                    maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
+                    articleCreateDateTime: null
                 )
                 .OrderArticlesByTrendingScore()
                 .FilterArticlesWithCoronaVirusContentForIosRelease(

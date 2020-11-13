@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Extensions;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -50,24 +51,18 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
                 ?.Where(categoryId => categoryId != default);
 
             var featuredArticles = articles
-                .Where(
-                    Article.GetFilteredFeaturedArticlesPredicate(
-                        categoryIds: null,
-                        newsPortalIds: null,
-                        maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
-                        articleCreateDateTime: null
-                    )
-                    .Compile()
+                .FiltereFeaturedArticles(
+                    categoryIds: null,
+                    newsPortalIds: null,
+                    maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
+                    articleCreateDateTime: null
                 )
                 .OrderFeaturedArticles(categoryIds);
 
             var trendingArticles = articles
-                .Where(
-                    Article.GetTrendingArticlePredicate(
-                        maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
-                        articleCreateDateTime: null
-                    )
-                    .Compile()
+                .FiltereTrendingArticles(
+                    maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
+                    articleCreateDateTime: null
                 )
                 .OrderArticlesByTrendingScore();
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Extensions;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -38,12 +39,9 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles
             );
 
             var articleDtos = articles
-                .Where(
-                    predicate: Article.GetTrendingArticlePredicate(
-                        maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
-                        articleCreateDateTime: firstArticle?.CreateDateTime
-                    )
-                    .Compile()
+                .FiltereTrendingArticles(
+                    maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
+                    articleCreateDateTime: firstArticle?.CreateDateTime
                 )
                 .OrderArticlesByTrendingScore()
                 .Skip(request.Skip)

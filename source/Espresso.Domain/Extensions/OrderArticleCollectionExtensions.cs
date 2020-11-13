@@ -2,73 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Espresso.Domain.Entities;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
 
 namespace Espresso.Common.Extensions
 {
-    public static class IEnumerableArticleExtensions
+    public static class OrderArticleCollectionExtensions
     {
-        #region Constants
-        public static IEnumerable<string> BannedKeywords => new List<string>
-            {
-                "virus",
-                "pandemij",
-                "koron",
-                "coron",
-                "capak",
-                "božinović",
-                "bozinovic",
-                "markotić",
-                "markotic",
-                "mask",
-                "karanten",
-                "umrlih",
-                "zaraz",
-                "zaraž",
-                "staracki dom",
-                "starački dom",
-                "bolnica",
-                "prva pomoc",
-                "prva pomoć",
-                "hitna",
-                "zabran",
-                "pozitiv",
-                "testir",
-                "slučaj",
-                "slucaj",
-                "covid",
-                "stozer",
-                "stožer",
-                "respirator",
-                "bolest",
-                "ambulant"
-            };
-        #endregion
-
-        #region Where
-        public static IEnumerable<Article> FilterArticlesWithCoronaVirusContentForIosRelease(
-            this IEnumerable<Article> articles,
-            DeviceType deviceType,
-            string targetedApiVersion
-        )
-        {
-            if (!(deviceType == DeviceType.Ios && targetedApiVersion == "2.0"))
-            {
-                return articles;
-            }
-
-            var filteredArticles = articles.Where(
-                article => !BannedKeywords.Any(
-                    bannedKeyword => article.Title.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase) ||
-                        article.Summary.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase)
-                )
-            );
-
-            return filteredArticles;
-        }
-        #endregion
-
-        #region Order
+        #region Methods
         public static IOrderedEnumerable<Article> OrderFeaturedArticles(
             this IEnumerable<Article> articles,
             IEnumerable<int>? categoryIds

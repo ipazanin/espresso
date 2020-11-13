@@ -391,7 +391,7 @@ namespace Espresso.Application.Services
                         new SlackMarkdownTextBlock("*Clicks %*"),
                         new SlackMarkdownTextBlock($"{Math.Round(totalNumberOfClicks == 0 ? 0 : 100 * numberOfClicks / (double)totalNumberOfClicks, 2)}%"),
                         new SlackMarkdownTextBlock("*Clicks Per Article*"),
-                        new SlackMarkdownTextBlock($"{Math.Round(numberOfArticles == 0 ? 0 : numberOfClicks / (double)numberOfArticles, 2)}"),                        
+                        new SlackMarkdownTextBlock($"{Math.Round(numberOfArticles == 0 ? 0 : numberOfClicks / (double)numberOfArticles, 2)}"),
                     }
                 );
                 blocks.Add(categoriesBlock);

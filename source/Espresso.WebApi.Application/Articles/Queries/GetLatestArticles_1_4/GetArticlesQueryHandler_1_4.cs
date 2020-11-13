@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Extensions;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -55,13 +56,11 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4
 
             var articleDtos = articles
                 .OrderArticlesByPublishDate()
-                .Where(
-                    predicate: Article.GetFilteredLatestArticlesPredicate_2_0(
-                        categoryIds: categoryIds,
-                        newsPortalIds: newsPortalIds,
-                        titleSearchTerm: request.TitleSearchQuery,
-                        articleCreateDateTime: firstArticle?.CreateDateTime
-                    ).Compile()
+                .FilterArticles_2_0(
+                    categoryIds: categoryIds,
+                    newsPortalIds: newsPortalIds,
+                    titleSearchTerm: request.TitleSearchQuery,
+                    articleCreateDateTime: firstArticle?.CreateDateTime
                 )
                 .Skip(request.Skip)
                 .Take(request.Take)

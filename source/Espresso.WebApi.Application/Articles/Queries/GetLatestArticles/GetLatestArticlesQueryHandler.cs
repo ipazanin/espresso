@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Extensions;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -95,13 +96,11 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
 
             var articles = savedArticles
                 .OrderArticlesByPublishDate()
-                .Where(
-                    predicate: Article.GetFilteredLatestArticlesPredicate(
-                        categoryIds: categoryIds,
-                        newsPortalIds: newsPortalIds,
-                        titleSearchTerm: request.TitleSearchQuery,
-                        articleCreateDateTime: firstArticleCreateDateTime
-                    ).Compile()
+                .FilterArticles(
+                    categoryIds: categoryIds,
+                    newsPortalIds: newsPortalIds,
+                    titleSearchTerm: request.TitleSearchQuery,
+                    articleCreateDateTime: firstArticleCreateDateTime
                 )
                 .Skip(request.Skip)
                 .Take(request.Take);
@@ -131,14 +130,11 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
             }
 
             var featuredArticles = savedArticles
-                .Where(
-                    Article.GetFilteredFeaturedArticlesPredicate(
-                        categoryIds: null,
-                        newsPortalIds: null,
-                        maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
-                        articleCreateDateTime: firstArticleCreateDateTime
-                    )
-                    .Compile()
+                .FiltereFeaturedArticles(
+                    categoryIds: null,
+                    newsPortalIds: null,
+                    maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
+                    articleCreateDateTime: firstArticleCreateDateTime
                 )
                 .OrderFeaturedArticles(categoryIds);
 
@@ -147,12 +143,9 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                 request.FeaturedArticlesTake - featuredArticles.Count();
 
             var trendingArticles = savedArticles
-                .Where(
-                    Article.GetTrendingArticlePredicate(
-                        maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
-                        articleCreateDateTime: null
-                    )
-                    .Compile()
+                .FiltereTrendingArticles(
+                    maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
+                    articleCreateDateTime: null
                 )
                 .OrderArticlesByTrendingScore()
                 .Take(trendingArticlesTake)
