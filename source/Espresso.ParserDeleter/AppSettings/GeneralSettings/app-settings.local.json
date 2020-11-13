@@ -4,7 +4,7 @@
     "Environment": 1
   },
   "ArticleSimilarityConfiguration": {
-    "GroupSimilarArticlesBatchSize": 1500
+    "GroupSimilarArticlesBatchSize": 2000
   },
   "CronJobsConfiguration": {
     "DeleteArticlesCronExpression": "* * * * *",

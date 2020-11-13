@@ -57,6 +57,11 @@ namespace Espresso.Domain.Utilities
             return words.Where(word => !Regex.IsMatch(word, $"^{UnimpactfulCroatianWordsRegex}$", RegexOptions.IgnoreCase));
         }
 
+        public static IEnumerable<string> RemoveWordsWithLessThanThreeLetters(this IEnumerable<string> words)
+        {
+            return words.Where(word => word.Length > 2);
+        }
+
         public static string ReplaceCroatianCharacters(this string input)
         {
             var len = input.Length;

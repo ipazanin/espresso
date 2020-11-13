@@ -87,6 +87,7 @@ namespace Espresso.Domain.Services
                     namedArguments: new (string argumentName, object argumentValue)[]
                     {
                         ("Total Number Of Articles", totalCount),
+                        ("Not Matched Articles Count", notMatchedArticles.Count),
                         ("Current Batch", count++),
                     }
                 );
@@ -160,11 +161,13 @@ namespace Espresso.Domain.Services
         {
             var mainArticleWords = LanguageUtility
                 .SeparateWords(mainArticle.Title)
-                .RemoveUnimpactfulCroatianWords();
+                .RemoveUnimpactfulCroatianWords()
+                .RemoveWordsWithLessThanThreeLetters();
 
             var possibleSubordinateArticleWords = LanguageUtility
                 .SeparateWords(possibleSubordinateArticle.Title)
-                .RemoveUnimpactfulCroatianWords();
+                .RemoveUnimpactfulCroatianWords()
+                .RemoveWordsWithLessThanThreeLetters();
 
 
             var similarityScore = CalculateSimilarityScoreBetweenWords(
