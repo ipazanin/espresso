@@ -16,6 +16,7 @@ using Espresso.Domain.IServices;
 using Espresso.ParserDeleter.Application.IServices;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
+using Espresso.Application.IServices;
 
 namespace Espresso.ParserDeleter.Application.Services
 {
@@ -25,19 +26,22 @@ namespace Espresso.ParserDeleter.Application.Services
         private readonly HttpClient _httpClient;
         private readonly IParseHtmlService _parseHtmlService;
         private readonly ILoggerService<ScrapeWebService> _loggerService;
+        private readonly IJsonService _jsonService;
         #endregion
 
         #region Constructors
         public ScrapeWebService(
             IParseHtmlService parseHtmlService,
             IHttpClientFactory httpClientFactory,
-            ILoggerService<ScrapeWebService> loggerService
+            ILoggerService<ScrapeWebService> loggerService,
+            IJsonService jsonService
         )
         {
             _httpClient = httpClientFactory.CreateClient();
             _httpClient.Timeout = TimeSpan.FromSeconds(10);
             _parseHtmlService = parseHtmlService;
             _loggerService = loggerService;
+            _jsonService = jsonService;
         }
         #endregion
 
@@ -93,7 +97,7 @@ namespace Espresso.ParserDeleter.Application.Services
         #endregion
 
         #region Private Methods
-        private static async Task<string?> GetImageUrlFromJsonObjectFromScriptTag(
+        private async Task<string?> GetImageUrlFromJsonObjectFromScriptTag(
             HtmlNodeCollection elementTags,
             IEnumerable<string> propertyNames,
             CancellationToken cancellationToken
@@ -104,7 +108,7 @@ namespace Espresso.ParserDeleter.Application.Services
             {
                 return null;
             }
-            var data = await JsonUtility.Deserialize<JsonElement>(jsonText, cancellationToken);
+            var data = await _jsonService.Deserialize<JsonElement>(jsonText, cancellationToken);
             try
             {
                 JsonElement property = default;

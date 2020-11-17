@@ -39,40 +39,15 @@ namespace Espresso.WebApi.Extensions
 
         private static void ConfigureSwaggerDocumentVersions(SwaggerGenOptions options, IWebApiConfiguration configuration)
         {
-            options.SwaggerDoc(configuration.AppConfiguration.EspressoWebApiCurrentVersion.ToString(), new OpenApiInfo
+            foreach (var apiVersion in configuration.AppConfiguration.ApiVersions)
             {
-                Title = $"Espresso API",
-                Version = configuration.AppConfiguration.EspressoWebApiCurrentVersion.ToString(),
-                Description = "Espresso APP Web Api",
-            });
-
-            options.SwaggerDoc(configuration.AppConfiguration.EspressoWebApiVersion_2_0.ToString(), new OpenApiInfo
-            {
-                Title = $"Espresso API",
-                Version = configuration.AppConfiguration.EspressoWebApiVersion_2_0.ToString(),
-                Description = "Espresso APP Web Api"
-            });
-
-            options.SwaggerDoc(configuration.AppConfiguration.EspressoWebApiVersion_1_4.ToString(), new OpenApiInfo
-            {
-                Title = $"Espresso API",
-                Version = configuration.AppConfiguration.EspressoWebApiVersion_1_4.ToString(),
-                Description = "Espresso APP Web Api"
-            });
-
-            options.SwaggerDoc(configuration.AppConfiguration.EspressoWebApiVersion_1_3.ToString(), new OpenApiInfo
-            {
-                Title = $"Espresso API",
-                Version = configuration.AppConfiguration.EspressoWebApiVersion_1_3.ToString(),
-                Description = "Espresso APP Web Api"
-            });
-
-            options.SwaggerDoc(configuration.AppConfiguration.EspressoWebApiVersion_1_2.ToString(), new OpenApiInfo
-            {
-                Title = $"Espresso API",
-                Version = configuration.AppConfiguration.EspressoWebApiVersion_1_2.ToString(),
-                Description = "Espresso APP Web Api"
-            });
+                options.SwaggerDoc(apiVersion.ToString(), new OpenApiInfo
+                {
+                    Title = $"Espresso API",
+                    Version = apiVersion.ToString(),
+                    Description = "Espresso APP Web Api",
+                });
+            }
 
             options.DocInclusionPredicate((version, desc) =>
             {

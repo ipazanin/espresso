@@ -179,7 +179,8 @@ namespace Espresso.WebApi.Application.Initialization
                 ),
             });
         }
-
+#pragma warning disable CA1822
+#pragma warning disable IDE0060
         private void DisplaySimilarArticles(
             IEnumerable<Article> articles
         )
@@ -200,6 +201,7 @@ namespace Espresso.WebApi.Application.Initialization
             // }
             #endregion
         }
+#pragma warning restore
         #endregion
     }
 }

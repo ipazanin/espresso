@@ -1,54 +1,82 @@
-using System.IO;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+// using System.IO;
+// using System.Text.Json;
+// using System.Threading;
+// using System.Threading.Tasks;
 
-namespace Espresso.Common.Utilities
-{
-    public static class JsonUtility
-    {
-        public static async Task<string> Serialize<TValue>(
-            TValue value,
-            CancellationToken cancellationToken
-        )
-        {
-            var stream = new MemoryStream();
-            await JsonSerializer.SerializeAsync(
-                utf8Json: stream,
-                value: value,
-                options: new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                    MaxDepth = 100
-                },
-                cancellationToken: cancellationToken
-            );
+// namespace Espresso.Common.Utilities
+// {
+//     public static class JsonUtility
+//     {
+//         #region Properties
+//         public static JsonSerializerOptions DefaultOptions => new JsonSerializerOptions
+//         {
+//             PropertyNameCaseInsensitive = true,
+//             AllowTrailingCommas = true,
+//             MaxDepth = 100,
+//             ReadCommentHandling = JsonCommentHandling.Skip,
+//         };
+//         #endregion
 
-            stream.Position = 0;
+//         #region Methods
+//         public static async Task<string> Serialize<TValue>(
+//             TValue value,
+//             CancellationToken cancellationToken
+//         )
+//         {
+//             var stream = new MemoryStream();
+//             await JsonSerializer.SerializeAsync(
+//                 utf8Json: stream,
+//                 value: value,
+//                 options: DefaultOptions,
+//                 cancellationToken: cancellationToken
+//             );
 
-            using var reader = new StreamReader(stream);
+//             stream.Position = 0;
 
-            var jsonValue = await reader
-                .ReadToEndAsync();
+//             using var reader = new StreamReader(stream);
 
-            return jsonValue;
-        }
+//             var jsonValue = await reader
+//                 .ReadToEndAsync();
 
-        public static async Task<TValue?> Deserialize<TValue>(
-            string json,
-            CancellationToken cancellationToken
-        )
-        {
-            var utf8Bytes = System.Text.Encoding.UTF8.GetBytes(json);
+//             return jsonValue;
+//         }
 
-            var stream = new MemoryStream(utf8Bytes);
+//         public static async Task<TValue?> Deserialize<TValue>(
+//             string json,
+//             CancellationToken cancellationToken
+//         )
+//         {
+//             var utf8Bytes = System.Text.Encoding.UTF8.GetBytes(json);
 
-            var value = await JsonSerializer.DeserializeAsync<TValue?>(
-                utf8Json: stream,
-                cancellationToken: cancellationToken
-            );
+//             var stream = new MemoryStream(utf8Bytes);
 
-            return value;
-        }
-    }
-}
+//             var value = await JsonSerializer.DeserializeAsync<TValue?>(
+//                 utf8Json: stream,
+//                 options: DefaultOptions,
+//                 cancellationToken: cancellationToken
+//             );
+
+//             return value;
+//         }
+
+//         public static async Task<TValue?> Deserialize<TValue>(
+//             byte[] utf8Bytes,
+//             CancellationToken cancellationToken
+//         )
+//         {
+//             var stream = new MemoryStream(utf8Bytes)
+//             {
+//                 Position = 0
+//             };
+
+//             var value = await JsonSerializer.DeserializeAsync<TValue?>(
+//                 utf8Json: stream,
+//                 options: DefaultOptions,
+//                 cancellationToken: cancellationToken
+//             );
+
+//             return value;
+//         }
+//     }
+//     #endregion
+// }

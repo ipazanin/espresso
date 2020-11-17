@@ -12,7 +12,7 @@ using Espresso.WebApi.Configuration;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Espresso.WebApi.CronJobs
+namespace Espresso.WebApi.Jobs.CronJobs
 {
     /// <summary>
     /// 

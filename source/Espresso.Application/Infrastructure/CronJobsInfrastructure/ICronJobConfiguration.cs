@@ -32,6 +32,5 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
         /// </summary>
         /// <value></value>
         AppEnvironment AppEnvironment { get; set; }
-
     }
 }

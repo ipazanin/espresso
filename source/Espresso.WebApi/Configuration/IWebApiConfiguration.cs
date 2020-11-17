@@ -47,5 +47,10 @@
         /// <value></value>
         public CronJobsConfiguration CronJobsConfiguration { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public RabbitMqConfiguration RabbitMqConfiguration { get; }
     }
 }

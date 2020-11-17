@@ -5,11 +5,10 @@ Makefile.local
 database-settings.local-production.json
 
 # Docker Compose
-docker-compose-local.yml
-docker-compose-development.yml
-docker-compose-database.yml
-development-environment.yml
-local-environment.yml
+database-environment.yml
+parser-environment.yml
+rabbitmq-environment.yml
+webapi-environment.yml
 
 # Firebase OAuth Configuration
 firebase-key.json

@@ -15,5 +15,11 @@
   "CronJobsConfiguration": {
     "DeleteArticlesCronExpression": "0 * * * *",
     "ParseArticlesCronExpression": "*/1 * * * *"
+  },
+  "RabbitMqConfiguration": {
+    "HostName": "rabbitmq",
+    "Port": 5672,
+    "UseRabbitMqServer": false,
+    "ArticlesQueueName": "articles-queue"
   }
 }

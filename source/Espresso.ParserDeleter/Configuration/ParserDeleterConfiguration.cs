@@ -10,6 +10,7 @@ namespace Espresso.ParserDeleter.Configuration
         public DatabaseConfiguration DatabaseConfiguration { get; }
         public CronJobsConfiguration CronJobsConfiguration { get; }
         public ArticleSimilarityConfiguration ArticleSimilarityConfiguration { get; }
+        public RabbitMqConfiguration RabbitMqConfiguration { get; }
         #endregion
 
         #region Constructors
@@ -20,6 +21,7 @@ namespace Espresso.ParserDeleter.Configuration
             DatabaseConfiguration = new DatabaseConfiguration(configuration.GetSection("DatabaseConfiguration"));
             CronJobsConfiguration = new CronJobsConfiguration(configuration.GetSection("CronJobsConfiguration"));
             ArticleSimilarityConfiguration = new ArticleSimilarityConfiguration(configuration.GetSection("ArticleSimilarityConfiguration"));
+            RabbitMqConfiguration = new RabbitMqConfiguration(configuration.GetSection("RabbitMqConfiguration"));
         }
         #endregion
     }

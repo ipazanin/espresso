@@ -3,23 +3,19 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.DataTransferObjects;
-using Espresso.Application.Extensions;
 using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Domain.Entities;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
-using Espresso.Common.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
 using Espresso.Persistence.IRepositories;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using Espresso.ParserDeleter.Application.IServices;
 
 namespace Espresso.ParserDeleter.ParseRssFeeds
 {
@@ -31,11 +27,10 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
         private readonly IArticleCategoryRepository _articleCategoryRepository;
         private readonly ISimilarArticleRepository _similarArticleRepository;
         private readonly ICreateArticleService _parseArticlesService;
-        private readonly ISlackService _slackService;
         private readonly ILoadRssFeedsService _loadRssFeedsService;
-        private readonly HttpClient _httpClient;
         private readonly ISortArticlesService _sortArticlesService;
         private readonly IGroupSimilarArticlesService _groupSimilarArticlesService;
+        private readonly ISendArticlesService _sendArticlesService;
         private readonly ILoggerService<ParseRssFeedsCommandHandler> _loggerService;
         #endregion
 
@@ -46,11 +41,10 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
             IArticleCategoryRepository articleCategoryRepository,
             ISimilarArticleRepository similarArticleRepository,
             ICreateArticleService parseArticlesService,
-            ISlackService slackService,
             ILoadRssFeedsService loadRssFeedsService,
-            IHttpClientFactory httpClientFactory,
             ISortArticlesService sortArticlesService,
             IGroupSimilarArticlesService groupSimilarArticlesService,
+            ISendArticlesService sendArticlesService,
             ILoggerService<ParseRssFeedsCommandHandler> loggerService
         )
         {
@@ -59,14 +53,11 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
             _articleCategoryRepository = articleCategoryRepository;
             _similarArticleRepository = similarArticleRepository;
             _parseArticlesService = parseArticlesService;
-            _slackService = slackService;
             _loadRssFeedsService = loadRssFeedsService;
-
-            _httpClient = httpClientFactory.CreateClient();
-            _httpClient.Timeout = TimeSpan.FromMinutes(4);
 
             _sortArticlesService = sortArticlesService;
             _groupSimilarArticlesService = groupSimilarArticlesService;
+            _sendArticlesService = sendArticlesService;
             _loggerService = loggerService;
         }
         #endregion
@@ -116,8 +107,7 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
 
             CreateSimilarArticles();
 
-            await CallWebServer(
-                request: request,
+            await _sendArticlesService.SendArticlesMessage(
                 createArticles: createArticles,
                 updateArticles: updateArticles,
                 cancellationToken: cancellationToken
@@ -268,66 +258,6 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
 
             _memoryCache.Set(key: MemoryCacheConstants.ArticleKey, value: articlesDictionary.Values.ToList());
             _memoryCache.Set(key: MemoryCacheConstants.LastSimilarityGroupingTime, value: DateTime.UtcNow);
-        }
-
-        private async Task CallWebServer(
-            ParseRssFeedsCommand request,
-            IEnumerable<Article> createArticles,
-            IEnumerable<Article> updateArticles,
-            CancellationToken cancellationToken
-        )
-        {
-            if (!createArticles.Any() && !updateArticles.Any())
-            {
-                return;
-            }
-
-            var createdArticleIds = createArticles.Select(article => article.Id);
-            var updatedArticleIds = updateArticles.Select(article => article.Id);
-
-            var httpHeaders = new List<(string headerKey, string headerValue)>
-            {
-                (headerKey: HttpHeaderConstants.ApiKeyHeaderName, headerValue: request.ParserApiKey),
-                (headerKey: HttpHeaderConstants.EspressoApiHeaderName, headerValue: request.TargetedApiVersion),
-                (headerKey: HttpHeaderConstants.VersionHeaderName, headerValue: request.CurrentApiVersion),
-                (headerKey: HttpHeaderConstants.DeviceTypeHeaderName, headerValue: ((int)DeviceType.RssFeedParser).ToString()),
-            };
-
-            try
-            {
-                _httpClient.AddHeadersToHttpClient(httpHeaders);
-                await _httpClient.PostAsJsonAsync(
-                    requestUri: $"{request.ServerUrl}/api/notifications/articles",
-                    value: new ArticlesBodyDto
-                    {
-                        CreatedArticles = createdArticleIds,
-                        UpdatedArticleIds = updatedArticleIds
-                    },
-                    cancellationToken: cancellationToken
-                );
-
-                return;
-            }
-            catch (Exception exception)
-            {
-                var eventName = Event.SendNewAndUpdatedArticlesRequest.GetDisplayName();
-                var version = request.CurrentApiVersion;
-                var arguments = new (string parameterName, object parameterValue)[]
-                {
-                    (nameof(version), version)
-                };
-
-                _loggerService.Log(eventName, exception, LogLevel.Error, arguments);
-
-                await _slackService.LogError(
-                        eventName: eventName,
-                        version: request.TargetedApiVersion,
-                        message: exception.Message,
-                        exception: exception,
-                        appEnvironment: request.AppEnvironment,
-                        cancellationToken: default
-                );
-            }
         }
         #endregion
     }

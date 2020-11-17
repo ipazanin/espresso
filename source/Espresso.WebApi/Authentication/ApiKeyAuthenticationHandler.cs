@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Common.Utilities;
 using Espresso.WebApi.DataTransferObjects;
@@ -26,6 +27,7 @@ namespace Espresso.WebApi.Authentication
         private const string ApiKeyHeaderName_1_2 = "Espresso-Api-Key";
 
         private readonly IApiKeyProvider _apiKeyProvider;
+        private readonly IJsonService _jsonService;
 
         /// <summary>
         /// 
@@ -35,12 +37,14 @@ namespace Espresso.WebApi.Authentication
         /// <param name="encoder"></param>
         /// <param name="clock"></param>
         /// <param name="apiKeyProvider"></param>
+        /// <param name="jsonService"></param>
         public ApiKeyAuthenticationHandler(
             IOptionsMonitor<ApiKeyAuthenticationOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
             ISystemClock clock,
-            IApiKeyProvider apiKeyProvider
+            IApiKeyProvider apiKeyProvider,
+            IJsonService jsonService
         ) : base(
             options: options,
             logger: logger,
@@ -49,6 +53,7 @@ namespace Espresso.WebApi.Authentication
         )
         {
             _apiKeyProvider = apiKeyProvider;
+            _jsonService = jsonService;
         }
 
         /// <summary>
@@ -108,7 +113,7 @@ namespace Espresso.WebApi.Authentication
                 errors: null
             );
 
-            var json = await JsonUtility.Serialize(exceptionDto, default);
+            var json = await _jsonService.Serialize(exceptionDto, default);
 
             await Response.WriteAsync(json);
         }
@@ -130,7 +135,7 @@ namespace Espresso.WebApi.Authentication
                 errors: null
             );
 
-            var json = await JsonUtility.Serialize(exceptionDto, default);
+            var json = await _jsonService.Serialize(exceptionDto, default);
 
             await Response.WriteAsync(json);
         }

@@ -1,26 +1,22 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using Espresso.WebApi.Application.Hubs;
-using Espresso.WebApi.Application.Initialization;
-using Espresso.Common.Enums;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
+﻿using Espresso.Common.Constants;
 using Espresso.WebApi.Configuration;
-using Espresso.WebApi.Extensions;
-using GraphQL.Server.Ui.Playground;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Espresso.WebApi
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class Startup
+    internal sealed partial class Startup
     {
+        #region Constants
+        private const string CustomCorsPolicyName = nameof(CustomCorsPolicyName);
+        private const string ClientAppStaticFilesDirectory = "ClientApp/build";
+        private const string SwaggerDefinitionFileName = "swagger" + FileExtensionConstants.Json;
+        private const string ApiDescriptionNamePrefix = "Espresso API";
+        private const string SwaggerApiExplorerRoute = "docs";
+        private const string SwaggerDocumentDefinitionRoutePrefix = "swagger";
+        #endregion
+
         #region Fields
-        private readonly IWebApiConfiguration _configuration;
+        private readonly IWebApiConfiguration _webApiConfiguration;
         #endregion
 
         #region Constructors
@@ -29,86 +25,7 @@ namespace Espresso.WebApi
         /// </summary>
         public Startup(IConfiguration configuration)
         {
-            _configuration = new WebApiConfiguration(configuration);
-        }
-        #endregion
-
-        #region Methods
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="services"></param>
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddApplicationServices(_configuration);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="app"></param>
-        /// <param name="memoryCacheInit"></param>
-        /// <param name="env"></param>
-        public void Configure(
-            IApplicationBuilder app,
-            IWebApiInit memoryCacheInit,
-            IWebHostEnvironment env
-        )
-        {
-            if (_configuration.SpaConfiguration.EnableCors)
-            {
-                app.UseCors("CustomCorsPolicy");
-            }
-
-            memoryCacheInit.InitWebApi().GetAwaiter().GetResult();
-            app.UseSecurityHeadersMiddleware(securityHeadersBuilder =>
-            {
-                securityHeadersBuilder.AddDefaultSecurePolicy();
-            });
-
-            app.UseHsts();
-
-            app.UseSwaggerServices(_configuration);
-            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions
-            {
-                Path = "/graphql-playground",
-                GraphQLEndPoint = "/graphql",
-                Headers = new Dictionary<string, object>
-                {
-                  { "espresso-api-key", "" },
-                  { "espresso-api-version", _configuration.AppConfiguration.EspressoWebApiCurrentVersion.ToString() },
-                  { "device-type", DeviceType.WebApp },
-                  { "version", "1.0.0" }
-                },
-                EditorReuseHeaders = true,
-            });
-
-            app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseStaticFiles();
-            app.UseSpaStaticFiles();
-
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = Path.Join(env.ContentRootPath, "ClientApp");
-
-                if (
-                    _configuration.AppConfiguration.AppEnvironment.Equals(AppEnvironment.Local) &&
-                    _configuration.SpaConfiguration.UseSpaProxyServer
-                )
-                {
-                    spa.UseProxyToSpaDevelopmentServer(_configuration.SpaConfiguration.SpaProxyServerUrl);
-                }
-            });
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-                endpoints.MapHealthChecks("/health");
-                endpoints.MapHub<ArticlesNotificationHub>("/notifications/articles");
-            });
+            _webApiConfiguration = new WebApiConfiguration(configuration);
         }
         #endregion
     }

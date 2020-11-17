@@ -27,38 +27,56 @@ build::
 
 compose-database::
 ifeq ($(arg1), up)
-	docker-compose -f ./compose/database.yml up \
-	--build --remove-orphans $(arg2)
+	docker-compose \
+	-f ./compose/database.yml \
+	-f ./compose/database-environment.yml  \
+	up --build $(arg2)
 else ifeq ($(strip $(arg1)),)
-	docker-compose -f ./compose/database.yml up \
-	--build --remove-orphans $(arg2)
+	docker-compose \
+	-f ./compose/database.yml \
+	-f ./compose/database-environment.yml \
+	up --build $(arg2)
 else ifeq ($(arg1), down)
-	docker-compose -f ./compose/database.yml down
+	docker-compose -f ./compose/database.yml -f ./compose/database-environment.yml down
 else
 	echo "Invalid Argument. Accepted arguments: up, down"
 endif
 
-compose-development::
+compose-rabbitmq::
 ifeq ($(arg), up)
 	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/parser.yml \
-	-f ./compose/development-environment.yml \
-	up --build --remove-orphans 
+	-f ./compose/rabbitmq.yml \
+	-f ./compose/rabbitmq-environment.yml \
+	up --build
 else ifeq ($(strip $(arg)),)
 	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/parser.yml \
-	-f ./compose/development-environment.yml \
-	up --build --remove-orphans 
+	-f ./compose/rabbitmq.yml \
+	-f ./compose/rabbitmq-environment.yml \
+	up --build
 else ifeq ($(arg), down)
 	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/webapi.yml \
+	-f ./compose/rabbitmq.yml \
+	-f ./compose/rabbitmq-environment.yml \
+	down
+else
+	echo "Invalid Argument. Accepted arguments: up, down"
+endif
+
+compose-parser::
+ifeq ($(arg), up)
+	docker-compose \
 	-f ./compose/parser.yml \
-	-f ./compose/development-environment.yml \
+	-f ./compose/parser-environment.yml \
+	up --build
+else ifeq ($(strip $(arg)),)
+	docker-compose \
+	-f ./compose/parser.yml \
+	-f ./compose/parser-environment.yml \
+	up --build
+else ifeq ($(arg), down)
+	docker-compose \
+	-f ./compose/parser.yml \
+	-f ./compose/parser-environment.yml \
 	down
 else
 	echo "Invalid Argument. Accepted arguments: up, down"
@@ -68,23 +86,67 @@ compose-local::
 ifeq ($(arg), up)
 	docker-compose \
 	-f ./compose/database.yml \
+	-f ./compose/database-environment.yml \
 	-f ./compose/webapi.yml \
+	-f ./compose/webapi-environment.yml \
 	-f ./compose/parser.yml \
-	-f ./compose/local-environment.yml \
-	up --build --remove-orphans
+	-f ./compose/parser-environment.yml \
+	up --build
 else ifeq ($(strip $(arg)),)
 	docker-compose \
 	-f ./compose/database.yml \
+	-f ./compose/database-environment.yml \
 	-f ./compose/webapi.yml \
+	-f ./compose/webapi-environment.yml \
 	-f ./compose/parser.yml \
-	-f ./compose/local-environment.yml \
-	up --build --remove-orphans
+	-f ./compose/parser-environment.yml \
+	up --build
 else ifeq ($(arg), down)
 	docker-compose \
 	-f ./compose/database.yml \
+	-f ./compose/database-environment.yml \
 	-f ./compose/webapi.yml \
+	-f ./compose/webapi-environment.yml \
 	-f ./compose/parser.yml \
-	-f ./compose/local-environment.yml \
+	-f ./compose/parser-environment.yml \
+	down
+else
+	echo "Invalid Argument. Accepted arguments: up, down"
+endif
+
+compose-local-rabbitmq::
+ifeq ($(arg), up)
+	docker-compose \
+	-f ./compose/database.yml \
+	-f ./compose/database-environment.yml \
+	-f ./compose/webapi.yml \
+	-f ./compose/webapi-environment.yml \
+	-f ./compose/parser.yml \
+	-f ./compose/parser-environment.yml \
+	-f ./compose/rabbitmq.yml \
+	-f ./compose/rabbitmq-environment.yml \
+	up --build
+else ifeq ($(strip $(arg)),)
+	docker-compose \
+	-f ./compose/database.yml \
+	-f ./compose/database-environment.yml \
+	-f ./compose/webapi.yml \
+	-f ./compose/webapi-environment.yml \
+	-f ./compose/parser.yml \
+	-f ./compose/parser-environment.yml \
+	-f ./compose/rabbitmq.yml \
+	-f ./compose/rabbitmq-environment.yml \
+	up --build
+else ifeq ($(arg), down)
+	docker-compose \
+	-f ./compose/database.yml \
+	-f ./compose/database-environment.yml \
+	-f ./compose/webapi.yml \
+	-f ./compose/webapi-environment.yml \
+	-f ./compose/parser.yml \
+	-f ./compose/parser-environment.yml \
+	-f ./compose/rabbitmq.yml \
+	-f ./compose/rabbitmq-environment.yml \
 	down
 else
 	echo "Invalid Argument. Accepted arguments: up, down"

@@ -25,5 +25,11 @@
     "ApplicationDownloadStatisticsCronExpression": "0 8 * * *",
     "WebApiReportCronExpression": "0 8 * * *"
   },
+  "RabbitMqConfiguration": {
+    "HostName": "rabbitmq",
+    "Port": 5672,
+    "UseRabbitMqServer": false,
+    "ArticlesQueueName": "articles-queue"
+  },
   "AllowedHosts": "*"
 }
