@@ -50,6 +50,12 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         /// <value></value>
         public TrendingScoreConfiguration TrendingScoreConfiguration { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public RabbitMqConfiguration RabbitMqConfiguration { get; }
         #endregion
 
         #region Constructors
@@ -66,6 +72,7 @@ namespace Espresso.WebApi.Configuration
             DateTimeConfiguration = new DateTimeConfiguration(configuration.GetSection("DateTimeConfiguration"));
             CronJobsConfiguration = new CronJobsConfiguration(configuration.GetSection("CronJobsConfiguration"));
             TrendingScoreConfiguration = new TrendingScoreConfiguration(configuration.GetSection("TrendingScoreConfiguration"));
+            RabbitMqConfiguration = new RabbitMqConfiguration(configuration.GetSection("RabbitMqConfiguration"));
         }
         #endregion
     }

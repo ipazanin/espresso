@@ -5,8 +5,6 @@ services:
     build:
       context: ../source
       dockerfile: Espresso.WebApi/Dockerfile
-      args:
-        REACT_APP_ENVIRONMENT: local
     ports:
       - '8000:80'
       - '8001:443'

@@ -4,7 +4,7 @@
     {
         #region Custom Espresso Headers
         public const string ApiKeyHeaderName = "espresso-api-key";
-        public const string EspressoApiHeaderName = "espresso-api-version";
+        public const string ApiVersionHeaderName = "espresso-api-version";
         public const string VersionHeaderName = "version";
         public const string DeviceTypeHeaderName = "device-type";
         #endregion

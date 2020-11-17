@@ -46,8 +46,6 @@ namespace Espresso.ParserDeleter.CronJobs
                 request: new ParseRssFeedsCommand
                 {
                     MaxAgeOfArticle = _configuration.AppConfiguration.MaxAgeOfArticles,
-                    ParserApiKey = _configuration.ApiKeysConfiguration.ParserApiKey,
-                    ServerUrl = _configuration.AppConfiguration.ServerUrl,
                     CurrentApiVersion = _configuration.AppConfiguration.Version,
                     TargetedApiVersion = _configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
                     ConsumerVersion = _configuration.AppConfiguration.Version,

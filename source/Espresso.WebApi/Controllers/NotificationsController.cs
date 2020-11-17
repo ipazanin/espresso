@@ -70,7 +70,7 @@ namespace Espresso.WebApi.Controllers
             await Sender.Send(
                 request: new UpdateInMemoryArticlesCommand
                 {
-                    CreatedArticleIds = articlesRequest.CreatedArticles,
+                    CreatedArticleIds = articlesRequest.CreatedArticleIds,
                     UpdatedArticleIds = articlesRequest.UpdatedArticleIds,
                     MaxAgeOfArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfArticle,
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
@@ -85,7 +85,7 @@ namespace Espresso.WebApi.Controllers
             await Sender.Send(
                 request: new SendArticlesNotificationsCommand
                 {
-                    CreatedArticleIds = articlesRequest.CreatedArticles,
+                    CreatedArticleIds = articlesRequest.CreatedArticleIds,
                     UpdatedArticleIds = articlesRequest.UpdatedArticleIds,
                     CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,

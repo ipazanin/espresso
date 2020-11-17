@@ -7,19 +7,13 @@ using System.Threading.Tasks;
 using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
-using Espresso.Common.Utilities;
-using Espresso.Application.DataTransferObjects;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Entities;
 using System.Linq;
-using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Application.DataTransferObjects.SlackDataTransferObjects;
-using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
-using System.Net.Http.Json;
 
 namespace Espresso.Application.Services
 {
@@ -62,6 +56,7 @@ namespace Espresso.Application.Services
         private readonly IMemoryCache _memoryCache;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILoggerService<SlackService> _loggerService;
+        private readonly IJsonService _jsonService;
         private readonly string _webHookUrl;
         #endregion
 
@@ -70,12 +65,14 @@ namespace Espresso.Application.Services
             IMemoryCache memoryCache,
             IHttpClientFactory httpClientFactory,
             ILoggerService<SlackService> loggerService,
+            IJsonService jsonService,
             string webHookUrl
         )
         {
             _memoryCache = memoryCache;
             _httpClientFactory = httpClientFactory;
             _loggerService = loggerService;
+            _jsonService = jsonService;
             _webHookUrl = webHookUrl;
         }
         #endregion
@@ -431,7 +428,7 @@ namespace Espresso.Application.Services
                   entry.AbsoluteExpirationRelativeToNow = s_exceptionMessageCooldownInterval;
                   try
                   {
-                      var jsonString = await JsonUtility.Serialize(data, cancellationToken);
+                      var jsonString = await _jsonService.Serialize(data, cancellationToken);
 
                       var content = new StringContent(jsonString, Encoding.UTF8, MimeTypeConstants.Json);
                       var response = await httpClient.PostAsync(

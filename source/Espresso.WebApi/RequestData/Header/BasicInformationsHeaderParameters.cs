@@ -13,7 +13,7 @@ namespace Espresso.WebApi.RequestData.Header
         /// <summary>
         /// 
         /// </summary>
-        [FromHeader(Name = HttpHeaderConstants.EspressoApiHeaderName)]
+        [FromHeader(Name = HttpHeaderConstants.ApiVersionHeaderName)]
         public string EspressoWebApiVersion { get; set; } = "";
 
         /// <summary>

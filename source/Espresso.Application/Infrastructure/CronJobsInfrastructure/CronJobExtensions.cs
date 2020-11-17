@@ -2,7 +2,7 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 
-namespace Espresso.WebApi.Extensions
+namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
 {
     /// <summary>
     /// 

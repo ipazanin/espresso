@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Espresso.Application.IServices;
 using Espresso.Common.Constants;
-using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
 using Espresso.WebApi.Application.Exceptions;
@@ -29,16 +25,19 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
         #region Fields
         private readonly IApplicationDatabaseContext _espressoDatabaseContext;
         private readonly IMemoryCache _memoryCache;
+        private readonly IJsonService _jsonService;
         #endregion
 
         #region Constructors
         public SendPushNotificationCommandHandler(
             IApplicationDatabaseContext espressoDatabaseContext,
-            IMemoryCache memoryCache
+            IMemoryCache memoryCache,
+            IJsonService jsonService
         )
         {
             _espressoDatabaseContext = espressoDatabaseContext;
             _memoryCache = memoryCache;
+            _jsonService = jsonService;
         }
         #endregion
 
@@ -63,7 +62,7 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
                 .Compile()
                 .Invoke(pushNotificationArticle);
 
-            var articleDtoJsonString = await JsonUtility.Serialize(articleDto, cancellationToken);
+            var articleDtoJsonString = await _jsonService.Serialize(articleDto, cancellationToken);
 
             var internalName = GetInternalName(request.InternalName);
             var customData = new Dictionary<string, string>

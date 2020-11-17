@@ -216,7 +216,7 @@ namespace Espresso.WebApi.Controllers
             var request = new GetConfigurationQuery_1_3
             {
                 CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
-                TargetedApiVersion = WebApiConfiguration.AppConfiguration.EspressoWebApiVersion_1_2.ToString(),
+                TargetedApiVersion = "1.2",
                 ConsumerVersion = mobileAppVersion,
                 DeviceType = mobileDeviceType,
                 AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Espresso.Common.Enums;
 using Microsoft.AspNetCore.Mvc;
@@ -38,30 +39,23 @@ namespace Espresso.WebApi.Configuration
         /// <summary>
         /// 
         /// </summary>
-        public ApiVersion EspressoWebApiVersion_1_2 => new ApiVersion(1, 2);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ApiVersion EspressoWebApiVersion_1_3 => new ApiVersion(1, 3);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ApiVersion EspressoWebApiVersion_1_4 => new ApiVersion(1, 4);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ApiVersion EspressoWebApiVersion_2_0 => new ApiVersion(2, 0);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ApiVersion EspressoWebApiCurrentVersion => new ApiVersion(
+        public ApiVersion ApiVersion => new ApiVersion(
             majorVersion: _configuration.GetValue<int>("MajorVersion"),
             minorVersion: _configuration.GetValue<int>("MinorVersion")
         );
+
+        /// <summary>
+        /// All Api Vesions
+        /// </summary>
+        /// <value></value>
+        public IEnumerable<ApiVersion> ApiVersions => new[]
+        {
+            ApiVersion,
+            new ApiVersion(2, 0),
+            new ApiVersion(1, 4),
+            new ApiVersion(1, 3),
+            new ApiVersion(1, 2),
+        };
 
         /// <summary>
         /// 
