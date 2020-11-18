@@ -12,6 +12,7 @@ namespace Espresso.Application.Services
         public static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             AllowTrailingCommas = true,
             MaxDepth = 100,
             ReadCommentHandling = JsonCommentHandling.Skip,
