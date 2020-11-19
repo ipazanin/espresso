@@ -5,13 +5,13 @@ import Main from 'views/Main';
 import Loader from 'components/Loader';
 
 import { useParams } from 'react-router-dom';
-import { useDocumentTitle } from '@profico/react-utils';
 import {
   GetWebConfigurationCategory,
   GetWebConfigurationQueryResponse,
 } from 'models';
 import { useQuery } from '@apollo/client';
 import { GET_CONFIGURATION } from 'graphql/queries/get_configuration';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 
 const filterCategories = (allCategories: GetWebConfigurationCategory[]) =>
   allCategories.filter(({ name }) => name !== 'Lokalno');

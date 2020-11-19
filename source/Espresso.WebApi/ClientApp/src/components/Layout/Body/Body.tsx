@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Flex } from '@profico/react-ui-components';
+import Flex from '../../Flex/Flex';
 
 import styles from './body.module.scss';
 

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Body from 'components/Layout/Body';
 
-import { Flex } from '@profico/react-ui-components';
 import {
   GetWebConfigurationCategory,
   GetFeaturedArticlesQueryResponse,
@@ -17,7 +16,8 @@ import {
   GET_LATEST_ARTICLES,
   GetLatestArticlesQueryArgs,
 } from 'graphql/queries/get_latest_articles';
-import { useDidMount } from '@profico/react-utils';
+import  useDidMount  from '../../hooks/useDidMount';
+import Flex from '../../components/Flex/Flex';
 
 import FeaturedArticles from './partials/FeaturedArticles';
 import LatestArticles from './partials/LatestArticles';
