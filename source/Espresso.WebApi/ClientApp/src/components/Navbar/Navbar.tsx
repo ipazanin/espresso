@@ -3,7 +3,6 @@ import React from 'react';
 import Touchable from 'components/Touchable';
 import cx from 'classnames';
 
-import { Flex, Text } from '@profico/react-ui-components';
 import {
   NavLink,
   useParams,
@@ -13,6 +12,8 @@ import {
 } from 'react-router-dom';
 import { ArrowRight } from 'components/Icons';
 import { GetWebConfigurationCategory } from 'models';
+import Flex from '../Flex/Flex';
+import Text from '../Text/Text';
 
 import styles from './navbar.module.scss';
 

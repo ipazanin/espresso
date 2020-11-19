@@ -1,8 +1,9 @@
 import React from 'react';
 import cx from 'classnames';
 
-import { Flex, Text } from '@profico/react-ui-components';
-import { useFullLifecyle } from '@profico/react-utils';
+import Flex from '../Flex/Flex';
+import Text from '../Text/Text';
+import useFullLifecyle from '../../hooks/useFullLifecycle';
 
 import styles from './loader.module.scss';
 

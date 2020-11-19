@@ -2,10 +2,13 @@ import React from 'react';
 import moment from 'moment';
 import cx from 'classnames';
 
-import { Flex, Text, Image } from '@profico/react-ui-components';
 import { GetLatestArticlesArticle, GetFeaturedArticlesArticle } from 'models';
 
 import styles from './article.module.scss';
+
+import Image from '../Image/Image';
+import Flex from '../Flex/Flex';
+import Text from '../Text/Text';
 
 type AnchorElementProps = React.DetailedHTMLProps<
   React.HTMLProps<HTMLAnchorElement>,

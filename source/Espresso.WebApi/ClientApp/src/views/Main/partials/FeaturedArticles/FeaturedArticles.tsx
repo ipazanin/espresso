@@ -1,9 +1,10 @@
 import React from 'react';
 import Article from 'components/Article';
 
-import { Flex, Text } from '@profico/react-ui-components';
 import { GetFeaturedArticlesArticle } from 'models';
 import { LoadingSpinner } from 'components/Loader';
+import Text from '../../../../components/Text/Text';
+import Flex from '../../../../components/Flex/Flex';
 
 import styles from './featured_articles.module.scss';
 

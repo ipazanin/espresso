@@ -2,10 +2,10 @@ import React from 'react';
 
 import { LoadingSpinner } from 'components/Loader';
 import { GetLatestArticlesArticle } from 'models';
-import { Flex, Text } from '@profico/react-ui-components';
-import { useWindowDimensions } from '@profico/react-utils';
-
 import Article from 'components/Article';
+import Flex from '../../../../components/Flex/Flex';
+import Text from '../../../../components/Text/Text';
+import useWindowDimensions from '../../../../hooks/useWindowDimensions';
 
 import styles from './latest_articles.module.scss';
 

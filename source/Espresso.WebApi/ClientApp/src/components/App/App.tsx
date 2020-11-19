@@ -5,9 +5,9 @@ import apolloClient from 'configuration/apollo-client';
 import 'moment/locale/hr';
 
 import { ApolloProvider } from '@apollo/client';
-import { TextConfigProvider } from '@profico/react-ui-components';
 import { Palette } from 'styles/Palette';
-import { useStringHelpers } from '@profico/react-utils';
+import { TextConfigProvider } from '../Text/Text.config';
+import useStringHelpers from '../../hooks/useStringHelpers';
 
 moment.locale('hr');
 
