@@ -32,6 +32,7 @@ exports[`App [component] -> Should render correctly 1`] = `
               "possibleTypes": undefined,
               "typePolicies": Object {},
             },
+            "fuzzySubtypes": Map {},
             "rootIdsByTypename": Object {
               "Mutation": "ROOT_MUTATION",
               "Query": "ROOT_QUERY",
@@ -42,10 +43,7 @@ exports[`App [component] -> Should render correctly 1`] = `
               "ROOT_QUERY": "Query",
               "ROOT_SUBSCRIPTION": "Subscription",
             },
-            "storageTrie": KeyTrie {
-              "makeData": [Function],
-              "weakness": true,
-            },
+            "supertypeMap": Map {},
             "typePolicies": Object {},
             "usingPossibleTypes": false,
           },
@@ -58,6 +56,10 @@ exports[`App [component] -> Should render correctly 1`] = `
               "makeData": [Function],
               "weakness": true,
             },
+          },
+          "storageTrie": KeyTrie {
+            "makeData": [Function],
+            "weakness": true,
           },
           "toReference": [Function],
         },
@@ -84,6 +86,7 @@ exports[`App [component] -> Should render correctly 1`] = `
               "possibleTypes": undefined,
               "typePolicies": Object {},
             },
+            "fuzzySubtypes": Map {},
             "rootIdsByTypename": Object {
               "Mutation": "ROOT_MUTATION",
               "Query": "ROOT_QUERY",
@@ -94,10 +97,7 @@ exports[`App [component] -> Should render correctly 1`] = `
               "ROOT_QUERY": "Query",
               "ROOT_SUBSCRIPTION": "Subscription",
             },
-            "storageTrie": KeyTrie {
-              "makeData": [Function],
-              "weakness": true,
-            },
+            "supertypeMap": Map {},
             "typePolicies": Object {},
             "usingPossibleTypes": false,
           },
@@ -111,6 +111,10 @@ exports[`App [component] -> Should render correctly 1`] = `
               "weakness": true,
             },
           },
+          "storageTrie": KeyTrie {
+            "makeData": [Function],
+            "weakness": true,
+          },
           "toReference": [Function],
         },
         "policies": Policies {
@@ -121,6 +125,7 @@ exports[`App [component] -> Should render correctly 1`] = `
             "possibleTypes": undefined,
             "typePolicies": Object {},
           },
+          "fuzzySubtypes": Map {},
           "rootIdsByTypename": Object {
             "Mutation": "ROOT_MUTATION",
             "Query": "ROOT_QUERY",
@@ -131,10 +136,7 @@ exports[`App [component] -> Should render correctly 1`] = `
             "ROOT_QUERY": "Query",
             "ROOT_SUBSCRIPTION": "Subscription",
           },
-          "storageTrie": KeyTrie {
-            "makeData": [Function],
-            "weakness": true,
-          },
+          "supertypeMap": Map {},
           "typePolicies": Object {},
           "usingPossibleTypes": false,
         },
@@ -199,6 +201,7 @@ exports[`App [component] -> Should render correctly 1`] = `
                 "possibleTypes": undefined,
                 "typePolicies": Object {},
               },
+              "fuzzySubtypes": Map {},
               "rootIdsByTypename": Object {
                 "Mutation": "ROOT_MUTATION",
                 "Query": "ROOT_QUERY",
@@ -209,10 +212,7 @@ exports[`App [component] -> Should render correctly 1`] = `
                 "ROOT_QUERY": "Query",
                 "ROOT_SUBSCRIPTION": "Subscription",
               },
-              "storageTrie": KeyTrie {
-                "makeData": [Function],
-                "weakness": true,
-              },
+              "supertypeMap": Map {},
               "typePolicies": Object {},
               "usingPossibleTypes": false,
             },
@@ -225,6 +225,10 @@ exports[`App [component] -> Should render correctly 1`] = `
                 "makeData": [Function],
                 "weakness": true,
               },
+            },
+            "storageTrie": KeyTrie {
+              "makeData": [Function],
+              "weakness": true,
             },
             "toReference": [Function],
           },
@@ -251,6 +255,7 @@ exports[`App [component] -> Should render correctly 1`] = `
                 "possibleTypes": undefined,
                 "typePolicies": Object {},
               },
+              "fuzzySubtypes": Map {},
               "rootIdsByTypename": Object {
                 "Mutation": "ROOT_MUTATION",
                 "Query": "ROOT_QUERY",
@@ -261,10 +266,7 @@ exports[`App [component] -> Should render correctly 1`] = `
                 "ROOT_QUERY": "Query",
                 "ROOT_SUBSCRIPTION": "Subscription",
               },
-              "storageTrie": KeyTrie {
-                "makeData": [Function],
-                "weakness": true,
-              },
+              "supertypeMap": Map {},
               "typePolicies": Object {},
               "usingPossibleTypes": false,
             },
@@ -278,6 +280,10 @@ exports[`App [component] -> Should render correctly 1`] = `
                 "weakness": true,
               },
             },
+            "storageTrie": KeyTrie {
+              "makeData": [Function],
+              "weakness": true,
+            },
             "toReference": [Function],
           },
           "policies": Policies {
@@ -288,6 +294,7 @@ exports[`App [component] -> Should render correctly 1`] = `
               "possibleTypes": undefined,
               "typePolicies": Object {},
             },
+            "fuzzySubtypes": Map {},
             "rootIdsByTypename": Object {
               "Mutation": "ROOT_MUTATION",
               "Query": "ROOT_QUERY",
@@ -298,10 +305,7 @@ exports[`App [component] -> Should render correctly 1`] = `
               "ROOT_QUERY": "Query",
               "ROOT_SUBSCRIPTION": "Subscription",
             },
-            "storageTrie": KeyTrie {
-              "makeData": [Function],
-              "weakness": true,
-            },
+            "supertypeMap": Map {},
             "typePolicies": Object {},
             "usingPossibleTypes": false,
           },
@@ -366,6 +370,7 @@ exports[`App [component] -> Should render correctly 1`] = `
                 "possibleTypes": undefined,
                 "typePolicies": Object {},
               },
+              "fuzzySubtypes": Map {},
               "rootIdsByTypename": Object {
                 "Mutation": "ROOT_MUTATION",
                 "Query": "ROOT_QUERY",
@@ -376,10 +381,7 @@ exports[`App [component] -> Should render correctly 1`] = `
                 "ROOT_QUERY": "Query",
                 "ROOT_SUBSCRIPTION": "Subscription",
               },
-              "storageTrie": KeyTrie {
-                "makeData": [Function],
-                "weakness": true,
-              },
+              "supertypeMap": Map {},
               "typePolicies": Object {},
               "usingPossibleTypes": false,
             },
@@ -392,6 +394,10 @@ exports[`App [component] -> Should render correctly 1`] = `
                 "makeData": [Function],
                 "weakness": true,
               },
+            },
+            "storageTrie": KeyTrie {
+              "makeData": [Function],
+              "weakness": true,
             },
             "toReference": [Function],
           },
@@ -418,6 +424,7 @@ exports[`App [component] -> Should render correctly 1`] = `
                 "possibleTypes": undefined,
                 "typePolicies": Object {},
               },
+              "fuzzySubtypes": Map {},
               "rootIdsByTypename": Object {
                 "Mutation": "ROOT_MUTATION",
                 "Query": "ROOT_QUERY",
@@ -428,10 +435,7 @@ exports[`App [component] -> Should render correctly 1`] = `
                 "ROOT_QUERY": "Query",
                 "ROOT_SUBSCRIPTION": "Subscription",
               },
-              "storageTrie": KeyTrie {
-                "makeData": [Function],
-                "weakness": true,
-              },
+              "supertypeMap": Map {},
               "typePolicies": Object {},
               "usingPossibleTypes": false,
             },
@@ -445,6 +449,10 @@ exports[`App [component] -> Should render correctly 1`] = `
                 "weakness": true,
               },
             },
+            "storageTrie": KeyTrie {
+              "makeData": [Function],
+              "weakness": true,
+            },
             "toReference": [Function],
           },
           "policies": Policies {
@@ -455,6 +463,7 @@ exports[`App [component] -> Should render correctly 1`] = `
               "possibleTypes": undefined,
               "typePolicies": Object {},
             },
+            "fuzzySubtypes": Map {},
             "rootIdsByTypename": Object {
               "Mutation": "ROOT_MUTATION",
               "Query": "ROOT_QUERY",
@@ -465,10 +474,7 @@ exports[`App [component] -> Should render correctly 1`] = `
               "ROOT_QUERY": "Query",
               "ROOT_SUBSCRIPTION": "Subscription",
             },
-            "storageTrie": KeyTrie {
-              "makeData": [Function],
-              "weakness": true,
-            },
+            "supertypeMap": Map {},
             "typePolicies": Object {},
             "usingPossibleTypes": false,
           },
@@ -536,6 +542,7 @@ exports[`App [component] -> Should render correctly 1`] = `
                   "possibleTypes": undefined,
                   "typePolicies": Object {},
                 },
+                "fuzzySubtypes": Map {},
                 "rootIdsByTypename": Object {
                   "Mutation": "ROOT_MUTATION",
                   "Query": "ROOT_QUERY",
@@ -546,10 +553,7 @@ exports[`App [component] -> Should render correctly 1`] = `
                   "ROOT_QUERY": "Query",
                   "ROOT_SUBSCRIPTION": "Subscription",
                 },
-                "storageTrie": KeyTrie {
-                  "makeData": [Function],
-                  "weakness": true,
-                },
+                "supertypeMap": Map {},
                 "typePolicies": Object {},
                 "usingPossibleTypes": false,
               },
@@ -562,6 +566,10 @@ exports[`App [component] -> Should render correctly 1`] = `
                   "makeData": [Function],
                   "weakness": true,
                 },
+              },
+              "storageTrie": KeyTrie {
+                "makeData": [Function],
+                "weakness": true,
               },
               "toReference": [Function],
             },
@@ -588,6 +596,7 @@ exports[`App [component] -> Should render correctly 1`] = `
                   "possibleTypes": undefined,
                   "typePolicies": Object {},
                 },
+                "fuzzySubtypes": Map {},
                 "rootIdsByTypename": Object {
                   "Mutation": "ROOT_MUTATION",
                   "Query": "ROOT_QUERY",
@@ -598,10 +607,7 @@ exports[`App [component] -> Should render correctly 1`] = `
                   "ROOT_QUERY": "Query",
                   "ROOT_SUBSCRIPTION": "Subscription",
                 },
-                "storageTrie": KeyTrie {
-                  "makeData": [Function],
-                  "weakness": true,
-                },
+                "supertypeMap": Map {},
                 "typePolicies": Object {},
                 "usingPossibleTypes": false,
               },
@@ -615,6 +621,10 @@ exports[`App [component] -> Should render correctly 1`] = `
                   "weakness": true,
                 },
               },
+              "storageTrie": KeyTrie {
+                "makeData": [Function],
+                "weakness": true,
+              },
               "toReference": [Function],
             },
             "policies": Policies {
@@ -625,6 +635,7 @@ exports[`App [component] -> Should render correctly 1`] = `
                 "possibleTypes": undefined,
                 "typePolicies": Object {},
               },
+              "fuzzySubtypes": Map {},
               "rootIdsByTypename": Object {
                 "Mutation": "ROOT_MUTATION",
                 "Query": "ROOT_QUERY",
@@ -635,10 +646,7 @@ exports[`App [component] -> Should render correctly 1`] = `
                 "ROOT_QUERY": "Query",
                 "ROOT_SUBSCRIPTION": "Subscription",
               },
-              "storageTrie": KeyTrie {
-                "makeData": [Function],
-                "weakness": true,
-              },
+              "supertypeMap": Map {},
               "typePolicies": Object {},
               "usingPossibleTypes": false,
             },
@@ -691,7 +699,7 @@ exports[`App [component] -> Should render correctly 1`] = `
     }
   }
 >
-  <Component
+  <TextConfigProvider
     config={
       Object {
         "colors": Object {
@@ -707,6 +715,6 @@ exports[`App [component] -> Should render correctly 1`] = `
     }
   >
     <AppRouter />
-  </Component>
+  </TextConfigProvider>
 </ApolloProvider>
 `;

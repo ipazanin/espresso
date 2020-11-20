@@ -80,11 +80,9 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             CategoryIds = resolveContext.GetArgument<string?>("categoryIds"),
                             MaxAgeOfFeaturedArticle = webApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,
                             MaxAgeOfTrendingArticle = webApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
-                            CurrentApiVersion = webApiConfiguration.AppConfiguration.Version,
                             TargetedApiVersion = userContext.TargetedApiVersion,
                             ConsumerVersion = userContext.ConsumerVersion,
                             DeviceType = userContext.DeviceType,
-                            AppEnvironment = webApiConfiguration.AppConfiguration.AppEnvironment
                         },
                         cancellationToken: resolveContext.CancellationToken
                     );

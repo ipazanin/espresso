@@ -102,11 +102,9 @@ namespace Espresso.WebApi.Controllers
                     MaxAgeOfTrendingArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
                     MaxAgeOfFeaturedArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,
                     FeaturedArticlesTake = WebApiConfiguration.AppConfiguration.FeaturedArticlesTake,
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );
@@ -166,11 +164,9 @@ namespace Espresso.WebApi.Controllers
                     MaxAgeOfTrendingArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
                     MaxAgeOfFeaturedArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,
                     FeaturedArticlesTake = WebApiConfiguration.AppConfiguration.FeaturedArticlesTake,
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );
@@ -227,11 +223,9 @@ namespace Espresso.WebApi.Controllers
                     NewNewsPortalsPosition = WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                     TitleSearchQuery = titleSearchQuery,
                     MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );
@@ -286,11 +280,9 @@ namespace Espresso.WebApi.Controllers
                     NewsPortalIds = newsPortalIds,
                     CategoryIds = categoryIds,
                     TitleSearchQuery = null,
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );
@@ -352,11 +344,9 @@ namespace Espresso.WebApi.Controllers
                     NewNewsPortalsPosition = WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                     TitleSearchQuery = titleSearchQuery,
                     MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );
@@ -417,11 +407,9 @@ namespace Espresso.WebApi.Controllers
                     NewNewsPortalsPosition = WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                     TitleSearchQuery = titleSearchQuery,
                     MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );
@@ -475,11 +463,9 @@ namespace Espresso.WebApi.Controllers
                     Skip = skip,
                     CategoryId = categoryId,
                     NewsPortalIds = newsPortalIds,
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );
@@ -530,11 +516,9 @@ namespace Espresso.WebApi.Controllers
                     Skip = articlePaginationParameters.Skip,
                     FirstArticleId = articlePaginationParameters.FirstArticleId,
                     MaxAgeOfTrendingArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );
@@ -590,11 +574,9 @@ namespace Espresso.WebApi.Controllers
                     NewsPortalIds = newsPortalIds,
                     MaxAgeOfFeaturedArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,
                     MaxAgeOfTrendingArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );
@@ -642,11 +624,9 @@ namespace Espresso.WebApi.Controllers
                 request: new IncrementNumberOfClicksCommand
                 {
                     Id = articleId,
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );
@@ -693,11 +673,9 @@ namespace Espresso.WebApi.Controllers
                 request: new IncrementNumberOfClicksCommand
                 {
                     Id = articleId,
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );
@@ -743,11 +721,9 @@ namespace Espresso.WebApi.Controllers
                 {
                     ArticleId = articleId,
                     IsHidden = isHidden,
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );
@@ -798,11 +774,9 @@ namespace Espresso.WebApi.Controllers
                                 featuredPosition: featuredConfiguration.FeaturedPosition
                             )
                         ),
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );
@@ -851,7 +825,6 @@ namespace Espresso.WebApi.Controllers
                 TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                 ConsumerVersion = basicInformationsHeaderParameters.Version,
                 DeviceType = basicInformationsHeaderParameters.DeviceType,
-                AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
             };
 
             var response = await Sender.Send(request, cancellationToken);

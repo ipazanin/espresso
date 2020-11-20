@@ -65,11 +65,9 @@ namespace Espresso.WebApi.Controllers
         {
             var command = new CreateApplicationDownloadCommand
             {
-                CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                 TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                 ConsumerVersion = basicInformationsHeaderParameters.Version,
                 DeviceType = basicInformationsHeaderParameters.DeviceType,
-                AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
             };
 
             await Sender.Send(
@@ -108,11 +106,9 @@ namespace Espresso.WebApi.Controllers
         {
             var command = new CreateApplicationDownloadCommand
             {
-                CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                 TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                 ConsumerVersion = basicInformationsHeaderParameters.Version,
                 DeviceType = basicInformationsHeaderParameters.DeviceType,
-                AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
             };
 
             await Sender.Send(
@@ -153,11 +149,9 @@ namespace Espresso.WebApi.Controllers
         {
             var command = new CreateApplicationDownloadCommand
             {
-                CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                 TargetedApiVersion = "1.2",
                 ConsumerVersion = mobileAppVersion,
                 DeviceType = mobileDeviceType,
-                AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
             };
             await Sender.Send(
                 request: command,
@@ -198,11 +192,9 @@ namespace Espresso.WebApi.Controllers
             var response = await Sender.Send(
                 request: new GetApplicationDownloadStatisticsQuery
                 {
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );
@@ -241,11 +233,9 @@ namespace Espresso.WebApi.Controllers
             var response = await Sender.Send(
                 request: new GetApplicationDownloadStatisticsQuery
                 {
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );

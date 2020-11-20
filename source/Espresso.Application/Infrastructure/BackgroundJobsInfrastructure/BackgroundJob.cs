@@ -8,7 +8,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Espresso.Application.Infrastructure.BackgroundJobsInfrastructure
 {
-    public abstract class BackgroundJob<T> : IHostedService where T : BackgroundJob<T>
+    public abstract class BackgroundJob<T> : IHostedService
+        where T : BackgroundJob<T>
     {
         #region Fields
         protected readonly IServiceScopeFactory ServiceScopeFactory;
@@ -28,6 +29,7 @@ namespace Espresso.Application.Infrastructure.BackgroundJobsInfrastructure
         {
             using var scope = ServiceScopeFactory.CreateScope();
             var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService<BackgroundJob<T>>>();
+
             var jobName = typeof(T).Name;
 
             loggerService.Log(
@@ -41,8 +43,9 @@ namespace Espresso.Application.Infrastructure.BackgroundJobsInfrastructure
             }
             catch (Exception exception)
             {
+                var errorEventName = $"Error while working {jobName}";
                 loggerService.Log(
-                    eventName: $"Error while working {jobName}",
+                    eventName: errorEventName,
                     exception: exception,
                     logLevel: LogLevel.Error
                 );

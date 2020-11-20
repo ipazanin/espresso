@@ -35,11 +35,9 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries
                         request: new GetConfigurationQuery
                         {
                             MaxAgeOfNewNewsPortal = webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                            CurrentApiVersion = webApiConfiguration.AppConfiguration.Version,
                             TargetedApiVersion = userContext.TargetedApiVersion,
                             ConsumerVersion = userContext.ConsumerVersion,
                             DeviceType = userContext.DeviceType,
-                            AppEnvironment = webApiConfiguration.AppConfiguration.AppEnvironment
                         },
                         cancellationToken: resolveContext.CancellationToken
                     );

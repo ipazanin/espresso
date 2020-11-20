@@ -112,10 +112,8 @@ namespace Espresso.WebApi.Filters
 
             return _slackService.LogError(
                     eventName: eventName,
-                    version: version,
                     message: context.Exception.Message,
                     exception: context.Exception,
-                    appEnvironment: _webApiConfiguration.AppConfiguration.AppEnvironment,
                     cancellationToken: default
             );
         }

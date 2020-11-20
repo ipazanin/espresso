@@ -71,11 +71,9 @@ namespace Espresso.WebApi.Controllers
             var request = new GetWebConfigurationQuery
             {
                 MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                 TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                 ConsumerVersion = basicInformationsHeaderParameters.Version,
                 DeviceType = basicInformationsHeaderParameters.DeviceType,
-                AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
             };
 
             var getNewsPortalsQueryResponse = await Sender.Send(
@@ -121,11 +119,9 @@ namespace Espresso.WebApi.Controllers
             var request = new GetConfigurationQuery
             {
                 MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                 TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                 ConsumerVersion = basicInformationsHeaderParameters.Version,
                 DeviceType = basicInformationsHeaderParameters.DeviceType,
-                AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
             };
             var getNewsPortalsQueryResponse = await Sender.Send(
                 request: request,
@@ -167,11 +163,9 @@ namespace Espresso.WebApi.Controllers
         {
             var request = new GetConfigurationQuery_1_3
             {
-                CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                 TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                 ConsumerVersion = basicInformationsHeaderParameters.Version,
                 DeviceType = basicInformationsHeaderParameters.DeviceType,
-                AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
             };
             var getNewsPortalsQueryResponse = await Sender.Send(
                 request: request,
@@ -215,11 +209,9 @@ namespace Espresso.WebApi.Controllers
         {
             var request = new GetConfigurationQuery_1_3
             {
-                CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                 TargetedApiVersion = "1.2",
                 ConsumerVersion = mobileAppVersion,
                 DeviceType = mobileDeviceType,
-                AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
             };
 
             var getNewsPortalsQueryResponse = await Sender.Send(

@@ -12,7 +12,6 @@ namespace Espresso.Domain.IServices
         public Task<(Article? article, bool isValid)> CreateArticleAsync(
             RssFeedItem rssFeedItem,
             IEnumerable<Category> categories,
-            TimeSpan maxAgeOfArticle,
             CancellationToken cancellationToken
         );
     }

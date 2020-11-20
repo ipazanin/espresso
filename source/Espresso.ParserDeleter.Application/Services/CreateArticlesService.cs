@@ -24,6 +24,7 @@ namespace Espresso.ParserDeleter.Application.Services
         private readonly IParseHtmlService _htmlParsingService;
         private readonly IValidator<ArticleData> _articleDataValidator;
         private readonly ILoggerService<CreateArticleService> _loggerService;
+        private readonly TimeSpan _maxAgeOfArticle;
         #endregion
 
         #region Constructors
@@ -31,13 +32,15 @@ namespace Espresso.ParserDeleter.Application.Services
             IScrapeWebService webScrapingService,
             IParseHtmlService htmlParsingService,
             IValidator<ArticleData> articleDataValidator,
-            ILoggerService<CreateArticleService> loggerService
+            ILoggerService<CreateArticleService> loggerService,
+            TimeSpan maxAgeOfArticle
         )
         {
             _webScrapingService = webScrapingService;
             _htmlParsingService = htmlParsingService;
             _articleDataValidator = articleDataValidator;
             _loggerService = loggerService;
+            _maxAgeOfArticle = maxAgeOfArticle;
         }
         #endregion
 
@@ -45,7 +48,6 @@ namespace Espresso.ParserDeleter.Application.Services
         public async Task<(Article? article, bool isValid)> CreateArticleAsync(
             RssFeedItem rssFeedItem,
             IEnumerable<Category> categories,
-            TimeSpan maxAgeOfArticle,
             CancellationToken cancellationToken
         )
         {
@@ -83,8 +85,7 @@ namespace Espresso.ParserDeleter.Application.Services
 
             var publishDateTime = GetPublishDateTime(
                 itemPublishDateTime: rssFeedItem.PublishDateTime,
-                utcNow: utcNow,
-                maxAgeOfArticle: maxAgeOfArticle
+                utcNow: utcNow
             );
 
             var articlecategories = GetArticleCategories(
@@ -296,9 +297,9 @@ namespace Espresso.ParserDeleter.Application.Services
             return imageUrl;
         }
 
-        private static DateTime? GetPublishDateTime(DateTimeOffset itemPublishDateTime, DateTime utcNow, TimeSpan maxAgeOfArticle)
+        private DateTime? GetPublishDateTime(DateTimeOffset itemPublishDateTime, DateTime utcNow)
         {
-            var invalidPublishdateTimeMinimum = utcNow - maxAgeOfArticle;
+            var invalidPublishdateTimeMinimum = utcNow - _maxAgeOfArticle;
             var minimumPublishDateTime = utcNow.AddDays(-1);
             var maximumPublishDateTime = utcNow;
             var rssFeedPublishDateTime = itemPublishDateTime.UtcDateTime;

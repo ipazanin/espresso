@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Espresso.Application.Models;
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
 using MediatR;
@@ -11,14 +12,17 @@ namespace Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplic
     {
         #region Fields
         private readonly IApplicationDatabaseContext _context;
+        private readonly ApplicationInformation _applicationInformation;
         #endregion
 
         #region Constructors
         public CreateApplicationDownloadCommanHandler(
-            IApplicationDatabaseContext context
+            IApplicationDatabaseContext context,
+            ApplicationInformation applicationInformation
         )
         {
             _context = context;
+            _applicationInformation = applicationInformation;
         }
         #endregion
 
@@ -26,7 +30,7 @@ namespace Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplic
         public async Task<Unit> Handle(CreateApplicationDownloadCommand request, CancellationToken cancellationToken)
         {
             var applicationDownload = new ApplicationDownload(
-                webApiVersion: request.CurrentApiVersion,
+                webApiVersion: _applicationInformation.Version,
                 mobileAppVersion: request.ConsumerVersion,
                 downloadedTime: DateTime.UtcNow,
                 mobileDeviceType: request.DeviceType

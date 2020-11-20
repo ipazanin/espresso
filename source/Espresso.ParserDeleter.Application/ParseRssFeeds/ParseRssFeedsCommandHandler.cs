@@ -2,12 +2,9 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.IServices;
 using Espresso.Common.Constants;
-using Espresso.Common.Enums;
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
@@ -74,8 +71,6 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
 
             var rssFeedItems = await _loadRssFeedsService.ParseRssFeeds(
                 rssFeeds: rssFeeds,
-                appEnvironment: request.AppEnvironment,
-                currentApiVersion: request.CurrentApiVersion,
                 cancellationToken: cancellationToken
             );
 
@@ -88,7 +83,6 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
             var articles = await GetArticlesFromLoadedRssFeeds(
                 rssFeedItems: rssFeedItems,
                 categories: categories,
-                request: request,
                 cancellationToken: cancellationToken
             );
 
@@ -120,10 +114,9 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
             };
         }
 
-        public async Task<IEnumerable<Article>> GetArticlesFromLoadedRssFeeds(
+        private async Task<IEnumerable<Article>> GetArticlesFromLoadedRssFeeds(
             IEnumerable<RssFeedItem> rssFeedItems,
             IEnumerable<Category> categories,
-            ParseRssFeedsCommand request,
             CancellationToken cancellationToken
         )
         {
@@ -141,7 +134,6 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
                         var (article, isValid) = await _parseArticlesService.CreateArticleAsync(
                             rssFeedItem: rssFeedItem,
                             categories: categories,
-                            maxAgeOfArticle: request.MaxAgeOfArticle,
                             cancellationToken: cancellationToken
                         );
 

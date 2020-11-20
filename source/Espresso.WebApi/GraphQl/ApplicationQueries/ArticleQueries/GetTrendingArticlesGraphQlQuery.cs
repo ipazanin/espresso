@@ -66,11 +66,9 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             Skip = resolveContext.GetArgument<int>("skip"),
                             FirstArticleId = firstArticleId,
                             MaxAgeOfTrendingArticle = webApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
-                            CurrentApiVersion = webApiConfiguration.AppConfiguration.Version,
                             TargetedApiVersion = userContext.TargetedApiVersion,
                             ConsumerVersion = userContext.ConsumerVersion,
                             DeviceType = userContext.DeviceType,
-                            AppEnvironment = webApiConfiguration.AppConfiguration.AppEnvironment
                         },
                         cancellationToken: resolveContext.CancellationToken
                     );

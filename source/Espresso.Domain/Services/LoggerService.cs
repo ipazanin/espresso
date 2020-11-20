@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +60,7 @@ namespace Espresso.Domain.Services
             var count = 0;
             var messageBuilder = new StringBuilder(
                 $"{AnsiUtility.EncodeEventName(count++)}\n\t" +
-                $"{AnsiUtility.EncodeErrorMessage(count++)}\n\t"
+                $"{AnsiUtility.EncodeParameterName("Exception Message")}: {AnsiUtility.EncodeErrorMessage(count++)}\n\t"
             );
             var defaultArguments = new List<object>
             {
@@ -89,8 +88,8 @@ namespace Espresso.Domain.Services
             var count = 0;
             var messageBuilder = new StringBuilder(
                 $"{AnsiUtility.EncodeEventName(count++)}\n\t" +
-                $"{AnsiUtility.EncodeErrorMessage(count++)}\n\t" +
-                $"{AnsiUtility.EncodeErrorMessage(count++)}\n\t"
+                $"{AnsiUtility.EncodeParameterName("Exception Message")}: {AnsiUtility.EncodeErrorMessage(count++)}\n\t" +
+                $"{AnsiUtility.EncodeParameterName("Inner Exception Message")}: {AnsiUtility.EncodeErrorMessage(count++)}\n\t"
             );
             var defaultArguments = new List<object>
             {

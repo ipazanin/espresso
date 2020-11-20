@@ -21,7 +21,6 @@ namespace Espresso.WebApi.Jobs.CronJobs
     {
         #region Fields
         private readonly IServiceScopeFactory _serviceScopeFactory;
-        private readonly IWebApiConfiguration _webApiConfiguration;
         #endregion
 
         #region Constructors
@@ -30,19 +29,16 @@ namespace Espresso.WebApi.Jobs.CronJobs
         /// </summary>
         /// <param name="serviceScopeFactory"></param>
         /// <param name="cronJobConfiguration"></param>
-        /// <param name="webApiConfiguration"></param>
         /// <returns></returns>
         public WebApiReportCronJob(
             IServiceScopeFactory serviceScopeFactory,
-            ICronJobConfiguration<WebApiReportCronJob> cronJobConfiguration,
-            IWebApiConfiguration webApiConfiguration
+            ICronJobConfiguration<WebApiReportCronJob> cronJobConfiguration
         ) : base(
             cronJobConfiguration: cronJobConfiguration,
             serviceScopeFactory: serviceScopeFactory
         )
         {
             _serviceScopeFactory = serviceScopeFactory;
-            _webApiConfiguration = webApiConfiguration;
         }
         #endregion
 
@@ -85,7 +81,6 @@ namespace Espresso.WebApi.Jobs.CronJobs
                 totalNumberOfClicks: totalNumberOfClicks,
                 topNewsPortals: topNewsPortals,
                 categoriesWithNumberOfClicks: categoriesWithNumberOfClicks,
-                appEnvironment: _webApiConfiguration.AppConfiguration.AppEnvironment,
                 cancellationToken: stoppingToken
             );
         }
