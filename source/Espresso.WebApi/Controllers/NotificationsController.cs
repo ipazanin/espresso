@@ -73,11 +73,9 @@ namespace Espresso.WebApi.Controllers
                     CreatedArticleIds = articlesRequest.CreatedArticleIds,
                     UpdatedArticleIds = articlesRequest.UpdatedArticleIds,
                     MaxAgeOfArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfArticle,
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );
@@ -87,11 +85,9 @@ namespace Espresso.WebApi.Controllers
                 {
                     CreatedArticleIds = articlesRequest.CreatedArticleIds,
                     UpdatedArticleIds = articlesRequest.UpdatedArticleIds,
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );
@@ -139,11 +135,9 @@ namespace Espresso.WebApi.Controllers
                     Topic = sendPushNotificationRequestBody.Topic ?? "",
                     ArticleUrl = sendPushNotificationRequestBody.ArticleUrl ?? "",
                     IsSoundEnabled = sendPushNotificationRequestBody.IsSoundEnabled,
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );
@@ -188,11 +182,9 @@ namespace Espresso.WebApi.Controllers
                 {
                     Take = take,
                     Skip = skip,
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );

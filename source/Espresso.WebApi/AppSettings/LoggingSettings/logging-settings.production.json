@@ -5,7 +5,8 @@
       "Microsoft": "Warning",
       "Microsoft.EntityFrameworkCore": "Warning",
       "System": "Warning",
-      "Espresso.Application.Infrastructure.MediatorInfrastructure.LoggerPipeline": "Information",
+      "Espresso.Application.Infrastructure.MediatorInfrastructure.LoggerRequestPipeline": "Information",
+      "Espresso.Application.Infrastructure.MediatorInfrastructure.ExceptionRequestPipeline": "Information",
       "Espresso.Application.Infrastructure.CronJobsInfrastructure.CronJob": "Information"
     }
   }

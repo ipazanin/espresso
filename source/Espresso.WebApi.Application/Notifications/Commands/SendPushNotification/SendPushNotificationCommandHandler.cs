@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.IServices;
+using Espresso.Application.Models;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
@@ -26,25 +27,28 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
         private readonly IApplicationDatabaseContext _espressoDatabaseContext;
         private readonly IMemoryCache _memoryCache;
         private readonly IJsonService _jsonService;
+        private readonly ApplicationInformation _applicationInformation;
         #endregion
 
         #region Constructors
         public SendPushNotificationCommandHandler(
             IApplicationDatabaseContext espressoDatabaseContext,
             IMemoryCache memoryCache,
-            IJsonService jsonService
+            IJsonService jsonService,
+            ApplicationInformation applicationInformation
         )
         {
             _espressoDatabaseContext = espressoDatabaseContext;
             _memoryCache = memoryCache;
             _jsonService = jsonService;
+            _applicationInformation = applicationInformation;
         }
         #endregion
 
         #region Methods
         public async Task<Unit> Handle(SendPushNotificationCommand request, CancellationToken cancellationToken)
         {
-            if (request.AppEnvironment != Common.Enums.AppEnvironment.Prod)
+            if (_applicationInformation.AppEnvironment != Common.Enums.AppEnvironment.Prod)
             {
                 return Unit.Value;
             }

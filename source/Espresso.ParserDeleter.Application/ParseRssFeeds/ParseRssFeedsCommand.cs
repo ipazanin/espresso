@@ -5,6 +5,5 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
 {
     public record ParseRssFeedsCommand : Request<ParseRssFeedsCommandResponse>
     {
-        public TimeSpan MaxAgeOfArticle { get; init; }
     }
 }

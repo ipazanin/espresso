@@ -11,8 +11,6 @@ namespace Espresso.Domain.IServices
     {
         public Task<IEnumerable<RssFeedItem>> ParseRssFeeds(
             IEnumerable<RssFeed> rssFeeds,
-            AppEnvironment appEnvironment,
-            string currentApiVersion,
             CancellationToken cancellationToken
         );
     }

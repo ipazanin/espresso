@@ -22,6 +22,9 @@ using Espresso.Domain.Services;
 using Espresso.ParserDeleter.Services;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.ParserDeleter.Application.Initialization;
+using MediatR.Pipeline;
+using Espresso.Application.Models;
+using Espresso.Domain.Enums.RssFeedEnums;
 
 namespace Espresso.ParserDeleter
 {
@@ -50,7 +53,10 @@ namespace Espresso.ParserDeleter
             services.AddHttpClient();
             services.AddSingleton<IParserDeleterConfiguration, ParserDeleterConfiguration>();
             services.AddValidatorsFromAssembly(typeof(ArticleDataValidator).Assembly);
-
+            services.AddSingleton(serviceProvider => new ApplicationInformation(
+                appEnvironment: _parserDeleterConfiguration.AppConfiguration.AppEnvironment,
+                version: _parserDeleterConfiguration.AppConfiguration.Version
+            ));
             return services;
         }
 
@@ -78,10 +84,10 @@ namespace Espresso.ParserDeleter
         /// <returns></returns>
         private static IServiceCollection AddMediatRServices(IServiceCollection services)
         {
-            services.AddMediatR(typeof(ParseRssFeedsCommandHandler).Assembly);
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggerPipeline<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ApplicationLifeTimePipeline<,>));
+            services.AddMediatR(typeof(ParseRssFeedsCommandHandler), typeof(LoggerRequestPipeline<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionRequestPipeline<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggerRequestPipeline<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
 
             return services;
         }
@@ -98,15 +104,22 @@ namespace Espresso.ParserDeleter
                httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
                loggerService: serviceProvider.GetRequiredService<ILoggerService<SlackService>>(),
                jsonService: serviceProvider.GetRequiredService<IJsonService>(),
-               webHookUrl: _parserDeleterConfiguration.AppConfiguration.SlackWebHook
+               webHookUrl: _parserDeleterConfiguration.AppConfiguration.SlackWebHook,
+               applicationInformation: serviceProvider.GetRequiredService<ApplicationInformation>()
            ));
             services.AddScoped<ILoadRssFeedsService, LoadRssFeedsService>();
-            services.AddScoped<ICreateArticleService, CreateArticleService>();
+            services.AddScoped<ICreateArticleService>(serviceProvider => new CreateArticleService(
+                webScrapingService: serviceProvider.GetRequiredService<IScrapeWebService>(),
+                htmlParsingService: serviceProvider.GetRequiredService<IParseHtmlService>(),
+                articleDataValidator: serviceProvider.GetRequiredService<ArticleDataValidator>(),
+                loggerService: serviceProvider.GetRequiredService<ILoggerService<CreateArticleService>>(),
+                maxAgeOfArticle: _parserDeleterConfiguration.AppConfiguration.MaxAgeOfArticles
+            ));
             services.AddScoped<IScrapeWebService, ScrapeWebService>();
             services.AddScoped<IParseHtmlService, ParseHtmlService>();
             services.AddScoped<ISortArticlesService, SortArticlesService>();
             services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
-            services.AddScoped<IGroupSimilarArticlesService, GroupSimilarArticlesService>(
+            services.AddScoped<IGroupSimilarArticlesService>(
                 serviceProvider => new GroupSimilarArticlesService(
                     similarityScoreThreshold: _parserDeleterConfiguration.ArticleSimilarityConfiguration.SimilarityScoreThreshold,
                     articlePublishDateTimeDiferenceThreshold: _parserDeleterConfiguration.ArticleSimilarityConfiguration.ArticlePublishDateTimeDiferenceThreshold,
@@ -135,8 +148,7 @@ namespace Espresso.ParserDeleter
                            parserApiKey: _parserDeleterConfiguration.ApiKeysConfiguration.ParserApiKey,
                            targetedApiVersion: _parserDeleterConfiguration.AppConfiguration.RssFeedParserMajorMinorVersion,
                            currentVersion: _parserDeleterConfiguration.AppConfiguration.Version,
-                           serverUrl: _parserDeleterConfiguration.AppConfiguration.ServerUrl,
-                           appEnvironment: _parserDeleterConfiguration.AppConfiguration.AppEnvironment
+                           serverUrl: _parserDeleterConfiguration.AppConfiguration.ServerUrl
                         );
                 }
             );

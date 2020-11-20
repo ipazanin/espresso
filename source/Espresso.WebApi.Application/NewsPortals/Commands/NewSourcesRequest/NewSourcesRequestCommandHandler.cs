@@ -31,7 +31,6 @@ namespace Espresso.WebApi.Application.NewsPortals.Commands.NewSourcesRequest
                     newsPortalName: request.NewsPortalName,
                     email: request.Email,
                     url: request.Url,
-                    appEnvironment: request.AppEnvironment,
                     cancellationToken: cancellationToken
                 );
 

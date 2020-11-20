@@ -18,7 +18,6 @@ namespace Espresso.WebApi.Jobs.CronJobs
     {
         #region Fields
         private readonly IServiceScopeFactory _scopeFactory;
-        private readonly IWebApiConfiguration _webApiConfiguration;
         #endregion
 
         #region Constructors
@@ -27,19 +26,16 @@ namespace Espresso.WebApi.Jobs.CronJobs
         /// </summary>
         /// <param name="serviceScopeFactory"></param>
         /// <param name="cronJobConfiguration"></param>
-        /// <param name="webApiConfiguration"></param>
         /// <returns></returns>
         public ApplicationDownloadStatisticsCronJob(
             IServiceScopeFactory serviceScopeFactory,
-            ICronJobConfiguration<ApplicationDownloadStatisticsCronJob> cronJobConfiguration,
-            IWebApiConfiguration webApiConfiguration
+            ICronJobConfiguration<ApplicationDownloadStatisticsCronJob> cronJobConfiguration
         ) : base(
             cronJobConfiguration: cronJobConfiguration,
             serviceScopeFactory: serviceScopeFactory
         )
         {
             _scopeFactory = serviceScopeFactory;
-            _webApiConfiguration = webApiConfiguration;
         }
         #endregion
 
@@ -82,7 +78,6 @@ namespace Espresso.WebApi.Jobs.CronJobs
                     yesterdayIosCount: todayIosCount,
                     totalAndroidCount: totalAndroidCount,
                     totalIosCount: totalIosCount,
-                    appEnvironment: _webApiConfiguration.AppConfiguration.AppEnvironment,
                     cancellationToken: cancellationToken
             );
         }

@@ -66,11 +66,9 @@ namespace Espresso.WebApi.Controllers
             var categories = await Sender.Send(
                 request: new GetCategoriesQuery
                 {
-                    CurrentApiVersion = WebApiConfiguration.AppConfiguration.Version,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
-                    AppEnvironment = WebApiConfiguration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );

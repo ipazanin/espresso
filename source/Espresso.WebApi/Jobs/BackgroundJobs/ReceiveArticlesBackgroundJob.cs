@@ -109,11 +109,9 @@ namespace Espresso.WebApi.Services
                             CreatedArticleIds = articlesBody.CreatedArticleIds,
                             UpdatedArticleIds = articlesBody.UpdatedArticleIds,
                             MaxAgeOfArticle = _webApiConfiguration.DateTimeConfiguration.MaxAgeOfArticle,
-                            CurrentApiVersion = _webApiConfiguration.AppConfiguration.Version,
                             TargetedApiVersion = _webApiConfiguration.AppConfiguration.ApiVersion.ToString(),
                             ConsumerVersion = _webApiConfiguration.AppConfiguration.Version,
                             DeviceType = DeviceType.RssFeedParser,
-                            AppEnvironment = _webApiConfiguration.AppConfiguration.AppEnvironment
                         });
                         _channel.BasicAck(deliveryTag: basicDeliveryArguments.DeliveryTag, false);
                     }

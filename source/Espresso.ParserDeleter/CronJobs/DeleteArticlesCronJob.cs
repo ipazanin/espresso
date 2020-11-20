@@ -50,11 +50,9 @@ namespace Espresso.ParserDeleter.CronJobs
                 request: new DeleteOldArticlesCommand
                 {
                     MaxAgeOfOldArticles = _configuration.AppConfiguration.MaxAgeOfArticles,
-                    CurrentApiVersion = _configuration.AppConfiguration.Version,
                     TargetedApiVersion = _configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
                     ConsumerVersion = _configuration.AppConfiguration.Version,
                     DeviceType = DeviceType.RssFeedParser,
-                    AppEnvironment = _configuration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );

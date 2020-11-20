@@ -4,6 +4,7 @@ using System.Reflection;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using Espresso.Application.IServices;
+using Espresso.Application.Models;
 using Espresso.Application.Services;
 using Espresso.Common.Constants;
 using Espresso.Common.Utilities;
@@ -21,6 +22,7 @@ using Espresso.WebApi.Jobs.CronJobs;
 using Espresso.WebApi.Services;
 using FluentValidation.AspNetCore;
 using MediatR;
+using MediatR.Pipeline;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
@@ -59,6 +61,10 @@ namespace Espresso.WebApi
             services.AddTransient<IWebApiInit, WebApiInit>();
             services.AddHttpClient();
             services.AddSingleton(serviceProvider => _webApiConfiguration);
+            services.AddSingleton(serviceProvider => new ApplicationInformation(
+                appEnvironment: _webApiConfiguration.AppConfiguration.AppEnvironment,
+                version: _webApiConfiguration.AppConfiguration.Version
+            ));
 
             return services;
         }
@@ -144,10 +150,10 @@ namespace Espresso.WebApi
         /// <returns></returns>
         public static IServiceCollection AddMediatRServices(IServiceCollection services)
         {
-            services.AddMediatR(typeof(GetNewsPortalsQuery).GetTypeInfo().Assembly);
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggerPipeline<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ApplicationLifeTimePipeline<,>));
+            services.AddMediatR(typeof(GetNewsPortalsQuery).GetTypeInfo(), typeof(LoggerRequestPipeline<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionRequestPipeline<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggerRequestPipeline<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
 
             return services;
         }
@@ -164,7 +170,8 @@ namespace Espresso.WebApi
                 httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
                 loggerService: serviceProvider.GetRequiredService<ILoggerService<SlackService>>(),
                 jsonService: serviceProvider.GetRequiredService<IJsonService>(),
-                webHookUrl: _webApiConfiguration.AppConfiguration.SlackWebHook
+                webHookUrl: _webApiConfiguration.AppConfiguration.SlackWebHook,
+                applicationInformation: serviceProvider.GetRequiredService<ApplicationInformation>()
             ));
             services.AddTransient<ITrendingScoreService, TrendingScoreService>(serviceProvider => new TrendingScoreService(
                 halfOfMaxTrendingScoreValue: _webApiConfiguration.TrendingScoreConfiguration.HalfOfMaxTrendingScoreValue,

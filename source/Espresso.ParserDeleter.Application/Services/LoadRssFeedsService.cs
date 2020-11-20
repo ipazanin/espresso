@@ -10,15 +10,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using Espresso.Application.Extensions;
-using Espresso.Application.IServices;
 using Espresso.Common.Enums;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Common.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
-using Espresso.ParserDeleter.Application.IServices;
 using Microsoft.Extensions.Logging;
+using Espresso.Application.Models;
 
 namespace Espresso.ParserDeleter.Application.Services
 {
@@ -44,8 +43,6 @@ namespace Espresso.ParserDeleter.Application.Services
         #region Methods
         public async Task<IEnumerable<RssFeedItem>> ParseRssFeeds(
             IEnumerable<RssFeed> rssFeeds,
-            AppEnvironment appEnvironment,
-            string currentApiVersion,
             CancellationToken cancellationToken
         )
         {

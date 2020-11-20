@@ -14,6 +14,7 @@ using Espresso.Domain.IServices;
 using Espresso.Domain.Entities;
 using System.Linq;
 using Espresso.Application.DataTransferObjects.SlackDataTransferObjects;
+using Espresso.Application.Models;
 
 namespace Espresso.Application.Services
 {
@@ -58,6 +59,7 @@ namespace Espresso.Application.Services
         private readonly ILoggerService<SlackService> _loggerService;
         private readonly IJsonService _jsonService;
         private readonly string _webHookUrl;
+        private readonly ApplicationInformation _applicationInformation;
         #endregion
 
         #region Contructor
@@ -66,7 +68,8 @@ namespace Espresso.Application.Services
             IHttpClientFactory httpClientFactory,
             ILoggerService<SlackService> loggerService,
             IJsonService jsonService,
-            string webHookUrl
+            string webHookUrl,
+            ApplicationInformation applicationInformation
         )
         {
             _memoryCache = memoryCache;
@@ -74,6 +77,7 @@ namespace Espresso.Application.Services
             _loggerService = loggerService;
             _jsonService = jsonService;
             _webHookUrl = webHookUrl;
+            _applicationInformation = applicationInformation;
         }
         #endregion
 
@@ -82,17 +86,15 @@ namespace Espresso.Application.Services
         #region  Public Methods
         public Task LogError(
             string eventName,
-            string version,
             string message,
             Exception exception,
-            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         )
         {
             var exceptionMessage = exception.Message;
             var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
             var text = $":blue_book: Event Name: {eventName}\n" +
-                $":label: Version: {version}\n" +
+                $":label: Version: {_applicationInformation.Version}\n" +
                 $":email: Message: {message}\n" +
                 $":exclamation: Exception Message: {exceptionMessage}\n" +
                 $":exclamation: Inner Exception Message: {innerExceptionMessage}\n";
@@ -105,27 +107,25 @@ namespace Espresso.Application.Services
                     channel: ErrorsChannel,
                     blocks: Array.Empty<SlackBlock>()
                 ),
-                appEnvironment: appEnvironment,
+
                 cancellationToken: cancellationToken
             );
         }
 
         public Task LogRequestError(
             string requestName,
-            string apiVersion,
             string targetedApiVersion,
             string consumerVersion,
             DeviceType deviceType,
             string requestParameters,
             Exception exception,
-            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         )
         {
             var exceptionMessage = exception.Message;
             var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
             var text = $":blue_book: Request Name: {requestName}\n" +
-                $":label: App Version: {apiVersion}\n" +
+                $":label: App Version: {_applicationInformation.Version}\n" +
                 $":label: Targeted WebApi Version: {targetedApiVersion}\n" +
                 $":label: Consumer Version: {consumerVersion}\n" +
                 $":iphone: Device Type: {deviceType}\n" +
@@ -141,7 +141,6 @@ namespace Espresso.Application.Services
                     channel: ErrorsChannel,
                     blocks: Array.Empty<SlackBlock>()
                 ),
-                appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
             );
         }
@@ -151,7 +150,6 @@ namespace Espresso.Application.Services
             int yesterdayIosCount,
             int totalAndroidCount,
             int totalIosCount,
-            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         )
         {
@@ -169,7 +167,7 @@ namespace Espresso.Application.Services
                     channel: AppDownloadsChannel,
                     blocks: Array.Empty<SlackBlock>()
                 ),
-                appEnvironment: appEnvironment,
+
                 cancellationToken: cancellationToken
             );
 
@@ -184,23 +182,19 @@ namespace Espresso.Application.Services
                         channel: AppDownloadsChannel,
                     blocks: Array.Empty<SlackBlock>()
                     ),
-                    appEnvironment: appEnvironment,
                     cancellationToken: cancellationToken
                 );
             }
         }
 
         public Task LogMissingCategoriesError(
-            string version,
             string rssFeedUrl,
             string articleUrl,
             string urlCategories,
-            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         )
         {
             var text = $":blue_book: Request Name: Missing Categories\n" +
-                $":label: Version: {version}\n" +
                 $":email: Rss Feed Url: {rssFeedUrl}\n" +
                 $":email: Article Url: {articleUrl}\n" +
                 $":email: Url-SegmentIndex:Category Map: {urlCategories}\n";
@@ -213,7 +207,6 @@ namespace Espresso.Application.Services
                     channel: MissingCategoriesErrorsChannel,
                     blocks: Array.Empty<SlackBlock>()
                 ),
-                appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
             );
         }
@@ -222,7 +215,6 @@ namespace Espresso.Application.Services
             string newsPortalName,
             string email,
             string? url,
-            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         )
         {
@@ -239,7 +231,6 @@ namespace Espresso.Application.Services
                     channel: NewNewsPortalRequestChannel,
                     blocks: Array.Empty<SlackBlock>()
                 ),
-                appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
             );
         }
@@ -247,7 +238,6 @@ namespace Espresso.Application.Services
         public Task LogPerformance(
             string applicationName,
             IEnumerable<(string name, int count, TimeSpan duration)> data,
-            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         )
         {
@@ -270,7 +260,6 @@ namespace Espresso.Application.Services
                     channel: BackendStatisticsChannel,
                     blocks: Array.Empty<SlackBlock>()
                 ),
-                appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
             );
         }
@@ -280,7 +269,6 @@ namespace Espresso.Application.Services
             int totalNumberOfClicks,
             IEnumerable<(NewsPortal newsPortal, int numberOfClicks, IEnumerable<Article> articles)> topNewsPortals,
             IEnumerable<(Category category, int numberOfClicks, IEnumerable<Article> articles)> categoriesWithNumberOfClicks,
-            AppEnvironment appEnvironment,
             CancellationToken cancellationToken
         )
         {
@@ -327,7 +315,6 @@ namespace Espresso.Application.Services
                     channel: BackendStatisticsChannel,
                     blocks: blocks
                 ),
-                appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
             );
 
@@ -368,7 +355,6 @@ namespace Espresso.Application.Services
                     channel: BackendStatisticsChannel,
                     blocks: blocks
                 ),
-                appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
             );
             blocks.Clear();
@@ -403,7 +389,6 @@ namespace Espresso.Application.Services
                     channel: BackendStatisticsChannel,
                     blocks: blocks
                 ),
-                appEnvironment: appEnvironment,
                 cancellationToken: cancellationToken
             );
         }
@@ -412,11 +397,10 @@ namespace Espresso.Application.Services
         #region Private Methods
         private async Task Log(
                 SlackWebHookRequestBodyDto data,
-                AppEnvironment appEnvironment,
                 CancellationToken cancellationToken
-            )
+        )
         {
-            if (!appEnvironment.Equals(AppEnvironment.Prod))
+            if (!_applicationInformation.AppEnvironment.Equals(AppEnvironment.Prod))
             {
                 return;
             }

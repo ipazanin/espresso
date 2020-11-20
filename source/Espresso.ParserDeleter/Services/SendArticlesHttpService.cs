@@ -28,7 +28,6 @@ namespace Espresso.ParserDeleter.Services
         private readonly string _targetedApiVersion;
         private readonly string _currentVersion;
         private readonly string _serverUrl;
-        private readonly AppEnvironment _appEnvironment;
         private readonly HttpClient _httpClient;
         #region Fields
         #endregion
@@ -41,8 +40,7 @@ namespace Espresso.ParserDeleter.Services
             string parserApiKey,
             string targetedApiVersion,
             string currentVersion,
-            string serverUrl,
-            AppEnvironment appEnvironment
+            string serverUrl
         )
         {
             _loggerService = loggerService;
@@ -51,7 +49,6 @@ namespace Espresso.ParserDeleter.Services
             _targetedApiVersion = targetedApiVersion;
             _currentVersion = currentVersion;
             _serverUrl = serverUrl;
-            _appEnvironment = appEnvironment;
             _httpClient = httpClientFactory.CreateClient();
             _httpClient.Timeout = TimeSpan.FromMinutes(4);
         }
@@ -108,10 +105,8 @@ namespace Espresso.ParserDeleter.Services
 
                 await _slackService.LogError(
                         eventName: eventName,
-                        version: _targetedApiVersion,
                         message: exception.Message,
                         exception: exception,
-                        appEnvironment: _appEnvironment,
                         cancellationToken: cancellationToken
                 );
             }

@@ -148,10 +148,8 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
                 var slackService = scope.ServiceProvider.GetRequiredService<ISlackService>();
                 await slackService.LogError(
                     eventName: eventName,
-                    version: _cronJobConfiguration.Version,
                     message: exception.Message,
                     exception: exception,
-                    appEnvironment: _cronJobConfiguration.AppEnvironment,
                     cancellationToken: default
                 );
             }

@@ -85,11 +85,9 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             NewNewsPortalsPosition = webApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                             TitleSearchQuery = resolveContext.GetArgument<string?>("titleSearchQuery"),
                             MaxAgeOfNewNewsPortal = webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                            CurrentApiVersion = webApiConfiguration.AppConfiguration.Version,
                             TargetedApiVersion = userContext.TargetedApiVersion,
                             ConsumerVersion = userContext.ConsumerVersion,
                             DeviceType = userContext.DeviceType,
-                            AppEnvironment = webApiConfiguration.AppConfiguration.AppEnvironment
                         },
                         cancellationToken: resolveContext.CancellationToken
                     );

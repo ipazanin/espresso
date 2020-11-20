@@ -17,10 +17,8 @@ namespace Espresso.WebApi.GraphQl.ApplicationMutations.ArticlesQueries
         /// 
         /// </summary>
         /// <param name="mediator"></param>
-        /// <param name="webApiConfiguration"></param>
         public IncrementNumberOfClicksGraphQlMutation(
-            IMediator mediator,
-            IWebApiConfiguration webApiConfiguration
+            IMediator mediator
         )
         {
             FieldAsync<StringGraphType>(
@@ -44,11 +42,9 @@ namespace Espresso.WebApi.GraphQl.ApplicationMutations.ArticlesQueries
                            request: new IncrementNumberOfClicksCommand
                            {
                                Id = Guid.Parse(articleIdString),
-                               CurrentApiVersion = webApiConfiguration.AppConfiguration.Version,
                                TargetedApiVersion = userContext.TargetedApiVersion,
                                ConsumerVersion = userContext.ConsumerVersion,
                                DeviceType = userContext.DeviceType,
-                               AppEnvironment = webApiConfiguration.AppConfiguration.AppEnvironment
                            },
                            cancellationToken: resolveContext.CancellationToken
                         );

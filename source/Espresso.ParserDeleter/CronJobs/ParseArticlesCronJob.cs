@@ -5,10 +5,8 @@ using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.ParserDeleter.Configuration;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Espresso.ParserDeleter.ParseRssFeeds;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
-using Espresso.Domain.IServices;
 
 namespace Espresso.ParserDeleter.CronJobs
 {
@@ -45,12 +43,9 @@ namespace Espresso.ParserDeleter.CronJobs
             var parseRssFeedsCommandResponse = await mediator.Send(
                 request: new ParseRssFeedsCommand
                 {
-                    MaxAgeOfArticle = _configuration.AppConfiguration.MaxAgeOfArticles,
-                    CurrentApiVersion = _configuration.AppConfiguration.Version,
                     TargetedApiVersion = _configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
                     ConsumerVersion = _configuration.AppConfiguration.Version,
                     DeviceType = DeviceType.RssFeedParser,
-                    AppEnvironment = _configuration.AppConfiguration.AppEnvironment
                 },
                 cancellationToken: cancellationToken
             );
