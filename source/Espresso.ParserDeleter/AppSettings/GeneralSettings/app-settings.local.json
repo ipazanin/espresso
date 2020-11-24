@@ -4,7 +4,8 @@
     "Environment": 1
   },
   "ArticleSimilarityConfiguration": {
-    "GroupSimilarArticlesBatchSize": 500
+    "ArticlePublishDateTimeDiferenceThresholdInHours": 8,
+    "MaxAgeOfSimilarArticleCheckingInHours": 26
   },
   "CronJobsConfiguration": {
     "DeleteArticlesCronExpression": "* * * * *",

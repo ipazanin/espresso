@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.Extensions;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
@@ -101,10 +100,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                     titleSearchTerm: request.TitleSearchQuery,
                     articleCreateDateTime: firstArticleCreateDateTime
                 )
-                .FilterArticlesWithCoronaVirusContentForIosRelease(
-                    deviceType: request.DeviceType,
-                    targetedApiVersion: request.TargetedApiVersion
-                )
                 .Skip(request.Skip)
                 .Take(request.Take);
 
@@ -133,10 +128,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                     maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
                     articleCreateDateTime: firstArticleCreateDateTime
                 )
-                .FilterArticlesWithCoronaVirusContentForIosRelease(
-                    deviceType: request.DeviceType,
-                    targetedApiVersion: request.TargetedApiVersion
-                )
                 .OrderFeaturedArticles(categoryIds);
 
             var trendingArticlesTake = request.FeaturedArticlesTake - featuredArticles.Count() <= 0 ?
@@ -149,10 +140,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                     articleCreateDateTime: null
                 )
                 .OrderArticlesByTrendingScore()
-                .FilterArticlesWithCoronaVirusContentForIosRelease(
-                    deviceType: request.DeviceType,
-                    targetedApiVersion: request.TargetedApiVersion
-                )
                 .Take(trendingArticlesTake)
                 .OrderArticlesByCategory(categoryIds);
 

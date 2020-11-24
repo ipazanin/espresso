@@ -2,17 +2,17 @@
   "Logging": {
     "LogLevel": {
       "Default": "Information",
-      "Microsoft": "Warning",
-      "Microsoft.EntityFrameworkCore": "None",
-      "System": "Warning",
-      "Espresso.Application.Infrastructure.MediatorInfrastructure.LoggerRequestPipeline": "Information",
-      "Espresso.Application.Infrastructure.MediatorInfrastructure.ExceptionRequestPipeline": "Information",
-      "Espresso.ParserDeleter.Application.CQRS.RssFeeds.Commands.ParseRssFeeds.ParseRssFeedsCommandHandler": "Information",
-      "Espresso.ParserDeleter.Application.Services.ScrapeWebService": "None",
-      "Espresso.ParserDeleter.Application.Services.LoadRssFeedsService": "None",
-      "Espresso.ParserDeleter.Application.Services.CreateArticleService": "None",
       "Espresso.Application.Infrastructure.CronJobsInfrastructure.CronJob": "Information",
-      "Espresso.Domain.Services.GroupSimilarArticlesService": "Information"
+      "Espresso.Application.Infrastructure.MediatorInfrastructure.ExceptionRequestPipeline": "Information",
+      "Espresso.Application.Infrastructure.MediatorInfrastructure.LoggerRequestPipeline": "Information",
+      "Espresso.Domain.Services.GroupSimilarArticlesService": "Information",
+      "Espresso.ParserDeleter.Application.CQRS.RssFeeds.Commands.ParseRssFeeds.ParseRssFeedsCommandHandler": "Information",
+      "Espresso.ParserDeleter.Application.Services.CreateArticleService": "None",
+      "Espresso.ParserDeleter.Application.Services.LoadRssFeedsService": "None",
+      "Espresso.ParserDeleter.Application.Services.ScrapeWebService": "None",
+      "Microsoft": "Warning",
+      "Microsoft.EntityFrameworkCore": "Warning",
+      "System": "Warning"
     }
   }
 }

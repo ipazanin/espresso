@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Espresso.Common.Constants;
 
-namespace Espresso.WebApi
+namespace Espresso.WebApi.Startup
 {
     internal sealed partial class Startup
     {
@@ -28,6 +28,7 @@ namespace Espresso.WebApi
         )
         {
             memoryCacheInit.InitWebApi().GetAwaiter().GetResult();
+
 
             app.UseSecurityHeadersMiddleware(securityHeadersBuilder =>
             {
@@ -62,7 +63,7 @@ namespace Espresso.WebApi
                 Headers = new Dictionary<string, object>
                 {
                   { HttpHeaderConstants.ApiKeyHeaderName, "" },
-                  { HttpHeaderConstants.ApiVersionHeaderName, _webApiConfiguration.AppConfiguration.ApiVersion.ToString() },
+                  { HttpHeaderConstants.ApiVersionHeaderName, "1.4" },
                   { HttpHeaderConstants.DeviceTypeHeaderName, DeviceType.WebApp },
                   { HttpHeaderConstants.VersionHeaderName, "1.0.0" }
                 },
@@ -89,6 +90,7 @@ namespace Espresso.WebApi
                 }
             });
 
+            app.UseResponseCaching();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

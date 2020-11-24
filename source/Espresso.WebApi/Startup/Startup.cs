@@ -2,7 +2,7 @@
 using Espresso.WebApi.Configuration;
 using Microsoft.Extensions.Configuration;
 
-namespace Espresso.WebApi
+namespace Espresso.WebApi.Startup
 {
     internal sealed partial class Startup
     {

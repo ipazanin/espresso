@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
@@ -20,7 +19,6 @@ namespace Espresso.Domain.Services
         private readonly TimeSpan _articlePublishDateTimeDiferenceThreshold;
         private readonly ILoggerService<GroupSimilarArticlesService> _loggerService;
         private readonly TimeSpan _maxAgeOfSimilarArticleChecking;
-        private readonly int _groupSimilarArticlesBatchSize;
         private readonly int _minimalNumberOfWordsForArticleToBeComparable;
         #endregion
 
@@ -30,7 +28,6 @@ namespace Espresso.Domain.Services
             TimeSpan articlePublishDateTimeDiferenceThreshold,
             ILoggerService<GroupSimilarArticlesService> loggerService,
             TimeSpan maxAgeOfSimilarArticleChecking,
-            int groupSimilarArticlesBatchSize,
             int minimalNumberOfWordsForArticleToBeComparable
         )
         {
@@ -38,7 +35,6 @@ namespace Espresso.Domain.Services
             _articlePublishDateTimeDiferenceThreshold = articlePublishDateTimeDiferenceThreshold;
             _loggerService = loggerService;
             _maxAgeOfSimilarArticleChecking = maxAgeOfSimilarArticleChecking;
-            _groupSimilarArticlesBatchSize = groupSimilarArticlesBatchSize;
             _minimalNumberOfWordsForArticleToBeComparable = minimalNumberOfWordsForArticleToBeComparable;
         }
         #endregion
@@ -54,12 +50,15 @@ namespace Espresso.Domain.Services
                 .Where(
                     article => article.PublishDateTime > maxAgeOfSimilarArticleCheckingDateTime &&
                         article.MainArticle is null &&
-                        LanguageUtility.SeparateWords(article.Title).RemoveUnimpactfulCroatianWords().Count() >= _minimalNumberOfWordsForArticleToBeComparable
+                        LanguageUtility
+                            .SeparateWords(article.Title)
+                            .RemoveUnimpactfulCroatianWords()
+                            .Count() >= _minimalNumberOfWordsForArticleToBeComparable
                 )
-                .OrderBy(article => article.PublishDateTime)
-                .Take(_groupSimilarArticlesBatchSize);
+                .OrderBy(article => article.PublishDateTime);
 
             var notMatchedArticles = orderedArticles.ToList();
+
             var similarArticles = new List<SimilarArticle>();
 
             var totalCount = orderedArticles.Count();
@@ -68,7 +67,7 @@ namespace Espresso.Domain.Services
             foreach (var article in orderedArticles)
             {
                 var articlesSimilarArticles = GetSimilarArticlesForArticle(
-                    mainArticle: article,
+                    possibleMainArticle: article,
                     notMatchedArticles: notMatchedArticles,
                     lastSimilarityGroupingTime: lastSimilarityGroupingTime
                 );
@@ -96,7 +95,7 @@ namespace Espresso.Domain.Services
         }
 
         private IEnumerable<SimilarArticle> GetSimilarArticlesForArticle(
-            Article mainArticle,
+            Article possibleMainArticle,
             IEnumerable<Article> notMatchedArticles,
             DateTime lastSimilarityGroupingTime
         )
@@ -105,20 +104,20 @@ namespace Espresso.Domain.Services
             var possibleSimilarArticles = notMatchedArticles
                 .Where(
                     notMatchedArticle =>
-                        mainArticle.Id != notMatchedArticle.Id &&
-                        mainArticle.NewsPortalId != notMatchedArticle.NewsPortalId &&
+                        possibleMainArticle.Id != notMatchedArticle.Id &&
+                        possibleMainArticle.NewsPortalId != notMatchedArticle.NewsPortalId &&
                         (
-                            mainArticle.PublishDateTime > notMatchedArticle.PublishDateTime ?
-                                (mainArticle.PublishDateTime - notMatchedArticle.PublishDateTime < _articlePublishDateTimeDiferenceThreshold) :
-                                (notMatchedArticle.PublishDateTime - mainArticle.PublishDateTime < _articlePublishDateTimeDiferenceThreshold)
+                            possibleMainArticle.PublishDateTime > notMatchedArticle.PublishDateTime ?
+                                (possibleMainArticle.PublishDateTime - notMatchedArticle.PublishDateTime < _articlePublishDateTimeDiferenceThreshold) :
+                                (notMatchedArticle.PublishDateTime - possibleMainArticle.PublishDateTime < _articlePublishDateTimeDiferenceThreshold)
                         ) &&
-                        (mainArticle.CreateDateTime > lastSimilarityGroupingTime || notMatchedArticle.CreateDateTime > lastSimilarityGroupingTime)
+                        (possibleMainArticle.CreateDateTime > lastSimilarityGroupingTime || notMatchedArticle.CreateDateTime > lastSimilarityGroupingTime)
                 );
 
             foreach (var possibleSimilarArticle in possibleSimilarArticles)
             {
                 var similarityScore = CalculateSimilarityScore(
-                    mainArticle: mainArticle,
+                    possibleMainArticle: possibleMainArticle,
                     possibleSubordinateArticle: possibleSimilarArticle
                 );
 
@@ -127,8 +126,8 @@ namespace Espresso.Domain.Services
                     var similarArticle = new SimilarArticle(
                         id: Guid.NewGuid(),
                         similarityScore: similarityScore,
-                        mainArticleId: mainArticle.Id,
-                        mainArticle: mainArticle,
+                        mainArticleId: possibleMainArticle.Id,
+                        mainArticle: possibleMainArticle,
                         subordinateArticleId: possibleSimilarArticle.Id,
                         subordinateArticle: possibleSimilarArticle
                     );
@@ -140,11 +139,11 @@ namespace Espresso.Domain.Services
                         namedArguments: new (string argumentName, object argumentValue)[]
                         {
                             ("Similarity Score", similarityScore),
-                            ("Main Article Title", mainArticle.Title),
+                            ("Main Article Title", possibleMainArticle.Title),
                             ("Subordinate Article Title", possibleSimilarArticle.Title),
-                            ("Main Article Source", mainArticle.NewsPortal!.Name),
+                            ("Main Article Source", possibleMainArticle.NewsPortal!.Name),
                             ("Subordinate Article Source", possibleSimilarArticle.NewsPortal!.Name),
-                            ("Main Article Category", mainArticle.ArticleCategories.FirstOrDefault()?.Category?.Name!),
+                            ("Main Article Category", possibleMainArticle.ArticleCategories.FirstOrDefault()?.Category?.Name!),
                             ("Subordinate Article Category", possibleSimilarArticle.ArticleCategories.FirstOrDefault()?.Category?.Name!),
                         }
                     );
@@ -155,12 +154,12 @@ namespace Espresso.Domain.Services
         }
 
         private static double CalculateSimilarityScore(
-            Article mainArticle,
+            Article possibleMainArticle,
             Article possibleSubordinateArticle
         )
         {
-            var mainArticleWords = LanguageUtility
-                .SeparateWords(mainArticle.Title)
+            var possibleMainArticleWords = LanguageUtility
+                .SeparateWords(possibleMainArticle.Title)
                 .RemoveUnimpactfulCroatianWords()
                 .RemoveWordsWithLessThanThreeLetters();
 
@@ -171,7 +170,7 @@ namespace Espresso.Domain.Services
 
 
             var similarityScore = CalculateSimilarityScoreBetweenWords(
-                mainArticleWords,
+                possibleMainArticleWords,
                 possibleSubordinateArticleWords
             );
 

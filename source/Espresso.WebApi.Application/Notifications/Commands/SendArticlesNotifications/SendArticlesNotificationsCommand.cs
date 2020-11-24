@@ -3,12 +3,13 @@ using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using MediatR;
 using Espresso.Application.DataTransferObjects;
 using System;
+using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 
 namespace Espresso.WebApi.Application.Notifications.Commands.SendArticlesNotifications
 {
     public record SendArticlesNotificationsCommand : Request<Unit>
     {
-        public IEnumerable<Guid> CreatedArticleIds { get; init; } = new List<Guid>();
-        public IEnumerable<Guid> UpdatedArticleIds { get; init; } = new List<Guid>();
+        public IEnumerable<ArticleDto> CreatedArticles { get; init; } = new List<ArticleDto>();
+        public IEnumerable<ArticleDto> UpdatedArticles { get; init; } = new List<ArticleDto>();
     }
 }

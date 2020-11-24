@@ -16,6 +16,9 @@ using Espresso.Application.DataTransferObjects;
 using Espresso.WebApi.DataTransferObjects;
 using Espresso.WebApi.RequestData.Header;
 using Espresso.WebApi.RequestData.Body;
+using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
+using System;
+using Espresso.Application.Services;
 
 namespace Espresso.WebApi.Controllers
 {
@@ -56,8 +59,6 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
         [ApiVersion("2.1")]
-        [ApiVersion("2.0")]
-        [ApiVersion("1.4")]
         [HttpPost]
         [Authorize(Roles = ApiKey.ParserRole)]
         [Route("api/notifications/articles")]
@@ -70,8 +71,8 @@ namespace Espresso.WebApi.Controllers
             await Sender.Send(
                 request: new UpdateInMemoryArticlesCommand
                 {
-                    CreatedArticleIds = articlesRequest.CreatedArticleIds,
-                    UpdatedArticleIds = articlesRequest.UpdatedArticleIds,
+                    CreatedArticles = articlesRequest.CreatedArticles,
+                    UpdatedArticles = articlesRequest.UpdatedArticles,
                     MaxAgeOfArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfArticle,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
@@ -83,8 +84,8 @@ namespace Espresso.WebApi.Controllers
             await Sender.Send(
                 request: new SendArticlesNotificationsCommand
                 {
-                    CreatedArticleIds = articlesRequest.CreatedArticleIds,
-                    UpdatedArticleIds = articlesRequest.UpdatedArticleIds,
+                    CreatedArticles = articlesRequest.CreatedArticles,
+                    UpdatedArticles = articlesRequest.UpdatedArticles,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,

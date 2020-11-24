@@ -26,7 +26,7 @@ using MediatR.Pipeline;
 using Espresso.Application.Models;
 using Espresso.Domain.Enums.RssFeedEnums;
 
-namespace Espresso.ParserDeleter
+namespace Espresso.ParserDeleter.Startup
 {
     internal sealed partial class Startup
     {
@@ -125,7 +125,6 @@ namespace Espresso.ParserDeleter
                     articlePublishDateTimeDiferenceThreshold: _parserDeleterConfiguration.ArticleSimilarityConfiguration.ArticlePublishDateTimeDiferenceThreshold,
                     loggerService: serviceProvider.GetRequiredService<ILoggerService<GroupSimilarArticlesService>>(),
                     maxAgeOfSimilarArticleChecking: _parserDeleterConfiguration.ArticleSimilarityConfiguration.MaxAgeOfSimilarArticleChecking,
-                    groupSimilarArticlesBatchSize: _parserDeleterConfiguration.ArticleSimilarityConfiguration.GroupSimilarArticlesBatchSize,
                     minimalNumberOfWordsForArticleToBeComparable: _parserDeleterConfiguration.ArticleSimilarityConfiguration.MinimalNumberOfWordsForArticleToBeComparable
                 )
             );

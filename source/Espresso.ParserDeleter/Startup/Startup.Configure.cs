@@ -1,6 +1,6 @@
 ﻿using Espresso.ParserDeleter.Application.Initialization;
 
-namespace Espresso.ParserDeleter
+namespace Espresso.ParserDeleter.Startup
 {
     internal sealed partial class Startup
     {

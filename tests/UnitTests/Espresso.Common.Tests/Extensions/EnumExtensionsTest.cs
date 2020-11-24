@@ -72,6 +72,49 @@ namespace Espresso.Common.Tests.Extensions
         }
         #endregion
 
+        #region GetIntegerValueAsString
+        [Fact]
+        public void GetIntegerValueAsString_WithUndefinedEnum_ReturnsIntegerValueAsString()
+        {
+            #region Arrange
+            var undefinedEnum = (AppEnvironment)(-1);
+            var expectedValue = ((int)undefinedEnum).ToString();
+            #endregion
+
+            #region Act
+            var actualValue = undefinedEnum.GetIntegerValueAsString();
+            #endregion
+
+            #region Assert
+            Assert.Equal(
+                expected: expectedValue,
+                actual: actualValue
+            );
+            #endregion
+        }
+
+        [Fact]
+        public void GetIntegerValueAsString_WithDefinedEnum_ReturnsIntegerValueAsString()
+        {
+            #region Arrange
+            var definedEnum = AppEnvironment.Local;
+            var expectedValue = ((int)definedEnum).ToString();
+            #endregion
+
+            #region Act
+            var actualValue = definedEnum.GetIntegerValueAsString();
+            #endregion
+
+            #region Assert
+            Assert.Equal(
+                expected: expectedValue,
+                actual: actualValue
+            );
+            #endregion
+        }
+        #endregion
+
+
         #endregion
 
     }

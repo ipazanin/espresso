@@ -130,7 +130,6 @@ namespace Espresso.Domain.Tests.Services
                 articlePublishDateTimeDiferenceThreshold: TimeSpan.FromHours(16),
                 loggerService: loggerServiceMock.Object,
                 maxAgeOfSimilarArticleChecking: TimeSpan.FromHours(32),
-                groupSimilarArticlesBatchSize: 100,
                 minimalNumberOfWordsForArticleToBeComparable: 1
             );
             #endregion

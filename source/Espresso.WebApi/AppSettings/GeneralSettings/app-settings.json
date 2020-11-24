@@ -1,35 +1,35 @@
 ﻿{
+  "AllowedHosts": "*",
   "AppConfiguration": {
-    "NewNewsPortalsPosition": 3,
-    "Version": "2.1.0",
+    "FeaturedArticlesTake": 10,
     "MajorVersion": 2,
     "MinorVersion": 1,
-    "FeaturedArticlesTake": 10
-  },
-  "SpaConfiguration": {
-    "UseSpaProxyServer": false,
-    "EnableCors": false,
-    "SpaProxyServerUrl": ""
-  },
-  "DateTimeConfiguration": {
-    "MaxAgeOfArticlesInDays": 7,
-    "MaxAgeOfTrendingArticlesInHours": 24,
-    "MaxAgeOfFeaturedArticlesInHours": 24,
-    "MaxAgeOfNewNewsPortalInDays": 60
-  },
-  "TrendingScoreConfiguration": {
-    "HalfOfMaxTrendingScoreValue": 500,
-    "AgeWeight": 0.9
+    "NewNewsPortalsPosition": 3,
+    "Version": "2.1.0"
   },
   "CronJobsConfiguration": {
     "ApplicationDownloadStatisticsCronExpression": "0 8 * * *",
     "WebApiReportCronExpression": "0 8 * * *"
   },
+  "DateTimeConfiguration": {
+    "MaxAgeOfArticlesInDays": 7,
+    "MaxAgeOfFeaturedArticlesInHours": 24,
+    "MaxAgeOfNewNewsPortalInDays": 60,
+    "MaxAgeOfTrendingArticlesInHours": 24
+  },
   "RabbitMqConfiguration": {
+    "ArticlesQueueName": "articles-queue",
     "HostName": "rabbitmq",
     "Port": 5672,
-    "UseRabbitMqServer": false,
-    "ArticlesQueueName": "articles-queue"
+    "UseRabbitMqServer": false
   },
-  "AllowedHosts": "*"
+  "SpaConfiguration": {
+    "EnableCors": false,
+    "SpaProxyServerUrl": "",
+    "UseSpaProxyServer": false
+  },
+  "TrendingScoreConfiguration": {
+    "AgeWeight": 0.9,
+    "HalfOfMaxTrendingScoreValue": 500
+  }
 }

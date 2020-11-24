@@ -1,33 +1,18 @@
 ﻿using System;
-using System.Collections;
-using System.Threading;
 using Espresso.Common.Constants;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Espresso.WebApi
+namespace Espresso.ParserDeleter.Startup
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class Program
+    internal sealed class Program
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="args"></param>
-        /// <returns></returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(configureOptions =>
