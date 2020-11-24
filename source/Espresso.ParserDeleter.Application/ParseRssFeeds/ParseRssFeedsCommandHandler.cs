@@ -88,9 +88,11 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
 
             var uniqueArticles = _sortArticlesService.RemoveDuplicateArticles(articles);
 
+            var savedArticles = _memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey);
+
             var (createArticles, updateArticles, articleCategoriesToCreate, articleCategoriesToDelete) = _sortArticlesService.SortArticles(
                 articles: uniqueArticles,
-                savedArticles: _memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey)
+                savedArticles: savedArticles
             );
 
             CreateArticles(articles: createArticles);

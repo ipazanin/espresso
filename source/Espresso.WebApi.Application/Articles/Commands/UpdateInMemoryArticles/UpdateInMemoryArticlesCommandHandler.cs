@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
-using Espresso.Persistence.Database;
+using Espresso.Domain.ValueObjects.ArticleValueObjects;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
@@ -18,37 +18,49 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
     {
         #region Fields
         private readonly IMemoryCache _memoryCache;
-        private readonly IApplicationDatabaseContext _applicationDatabaseContext;
         private readonly ITrendingScoreService _trendingScoreService;
         #endregion
 
         #region Constructors
         public UpdateInMemoryArticlesCommandHandler(
             IMemoryCache memoryCache,
-            IApplicationDatabaseContext applicationDatabaseContext,
             ITrendingScoreService trendingScoreService
         )
         {
             _memoryCache = memoryCache;
-            _applicationDatabaseContext = applicationDatabaseContext;
             _trendingScoreService = trendingScoreService;
         }
         #endregion
 
         #region Methods
-        public async Task<UpdateInMemoryArticlesCommandResponse> Handle(UpdateInMemoryArticlesCommand request, CancellationToken cancellationToken)
+        public Task<UpdateInMemoryArticlesCommandResponse> Handle(UpdateInMemoryArticlesCommand request, CancellationToken cancellationToken)
         {
             var savedArticlesDictionary = _memoryCache
                 .Get<IEnumerable<Article>>(key: MemoryCacheConstants.ArticleKey)
                 .ToDictionary(article => article.Id);
 
-            await CreateArticles(savedArticlesDictionary, request.CreatedArticleIds, cancellationToken);
-            await UpdateArticles(savedArticlesDictionary, request.UpdatedArticleIds, cancellationToken);
+            var newsPortalsDictionary = _memoryCache
+                .Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey)
+                .ToDictionary(newsPortal => newsPortal.Id);
+
+            var categoriesDictionary = _memoryCache
+                .Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey)
+                .ToDictionary(category => category.Id);
+
+
+            var articleDtos = request.CreatedArticles.Union(request.UpdatedArticles);
+
+            UpdateInMemoryArticles(
+                articlesDictionary: savedArticlesDictionary,
+                newsPortalsDictionary: newsPortalsDictionary,
+                categoriesDictionary: categoriesDictionary,
+                articleDtos: articleDtos
+            );
 
             RemoveOldArticles(savedArticlesDictionary, request.MaxAgeOfArticle);
 
             var articles = savedArticlesDictionary
-                .Select(articleKeyValuePair => articleKeyValuePair.Value)
+                .Values
                 .ToList();
 
             var articlesToSave = _trendingScoreService.CalculateTrendingScore(articles);
@@ -60,90 +72,111 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
 
             var response = new UpdateInMemoryArticlesCommandResponse
             {
-                NumberOfUpdatedArticles = request.CreatedArticleIds.Count(),
-                NumberOfCreatedArticles = request.UpdatedArticleIds.Count()
+                NumberOfUpdatedArticles = request.CreatedArticles.Count(),
+                NumberOfCreatedArticles = request.UpdatedArticles.Count()
             };
 
-            return response;
+            return Task.FromResult(response);
         }
 
-        private async Task CreateArticles(
-            IDictionary<Guid, Article> savedArticlesDictionary,
-            IEnumerable<Guid> createdArticleIds,
-            CancellationToken cancellationToken
+        private static void UpdateInMemoryArticles(
+            IDictionary<Guid, Article> articlesDictionary,
+            IDictionary<int, NewsPortal> newsPortalsDictionary,
+            IDictionary<int, Category> categoriesDictionary,
+            IEnumerable<ArticleDto> articleDtos
         )
         {
-
-            var articlesToCreate = await _applicationDatabaseContext
-                .Articles
-                .Include(article => article.ArticleCategories)
-                .ThenInclude(articleCategory => articleCategory.Category)
-                .Include(article => article.NewsPortal)
-                .Include(article => article.MainArticle)
-                .ThenInclude(mainArticle => mainArticle!.MainArticle)
-                .Include(article => article.SubordinateArticles)
-                .ThenInclude(subordinateArticle => subordinateArticle!.SubordinateArticle)
-                .ThenInclude(article => article!.NewsPortal)
-                .Include(article => article.SubordinateArticles)
-                .ThenInclude(subordinateArticle => subordinateArticle!.SubordinateArticle)
-                .ThenInclude(article => article!.ArticleCategories)
-                .ThenInclude(articleCategory => articleCategory.Category)
-                .Where(article => createdArticleIds.Contains(article.Id))
-                .AsSplitQuery()
-                .AsNoTracking()
-                .ToListAsync(cancellationToken);
-
-            foreach (var article in articlesToCreate)
+            foreach (var articleDto in articleDtos)
             {
-                if (savedArticlesDictionary.ContainsKey(article.Id))
+                var article = CreateArticle(
+                    articleDto: articleDto,
+                    newsPortalsDictionary: newsPortalsDictionary,
+                    categoriesDictionary: categoriesDictionary
+                );
+
+                if (articlesDictionary.ContainsKey(article.Id))
                 {
-                    _ = savedArticlesDictionary.Remove(article.Id);
-                    savedArticlesDictionary.Add(article.Id, article);
+                    articlesDictionary.Remove(article.Id);
+                    articlesDictionary.Add(article.Id, article);
                 }
                 else
                 {
-                    savedArticlesDictionary.Add(article.Id, article);
+                    articlesDictionary.Add(article.Id, article);
+                }
+            }
+
+            var articleDtoIds = articleDtos.Select(articleDto => articleDto.Id);
+            var newArticles = articlesDictionary
+                .Values
+                .Where(article => articleDtoIds.Contains(article.Id));
+
+            foreach (var article in newArticles)
+            {
+                if (
+                    article.MainArticle is not null &&
+                    articlesDictionary.TryGetValue(article.MainArticle.MainArticleId, out var mainArticle)
+                )
+                {
+                    var subordinateArticle = article;
+
+                    subordinateArticle.MainArticle.SetMainArticle(mainArticle);
+                    subordinateArticle.MainArticle.SetSubordinateArticle(subordinateArticle);
+
+                    mainArticle.SubordinateArticles.Add(article.MainArticle);
                 }
             }
         }
 
-        private async Task UpdateArticles(
-            IDictionary<Guid, Article> savedArticlesDictionary,
-            IEnumerable<Guid> updatedArticleIds,
-            CancellationToken cancellationToken
+        private static Article CreateArticle(
+            ArticleDto articleDto,
+            IDictionary<int, NewsPortal> newsPortalsDictionary,
+            IDictionary<int, Category> categoriesDictionary
         )
         {
-            var articlesToUpdate = await _applicationDatabaseContext
-                .Articles
-                .Include(article => article.ArticleCategories)
-                .ThenInclude(articleCategory => articleCategory.Category)
-                .Include(article => article.NewsPortal)
-                .Include(article => article.MainArticle)
-                .ThenInclude(mainArticle => mainArticle!.MainArticle)
-                .Include(article => article.SubordinateArticles)
-                .ThenInclude(subordinateArticle => subordinateArticle!.SubordinateArticle)
-                .ThenInclude(article => article!.NewsPortal)
-                .Include(article => article.SubordinateArticles)
-                .ThenInclude(subordinateArticle => subordinateArticle!.SubordinateArticle)
-                .ThenInclude(article => article!.ArticleCategories)
-                .ThenInclude(articleCategory => articleCategory.Category)
-                .Where(article => updatedArticleIds.Contains(article.Id))
-                .AsSplitQuery()
-                .AsNoTracking()
-                .ToListAsync(cancellationToken);
+            var articleCategories = articleDto
+                .ArticleCategories
+                .Select(articleCategory => new ArticleCategory(
+                    id: articleCategory.Id,
+                    articleId: articleDto.Id,
+                    categoryId: articleCategory.CategoryId,
+                    article: null,
+                    category: categoriesDictionary[articleCategory.CategoryId]
+                ));
 
-            foreach (var article in articlesToUpdate)
-            {
-                if (savedArticlesDictionary.ContainsKey(article.Id))
-                {
-                    savedArticlesDictionary.Remove(article.Id);
-                    savedArticlesDictionary.Add(article.Id, article);
-                }
-                else
-                {
-                    savedArticlesDictionary.Add(article.Id, article);
-                }
-            }
+            var mainArticle = articleDto.MainArticle == null ?
+                null :
+                new SimilarArticle(
+                    id: articleDto.MainArticle.Id,
+                    similarityScore: articleDto.MainArticle.SimilarityScore,
+                    mainArticleId: articleDto.MainArticle.MainArticleId,
+                    mainArticle: null,
+                    subordinateArticleId: articleDto.MainArticle.SubordinateArticleId,
+                    subordinateArticle: null
+                );
+
+            var article = new Article(
+                id: articleDto.Id,
+                url: articleDto.Url,
+                webUrl: articleDto.WebUrl,
+                summary: articleDto.Summary,
+                title: articleDto.Title,
+                imageUrl: articleDto.ImageUrl,
+                createDateTime: articleDto.CreateDateTime,
+                updateDateTime: articleDto.UpdateDateTime,
+                publishDateTime: articleDto.PublishDateTime!,
+                numberOfClicks: articleDto.NumberOfClicks,
+                trendingScore: articleDto.TrendingScore,
+                editorConfiguration: new EditorConfiguration(),
+                newsPortalId: articleDto.NewsPortalId,
+                rssFeedId: articleDto.RssFeedId,
+                articleCategories: articleCategories,
+                newsPortal: newsPortalsDictionary[articleDto.NewsPortalId],
+                rssFeed: null,
+                subordinateArticles: null,
+                mainArticle: mainArticle
+            );
+
+            return article;
         }
 
         private void RemoveOldArticles(

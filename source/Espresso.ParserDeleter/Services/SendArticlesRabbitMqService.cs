@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects;
+using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Application.IServices;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
@@ -70,13 +71,6 @@ namespace Espresso.ParserDeleter.Services
 
             var connection = factory.CreateConnection();
             var channel = connection.CreateModel();
-            // channel.QueueDeclare(
-            //     queue: _queueName,
-            //     durable: false,
-            //     exclusive: false,
-            //     autoDelete: false,
-            //     arguments: null
-            // );
 
             var properties = channel.CreateBasicProperties();
 
@@ -94,14 +88,14 @@ namespace Espresso.ParserDeleter.Services
             CancellationToken cancellationToken
         )
         {
-            var createdArticleIds = createArticles.Select(article => article.Id);
-            var updatedArticleIds = updateArticles.Select(article => article.Id);
-            var articlesBody = new ArticlesBodyDto
-            {
-                CreatedArticleIds = createdArticleIds,
-                UpdatedArticleIds = updatedArticleIds
-            };
-            var articlesBodyJson = await _jsonService.Serialize(articlesBody, cancellationToken);
+            var articleDtoProjection = ArticleDto.GetProjection().Compile();
+
+            var data = new ArticlesBodyDto(
+                createdArticles: createArticles.Select(articleDtoProjection),
+                updatedArticles: updateArticles.Select(articleDtoProjection)
+            );
+
+            var articlesBodyJson = await _jsonService.Serialize(data, cancellationToken);
             var articlesBodyUtf8Bytes = Encoding.UTF8.GetBytes(articlesBodyJson);
 
             return articlesBodyUtf8Bytes;

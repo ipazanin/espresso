@@ -1,25 +1,24 @@
 ﻿{
   "AppConfiguration": {
-    "Version": "2.1.0",
     "MajorVersion": 2,
+    "MaxAgeOfArticlesInDays": 7,
     "MinorVersion": 1,
-    "MaxAgeOfArticlesInDays": 7
+    "Version": "2.1.0"
   },
   "ArticleSimilarityConfiguration": {
-    "SimilarityScoreThreshold": 0.65,
     "ArticlePublishDateTimeDiferenceThresholdInHours": 24,
     "MaxAgeOfSimilarArticleCheckingInHours": 26,
-    "GroupSimilarArticlesBatchSize": 5000,
-    "MinimalNumberOfWordsForArticleToBeComparable": 4
+    "MinimalNumberOfWordsForArticleToBeComparable": 4,
+    "SimilarityScoreThreshold": 0.65
   },
   "CronJobsConfiguration": {
     "DeleteArticlesCronExpression": "0 * * * *",
     "ParseArticlesCronExpression": "*/1 * * * *"
   },
   "RabbitMqConfiguration": {
+    "ArticlesQueueName": "articles-queue",
     "HostName": "rabbitmq",
     "Port": 5672,
-    "UseRabbitMqServer": false,
-    "ArticlesQueueName": "articles-queue"
+    "UseRabbitMqServer": false
   }
 }

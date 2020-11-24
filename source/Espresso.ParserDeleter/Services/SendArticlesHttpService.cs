@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.DataTransferObjects;
+using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Application.Extensions;
 using Espresso.Application.IServices;
 using Espresso.Common.Constants;
@@ -66,29 +65,31 @@ namespace Espresso.ParserDeleter.Services
                 return;
             }
 
-            var createdArticleIds = createArticles.Select(article => article.Id);
-            var updatedArticleIds = updateArticles.Select(article => article.Id);
-
             var httpHeaders = new List<(string headerKey, string headerValue)>
             {
                 (headerKey: HttpHeaderConstants.ApiKeyHeaderName, headerValue: _parserApiKey),
                 (headerKey: HttpHeaderConstants.ApiVersionHeaderName, headerValue: _targetedApiVersion),
                 (headerKey: HttpHeaderConstants.VersionHeaderName, headerValue: _currentVersion),
-                (headerKey: HttpHeaderConstants.DeviceTypeHeaderName, headerValue: ((int)DeviceType.RssFeedParser).ToString()),
+                (headerKey: HttpHeaderConstants.DeviceTypeHeaderName, headerValue: DeviceType.RssFeedParser.GetIntegerValueAsString()),
             };
+
+            var articleDtoProjection = ArticleDto.GetProjection().Compile();
+
+            var data = new ArticlesBodyDto(
+                createdArticles: createArticles.Select(articleDtoProjection),
+                updatedArticles: updateArticles.Select(articleDtoProjection)
+            );
 
             try
             {
                 _httpClient.AddHeadersToHttpClient(httpHeaders);
-                await _httpClient.PostAsJsonAsync(
+                var response = await _httpClient.PostAsJsonAsync(
                     requestUri: $"{_serverUrl}/api/notifications/articles",
-                    value: new ArticlesBodyDto
-                    {
-                        CreatedArticleIds = createdArticleIds,
-                        UpdatedArticleIds = updatedArticleIds
-                    },
+                    value: data,
                     cancellationToken: cancellationToken
                 );
+
+                response.EnsureSuccessStatusCode();
 
                 return;
             }

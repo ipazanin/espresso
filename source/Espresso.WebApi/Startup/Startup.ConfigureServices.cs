@@ -29,7 +29,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Espresso.WebApi
+namespace Espresso.WebApi.Startup
 {
     internal sealed partial class Startup
     {
@@ -92,6 +92,8 @@ namespace Espresso.WebApi
                         fluentValidatorConfiguration
                             .RegisterValidatorsFromAssemblyContaining<GetNewsPortalsQueryValidator>()
                 );
+
+            services.AddResponseCaching();
 
             services.AddHealthChecks();
             services.AddSignalR();

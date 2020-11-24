@@ -65,18 +65,50 @@ endif
 compose-parser::
 ifeq ($(arg), up)
 	docker-compose \
+	-f ./compose/database.yml \
+	-f ./compose/database-environment.yml \	
 	-f ./compose/parser.yml \
 	-f ./compose/parser-environment.yml \
 	up --build
 else ifeq ($(strip $(arg)),)
 	docker-compose \
+	-f ./compose/database.yml \
+	-f ./compose/database-environment.yml \	
 	-f ./compose/parser.yml \
 	-f ./compose/parser-environment.yml \
 	up --build
 else ifeq ($(arg), down)
 	docker-compose \
+	-f ./compose/database.yml \
+	-f ./compose/database-environment.yml \	
 	-f ./compose/parser.yml \
 	-f ./compose/parser-environment.yml \
+	down
+else
+	echo "Invalid Argument. Accepted arguments: up, down"
+endif
+
+compose-webapi::
+ifeq ($(arg), up)
+	docker-compose \
+	-f ./compose/database.yml \
+	-f ./compose/database-environment.yml \
+	-f ./compose/webapi.yml \
+	-f ./compose/webapi-environment.yml \
+	up --build
+else ifeq ($(strip $(arg)),)
+	docker-compose \
+	-f ./compose/database.yml \
+	-f ./compose/database-environment.yml \
+	-f ./compose/webapi.yml \
+	-f ./compose/webapi-environment.yml \
+	up --build
+else ifeq ($(arg), down)
+	docker-compose \
+	-f ./compose/database.yml \
+	-f ./compose/database-environment.yml \
+	-f ./compose/webapi.yml \
+	-f ./compose/webapi-environment.yml \
 	down
 else
 	echo "Invalid Argument. Accepted arguments: up, down"

@@ -1,7 +1,7 @@
 ﻿using Espresso.ParserDeleter.Configuration;
 using Microsoft.Extensions.Configuration;
 
-namespace Espresso.ParserDeleter
+namespace Espresso.ParserDeleter.Startup
 {
     internal sealed partial class Startup
     {

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Espresso.Common.Extensions;
 
 namespace Espresso.Domain.Utilities
 {
@@ -14,7 +13,7 @@ namespace Espresso.Domain.Utilities
         private const string StartOfWordCharactersRegex = "(^| |\n)";
         private const string UnimpactfulCroatianWordsRegex = "(u|i|je|na|se|su|što|zbog|do|te|samo|jer" +
             "|već|za|da|s|od|a|će|iz|koji|ne|kako|o|nije|bi|to|ali|još|sa|kao|koja|sve|biti|po|koje|ga" +
-            "|bio|sam|bez|no|dok|mu|pa|li|oko|ako)";
+            "|bio|sam|bez|no|dok|mu|pa|li|oko|ako|ili)";
 
         public static IEnumerable<string> GetSearchTerms(string? searchTerm)
         {

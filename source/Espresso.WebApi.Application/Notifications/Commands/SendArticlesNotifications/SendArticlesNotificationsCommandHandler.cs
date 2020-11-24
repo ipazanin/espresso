@@ -17,42 +17,31 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendArticlesNotific
 
         #region Fields
         private readonly IHubContext<ArticlesNotificationHub> _hubContext;
-        private readonly IApplicationDatabaseContext _applicationDatabaseContext;
         #endregion
 
         #region Constructors
         public SendArticlesNotificationsCommandHandler(
-            IHubContext<ArticlesNotificationHub> hubContext,
-            IApplicationDatabaseContext applicationDatabaseContext
+            IHubContext<ArticlesNotificationHub> hubContext
         )
         {
             _hubContext = hubContext;
-            _applicationDatabaseContext = applicationDatabaseContext;
         }
         #endregion
 
         #region Methods
         public async Task<Unit> Handle(SendArticlesNotificationsCommand request, CancellationToken cancellationToken)
         {
-            if (!request.CreatedArticleIds.Any())
+            if (!request.CreatedArticles.Any())
             {
                 return Unit.Value;
             }
 
-            var createdArticles = await _applicationDatabaseContext
-                .Articles
-                .Include(article => article.ArticleCategories)
-                .ThenInclude(articleCategory => articleCategory.Category)
-                .Include(article => article.NewsPortal)
-                .Where(article => request.CreatedArticleIds.Contains(article.Id))
-                .AsSplitQuery()
-                .AsNoTracking()
-                .ToListAsync(cancellationToken);
-
-            var newArticles = createdArticles.Select(article => new NewArticleDto(
-                    article.NewsPortal!.Id,
+            var newArticles = request
+                .CreatedArticles
+                .Select(article => new NewArticleDto(
+                    article.NewsPortalId,
                     article.ArticleCategories.Select(articleCategory => articleCategory.CategoryId)
-            ));
+                ));
 
             var newArticlesNotificationDto = new NewArticlesNotificationDto(newArticles);
 

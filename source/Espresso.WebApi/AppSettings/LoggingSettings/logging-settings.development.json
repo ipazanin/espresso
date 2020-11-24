@@ -2,12 +2,12 @@
   "Logging": {
     "LogLevel": {
       "Default": "Information",
+      "Espresso.Application.Infrastructure.CronJobsInfrastructure.CronJob": "Information",
+      "Espresso.Application.Infrastructure.MediatorInfrastructure.ExceptionRequestPipeline": "Information",
+      "Espresso.Application.Infrastructure.MediatorInfrastructure.LoggerRequestPipeline": "Information",
       "Microsoft": "Warning",
       "Microsoft.EntityFrameworkCore": "Warning",
-      "System": "Warning",
-      "Espresso.Application.Infrastructure.MediatorInfrastructure.LoggerRequestPipeline": "Information",
-      "Espresso.Application.Infrastructure.MediatorInfrastructure.ExceptionRequestPipeline": "Information",
-      "Espresso.Application.Infrastructure.CronJobsInfrastructure.CronJob": "Information"
+      "System": "Warning"
     }
   }
 }

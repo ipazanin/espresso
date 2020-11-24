@@ -1,11 +1,9 @@
 using System;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.DataTransferObjects;
+using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Application.Infrastructure.BackgroundJobsInfrastructure;
 using Espresso.Application.IServices;
-using Espresso.Common.Utilities;
 using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.IServices;
 using Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles;
@@ -106,8 +104,8 @@ namespace Espresso.WebApi.Services
                     {
                         await sender.Send(new UpdateInMemoryArticlesCommand
                         {
-                            CreatedArticleIds = articlesBody.CreatedArticleIds,
-                            UpdatedArticleIds = articlesBody.UpdatedArticleIds,
+                            CreatedArticles = articlesBody.CreatedArticles,
+                            UpdatedArticles = articlesBody.UpdatedArticles,
                             MaxAgeOfArticle = _webApiConfiguration.DateTimeConfiguration.MaxAgeOfArticle,
                             TargetedApiVersion = _webApiConfiguration.AppConfiguration.ApiVersion.ToString(),
                             ConsumerVersion = _webApiConfiguration.AppConfiguration.Version,

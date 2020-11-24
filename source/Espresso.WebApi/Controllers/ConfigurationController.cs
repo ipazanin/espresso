@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Espresso.WebApi.DataTransferObjects;
 using Espresso.WebApi.RequestData.Header;
+using System;
 
 namespace Espresso.WebApi.Controllers
 {
@@ -60,6 +61,10 @@ namespace Espresso.WebApi.Controllers
         [ApiVersion("2.1")]
         [ApiVersion("2.0")]
         [ApiVersion("1.4")]
+        [ResponseCache(
+            Duration = 12 * 60 * 60,
+            Location = ResponseCacheLocation.Any
+        )]
         [HttpGet]
         [Authorize(Roles = ApiKey.WebAppRole)]
         [Route("api/web-configuration")]
@@ -108,6 +113,10 @@ namespace Espresso.WebApi.Controllers
         [ApiVersion("2.1")]
         [ApiVersion("2.0")]
         [ApiVersion("1.4")]
+        [ResponseCache(
+            Duration = 12 * 60 * 60,
+            Location = ResponseCacheLocation.Any
+        )]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
         [Route("api/configuration")]

@@ -29,5 +29,10 @@ namespace Espresso.Common.Extensions
                 display.Name :
                 value.ToString();
         }
+
+        public static string GetIntegerValueAsString(this Enum value)
+        {
+            return Convert.ToInt32(value).ToString();
+        }
     }
 }

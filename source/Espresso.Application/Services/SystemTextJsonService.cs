@@ -114,6 +114,7 @@ namespace Espresso.Application.Services
             var defaultJsonOptions = DefaultJsonSerializerOptions;
 
             jsonSerializerOptions.PropertyNameCaseInsensitive = defaultJsonOptions.PropertyNameCaseInsensitive;
+            jsonSerializerOptions.PropertyNamingPolicy = defaultJsonOptions.PropertyNamingPolicy;
             jsonSerializerOptions.AllowTrailingCommas = defaultJsonOptions.AllowTrailingCommas;
             jsonSerializerOptions.MaxDepth = defaultJsonOptions.MaxDepth;
             jsonSerializerOptions.ReadCommentHandling = defaultJsonOptions.ReadCommentHandling;

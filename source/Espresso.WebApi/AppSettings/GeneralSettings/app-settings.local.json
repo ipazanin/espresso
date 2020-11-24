@@ -7,7 +7,7 @@
     "WebApiReportCronExpression": "1 1 1 * *"
   },
   "SpaConfiguration": {
-    "UseSpaProxyServer": false,
-    "SpaProxyServerUrl": "http://docker.for.mac.localhost:3000"
+    "SpaProxyServerUrl": "http://docker.for.mac.localhost:3000",
+    "UseSpaProxyServer": false
   }
 }

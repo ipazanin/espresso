@@ -3,16 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Espresso.Application.IServices;
-using Espresso.Application.Services;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
-using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
 using Espresso.Common.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
-using Espresso.Persistence.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -123,11 +119,9 @@ namespace Espresso.ParserDeleter.Application.Initialization
                 value: articles
             );
 
-            var lastSimilarityGroupingTime = articles
-                .OrderByDescending(article => article.CreateDateTime)
-                .FirstOrDefault()
-                ?.CreateDateTime
-                ?? new DateTime();
+            var lastSimilarityGroupingTime = articles.Any() ?
+                articles.Max(article => article.CreateDateTime) :
+                new DateTime();
 
             _memoryCache.Set(MemoryCacheConstants.LastSimilarityGroupingTime, lastSimilarityGroupingTime);
             #endregion

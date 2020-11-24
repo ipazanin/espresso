@@ -4,15 +4,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
-using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
 using Espresso.Common.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
-using Espresso.Persistence.IRepositories;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +25,6 @@ namespace Espresso.WebApi.Application.Initialization
     {
         #region Constants
         private const string ConfigurationFileName = "firebase-key.json";
-
         #endregion
 
         #region Fileds
@@ -64,7 +60,6 @@ namespace Espresso.WebApi.Application.Initialization
             InitializeFireBase();
 
             await _context.Database.MigrateAsync();
-
 
             #region Regions
             var regions = await _context
