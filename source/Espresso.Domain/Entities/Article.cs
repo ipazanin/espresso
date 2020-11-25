@@ -239,6 +239,18 @@ namespace Espresso.Domain.Entities
                 }
             }
 
+            if (shouldUpdate)
+            {
+                UpdateDateTime = DateTime.UtcNow;
+            }
+
+            var numberOfArticleCategoriesAfterUpdate = ArticleCategories.Count + articleCategoriesToCreate.Count - articleCategoriesToDelete.Count;
+            if (numberOfArticleCategoriesAfterUpdate < 1)
+            {
+                articleCategoriesToDelete.Clear();
+            }
+
+
             return (shouldUpdate, articleCategoriesToCreate, articleCategoriesToDelete);
         }
 

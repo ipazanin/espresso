@@ -12,6 +12,7 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using Espresso.Application.Services;
 
 namespace Espresso.ParserDeleter.Application.Initialization
 {

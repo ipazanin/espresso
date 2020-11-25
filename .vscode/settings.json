@@ -40,5 +40,46 @@
   },
   "eslint.lintTask.enable": true,
   "eslint.nodePath": "./source/Espresso.ClientApp/node_modules",
-  "prettier.configPath": "./source/Espresso.ClientApp/.prettierrc"
+  "prettier.configPath": "./source/Espresso.ClientApp/.prettierrc",
+  "cSpell.enableFiletypes": [
+    "!asciidoc",
+    "!c",
+    "!cpp",
+    "!go",
+    "!handlebars",
+    "!haskell",
+    "!jade",
+    "!java",
+    "!latex",
+    "!less",
+    "!php",
+    "!pug",
+    "!python",
+    "!rust",
+    "!scala",
+    "aspnetcorerazor",
+    "dockerfile",
+    "git-rebase",
+    "groovy",
+    "makefile",
+    "shellscript",
+    "xml"
+  ],
+  "cSpell.words": [
+    "Mediat",
+    "parserdeleter",
+    "rabbitmq",
+    "webapi"
+  ],
+  "cSpell.ignorePaths": [
+    "**/package-lock.json",
+    "**/node_modules/**",
+    "**/vscode-extension/**",
+    "**/.git/objects/**",
+    ".vscode",
+    ".vscode-insiders",
+    "**/bin/**",
+    "**/obj/**",
+    "**/TestReports/**"
+  ]
 }

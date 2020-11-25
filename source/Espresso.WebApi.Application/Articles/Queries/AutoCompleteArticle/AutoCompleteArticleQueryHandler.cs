@@ -69,7 +69,7 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
             matchedWords.AddRange(matchedArticleTitleWords);
 
             var filteredMatches = matchedWords
-                .RemoveUnimpactfulCroatianWords()
+                .RemoveUnImpactfulCroatianWords()
                 .Distinct(StringComparer.InvariantCultureIgnoreCase)
                 .OrderBy(matchedWord => matchedWord)
                 .Skip(request.Skip)
