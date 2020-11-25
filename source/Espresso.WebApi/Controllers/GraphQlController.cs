@@ -84,6 +84,7 @@ namespace Espresso.WebApi.Controllers
                 executionOptions.Inputs = query.Variables is null ? null : new Inputs(query.Variables);
                 executionOptions.OperationName = query.OperationName;
                 executionOptions.CancellationToken = cancellationToken;
+                executionOptions.ThrowOnUnhandledException = true;
 
                 if (
                     WebApiConfiguration
@@ -92,7 +93,6 @@ namespace Espresso.WebApi.Controllers
                         .Equals(AppEnvironment.Local)
                 )
                 {
-                    executionOptions.ExposeExceptions = true;
                     executionOptions.EnableMetrics = true;
                 }
 
@@ -103,18 +103,6 @@ namespace Espresso.WebApi.Controllers
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                 };
             });
-
-            if (result.Errors?.Count > 0)
-            {
-                var values = new List<string>(result.Errors.Select(executionError => executionError.Message));
-                values.AddRange(result.Errors.Select(executionError => executionError.InnerException?.Message ?? ""));
-                throw new ValidationException(
-                    message: string.Join(
-                        separator: ",",
-                        values: values
-                    )
-                );
-            }
 
             return Ok(new { data = result.Data });
         }

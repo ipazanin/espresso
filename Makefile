@@ -1,3 +1,6 @@
+# Constants
+CLIENTAPP_DIRECTORY=./source/Espresso.ClientApp
+
 # Common
 list::
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | \
@@ -18,8 +21,12 @@ health-check-backend::
 	make build
 	make test-backend
 
+clean::
+	dotnet clean --configuration Release --verbosity minimal source/Espresso.sln && \
+	find . -iname "bin" -o -iname "obj" | xargs rm -rf
+
 rebuild-backend::
-	dotnet clean --configuration Release --verbosity minimal source/Espresso.sln
+	make clean
 	make build
 
 build::
@@ -243,8 +250,6 @@ else
 endif
 
 # Frontend Scripts
-FRONTEND_DIRECTORY=./source/Espresso.WebApi/ClientApp
-
 health-check-frontend::
 	make install
 	make build-frontend
@@ -252,27 +257,27 @@ health-check-frontend::
 	make test-frontend
 
 rebuild-frontend::
-	cd $(FRONTEND_DIRECTORY); \
+	cd $(CLIENTAPP_DIRECTORY); \
 	rm -rf node_modules \
 	rm -rf build
 	make install
 	make build-frontend
 
 install::
-	cd $(FRONTEND_DIRECTORY); \
+	cd $(CLIENTAPP_DIRECTORY); \
 	npm install
 
 build-frontend::
-	cd $(FRONTEND_DIRECTORY); \
+	cd $(CLIENTAPP_DIRECTORY); \
 	REACT_APP_ENVIRONMENT=production \
 	./node_modules/.bin/react-scripts build
 
 lint::
-	cd $(FRONTEND_DIRECTORY); \
+	cd $(CLIENTAPP_DIRECTORY); \
 	./node_modules/.bin/eslint --ext .ts,.tsx src/ \
 	--fix --cache --cache-location=./node_modules/.cache/
 
 test-frontend::
-	cd $(FRONTEND_DIRECTORY); \
+	cd $(CLIENTAPP_DIRECTORY); \
 	CI=true REACT_APP_ENVIRONMENT=test \
 	./node_modules/.bin/react-scripts test

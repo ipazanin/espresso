@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Espresso.Common.Constants;
+using Espresso.Application.Services;
 
 namespace Espresso.WebApi.Startup
 {
@@ -78,7 +79,7 @@ namespace Espresso.WebApi.Startup
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = Path.Join(env.ContentRootPath, "ClientApp");
+                spa.Options.SourcePath = Path.Join(env.ContentRootPath, ClientAppDirectory);
 
                 if (
                     _webApiConfiguration.AppConfiguration.AppEnvironment.Equals(AppEnvironment.Local) &&

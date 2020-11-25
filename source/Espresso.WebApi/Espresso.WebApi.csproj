@@ -5,13 +5,13 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <AnalysisLevel>preview</AnalysisLevel>
     <Nullable>enable</Nullable>
-    
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    
+    <!-- <SpaRoot>ClientApp\</SpaRoot> -->
+    <!-- <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
-    <SpaRoot>ClientApp\</SpaRoot>
-    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes> -->
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,9 +20,9 @@
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.0" />
-    <PackageReference Include="GraphQL" Version="3.0.0-preview-1719" />
-    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="4.3.0" />
-    <PackageReference Include="GraphQL.SystemTextJson" Version="3.0.0-preview-1719" />
+    <PackageReference Include="GraphQL" Version="3.1.5" />
+    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="4.3.1" />
+    <PackageReference Include="GraphQL.SystemTextJson" Version="3.1.5" />
     <PackageReference Include="RabbitMQ.Client" Version="6.2.1" />
   </ItemGroup>
 
@@ -32,12 +32,28 @@
     <ProjectReference Include="..\Espresso.Persistence\Espresso.Persistence.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+  <!-- <ItemGroup>
     <Content Remove="$(SpaRoot)**" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
-  </ItemGroup>
+  </ItemGroup> -->
+
+<!-- <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <Exec Command="if not exist $(OutDir)..\..\..\.\build  mkdir $(OutDir)..\..\..\..\build" />
+  <Exec Command="copy $(OutDir)$(TargetName).dll $(OutDir)..\..\..\..\build\$(TargetName).dll /Y" />
+  <Exec Command="copy $(OutDir)$(TargetName).pdb $(OutDir)..\..\..\..\build\$(TargetName).pdb /Y" />
+</Target> -->
+
+<!-- <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <Exec Command="echo $(OutDir)" />
+  <Exec Command="ls ../Espresso.ClientApp/build" />
+  <Exec Command="mkdir -p $(OutDir)Espresso.ClientApp" />
+  <Exec Command="cp -R ../Espresso.ClientApp/build $(OutDir)Espresso.ClientApp/build" />
+  <Exec Command="ls $(OutDir)" />
+  <Exec Command="ls $(OutDir)Espresso.ClientApp" />
+  <Exec Command="ls $(OutDir)Espresso.ClientApp/build" />
+</Target> -->
 
 <ItemGroup>
       <Content Update="AppSettings/DatabaseSettings/database-settings.development.json">
