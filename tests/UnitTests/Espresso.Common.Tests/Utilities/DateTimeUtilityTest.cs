@@ -7,6 +7,51 @@ namespace Espresso.Common.Tests.Utilities
 {
     public class DateTimeUtilityTest
     {
+        #region Properties
+
+        #region CurrentMiliseconds
+        [Fact]
+        public void CurrentMiliseconds_ReturnsCurrentUnixUtxMiliseconds()
+        {
+            #region Arrange
+            var expectedMiliseconds = (long)(DateTime.UtcNow - DateTimeConstants.UnixEpochStartTime).TotalMilliseconds;
+            #endregion
+
+            #region Act
+            var actualMiliseconds = DateTimeUtility.CurrentMiliseconds;
+            #endregion
+
+            #region Assert
+            Assert.Equal(
+                expected: expectedMiliseconds,
+                actual: actualMiliseconds
+            );
+            #endregion
+        }
+        #endregion
+
+        #region YestrdaysDate
+        [Fact]
+        public void YestrdaysDate_ReturnsYesterdaysDate()
+        {
+            #region Arrange
+            var expectedDate = DateTime.UtcNow.AddDays(-1).Date;
+            #endregion
+
+            #region Act
+            var actualDate = DateTimeUtility.YesterdaysDate;
+            #endregion
+
+            #region Assert
+            Assert.Equal(
+                expected: expectedDate,
+                actual: actualDate
+            );
+            #endregion
+        }
+        #endregion    
+
+        #endregion
 
         #region  Methods
 
