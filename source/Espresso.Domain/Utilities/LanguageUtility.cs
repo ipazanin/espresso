@@ -11,7 +11,7 @@ namespace Espresso.Domain.Utilities
         private const string AllowedCharactersRegex = "([a-z]|[A-Z]|[0-9]|ž|Ž|đ|Đ|ć|Ć|č|Č|š|Š)";
         private const string DelimiterCharactersRegex = "( |\\.|;|:|,|\\n|$)";
         private const string StartOfWordCharactersRegex = "(^| |\n)";
-        private const string UnimpactfulCroatianWordsRegex = "(u|i|je|na|se|su|što|zbog|do|te|samo|jer" +
+        private const string UnImpactfulCroatianWordsRegex = "(u|i|je|na|se|su|što|zbog|do|te|samo|jer" +
             "|već|za|da|s|od|a|će|iz|koji|ne|kako|o|nije|bi|to|ali|još|sa|kao|koja|sve|biti|po|koje|ga" +
             "|bio|sam|bez|no|dok|mu|pa|li|oko|ako|ili)";
 
@@ -51,9 +51,9 @@ namespace Espresso.Domain.Utilities
             return matchedWords;
         }
 
-        public static IEnumerable<string> RemoveUnimpactfulCroatianWords(this IEnumerable<string> words)
+        public static IEnumerable<string> RemoveUnImpactfulCroatianWords(this IEnumerable<string> words)
         {
-            return words.Where(word => !Regex.IsMatch(word, $"^{UnimpactfulCroatianWordsRegex}$", RegexOptions.IgnoreCase));
+            return words.Where(word => !Regex.IsMatch(word, $"^{UnImpactfulCroatianWordsRegex}$", RegexOptions.IgnoreCase));
         }
 
         public static IEnumerable<string> RemoveWordsWithLessThanThreeLetters(this IEnumerable<string> words)

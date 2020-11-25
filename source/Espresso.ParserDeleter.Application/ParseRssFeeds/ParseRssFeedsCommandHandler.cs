@@ -146,7 +146,7 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
                     }
                     catch (Exception exception)
                     {
-                        var eventName = "CreatecArticle Unhandled Exception";
+                        var eventName = "Create Article Unhandled Exception";
                         _loggerService.Log(eventName, exception, LogLevel.Error);
                     }
                 }, cancellationToken));

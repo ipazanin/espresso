@@ -181,7 +181,7 @@ namespace Espresso.Domain.Tests.Utilities
             #endregion
 
             #region Act
-            var actualWords = LanguageUtility.RemoveUnimpactfulCroatianWords(words);
+            var actualWords = LanguageUtility.RemoveUnImpactfulCroatianWords(words);
             #endregion
 
             #region Assert
@@ -209,7 +209,7 @@ namespace Espresso.Domain.Tests.Utilities
             #endregion
 
             #region Act
-            var actualWords = LanguageUtility.RemoveUnimpactfulCroatianWords(words);
+            var actualWords = LanguageUtility.RemoveUnImpactfulCroatianWords(words);
             #endregion
 
             #region Assert
@@ -232,7 +232,7 @@ namespace Espresso.Domain.Tests.Utilities
             #endregion
 
             #region Act
-            var actualWords = LanguageUtility.RemoveUnimpactfulCroatianWords(words);
+            var actualWords = LanguageUtility.RemoveUnImpactfulCroatianWords(words);
             #endregion
 
             #region Assert

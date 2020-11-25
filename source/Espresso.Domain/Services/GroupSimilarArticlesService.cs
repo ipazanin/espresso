@@ -52,7 +52,7 @@ namespace Espresso.Domain.Services
                         article.MainArticle is null &&
                         LanguageUtility
                             .SeparateWords(article.Title)
-                            .RemoveUnimpactfulCroatianWords()
+                            .RemoveUnImpactfulCroatianWords()
                             .Count() >= _minimalNumberOfWordsForArticleToBeComparable
                 )
                 .OrderBy(article => article.PublishDateTime);
@@ -160,12 +160,12 @@ namespace Espresso.Domain.Services
         {
             var possibleMainArticleWords = LanguageUtility
                 .SeparateWords(possibleMainArticle.Title)
-                .RemoveUnimpactfulCroatianWords()
+                .RemoveUnImpactfulCroatianWords()
                 .RemoveWordsWithLessThanThreeLetters();
 
             var possibleSubordinateArticleWords = LanguageUtility
                 .SeparateWords(possibleSubordinateArticle.Title)
-                .RemoveUnimpactfulCroatianWords()
+                .RemoveUnImpactfulCroatianWords()
                 .RemoveWordsWithLessThanThreeLetters();
 
 

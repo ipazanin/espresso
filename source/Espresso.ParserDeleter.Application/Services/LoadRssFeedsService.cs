@@ -17,7 +17,6 @@ using Espresso.Common.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
 using Microsoft.Extensions.Logging;
-using Espresso.Application.Models;
 
 namespace Espresso.ParserDeleter.Application.Services
 {
