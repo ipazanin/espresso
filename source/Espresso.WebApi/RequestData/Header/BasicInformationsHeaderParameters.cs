@@ -1,5 +1,5 @@
 ﻿using Espresso.Common.Constants;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.Common.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Espresso.WebApi.RequestData.Header

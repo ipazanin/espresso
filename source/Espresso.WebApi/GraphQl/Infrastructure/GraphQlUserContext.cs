@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.Common.Enums;
 
 namespace Espresso.WebApi.GraphQl.Infrastructure
 {

@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.IServices;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.Common.Enums;
 using Espresso.ParserDeleter.Configuration;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.Common.Enums;
 using Espresso.Domain.Extensions;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;

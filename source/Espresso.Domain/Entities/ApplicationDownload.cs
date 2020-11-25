@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.Common.Enums;
 using Espresso.Domain.Infrastructure;
 
 namespace Espresso.Domain.Entities

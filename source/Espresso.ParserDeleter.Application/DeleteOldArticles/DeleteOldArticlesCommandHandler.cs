@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
 using Espresso.Common.Constants;
-
 using Espresso.Domain.Entities;
+using Espresso.Domain.IServices;
 using Espresso.Persistence.IRepositories;
 using MediatR;
 
@@ -19,16 +18,19 @@ namespace Espresso.ParserDeleter.Application.DeleteOldArticles
         #region Fields
         private readonly IMemoryCache _memoryCache;
         private readonly IArticleRepository _articleRepository;
+        private readonly IRemoveOldArticlesService _removeOldArticlesService;
         #endregion
 
         #region Constructors
         public DeleteOldArticlesCommandHandler(
             IMemoryCache memoryCache,
-            IArticleRepository articleRepository
+            IArticleRepository articleRepository,
+            IRemoveOldArticlesService removeOldArticlesService
         )
         {
             _memoryCache = memoryCache;
             _articleRepository = articleRepository;
+            _removeOldArticlesService = removeOldArticlesService;
         }
         #endregion
 
@@ -37,18 +39,20 @@ namespace Espresso.ParserDeleter.Application.DeleteOldArticles
         {
             var maxArticleAge = DateTime.UtcNow - request.MaxAgeOfOldArticles;
 
-            var memoryCacheArticles = _memoryCache.Get<IEnumerable<Article>>(key: MemoryCacheConstants.ArticleKey);
-            var notOldMemoryCacheArticles = memoryCacheArticles
-                .Where(article => article.CreateDateTime > maxArticleAge)
-                .ToList();
-            _ = _memoryCache.Set(key: MemoryCacheConstants.ArticleKey, value: notOldMemoryCacheArticles);
+            var articles = _memoryCache.Get<IEnumerable<Article>>(key: MemoryCacheConstants.ArticleKey);
+
+            var articlesToSave = _removeOldArticlesService.RemoveOldArticles(articles);
+
+            _memoryCache.Set(key: MemoryCacheConstants.ArticleKey, value: articlesToSave);
 
             var numberOfDeletedArticles = _articleRepository.DeleteArticlesAndSimilarArticles(maxArticleAge);
 
             var response = new DeleteOldArticlesCommandResponse
             {
-                NumberOfDeletedAricles = numberOfDeletedArticles
+                NumberOfDeletedDatabaseAricles = numberOfDeletedArticles,
+                NumberOfDeletedMemoryCacheAricles = articles.Count() - articlesToSave.Count()
             };
+
             return Task.FromResult(response);
         }
         #endregion

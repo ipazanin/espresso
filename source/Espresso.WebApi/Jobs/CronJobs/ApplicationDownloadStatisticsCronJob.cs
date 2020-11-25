@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.Common.Enums;
 using Espresso.Persistence.IRepositories;
 using Espresso.Application.IServices;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Espresso.Domain.Enums.ApplicationDownloadEnums
+namespace Espresso.Common.Enums
 {
     public enum DeviceType
     {

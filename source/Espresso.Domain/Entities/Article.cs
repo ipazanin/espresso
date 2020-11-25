@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Infrastructure;
-using Espresso.Domain.Utilities;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
 
 namespace Espresso.Domain.Entities
@@ -280,6 +277,34 @@ namespace Espresso.Domain.Entities
             NewsPortalId = newsPortal.Id;
         }
 
+        public void RemoveSimilarArticles()
+        {
+            if (
+                MainArticle is not null &&
+                MainArticle.MainArticle is not null
+            )
+            {
+                MainArticle.MainArticle.RemoveSubordinateArticle(this);
+                MainArticle = null;
+            }
+            foreach (var subordinateArticle in SubordinateArticles)
+            {
+                subordinateArticle.SubordinateArticle?.RemoveMainArticle();
+            }
+            SubordinateArticles.Clear();
+        }
+
+        private void RemoveSubordinateArticle(Article subordinateArticle)
+        {
+            SubordinateArticles = SubordinateArticles
+                .Where(similarArticle => similarArticle.SubordinateArticleId != subordinateArticle.Id)
+                .ToList();
+        }
+
+        private void RemoveMainArticle()
+        {
+            MainArticle = null;
+        }
         #endregion
     }
 }

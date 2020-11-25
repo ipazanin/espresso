@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Espresso.Domain.Entities;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.Common.Enums;
 using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Utilities;
 

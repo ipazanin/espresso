@@ -19,16 +19,19 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
         #region Fields
         private readonly IMemoryCache _memoryCache;
         private readonly ITrendingScoreService _trendingScoreService;
+        private readonly IRemoveOldArticlesService _removeOldArticlesService;
         #endregion
 
         #region Constructors
         public UpdateInMemoryArticlesCommandHandler(
             IMemoryCache memoryCache,
-            ITrendingScoreService trendingScoreService
+            ITrendingScoreService trendingScoreService,
+            IRemoveOldArticlesService removeOldArticlesService
         )
         {
             _memoryCache = memoryCache;
             _trendingScoreService = trendingScoreService;
+            _removeOldArticlesService = removeOldArticlesService;
         }
         #endregion
 
@@ -57,17 +60,14 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
                 articleDtos: articleDtos
             );
 
-            RemoveOldArticles(savedArticlesDictionary, request.MaxAgeOfArticle);
-
-            var articles = savedArticlesDictionary
-                .Values
-                .ToList();
+            var articles = _removeOldArticlesService
+                .RemoveOldArticles(savedArticlesDictionary.Values);
 
             var articlesToSave = _trendingScoreService.CalculateTrendingScore(articles);
 
             _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
-                value: articlesToSave
+                value: articlesToSave.ToList()
             );
 
             var response = new UpdateInMemoryArticlesCommandResponse
@@ -177,29 +177,6 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
             );
 
             return article;
-        }
-
-        private void RemoveOldArticles(
-            IDictionary<Guid, Article> savedArticlesDictionary,
-            TimeSpan maxAgeOfArticle
-        )
-        {
-            var maxAge = DateTime.UtcNow - maxAgeOfArticle;
-
-            var articlesToRemove = savedArticlesDictionary
-                .Values
-                .Where(article => article.CreateDateTime < maxAge)
-                .ToList();
-
-            foreach (var articleToRemove in articlesToRemove)
-            {
-                savedArticlesDictionary.Remove(articleToRemove.Id);
-            }
-
-            _memoryCache.Set(
-                key: MemoryCacheConstants.ArticleKey,
-                value: articlesToRemove
-            );
         }
         #endregion
     }
