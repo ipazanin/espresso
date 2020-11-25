@@ -1,7 +1,4 @@
-# Constants
-CLIENTAPP_DIRECTORY=./source/Espresso.ClientApp
-
-# Common
+# common
 list::
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | \
 	awk -v RS= -F: '/^# File/,/^# Finished Make data base/ \
@@ -15,269 +12,100 @@ rebuild::
 	make rebuild-backend
 	make rebuild-frontend
 
-# Backend
-health-check-backend::
-	make restore
-	make build
-	make test-backend
-
-clean::
-	dotnet clean --configuration Release --verbosity minimal source/Espresso.sln && \
-	find . -iname "bin" -o -iname "obj" | xargs rm -rf
-
-rebuild-backend::
-	make clean
-	make build
-
-build::
-	dotnet build --configuration Release source/Espresso.sln
-
+# docker
 compose-database::
-ifeq ($(arg1), up)
-	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml  \
-	up --build $(arg2)
-else ifeq ($(strip $(arg1)),)
-	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	up --build $(arg2)
-else ifeq ($(arg1), down)
-	docker-compose -f ./compose/database.yml -f ./compose/database-environment.yml down
-else
-	echo "Invalid Argument. Accepted arguments: up, down"
-endif
+	make -f scripts/make/docker/Makefile compose-database arg1=$(arg1) arg2=$(arg2)
 
 compose-rabbitmq::
-ifeq ($(arg), up)
-	docker-compose \
-	-f ./compose/rabbitmq.yml \
-	-f ./compose/rabbitmq-environment.yml \
-	up --build
-else ifeq ($(strip $(arg)),)
-	docker-compose \
-	-f ./compose/rabbitmq.yml \
-	-f ./compose/rabbitmq-environment.yml \
-	up --build
-else ifeq ($(arg), down)
-	docker-compose \
-	-f ./compose/rabbitmq.yml \
-	-f ./compose/rabbitmq-environment.yml \
-	down
-else
-	echo "Invalid Argument. Accepted arguments: up, down"
-endif
+	make -f scripts/make/docker/Makefile compose-rabbitmq arg=$(arg)
 
 compose-parser::
-ifeq ($(arg), up)
-	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \	
-	-f ./compose/parser.yml \
-	-f ./compose/parser-environment.yml \
-	up --build
-else ifeq ($(strip $(arg)),)
-	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \	
-	-f ./compose/parser.yml \
-	-f ./compose/parser-environment.yml \
-	up --build
-else ifeq ($(arg), down)
-	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \	
-	-f ./compose/parser.yml \
-	-f ./compose/parser-environment.yml \
-	down
-else
-	echo "Invalid Argument. Accepted arguments: up, down"
-endif
+	make -f scripts/make/docker/Makefile compose-parser arg=$(arg)
 
 compose-webapi::
-ifeq ($(arg), up)
-	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/webapi-environment.yml \
-	up --build
-else ifeq ($(strip $(arg)),)
-	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/webapi-environment.yml \
-	up --build
-else ifeq ($(arg), down)
-	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/webapi-environment.yml \
-	down
-else
-	echo "Invalid Argument. Accepted arguments: up, down"
-endif
+	make -f scripts/make/docker/Makefile compose-webapi arg=$(arg)
 
 compose-local::
-ifeq ($(arg), up)
-	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/webapi-environment.yml \
-	-f ./compose/parser.yml \
-	-f ./compose/parser-environment.yml \
-	up --build
-else ifeq ($(strip $(arg)),)
-	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/webapi-environment.yml \
-	-f ./compose/parser.yml \
-	-f ./compose/parser-environment.yml \
-	up --build
-else ifeq ($(arg), down)
-	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/webapi-environment.yml \
-	-f ./compose/parser.yml \
-	-f ./compose/parser-environment.yml \
-	down
-else
-	echo "Invalid Argument. Accepted arguments: up, down"
-endif
+	make -f scripts/make/docker/Makefile compose-local arg=$(arg)
 
 compose-local-rabbitmq::
-ifeq ($(arg), up)
-	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/webapi-environment.yml \
-	-f ./compose/parser.yml \
-	-f ./compose/parser-environment.yml \
-	-f ./compose/rabbitmq.yml \
-	-f ./compose/rabbitmq-environment.yml \
-	up --build
-else ifeq ($(strip $(arg)),)
-	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/webapi-environment.yml \
-	-f ./compose/parser.yml \
-	-f ./compose/parser-environment.yml \
-	-f ./compose/rabbitmq.yml \
-	-f ./compose/rabbitmq-environment.yml \
-	up --build
-else ifeq ($(arg), down)
-	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/webapi-environment.yml \
-	-f ./compose/parser.yml \
-	-f ./compose/parser-environment.yml \
-	-f ./compose/rabbitmq.yml \
-	-f ./compose/rabbitmq-environment.yml \
-	down
-else
-	echo "Invalid Argument. Accepted arguments: up, down"
-endif
-
-database-update::
-	ASPNETCORE_ENVIRONMENT=local-production-db dotnet ef database update -p \
-	./source/Espresso.Persistence/Espresso.Persistence.csproj -v
+	make -f scripts/make/docker/Makefile compose-local-rabbitmq arg=$(arg)
 
 docker-build-webapi::
-ifeq ($(strip $(v)),)
-	docker build --force-rm -f ./source/Espresso.WebApi/Dockerfile -t \
-	docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi:latest --build-arg REACT_APP_ENVIRONMENT=production ./source
-	docker push docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi:latest
-else
-	docker build --force-rm -f ./source/Espresso.WebApi/Dockerfile -t \
-	docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi:$(v) --build-arg REACT_APP_ENVIRONMENT=production ./source
-	docker push docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi:$(v)
-endif
+	make -f scripts/make/docker/Makefile docker-build-webapi  v=$(v)
 
 docker-build-parserdeleter::
-ifeq ($(strip $(v)),)
-	docker build --force-rm -f ./source/Espresso.ParserDeleter/Dockerfile -t \
-	docker.pkg.github.com/espresso-news/espresso-backend/espresso-parserdeleter:latest ./source
-	docker push docker.pkg.github.com/espresso-news/espresso-backend/espresso-parserdeleter:latest
-else
-	docker build --force-rm -f ./source/Espresso.ParserDeleter/Dockerfile -t \
-	docker.pkg.github.com/espresso-news/espresso-backend/espresso-parserdeleter:$(v) ./source
-	docker push docker.pkg.github.com/espresso-news/espresso-backend/espresso-parserdeleter:$(v)
-endif
+	make -f scripts/make/docker/Makefile docker-build-parserdeleter v=$(v)
 
 docker-build::
 	make docker-build-webapi v=$(v)
 	make docker-build-parserdeleter v=$(v)
 
+# backend
+health-check-backend::
+	make restore
+	make build
+	make test
+
+rebuild-backend::
+	make clean
+	make build
+
+clean::
+	dotnet clean --configuration Release --verbosity minimal source/Espresso.sln && \
+	find . -iname "bin" -o -iname "obj" | xargs rm -rf
+
+build::
+	make -f scripts/make/backend/Makefile build
+	
+database-update::
+	make -f scripts/make/backend/Makefile database-update
+
 migration-add::
-	ASPNETCORE_ENVIRONMENT=local-local-db dotnet ef migrations \
-	add -p ./source/Espresso.Persistence/Espresso.Persistence.csproj -v $(name)
+	make -f scripts/make/backend/Makefile migration-add name=$(name)
 
 migration-remove::
-	ASPNETCORE_ENVIRONMENT=local-local-db dotnet ef migrations \
-	remove -p ./source/Espresso.Persistence/Espresso.Persistence.csproj -v
+	make -f scripts/make/backend/Makefile migration-remove
 
 update::
-	./scripts/update.sh
+	make -f scripts/make/backend/Makefile update
 
 restore::
-	dotnet restore ./source/Espresso.sln
+	make -f scripts/make/backend/Makefile restore
 
-test-backend-coverage::
-	sudo dotnet test --logger 'trx;LogFileName=TestResults.trx' \
-	--logger 'xunit;LogFileName=TestResults.xml' \
-	--results-directory ./tests/UnitTests/TestReports/UnitTests \
-	/p:CollectCoverage=true /p:CoverletOutput=TestReports/Coverage/ \
-	/p:CoverletOutputFormat=cobertura ./source/Espresso.sln
+test::
+	make -f scripts/make/backend/Makefile test verbosity=$(verbosity)
 
-test-backend::
-ifeq ($(strip $(verbosity)),)
-	dotnet test --verbosity minimal source/Espresso.sln
-else
-	dotnet test --verbosity $(verbosity) source/Espresso.sln
-endif
+test-coverage::
+	make -f scripts/make/backend/Makefile test-coverage
+	
+create-coverage-report::
+	make -f scripts/make/backend/Makefile create-coverage-report
 
-# Frontend Scripts
+coverage:
+	make -f scripts/make/backend/Makefile coverage
+
+# frontend
 health-check-frontend::
-	make install
-	make build-frontend
-	make lint
-	make test-frontend
+	make -f scripts/make/frontend/Makefile health-check-frontend
 
 rebuild-frontend::
-	cd $(CLIENTAPP_DIRECTORY); \
-	rm -rf node_modules \
-	rm -rf build
-	make install
-	make build-frontend
+	make -f scripts/make/frontend/Makefile rebuild-frontend
 
 install::
-	cd $(CLIENTAPP_DIRECTORY); \
-	npm install
+	make -f scripts/make/frontend/Makefile install
 
 build-frontend::
-	cd $(CLIENTAPP_DIRECTORY); \
-	REACT_APP_ENVIRONMENT=production \
-	./node_modules/.bin/react-scripts build
+	make -f scripts/make/frontend/Makefile build-frontend
 
 lint::
-	cd $(CLIENTAPP_DIRECTORY); \
-	./node_modules/.bin/eslint --ext .ts,.tsx src/ \
-	--fix --cache --cache-location=./node_modules/.cache/
+	make -f scripts/make/frontend/Makefile lint
 
 test-frontend::
-	cd $(CLIENTAPP_DIRECTORY); \
-	CI=true REACT_APP_ENVIRONMENT=test \
-	./node_modules/.bin/react-scripts test
+	make -f scripts/make/frontend/Makefile test-frontend
+
+start-parser::
+	make -f scripts/make/local/Makefile start-parser
+
+start-webapi::
+	make -f scripts/make/local/Makefile start-webapi

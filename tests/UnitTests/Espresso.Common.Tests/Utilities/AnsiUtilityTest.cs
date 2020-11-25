@@ -116,6 +116,34 @@ namespace Espresso.Common.Tests.Utilities
         }
         #endregion
 
+        #region EncodeString
+        [Fact]
+        public void EncodeString_EncodesStringWithWhiteColorAndItalic()
+        {
+            #region Arrange
+            var value = 0;
+            var expectedAnsivalue =
+                "\u001b[" +
+                "37" +
+                ";3" +
+                "m" +
+                $"{{{value}}}" +
+                "\u001b[0m";
+            #endregion
+
+            #region Act
+            var actualAnsivalue = AnsiUtility.EncodeString(value);
+            #endregion
+
+            #region Assert
+            Assert.Equal(
+                expected: expectedAnsivalue,
+                actual: actualAnsivalue
+            );
+            #endregion
+        }
+        #endregion        
+
         #region EncodeDeviceType
         [Fact]
         public void EncodeDeviceType_EncodesStringWithYellowColor()
@@ -168,7 +196,61 @@ namespace Espresso.Common.Tests.Utilities
             );
             #endregion
         }
-        #endregion     
+        #endregion   
+
+        #region EncodeNumber
+        [Fact]
+        public void EncodeNumber_EncodesStringWithMagentaColor()
+        {
+            #region Arrange
+            var value = 0;
+            var expectedAnsivalue =
+                "\u001b[" +
+                "35" +
+                "m" +
+                $"{{{value}}}" +
+                "\u001b[0m";
+            #endregion
+
+            #region Act
+            var actualAnsivalue = AnsiUtility.EncodeNumber(value);
+            #endregion
+
+            #region Assert
+            Assert.Equal(
+                expected: expectedAnsivalue,
+                actual: actualAnsivalue
+            );
+            #endregion
+        }
+        #endregion    
+
+        #region EncodeObject
+        [Fact]
+        public void EncodeObject_EncodesStringWithMagentaColor()
+        {
+            #region Arrange
+            var value = 0;
+            var expectedAnsivalue =
+                "\u001b[" +
+                "35" +
+                "m" +
+                $"{{{value}}}" +
+                "\u001b[0m";
+            #endregion
+
+            #region Act
+            var actualAnsivalue = AnsiUtility.EncodeObject(value);
+            #endregion
+
+            #region Assert
+            Assert.Equal(
+                expected: expectedAnsivalue,
+                actual: actualAnsivalue
+            );
+            #endregion
+        }
+        #endregion                     
 
         #endregion
 

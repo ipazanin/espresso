@@ -1,5 +1,5 @@
-# Makefile
-Makefile.local
+# Local Makefile
+scripts/make/local
 
 # DatabaseSettings
 database-settings.local-production.json
@@ -32,7 +32,7 @@ bld/
 [Ll]ogs/
 
 # XUnit Test Reports
-[Tt]estReports
+[Tt]est[RrT]eports
 
 # MSTest test Results
 [Tt]est[Rr]esult*/

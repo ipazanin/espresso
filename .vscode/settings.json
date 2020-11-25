@@ -34,11 +34,11 @@
   "eslint.format.enable": true,
   "eslint.validate": ["javascript", "typescript"],
   "eslint.packageManager": "npm",
-  "eslint.workingDirectories": ["./source/Espresso.WebApi/ClientApp"],
+  "eslint.workingDirectories": ["./source/Espresso.ClientApp"],
   "eslint.options": {
     "configFile": ".eslintrc"
   },
   "eslint.lintTask.enable": true,
-  "eslint.nodePath": "./source/Espresso.WebApi/ClientApp/node_modules",
-  "prettier.configPath": "./source/Espresso.WebApi/ClientApp/.prettierrc"
+  "eslint.nodePath": "./source/Espresso.ClientApp/node_modules",
+  "prettier.configPath": "./source/Espresso.ClientApp/.prettierrc"
 }
