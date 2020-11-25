@@ -27,6 +27,7 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
         private readonly IApplicationDatabaseContext _espressoDatabaseContext;
         private readonly IMemoryCache _memoryCache;
         private readonly IJsonService _jsonService;
+        private readonly ISlackService _slackService;
         private readonly ApplicationInformation _applicationInformation;
         #endregion
 
@@ -35,12 +36,14 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
             IApplicationDatabaseContext espressoDatabaseContext,
             IMemoryCache memoryCache,
             IJsonService jsonService,
+            ISlackService slackService,
             ApplicationInformation applicationInformation
         )
         {
             _espressoDatabaseContext = espressoDatabaseContext;
             _memoryCache = memoryCache;
             _jsonService = jsonService;
+            _slackService = slackService;
             _applicationInformation = applicationInformation;
         }
         #endregion
@@ -101,7 +104,7 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
 
             var messaging = FirebaseMessaging.DefaultInstance;
 
-            _ = await messaging.SendAsync(message, cancellationToken);
+            await messaging.SendAsync(message, cancellationToken);
             var pushNotification = new PushNotification(
                 id: Guid.NewGuid(),
                 internalName: internalName,
@@ -113,8 +116,14 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
                 createdAt: DateTime.UtcNow
             );
 
-            _ = _espressoDatabaseContext.PushNotifications.Add(pushNotification);
-            _ = await _espressoDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
+            _espressoDatabaseContext.PushNotifications.Add(pushNotification);
+            await _espressoDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
+
+            await _slackService.LogPushNotification(
+                pushNotification: pushNotification,
+                article: pushNotificationArticle,
+                cancellationToken: cancellationToken
+            );
 
             return Unit.Value;
         }

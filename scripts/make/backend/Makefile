@@ -30,6 +30,7 @@ update::
 restore::
 	dotnet restore ./source/Espresso.sln
 
+# verbosity levels: quiet, minimal, normal, detailed, diagnostic
 test::
 ifeq ($(strip $(verbosity)),)
 	dotnet test --verbosity minimal source/Espresso.sln
@@ -38,6 +39,7 @@ else
 endif
 
 test-coverage::
+ifeq ($(strip $(verbosity)),)
 	dotnet test \
 	--verbosity minimal \
 	--logger 'xunit;LogFileName=TestResults.xml' \
@@ -46,13 +48,19 @@ test-coverage::
 	/p:CoverletOutput=TestReports/ \
 	/p:CoverletOutputFormat=cobertura \
 	./source/Espresso.sln
+else
+	dotnet test \
+	--verbosity $(verbosity) \
+	--logger 'xunit;LogFileName=TestResults.xml' \
+	--results-directory ./tests/UnitTests/TestReports \
+	/p:CollectCoverage=true \
+	/p:CoverletOutput=TestReports/ \
+	/p:CoverletOutputFormat=cobertura \
+	./source/Espresso.sln
+endif
 	
 create-coverage-report::
 	sudo reportgenerator \
 	"-reports:tests/UnitTests/*/*/*.xml" \
 	"-targetdir:tests/UnitTests/TestReports" \
 	-reporttypes:Html
-
-coverage:
-	make -f scripts/make/backend/Makefile test-coverage
-	make -f scripts/make/backend/Makefile create-coverage-report

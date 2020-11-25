@@ -8,16 +8,16 @@ list::
 compose-database::
 ifeq ($(arg1), up)
 	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml  \
+	-f ./scripts/compose/database.yml \
+	-f ./scripts/compose/database-environment.yml  \
 	up --build $(arg2)
 else ifeq ($(strip $(arg1)),)
 	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
+	-f ./scripts/compose/database.yml \
+	-f ./scripts/compose/database-environment.yml \
 	up --build $(arg2)
 else ifeq ($(arg1), down)
-	docker-compose -f ./compose/database.yml -f ./compose/database-environment.yml down
+	docker-compose -f ./scripts/compose/database.yml -f ./scripts/compose/database-environment.yml down
 else
 	echo "Invalid Argument. Accepted arguments: up, down"
 endif
@@ -25,18 +25,18 @@ endif
 compose-rabbitmq::
 ifeq ($(arg), up)
 	docker-compose \
-	-f ./compose/rabbitmq.yml \
-	-f ./compose/rabbitmq-environment.yml \
+	-f ./scripts/compose/rabbitmq.yml \
+	-f ./scripts/compose/rabbitmq-environment.yml \
 	up --build
 else ifeq ($(strip $(arg)),)
 	docker-compose \
-	-f ./compose/rabbitmq.yml \
-	-f ./compose/rabbitmq-environment.yml \
+	-f ./scripts/compose/rabbitmq.yml \
+	-f ./scripts/compose/rabbitmq-environment.yml \
 	up --build
 else ifeq ($(arg), down)
 	docker-compose \
-	-f ./compose/rabbitmq.yml \
-	-f ./compose/rabbitmq-environment.yml \
+	-f ./scripts/compose/rabbitmq.yml \
+	-f ./scripts/compose/rabbitmq-environment.yml \
 	down
 else
 	echo "Invalid Argument. Accepted arguments: up, down"
@@ -45,24 +45,24 @@ endif
 compose-parser::
 ifeq ($(arg), up)
 	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \	
-	-f ./compose/parser.yml \
-	-f ./compose/parser-environment.yml \
+	-f ./scripts/compose/database.yml \
+	-f ./scripts/compose/database-environment.yml \	
+	-f ./scripts/compose/parser.yml \
+	-f ./scripts/compose/parser-environment.yml \
 	up --build
 else ifeq ($(strip $(arg)),)
 	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \	
-	-f ./compose/parser.yml \
-	-f ./compose/parser-environment.yml \
+	-f ./scripts/compose/database.yml \
+	-f ./scripts/compose/database-environment.yml \	
+	-f ./scripts/compose/parser.yml \
+	-f ./scripts/compose/parser-environment.yml \
 	up --build
 else ifeq ($(arg), down)
 	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \	
-	-f ./compose/parser.yml \
-	-f ./compose/parser-environment.yml \
+	-f ./scripts/compose/database.yml \
+	-f ./scripts/compose/database-environment.yml \	
+	-f ./scripts/compose/parser.yml \
+	-f ./scripts/compose/parser-environment.yml \
 	down
 else
 	echo "Invalid Argument. Accepted arguments: up, down"
@@ -71,24 +71,24 @@ endif
 compose-webapi::
 ifeq ($(arg), up)
 	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/webapi-environment.yml \
+	-f ./scripts/compose/database.yml \
+	-f ./scripts/compose/database-environment.yml \
+	-f ./scripts/compose/webapi.yml \
+	-f ./scripts/compose/webapi-environment.yml \
 	up --build
 else ifeq ($(strip $(arg)),)
 	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/webapi-environment.yml \
+	-f ./scripts/compose/database.yml \
+	-f ./scripts/compose/database-environment.yml \
+	-f ./scripts/compose/webapi.yml \
+	-f ./scripts/compose/webapi-environment.yml \
 	up --build
 else ifeq ($(arg), down)
 	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/webapi-environment.yml \
+	-f ./scripts/compose/database.yml \
+	-f ./scripts/compose/database-environment.yml \
+	-f ./scripts/compose/webapi.yml \
+	-f ./scripts/compose/webapi-environment.yml \
 	down
 else
 	echo "Invalid Argument. Accepted arguments: up, down"
@@ -97,30 +97,30 @@ endif
 compose-local::
 ifeq ($(arg), up)
 	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/webapi-environment.yml \
-	-f ./compose/parser.yml \
-	-f ./compose/parser-environment.yml \
+	-f ./scripts/compose/database.yml \
+	-f ./scripts/compose/database-environment.yml \
+	-f ./scripts/compose/webapi.yml \
+	-f ./scripts/compose/webapi-environment.yml \
+	-f ./scripts/compose/parser.yml \
+	-f ./scripts/compose/parser-environment.yml \
 	up --build
 else ifeq ($(strip $(arg)),)
 	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/webapi-environment.yml \
-	-f ./compose/parser.yml \
-	-f ./compose/parser-environment.yml \
+	-f ./scripts/compose/database.yml \
+	-f ./scripts/compose/database-environment.yml \
+	-f ./scripts/compose/webapi.yml \
+	-f ./scripts/compose/webapi-environment.yml \
+	-f ./scripts/compose/parser.yml \
+	-f ./scripts/compose/parser-environment.yml \
 	up --build
 else ifeq ($(arg), down)
 	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/webapi-environment.yml \
-	-f ./compose/parser.yml \
-	-f ./compose/parser-environment.yml \
+	-f ./scripts/compose/database.yml \
+	-f ./scripts/compose/database-environment.yml \
+	-f ./scripts/compose/webapi.yml \
+	-f ./scripts/compose/webapi-environment.yml \
+	-f ./scripts/compose/parser.yml \
+	-f ./scripts/compose/parser-environment.yml \
 	down
 else
 	echo "Invalid Argument. Accepted arguments: up, down"
@@ -129,36 +129,36 @@ endif
 compose-local-rabbitmq::
 ifeq ($(arg), up)
 	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/webapi-environment.yml \
-	-f ./compose/parser.yml \
-	-f ./compose/parser-environment.yml \
-	-f ./compose/rabbitmq.yml \
-	-f ./compose/rabbitmq-environment.yml \
+	-f ./scripts/compose/database.yml \
+	-f ./scripts/compose/database-environment.yml \
+	-f ./scripts/compose/webapi.yml \
+	-f ./scripts/compose/webapi-environment.yml \
+	-f ./scripts/compose/parser.yml \
+	-f ./scripts/compose/parser-environment.yml \
+	-f ./scripts/compose/rabbitmq.yml \
+	-f ./scripts/compose/rabbitmq-environment.yml \
 	up --build
 else ifeq ($(strip $(arg)),)
 	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/webapi-environment.yml \
-	-f ./compose/parser.yml \
-	-f ./compose/parser-environment.yml \
-	-f ./compose/rabbitmq.yml \
-	-f ./compose/rabbitmq-environment.yml \
+	-f ./scripts/compose/database.yml \
+	-f ./scripts/compose/database-environment.yml \
+	-f ./scripts/compose/webapi.yml \
+	-f ./scripts/compose/webapi-environment.yml \
+	-f ./scripts/compose/parser.yml \
+	-f ./scripts/compose/parser-environment.yml \
+	-f ./scripts/compose/rabbitmq.yml \
+	-f ./scripts/compose/rabbitmq-environment.yml \
 	up --build
 else ifeq ($(arg), down)
 	docker-compose \
-	-f ./compose/database.yml \
-	-f ./compose/database-environment.yml \
-	-f ./compose/webapi.yml \
-	-f ./compose/webapi-environment.yml \
-	-f ./compose/parser.yml \
-	-f ./compose/parser-environment.yml \
-	-f ./compose/rabbitmq.yml \
-	-f ./compose/rabbitmq-environment.yml \
+	-f ./scripts/compose/database.yml \
+	-f ./scripts/compose/database-environment.yml \
+	-f ./scripts/compose/webapi.yml \
+	-f ./scripts/compose/webapi-environment.yml \
+	-f ./scripts/compose/parser.yml \
+	-f ./scripts/compose/parser-environment.yml \
+	-f ./scripts/compose/rabbitmq.yml \
+	-f ./scripts/compose/rabbitmq-environment.yml \
 	down
 else
 	echo "Invalid Argument. Accepted arguments: up, down"
@@ -185,7 +185,3 @@ else
 	docker.pkg.github.com/espresso-news/espresso-backend/espresso-parserdeleter:$(v) ./source
 	docker push docker.pkg.github.com/espresso-news/espresso-backend/espresso-parserdeleter:$(v)
 endif
-
-docker-build::
-	make docker-build-webapi v=$(v)
-	make docker-build-parserdeleter v=$(v)
