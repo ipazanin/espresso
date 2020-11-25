@@ -8,7 +8,8 @@ namespace Espresso.WebApi.Startup
     {
         #region Constants
         private const string CustomCorsPolicyName = nameof(CustomCorsPolicyName);
-        private const string ClientAppStaticFilesDirectory = "ClientApp/build";
+        private const string ClientAppStaticFilesDirectory = "../Espresso.ClientApp/build";
+        private const string ClientAppDirectory = "../Espresso.ClientApp";
         private const string SwaggerDefinitionFileName = "swagger" + FileExtensionConstants.Json;
         private const string ApiDescriptionNamePrefix = "Espresso API";
         private const string SwaggerApiExplorerRoute = "docs";

@@ -1,7 +1,10 @@
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS dotnetruntime
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+# .NET App
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS dotnetbuilder
 WORKDIR /source
+
+# Restore .NET App
 COPY ["Espresso.Application/Espresso.Application.csproj", "Espresso.Application/"]
 COPY ["Espresso.Common/Espresso.Common.csproj", "Espresso.Common/"]
 COPY ["Espresso.Domain/Espresso.Domain.csproj", "Espresso.Domain/"]
@@ -9,14 +12,19 @@ COPY ["Espresso.ParserDeleter.Application/Espresso.ParserDeleter.Application.csp
 COPY ["Espresso.ParserDeleter/Espresso.ParserDeleter.csproj", "Espresso.ParserDeleter/"]
 COPY ["Espresso.Persistence/Espresso.Persistence.csproj", "Espresso.Persistence/"]
 RUN dotnet restore "Espresso.ParserDeleter/Espresso.ParserDeleter.csproj"
+
+# Build .NET App
 COPY . .
 WORKDIR "/source/Espresso.ParserDeleter"
 RUN dotnet build "Espresso.ParserDeleter.csproj" -c Release -o /app/build
 
-FROM build AS publish
+# Publish .NET App
+FROM dotnetbuilder AS dotnetpublisher
 RUN dotnet publish "Espresso.ParserDeleter.csproj" -c Release -o /app/publish
 
-FROM base AS final
+FROM dotnetruntime AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
+
+# Copy .NET Application From clientappbuilder Image Into final Image
+COPY --from=dotnetpublisher /app/publish .
 ENTRYPOINT ["dotnet", "Espresso.ParserDeleter.dll"]
