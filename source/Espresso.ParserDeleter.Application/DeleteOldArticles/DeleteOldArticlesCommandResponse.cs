@@ -2,6 +2,7 @@
 {
     public record DeleteOldArticlesCommandResponse
     {
-        public int NumberOfDeletedAricles { get; init; }
+        public int NumberOfDeletedDatabaseAricles { get; init; }
+        public int NumberOfDeletedMemoryCacheAricles { get; init; }
     }
 }

@@ -1,10 +1,11 @@
 ﻿{
   "AppConfiguration": {
     "ServerUrl": "http://webapi:80",
-    "Environment": 1
+    "Environment": 1,
+    "MaxAgeOfArticlesInDays": 2
   },
   "ArticleSimilarityConfiguration": {
-    "ArticlePublishDateTimeDiferenceThresholdInHours": 8,
+    "ArticlePublishDateTimeDiferenceThresholdInHours": 6,
     "MaxAgeOfSimilarArticleCheckingInHours": 26
   },
   "CronJobsConfiguration": {

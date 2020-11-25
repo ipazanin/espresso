@@ -5,7 +5,7 @@ using Espresso.WebApi.Application.Configuration.Queries.GetConfiguration;
 using Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3;
 using Espresso.WebApi.Application.Configuration.Queries.GetWebConfiguration;
 using Espresso.Common.Constants;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.Common.Enums;
 using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Infrastructure;

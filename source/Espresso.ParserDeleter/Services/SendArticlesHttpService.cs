@@ -12,7 +12,6 @@ using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.Domain.IServices;
 using Espresso.ParserDeleter.Application.IServices;
 using Microsoft.Extensions.Logging;

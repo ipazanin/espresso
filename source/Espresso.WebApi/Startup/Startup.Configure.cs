@@ -3,7 +3,6 @@ using System.IO;
 using Espresso.WebApi.Application.Hubs;
 using Espresso.WebApi.Application.Initialization;
 using Espresso.Common.Enums;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Espresso.WebApi.Extensions;
 using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Builder;

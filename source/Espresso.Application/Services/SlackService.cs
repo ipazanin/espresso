@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Espresso.Domain.IServices;

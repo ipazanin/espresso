@@ -22,9 +22,7 @@ using Espresso.Domain.Services;
 using Espresso.ParserDeleter.Services;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.ParserDeleter.Application.Initialization;
-using MediatR.Pipeline;
 using Espresso.Application.Models;
-using Espresso.Domain.Enums.RssFeedEnums;
 
 namespace Espresso.ParserDeleter.Startup
 {
@@ -152,6 +150,11 @@ namespace Espresso.ParserDeleter.Startup
                 }
             );
             services.AddTransient<IJsonService, SystemTextJsonService>();
+            services.AddScoped<IRemoveOldArticlesService, RemoveOldArticlesService>(
+                serviceProvider => new RemoveOldArticlesService(
+                    maxAgeOfArticle: _parserDeleterConfiguration.AppConfiguration.MaxAgeOfArticles
+                )
+            );
 
             return services;
         }

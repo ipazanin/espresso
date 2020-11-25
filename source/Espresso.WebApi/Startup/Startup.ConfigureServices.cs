@@ -181,6 +181,11 @@ namespace Espresso.WebApi.Startup
             ));
             services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
             services.AddTransient<IJsonService, SystemTextJsonService>();
+            services.AddScoped<IRemoveOldArticlesService, RemoveOldArticlesService>(
+                serviceProvider => new RemoveOldArticlesService(
+                    maxAgeOfArticle: _webApiConfiguration.DateTimeConfiguration.MaxAgeOfArticle
+                )
+            );
 
             return services;
         }

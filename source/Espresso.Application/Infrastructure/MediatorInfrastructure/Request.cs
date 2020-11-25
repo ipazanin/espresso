@@ -1,5 +1,4 @@
 ﻿using Espresso.Common.Enums;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
 using MediatR;
 
 namespace Espresso.Application.Infrastructure.MediatorInfrastructure

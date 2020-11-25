@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplicationDownload;
 using Espresso.WebApi.Application.ApplicationDownloads.Queries.GetApplicationDownloadStatistics;
 using Espresso.Common.Constants;
-using Espresso.Domain.Enums.ApplicationDownloadEnums;
+using Espresso.Common.Enums;
 using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.Infrastructure;
