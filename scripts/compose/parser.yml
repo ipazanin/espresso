@@ -3,6 +3,6 @@ services:
   parser:
     container_name: parser
     build:
-      context: ../source
+      context: ../../source
       dockerfile: Espresso.ParserDeleter/Dockerfile
     restart: always

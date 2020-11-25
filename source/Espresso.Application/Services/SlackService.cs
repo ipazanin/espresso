@@ -50,6 +50,10 @@ namespace Espresso.Application.Services
         private const string BackendStatisticsBotIconEmoji = ":bar_chart:";
         private const string BackendStatisticsBotUsername = "backend-bot";
         private const string BackendStatisticsChannel = "#backend-statistics";
+
+        private const string PushNotificationBotIconEmoji = ":bell:";
+        private const string PushNotificationBotUsername = "push-bot";
+        private const string PushNotificationChannel = "#general";
         #endregion
 
         #region Fields
@@ -391,6 +395,47 @@ namespace Espresso.Application.Services
                 cancellationToken: cancellationToken
             );
         }
+
+        public Task LogPushNotification(
+            PushNotification pushNotification,
+            Article article,
+            CancellationToken cancellationToken
+        )
+        {
+            var blocks = new List<SlackBlock>
+            {
+                new SlackHeaderBlock(new SlackPlainTextBlock(pushNotification.InternalName)),
+                new SlackTextFieldsImageSectionBlock(
+                    text: new SlackMarkdownTextBlock($"<{pushNotification.ArticleUrl}|{article.Title}>"),
+                    fields: new List<SlackMarkdownTextBlock>
+                    {
+                        new SlackMarkdownTextBlock("*Topic*"),
+                        new SlackMarkdownTextBlock(pushNotification.Topic),
+                        new SlackMarkdownTextBlock("*Message*"),
+                        new SlackMarkdownTextBlock(pushNotification.Message),
+                        new SlackMarkdownTextBlock("*Title*"),
+                        new SlackMarkdownTextBlock(pushNotification.Title),
+                        new SlackMarkdownTextBlock("*Source*"),
+                        new SlackMarkdownTextBlock(article.NewsPortal?.Name ?? ""),
+                    },
+                    accessory: new SlackImageBlock(
+                        imageUrl: article.ImageUrl ?? "https://via.placeholder.com/350x150.jpg",
+                        altText: "article image"
+                    )
+                )
+            };
+
+            return Log(
+                data: new SlackWebHookRequestBodyDto(
+                    userName: PushNotificationBotUsername,
+                    iconEmoji: PushNotificationBotIconEmoji,
+                    text: "PushNotification",
+                    channel: PushNotificationChannel,
+                    blocks: blocks
+                ),
+                cancellationToken: cancellationToken
+            );
+        }
         #endregion
 
         #region Private Methods
@@ -406,7 +451,7 @@ namespace Espresso.Application.Services
 
             var httpClient = _httpClientFactory.CreateClient();
 
-            _ = await _memoryCache.GetOrCreateAsync(data.Text, async entry =>
+            await _memoryCache.GetOrCreateAsync(data.Text, async entry =>
               {
                   entry.AbsoluteExpirationRelativeToNow = s_exceptionMessageCooldownInterval;
                   try

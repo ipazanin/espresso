@@ -77,13 +77,14 @@ test::
 	make -f scripts/make/backend/Makefile test verbosity=$(verbosity)
 
 test-coverage::
-	make -f scripts/make/backend/Makefile test-coverage
+	make -f scripts/make/backend/Makefile test-coverage verbosity=$(verbosity)
 	
 create-coverage-report::
 	make -f scripts/make/backend/Makefile create-coverage-report
 
 coverage:
-	make -f scripts/make/backend/Makefile coverage
+	make test-coverage verbosity=quiet
+	make create-coverage-report verbosity=quiet
 
 # frontend
 health-check-frontend::

@@ -114,7 +114,6 @@ namespace Espresso.Common.Tests.Extensions
         }
         #endregion
 
-
         #endregion
 
     }

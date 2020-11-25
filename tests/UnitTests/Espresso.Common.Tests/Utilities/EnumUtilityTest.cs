@@ -350,6 +350,51 @@ namespace Espresso.Common.Tests.Utilities
             );
             #endregion
         }
+
+
+        [Fact]
+        public void GetEnumOrDefault_ReturnsProvidedEnumValue_WhenProvidedEnumValueIsDefined()
+        {
+            #region Arrange
+            var expectedEnumvalue = AppEnvironment.Dev;
+            #endregion
+
+            #region  Act
+            var actualEnum = EnumUtility.GetEnumOrDefault(
+                enumValue: AppEnvironment.Dev,
+                defaultValue: AppEnvironment.Local
+            );
+            #endregion
+
+            #region Assert
+            Assert.Equal(
+                expected: expectedEnumvalue,
+                actual: actualEnum
+            );
+            #endregion
+        }
+
+        [Fact]
+        public void GetEnumOrDefault_ReturnsDefaultEnumValue_WhenProvidedEnumValueIsUndefined()
+        {
+            #region Arrange
+            var expectedEnumvalue = AppEnvironment.Local;
+            #endregion
+
+            #region  Act
+            var actualEnum = EnumUtility.GetEnumOrDefault(
+                enumValue: (AppEnvironment)(-1),
+                defaultValue: AppEnvironment.Local
+            );
+            #endregion
+
+            #region Assert
+            Assert.Equal(
+                expected: expectedEnumvalue,
+                actual: actualEnum
+            );
+            #endregion
+        }
         #endregion
 
         #region GetAllValues

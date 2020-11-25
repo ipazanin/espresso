@@ -55,5 +55,11 @@ namespace Espresso.Application.IServices
             IEnumerable<(Category category, int numberOfClicks, IEnumerable<Article> articles)> categoriesWithNumberOfClicks,
             CancellationToken cancellationToken
         );
+
+        public Task LogPushNotification(
+            PushNotification pushNotification,
+            Article article,
+            CancellationToken cancellationToken
+        );
     }
 }

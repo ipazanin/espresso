@@ -23,7 +23,7 @@ namespace Espresso.Common.Extensions
             }
 
             var members = type.GetMember(value.ToString());
-            var display = (DisplayAttribute?)members.FirstOrDefault()?.GetCustomAttributes(typeof(DisplayAttribute), false)?.FirstOrDefault();
+            var display = (DisplayAttribute?)members.FirstOrDefault()?.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault();
 
             return (display is not null && display.Name is not null) ?
                 display.Name :
