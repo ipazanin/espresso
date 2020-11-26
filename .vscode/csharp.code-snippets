@@ -1,11 +1,21 @@
 {
   // https://code.visualstudio.com/docs/editor/userdefinedsnippets
-  "Console.WriteLine": {
+  "Console": {
     "scope": "csharp",
-    "prefix": "log",
+    "prefix": "console",
     "body": [
       "System.Console.WriteLine(\"-------------------------------------------------------------\");",
       "System.Console.WriteLine(${1:variable});",
+      "System.Console.WriteLine(\"-------------------------------------------------------------\");"
+    ],
+    "description": "Log output to Console.WriteLine"
+  },
+  "ConsoleJson": {
+    "scope": "csharp",
+    "prefix": "console-json",
+    "body": [
+      "System.Console.WriteLine(\"-------------------------------------------------------------\");",
+      "System.Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(${1:variable}));",
       "System.Console.WriteLine(\"-------------------------------------------------------------\");"
     ],
     "description": "Log output to Console.WriteLine"

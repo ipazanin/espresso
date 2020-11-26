@@ -197,9 +197,7 @@ namespace Espresso.ParserDeleter.Application.Services
                 return null;
             }
 
-#pragma warning disable IDE0057
-            var articleId = $"{itemId.Substring(itemId.IndexOf("id=") + 3)}/";
-#pragma warning restore IDE0057
+            var articleId = $"{itemId[(itemId.IndexOf("id=") + 3)..]}/";
             var urlSegments = itemLinks.FirstOrDefault()?.Segments ?? Array.Empty<string>();
 
             var firstArticleSegment = urlSegments.Length < 2 ? "" : urlSegments[1].ToLower();
