@@ -65,12 +65,7 @@
     "shellscript",
     "xml"
   ],
-  "cSpell.words": [
-    "Mediat",
-    "parserdeleter",
-    "rabbitmq",
-    "webapi"
-  ],
+  "cSpell.words": ["Mediat", "parserdeleter", "rabbitmq", "webapi"],
   "cSpell.ignorePaths": [
     "**/package-lock.json",
     "**/node_modules/**",

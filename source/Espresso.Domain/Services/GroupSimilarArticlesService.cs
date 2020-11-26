@@ -168,7 +168,6 @@ namespace Espresso.Domain.Services
                 .RemoveUnImpactfulCroatianWords()
                 .RemoveWordsWithLessThanThreeLetters();
 
-
             var similarityScore = CalculateSimilarityScoreBetweenWords(
                 possibleMainArticleWords,
                 possibleSubordinateArticleWords
