@@ -111,7 +111,10 @@ namespace Espresso.Domain.Services
                                 (possibleMainArticle.PublishDateTime - notMatchedArticle.PublishDateTime < _articlePublishDateTimeDiferenceThreshold) :
                                 (notMatchedArticle.PublishDateTime - possibleMainArticle.PublishDateTime < _articlePublishDateTimeDiferenceThreshold)
                         ) &&
-                        (possibleMainArticle.CreateDateTime > lastSimilarityGroupingTime || notMatchedArticle.CreateDateTime > lastSimilarityGroupingTime)
+                        (
+                            possibleMainArticle.CreateDateTime > lastSimilarityGroupingTime ||
+                            notMatchedArticle.CreateDateTime > lastSimilarityGroupingTime
+                        )
                 );
 
             foreach (var possibleSimilarArticle in possibleSimilarArticles)

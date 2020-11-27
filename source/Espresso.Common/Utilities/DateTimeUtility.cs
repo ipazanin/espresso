@@ -9,9 +9,9 @@ namespace Espresso.Domain.Utilities
 
         #region Properties
         /// <summary>
-        /// Returns Current Miliseconds in Unix UTC format
+        /// Returns Current Milliseconds in Unix UTC format
         /// </summary>
-        public static long CurrentMiliseconds => GetMiliseconds(DateTime.UtcNow);
+        public static long CurrentMilliseconds => GetMilliseconds(DateTime.UtcNow);
 
         /// <summary>
         /// 
@@ -22,33 +22,33 @@ namespace Espresso.Domain.Utilities
 
         #region Methods
         /// <summary>
-        /// Gets miliseconds in Unix UTC format from DateTime
+        /// Gets milliseconds in Unix UTC format from DateTime
         /// </summary>
         /// <param name="dateTime">DateTime</param>
         /// <returns></returns>
-        public static long GetMiliseconds(DateTime dateTime)
+        public static long GetMilliseconds(DateTime dateTime)
         {
             return (long)(dateTime - DateTimeConstants.UnixEpochStartTime).TotalMilliseconds;
         }
 
         /// <summary>
-        /// Gets miliseconds truncated to last day
+        /// Gets milliseconds truncated to last day
         /// </summary>
-        /// <param name="miliseconds"></param>
+        /// <param name="milliseconds"></param>
         /// <returns></returns>
-        public static long TruncateMilisecondsToDate(long miliseconds)
+        public static long TruncateMillisecondsToDate(long milliseconds)
         {
-            return miliseconds - (miliseconds % (long)TimeSpan.FromDays(1).TotalMilliseconds);
+            return milliseconds - (milliseconds % (long)TimeSpan.FromDays(1).TotalMilliseconds);
         }
 
         /// <summary>
-        /// Gets DateTime from Unix UTC miliseconds
+        /// Gets DateTime from Unix UTC milliseconds
         /// </summary>
-        /// <param name="miliseconds">Unix UTC time in miliseconds</param>
+        /// <param name="milliseconds">Unix UTC time in milliseconds</param>
         /// <returns></returns>
-        public static DateTime GetDateTime(long miliseconds)
+        public static DateTime GetDateTime(long milliseconds)
         {
-            return DateTimeConstants.UnixEpochStartTime.AddMilliseconds(miliseconds);
+            return DateTimeConstants.UnixEpochStartTime.AddMilliseconds(milliseconds);
         }
         #endregion
     }

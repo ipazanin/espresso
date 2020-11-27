@@ -16,16 +16,6 @@ namespace Espresso.Application.IServices
             CancellationToken cancellationToken
         );
 
-        public Task LogRequestError(
-            string requestName,
-            string targetedApiVersion,
-            string consumerVersion,
-            DeviceType deviceType,
-            string requestParameters,
-            Exception exception,
-            CancellationToken cancellationToken
-        );
-
         public Task LogAppDownloadStatistics(
             int yesterdayAndroidCount,
             int yesterdayIosCount,

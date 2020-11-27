@@ -33,7 +33,7 @@ restore::
 # verbosity levels: quiet, minimal, normal, detailed, diagnostic
 test::
 ifeq ($(strip $(verbosity)),)
-	dotnet test --verbosity minimal source/Espresso.sln
+	dotnet test --verbosity quiet source/Espresso.sln
 else
 	dotnet test --verbosity $(verbosity) source/Espresso.sln
 endif

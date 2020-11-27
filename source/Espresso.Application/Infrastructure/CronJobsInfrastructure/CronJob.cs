@@ -44,17 +44,17 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
 
         protected virtual async Task ScheduleJob(CancellationToken cancellationToken)
         {
-            var ocurrence = _expression.GetNextOccurrence(
+            var occurrence = _expression.GetNextOccurrence(
                 from: DateTimeOffset.Now,
                 zone: _cronJobConfiguration.TimeZoneInfo
             );
 
-            if (!ocurrence.HasValue)
+            if (!occurrence.HasValue)
             {
                 return;
             }
 
-            var delay = ocurrence.Value - DateTimeOffset.Now;
+            var delay = occurrence.Value - DateTimeOffset.Now;
 
             if (delay.TotalMilliseconds <= 0)
             {
@@ -68,7 +68,7 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
                 _timer = null;
 
                 await ExecuteWork(
-                    ocurrence: ocurrence.Value,
+                    occurrence: occurrence.Value,
                     cancellationToken: cancellationToken
                 );
             };
@@ -77,7 +77,7 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
             var eventName = $"{typeof(T).Name} scheduled";
             var arguments = new List<(string argumentName, object argumentValue)>
             {
-                (nameof(ocurrence), ocurrence)
+                (nameof(occurrence), occurrence)
             };
 
             using var scope = ServiceScopeFactory.CreateScope();
@@ -102,7 +102,7 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
         }
 
         private async Task ExecuteWork(
-            DateTimeOffset ocurrence,
+            DateTimeOffset occurrence,
             CancellationToken cancellationToken
         )
         {
@@ -123,12 +123,12 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
                 await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
 
                 var eventName = $"{typeof(T).Name} work ended";
-                var nextOccurence = _expression.GetNextOccurrence(DateTimeOffset.Now, _cronJobConfiguration.TimeZoneInfo) ?? ocurrence;
+                var nextOccurrence = _expression.GetNextOccurrence(DateTimeOffset.Now, _cronJobConfiguration.TimeZoneInfo) ?? occurrence;
 
                 var arguments = new (string argumentName, object argumentValue)[]
                 {
-                    (nameof(ocurrence),ocurrence),
-                    (nameof(nextOccurence),nextOccurence),
+                    (nameof(occurrence),occurrence),
+                    (nameof(nextOccurrence),nextOccurrence),
                     (nameof(elapsed),elapsed),
                 };
                 loggerService.Log(eventName, LogLevel.Information, arguments);
@@ -140,7 +140,7 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
 
                 var arguments = new (string argumentName, object argumentValue)[]
                 {
-                    (nameof(ocurrence),ocurrence),
+                    (nameof(occurrence), occurrence),
                 };
 
                 loggerService.Log(eventName, exception, LogLevel.Error, arguments);
