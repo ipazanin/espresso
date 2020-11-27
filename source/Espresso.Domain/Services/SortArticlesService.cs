@@ -27,7 +27,7 @@ namespace Espresso.Domain.Services
                 keySelector: article => article.Id
             );
 
-            var savedArticlesArticleIdDictionary = new Dictionary<(int newsPortalId, string articleId), Guid>();
+            var savedArticlesArticleIdDictionary = new Dictionary<(int newsPortalId, string articleUrl), Guid>();
             var savedArticlesTitleDictionary = new Dictionary<(int newsPortalId, string title), Guid>();
             var savedArticlesSummaryDictionary = new Dictionary<(int newsPortalId, string summary), Guid>();
 

@@ -165,7 +165,7 @@ namespace Espresso.Domain.Entities
         /// Updates Article if necessary
         /// </summary>
         /// <param name="other"></param>
-        /// <returns>If article should be upadted</returns>
+        /// <returns>If article should be updated</returns>
         public
         (
             bool shouldUpdate,

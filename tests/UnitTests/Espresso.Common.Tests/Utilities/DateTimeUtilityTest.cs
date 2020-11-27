@@ -9,30 +9,32 @@ namespace Espresso.Common.Tests.Utilities
     {
         #region Properties
 
-        #region CurrentMiliseconds
+        #region CurrentMilliseconds
         [Fact]
-        public void CurrentMiliseconds_ReturnsCurrentUnixUtxMiliseconds()
+        public void CurrentMilliseconds_ReturnsCurrentUnixUtxMilliseconds()
         {
             #region Arrange
-            var expectedMiliseconds = (long)(DateTime.UtcNow - DateTimeConstants.UnixEpochStartTime).TotalMilliseconds;
+            var millisecondsThreshold = 2;
+            var expectedMilliseconds = (long)(DateTime.UtcNow - DateTimeConstants.UnixEpochStartTime).TotalMilliseconds;
             #endregion
 
             #region Act
-            var actualMiliseconds = DateTimeUtility.CurrentMiliseconds;
+            var actualMilliseconds = DateTimeUtility.CurrentMilliseconds;
             #endregion
 
             #region Assert
-            Assert.Equal(
-                expected: expectedMiliseconds,
-                actual: actualMiliseconds
+            Assert.InRange(
+                actual: actualMilliseconds,
+                low: expectedMilliseconds - millisecondsThreshold,
+                high: expectedMilliseconds + millisecondsThreshold
             );
             #endregion
         }
         #endregion
 
-        #region YestrdaysDate
+        #region YesterdaysDate
         [Fact]
-        public void YestrdaysDate_ReturnsYesterdaysDate()
+        public void YesterdaysDate_ReturnsYesterdaysDate()
         {
             #region Arrange
             var expectedDate = DateTime.UtcNow.AddDays(-1).Date;
@@ -60,13 +62,13 @@ namespace Espresso.Common.Tests.Utilities
         public void GetDateTime_WithMaxLongValue_ThrowsArgumentOutOfRangeException()
         {
             #region Arrange
-            var miliseconds = long.MaxValue;
+            var milliseconds = long.MaxValue;
             #endregion
 
             #region Act
             void TestAction()
             {
-                var actualDateTime = DateTimeUtility.GetDateTime(miliseconds);
+                var actualDateTime = DateTimeUtility.GetDateTime(milliseconds);
             }
             #endregion
 
@@ -79,13 +81,13 @@ namespace Espresso.Common.Tests.Utilities
         public void GetDateTime_WithMinLongValue_ThrowsArgumentOutOfRangeException()
         {
             #region Arrange
-            var miliseconds = long.MinValue;
+            var milliseconds = long.MinValue;
             #endregion
 
             #region Act
             void TestAction()
             {
-                var actualDateTime = DateTimeUtility.GetDateTime(miliseconds);
+                var actualDateTime = DateTimeUtility.GetDateTime(milliseconds);
             }
             #endregion
 
@@ -98,21 +100,21 @@ namespace Espresso.Common.Tests.Utilities
         public void GetDateTime_WithMaxLongValue_ThrowsArgumentOutOfRangeExceptionWithMessage()
         {
             #region Arrange
-            var miliseconds = long.MaxValue;
-            var expectedExceptionMessge = "Value to add was out of range. (Parameter 'value')";
+            var milliseconds = long.MaxValue;
+            var expectedExceptionMessage = "Value to add was out of range. (Parameter 'value')";
             #endregion
 
             #region Act
             void TestAction()
             {
-                var actualDateTime = DateTimeUtility.GetDateTime(miliseconds);
+                var actualDateTime = DateTimeUtility.GetDateTime(milliseconds);
             }
             #endregion
 
             #region Assert
             var exception = Assert.Throws<ArgumentOutOfRangeException>(TestAction);
             Assert.Equal(
-                expected: expectedExceptionMessge,
+                expected: expectedExceptionMessage,
                 actual: exception.Message
             );
             #endregion
@@ -122,21 +124,21 @@ namespace Espresso.Common.Tests.Utilities
         public void GetDateTime_WithMinLongValue_ThrowsArgumentOutOfRangeExceptionWithMessage()
         {
             #region Arrange
-            var miliseconds = long.MinValue;
-            var expectedExceptionMessge = "Value to add was out of range. (Parameter 'value')";
+            var milliseconds = long.MinValue;
+            var expectedExceptionMessage = "Value to add was out of range. (Parameter 'value')";
             #endregion
 
             #region Act
             void TestAction()
             {
-                var actualDateTime = DateTimeUtility.GetDateTime(miliseconds);
+                var actualDateTime = DateTimeUtility.GetDateTime(milliseconds);
             }
             #endregion
 
             #region Assert
             var exception = Assert.Throws<ArgumentOutOfRangeException>(TestAction);
             Assert.Equal(
-                expected: expectedExceptionMessge,
+                expected: expectedExceptionMessage,
                 actual: exception.Message
             );
             #endregion
@@ -146,11 +148,11 @@ namespace Espresso.Common.Tests.Utilities
         public void GetDateTime_WithZeroLongValue_ReturnsUnixEpochStart()
         {
             #region Arrange
-            var miliseconds = 0L;
+            var milliseconds = 0L;
             #endregion
 
             #region Act
-            var actualDateTime = DateTimeUtility.GetDateTime(miliseconds);
+            var actualDateTime = DateTimeUtility.GetDateTime(milliseconds);
             #endregion
 
             #region Assert
@@ -162,44 +164,44 @@ namespace Espresso.Common.Tests.Utilities
         }
         #endregion
 
-        #region GetMiliseconds
+        #region GetMilliseconds
         [Fact]
-        public void GetMiliseconds_WithUnixEpochStartTime_ReturnsZeroMiliseconds()
+        public void GetMilliseconds_WithUnixEpochStartTime_ReturnsZeroMilliseconds()
         {
             #region Arrange
-            var expectedMiliseconds = 0L;
+            var expectedMilliseconds = 0L;
             #endregion
 
             #region Act
-            var actualMiliseconds = DateTimeUtility.GetMiliseconds(DateTimeConstants.UnixEpochStartTime);
+            var actualMilliseconds = DateTimeUtility.GetMilliseconds(DateTimeConstants.UnixEpochStartTime);
             #endregion
 
             #region Assert
             Assert.Equal(
-                expected: actualMiliseconds,
-                actual: expectedMiliseconds
+                expected: actualMilliseconds,
+                actual: expectedMilliseconds
             );
             #endregion
         }
         #endregion
 
-        #region TruncateMiliseconds
+        #region TruncateMilliseconds
         [Fact]
-        public void TruncateMiliseconds_WithUnixEpochStartTime_ReturnsZeroMiliseconds()
+        public void TruncateMilliseconds_WithUnixEpochStartTime_ReturnsZeroMilliseconds()
         {
             #region Arrange
-            var expectedMiliseconds = 0L;
-            var milisecondsToTruncate = 1000L;
+            var expectedMilliseconds = 0L;
+            var millisecondsToTruncate = 1000L;
             #endregion
 
             #region Act
-            var actualMiliseconds = DateTimeUtility.TruncateMilisecondsToDate(milisecondsToTruncate);
+            var actualMilliseconds = DateTimeUtility.TruncateMillisecondsToDate(millisecondsToTruncate);
             #endregion
 
             #region Assert
             Assert.Equal(
-                expected: actualMiliseconds,
-                actual: expectedMiliseconds
+                expected: actualMilliseconds,
+                actual: expectedMilliseconds
             );
             #endregion
         }

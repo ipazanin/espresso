@@ -65,7 +65,7 @@ namespace Espresso.Application.Services
         private readonly ApplicationInformation _applicationInformation;
         #endregion
 
-        #region Contructor
+        #region Constructor
         public SlackService(
             IMemoryCache memoryCache,
             IHttpClientFactory httpClientFactory,
@@ -111,39 +111,6 @@ namespace Espresso.Application.Services
                     blocks: Array.Empty<SlackBlock>()
                 ),
 
-                cancellationToken: cancellationToken
-            );
-        }
-
-        public Task LogRequestError(
-            string requestName,
-            string targetedApiVersion,
-            string consumerVersion,
-            DeviceType deviceType,
-            string requestParameters,
-            Exception exception,
-            CancellationToken cancellationToken
-        )
-        {
-            var exceptionMessage = exception.Message;
-            var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
-            var text = $":blue_book: Request Name: {requestName}\n" +
-                $":label: App Version: {_applicationInformation.Version}\n" +
-                $":label: Targeted WebApi Version: {targetedApiVersion}\n" +
-                $":label: Consumer Version: {consumerVersion}\n" +
-                $":iphone: Device Type: {deviceType}\n" +
-                $":books: Request Parameters: {requestParameters}\n" +
-                $":exclamation: Exception Message: {exceptionMessage}\n" +
-                $":exclamation: Inner Exception Message: {innerExceptionMessage}\n";
-
-            return Log(
-                data: new SlackWebHookRequestBodyDto(
-                    userName: ErrorBotUsername,
-                    iconEmoji: ErrorsBotIconEmoji,
-                    text: text,
-                    channel: ErrorsChannel,
-                    blocks: Array.Empty<SlackBlock>()
-                ),
                 cancellationToken: cancellationToken
             );
         }

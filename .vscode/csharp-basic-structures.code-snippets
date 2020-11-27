@@ -2,7 +2,7 @@
   // https://code.visualstudio.com/docs/editor/userdefinedsnippets
   "Console": {
     "scope": "csharp",
-    "prefix": "console",
+    "prefix": "app-console",
     "body": [
       "System.Console.WriteLine(\"-------------------------------------------------------------\");",
       "System.Console.WriteLine(${1:variable});",
@@ -12,11 +12,38 @@
   },
   "ConsoleJson": {
     "scope": "csharp",
-    "prefix": "console-json",
+    "prefix": "app-console-json",
     "body": [
       "System.Console.WriteLine(\"-------------------------------------------------------------\");",
       "System.Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(${1:variable}));",
       "System.Console.WriteLine(\"-------------------------------------------------------------\");"
+    ],
+    "description": "Log output to Console.WriteLine"
+  },
+  "Region": {
+    "scope": "csharp",
+    "prefix": "app-region",
+    "body": ["#region $0", "", "#endregion $0"],
+    "description": "Log output to Console.WriteLine"
+  },
+  "UnitTestMethod": {
+    "scope": "csharp",
+    "prefix": "app-unit-test-method",
+    "body": [
+      "#region MethodName$0",
+      "[Fact]",
+      "public void MethodName$0_Returns_When()",
+      "{",
+      "    #region Arrange",
+      "    #endregion Arrange",
+      "",
+      "    #region Act",
+      "    #endregion Act",
+      "",
+      "    #region Assert",
+      "    #endregion Assert",
+      "}",
+      "#endregion MethodName$0"
     ],
     "description": "Log output to Console.WriteLine"
   },
@@ -142,5 +169,37 @@
       "}"
     ],
     "description": "Create new Service"
+  },
+  "UnitTest": {
+    "scope": "csharp",
+    "prefix": "app-unit-test",
+    "body": [
+      "using Xunit;",
+      "",
+      "namespace ${TM_DIRECTORY/^\\/private\\/var\\/projects\\/personal\\/espresso-backend\\/tests\\/UnitTests(\\/([^\\/]+))(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?/$2${3:+.}$4${5:+.}$6${7:+.}$8${9:+.}$10${11:+.}$12${13:+.}$14${15:+.}$16${17:+.}$18${19:+.}$20/gi}",
+      "{",
+      "    /// <summary>",
+      "    /// ${TM_FILENAME_BASE}",
+      "    /// </summary>",
+      "    public class ${TM_FILENAME_BASE}",
+      "    {",
+      "        #region MethodName$0",
+      "        [Fact]",
+      "        public void MethodName$0_Returns_When()",
+      "        {",
+      "            #region Arrange",
+      "            #endregion Arrange",
+      "",
+      "            #region Act",
+      "            #endregion Act",
+      "",
+      "            #region Assert",
+      "            #endregion Assert",
+      "        }",
+      "        #endregion MethodName$0",
+      "    }",
+      "}"
+    ],
+    "description": "Create new XUnit Test"
   }
 }
