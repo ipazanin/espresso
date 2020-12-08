@@ -1,8 +1,13 @@
-SolutionPath="source/Espresso.sln"
+SolutionPath="server/Espresso/Espresso.sln"
 PersistenceProjectPath="source/Espresso.Persistence/Espresso.Persistence.csproj"
 DefaultVerbosity="minimal" # verbosity levels: quiet, minimal, normal, detailed, diagnostic
 LocalEnvironmentName="local"
 Configuration="Release" # Configurations: Release, Debug
+
+UnitTestResultsPath="server/UnitTests/TestReports"
+UnitTestRelativeResultsPath="TestReports"
+UnitTestsDirectory="server/UnitTests"
+UnitTestsLogFileName="TestResults.xml"
 
 list::
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | \
@@ -55,25 +60,25 @@ test-coverage::
 ifeq ($(strip $(verbosity)),)
 	dotnet test \
 	--verbosity $(DefaultVerbosity) \
-	--logger 'xunit;LogFileName=TestResults.xml' \
-	--results-directory ./tests/UnitTests/TestReports \
+	--logger 'xunit;LogFileName=$(UnitTestsLogFileName)' \
+	--results-directory $(UnitTestResultsPath) \
 	/p:CollectCoverage=true \
-	/p:CoverletOutput=TestReports/ \
+	/p:CoverletOutput=$(UnitTestRelativeResultsPath)/ \
 	/p:CoverletOutputFormat=cobertura \
 	$(SolutionPath)
 else
 	dotnet test \
 	--verbosity $(verbosity) \
-	--logger 'xunit;LogFileName=TestResults.xml' \
-	--results-directory ./tests/UnitTests/TestReports \
+	--logger 'xunit;LogFileName=$(UnitTestsLogFileName)' \
+	--results-directory $(UnitTestResultsPath) \
 	/p:CollectCoverage=true \
-	/p:CoverletOutput=TestReports/ \
+	/p:CoverletOutput=$(UnitTestRelativeResultsPath)/ \
 	/p:CoverletOutputFormat=cobertura \
 	$(SolutionPath)
 endif
 	
 create-coverage-report::
 	sudo reportgenerator \
-	"-reports:tests/UnitTests/*/*/*.xml" \
-	"-targetdir:tests/UnitTests/TestReports" \
+	"-reports:$(UnitTestsDirectory)/*/*/*.xml" \
+	"-targetdir:$(UnitTestResultsPath)" \
 	-reporttypes:Html

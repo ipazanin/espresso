@@ -3,8 +3,8 @@ services:
   webapi:
     container_name: webapi
     build:
-      context: ../../source
-      dockerfile: Espresso.WebApi/Dockerfile
+      context: ../..
+      dockerfile: server/Espresso/Espresso.WebApi/Dockerfile
     ports:
       - '8000:80'
       - '8001:443'

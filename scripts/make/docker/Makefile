@@ -1,3 +1,6 @@
+EspressoWebApiDockerfilePath="./server/Espresso/Espresso.WebApi/Dockerfile"
+EspressoParserDockerfilePath="./server/Espresso/Espresso.ParserDeleter/Dockerfile"
+DockerBuildContextPath="."
 WebApiDockerImage="docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi"
 ParserDockerImage="docker.pkg.github.com/espresso-news/espresso-backend/espresso-parserdeleter"
 DefaultReactEnvironment="production"
@@ -165,18 +168,18 @@ docker-build-webapi::
 ifeq ($(strip $(v)),)
 	docker build \
 	--force-rm \
-	-f ./source/Espresso.WebApi/Dockerfile \
+	-f $(EspressoWebApiDockerfilePath) \
 	-t $(WebApiDockerImage):latest \
 	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
-	./source
+	$(DockerBuildContextPath)
 	docker push $(WebApiDockerImage):latest
 else
 	docker build \
 	--force-rm \
-	-f ./source/Espresso.WebApi/Dockerfile \
+	-f $(EspressoWebApiDockerfilePath) \
 	-t $(WebApiDockerImage):$(v) \
 	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
-	./source
+	$(DockerBuildContextPath)
 	docker push $(WebApiDockerImage):$(v)
 endif
 
@@ -184,15 +187,15 @@ docker-build-parserdeleter::
 ifeq ($(strip $(v)),)
 	docker build \
 	--force-rm \
-	-f ./source/Espresso.ParserDeleter/Dockerfile \
+	-f $(EspressoParserDockerfilePath) \
 	-t $(ParserDockerImage):latest \
-	./source
+	$(DockerBuildContextPath)
 	docker push $(ParserDockerImage):latest
 else
 	docker build \
 	--force-rm \
-	-f ./source/Espresso.ParserDeleter/Dockerfile \
+	-f $(EspressoParserDockerfilePath) \
 	-t $(ParserDockerImage):$(v) \
-	./source
+	$(DockerBuildContextPath)
 	docker push $(ParserDockerImage):$(v)
 endif
