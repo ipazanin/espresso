@@ -14,6 +14,8 @@ using Espresso.Domain.Entities;
 using System.Linq;
 using Espresso.Application.DataTransferObjects.SlackDataTransferObjects;
 using Espresso.Application.Models;
+using Espresso.Common.IServices;
+using Espresso.ParserDeleter.Application.Constants;
 
 namespace Espresso.Application.Services
 {
@@ -288,79 +290,81 @@ namespace Espresso.Application.Services
                 cancellationToken: cancellationToken
             );
 
-            blocks.Clear();
-            blocks.Add(new SlackHeaderBlock(new SlackPlainTextBlock("Top News Portals")));
+            #region TODO: Move to another method and add cron job to execute once a week
+            // blocks.Clear();
+            // blocks.Add(new SlackHeaderBlock(new SlackPlainTextBlock("Top News Portals")));
 
-            foreach (var (newsPortal, numberOfClicks, articles) in topNewsPortals)
-            {
-                var numberOfArticles = articles.Count();
-                var newsPortalsBlock = new SlackTextFieldsImageSectionBlock(
-                    text: new SlackMarkdownTextBlock($"<{newsPortal.BaseUrl}|{newsPortal.Name}>"),
-                    fields: new List<SlackMarkdownTextBlock>
-                    {
-                        new SlackMarkdownTextBlock("*Category*"),
-                        new SlackMarkdownTextBlock(newsPortal.Category!.Name),
-                        new SlackMarkdownTextBlock("*Number Of Clicks*"),
-                        new SlackMarkdownTextBlock(numberOfClicks.ToString()),
-                        new SlackMarkdownTextBlock("*Clicks %*"),
-                        new SlackMarkdownTextBlock($"{Math.Round(totalNumberOfClicks == 0 ? 0 : 100 * numberOfClicks / (double)totalNumberOfClicks, 2)}%"),
-                        new SlackMarkdownTextBlock("*Clicks Per Article*"),
-                        new SlackMarkdownTextBlock($"{Math.Round(numberOfArticles == 0 ? 0 : numberOfClicks / (double)numberOfArticles, 2)}"),
-                    },
-                    accessory: new SlackImageBlock(
-                        imageUrl: $"https://espressonews.co/{newsPortal.IconUrl}" ?? "https://via.placeholder.com/350x150.jpg",
-                        altText: "news portal image"
-                    )
-                );
+            // foreach (var (newsPortal, numberOfClicks, articles) in topNewsPortals)
+            // {
+            //     var numberOfArticles = articles.Count();
+            //     var newsPortalsBlock = new SlackTextFieldsImageSectionBlock(
+            //         text: new SlackMarkdownTextBlock($"<{newsPortal.BaseUrl}|{newsPortal.Name}>"),
+            //         fields: new List<SlackMarkdownTextBlock>
+            //         {
+            //             new SlackMarkdownTextBlock("*Category*"),
+            //             new SlackMarkdownTextBlock(newsPortal.Category!.Name),
+            //             new SlackMarkdownTextBlock("*Number Of Clicks*"),
+            //             new SlackMarkdownTextBlock(numberOfClicks.ToString()),
+            //             new SlackMarkdownTextBlock("*Clicks %*"),
+            //             new SlackMarkdownTextBlock($"{Math.Round(totalNumberOfClicks == 0 ? 0 : 100 * numberOfClicks / (double)totalNumberOfClicks, 2)}%"),
+            //             new SlackMarkdownTextBlock("*Clicks Per Article*"),
+            //             new SlackMarkdownTextBlock($"{Math.Round(numberOfArticles == 0 ? 0 : numberOfClicks / (double)numberOfArticles, 2)}"),
+            //         },
+            //         accessory: new SlackImageBlock(
+            //             imageUrl: $"https://espressonews.co/{newsPortal.IconUrl}" ?? "https://via.placeholder.com/350x150.jpg",
+            //             altText: "news portal image"
+            //         )
+            //     );
 
-                blocks.Add(newsPortalsBlock);
-                blocks.Add(new SlackDividerBlock());
-            }
+            //     blocks.Add(newsPortalsBlock);
+            //     blocks.Add(new SlackDividerBlock());
+            // }
 
-            await Log(
-                data: new SlackWebHookRequestBodyDto(
-                    userName: BackendStatisticsBotUsername,
-                    iconEmoji: BackendStatisticsBotIconEmoji,
-                    text: "News Portals",
-                    channel: BackendStatisticsChannel,
-                    blocks: blocks
-                ),
-                cancellationToken: cancellationToken
-            );
-            blocks.Clear();
+            // await Log(
+            //     data: new SlackWebHookRequestBodyDto(
+            //         userName: BackendStatisticsBotUsername,
+            //         iconEmoji: BackendStatisticsBotIconEmoji,
+            //         text: "News Portals",
+            //         channel: BackendStatisticsChannel,
+            //         blocks: blocks
+            //     ),
+            //     cancellationToken: cancellationToken
+            // );
+            // blocks.Clear();
 
-            blocks.Add(new SlackHeaderBlock(new SlackPlainTextBlock("Categories")));
+            // blocks.Add(new SlackHeaderBlock(new SlackPlainTextBlock("Categories")));
 
 
-            foreach (var (category, numberOfClicks, articles) in categoriesWithNumberOfClicks)
-            {
-                var numberOfArticles = articles.Count();
-                var categoriesBlock = new SlackTextFieldsSectionBlock(
-                    text: new SlackMarkdownTextBlock($"*{category.Name}*"),
-                    fields: new List<SlackMarkdownTextBlock>
-                    {
-                        new SlackMarkdownTextBlock("*Number Of Clicks*"),
-                        new SlackMarkdownTextBlock(numberOfClicks.ToString()),
-                        new SlackMarkdownTextBlock("*Clicks %*"),
-                        new SlackMarkdownTextBlock($"{Math.Round(totalNumberOfClicks == 0 ? 0 : 100 * numberOfClicks / (double)totalNumberOfClicks, 2)}%"),
-                        new SlackMarkdownTextBlock("*Clicks Per Article*"),
-                        new SlackMarkdownTextBlock($"{Math.Round(numberOfArticles == 0 ? 0 : numberOfClicks / (double)numberOfArticles, 2)}"),
-                    }
-                );
-                blocks.Add(categoriesBlock);
-                blocks.Add(new SlackDividerBlock());
-            }
+            // foreach (var (category, numberOfClicks, articles) in categoriesWithNumberOfClicks)
+            // {
+            //     var numberOfArticles = articles.Count();
+            //     var categoriesBlock = new SlackTextFieldsSectionBlock(
+            //         text: new SlackMarkdownTextBlock($"*{category.Name}*"),
+            //         fields: new List<SlackMarkdownTextBlock>
+            //         {
+            //             new SlackMarkdownTextBlock("*Number Of Clicks*"),
+            //             new SlackMarkdownTextBlock(numberOfClicks.ToString()),
+            //             new SlackMarkdownTextBlock("*Clicks %*"),
+            //             new SlackMarkdownTextBlock($"{Math.Round(totalNumberOfClicks == 0 ? 0 : 100 * numberOfClicks / (double)totalNumberOfClicks, 2)}%"),
+            //             new SlackMarkdownTextBlock("*Clicks Per Article*"),
+            //             new SlackMarkdownTextBlock($"{Math.Round(numberOfArticles == 0 ? 0 : numberOfClicks / (double)numberOfArticles, 2)}"),
+            //         }
+            //     );
+            //     blocks.Add(categoriesBlock);
+            //     blocks.Add(new SlackDividerBlock());
+            // }
 
-            await Log(
-                data: new SlackWebHookRequestBodyDto(
-                    userName: BackendStatisticsBotUsername,
-                    iconEmoji: BackendStatisticsBotIconEmoji,
-                    text: "Categories",
-                    channel: BackendStatisticsChannel,
-                    blocks: blocks
-                ),
-                cancellationToken: cancellationToken
-            );
+            // await Log(
+            //     data: new SlackWebHookRequestBodyDto(
+            //         userName: BackendStatisticsBotUsername,
+            //         iconEmoji: BackendStatisticsBotIconEmoji,
+            //         text: "Categories",
+            //         channel: BackendStatisticsChannel,
+            //         blocks: blocks
+            //     ),
+            //     cancellationToken: cancellationToken
+            // );
+            #endregion
         }
 
         public Task LogPushNotification(
@@ -416,10 +420,10 @@ namespace Espresso.Application.Services
                 return;
             }
 
-            var httpClient = _httpClientFactory.CreateClient();
-
             await _memoryCache.GetOrCreateAsync(data.Text, async entry =>
               {
+                  var httpClient = _httpClientFactory.CreateClient(HttpClientConstants.SlackHttpClientName);
+
                   entry.AbsoluteExpirationRelativeToNow = s_exceptionMessageCooldownInterval;
                   try
                   {

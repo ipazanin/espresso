@@ -52,5 +52,18 @@
         /// </summary>
         /// <value></value>
         public RabbitMqConfiguration RabbitMqConfiguration { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public HttpClientConfiguration SlackHttpClientConfiguration { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public SystemTextJsonSerializerConfiguration SystemTextJsonSerializerConfiguration { get; }
+
     }
 }

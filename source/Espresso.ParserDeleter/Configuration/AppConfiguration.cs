@@ -28,6 +28,8 @@ namespace Espresso.ParserDeleter.Configuration
         public TimeSpan Uptime => DateTime.UtcNow - Process.GetCurrentProcess().StartTime.ToUniversalTime();
 
         public string SlackWebHook => _configuration.GetValue<string>("SlackWebHook");
+
+        public int MaxHttpHandlerRetries => _configuration.GetValue<int>("MaxHttpHandlerRetries");
         #endregion
 
         #region Constructors

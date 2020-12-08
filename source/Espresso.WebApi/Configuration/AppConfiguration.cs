@@ -45,7 +45,7 @@ namespace Espresso.WebApi.Configuration
         );
 
         /// <summary>
-        /// All Api Vesions
+        /// All Api Versions
         /// </summary>
         /// <value></value>
         public IEnumerable<ApiVersion> ApiVersions => new[]
@@ -74,6 +74,12 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         /// <returns></returns>
         public string SlackWebHook => _configuration.GetValue<string>("SlackWebHook");
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public int MaxHttpHandlerRetries => _configuration.GetValue<int>("MaxHttpHandlerRetries");
         #endregion
 
         #region Constructors

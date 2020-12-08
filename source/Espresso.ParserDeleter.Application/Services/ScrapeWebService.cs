@@ -9,14 +9,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.Extensions;
 using Espresso.Common.Enums;
-using Espresso.Common.Utilities;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Common.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.ParserDeleter.Application.IServices;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
-using Espresso.Application.IServices;
+using Espresso.Common.IServices;
+using Espresso.ParserDeleter.Application.Constants;
 
 namespace Espresso.ParserDeleter.Application.Services
 {
@@ -37,8 +37,7 @@ namespace Espresso.ParserDeleter.Application.Services
             IJsonService jsonService
         )
         {
-            _httpClient = httpClientFactory.CreateClient();
-            _httpClient.Timeout = TimeSpan.FromSeconds(10);
+            _httpClient = httpClientFactory.CreateClient(HttpClientConstants.ScrapeWebHttpClientName);
             _parseHtmlService = parseHtmlService;
             _loggerService = loggerService;
             _jsonService = jsonService;

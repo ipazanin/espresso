@@ -1,10 +1,7 @@
-# Common
-list::
-	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | \
-	awk -v RS= -F: '/^# File/,/^# Finished Make data base/ \
-	{if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
+WebApiDockerImage="docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi"
+ParserDockerImage="docker.pkg.github.com/espresso-news/espresso-backend/espresso-parserdeleter"
+DefaultReactEnvironment="production"
 
-# Backend
 compose-database::
 ifeq ($(arg1), up)
 	docker-compose \
@@ -166,22 +163,36 @@ endif
 
 docker-build-webapi::
 ifeq ($(strip $(v)),)
-	docker build --force-rm -f ./source/Espresso.WebApi/Dockerfile -t \
-	docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi:latest --build-arg REACT_APP_ENVIRONMENT=production ./source
-	docker push docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi:latest
+	docker build \
+	--force-rm \
+	-f ./source/Espresso.WebApi/Dockerfile \
+	-t $(WebApiDockerImage):latest \
+	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
+	./source
+	docker push $(WebApiDockerImage):latest
 else
-	docker build --force-rm -f ./source/Espresso.WebApi/Dockerfile -t \
-	docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi:$(v) --build-arg REACT_APP_ENVIRONMENT=production ./source
-	docker push docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi:$(v)
+	docker build \
+	--force-rm \
+	-f ./source/Espresso.WebApi/Dockerfile \
+	-t $(WebApiDockerImage):$(v) \
+	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
+	./source
+	docker push $(WebApiDockerImage):$(v)
 endif
 
 docker-build-parserdeleter::
 ifeq ($(strip $(v)),)
-	docker build --force-rm -f ./source/Espresso.ParserDeleter/Dockerfile -t \
-	docker.pkg.github.com/espresso-news/espresso-backend/espresso-parserdeleter:latest ./source
-	docker push docker.pkg.github.com/espresso-news/espresso-backend/espresso-parserdeleter:latest
+	docker build \
+	--force-rm \
+	-f ./source/Espresso.ParserDeleter/Dockerfile \
+	-t $(ParserDockerImage):latest \
+	./source
+	docker push $(ParserDockerImage):latest
 else
-	docker build --force-rm -f ./source/Espresso.ParserDeleter/Dockerfile -t \
-	docker.pkg.github.com/espresso-news/espresso-backend/espresso-parserdeleter:$(v) ./source
-	docker push docker.pkg.github.com/espresso-news/espresso-backend/espresso-parserdeleter:$(v)
+	docker build \
+	--force-rm \
+	-f ./source/Espresso.ParserDeleter/Dockerfile \
+	-t $(ParserDockerImage):$(v) \
+	./source
+	docker push $(ParserDockerImage):$(v)
 endif

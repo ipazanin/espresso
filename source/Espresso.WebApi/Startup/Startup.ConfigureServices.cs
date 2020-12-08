@@ -6,10 +6,13 @@ using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using Espresso.Application.IServices;
 using Espresso.Application.Models;
 using Espresso.Application.Services;
+using Espresso.Application.Utilities;
 using Espresso.Common.Constants;
-using Espresso.Common.Utilities;
+using Espresso.Common.IServices;
+using Espresso.Common.Services;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Services;
+using Espresso.ParserDeleter.Application.Constants;
 using Espresso.Persistence.Database;
 using Espresso.Persistence.IRepositories;
 using Espresso.Persistence.Repositories;
@@ -51,7 +54,7 @@ namespace Espresso.WebApi.Startup
         }
 
         /// <summary>
-        /// Essential Services: MemoryCache, Initialisation, HttpClient, Configuration ...
+        /// Essential Services: MemoryCache, Initialization, HttpClient, Configuration ...
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
@@ -59,7 +62,21 @@ namespace Espresso.WebApi.Startup
         {
             services.AddMemoryCache();
             services.AddTransient<IWebApiInit, WebApiInit>();
-            services.AddHttpClient();
+            services
+                .AddHttpClient(
+                    name: HttpClientConstants.SlackHttpClientName,
+                    configureClient: (serviceProvider, httpClient) =>
+                    {
+                        httpClient.Timeout = _webApiConfiguration.SlackHttpClientConfiguration.Timeout;
+                    }
+                )
+                .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+                {
+                })
+                .AddHttpMessageHandler(serviceProvider => new RetryHttpRequestHandler(
+                    maxRetries: _webApiConfiguration.SlackHttpClientConfiguration.MaxRetries
+                ));
+
             services.AddSingleton(serviceProvider => _webApiConfiguration);
             services.AddSingleton(serviceProvider => new ApplicationInformation(
                 appEnvironment: _webApiConfiguration.AppConfiguration.AppEnvironment,
@@ -84,7 +101,11 @@ namespace Espresso.WebApi.Startup
                 })
                 .AddJsonOptions(jsonOptions =>
                 {
-                    SystemTextJsonService.MapJsonSerializerOptionsToDefaultOptions(jsonOptions.JsonSerializerOptions);
+                    _webApiConfiguration
+                        .SystemTextJsonSerializerConfiguration
+                        .MapJsonSerializerOptionsToDefaultOptions(
+                            jsonSerializerOptions: jsonOptions.JsonSerializerOptions
+                        );
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Latest)
                 .AddFluentValidation(
@@ -180,7 +201,9 @@ namespace Espresso.WebApi.Startup
                 ageWeight: _webApiConfiguration.TrendingScoreConfiguration.AgeWeight
             ));
             services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
-            services.AddTransient<IJsonService, SystemTextJsonService>();
+            services.AddTransient<IJsonService, SystemTextJsonService>(serviceProvider => new SystemTextJsonService(
+                defaultJsonSerializerOptions: _webApiConfiguration.SystemTextJsonSerializerConfiguration.JsonSerializerOptions
+            ));
             services.AddScoped<IRemoveOldArticlesService, RemoveOldArticlesService>(
                 serviceProvider => new RemoveOldArticlesService(
                     maxAgeOfArticle: _webApiConfiguration.DateTimeConfiguration.MaxAgeOfArticle

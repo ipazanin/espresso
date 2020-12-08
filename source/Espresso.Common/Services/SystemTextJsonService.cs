@@ -1,28 +1,29 @@
 using System.IO;
+using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.IServices;
+using Espresso.Common.Constants;
+using Espresso.Common.IServices;
 
-namespace Espresso.Application.Services
+namespace Espresso.Common.Services
 {
     public class SystemTextJsonService : IJsonService
     {
         #region Fields
-        public static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            AllowTrailingCommas = true,
-            MaxDepth = 100,
-            ReadCommentHandling = JsonCommentHandling.Skip,
-        };
+        /// <summary>
+        /// </summary>
+        /// <value></value>
+        private readonly JsonSerializerOptions _defaultJsonSerializerOptions;
         #endregion
 
         #region Constructors
-        public SystemTextJsonService()
+        public SystemTextJsonService(
+            JsonSerializerOptions defaultJsonSerializerOptions
+        )
         {
-
+            _defaultJsonSerializerOptions = defaultJsonSerializerOptions;
         }
         #endregion
 
@@ -36,7 +37,7 @@ namespace Espresso.Application.Services
             await JsonSerializer.SerializeAsync(
                 utf8Json: stream,
                 value: value,
-                options: DefaultJsonSerializerOptions,
+                options: _defaultJsonSerializerOptions,
                 cancellationToken: cancellationToken
             );
 
@@ -50,18 +51,28 @@ namespace Espresso.Application.Services
             return jsonValue;
         }
 
+        public string Serialize<TValue>(TValue value)
+        {
+            var jsonString = JsonSerializer.Serialize(
+                value: value,
+                options: _defaultJsonSerializerOptions
+            );
+
+            return jsonString;
+        }
+
         public async Task<TValue?> Deserialize<TValue>(
             string json,
             CancellationToken cancellationToken
         )
         {
-            var utf8Bytes = System.Text.Encoding.UTF8.GetBytes(json);
+            var utf8Bytes = Encoding.UTF8.GetBytes(json);
 
             var stream = new MemoryStream(utf8Bytes);
 
             var value = await JsonSerializer.DeserializeAsync<TValue?>(
                 utf8Json: stream,
-                options: DefaultJsonSerializerOptions,
+                options: _defaultJsonSerializerOptions,
                 cancellationToken: cancellationToken
             );
 
@@ -80,7 +91,7 @@ namespace Espresso.Application.Services
 
             var value = await JsonSerializer.DeserializeAsync<TValue?>(
                 utf8Json: stream,
-                options: DefaultJsonSerializerOptions,
+                options: _defaultJsonSerializerOptions,
                 cancellationToken: cancellationToken
             );
 
@@ -91,33 +102,26 @@ namespace Espresso.Application.Services
         {
             var value = JsonSerializer.Deserialize<TValue?>(
                 json: json,
-                options: DefaultJsonSerializerOptions
+                options: _defaultJsonSerializerOptions
             );
 
             return value;
         }
 
-        public string Serialize<TValue>(TValue value)
-        {
-            var jsonString = JsonSerializer.Serialize(
-                value: value,
-                options: DefaultJsonSerializerOptions
-            );
-
-            return jsonString;
-        }
-
-        public static void MapJsonSerializerOptionsToDefaultOptions(
-            JsonSerializerOptions jsonSerializerOptions
+        public async Task<HttpContent> GetJsonHttpContent<TValue>(
+            TValue value,
+            CancellationToken cancellationToken
         )
         {
-            var defaultJsonOptions = DefaultJsonSerializerOptions;
+            var content = await Serialize(value, cancellationToken);
 
-            jsonSerializerOptions.PropertyNameCaseInsensitive = defaultJsonOptions.PropertyNameCaseInsensitive;
-            jsonSerializerOptions.PropertyNamingPolicy = defaultJsonOptions.PropertyNamingPolicy;
-            jsonSerializerOptions.AllowTrailingCommas = defaultJsonOptions.AllowTrailingCommas;
-            jsonSerializerOptions.MaxDepth = defaultJsonOptions.MaxDepth;
-            jsonSerializerOptions.ReadCommentHandling = defaultJsonOptions.ReadCommentHandling;
+            var httpRequestMessage = new StringContent(
+                content: content,
+                encoding: Encoding.UTF8,
+                mediaType: MimeTypeConstants.Json
+            );
+
+            return httpRequestMessage;
         }
         #endregion
     }

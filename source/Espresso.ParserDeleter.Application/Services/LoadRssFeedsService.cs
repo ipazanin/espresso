@@ -17,6 +17,8 @@ using Espresso.Common.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
 using Microsoft.Extensions.Logging;
+using Espresso.Common.Constants;
+using Espresso.ParserDeleter.Application.Constants;
 
 namespace Espresso.ParserDeleter.Application.Services
 {
@@ -33,8 +35,7 @@ namespace Espresso.ParserDeleter.Application.Services
             ILoggerService<LoadRssFeedsService> loggerService
         )
         {
-            _httpClient = httpClientFactory.CreateClient();
-            _httpClient.Timeout = TimeSpan.FromSeconds(10);
+            _httpClient = httpClientFactory.CreateClient(HttpClientConstants.LoadRssFeedsHttpClientName);
             _loggerService = loggerService;
         }
         #endregion

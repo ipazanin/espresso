@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects;
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Application.IServices;
+using Espresso.Common.IServices;
 using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
 using Espresso.ParserDeleter.Application.IServices;

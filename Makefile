@@ -52,8 +52,7 @@ rebuild-backend::
 	make build
 
 clean::
-	dotnet clean --configuration Release --verbosity minimal source/Espresso.sln && \
-	find . -iname "bin" -o -iname "obj" | xargs rm -rf
+	make -f scripts/make/backend/Makefile clean
 
 build::
 	make -f scripts/make/backend/Makefile build
