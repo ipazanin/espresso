@@ -4,7 +4,7 @@
     "**/obj": true,
     "**/bin": true,
     "**/node_modules": true,
-    "**/Espresso.ClientApp/build": true
+    "**/client/build": true
   },
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -37,13 +37,13 @@
   "eslint.format.enable": true,
   "eslint.validate": ["javascript", "typescript"],
   "eslint.packageManager": "npm",
-  "eslint.workingDirectories": ["./source/Espresso.ClientApp"],
+  "eslint.workingDirectories": ["./client"],
   "eslint.options": {
     "configFile": ".eslintrc"
   },
   "eslint.lintTask.enable": true,
-  "eslint.nodePath": "./source/Espresso.ClientApp/node_modules",
-  "prettier.configPath": "./source/Espresso.ClientApp/.prettierrc",
+  "eslint.nodePath": "./client/node_modules",
+  "prettier.configPath": "./client/.prettierrc",
   "cSpell.enableFiletypes": [
     "!asciidoc",
     "!c",
