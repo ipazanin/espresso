@@ -5,6 +5,7 @@ using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Application.Infrastructure.BackgroundJobsInfrastructure;
 using Espresso.Application.IServices;
 using Espresso.Common.Enums;
+using Espresso.Common.IServices;
 using Espresso.Domain.IServices;
 using Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles;
 using Espresso.WebApi.Configuration;

@@ -10,6 +10,7 @@
       "Espresso.ParserDeleter.Application.Services.CreateArticleService": "None",
       "Espresso.ParserDeleter.Application.Services.LoadRssFeedsService": "None",
       "Espresso.ParserDeleter.Application.Services.ScrapeWebService": "None",
+      "Espresso.ParserDeleter.Services.SendArticlesHttpService": "Information",
       "Microsoft": "Warning",
       "System": "Warning"
     }

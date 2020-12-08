@@ -11,6 +11,11 @@ namespace Espresso.ParserDeleter.Configuration
         public CronJobsConfiguration CronJobsConfiguration { get; }
         public ArticleSimilarityConfiguration ArticleSimilarityConfiguration { get; }
         public RabbitMqConfiguration RabbitMqConfiguration { get; }
+        public HttpClientConfiguration SlackHttpClientConfiguration { get; }
+        public HttpClientConfiguration SendArticlesHttpClientConfiguration { get; }
+        public HttpClientConfiguration LoadRssFeedsHttpClientConfiguration { get; }
+        public HttpClientConfiguration ScrapeWebHttpClientConfiguration { get; }
+        public SystemTextJsonSerializerConfiguration SystemTextJsonSerializerConfiguration { get; }
         #endregion
 
         #region Constructors
@@ -22,6 +27,11 @@ namespace Espresso.ParserDeleter.Configuration
             CronJobsConfiguration = new CronJobsConfiguration(configuration.GetSection("CronJobsConfiguration"));
             ArticleSimilarityConfiguration = new ArticleSimilarityConfiguration(configuration.GetSection("ArticleSimilarityConfiguration"));
             RabbitMqConfiguration = new RabbitMqConfiguration(configuration.GetSection("RabbitMqConfiguration"));
+            SlackHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:SlackHttpClientConfiguration"));
+            SendArticlesHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:SendArticlesHttpClientConfiguration"));
+            LoadRssFeedsHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:LoadRssFeedsHttpClientConfiguration"));
+            ScrapeWebHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:ScrapeWebHttpClientConfiguration"));
+            SystemTextJsonSerializerConfiguration = new SystemTextJsonSerializerConfiguration(configuration.GetSection("SystemTextJsonSerializerConfiguration"));
         }
         #endregion
     }

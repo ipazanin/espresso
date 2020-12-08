@@ -496,7 +496,6 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
-        [ApiVersion("2.0")]
         [ApiVersion("1.4")]
         [ApiVersion("1.3")]
         [ApiVersion("1.2")]
@@ -595,11 +594,11 @@ namespace Espresso.WebApi.Controllers
         /// <param name="articleId">Article Id</param>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <returns></returns>
-        /// <response code="200">When operation is sucessfull</response>
+        /// <response code="200">When operation is successfull</response>
         /// <response code="400">If <paramref name="articleId"/> is not valid Guid</response>
         /// <response code="401">If API Key is invalid or missing</response>
         /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="404">If resource is nout found</response>
+        /// <response code="404">If resource is not found</response>
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -645,11 +644,11 @@ namespace Espresso.WebApi.Controllers
         /// <param name="articleId">Article Id</param>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <returns></returns>
-        /// <response code="200">When operation is sucessfull</response>
+        /// <response code="200">When operation is successfull</response>
         /// <response code="400">If <paramref name="articleId"/> is not valid Guid</response>
         /// <response code="401">If API Key is invalid or missing</response>
         /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="404">If resource is nout found</response>
+        /// <response code="404">If resource is not found</response>
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -689,13 +688,13 @@ namespace Espresso.WebApi.Controllers
         /// <param name="cancellationToken"></param>
         /// <param name="articleId">Article Id</param>
         /// <param name="isHidden"></param>
-        /// <param name="basicInformationsHeaderParameters">Basic App Informations</param>
+        /// <param name="basicInformationsHeaderParameters">Basic App Information</param>
         /// <returns></returns>
-        /// <response code="200">When operation is sucessfull</response>
+        /// <response code="200">When operation is successfull</response>
         /// <response code="400">If <paramref name="articleId"/> is not valid Guid</response>
         /// <response code="401">If API Key is invalid or missing</response>
         /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="404">If resource is nout found</response>
+        /// <response code="404">If resource is not found</response>
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -736,13 +735,13 @@ namespace Espresso.WebApi.Controllers
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <param name="requestBody"></param>
-        /// <param name="basicInformationsHeaderParameters">Basic App Informations</param>
+        /// <param name="basicInformationsHeaderParameters">Basic App Information</param>
         /// <returns></returns>
-        /// <response code="200">When operation is sucessfull</response>
+        /// <response code="200">When operation is successfull</response>
         /// <response code="400">If validation fails</response>
         /// <response code="401">If API Key is invalid or missing</response>
         /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="404">If resource is nout found</response>
+        /// <response code="404">If resource is not found</response>
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -788,15 +787,15 @@ namespace Espresso.WebApi.Controllers
         /// Auto Complete Article Titles
         /// </summary>
         /// <param name="cancellationToken"></param>
-        /// <param name="basicInformationsHeaderParameters">Basic App Informations</param>
+        /// <param name="basicInformationsHeaderParameters">Basic App Information</param>
         /// <param name="titleSearchQuery"></param>
         /// <param name="paginationParameters"></param>
         /// <returns></returns>
-        /// <response code="200">When operation is sucessfull</response>
+        /// <response code="200">When operation is successfull</response>
         /// <response code="400">If validation fails</response>
         /// <response code="401">If API Key is invalid or missing</response>
         /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="404">If resource is nout found</response>
+        /// <response code="404">If resource is not found</response>
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]

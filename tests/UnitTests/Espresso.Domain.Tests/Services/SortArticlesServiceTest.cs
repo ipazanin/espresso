@@ -4,7 +4,6 @@ using System.Linq;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Services;
 using Espresso.Domain.Tests.TestUtilities;
-using Espresso.Domain.ValueObjects.ArticleValueObjects;
 using Xunit;
 
 namespace Espresso.Domain.Tests.Services
@@ -329,13 +328,15 @@ namespace Espresso.Domain.Tests.Services
                     newsPortalId: 1,
                     url: "url1",
                     title: "title1",
-                    summary: "summary1"
+                    summary: "summary1",
+                    id: Guid.NewGuid()
                 ),
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
                     url: "url2",
                     title: "title2",
-                    summary: "summary2"
+                    summary: "summary2",
+                    id: Guid.NewGuid()
                 ),
             };
             var expectedArticlesCount = articles.Count;
@@ -366,25 +367,29 @@ namespace Espresso.Domain.Tests.Services
                     newsPortalId: 1,
                     url: "url1",
                     title: "title1",
-                    summary: "summary1"
+                    summary: "summary1",
+                    id: Guid.NewGuid()
                 ),
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
                     url: "url2",
                     title: "title2",
-                    summary: "summary2"
+                    summary: "summary2",
+                    id: Guid.NewGuid()
                 ),
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
                     url: "url1",
                     title: "title1",
-                    summary: "summary1"
+                    summary: "summary1",
+                    id: Guid.NewGuid()
                 ),
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
                     url: "url2",
                     title: "title2",
-                    summary: "summary2"
+                    summary: "summary2",
+                    id: Guid.NewGuid()
                 ),
             };
             var expectedArticlesCount = articles.Count - 2;

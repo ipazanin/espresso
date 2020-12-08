@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Espresso.Application.IServices;
 using Espresso.Application.Models;
 using Espresso.Common.Constants;
+using Espresso.Common.IServices;
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
 using Espresso.WebApi.Application.Exceptions;

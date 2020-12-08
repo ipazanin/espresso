@@ -12,13 +12,10 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Espresso.Application.DataTransferObjects;
 using Espresso.WebApi.DataTransferObjects;
 using Espresso.WebApi.RequestData.Header;
 using Espresso.WebApi.RequestData.Body;
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
-using System;
-using Espresso.Application.Services;
 
 namespace Espresso.WebApi.Controllers
 {
@@ -62,7 +59,7 @@ namespace Espresso.WebApi.Controllers
         [HttpPost]
         [Authorize(Roles = ApiKey.ParserRole)]
         [Route("api/notifications/articles")]
-        public async Task<IActionResult> SendLatestArticlesNotificition(
+        public async Task<IActionResult> SendLatestArticlesNotification(
             [FromBody] ArticlesBodyDto articlesRequest,
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             CancellationToken cancellationToken

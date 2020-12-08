@@ -1,8 +1,9 @@
 
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Espresso.Application.IServices
+namespace Espresso.Common.IServices
 {
     public interface IJsonService
     {
@@ -24,5 +25,10 @@ namespace Espresso.Application.IServices
         public string Serialize<TValue>(TValue value);
 
         public TValue? Deserialize<TValue>(string json);
+
+        public Task<HttpContent> GetJsonHttpContent<TValue>(
+            TValue value,
+            CancellationToken cancellationToken
+        );
     }
 }

@@ -23,6 +23,10 @@ using Espresso.ParserDeleter.Services;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.ParserDeleter.Application.Initialization;
 using Espresso.Application.Models;
+using Espresso.Common.Services;
+using Espresso.Common.IServices;
+using Espresso.Application.Utilities;
+using Espresso.ParserDeleter.Application.Constants;
 
 namespace Espresso.ParserDeleter.Startup
 {
@@ -39,7 +43,7 @@ namespace Espresso.ParserDeleter.Startup
         }
 
         /// <summary>
-        /// Essential Services: MemoryCache, Initialisation, HttpClient, Configuration ...
+        /// Essential Services: MemoryCache, Initialization, HttpClient, Configuration ...
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
@@ -48,7 +52,67 @@ namespace Espresso.ParserDeleter.Startup
             services.AddMemoryCache();
             services.AddTransient<IParserDeleterInit, ParserDeleterInit>();
             services.AddSingleton(serviceProvider => _parserDeleterConfiguration);
-            services.AddHttpClient();
+
+            services
+                .AddHttpClient(
+                    name: HttpClientConstants.SlackHttpClientName,
+                    configureClient: (serviceProvider, httpClient) =>
+                    {
+                        httpClient.Timeout = _parserDeleterConfiguration.SlackHttpClientConfiguration.Timeout;
+                    }
+                )
+                .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+                {
+                })
+                .AddHttpMessageHandler(serviceProvider => new RetryHttpRequestHandler(
+                    maxRetries: _parserDeleterConfiguration.SlackHttpClientConfiguration.MaxRetries
+                ));
+
+            services
+                .AddHttpClient(
+                    name: HttpClientConstants.SendArticlesHttpClientName,
+                    configureClient: (serviceProvider, httpClient) =>
+                    {
+                        httpClient.Timeout = _parserDeleterConfiguration.SendArticlesHttpClientConfiguration.Timeout;
+                    }
+                )
+                .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+                {
+                })
+                .AddHttpMessageHandler(serviceProvider => new RetryHttpRequestHandler(
+                    maxRetries: _parserDeleterConfiguration.SendArticlesHttpClientConfiguration.MaxRetries
+                ));
+
+            services
+                .AddHttpClient(
+                    name: HttpClientConstants.LoadRssFeedsHttpClientName,
+                    configureClient: (serviceProvider, httpClient) =>
+                    {
+                        httpClient.Timeout = _parserDeleterConfiguration.LoadRssFeedsHttpClientConfiguration.Timeout;
+                    }
+                )
+                .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+                {
+                })
+                .AddHttpMessageHandler(serviceProvider => new RetryHttpRequestHandler(
+                    maxRetries: _parserDeleterConfiguration.LoadRssFeedsHttpClientConfiguration.MaxRetries
+                ));
+
+            services
+                .AddHttpClient(
+                    name: HttpClientConstants.ScrapeWebHttpClientName,
+                    configureClient: (serviceProvider, httpClient) =>
+                    {
+                        httpClient.Timeout = _parserDeleterConfiguration.ScrapeWebHttpClientConfiguration.Timeout;
+                    }
+                )
+                .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+                {
+                })
+                .AddHttpMessageHandler(serviceProvider => new RetryHttpRequestHandler(
+                    maxRetries: _parserDeleterConfiguration.ScrapeWebHttpClientConfiguration.MaxRetries
+                ));
+
             services.AddSingleton<IParserDeleterConfiguration, ParserDeleterConfiguration>();
             services.AddValidatorsFromAssembly(typeof(ArticleDataValidator).Assembly);
             services.AddSingleton(serviceProvider => new ApplicationInformation(
@@ -63,13 +127,17 @@ namespace Espresso.ParserDeleter.Startup
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        private static IServiceCollection AddWebApi(IServiceCollection services)
+        private IServiceCollection AddWebApi(IServiceCollection services)
         {
             services
                 .AddControllers()
                 .AddJsonOptions(jsonOptions =>
                 {
-                    SystemTextJsonService.MapJsonSerializerOptionsToDefaultOptions(jsonOptions.JsonSerializerOptions);
+                    _parserDeleterConfiguration
+                        .SystemTextJsonSerializerConfiguration
+                        .MapJsonSerializerOptionsToDefaultOptions(
+                            jsonSerializerOptions: jsonOptions.JsonSerializerOptions
+                        );
                 });
 
             return services;
@@ -142,6 +210,7 @@ namespace Espresso.ParserDeleter.Startup
                            httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
                            loggerService: serviceProvider.GetRequiredService<ILoggerService<SendArticlesHttpService>>(),
                            slackService: serviceProvider.GetRequiredService<ISlackService>(),
+                           jsonService: serviceProvider.GetRequiredService<IJsonService>(),
                            parserApiKey: _parserDeleterConfiguration.ApiKeysConfiguration.ParserApiKey,
                            targetedApiVersion: _parserDeleterConfiguration.AppConfiguration.RssFeedParserMajorMinorVersion,
                            currentVersion: _parserDeleterConfiguration.AppConfiguration.Version,
@@ -149,7 +218,9 @@ namespace Espresso.ParserDeleter.Startup
                         );
                 }
             );
-            services.AddTransient<IJsonService, SystemTextJsonService>();
+            services.AddTransient<IJsonService, SystemTextJsonService>(serviceProvider => new SystemTextJsonService(
+                defaultJsonSerializerOptions: _parserDeleterConfiguration.SystemTextJsonSerializerConfiguration.JsonSerializerOptions
+            ));
             services.AddScoped<IRemoveOldArticlesService, RemoveOldArticlesService>(
                 serviceProvider => new RemoveOldArticlesService(
                     maxAgeOfArticle: _parserDeleterConfiguration.AppConfiguration.MaxAgeOfArticles

@@ -11,7 +11,7 @@ namespace Espresso.Domain.Services
     public class GroupSimilarArticlesService : IGroupSimilarArticlesService
     {
         #region Constants
-        private const double MaxSimilarityScore = 1;
+        private const double MaxSimilarityScore = 1d;
         #endregion
 
         #region Fields
@@ -187,22 +187,22 @@ namespace Espresso.Domain.Services
             var totalSimilarityScore = 0.0d;
             foreach (var firstArticleWord in firstArticleWords)
             {
-                var bestSecondArticleMatchScore = 0.0d;
+                var bestSecondArticleTitleMatchScore = 0.0d;
 
                 foreach (var secondArticleWord in secondArticleWords)
                 {
-                    var currentSimilarityScore = CalculateSimilarityScoreBetweenTwoWords(firstArticleWord, secondArticleWord);
-                    if (currentSimilarityScore == MaxSimilarityScore)
+                    var currentArticleTitleSimilarityScore = CalculateSimilarityScoreBetweenTwoWords(firstArticleWord, secondArticleWord);
+                    if (currentArticleTitleSimilarityScore == MaxSimilarityScore)
                     {
-                        bestSecondArticleMatchScore = MaxSimilarityScore;
+                        bestSecondArticleTitleMatchScore = MaxSimilarityScore;
                         break;
                     }
-                    if (currentSimilarityScore > bestSecondArticleMatchScore)
+                    if (currentArticleTitleSimilarityScore > bestSecondArticleTitleMatchScore)
                     {
-                        bestSecondArticleMatchScore = currentSimilarityScore;
+                        bestSecondArticleTitleMatchScore = currentArticleTitleSimilarityScore;
                     }
                 }
-                totalSimilarityScore += bestSecondArticleMatchScore;
+                totalSimilarityScore += bestSecondArticleTitleMatchScore;
             }
 
             var averageSimilarityScore = totalSimilarityScore / firstArticleWords.Count();

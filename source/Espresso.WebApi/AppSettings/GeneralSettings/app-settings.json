@@ -17,6 +17,12 @@
     "MaxAgeOfNewNewsPortalInDays": 60,
     "MaxAgeOfTrendingArticlesInHours": 24
   },
+  "HttpClientConfiguration": {
+    "SlackHttpClientConfiguration": {
+      "MaxRetries": 1,
+      "TimeoutInSeconds": 5
+    }
+  },
   "RabbitMqConfiguration": {
     "ArticlesQueueName": "articles-queue",
     "HostName": "rabbitmq",
@@ -27,6 +33,12 @@
     "EnableCors": false,
     "SpaProxyServerUrl": "",
     "UseSpaProxyServer": false
+  },
+  "SystemTextJsonSerializerConfiguration": {
+    "AllowTrailingCommas": true,
+    "MaxDepth": 100,
+    "PropertyNameCaseInsensitive": true,
+    "ReadCommentHandling": 1
   },
   "TrendingScoreConfiguration": {
     "AgeWeight": 0.9,

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
@@ -11,8 +10,10 @@ using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
+using Espresso.Common.IServices;
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
+using Espresso.ParserDeleter.Application.Constants;
 using Espresso.ParserDeleter.Application.IServices;
 using Microsoft.Extensions.Logging;
 
@@ -22,6 +23,7 @@ namespace Espresso.ParserDeleter.Services
     {
         private readonly ILoggerService<SendArticlesHttpService> _loggerService;
         private readonly ISlackService _slackService;
+        private readonly IJsonService _jsonService;
         private readonly string _parserApiKey;
         private readonly string _targetedApiVersion;
         private readonly string _currentVersion;
@@ -35,6 +37,7 @@ namespace Espresso.ParserDeleter.Services
             IHttpClientFactory httpClientFactory,
             ILoggerService<SendArticlesHttpService> loggerService,
             ISlackService slackService,
+            IJsonService jsonService,
             string parserApiKey,
             string targetedApiVersion,
             string currentVersion,
@@ -43,12 +46,12 @@ namespace Espresso.ParserDeleter.Services
         {
             _loggerService = loggerService;
             _slackService = slackService;
+            _jsonService = jsonService;
             _parserApiKey = parserApiKey;
             _targetedApiVersion = targetedApiVersion;
             _currentVersion = currentVersion;
             _serverUrl = serverUrl;
-            _httpClient = httpClientFactory.CreateClient();
-            _httpClient.Timeout = TimeSpan.FromMinutes(4);
+            _httpClient = httpClientFactory.CreateClient(HttpClientConstants.SendArticlesHttpClientName);
         }
         #endregion
 
@@ -79,12 +82,17 @@ namespace Espresso.ParserDeleter.Services
                 updatedArticles: updateArticles.Select(articleDtoProjection)
             );
 
+            var httpContent = await _jsonService.GetJsonHttpContent(
+                value: data,
+                cancellationToken: cancellationToken
+            );
+
             try
             {
                 _httpClient.AddHeadersToHttpClient(httpHeaders);
-                var response = await _httpClient.PostAsJsonAsync(
+                var response = await _httpClient.PostAsync(
                     requestUri: $"{_serverUrl}/api/notifications/articles",
-                    value: data,
+                    content: httpContent,
                     cancellationToken: cancellationToken
                 );
 

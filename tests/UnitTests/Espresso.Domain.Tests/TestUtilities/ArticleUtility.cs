@@ -16,11 +16,14 @@ namespace Espresso.Domain.Tests.TestUtilities
             string url = "",
             string title = "",
             string summary = "",
-            DateTime publishDateTime = default
+            DateTime publishDateTime = default,
+            DateTime createDateTime = default,
+            int categoryId = default,
+            Guid id = default
         )
         {
             var category = new Category(
-                id: default,
+                id: categoryId,
                 name: "",
                 color: "",
                 keyWordsRegexPattern: default,
@@ -53,13 +56,13 @@ namespace Espresso.Domain.Tests.TestUtilities
             );
 
             var article = new Article(
-                id: Guid.NewGuid(),
+                id: id,
                 url: url,
                 webUrl: "",
                 summary: summary,
                 title: title,
                 imageUrl: default,
-                createDateTime: DateTime.UtcNow,
+                createDateTime: createDateTime,
                 updateDateTime: default,
                 publishDateTime: publishDateTime,
                 numberOfClicks: default,

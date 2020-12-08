@@ -1,53 +1,66 @@
-# Common
+SolutionPath="source/Espresso.sln"
+PersistenceProjectPath="source/Espresso.Persistence/Espresso.Persistence.csproj"
+DefaultVerbosity="minimal" # verbosity levels: quiet, minimal, normal, detailed, diagnostic
+LocalEnvironmentName="local"
+Configuration="Release" # Configurations: Release, Debug
+
 list::
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | \
 	awk -v RS= -F: '/^# File/,/^# Finished Make data base/ \
 	{if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
 
-# Backend
 clean::
-	dotnet clean --configuration Release --verbosity minimal source/Espresso.sln && \
+	dotnet clean --configuration Release --verbosity minimal $(SolutionPath) && \
 	find . -iname "bin" -o -iname "obj" | xargs rm -rf
 
 build::
-	dotnet build --configuration Release source/Espresso.sln
+ifeq ($(strip $(verbosity)),)
+	dotnet build \
+	--configuration $(Configuration) \
+	--verbosity $(DefaultVerbosity) \
+	$(SolutionPath)
+else
+	dotnet build \
+	--configuration $(Configuration) \
+	--verbosity $(verbosity) \
+	$(SolutionPath)
+endif
 
 database-update::
-	ASPNETCORE_ENVIRONMENT=local-production-db dotnet ef database update -p \
-	./source/Espresso.Persistence/Espresso.Persistence.csproj -v
+	ASPNETCORE_ENVIRONMENT=$(LocalEnvironmentName) \
+	dotnet ef database update -p $(PersistenceProjectPath) -v
 
 migration-add::
-	ASPNETCORE_ENVIRONMENT=local-local-db dotnet ef migrations \
-	add -p ./source/Espresso.Persistence/Espresso.Persistence.csproj -v $(name)
+	ASPNETCORE_ENVIRONMENT=$(LocalEnvironmentName) \
+	dotnet ef migrations add -p $(PersistenceProjectPath) -v $(name)
 
 migration-remove::
-	ASPNETCORE_ENVIRONMENT=local-local-db dotnet ef migrations \
-	remove -p ./source/Espresso.Persistence/Espresso.Persistence.csproj -v
+	ASPNETCORE_ENVIRONMENT=$(LocalEnvironmentName) \
+	dotnet ef migrations remove -p $(PersistenceProjectPath) -v
 
 update::
 	./scripts/update.sh
 
 restore::
-	dotnet restore ./source/Espresso.sln
+	dotnet restore $(SolutionPath)
 
-# verbosity levels: quiet, minimal, normal, detailed, diagnostic
 test::
 ifeq ($(strip $(verbosity)),)
-	dotnet test --verbosity quiet source/Espresso.sln
+	dotnet test --verbosity $(DefaultVerbosity) $(SolutionPath)
 else
-	dotnet test --verbosity $(verbosity) source/Espresso.sln
+	dotnet test --verbosity $(verbosity) $(SolutionPath)
 endif
 
 test-coverage::
 ifeq ($(strip $(verbosity)),)
 	dotnet test \
-	--verbosity minimal \
+	--verbosity $(DefaultVerbosity) \
 	--logger 'xunit;LogFileName=TestResults.xml' \
 	--results-directory ./tests/UnitTests/TestReports \
 	/p:CollectCoverage=true \
 	/p:CoverletOutput=TestReports/ \
 	/p:CoverletOutputFormat=cobertura \
-	./source/Espresso.sln
+	$(SolutionPath)
 else
 	dotnet test \
 	--verbosity $(verbosity) \
@@ -56,7 +69,7 @@ else
 	/p:CollectCoverage=true \
 	/p:CoverletOutput=TestReports/ \
 	/p:CoverletOutputFormat=cobertura \
-	./source/Espresso.sln
+	$(SolutionPath)
 endif
 	
 create-coverage-report::

@@ -56,6 +56,18 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         /// <value></value>
         public RabbitMqConfiguration RabbitMqConfiguration { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public HttpClientConfiguration SlackHttpClientConfiguration { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public SystemTextJsonSerializerConfiguration SystemTextJsonSerializerConfiguration { get; }
         #endregion
 
         #region Constructors
@@ -73,6 +85,8 @@ namespace Espresso.WebApi.Configuration
             CronJobsConfiguration = new CronJobsConfiguration(configuration.GetSection("CronJobsConfiguration"));
             TrendingScoreConfiguration = new TrendingScoreConfiguration(configuration.GetSection("TrendingScoreConfiguration"));
             RabbitMqConfiguration = new RabbitMqConfiguration(configuration.GetSection("RabbitMqConfiguration"));
+            SlackHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:DefaultHttpClientConfiguration"));
+            SystemTextJsonSerializerConfiguration = new SystemTextJsonSerializerConfiguration(configuration.GetSection("SystemTextJsonSerializerConfiguration"));
         }
         #endregion
     }

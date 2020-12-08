@@ -6,7 +6,7 @@
     <AnalysisLevel>preview</AnalysisLevel>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    
+
     <!-- <SpaRoot>ClientApp\</SpaRoot> -->
     <!-- <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
@@ -32,31 +32,8 @@
     <ProjectReference Include="..\Espresso.Persistence\Espresso.Persistence.csproj" />
   </ItemGroup>
 
-    <!-- Don't publish the SPA source files, but do show them in the project files list -->
-  <!-- <ItemGroup>
-    <Content Remove="$(SpaRoot)**" />
-    <None Remove="$(SpaRoot)**" />
-    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
-  </ItemGroup> -->
-
-<!-- <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-  <Exec Command="if not exist $(OutDir)..\..\..\.\build  mkdir $(OutDir)..\..\..\..\build" />
-  <Exec Command="copy $(OutDir)$(TargetName).dll $(OutDir)..\..\..\..\build\$(TargetName).dll /Y" />
-  <Exec Command="copy $(OutDir)$(TargetName).pdb $(OutDir)..\..\..\..\build\$(TargetName).pdb /Y" />
-</Target> -->
-
-<!-- <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-  <Exec Command="echo $(OutDir)" />
-  <Exec Command="ls ../Espresso.ClientApp/build" />
-  <Exec Command="mkdir -p $(OutDir)Espresso.ClientApp" />
-  <Exec Command="cp -R ../Espresso.ClientApp/build $(OutDir)Espresso.ClientApp/build" />
-  <Exec Command="ls $(OutDir)" />
-  <Exec Command="ls $(OutDir)Espresso.ClientApp" />
-  <Exec Command="ls $(OutDir)Espresso.ClientApp/build" />
-</Target> -->
-
-<ItemGroup>
-      <Content Update="AppSettings/DatabaseSettings/database-settings.development.json">
+  <ItemGroup>
+    <Content Update="AppSettings/DatabaseSettings/database-settings.development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="AppSettings/DatabaseSettings/database-settings.json">
@@ -96,7 +73,7 @@
     </Content>
     <Content Update="AppSettings/LoggingSettings/logging-settings.production.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>    
+    </Content>
   </ItemGroup>
-  
+
 </Project>
