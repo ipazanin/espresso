@@ -3,8 +3,8 @@
     "Environment": 1
   },
   "CronJobsConfiguration": {
-    "ApplicationDownloadStatisticsCronExpression": "1 1 * * *",
-    "WebApiReportCronExpression": "1 1 * * *"
+    "ApplicationDownloadStatisticsCronExpression": "* * * * *",
+    "WebApiReportCronExpression": "* * * * *"
   },
   "DateTimeConfiguration": {
     "MaxAgeOfArticlesInDays": 2

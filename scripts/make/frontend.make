@@ -1,33 +1,28 @@
-CLIENTAPP_DIRECTORY="client"
-
-health-check-frontend::
-	make -f scripts/make/frontend/Makefile install
-	make -f scripts/make/frontend/Makefile build-frontend
-	make -f scripts/make/frontend/Makefile lint
-	make -f scripts/make/frontend/Makefile test-frontend
+ClientAppDirectory="client"
+TestReactAppEnvironment="test"
 
 rebuild-frontend::
-	cd $(CLIENTAPP_DIRECTORY); \
+	cd $(ClientAppDirectory); \
 	rm -rf node_modules \
 	rm -rf build
 	make -f scripts/make/frontend/Makefile install
 	make -f scripts/make/frontend/Makefile build-frontend
 
 install::
-	cd $(CLIENTAPP_DIRECTORY); \
+	cd $(ClientAppDirectory); \
 	npm install
 
 build-frontend::
-	cd $(CLIENTAPP_DIRECTORY); \
+	cd $(ClientAppDirectory); \
 	REACT_APP_ENVIRONMENT=production \
 	./node_modules/.bin/react-scripts build
 
 lint::
-	cd $(CLIENTAPP_DIRECTORY); \
+	cd $(ClientAppDirectory); \
 	./node_modules/.bin/eslint --ext .ts,.tsx src/ \
 	--fix --cache --cache-location=./node_modules/.cache/
 
 test-frontend::
-	cd $(CLIENTAPP_DIRECTORY); \
+	cd $(ClientAppDirectory); \
 	CI=true REACT_APP_ENVIRONMENT=test \
 	./node_modules/.bin/react-scripts test

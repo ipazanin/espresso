@@ -65,7 +65,7 @@ namespace Espresso.Common.Extensions
                     article => categoriesWithOrderIndex == null ?
                         halfOfMaxValue :
                         (
-                            categoriesWithOrderIndex.ContainsKey(article.ArticleCategories.First().CategoryId) ?
+                            categoriesWithOrderIndex.ContainsKey(article.ArticleCategories.FirstOrDefault()?.CategoryId ?? 0) ?
                                 halfOfMaxValue + categoriesWithOrderIndex[article.ArticleCategories.First().CategoryId] :
                                 int.MaxValue
                         )

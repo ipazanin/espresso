@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/source/Espresso.WebApi/Espresso.WebApi.csproj",
+                "${workspaceFolder}/server/Espresso/Espresso.WebApi/Espresso.WebApi.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/source/Espresso.WebApi/Espresso.WebApi.csproj",
+                "${workspaceFolder}/server/Espresso/Espresso.WebApi/Espresso.WebApi.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,7 +32,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/source/Espresso.WebApi/Espresso.WebApi.csproj",
+                "${workspaceFolder}/server/Espresso/Espresso.WebApi/Espresso.WebApi.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -44,7 +44,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/source/Espresso.WebApi/Espresso.WebApi.csproj",
+                "${workspaceFolder}/server/Espresso/Espresso.WebApi/Espresso.WebApi.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -56,7 +56,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/source/Espresso.WebApi/Espresso.WebApi.csproj",
+                "${workspaceFolder}/server/Espresso/Espresso.WebApi/Espresso.WebApi.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -68,7 +68,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/source/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj",
+                "${workspaceFolder}/server/Espresso/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -80,7 +80,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/source/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj",
+                "${workspaceFolder}/server/Espresso/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
