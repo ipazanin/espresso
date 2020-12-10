@@ -23,7 +23,7 @@
   },
   "[xml]": {
     "editor.defaultFormatter": "DotJoshJohnson.xml"
-  },  
+  },
   "csharp.maxProjectFileCountForDiagnosticAnalysis": 0,
   "csharp.semanticHighlighting.enabled": true,
   "omnisharp.enableRoslynAnalyzers": true,
@@ -86,5 +86,8 @@
     "**/bin/**",
     "**/obj/**",
     "**/TestReports/**"
-  ]
+  ],
+  "files.associations": {
+    "*.make": "makefile"
+  }
 }

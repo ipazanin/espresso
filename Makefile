@@ -14,28 +14,28 @@ rebuild::
 
 # docker
 compose-database::
-	make -f scripts/make/docker/Makefile compose-database arg1=$(arg1) arg2=$(arg2)
+	make -f scripts/make/docker.make compose-database arg1=$(arg1) arg2=$(arg2)
 
 compose-rabbitmq::
-	make -f scripts/make/docker/Makefile compose-rabbitmq arg=$(arg)
+	make -f scripts/make/docker.make compose-rabbitmq arg=$(arg)
 
 compose-parser::
-	make -f scripts/make/docker/Makefile compose-parser arg=$(arg)
+	make -f scripts/make/docker.make compose-parser arg=$(arg)
 
 compose-webapi::
-	make -f scripts/make/docker/Makefile compose-webapi arg=$(arg)
+	make -f scripts/make/docker.make compose-webapi arg=$(arg)
 
 compose-local::
-	make -f scripts/make/docker/Makefile compose-local arg=$(arg)
+	make -f scripts/make/docker.make compose-local arg=$(arg)
 
 compose-local-rabbitmq::
-	make -f scripts/make/docker/Makefile compose-local-rabbitmq arg=$(arg)
+	make -f scripts/make/docker.make compose-local-rabbitmq arg=$(arg)
 
 docker-build-webapi::
-	make -f scripts/make/docker/Makefile docker-build-webapi  v=$(v)
+	make -f scripts/make/docker.make docker-build-webapi  v=$(v)
 
 docker-build-parserdeleter::
-	make -f scripts/make/docker/Makefile docker-build-parserdeleter v=$(v)
+	make -f scripts/make/docker.make docker-build-parserdeleter v=$(v)
 
 docker-build::
 	make docker-build-webapi v=$(v)
@@ -52,34 +52,34 @@ rebuild-backend::
 	make build
 
 clean::
-	make -f scripts/make/backend/Makefile clean
+	make -f scripts/make/backend.make clean
 
 build::
-	make -f scripts/make/backend/Makefile build
+	make -f scripts/make/backend.make build
 	
 database-update::
-	make -f scripts/make/backend/Makefile database-update
+	make -f scripts/make/backend.make database-update
 
 migration-add::
-	make -f scripts/make/backend/Makefile migration-add name=$(name)
+	make -f scripts/make/backend.make migration-add name=$(name)
 
 migration-remove::
-	make -f scripts/make/backend/Makefile migration-remove
+	make -f scripts/make/backend.make migration-remove
 
 update::
-	make -f scripts/make/backend/Makefile update
+	make -f scripts/make/backend.make update
 
 restore::
-	make -f scripts/make/backend/Makefile restore
+	make -f scripts/make/backend.make restore
 
 test::
-	make -f scripts/make/backend/Makefile test verbosity=$(verbosity)
+	make -f scripts/make/backend.make test verbosity=$(verbosity)
 
 test-coverage::
-	make -f scripts/make/backend/Makefile test-coverage verbosity=$(verbosity)
+	make -f scripts/make/backend.make test-coverage verbosity=$(verbosity)
 	
 create-coverage-report::
-	make -f scripts/make/backend/Makefile create-coverage-report
+	make -f scripts/make/backend.make create-coverage-report
 
 coverage:
 	make test-coverage verbosity=quiet
@@ -87,25 +87,28 @@ coverage:
 
 # frontend
 health-check-frontend::
-	make -f scripts/make/frontend/Makefile health-check-frontend
+	make -f scripts/make/frontend.make install
+	make -f scripts/make/frontend.make build-frontend
+	make -f scripts/make/frontend.make lint
+	make -f scripts/make/frontend.make test-frontend
 
 rebuild-frontend::
-	make -f scripts/make/frontend/Makefile rebuild-frontend
+	make -f scripts/make/frontend.make rebuild-frontend
 
 install::
-	make -f scripts/make/frontend/Makefile install
+	make -f scripts/make/frontend.make install
 
 build-frontend::
-	make -f scripts/make/frontend/Makefile build-frontend
+	make -f scripts/make/frontend.make build-frontend
 
 lint::
-	make -f scripts/make/frontend/Makefile lint
+	make -f scripts/make/frontend.make lint
 
 test-frontend::
-	make -f scripts/make/frontend/Makefile test-frontend
+	make -f scripts/make/frontend.make test-frontend
 
 start-parser::
-	make -f scripts/make/local/Makefile start-parser
+	make -f scripts/make/local.make start-parser
 
 start-webapi::
-	make -f scripts/make/local/Makefile start-webapi
+	make -f scripts/make/local.make start-webapi

@@ -2,7 +2,8 @@ SolutionPath="server/Espresso/Espresso.sln"
 PersistenceProjectPath="source/Espresso.Persistence/Espresso.Persistence.csproj"
 DefaultVerbosity="minimal" # verbosity levels: quiet, minimal, normal, detailed, diagnostic
 LocalEnvironmentName="local"
-Configuration="Release" # Configurations: Release, Debug
+DefaultConfiguration="Release" # Configurations: Release, Debug
+DebugConfiguration="Debug" 
 
 UnitTestResultsPath="server/UnitTests/TestReports"
 UnitTestRelativeResultsPath="TestReports"
@@ -15,18 +16,18 @@ list::
 	{if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
 
 clean::
-	dotnet clean --configuration Release --verbosity minimal $(SolutionPath) && \
-	find . -iname "bin" -o -iname "obj" | xargs rm -rf
+	dotnet clean --configuration $(DefaultConfiguration) --verbosity $(DefaultVerbosity) $(SolutionPath)
+	dotnet clean --configuration $(DebugConfiguration) --verbosity $(DefaultVerbosity) $(SolutionPath)
 
 build::
 ifeq ($(strip $(verbosity)),)
 	dotnet build \
-	--configuration $(Configuration) \
+	--configuration $(DefaultConfiguration) \
 	--verbosity $(DefaultVerbosity) \
 	$(SolutionPath)
 else
 	dotnet build \
-	--configuration $(Configuration) \
+	--configuration $(DefaultConfiguration) \
 	--verbosity $(verbosity) \
 	$(SolutionPath)
 endif
