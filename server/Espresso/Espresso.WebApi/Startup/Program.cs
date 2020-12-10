@@ -29,8 +29,8 @@ namespace Espresso.WebApi.Startup
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(configureOptions =>
                 {
-                    var environmentName = Environment.GetEnvironmentVariable(EnviromentVariableNamesConstants.AspNetCoreEnvironment) ?? "";
-                    var databaseName = Environment.GetEnvironmentVariable(EnviromentVariableNamesConstants.DatabaseName) ?? "";
+                    var environmentName = Environment.GetEnvironmentVariable(EnvironmentVariableNamesConstants.AspNetCoreEnvironment) ?? "";
+                    var databaseName = Environment.GetEnvironmentVariable(EnvironmentVariableNamesConstants.DatabaseName) ?? "";
 
                     var configuration = configureOptions
                         .AddJsonFile(path: $"AppSettings/GeneralSettings/app-settings.json", optional: false)

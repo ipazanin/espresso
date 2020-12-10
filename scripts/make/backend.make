@@ -1,5 +1,5 @@
 SolutionPath="server/Espresso/Espresso.sln"
-PersistenceProjectPath="source/Espresso.Persistence/Espresso.Persistence.csproj"
+PersistenceProjectPath="server/Espresso/Espresso.Persistence/Espresso.Persistence.csproj"
 DefaultVerbosity="minimal" # verbosity levels: quiet, minimal, normal, detailed, diagnostic
 LocalEnvironmentName="local"
 DefaultConfiguration="Release" # Configurations: Release, Debug

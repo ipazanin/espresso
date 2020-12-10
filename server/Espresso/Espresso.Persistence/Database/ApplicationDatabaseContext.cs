@@ -1,5 +1,5 @@
 ﻿using Espresso.Domain.Entities;
-using Espresso.Persistence.Extensions;
+using Espresso.Infrastructure.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Espresso.Persistence.Database
@@ -30,7 +30,9 @@ namespace Espresso.Persistence.Database
         #region Methods
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyAllConfigurations();
+            modelBuilder.ApplyAllConfigurations(
+                configurationsAssembly: typeof(ApplicationDatabaseContext).Assembly
+            );
             base.OnModelCreating(modelBuilder);
         }
 
