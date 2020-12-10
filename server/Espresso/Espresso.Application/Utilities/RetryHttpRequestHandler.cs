@@ -13,14 +13,7 @@ namespace Espresso.Application.Utilities
             int maxRetries
         ) : base()
         {
-            if (maxRetries < 1)
-            {
-                throw new ArgumentException(
-                    message: $"{nameof(maxRetries)} must be greater than 0!",
-                    paramName: nameof(maxRetries)
-                );
-            }
-            _maxRetries = maxRetries;
+            _maxRetries = maxRetries > 0 ? maxRetries : 1;
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(
