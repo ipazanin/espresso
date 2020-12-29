@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  infer-csharp:
+    container_name: infer-csharp
+    build:
+      context: ../..
+      dockerfile: scripts/analysis/Dockerfile

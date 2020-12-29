@@ -1,6 +1,6 @@
 ﻿{
   "AppConfiguration": {
-    "ServerUrl": "http://webapi:80",
+    "ServerUrl": "http://espresso-webapi:80",
     "Environment": 2,
     "MaxAgeOfArticlesInDays": 3
   },

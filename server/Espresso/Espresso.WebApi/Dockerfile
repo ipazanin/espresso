@@ -5,6 +5,7 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0 AS dotnet-builder
 WORKDIR /server/Espresso
 
 # Restore .NET App
+COPY nuget.config nuget.config
 COPY ["server/Espresso/Espresso.Application/Espresso.Application.csproj", "Espresso.Application/"]
 COPY ["server/Espresso/Espresso.Common/Espresso.Common.csproj", "Espresso.Common/"]
 COPY ["server/Espresso/Espresso.Domain/Espresso.Domain.csproj", "Espresso.Domain/"]
