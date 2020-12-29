@@ -1,6 +1,7 @@
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS dotnet-runtime
+FROM mcr.microsoft.com/infersharp:latest AS infer-sharp
 
-# .NET App
+RUN ls
+
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS dotnet-builder
 WORKDIR /server/Espresso
 
@@ -14,20 +15,26 @@ COPY ["server/Espresso/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj", "E
 COPY ["server/Espresso/Espresso.Persistence/Espresso.Persistence.csproj", "Espresso.Persistence/"]
 RUN dotnet restore "Espresso.ParserDeleter/Espresso.ParserDeleter.csproj"
 
-# Build .NET App
 COPY server/Espresso .
+
 WORKDIR /server/Espresso/Espresso.ParserDeleter
 RUN dotnet build "Espresso.ParserDeleter.csproj" -c Release -o /app/server/build
 
-# Publish .NET App
 FROM dotnet-builder AS dotnet-publisher
 RUN dotnet publish "Espresso.ParserDeleter.csproj" -c Release -o /app/server/publish
 
-FROM dotnet-runtime AS final
+FROM infer-sharp
 
-# Sets working directory for dotnet entry point command
-WORKDIR /app/server
+RUN mkdir Espresso
 
-# Copy .NET Application From dotnet-publisher Image Into final Image
-COPY --from=dotnet-publisher /app/server/publish /app/server
-ENTRYPOINT ["dotnet", "Espresso.ParserDeleter.dll"]
+WORKDIR /Espresso
+
+COPY --from=dotnet-builder /app/server/build .
+COPY --from=dotnet-publisher /app/server/publish .
+RUN rm -rf AppSettings
+
+FROM infer-sharp
+
+RUN ls Examples
+
+ENTRYPOINT ["sh", "run_infersharp.sh", "Espresso", "output"]

@@ -17,7 +17,7 @@ namespace Espresso.ParserDeleter.Configuration
         /// 
         /// </summary>
         /// <value></value>
-        public JsonSerializerOptions JsonSerializerOptions => new JsonSerializerOptions
+        public JsonSerializerOptions JsonSerializerOptions => new()
         {
             AllowTrailingCommas = _configuration.GetValue<bool>("AllowTrailingCommas"),
             MaxDepth = _configuration.GetValue<int>("MaxDepth"),

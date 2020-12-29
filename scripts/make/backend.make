@@ -32,6 +32,19 @@ else
 	$(SolutionPath)
 endif
 
+publish::
+ifeq ($(strip $(verbosity)),)
+	dotnet publish \
+	--configuration $(DefaultConfiguration) \
+	--verbosity $(DefaultVerbosity) \
+	$(SolutionPath)
+else
+	dotnet publish \
+	--configuration $(DefaultConfiguration) \
+	--verbosity $(verbosity) \
+	$(SolutionPath)
+endif
+
 database-update::
 	ASPNETCORE_ENVIRONMENT=$(LocalEnvironmentName) \
 	dotnet ef database update -p $(PersistenceProjectPath) -v
@@ -83,3 +96,6 @@ create-coverage-report::
 	"-reports:$(UnitTestsDirectory)/*/*/*.xml" \
 	"-targetdir:$(UnitTestResultsPath)" \
 	-reporttypes:Html
+
+infer-csharp::
+	docker-compose -f ./scripts/analysis/infer-csharp.yml up --build

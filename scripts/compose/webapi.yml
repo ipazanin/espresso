@@ -1,7 +1,8 @@
 version: '3.8'
 services:
-  webapi:
-    container_name: webapi
+  espresso-webapi:
+    container_name: espresso-webapi
+    image: docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi
     build:
       context: ../..
       dockerfile: server/Espresso/Espresso.WebApi/Dockerfile
@@ -9,3 +10,8 @@ services:
       - '8000:80'
       - '8001:443'
     restart: always
+    networks:
+      - espresso
+
+networks:
+  espresso:

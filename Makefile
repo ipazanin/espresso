@@ -56,6 +56,9 @@ clean::
 
 build::
 	make -f scripts/make/backend.make build
+
+publish::
+	make -f scripts/make/backend.make publish	
 	
 database-update::
 	make -f scripts/make/backend.make database-update
@@ -85,6 +88,17 @@ coverage:
 	make test-coverage verbosity=quiet
 	make create-coverage-report verbosity=quiet
 
+start-parser::
+	make -f scripts/make/local.make start-parser
+
+start-webapi::
+	make -f scripts/make/local.make start-webapi
+
+infer-csharp::
+	# make -f scripts/make/backend.make build
+	# make -f scripts/make/backend.make publish
+	make -f scripts/make/backend.make infer-csharp
+
 # frontend
 health-check-frontend::
 	make -f scripts/make/frontend.make install
@@ -106,9 +120,3 @@ lint::
 
 test-frontend::
 	make -f scripts/make/frontend.make test-frontend
-
-start-parser::
-	make -f scripts/make/local.make start-parser
-
-start-webapi::
-	make -f scripts/make/local.make start-webapi

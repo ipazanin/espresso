@@ -5,7 +5,15 @@ namespace Espresso.Common.Constants
     public static class DateTimeConstants
     {
         #region Points in Time
-        public static DateTime UnixEpochStartTime => new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        public static DateTime UnixEpochStartTime => new(
+            year: 1970,
+            month: 1,
+            day: 1,
+            hour: 0,
+            minute: 0,
+            second: 0,
+            kind: DateTimeKind.Utc
+        );
         #endregion
 
         #region Formats
