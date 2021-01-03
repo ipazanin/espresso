@@ -1,5 +1,5 @@
 ﻿using Espresso.Domain.Entities;
-using Espresso.Infrastructure.Persistence.Extensions;
+using Espresso.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Espresso.Persistence.Database

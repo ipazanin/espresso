@@ -108,7 +108,7 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         Zagrebancija = 52,
         [Display(Name = "Sjever.hr")]
         SjeverHr = 53,
-        [Display(Name = "Sjever.hr")]
+        [Display(Name = "Prigorski.hr")]
         PrigorskiHr = 54,
         [Display(Name = "ePodravina.hr")]
         PodravinaHr = 55,

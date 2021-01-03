@@ -1,0 +1,107 @@
+{
+  // https://code.visualstudio.com/docs/editor/userdefinedsnippets
+  // https://stackoverflow.com/questions/33485643/vscode-snippet-for-creating-new-c-sharp-class-with-namespace-declaration
+  "Region": {
+    "scope": "csharp",
+    "prefix": "csRegion",
+    "body": ["#region $0", "", "#endregion $0"],
+    "description": "New Region"
+  },
+  "Class": {
+    "scope": "csharp",
+    "prefix": "csClass",
+    "body": [
+      "namespace ${TM_DIRECTORY/^\\/private\\/var\\/projects\\/personal\\/espresso\\/server\\/Espresso(\\/([^\\/]+))(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?/$2${3:+.}$4${5:+.}$6${7:+.}$8${9:+.}$10${11:+.}$12${13:+.}$14${15:+.}$16${17:+.}$18${19:+.}$20/gi}",
+      "{",
+      "    /// <summary>",
+      "    /// ${TM_FILENAME_BASE}",
+      "    /// </summary>",
+      "    public class ${TM_FILENAME_BASE}",
+      "    {",
+      "        #region Constants",
+      "        #endregion Constants",
+      "",
+      "        #region Fields",
+      "        #endregion Fields",
+      "",
+      "        #region Properties",
+      "        $0",
+      "        #endregion Properties",
+      "",
+      "        #region Constructors",
+      "        /// <summary>",
+      "        /// ${TM_FILENAME_BASE} Constructor",
+      "        /// </summary>",
+      "        public ${TM_FILENAME_BASE}()",
+      "        {",
+      "        }",
+      "        #endregion Constructors",
+      "",
+      "        #region Methods",
+      "        #endregion Methods",
+      "    }",
+      "}"
+    ],
+    "description": "Create new Public Class"
+  },
+  "Interface": {
+    "scope": "csharp",
+    "prefix": "csInterface",
+    "body": [
+      "namespace ${TM_DIRECTORY/^\\/private\\/var\\/projects\\/personal\\/espresso\\/server\\/Espresso(\\/([^\\/]+))(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?/$2${3:+.}$4${5:+.}$6${7:+.}$8${9:+.}$10${11:+.}$12${13:+.}$14${15:+.}$16${17:+.}$18${19:+.}$20/gi}",
+      "{",
+      "    /// <summary>",
+      "    /// ${TM_FILENAME_BASE}",
+      "    /// </summary>",
+      "    public interface ${TM_FILENAME_BASE}",
+      "    {",
+      "    }",
+      "}"
+    ],
+    "description": "Create new Public Interface"
+  },
+  "Enum": {
+    "scope": "csharp",
+    "prefix": "csEnum",
+    "body": [
+      "namespace ${TM_DIRECTORY/^\\/private\\/var\\/projects\\/personal\\/espresso\\/server\\/Espresso(\\/([^\\/]+))(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?/$2${3:+.}$4${5:+.}$6${7:+.}$8${9:+.}$10${11:+.}$12${13:+.}$14${15:+.}$16${17:+.}$18${19:+.}$20/gi}",
+      "{",
+      "    /// <summary>",
+      "    /// ${TM_FILENAME_BASE}",
+      "    /// </summary>",
+      "    public enum ${TM_FILENAME_BASE}",
+      "    {",
+      "    }",
+      "}"
+    ],
+    "description": "Create new Public Enum"
+  },
+  "Record": {
+    "scope": "csharp",
+    "prefix": "csRecord",
+    "body": [
+      "namespace ${TM_DIRECTORY/^\\/private\\/var\\/projects\\/personal\\/espresso\\/server\\/Espresso(\\/([^\\/]+))(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?/$2${3:+.}$4${5:+.}$6${7:+.}$8${9:+.}$10${11:+.}$12${13:+.}$14${15:+.}$16${17:+.}$18${19:+.}$20/gi}",
+      "{",
+      "    /// <summary>",
+      "    /// ${TM_FILENAME_BASE}",
+      "    /// </summary>",
+      "    public record ${TM_FILENAME_BASE}",
+      "    {",
+      "        #region Properties",
+      "        $0",
+      "        #endregion Properties",
+      "",
+      "        #region Constructors",
+      "        /// <summary>",
+      "        /// ${TM_FILENAME_BASE} Constructor",
+      "        /// </summary>",
+      "        public ${TM_FILENAME_BASE}()",
+      "        {",
+      "        }",
+      "        #endregion Constructors",
+      "    }",
+      "}"
+    ],
+    "description": "Create new Public Record"
+  }
+}
