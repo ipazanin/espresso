@@ -1,5 +1,5 @@
-WebApiProjectPath="./server/Espresso/Espresso.WebApi/Espresso.WebApi.csproj"
-ParserProjectPath="./server/Espresso/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj"
+WebApiProjectPath="source/server/Espresso/Espresso.WebApi/Espresso.WebApi.csproj"
+ParserProjectPath="source/server/Espresso/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj"
 WebApiUrls="http://localhost:8000"
 ParserUrls="http://localhost:9000"
 ReleaseConfiguration="Release"
@@ -35,7 +35,7 @@ else ifeq ($(arg), watch)
     RABBITMQCONFIGURATION__HOSTNAME="localhost" \
 	dotnet watch --project $(ParserProjectPath) run --urls $(ParserUrls)  --configuration $(DebugConfiguration)
 else
-	echo "Invalid Argument. Accepted arguments: {empty}, watch}"
+	echo "Invalid Argument. Accepted arguments: {empty}, watch"
 endif
 
 start-webapi::
@@ -71,5 +71,5 @@ else ifeq ($(arg), watch)
     RABBITMQCONFIGURATION__HOSTNAME="localhost" \
 	dotnet watch --project $(WebApiProjectPath) run --urls $(WebApiUrls) --configuration $(DebugConfiguration)
 else
-	echo "Invalid Argument. Accepted arguments: {empty}, watch}"
+	echo "Invalid Argument. Accepted arguments: {empty}, watch"
 endif

@@ -1,4 +1,4 @@
-ClientAppDirectory="client"
+ClientAppDirectory="source/client"
 TestReactAppEnvironment="test"
 
 rebuild-frontend::

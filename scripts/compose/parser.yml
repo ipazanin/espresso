@@ -4,7 +4,7 @@ services:
     container_name: espresso-parser
     image: docker.pkg.github.com/espresso-news/espresso-backend/espresso-parserdeleter
     build:
-      context: ../..
+      context: ../../source
       dockerfile: server/Espresso/Espresso.ParserDeleter/Dockerfile
     restart: always
     networks:
