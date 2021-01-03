@@ -10,6 +10,8 @@ UnitTestRelativeResultsPath="TestReports"
 UnitTestsDirectory="server/UnitTests"
 UnitTestsLogFileName="TestResults.xml"
 
+LocalConnectionString="Server=localhost,1433;Database=EspressoDb;Application Name=Espresso;User=sa;Password=Opatija1;"
+
 list::
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | \
 	awk -v RS= -F: '/^# File/,/^# Finished Make data base/ \
@@ -47,15 +49,25 @@ endif
 
 database-update::
 	ASPNETCORE_ENVIRONMENT=$(LocalEnvironmentName) \
-	dotnet ef database update -p $(PersistenceProjectPath) -v
+    DATABASECONFIGURATION__DEFAULTCONNECTIONSTRING=$(LocalConnectionString) \
+	dotnet ef database update \
+    -p $(PersistenceProjectPath) \
+    -v
 
 migration-add::
 	ASPNETCORE_ENVIRONMENT=$(LocalEnvironmentName) \
-	dotnet ef migrations add -p $(PersistenceProjectPath) -v $(name)
+    DATABASECONFIGURATION__DEFAULTCONNECTIONSTRING=$(LocalConnectionString) \
+	dotnet ef migrations add \
+    -p $(PersistenceProjectPath) \
+    -v \
+    $(name)
 
 migration-remove::
 	ASPNETCORE_ENVIRONMENT=$(LocalEnvironmentName) \
-	dotnet ef migrations remove -p $(PersistenceProjectPath) -v
+    DATABASECONFIGURATION__DEFAULTCONNECTIONSTRING=$(LocalConnectionString) \
+	dotnet ef migrations remove \
+    -p $(PersistenceProjectPath) \
+	-v
 
 update::
 	./scripts/update.sh

@@ -1,0 +1,57 @@
+{
+  // https://code.visualstudio.com/docs/editor/userdefinedsnippets
+  // https://stackoverflow.com/questions/33485643/vscode-snippet-for-creating-new-c-sharp-class-with-namespace-declaration
+  "UnitTestMethod": {
+    "scope": "csharp",
+    "prefix": "csUnitTestMethod",
+    "body": [
+      "#region MethodName$0",
+      "[Fact]",
+      "public void MethodName$0_Returns_When()",
+      "{",
+      "    #region Arrange",
+      "    #endregion Arrange",
+      "",
+      "    #region Act",
+      "    #endregion Act",
+      "",
+      "    #region Assert",
+      "    #endregion Assert",
+      "}",
+      "#endregion MethodName$0"
+    ],
+    "description": "Log output to Console.WriteLine"
+  },
+  "UnitTest": {
+    "scope": "csharp",
+    "prefix": "csUnitTest",
+    "body": [
+      "using Xunit;",
+      "",
+      "namespace ${TM_DIRECTORY/^\\/private\\/var\\/projects\\/personal\\/espresso\\/server\\/UnitTests(\\/([^\\/]+))(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?(\\/([^\\/]+))?/$2${3:+.}$4${5:+.}$6${7:+.}$8${9:+.}$10${11:+.}$12${13:+.}$14${15:+.}$16${17:+.}$18${19:+.}$20/gi}",
+      "{",
+      "    /// <summary>",
+      "    /// ${TM_FILENAME_BASE}",
+      "    /// </summary>",
+      "    public class ${TM_FILENAME_BASE}",
+      "    {",
+      "        #region MethodName$0",
+      "        [Fact]",
+      "        public void MethodName$0_Returns_When()",
+      "        {",
+      "            #region Arrange",
+      "            #endregion Arrange",
+      "",
+      "            #region Act",
+      "            #endregion Act",
+      "",
+      "            #region Assert",
+      "            #endregion Assert",
+      "        }",
+      "        #endregion MethodName$0",
+      "    }",
+      "}"
+    ],
+    "description": "Create new XUnit Test"
+  }
+}

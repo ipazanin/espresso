@@ -1,0 +1,24 @@
+{
+  // https://code.visualstudio.com/docs/editor/userdefinedsnippets
+  // https://stackoverflow.com/questions/33485643/vscode-snippet-for-creating-new-c-sharp-class-with-namespace-declaration
+  "Console": {
+    "scope": "csharp",
+    "prefix": "csConsole",
+    "body": [
+      "System.Console.WriteLine(\"-------------------------------------------------------------\");",
+      "System.Console.WriteLine(${1:variable});",
+      "System.Console.WriteLine(\"-------------------------------------------------------------\");"
+    ],
+    "description": "Log output to Console.WriteLine"
+  },
+  "ConsoleJson": {
+    "scope": "csharp",
+    "prefix": "csConsoleJson",
+    "body": [
+      "System.Console.WriteLine(\"-------------------------------------------------------------\");",
+      "System.Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(${1:variable}));",
+      "System.Console.WriteLine(\"-------------------------------------------------------------\");"
+    ],
+    "description": "Log output to Console.WriteLine"
+  },
+}
