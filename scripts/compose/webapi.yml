@@ -4,7 +4,7 @@ services:
     container_name: espresso-webapi
     image: docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi
     build:
-      context: ../..
+      context: ../../source
       dockerfile: server/Espresso/Espresso.WebApi/Dockerfile
     ports:
       - '8000:80'

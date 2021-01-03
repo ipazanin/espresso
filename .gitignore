@@ -1,9 +1,6 @@
 # Local Makefile
 scripts/make/local
 
-# Nuget Configuration
-nuget.config
-
 # DatabaseSettings
 database-settings.local-production.json
 
