@@ -109,6 +109,10 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
                 cancellationToken: cancellationToken
             );
 
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
             return new ParseRssFeedsCommandResponse
             {
                 CreatedArticles = createArticles.Count(),
