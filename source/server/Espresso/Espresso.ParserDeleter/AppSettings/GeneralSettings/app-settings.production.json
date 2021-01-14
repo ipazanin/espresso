@@ -4,7 +4,7 @@
     "Environment": 3
   },
   "CronJobsConfiguration": {
-    "DeleteArticlesCronExpression": "0 * * * *",
+    "DeleteArticlesCronExpression": "*/10 * * * *",
     "ParseArticlesCronExpression": "*/1 * * * *"
   }
 }
