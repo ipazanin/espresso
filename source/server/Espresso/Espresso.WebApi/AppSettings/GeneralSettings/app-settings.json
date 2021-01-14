@@ -12,7 +12,7 @@
     "WebApiReportCronExpression": "0 8 * * *"
   },
   "DateTimeConfiguration": {
-    "MaxAgeOfArticlesInDays": 5,
+    "MaxAgeOfArticlesInDays": 3,
     "MaxAgeOfFeaturedArticlesInHours": 24,
     "MaxAgeOfNewNewsPortalInDays": 60,
     "MaxAgeOfTrendingArticlesInHours": 24

@@ -9,7 +9,6 @@ services:
     ports:
       - '8000:80'
       - '8001:443'
-    restart: always
     networks:
       - espresso
 
