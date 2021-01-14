@@ -6,7 +6,6 @@ services:
     build:
       context: ../../source
       dockerfile: server/Espresso/Espresso.ParserDeleter/Dockerfile
-    restart: always
     networks:
       - espresso
 

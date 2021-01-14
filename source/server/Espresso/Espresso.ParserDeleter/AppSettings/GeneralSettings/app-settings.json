@@ -1,7 +1,7 @@
 ﻿{
   "AppConfiguration": {
     "MajorVersion": 2,
-    "MaxAgeOfArticlesInDays": 5,
+    "MaxAgeOfArticlesInDays": 3,
     "MinorVersion": 1,
     "Version": "2.1.1"
   },
