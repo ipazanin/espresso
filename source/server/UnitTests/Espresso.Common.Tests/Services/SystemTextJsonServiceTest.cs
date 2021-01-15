@@ -227,7 +227,7 @@ namespace Espresso.Common.Tests.Services
             #endregion Arrange
 
             #region Act/Assert
-            _ = await Assert.ThrowsAsync<JsonException>(async () =>
+            await Assert.ThrowsAsync<JsonException>(async () =>
             {
                 var actualDeserializedObject = await systemTextJsonService.Deserialize<ExampleClassWithPublicSetters>(
                     json: serializedObject,
@@ -303,7 +303,7 @@ namespace Espresso.Common.Tests.Services
             #endregion Arrange
 
             #region Act/Assert
-            _ = await Assert.ThrowsAsync<JsonException>(async () =>
+            await Assert.ThrowsAsync<JsonException>(async () =>
             {
                 var actualDeserializedObject = await systemTextJsonService.Deserialize<ExampleClassWithPublicSetters>(
                     utf8Bytes: serializedByteArray,
@@ -379,7 +379,7 @@ namespace Espresso.Common.Tests.Services
             #endregion Arrange
 
             #region Act/Assert
-            _ = Assert.Throws<JsonException>(() =>
+            Assert.Throws<JsonException>(() =>
             {
                 var actualDeserializedObject = systemTextJsonService.Deserialize<ExampleClassWithPublicSetters>(
                     json: serializedObject

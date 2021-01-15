@@ -15,7 +15,7 @@ namespace Espresso.Domain.Services
             IEnumerable<ArticleCategory> articleCategoriesToDelete
         ) SortArticles(
             IEnumerable<Article> articles,
-            IEnumerable<Article> savedArticles
+            IDictionary<Guid, Article> savedArticles
         )
         {
             var createArticles = new List<Article>();
@@ -23,19 +23,15 @@ namespace Espresso.Domain.Services
             var articleCategoriesToCreate = new List<ArticleCategory>();
             var articleCategoriesToDelete = new List<ArticleCategory>();
 
-            var savedArticlesIdDictionary = savedArticles.ToDictionary(
-                keySelector: article => article.Id
-            );
-
             var savedArticlesArticleIdDictionary = new Dictionary<(int newsPortalId, string articleUrl), Guid>();
             var savedArticlesTitleDictionary = new Dictionary<(int newsPortalId, string title), Guid>();
             var savedArticlesSummaryDictionary = new Dictionary<(int newsPortalId, string summary), Guid>();
 
-            foreach (var article in savedArticles)
+            foreach (var (id, article) in savedArticles)
             {
-                savedArticlesArticleIdDictionary.TryAdd((article.NewsPortalId, article.Url), article.Id);
-                savedArticlesTitleDictionary.TryAdd((article.NewsPortalId, article.Title), article.Id);
-                savedArticlesSummaryDictionary.TryAdd((article.NewsPortalId, article.Summary), article.Id);
+                savedArticlesArticleIdDictionary.TryAdd((article.NewsPortalId, article.Url), id);
+                savedArticlesTitleDictionary.TryAdd((article.NewsPortalId, article.Title), id);
+                savedArticlesSummaryDictionary.TryAdd((article.NewsPortalId, article.Summary), id);
             }
 
             foreach (var article in articles)
@@ -46,7 +42,7 @@ namespace Espresso.Domain.Services
                     savedArticlesSummaryDictionary.TryGetValue((article.NewsPortalId, article.Summary), out savedArticleId)
                 )
                 {
-                    var savedArticle = savedArticlesIdDictionary[savedArticleId];
+                    var savedArticle = savedArticles[savedArticleId];
                     var (shouldUpdate, createArticleCategories, deleteArticleCategories) = savedArticle.Update(article);
                     if (shouldUpdate)
                     {

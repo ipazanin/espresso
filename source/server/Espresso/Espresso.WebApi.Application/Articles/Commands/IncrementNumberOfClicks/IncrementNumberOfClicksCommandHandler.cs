@@ -61,7 +61,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticle
 
                 var articlesWithUpdatedTrendingScore = _trendingScoreService.CalculateTrendingScore(articles: memoryCacheArticles.Values);
 
-                _ = _memoryCache.Set(
+                _memoryCache.Set(
                     key: MemoryCacheConstants.ArticleKey,
                     value: articlesWithUpdatedTrendingScore.ToList()
                 );

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Espresso.Domain.Entities;
 
 namespace Espresso.Domain.IServices
@@ -12,7 +13,7 @@ namespace Espresso.Domain.IServices
             IEnumerable<ArticleCategory> articleCategoriesToDelete
         ) SortArticles(
             IEnumerable<Article> articles,
-            IEnumerable<Article> savedArticles
+            IDictionary<Guid, Article> savedArticles
         );
 
         public IEnumerable<Article> RemoveDuplicateArticles(IEnumerable<Article> articles);

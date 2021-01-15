@@ -6,7 +6,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.HideArticle
     {
         public HideArticleCommandValidator()
         {
-            _ = RuleFor(request => request.ArticleId).NotEmpty();
+            RuleFor(request => request.ArticleId).NotEmpty();
         }
     }
 }

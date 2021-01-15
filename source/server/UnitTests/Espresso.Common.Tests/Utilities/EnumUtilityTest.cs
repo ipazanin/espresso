@@ -14,12 +14,12 @@ namespace Espresso.Common.Tests.Utilities
         public void TryParseEnum_WithIntegerValueNotDefinedBySelectedEnum_ReturnsFalse()
         {
             #region Arrange
-            var notDefinedEnumIntegereValue = -1;
+            var notDefinedEnumIntegerValue = -1;
             #endregion
 
             #region  Act
             var isConversionSuccessfull = EnumUtility.TryParseEnum<AppEnvironment>(
-                enumValue: notDefinedEnumIntegereValue,
+                enumValue: notDefinedEnumIntegerValue,
                 value: out _
             );
             #endregion

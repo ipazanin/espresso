@@ -68,7 +68,7 @@ namespace Espresso.WebApi.Application.Initialization
                 .AsNoTracking()
                 .ToListAsync();
 
-            _ = _memoryCache.Set(
+            _memoryCache.Set(
                 key: MemoryCacheConstants.RegionKey,
                 value: regions.ToList()
             );
@@ -85,7 +85,7 @@ namespace Espresso.WebApi.Application.Initialization
             var newsPortalsDictionary = newsPortals
                 .ToDictionary(newsPortal => newsPortal.Id);
 
-            _ = _memoryCache.Set(
+            _memoryCache.Set(
                 key: MemoryCacheConstants.NewsPortalKey,
                 value: newsPortals.ToList()
             );
@@ -100,7 +100,7 @@ namespace Espresso.WebApi.Application.Initialization
 
             var categoriesDictionary = categories.ToDictionary(category => category.Id);
 
-            _ = _memoryCache.Set(
+            _memoryCache.Set(
                 key: MemoryCacheConstants.CategoryKey,
                 value: categories
             );

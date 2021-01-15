@@ -7,11 +7,11 @@ namespace Espresso.WebApi.Application.Notifications.Queries.GetPushNotifications
     {
         public GetPushNotificationsQueryValidator()
         {
-            _ = RuleFor(request => request.Take)
+            RuleFor(request => request.Take)
                 .GreaterThan(0)
                 .LessThan(100);
 
-            _ = RuleFor(request => request.Skip)
+            RuleFor(request => request.Skip)
                 .GreaterThanOrEqualTo(0);
         }
     }

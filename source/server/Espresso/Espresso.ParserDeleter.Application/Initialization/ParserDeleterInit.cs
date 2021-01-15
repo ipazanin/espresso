@@ -49,8 +49,8 @@ namespace Espresso.ParserDeleter.Application.Initialization
         #region Methods
         public async Task InitParserDeleter()
         {
-            var isInitialised = _memoryCache.Get<IEnumerable<NewsPortal>?>(key: MemoryCacheConstants.NewsPortalKey) != null;
-            if (isInitialised)
+            var isInitialized = _memoryCache.Get<IEnumerable<NewsPortal>?>(key: MemoryCacheConstants.NewsPortalKey) != null;
+            if (isInitialized)
             {
                 return;
             }
@@ -67,7 +67,7 @@ namespace Espresso.ParserDeleter.Application.Initialization
 
             var newsPortalsDictionary = newsPortals.ToDictionary(newsPortal => newsPortal.Id);
 
-            _ = _memoryCache.Set(
+            _memoryCache.Set(
                 key: MemoryCacheConstants.NewsPortalKey,
                 value: newsPortals
             );
@@ -81,7 +81,7 @@ namespace Espresso.ParserDeleter.Application.Initialization
 
             var categoriesDictionary = categories.ToDictionary(category => category.Id);
 
-            _ = _memoryCache.Set(
+            _memoryCache.Set(
                 key: MemoryCacheConstants.CategoryKey,
                 value: categories
             );
@@ -117,14 +117,8 @@ namespace Espresso.ParserDeleter.Application.Initialization
 
             _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
-                value: articles
+                value: articlesDictionary
             );
-
-            var lastSimilarityGroupingTime = articles.Any() ?
-                articles.Max(article => article.CreateDateTime) :
-                new DateTime();
-
-            _memoryCache.Set(MemoryCacheConstants.LastSimilarityGroupingTime, lastSimilarityGroupingTime);
             #endregion
 
             #region RssFeeds
@@ -138,7 +132,7 @@ namespace Espresso.ParserDeleter.Application.Initialization
                 .AsNoTracking()
                 .ToListAsync();
 
-            _ = _memoryCache.Set(
+            _memoryCache.Set(
                 key: MemoryCacheConstants.RssFeedKey,
                 value: rssFeeds.ToList()
             );

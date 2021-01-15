@@ -6,7 +6,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticle
     {
         public IncrementNumberOfClicksCommandValidator()
         {
-            _ = RuleFor(incrementArticleTrendingScoreCommand => incrementArticleTrendingScoreCommand.Id).NotEmpty();
+            RuleFor(incrementArticleTrendingScoreCommand => incrementArticleTrendingScoreCommand.Id).NotEmpty();
         }
     }
 }

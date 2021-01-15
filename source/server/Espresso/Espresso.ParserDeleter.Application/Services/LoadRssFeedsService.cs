@@ -135,7 +135,7 @@ namespace Espresso.ParserDeleter.Application.Services
 
             using var response = await _httpClient.SendAsync(request, cancellationToken);
 
-            _ = response.EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode();
 
             using var responseStream = await response.Content.ReadAsStreamAsync(cancellationToken);
             using var decompressedStream = new GZipStream(responseStream, CompressionMode.Decompress);
@@ -151,7 +151,7 @@ namespace Espresso.ParserDeleter.Application.Services
 
             using var response = await _httpClient.SendAsync(request, cancellationToken);
 
-            _ = response.EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode();
 
             var feedContent = await response.Content.ReadAsStringAsync(cancellationToken);
 

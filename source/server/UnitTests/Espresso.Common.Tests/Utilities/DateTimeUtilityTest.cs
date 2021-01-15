@@ -73,7 +73,7 @@ namespace Espresso.Common.Tests.Utilities
             #endregion
 
             #region Assert
-            _ = Assert.Throws<ArgumentOutOfRangeException>(TestAction);
+            Assert.Throws<ArgumentOutOfRangeException>(TestAction);
             #endregion
         }
 
@@ -92,7 +92,7 @@ namespace Espresso.Common.Tests.Utilities
             #endregion
 
             #region Assert
-            _ = Assert.Throws<ArgumentOutOfRangeException>(TestAction);
+            Assert.Throws<ArgumentOutOfRangeException>(TestAction);
             #endregion
         }
 
