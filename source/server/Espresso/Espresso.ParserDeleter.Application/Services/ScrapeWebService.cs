@@ -107,9 +107,10 @@ namespace Espresso.ParserDeleter.Application.Services
             {
                 return null;
             }
-            var data = await _jsonService.Deserialize<JsonElement>(jsonText, cancellationToken);
+
             try
             {
+                var data = await _jsonService.Deserialize<JsonElement>(jsonText, cancellationToken);
                 JsonElement property = default;
                 var count = 0;
                 foreach (var propertyName in propertyNames)
@@ -128,9 +129,19 @@ namespace Espresso.ParserDeleter.Application.Services
 
                 return imageUrl;
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                throw;
+                _loggerService.Log(
+                    eventName: "GetImageUrlFromJsonObjectFromScriptTag Error while parsing JSON",
+                    exception: exception,
+                    logLevel: LogLevel.Warning,
+                    namedArguments: new (string, object)[]
+                    {
+                        (nameof(jsonText), jsonText),
+                        (nameof(propertyNames), string.Join(", ", propertyNames))
+                    }
+                );
+                return null;
             }
         }
 
@@ -149,7 +160,7 @@ namespace Espresso.ParserDeleter.Application.Services
                     default:
                         {
                             using var response = await _httpClient.SendAsync(request: request, cancellationToken: cancellationToken);
-                            _ = response.EnsureSuccessStatusCode();
+                            response.EnsureSuccessStatusCode();
                             var pageContent = await response.Content.ReadAsStringAsync(cancellationToken);
                             return pageContent;
                         }
@@ -157,7 +168,7 @@ namespace Espresso.ParserDeleter.Application.Services
                         {
                             request.AddBrowserHeadersToHttpRequestMessage();
                             using var response = await _httpClient.SendAsync(request: request, cancellationToken: cancellationToken);
-                            _ = response.EnsureSuccessStatusCode();
+                            response.EnsureSuccessStatusCode();
                             using var responseStream = await response.Content.ReadAsStreamAsync(cancellationToken);
                             using var decompressedStream = new GZipStream(responseStream, CompressionMode.Decompress);
                             using var streamReader = new StreamReader(decompressedStream);

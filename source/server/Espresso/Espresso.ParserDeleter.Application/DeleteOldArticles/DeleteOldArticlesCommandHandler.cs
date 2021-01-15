@@ -39,18 +39,18 @@ namespace Espresso.ParserDeleter.Application.DeleteOldArticles
         {
             var maxArticleAge = DateTime.UtcNow - request.MaxAgeOfOldArticles;
 
-            var articles = _memoryCache.Get<IEnumerable<Article>>(key: MemoryCacheConstants.ArticleKey);
+            var articles = _memoryCache.Get<IDictionary<Guid, Article>>(key: MemoryCacheConstants.ArticleKey);
 
-            var articlesToSave = _removeOldArticlesService.RemoveOldArticles(articles);
+            var numberOfDeletedMemoryCacheArticles = _removeOldArticlesService.RemoveOldArticlesFromCollection(articles);
 
-            _memoryCache.Set(key: MemoryCacheConstants.ArticleKey, value: articlesToSave);
+            _memoryCache.Set(key: MemoryCacheConstants.ArticleKey, value: articles);
 
-            var numberOfDeletedArticles = _articleRepository.DeleteArticlesAndSimilarArticles(maxArticleAge);
+            var numberOfDeletedDatabaseArticles = _articleRepository.DeleteArticlesAndSimilarArticles(maxArticleAge);
 
             var response = new DeleteOldArticlesCommandResponse
             {
-                NumberOfDeletedDatabaseAricles = numberOfDeletedArticles,
-                NumberOfDeletedMemoryCacheAricles = articles.Count() - articlesToSave.Count()
+                NumberOfDeletedDatabaseArticles = numberOfDeletedDatabaseArticles,
+                NumberOfDeletedMemoryCacheArticles = numberOfDeletedMemoryCacheArticles
             };
 
             return Task.FromResult(response);

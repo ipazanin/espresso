@@ -36,9 +36,9 @@ namespace Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplic
                 mobileDeviceType: request.DeviceType
             );
 
-            _ = _context.ApplicationDownload.Add(applicationDownload);
+            _context.ApplicationDownload.Add(applicationDownload);
 
-            _ = await _context
+            await _context
                 .SaveChangesAsync(cancellationToken);
 
             return Unit.Value;

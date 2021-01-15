@@ -19,7 +19,8 @@ namespace Espresso.Domain.Tests.Services
         {
             #region Arrange
             var articles = new List<Article>();
-            var savedArticles = new List<Article>();
+            var savedArticles = new List<Article>()
+                .ToDictionary(article => article.Id);
 
             var expectedCreatedArticles = new List<Article>();
 
@@ -46,7 +47,8 @@ namespace Espresso.Domain.Tests.Services
         {
             #region Arrange
             var articles = new List<Article>();
-            var savedArticles = new List<Article>();
+            var savedArticles = new List<Article>()
+                .ToDictionary(article => article.Id);
 
             var expectedUpdateArticles = new List<Article>();
 
@@ -73,7 +75,8 @@ namespace Espresso.Domain.Tests.Services
         {
             #region Arrange
             var articles = new List<Article>();
-            var savedArticles = new List<Article>();
+            var savedArticles = new List<Article>()
+                .ToDictionary(article => article.Id);
 
             var expectedCreatedArticleCategories = new List<ArticleCategory>();
 
@@ -100,7 +103,8 @@ namespace Espresso.Domain.Tests.Services
         {
             #region Arrange
             var articles = new List<Article>();
-            var savedArticles = new List<Article>();
+            var savedArticles = new List<Article>()
+                .ToDictionary(article => article.Id);
 
             var expectedUpdateArticleCategories = new List<ArticleCategory>();
 
@@ -130,7 +134,8 @@ namespace Espresso.Domain.Tests.Services
             {
                 ArticleUtility.CreateDefaultArticleWith(default, default!, default!, default!)
             };
-            var savedArticles = new List<Article>();
+            var savedArticles = new List<Article>()
+                .ToDictionary(article => article.Id);
 
             var expectedCreatedArticlesCount = 1;
 
@@ -161,7 +166,8 @@ namespace Espresso.Domain.Tests.Services
             {
                 ArticleUtility.CreateDefaultArticleWith(default, default!, default!, default!)
             };
-            var savedArticles = new List<Article>();
+            var savedArticles = new List<Article>()
+                .ToDictionary(article => article.Id);
 
             var expectedCreatedArticleCategoriesCount = 1;
 
@@ -205,7 +211,7 @@ namespace Espresso.Domain.Tests.Services
                     title: "title2",
                     summary: "summary2"
                 )
-            };
+            }.ToDictionary(article => article.Id);
 
             var expectedUpdatedArticlesCount = 1;
 
@@ -249,7 +255,7 @@ namespace Espresso.Domain.Tests.Services
                     title: "title1",
                     summary: "summary2"
                 )
-            };
+            }.ToDictionary(article => article.Id);
 
             var expectedUpdatedArticlesCount = 1;
 
@@ -293,7 +299,7 @@ namespace Espresso.Domain.Tests.Services
                     title: "title2",
                     summary: "summary1"
                 )
-            };
+            }.ToDictionary(article => article.Id);
 
             var expectedUpdatedArticlesCount = 1;
 

@@ -6,8 +6,8 @@ namespace Espresso.WebApi.Application.NewsPortals.Commands.NewSourcesRequest
     {
         public NewSourcesRequestCommandValidator()
         {
-            _ = RuleFor(request => request.NewsPortalName).NotEmpty();
-            _ = RuleFor(request => request.Email).NotEmpty().EmailAddress();
+            RuleFor(request => request.NewsPortalName).NotEmpty();
+            RuleFor(request => request.Email).NotEmpty().EmailAddress();
         }
     }
 }

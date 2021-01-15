@@ -8,9 +8,9 @@ namespace Espresso.Application.Extensions
             this HttpRequestMessage request
         )
         {
-            // _ = request.Headers.TryAddWithoutValidation("accept", "text/html,application/xhtml+xml,application/xml");
-            // _ = request.Headers.TryAddWithoutValidation("user-agent", "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:19.0) Gecko/20100101 Firefox/19.0");
-            // _ = request.Headers.TryAddWithoutValidation("accept-charset", "ISO-8859-1");
+            // request.Headers.TryAddWithoutValidation("accept", "text/html,application/xhtml+xml,application/xml");
+            // request.Headers.TryAddWithoutValidation("user-agent", "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:19.0) Gecko/20100101 Firefox/19.0");
+            // request.Headers.TryAddWithoutValidation("accept-charset", "ISO-8859-1");
 
             request.Headers.TryAddWithoutValidation("accept", "*/*");
             request.Headers.TryAddWithoutValidation("accept-encoding", "gzip, deflate");

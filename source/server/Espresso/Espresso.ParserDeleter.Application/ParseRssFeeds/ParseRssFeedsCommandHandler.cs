@@ -74,8 +74,8 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
                 cancellationToken: cancellationToken
             );
 
-            // To Save SkipParseConfiguration.CurrentSkip
-            _ = _memoryCache.Set(
+            // To Save SkipParseConfiguration.CurrentSkip in Memory Cache Rss Feeds
+            _memoryCache.Set(
                 key: MemoryCacheConstants.RssFeedKey,
                 value: rssFeeds.ToList()
             );
@@ -88,20 +88,36 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
 
             var uniqueArticles = _sortArticlesService.RemoveDuplicateArticles(articles);
 
-            var savedArticles = _memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey);
+            var savedArticles = _memoryCache.Get<IDictionary<Guid, Article>>(MemoryCacheConstants.ArticleKey);
+            var lastSimilarityGroupingTime = savedArticles.Values.Any() ?
+                savedArticles.Values.Max(article => article.CreateDateTime) :
+                new DateTime();
 
             var (createArticles, updateArticles, articleCategoriesToCreate, articleCategoriesToDelete) = _sortArticlesService.SortArticles(
                 articles: uniqueArticles,
                 savedArticles: savedArticles
             );
 
-            CreateArticles(articles: createArticles);
-            UpdateArticles(articles: updateArticles);
+            CreateArticles(
+                createArticles: createArticles,
+                savedArticles: savedArticles
+            );
+            UpdateArticles(
+                updateArticles: updateArticles,
+                savedArticles: savedArticles
+            );
+            _memoryCache.Set(
+                key: MemoryCacheConstants.ArticleKey,
+                value: savedArticles
+            );
 
             _articleCategoryRepository.InsertArticleCategories(articleCategoriesToCreate);
             _articleCategoryRepository.DeleteArticleCategories(articleCategoriesToDelete.Select(articleCategory => articleCategory.Id));
 
-            CreateSimilarArticles();
+            CreateSimilarArticles(
+                savedArticles: savedArticles,
+                lastSimilarityGroupingTime: lastSimilarityGroupingTime
+            );
 
             await _sendArticlesService.SendArticlesMessage(
                 createArticles: createArticles,
@@ -162,76 +178,62 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
         }
 
         private void CreateArticles(
-            IEnumerable<Article> articles
+            IEnumerable<Article> createArticles,
+            IDictionary<Guid, Article> savedArticles
         )
         {
-            if (!articles.Any())
+            if (!createArticles.Any())
             {
                 return;
             }
 
-            var articlesDictionary = _memoryCache
-                .Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey)
-                .ToDictionary(article => article.Id);
-
             var articlesToCreate = new List<Article>();
 
-            foreach (var article in articles)
+            foreach (var article in createArticles)
             {
-                if (articlesDictionary.ContainsKey(article.Id))
+                if (savedArticles.ContainsKey(article.Id))
                 {
                     continue;
                 }
-                articlesDictionary.Add(article.Id, article);
+                savedArticles.Add(article.Id, article);
 
                 articlesToCreate.Add(article);
             }
 
             _articleRepository.InsertArticles(articlesToCreate);
-
-            _ = _memoryCache.Set(
-                key: MemoryCacheConstants.ArticleKey,
-                value: articlesDictionary.Values.ToList()
-            );
         }
 
         private void UpdateArticles(
-            IEnumerable<Article> articles
+            IEnumerable<Article> updateArticles,
+            IDictionary<Guid, Article> savedArticles
         )
         {
-            if (!articles.Any())
+            if (!updateArticles.Any())
             {
                 return;
             }
 
-            var articlesDictionary = _memoryCache
-                .Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey)
-                .ToDictionary(article => article.Id);
-
             var articlesToUpdate = new List<Article>();
 
-            foreach (var article in articles)
+            foreach (var article in updateArticles)
             {
-                if (articlesDictionary.ContainsKey(article.Id))
+                if (savedArticles.ContainsKey(article.Id))
                 {
-                    _ = articlesDictionary.Remove(article.Id);
-                    articlesDictionary.Add(article.Id, article);
+                    savedArticles.Remove(article.Id);
+                    savedArticles.Add(article.Id, article);
                     articlesToUpdate.Add(article);
                 }
             }
 
             _articleRepository.UpdateArticles(articlesToUpdate);
-
-            _ = _memoryCache.Set(
-                key: MemoryCacheConstants.ArticleKey,
-                value: articlesDictionary.Values.ToList()
-            );
         }
 
-        private void CreateSimilarArticles()
+        private void CreateSimilarArticles(
+            IDictionary<Guid, Article> savedArticles,
+            DateTime lastSimilarityGroupingTime
+        )
         {
-            var articles = _memoryCache.Get<IEnumerable<Article>>(key: MemoryCacheConstants.ArticleKey);
-            var lastSimilarityGroupingTime = _memoryCache.Get<DateTime>(key: MemoryCacheConstants.LastSimilarityGroupingTime);
+            var articles = savedArticles.Values;
 
             var similarArticles = _groupSimilarArticlesService.GroupSimilarArticles(
                 articles,
@@ -253,9 +255,6 @@ namespace Espresso.ParserDeleter.ParseRssFeeds
                     subordinateArticle.SetMainArticle(similarArticle);
                 }
             }
-
-            _memoryCache.Set(key: MemoryCacheConstants.ArticleKey, value: articlesDictionary.Values.ToList());
-            _memoryCache.Set(key: MemoryCacheConstants.LastSimilarityGroupingTime, value: DateTime.UtcNow);
         }
         #endregion
     }

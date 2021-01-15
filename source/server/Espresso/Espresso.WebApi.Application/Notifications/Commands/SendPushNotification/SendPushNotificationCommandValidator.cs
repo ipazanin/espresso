@@ -7,21 +7,21 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
     {
         public SendPushNotificationCommandValidator()
         {
-            _ = RuleFor(requets => requets.InternalName)
+            RuleFor(requets => requets.InternalName)
                 .MaximumLength(PushNotification.InternalNameMaxLength);
 
-            _ = RuleFor(requets => requets.Title)
+            RuleFor(requets => requets.Title)
                 .MaximumLength(PushNotification.InternalNameMaxLength);
 
-            _ = RuleFor(requets => requets.Message)
+            RuleFor(requets => requets.Message)
                 .MaximumLength(PushNotification.InternalNameMaxLength)
                 .NotEmpty();
 
-            _ = RuleFor(requets => requets.Topic)
+            RuleFor(requets => requets.Topic)
                 .MaximumLength(PushNotification.InternalNameMaxLength)
                 .NotEmpty();
 
-            _ = RuleFor(requets => requets.ArticleUrl)
+            RuleFor(requets => requets.ArticleUrl)
                 .MaximumLength(PushNotification.InternalNameMaxLength)
                 .NotEmpty();
         }

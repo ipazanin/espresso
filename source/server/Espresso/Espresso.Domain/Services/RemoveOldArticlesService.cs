@@ -22,20 +22,33 @@ namespace Espresso.Domain.Services
         #endregion
 
         #region Methods
+        public int RemoveOldArticlesFromCollection(IDictionary<Guid, Article> articles)
+        {
+            var maxAgeDate = DateTime.UtcNow - _maxAgeOfArticle;
+            var articlesToRemove = new List<Guid>();
+
+            foreach (var (id, article) in articles)
+            {
+                if (article.PublishDateTime < maxAgeDate)
+                {
+                    articlesToRemove.Add(id);
+                }
+            }
+            foreach (var id in articlesToRemove)
+            {
+                articles.Remove(id);
+            }
+
+            return articlesToRemove.Count;
+        }
+
         public IEnumerable<Article> RemoveOldArticles(IEnumerable<Article> articles)
         {
             var maxAgeDate = DateTime.UtcNow - _maxAgeOfArticle;
-            var oldArticles = articles.Where(article => article.PublishDateTime < maxAgeDate);
 
-            var articlesDictionary = articles.ToDictionary(article => article.Id);
+            var notOldArticles = articles.Where(article => article.PublishDateTime > maxAgeDate);
 
-            foreach (var oldArticle in oldArticles)
-            {
-                articlesDictionary.Remove(oldArticle.Id);
-                oldArticle.RemoveSimilarArticles();
-            }
-
-            return articlesDictionary.Values;
+            return notOldArticles;
         }
         #endregion
     }
