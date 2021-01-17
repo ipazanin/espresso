@@ -581,6 +581,16 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global
                 ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.BitnoNet,
+                    name: NewsPortalId.BitnoNet.GetDisplayName(),
+                    baseUrl: "https://www.bitno.net",
+                    iconUrl: $"Icons/{NewsPortalId.BitnoNet}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2021, 1, 16, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Vijesti,
+                    regionId: (int)RegionId.Global
+                ),
             };
 
             builder.HasData(newsPortals);

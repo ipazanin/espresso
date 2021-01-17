@@ -446,7 +446,13 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal
                 ),
-
+                new RssFeed(
+                    id: (int)RssFeedId.Press032,
+                    url: "https://press032.com/feed",
+                    newsPortalId: (int)NewsPortalId.Press032,
+                    categoryId: (int)CategoryId.Local,
+                    requestType: RequestType.Normal
+                ),
             };
 
             builder.HasData(localRssFeeds);
@@ -482,6 +488,13 @@ namespace Espresso.Persistence.DataSeed
                 NumberOfSkips = 4,
                 CurrentSkip = 0
             });
+
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Press032,
+                NumberOfSkips = 7,
+                CurrentSkip = 0
+            });
         }
 
         private static void SeedLocalImageUrlParseConfiguration(
@@ -491,20 +504,20 @@ namespace Espresso.Persistence.DataSeed
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.DalmacijaDanas,
-                ImgElementXPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img",
+                XPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img",
             });
 
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.IndexHrZagreb,
-                ImgElementXPath = "//figure[contains(@class, 'img-container')]//img",
+                XPath = "//figure[contains(@class, 'img-container')]//img",
                 ImageUrlParseStrategy = ImageUrlParseStrategy.FromContent
             });
 
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Zupanjac,
-                ImgElementXPath = "//div[contains(@class, 'feature-img')]//img"
+                XPath = "//div[contains(@class, 'feature-img')]//img"
             });
         }
 

@@ -56,9 +56,12 @@ namespace Espresso.ParserDeleter.Application.Services
             return summary;
         }
 
-        public string? GetImageUrlFromSrcAttribute(HtmlNodeCollection elementTags)
+        public string? GetImageUrlFromSrcAttribute(
+            HtmlNodeCollection elementTags,
+            string attributeName
+        )
         {
-            var imageUrls = elementTags.Select(imgTag => imgTag?.GetAttributeValue("src", null));
+            var imageUrls = elementTags.Select(imgTag => imgTag?.GetAttributeValue(attributeName, null));
             var imageUrl = imageUrls.FirstOrDefault();
 
             return imageUrl;

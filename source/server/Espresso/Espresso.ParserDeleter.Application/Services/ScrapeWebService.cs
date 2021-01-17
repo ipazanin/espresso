@@ -17,6 +17,7 @@ using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using Espresso.Common.IServices;
 using Espresso.ParserDeleter.Application.Constants;
+using Espresso.Domain.ValueObjects.RssFeedValueObjects;
 
 namespace Espresso.ParserDeleter.Application.Services
 {
@@ -49,14 +50,12 @@ namespace Espresso.ParserDeleter.Application.Services
         #region Public Methods
         public async Task<string?> GetSrcAttributeFromElementDefinedByXPath(
             string? articleUrl,
-            string xPath,
-            ImageUrlWebScrapeType imageUrlWebScrapeType,
-            IEnumerable<string> propertyNames,
             RequestType requestType,
+            ImageUrlParseConfiguration imageUrlParseConfiguration,
             CancellationToken cancellationToken
         )
         {
-            if (articleUrl is null || string.IsNullOrEmpty(xPath))
+            if (articleUrl is null || string.IsNullOrEmpty(imageUrlParseConfiguration.XPath))
             {
                 return null;
             }
@@ -73,22 +72,24 @@ namespace Espresso.ParserDeleter.Application.Services
 
             var htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(htmlString);
-            var elementTags = htmlDocument.DocumentNode.SelectNodes(xPath);
+            var elementTags = htmlDocument.DocumentNode.SelectNodes(imageUrlParseConfiguration.XPath);
 
             if (elementTags is null)
             {
                 return null;
             }
 
-            var imageUrl = imageUrlWebScrapeType switch
+            var imageUrl = imageUrlParseConfiguration.ImageUrlWebScrapeType switch
             {
                 ImageUrlWebScrapeType.JsonObjectInScriptElement => await GetImageUrlFromJsonObjectFromScriptTag(
                     elementTags: elementTags,
-                    propertyNames: propertyNames,
+                    propertyNames: imageUrlParseConfiguration.GetPropertyNames(),
                     cancellationToken: cancellationToken
                 ),
-                ImageUrlWebScrapeType.SrcAttribute => _parseHtmlService.GetImageUrlFromSrcAttribute(elementTags),
-                _ => _parseHtmlService.GetImageUrlFromSrcAttribute(elementTags),
+                _ => _parseHtmlService.GetImageUrlFromSrcAttribute(
+                    elementTags: elementTags,
+                    attributeName: imageUrlParseConfiguration.AttributeName
+                ),
             };
 
             return imageUrl;

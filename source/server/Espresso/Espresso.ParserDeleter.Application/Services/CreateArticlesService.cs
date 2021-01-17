@@ -271,10 +271,8 @@ namespace Espresso.ParserDeleter.Application.Services
             {
                 imageUrl = await _webScrapingService.GetSrcAttributeFromElementDefinedByXPath(
                     articleUrl: webUrl,
-                    xPath: rssFeed.ImageUrlParseConfiguration.ImgElementXPath,
-                    imageUrlWebScrapeType: rssFeed.ImageUrlParseConfiguration.ImageUrlWebScrapeType,
-                    propertyNames: rssFeed.ImageUrlParseConfiguration.GetPropertyNames(),
-                    requestType: rssFeed.RequestType,
+                    requestType: RequestType.Browser,
+                    imageUrlParseConfiguration: rssFeed.ImageUrlParseConfiguration,
                     cancellationToken: cancellationToken
                 );
 

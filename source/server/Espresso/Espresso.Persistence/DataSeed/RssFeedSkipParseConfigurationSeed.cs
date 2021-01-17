@@ -288,6 +288,13 @@ namespace Espresso.Persistence.DataSeed
                 NumberOfSkips = 31,
                 CurrentSkip = 0
             });
+
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.BitnoNet,
+                NumberOfSkips = 12,
+                CurrentSkip = 0
+            });
         }
     }
 }
