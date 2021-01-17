@@ -15,9 +15,12 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         public const string ImgElementXPathDefaultValue = "";
         public const int ImgElementXPathHasMaxLength = 300;
 
+        public const string AttributeNameDefaultValue = "src";
+        public const int AttributeNameMaxLength = 100;
+
         public static bool? ShouldImageUrlBeWebScrapedDefaultValue => null;
 
-        public const ImageUrlWebScrapeType ImageUrlWebScrapeTypeDefaultValue = ImageUrlWebScrapeType.SrcAttribute;
+        public const ImageUrlWebScrapeType ImageUrlWebScrapeTypeDefaultValue = ImageUrlWebScrapeType.Attribute;
 
         public const string? JsonWebScrapePropertyNamesDefaultValue = null;
         public const int JsonWebScrapePropertyNamesHasMaxLength = 300;
@@ -26,7 +29,9 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         #region Properties
         public ImageUrlParseStrategy ImageUrlParseStrategy { get; private set; }
 
-        public string ImgElementXPath { get; private set; }
+        public string XPath { get; private set; }
+
+        public string AttributeName { get; private set; }
 
         public bool? ShouldImageUrlBeWebScraped { get; private set; }
 
@@ -41,19 +46,22 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         /// </summary>
         private ImageUrlParseConfiguration()
         {
-            ImgElementXPath = null!;
+            XPath = null!;
+            AttributeName = null!;
         }
 
         public ImageUrlParseConfiguration(
             ImageUrlParseStrategy imageUrlParseStrategy,
             string imgElementXPath,
+            string attributeName,
             bool shouldImageUrlBeWebScraped,
             ImageUrlWebScrapeType imageUrlWebScrapeType,
             string jsonWebScrapePropertyNames
         )
         {
             ImageUrlParseStrategy = imageUrlParseStrategy;
-            ImgElementXPath = imgElementXPath;
+            XPath = imgElementXPath;
+            AttributeName = attributeName;
             ShouldImageUrlBeWebScraped = shouldImageUrlBeWebScraped;
             ImageUrlWebScrapeType = imageUrlWebScrapeType;
             JsonWebScrapePropertyNames = jsonWebScrapePropertyNames;
@@ -72,7 +80,8 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         protected override IEnumerable<object?> GetAtomicValues()
         {
             yield return ImageUrlParseStrategy;
-            yield return ImgElementXPath;
+            yield return XPath;
+            yield return AttributeName;
             yield return ShouldImageUrlBeWebScraped;
             yield return ImageUrlWebScrapeType;
             yield return JsonWebScrapePropertyNames;

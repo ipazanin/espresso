@@ -167,5 +167,7 @@
         GamerHr = 166,
         OgPortal = 167,
         Zupanjac = 168,
+        Press032 = 169,
+        BitnoNet = 170
     }
 }

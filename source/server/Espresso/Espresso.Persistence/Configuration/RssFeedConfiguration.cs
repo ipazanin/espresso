@@ -93,9 +93,14 @@ namespace Espresso.Persistence.Configuration
             var imageUrlParseConfiguration = builder.OwnsOne(rssFeed => rssFeed.ImageUrlParseConfiguration);
 
             imageUrlParseConfiguration
-                .Property(imageUrlConfig => imageUrlConfig.ImgElementXPath)
+                .Property(imageUrlConfig => imageUrlConfig.XPath)
                 .HasMaxLength(ImageUrlParseConfiguration.ImgElementXPathHasMaxLength)
                 .HasDefaultValue(ImageUrlParseConfiguration.ImgElementXPathDefaultValue);
+
+            imageUrlParseConfiguration
+                .Property(imageUrlConfig => imageUrlConfig.AttributeName)
+                .HasMaxLength(ImageUrlParseConfiguration.AttributeNameMaxLength)
+                .HasDefaultValue(ImageUrlParseConfiguration.AttributeNameDefaultValue);
 
             imageUrlParseConfiguration
                 .Property(imageUrlConfig => imageUrlConfig.ImageUrlParseStrategy)

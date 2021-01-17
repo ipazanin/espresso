@@ -2,7 +2,7 @@
 {
     public enum ImageUrlWebScrapeType
     {
-        SrcAttribute = 1,
+        Attribute = 1,
         JsonObjectInScriptElement = 2
     }
 }

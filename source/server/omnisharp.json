@@ -12,5 +12,11 @@
       "**/obj/**/*",
       "**/Migrations/**/*"
     ]
+  },
+  "cake": {
+    "enabled": false
+  },
+  "script": {
+    "enabled": false
   }
 }

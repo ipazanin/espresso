@@ -1,99 +1,94 @@
 {
-	"[csharp]": {
-		"editor.defaultFormatter": "ms-dotnettools.csharp"
-	},
-	"[json]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
-	},
-	"[jsonc]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
-	},
-	"[typescript]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
-	},
-	"[typescriptreact]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
-	},
-	"[xml]": {
-		"editor.defaultFormatter": "DotJoshJohnson.xml"
-	},
-	"cSpell.enableFiletypes": [
-		"!asciidoc",
-		"!c",
-		"!cpp",
-		"!go",
-		"!handlebars",
-		"!haskell",
-		"!jade",
-		"!java",
-		"!latex",
-		"!less",
-		"!php",
-		"!pug",
-		"!python",
-		"!rust",
-		"!scala",
-		"aspnetcorerazor",
-		"dockerfile",
-		"git-rebase",
-		"groovy",
-		"makefile",
-		"shellscript",
-		"xml"
-	],
-	"cSpell.ignorePaths": [
-		"**/package-lock.json",
-		"**/node_modules/**",
-		"**/vscode-extension/**",
-		"**/.git/objects/**",
-		".vscode",
-		".vscode-insiders",
-		"**/bin/**",
-		"**/obj/**",
-		"**/TestReports/**"
-	],
-	"cSpell.words": [
-		"CQRS",
-		"Mediat",
-		"Xunit",
-		"parserdeleter",
-		"rabbitmq",
-		"webapi"
-	],
-	"csharp.maxProjectFileCountForDiagnosticAnalysis": 0,
-	"csharp.semanticHighlighting.enabled": true,
-	"eslint.alwaysShowStatus": true,
-	"eslint.format.enable": true,
-	"eslint.lintTask.enable": true,
-	"eslint.nodePath": "./client/node_modules",
-	"eslint.options": {
-		"configFile": ".eslintrc"
-	},
-	"eslint.packageManager": "npm",
-	"eslint.validate": [
-		"javascript",
-		"typescript"
-	],
-	"eslint.workingDirectories": [
-		"./client"
-	],
-	"files.associations": {
-		"*.make": "makefile",
-		"*.docker": "dockerfile"
-	},
-	"files.exclude": {
-		"**/.git": true,
-		"**/obj": true,
-		"**/bin": true,
-		"**/node_modules": true,
-		"**/client/build": true
-	},
-	"omnisharp.autoStart": true,
-	"omnisharp.enableEditorConfigSupport": true,
-	"omnisharp.enableImportCompletion": true,
-	"omnisharp.enableMsBuildLoadProjectsOnDemand": false,
-	"omnisharp.enableRoslynAnalyzers": true,
-	"omnisharp.projectLoadTimeout": 360,
-	"prettier.configPath": "./client/.prettierrc",
-	"typescript.updateImportsOnFileMove.enabled": "always"
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[xml]": {
+    "editor.defaultFormatter": "DotJoshJohnson.xml"
+  },
+  "cSpell.enableFiletypes": [
+    "!asciidoc",
+    "!c",
+    "!cpp",
+    "!go",
+    "!handlebars",
+    "!haskell",
+    "!jade",
+    "!java",
+    "!latex",
+    "!less",
+    "!php",
+    "!pug",
+    "!python",
+    "!rust",
+    "!scala",
+    "aspnetcorerazor",
+    "dockerfile",
+    "git-rebase",
+    "groovy",
+    "makefile",
+    "shellscript",
+    "xml"
+  ],
+  "cSpell.ignorePaths": [
+    "**/package-lock.json",
+    "**/node_modules/**",
+    "**/vscode-extension/**",
+    "**/.git/objects/**",
+    ".vscode",
+    ".vscode-insiders",
+    "**/bin/**",
+    "**/obj/**",
+    "**/TestReports/**"
+  ],
+  "cSpell.words": [
+    "CQRS",
+    "Mediat",
+    "Xunit",
+    "parserdeleter",
+    "rabbitmq",
+    "webapi"
+  ],
+  "csharp.maxProjectFileCountForDiagnosticAnalysis": 0,
+  "csharp.semanticHighlighting.enabled": true,
+  "eslint.alwaysShowStatus": true,
+  "eslint.format.enable": true,
+  "eslint.lintTask.enable": true,
+  "eslint.nodePath": "./source/client/node_modules",
+  "eslint.options": {
+    "configFile": ".eslintrc"
+  },
+  "eslint.packageManager": "npm",
+  "eslint.validate": ["javascript", "typescript"],
+  "eslint.workingDirectories": ["./source/client"],
+  "files.associations": {
+    "*.make": "makefile",
+    "*.docker": "dockerfile"
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/obj": true,
+    "**/bin": true,
+    "**/node_modules": true,
+    "**/client/build": true
+  },
+  "omnisharp.autoStart": true,
+  "omnisharp.enableEditorConfigSupport": true,
+  "omnisharp.enableImportCompletion": true,
+  "omnisharp.enableMsBuildLoadProjectsOnDemand": false,
+  "omnisharp.enableRoslynAnalyzers": true,
+  "omnisharp.projectLoadTimeout": 360,
+  "prettier.configPath": "./source/client/.prettierrc",
+  "typescript.updateImportsOnFileMove.enabled": "always"
 }

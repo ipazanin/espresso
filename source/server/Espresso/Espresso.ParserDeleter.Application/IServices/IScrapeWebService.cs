@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Espresso.Domain.Enums.RssFeedEnums;
+using Espresso.Domain.ValueObjects.RssFeedValueObjects;
 
 namespace Espresso.ParserDeleter.Application.IServices
 {
@@ -10,10 +11,8 @@ namespace Espresso.ParserDeleter.Application.IServices
     {
         public Task<string?> GetSrcAttributeFromElementDefinedByXPath(
             string? articleUrl,
-            string xPath,
-            ImageUrlWebScrapeType imageUrlWebScrapeType,
-            IEnumerable<string> propertyNames,
             RequestType requestType,
+            ImageUrlParseConfiguration imageUrlParseConfiguration,
             CancellationToken cancellationToken
         );
     }

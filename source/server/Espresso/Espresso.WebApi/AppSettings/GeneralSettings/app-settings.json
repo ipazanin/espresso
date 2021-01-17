@@ -5,14 +5,14 @@
     "MajorVersion": 2,
     "MinorVersion": 1,
     "NewNewsPortalsPosition": 3,
-    "Version": "2.1.1"
+    "Version": "2.1.2"
   },
   "CronJobsConfiguration": {
     "ApplicationDownloadStatisticsCronExpression": "0 8 * * *",
     "WebApiReportCronExpression": "0 8 * * *"
   },
   "DateTimeConfiguration": {
-    "MaxAgeOfArticlesInDays": 3,
+    "MaxAgeOfArticlesInDays": 5,
     "MaxAgeOfFeaturedArticlesInHours": 24,
     "MaxAgeOfNewNewsPortalInDays": 60,
     "MaxAgeOfTrendingArticlesInHours": 24

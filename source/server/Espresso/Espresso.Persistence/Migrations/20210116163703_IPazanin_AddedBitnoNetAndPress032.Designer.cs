@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Espresso.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210116163703_IPazanin_AddedBitnoNetAndPress032")]
+    partial class IPazanin_AddedBitnoNetAndPress032
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2412,7 +2414,7 @@ namespace Espresso.Persistence.Migrations
                             Id = 170,
                             CategoryId = 1,
                             NewsPortalId = 125,
-                            RequestType = 2,
+                            RequestType = 1,
                             Url = "https://www.bitno.net/feed"
                         },
                         new
@@ -4188,13 +4190,6 @@ namespace Espresso.Persistence.Migrations
                                 .HasColumnType("int")
                                 .UseIdentityColumn();
 
-                            b1.Property<string>("AttributeName")
-                                .IsRequired()
-                                .ValueGeneratedOnAdd()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasDefaultValue("src");
-
                             b1.Property<int>("ImageUrlParseStrategy")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int")
@@ -4205,19 +4200,19 @@ namespace Espresso.Persistence.Migrations
                                 .HasColumnType("int")
                                 .HasDefaultValue(1);
 
+                            b1.Property<string>("ImgElementXPath")
+                                .IsRequired()
+                                .ValueGeneratedOnAdd()
+                                .HasMaxLength(300)
+                                .HasColumnType("nvarchar(300)")
+                                .HasDefaultValue("");
+
                             b1.Property<string>("JsonWebScrapePropertyNames")
                                 .HasMaxLength(300)
                                 .HasColumnType("nvarchar(300)");
 
                             b1.Property<bool?>("ShouldImageUrlBeWebScraped")
                                 .HasColumnType("bit");
-
-                            b1.Property<string>("XPath")
-                                .IsRequired()
-                                .ValueGeneratedOnAdd()
-                                .HasMaxLength(300)
-                                .HasColumnType("nvarchar(300)")
-                                .HasDefaultValue("");
 
                             b1.HasKey("RssFeedId");
 
@@ -4231,524 +4226,518 @@ namespace Espresso.Persistence.Migrations
                                 {
                                     RssFeedId = 1,
                                     ImageUrlParseStrategy = 1,
-                                    XPath = "//figure[contains(@class, 'img-container')]//img"
+                                    ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 2,
                                     ImageUrlParseStrategy = 1,
-                                    XPath = "//figure[contains(@class, 'img-container')]//img"
+                                    ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 3,
                                     ImageUrlParseStrategy = 1,
-                                    XPath = "//figure[contains(@class, 'img-container')]//img"
+                                    ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 4,
                                     ImageUrlParseStrategy = 1,
-                                    XPath = "//figure[contains(@class, 'img-container')]//img"
+                                    ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 5,
                                     ImageUrlParseStrategy = 1,
-                                    XPath = "//figure[contains(@class, 'img-container')]//img"
+                                    ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 6,
-                                    XPath = "//img[contains(@class, 'article__figure_img')]"
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 7,
-                                    XPath = "//img[contains(@class, 'article__figure_img')]"
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 8,
-                                    XPath = "//img[contains(@class, 'article__figure_img')]"
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 9,
-                                    XPath = "//img[contains(@class, 'article__figure_img')]"
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 10,
-                                    XPath = "//img[contains(@class, 'article__figure_img')]"
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 11,
-                                    XPath = "//img[contains(@class, 'article__figure_img')]"
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 12,
-                                    XPath = "//img[contains(@class, 'media-object adaptive lazy')]"
+                                    ImgElementXPath = "//img[contains(@class, 'media-object adaptive lazy')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 13,
-                                    XPath = "//img[contains(@class, 'media-object adaptive lazy')]"
+                                    ImgElementXPath = "//img[contains(@class, 'media-object adaptive lazy')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 14,
-                                    XPath = "//div[contains(@class, 'featured-img')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'featured-img')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 15,
-                                    XPath = "//img[contains(@class, 'card__image')]"
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 16,
-                                    XPath = "//img[contains(@class, 'card__image')]"
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 17,
-                                    XPath = "//img[contains(@class, 'card__image')]"
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 18,
-                                    XPath = "//img[contains(@class, 'card__image')]"
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 19,
-                                    XPath = "//img[contains(@class, 'card__image')]"
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 20,
-                                    XPath = "//img[contains(@class, 'card__image')]"
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 21,
-                                    XPath = "//img[contains(@class, 'card__image')]"
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 22,
-                                    XPath = "//img[contains(@class, 'card__image')]"
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 23,
-                                    XPath = "//img[contains(@class, 'card__image')]"
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 24,
-                                    XPath = "//img[contains(@class, 'card__image')]"
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 25,
-                                    XPath = "//img[contains(@class, 'card__image')]"
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 26,
-                                    XPath = "//img[contains(@class, 'card__image')]"
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 27,
-                                    XPath = "//img[contains(@class, 'card__image')]"
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 28,
-                                    XPath = "//img[contains(@class, 'card__image')]"
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 29,
-                                    XPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 30,
-                                    XPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 31,
-                                    XPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 32,
-                                    XPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 33,
-                                    XPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 34,
-                                    XPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 35,
-                                    XPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 36,
-                                    XPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 37,
                                     ImageUrlWebScrapeType = 2,
+                                    ImgElementXPath = "//script[contains(@type, 'application/ld+json')]",
                                     JsonWebScrapePropertyNames = "image,url",
-                                    ShouldImageUrlBeWebScraped = true,
-                                    XPath = "//script[contains(@type, 'application/ld+json')]"
+                                    ShouldImageUrlBeWebScraped = true
                                 },
                                 new
                                 {
                                     RssFeedId = 39,
-                                    XPath = "//div[contains(@class, 'thumb')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'thumb')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 40,
-                                    XPath = "//div[contains(@class, 'featured-img')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'featured-img')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 42,
-                                    XPath = "//figure[contains(@class, 'article-main-img')]//img"
+                                    ImgElementXPath = "//figure[contains(@class, 'article-main-img')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 43,
-                                    XPath = "//figure[contains(@class, 'article-image main-image')]//img"
+                                    ImgElementXPath = "//figure[contains(@class, 'article-image main-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 44,
-                                    XPath = "//img[contains(@class, 'naslovna')]"
+                                    ImgElementXPath = "//img[contains(@class, 'naslovna')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 47,
-                                    XPath = "//div[contains(@class, 'post-img')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'post-img')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 48,
-                                    XPath = "//img[contains(@class, 'card__image')]"
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 49,
-                                    XPath = "//img[contains(@class, 'card__image')]"
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 50,
-                                    XPath = "//img[contains(@class, 'card__image')]"
+                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 54,
-                                    XPath = "//div[contains(@class, 'entry-content')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'entry-content')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 55,
-                                    XPath = "//div[contains(@class, 'attribute-image')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'attribute-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 56,
-                                    XPath = "//div[contains(@class, 'img-holder')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'img-holder')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 57,
                                     ImageUrlParseStrategy = 2,
-                                    XPath = "//div[contains(@class, 'post__hero')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'post__hero')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 58,
-                                    XPath = "//div[contains(@class, 'postFeaturedImg postFeaturedImg--single')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'postFeaturedImg postFeaturedImg--single')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 59,
-                                    XPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 61,
-                                    XPath = "//div[contains(@class, 'first-image')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'first-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 62,
                                     ImageUrlParseStrategy = 2,
-                                    XPath = "//figure[contains(@class, 'dcms-image article-image')]//img"
+                                    ImgElementXPath = "//figure[contains(@class, 'dcms-image article-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 63,
-                                    XPath = "//div[contains(@class, 'post-thumbnail')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'post-thumbnail')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 64,
-                                    XPath = "//figure[contains(@class, 'figure')]//img"
+                                    ImgElementXPath = "//figure[contains(@class, 'figure')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 65,
                                     ImageUrlParseStrategy = 3,
-                                    XPath = "//figure[contains(@class, 'media')]//img"
+                                    ImgElementXPath = "//figure[contains(@class, 'media')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 66,
-                                    XPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 67,
-                                    XPath = "//div[contains(@class, 'image-slider')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 68,
-                                    XPath = "//div[contains(@class, 'image-slider')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 69,
-                                    XPath = "//div[contains(@class, 'image-slider')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 70,
-                                    XPath = "//div[contains(@class, 'image-slider')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 71,
-                                    XPath = "//picture[contains(@class, 'pic')]//img"
+                                    ImgElementXPath = "//picture[contains(@class, 'pic')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 72,
-                                    XPath = "//div[contains(@class, 'img-holder inner')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'img-holder inner')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 74,
-                                    XPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 81,
-                                    XPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 75,
-                                    XPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 76,
-                                    XPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 80,
-                                    XPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 77,
-                                    XPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 78,
-                                    XPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 79,
-                                    XPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 82,
                                     ImageUrlParseStrategy = 4,
-                                    XPath = "//div[contains(@class, 'mycontent')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'mycontent')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 84,
-                                    XPath = "//div[contains(@class, 'single-post-media')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'single-post-media')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 85,
-                                    XPath = "//img[contains(@class, 'article__figure_img')]"
+                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 144,
-                                    XPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 145,
-                                    XPath = "//div[contains(@class, 'entry-image featured-image')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'entry-image featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 146,
-                                    XPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 147,
-                                    XPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 148,
-                                    XPath = "//div[contains(@class, 'img')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'img')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 150,
                                     ImageUrlParseStrategy = 1,
-                                    XPath = "//div[contains(@class, 'main-content')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'main-content')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 151,
-                                    XPath = "//div[contains(@class, 'article')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'article')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 152,
-                                    XPath = "//div[contains(@class, 'site-content')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'site-content')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 153,
                                     ImageUrlParseStrategy = 4,
-                                    XPath = "//div[contains(@class, 'content')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'content')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 154,
-                                    XPath = "//div[contains(@class, 'td-post-content')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'td-post-content')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 155,
-                                    XPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 156,
-                                    XPath = "//div[contains(@class, 'intro-image-over')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'intro-image-over')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 157,
-                                    XPath = "//main[contains(@class, 'main-content')]//img"
+                                    ImgElementXPath = "//main[contains(@class, 'main-content')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 158,
-                                    XPath = "//div[contains(@class, 'post-img')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'post-img')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 159,
-                                    XPath = "//div[contains(@class, 'news')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'news')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 160,
-                                    XPath = "//div[contains(@class, 'field-items')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'field-items')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 161,
-                                    ShouldImageUrlBeWebScraped = false,
-                                    XPath = "//figure[contains(@class, 'post-gallery')]//img"
+                                    ImgElementXPath = "//figure[contains(@class, 'post-gallery')]//img",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 162,
-                                    XPath = "//div[contains(@class, 'zox-post-main')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'zox-post-main')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 163,
-                                    XPath = "//div[contains(@class, 'content')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'content')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 164,
-                                    ShouldImageUrlBeWebScraped = false,
-                                    XPath = ""
+                                    ImgElementXPath = "",
+                                    ShouldImageUrlBeWebScraped = false
                                 },
                                 new
                                 {
                                     RssFeedId = 165,
-                                    XPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 166,
-                                    XPath = "//div[contains(@class, 'site-featured-image')]//img"
-                                },
-                                new
-                                {
-                                    RssFeedId = 170,
-                                    AttributeName = "data-lazy-src",
-                                    XPath = "//section[contains(@class, 'article-content')]//picture[contains(@class, 'wp-caption')]//img[@data-lazy-src]"
+                                    ImgElementXPath = "//div[contains(@class, 'site-featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 83,
-                                    XPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 96,
                                     ImageUrlParseStrategy = 2,
-                                    XPath = "//figure[contains(@class, 'img-container')]//img"
+                                    ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 168,
-                                    XPath = "//div[contains(@class, 'feature-img')]//img"
+                                    ImgElementXPath = "//div[contains(@class, 'feature-img')]//img"
                                 });
                         });
 
@@ -5018,12 +5007,6 @@ namespace Espresso.Persistence.Migrations
                                     RssFeedId = 166,
                                     CurrentSkip = 0,
                                     NumberOfSkips = 31
-                                },
-                                new
-                                {
-                                    RssFeedId = 170,
-                                    CurrentSkip = 0,
-                                    NumberOfSkips = 12
                                 },
                                 new
                                 {

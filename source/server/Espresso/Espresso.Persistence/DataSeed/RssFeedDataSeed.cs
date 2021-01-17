@@ -431,6 +431,13 @@ namespace Espresso.Persistence.DataSeed
                     requestType: RequestType.Normal
                 ),
 
+                new RssFeed(
+                    id: (int)RssFeedId.BitnoNet,
+                    url: "https://www.bitno.net/feed",
+                    newsPortalId: (int)NewsPortalId.BitnoNet,
+                    categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Browser
+                ),
             };
 
             builder.HasData(rssFeeds);

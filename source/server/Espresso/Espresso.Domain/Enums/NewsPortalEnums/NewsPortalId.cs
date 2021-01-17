@@ -246,5 +246,9 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         OgPortal = 122,
         [Display(Name = "Županjac.net")]
         Zupanjac = 123,
+        [Display(Name = "PRESS 032")]
+        Press032 = 124,
+        [Display(Name = "Bitno.net")]
+        BitnoNet = 125
     }
 }

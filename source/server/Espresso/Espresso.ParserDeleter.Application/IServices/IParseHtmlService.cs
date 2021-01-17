@@ -11,6 +11,9 @@ namespace Espresso.ParserDeleter.Application.IServices
 
         public string? GetText(string? html);
 
-        public string? GetImageUrlFromSrcAttribute(HtmlNodeCollection elementTags);
+        public string? GetImageUrlFromSrcAttribute(
+            HtmlNodeCollection elementTags,
+            string attributeName
+        );
     }
 }

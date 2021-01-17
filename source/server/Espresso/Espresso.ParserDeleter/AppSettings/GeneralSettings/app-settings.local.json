@@ -11,5 +11,15 @@
   "CronJobsConfiguration": {
     "DeleteArticlesCronExpression": "* * * * *",
     "ParseArticlesCronExpression": "* * * * *"
+  },
+  "HttpClientConfiguration": {
+    "LoadRssFeedsHttpClientConfiguration": {
+      "MaxRetries": 1,
+      "TimeoutInSeconds": 60
+    },
+    "ScrapeWebHttpClientConfiguration": {
+      "MaxRetries": 1,
+      "TimeoutInSeconds": 60
+    }
   }
 }

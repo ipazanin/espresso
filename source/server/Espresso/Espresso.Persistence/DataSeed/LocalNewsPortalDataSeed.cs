@@ -638,7 +638,17 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 10, 26, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Slavonija
-                ),                    
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.Press032,
+                    name: NewsPortalId.Press032.GetDisplayName(),
+                    baseUrl: "https://press032.com",
+                    iconUrl: $"Icons/{NewsPortalId.Press032}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2021, 1, 16, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Slavonija
+                ),                               
                 #endregion                                            
             };
 
