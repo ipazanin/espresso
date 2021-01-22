@@ -6,7 +6,7 @@ database-settings.local-production.json
 
 # Docker Compose
 database-environment.yml
-parser-environment.yml
+dashboard-environment.yml
 rabbitmq-environment.yml
 webapi-environment.yml
 

@@ -10,18 +10,18 @@ COPY nuget.config nuget.config
 COPY ["server/Espresso/Espresso.Application/Espresso.Application.csproj", "Espresso.Application/"]
 COPY ["server/Espresso/Espresso.Common/Espresso.Common.csproj", "Espresso.Common/"]
 COPY ["server/Espresso/Espresso.Domain/Espresso.Domain.csproj", "Espresso.Domain/"]
-COPY ["server/Espresso/Espresso.ParserDeleter.Application/Espresso.ParserDeleter.Application.csproj", "Espresso.ParserDeleter.Application/"]
-COPY ["server/Espresso/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj", "Espresso.ParserDeleter/"]
+COPY ["server/Espresso/Espresso.Dashboard.Application/Espresso.Dashboard.Application.csproj", "Espresso.Dashboard.Application/"]
+COPY ["server/Espresso/Espresso.Dashboard/Espresso.Dashboard.csproj", "Espresso.Dashboard/"]
 COPY ["server/Espresso/Espresso.Persistence/Espresso.Persistence.csproj", "Espresso.Persistence/"]
-RUN dotnet restore "Espresso.ParserDeleter/Espresso.ParserDeleter.csproj"
+RUN dotnet restore "Espresso.Dashboard/Espresso.Dashboard.csproj"
 
 COPY server/Espresso .
 
-WORKDIR /server/Espresso/Espresso.ParserDeleter
-RUN dotnet build "Espresso.ParserDeleter.csproj" -c Release -o /app/server/build
+WORKDIR /server/Espresso/Espresso.Dashboard
+RUN dotnet build "Espresso.Dashboard.csproj" -c Release -o /app/server/build
 
 FROM dotnet-builder AS dotnet-publisher
-RUN dotnet publish "Espresso.ParserDeleter.csproj" -c Release -o /app/server/publish
+RUN dotnet publish "Espresso.Dashboard.csproj" -c Release -o /app/server/publish
 
 FROM infer-sharp
 

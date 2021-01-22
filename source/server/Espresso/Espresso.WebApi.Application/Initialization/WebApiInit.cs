@@ -29,7 +29,7 @@ namespace Espresso.WebApi.Application.Initialization
 
         #region Fileds
         private readonly IMemoryCache _memoryCache;
-        private readonly IApplicationDatabaseContext _context;
+        private readonly IEspressoDatabaseContext _context;
         private readonly ILoggerService<WebApiInit> _loggerService;
         #endregion
 
@@ -42,7 +42,7 @@ namespace Espresso.WebApi.Application.Initialization
         /// <param name="loggerFactory"></param>
         public WebApiInit(
             IMemoryCache memoryCache,
-            IApplicationDatabaseContext context,
+            IEspressoDatabaseContext context,
             ILoggerService<WebApiInit> loggerService
         )
         {

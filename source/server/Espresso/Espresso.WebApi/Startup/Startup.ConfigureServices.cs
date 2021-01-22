@@ -12,7 +12,7 @@ using Espresso.Common.IServices;
 using Espresso.Common.Services;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Services;
-using Espresso.ParserDeleter.Application.Constants;
+using Espresso.Dashboard.Application.Constants;
 using Espresso.Persistence.Database;
 using Espresso.Persistence.IRepositories;
 using Espresso.Persistence.Repositories;
@@ -220,10 +220,10 @@ namespace Espresso.WebApi.Startup
         /// <returns></returns>
         private IServiceCollection AddPersistence(IServiceCollection services)
         {
-            services.AddDbContext<IApplicationDatabaseContext, ApplicationDatabaseContext>(options =>
+            services.AddDbContext<IEspressoDatabaseContext, EspressoDatabaseContext>(options =>
             {
                 options.UseSqlServer(
-                    connectionString: _webApiConfiguration.DatabaseConfiguration.ConnectionString,
+                    connectionString: _webApiConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString,
                     sqlServerOptionsAction: sqlServerOptions =>
                     {
                         sqlServerOptions.CommandTimeout(_webApiConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
@@ -235,7 +235,7 @@ namespace Espresso.WebApi.Startup
             });
 
             services.AddScoped<IDatabaseConnectionFactory>(
-                serviceProvider => new DatabaseConnectionFactory(_webApiConfiguration.DatabaseConfiguration.ConnectionString)
+                serviceProvider => new DatabaseConnectionFactory(_webApiConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString)
             );
             services.AddScoped<IApplicationDownloadRepository, ApplicationDownloadRepository>();
             services.AddScoped<IArticleCategoryRepository, ArticleCategoryRepository>();

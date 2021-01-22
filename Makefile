@@ -60,14 +60,23 @@ build::
 publish::
 	make -f scripts/make/backend.make publish	
 	
-database-update::
-	make -f scripts/make/backend.make database-update
+database-update-espresso-database::
+	make -f scripts/make/backend.make database-update-espresso-database
 
-migration-add::
-	make -f scripts/make/backend.make migration-add name=$(name)
+migration-add-espresso-database::
+	make -f scripts/make/backend.make migration-add-espresso-database name=$(name)
 
-migration-remove::
-	make -f scripts/make/backend.make migration-remove
+migration-remove-espresso-database::
+	make -f scripts/make/backend.make migration-remove-espresso-database
+
+database-update-identity-database::
+	make -f scripts/make/backend.make database-update-identity-database
+
+migration-add-identity-database::
+	make -f scripts/make/backend.make migration-add-identity-database name=$(name)
+
+migration-remove-identity-database::
+	make -f scripts/make/backend.make migration-remove-identity-database
 
 update::
 	make -f scripts/make/backend.make update
@@ -88,11 +97,11 @@ coverage:
 	make test-coverage verbosity=quiet
 	make create-coverage-report verbosity=quiet
 
-start-parser::
-	make -f scripts/make/local.make start-parser
+start-dashboard::
+	make -f scripts/make/backend.make start-dashboard
 
 start-webapi::
-	make -f scripts/make/local.make start-webapi
+	make -f scripts/make/backend.make start-webapi
 
 infer-csharp::
 	# make -f scripts/make/backend.make build

@@ -1,4 +1,4 @@
-namespace Espresso.ParserDeleter.Application.Constants
+namespace Espresso.Dashboard.Application.Constants
 {
     /// <summary>
     /// HttpClientConstants

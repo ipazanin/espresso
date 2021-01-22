@@ -22,7 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Espresso\Espresso.Domain\Espresso.Domain.csproj" />
     <ProjectReference Include="..\..\Espresso\Espresso.WebApi\Espresso.WebApi.csproj" />
-    <ProjectReference Include="..\..\Espresso\Espresso.ParserDeleter\Espresso.ParserDeleter.csproj" />
+    <ProjectReference Include="..\..\Espresso\Espresso.Dashboard\Espresso.Dashboard.csproj" />
   </ItemGroup>
 
 </Project>

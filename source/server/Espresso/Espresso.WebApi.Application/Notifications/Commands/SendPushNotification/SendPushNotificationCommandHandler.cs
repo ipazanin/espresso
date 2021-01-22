@@ -25,7 +25,7 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
         #endregion
 
         #region Fields
-        private readonly IApplicationDatabaseContext _espressoDatabaseContext;
+        private readonly IEspressoDatabaseContext _espressoDatabaseContext;
         private readonly IMemoryCache _memoryCache;
         private readonly IJsonService _jsonService;
         private readonly ISlackService _slackService;
@@ -34,7 +34,7 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
 
         #region Constructors
         public SendPushNotificationCommandHandler(
-            IApplicationDatabaseContext espressoDatabaseContext,
+            IEspressoDatabaseContext espressoDatabaseContext,
             IMemoryCache memoryCache,
             IJsonService jsonService,
             ISlackService slackService,
