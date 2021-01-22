@@ -71,26 +71,26 @@ function dotnet_update_packages() {
 
 function dotnet_restore_espresso(){
     dotnet restore ./source/server/Espresso/Espresso.WebApi.Application/Espresso.WebApi.Application.csproj
-    dotnet restore ./source/server/Espresso/Espresso.ParserDeleter.Application/Espresso.ParserDeleter.Application.csproj
+    dotnet restore ./source/server/Espresso/Espresso.Dashboard.Application/Espresso.Dashboard.Application.csproj
     dotnet restore ./source/server/Espresso/Espresso.Application/Espresso.Application.csproj
-    dotnet restore ./source/server/Espresso/Espresso.ParserDeleter.Application/Espresso.ParserDeleter.Application.csproj
+    dotnet restore ./source/server/Espresso/Espresso.Dashboard.Application/Espresso.Dashboard.Application.csproj
     dotnet restore ./source/server/Espresso/Espresso.Common/Espresso.Common.csproj
     dotnet restore ./source/server/Espresso/Espresso.Domain/Espresso.Domain.csproj
     dotnet restore ./source/server/Espresso/Espresso.Persistence/Espresso.Persistence.csproj
     dotnet restore ./source/server/Espresso/Espresso.WebApi/Espresso.WebApi.csproj
-    dotnet restore ./source/server/Espresso/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj
+    dotnet restore ./source/server/Espresso/Espresso.Dashboard/Espresso.Dashboard.csproj
 }
 
 function dotnet_update_packages_espresso(){
     dotnet_update_packages ./source/server/Espresso/Espresso.WebApi.Application/Espresso.WebApi.Application.csproj
-    dotnet_update_packages ./source/server/Espresso/Espresso.ParserDeleter.Application/Espresso.ParserDeleter.Application.csproj
+    dotnet_update_packages ./source/server/Espresso/Espresso.Dashboard.Application/Espresso.Dashboard.Application.csproj
     dotnet_update_packages ./source/server/Espresso/Espresso.Application/Espresso.Application.csproj
-    dotnet_update_packages ./source/server/Espresso/Espresso.ParserDeleter.Application/Espresso.ParserDeleter.Application.csproj
+    dotnet_update_packages ./source/server/Espresso/Espresso.Dashboard.Application/Espresso.Dashboard.Application.csproj
     dotnet_update_packages ./source/server/Espresso/Espresso.Common/Espresso.Common.csproj
     dotnet_update_packages ./source/server/Espresso/Espresso.Domain/Espresso.Domain.csproj
     dotnet_update_packages ./source/server/Espresso/Espresso.Persistence/Espresso.Persistence.csproj
     dotnet_update_packages ./source/server/Espresso/Espresso.WebApi/Espresso.WebApi.csproj
-    dotnet_update_packages ./source/server/Espresso/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj
+    dotnet_update_packages ./source/server/Espresso/Espresso.Dashboard/Espresso.Dashboard.csproj
 }
 
 # restore

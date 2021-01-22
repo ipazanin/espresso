@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Espresso.Persistence.Infrastructure
 {
-    public class DatabaseContextFactory : DesignTimeDatabaseContextFactoryBase<ApplicationDatabaseContext>
+    public class DatabaseContextFactory : DesignTimeDatabaseContextFactoryBase<EspressoDatabaseContext>
     {
-        protected override ApplicationDatabaseContext CreateNewInstance(DbContextOptions<ApplicationDatabaseContext> options)
+        protected override EspressoDatabaseContext CreateNewInstance(DbContextOptions<EspressoDatabaseContext> options)
         {
-            return new ApplicationDatabaseContext(options);
+            return new EspressoDatabaseContext(options);
         }
     }
 }

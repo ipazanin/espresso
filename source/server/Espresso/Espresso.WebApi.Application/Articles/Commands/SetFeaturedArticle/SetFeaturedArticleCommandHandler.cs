@@ -16,13 +16,13 @@ namespace Espresso.WebApi.Application.Articles.Commands.SetFeaturedArticle
     {
         #region Fields
         private readonly IMemoryCache _memoryCache;
-        private readonly IApplicationDatabaseContext _context;
+        private readonly IEspressoDatabaseContext _context;
         #endregion
 
         #region Constructors
         public SetFeaturedArticleCommandHandler(
             IMemoryCache memoryCache,
-            IApplicationDatabaseContext context
+            IEspressoDatabaseContext context
         )
         {
             _memoryCache = memoryCache;

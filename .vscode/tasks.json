@@ -2,31 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "build",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "build",
-        "${workspaceFolder}/source/server/Espresso/Espresso.WebApi/Espresso.WebApi.csproj",
-        "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
-      ],
-      "problemMatcher": "$msCompile"
-    },
-    {
-      "label": "publish",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "publish",
-        "${workspaceFolder}/source/server/Espresso/Espresso.WebApi/Espresso.WebApi.csproj",
-        "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
-      ],
-      "problemMatcher": "$msCompile"
-    },
-    {
-      "label": "watch",
+      "label": "watch-webapi",
       "command": "dotnet",
       "type": "process",
       "args": [
@@ -63,24 +39,24 @@
       "problemMatcher": "$msCompile"
     },
     {
-      "label": "build-parserdeleter",
+      "label": "build-dashboard",
       "command": "dotnet",
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/source/server/Espresso/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj",
+        "${workspaceFolder}/source/server/Espresso/Espresso.Dashboard/Espresso.Dashboard.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
       "problemMatcher": "$msCompile"
     },
     {
-      "label": "publish-parserdeleter",
+      "label": "publish-dashboard",
       "command": "dotnet",
       "type": "process",
       "args": [
         "publish",
-        "${workspaceFolder}/source/server/Espresso/Espresso.ParserDeleter/Espresso.ParserDeleter.csproj",
+        "${workspaceFolder}/source/server/Espresso/Espresso.Dashboard/Espresso.Dashboard.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],

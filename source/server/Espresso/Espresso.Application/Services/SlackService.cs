@@ -15,7 +15,7 @@ using System.Linq;
 using Espresso.Application.DataTransferObjects.SlackDataTransferObjects;
 using Espresso.Application.Models;
 using Espresso.Common.IServices;
-using Espresso.ParserDeleter.Application.Constants;
+using Espresso.Dashboard.Application.Constants;
 
 namespace Espresso.Application.Services
 {

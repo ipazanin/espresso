@@ -11,13 +11,13 @@ namespace Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplic
     public class CreateApplicationDownloadCommanHandler : IRequestHandler<CreateApplicationDownloadCommand>
     {
         #region Fields
-        private readonly IApplicationDatabaseContext _context;
+        private readonly IEspressoDatabaseContext _context;
         private readonly ApplicationInformation _applicationInformation;
         #endregion
 
         #region Constructors
         public CreateApplicationDownloadCommanHandler(
-            IApplicationDatabaseContext context,
+            IEspressoDatabaseContext context,
             ApplicationInformation applicationInformation
         )
         {

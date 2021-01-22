@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  espresso-dashboard:
+    container_name: espresso-dashboard
+    image: docker.pkg.github.com/espresso-news/espresso-backend/espresso-dashboard
+    restart: unless-stopped
+    build:
+      context: ../../source
+      dockerfile: server/Espresso/Espresso.Dashboard/Dockerfile
+    networks:
+      - espresso
+
+networks:
+  espresso:

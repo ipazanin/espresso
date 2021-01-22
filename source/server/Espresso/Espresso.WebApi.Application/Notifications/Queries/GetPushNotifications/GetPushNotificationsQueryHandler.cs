@@ -10,10 +10,10 @@ namespace Espresso.WebApi.Application.Notifications.Queries.GetPushNotifications
 {
     public class GetPushNotificationsQueryHandler : IRequestHandler<GetPushNotificationsQuery, GetPushNotificationsQueryResponse>
     {
-        private readonly IApplicationDatabaseContext _espressoDatabaseContext;
+        private readonly IEspressoDatabaseContext _espressoDatabaseContext;
 
         public GetPushNotificationsQueryHandler(
-            IApplicationDatabaseContext espressoDatabaseContext
+            IEspressoDatabaseContext espressoDatabaseContext
         )
         {
             _espressoDatabaseContext = espressoDatabaseContext;

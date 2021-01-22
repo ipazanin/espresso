@@ -17,7 +17,7 @@ namespace Espresso.WebApi.Configuration
         /// 
         /// </summary>
         /// <returns></returns>
-        public string ConnectionString => _configuration.GetValue<string>("DefaultConnectionString");
+        public string EspressoDatabaseConnectionString => _configuration.GetValue<string>("EspressoDatabaseConnectionString");
 
         /// <summary>
         /// 

@@ -17,14 +17,14 @@ namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticle
     {
         #region Fields
         private readonly IMemoryCache _memoryCache;
-        private readonly IApplicationDatabaseContext _context;
+        private readonly IEspressoDatabaseContext _context;
         private readonly ITrendingScoreService _trendingScoreService;
         #endregion
 
         #region Constructors
         public IncrementNumberOfClicksCommandHandler(
             IMemoryCache memoryCache,
-            IApplicationDatabaseContext context,
+            IEspressoDatabaseContext context,
             ITrendingScoreService trendingScoreService
         )
         {

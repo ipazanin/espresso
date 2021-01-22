@@ -4,7 +4,7 @@
     {
         Undefined = 0,
         CustomExceptionFilterAttribute = 1,
-        ParserInit = 17,
+        DashboardEspressoDatabaseInit = 17,
         RssFeedLoading = 19,
         CreateArticle = 20,
         SendNewAndUpdatedArticlesRequest = 21,

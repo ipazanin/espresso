@@ -1,7 +1,0 @@
-﻿{
-  "DatabaseConfiguration": {
-    "DefaultConnectionString": "DefaultConnectionStringPlaceholder",
-    "EnableDetailedErrors": false,
-    "EnableSensitiveDataLogging": false
-  }
-}

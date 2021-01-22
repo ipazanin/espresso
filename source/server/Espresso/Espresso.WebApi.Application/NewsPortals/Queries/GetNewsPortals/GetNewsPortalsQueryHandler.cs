@@ -11,12 +11,12 @@ namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals
     public class GetNewsPortalsQueryHandler : IRequestHandler<GetNewsPortalsQuery, GetNewsPortalsQueryResponse>
     {
         #region Fields
-        private readonly IApplicationDatabaseContext _context;
+        private readonly IEspressoDatabaseContext _context;
         #endregion
 
         #region Constructors
         public GetNewsPortalsQueryHandler(
-            IApplicationDatabaseContext context
+            IEspressoDatabaseContext context
         )
         {
             _context = context;
