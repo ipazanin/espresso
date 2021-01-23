@@ -168,6 +168,9 @@
         OgPortal = 167,
         Zupanjac = 168,
         Press032 = 169,
-        BitnoNet = 170
+        BitnoNet = 170,
+        PloceOnline = 171,
+        KaPortalHr = 172,
+        RadioMreznica = 173
     }
 }

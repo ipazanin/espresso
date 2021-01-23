@@ -453,6 +453,27 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal
                 ),
+                new RssFeed(
+                    id: (int)RssFeedId.PloceOnline,
+                    url: "https://ploce.com.hr/feed",
+                    newsPortalId: (int)NewsPortalId.PloceOnline,
+                    categoryId: (int)CategoryId.Local,
+                    requestType: RequestType.Normal
+                ),
+                new RssFeed(
+                    id: (int)RssFeedId.KaPortalHr,
+                    url: "https://kaportal.net.hr/feed",
+                    newsPortalId: (int)NewsPortalId.KaPortalHr,
+                    categoryId: (int)CategoryId.Local,
+                    requestType: RequestType.Normal
+                ),
+                new RssFeed(
+                    id: (int)RssFeedId.RadioMreznica,
+                    url: "https://radio-mreznica.hr/feed",
+                    newsPortalId: (int)NewsPortalId.RadioMreznica,
+                    categoryId: (int)CategoryId.Local,
+                    requestType: RequestType.Normal
+                ),
             };
 
             builder.HasData(localRssFeeds);
@@ -495,6 +516,13 @@ namespace Espresso.Persistence.DataSeed
                 NumberOfSkips = 7,
                 CurrentSkip = 0
             });
+
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.PloceOnline,
+                NumberOfSkips = 3,
+                CurrentSkip = 0
+            });
         }
 
         private static void SeedLocalImageUrlParseConfiguration(
@@ -518,6 +546,12 @@ namespace Espresso.Persistence.DataSeed
             {
                 RssFeedId = (int)RssFeedId.Zupanjac,
                 XPath = "//div[contains(@class, 'feature-img')]//img"
+            });
+
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.KaPortalHr,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.FromFirstElementExtension
             });
         }
 
