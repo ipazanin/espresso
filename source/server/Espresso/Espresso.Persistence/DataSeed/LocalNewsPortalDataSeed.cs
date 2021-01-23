@@ -182,7 +182,17 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija
-                ),                                                                                                                                                                                                                                       
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.PloceOnline,
+                    name: NewsPortalId.PloceOnline.GetDisplayName(),
+                    baseUrl: "https://ploce.com.hr",
+                    iconUrl: $"Icons/{NewsPortalId.PloceOnline}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2021, 1, 23, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Dalmacija
+                ),                                                                                                                                                                                                                                                       
                 #endregion
 
                 #region Istra i Kvarner
@@ -421,7 +431,27 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Zagreb
-                ),                                                                                               
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.KaPortalHr,
+                    name: NewsPortalId.KaPortalHr.GetDisplayName(),
+                    baseUrl: "https://kaportal.net.hr",
+                    iconUrl: $"Icons/{NewsPortalId.KaPortalHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2021, 1, 23, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Zagreb
+                ),
+                new NewsPortal(
+                    id:(int)NewsPortalId.RadioMreznica,
+                    name: NewsPortalId.RadioMreznica.GetDisplayName(),
+                    baseUrl: "https://radio-mreznica.hr",
+                    iconUrl: $"Icons/{NewsPortalId.RadioMreznica}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2021, 1, 23, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Local,
+                    regionId: (int)RegionId.Zagreb
+                ),                                                                                                                               
                 #endregion
 
                 #region Sjeverna Hrvatska

@@ -249,6 +249,12 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         [Display(Name = "PRESS 032")]
         Press032 = 124,
         [Display(Name = "Bitno.net")]
-        BitnoNet = 125
+        BitnoNet = 125,
+        [Display(Name = "Ploče Online")]
+        PloceOnline = 126,
+        [Display(Name = "KAportal.hr")]
+        KaPortalHr = 127,
+        [Display(Name = "Radio Mrežnica")]
+        RadioMreznica = 128
     }
 }

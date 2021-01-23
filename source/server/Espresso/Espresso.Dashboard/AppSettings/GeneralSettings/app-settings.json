@@ -3,7 +3,7 @@
     "MajorVersion": 2,
     "MaxAgeOfArticlesInDays": 5,
     "MinorVersion": 1,
-    "Version": "2.1.3"
+    "Version": "2.1.4"
   },
   "ArticleSimilarityConfiguration": {
     "ArticlePublishDateTimeDiferenceThresholdInHours": 24,

@@ -12,7 +12,7 @@ namespace Espresso.Domain.Enums.RegionEnums
         Istra = 3,
         [Display(Name = "Lika")]
         Lika = 4,
-        [Display(Name = "Zagreb")]
+        [Display(Name = "Zagreb i okolica")]
         Zagreb = 5,
         [Display(Name = "Sjeverna Hrvatska")]
         SjevernaHrvatska = 6,

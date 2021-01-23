@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Espresso.Persistence.Migrations
+namespace Espresso.Persistence.EspressoDatabaseMigrations
 {
     [DbContext(typeof(EspressoDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210123150336_IPazanin_ChangedKaPortalImageUrlParseStrategy")]
+    partial class IPazanin_ChangedKaPortalImageUrlParseStrategy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

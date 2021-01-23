@@ -76,9 +76,11 @@ namespace Espresso.Dashboard.Application.Services
                                 Links = syndicationItem.Links?.Select(syndicationLink => syndicationLink.Uri),
                                 Title = syndicationItem.Title?.Text,
                                 Summary = syndicationItem.Summary?.Text,
-                                Content = (syndicationItem.Content is TextSyndicationContent ?
-                                    syndicationItem.Content as TextSyndicationContent
-                                    : null)
+                                Content = (
+                                        syndicationItem.Content is TextSyndicationContent ?
+                                        syndicationItem.Content as TextSyndicationContent
+                                        : null
+                                    )
                                     ?.Text,
                                 PublishDateTime = syndicationItem.PublishDate.DateTime,
                                 ElementExtensions = syndicationItem
