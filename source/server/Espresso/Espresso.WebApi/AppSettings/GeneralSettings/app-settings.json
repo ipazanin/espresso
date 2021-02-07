@@ -13,9 +13,9 @@
   },
   "DateTimeConfiguration": {
     "MaxAgeOfArticlesInDays": 5,
-    "MaxAgeOfFeaturedArticlesInHours": 24,
+    "MaxAgeOfFeaturedArticlesInHours": 6,
     "MaxAgeOfNewNewsPortalInDays": 60,
-    "MaxAgeOfTrendingArticlesInHours": 24
+    "MaxAgeOfTrendingArticlesInHours": 6
   },
   "HttpClientConfiguration": {
     "SlackHttpClientConfiguration": {
