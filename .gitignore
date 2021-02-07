@@ -16,7 +16,7 @@ firebase-key.json
 # VS Code Launch Json
 .vscode/launch.json
 
-# Build results
+# .NET Build results
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/

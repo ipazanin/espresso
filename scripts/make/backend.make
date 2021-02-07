@@ -3,7 +3,7 @@ PersistenceProjectPath="source/server/Espresso/Espresso.Persistence/Espresso.Per
 DefaultVerbosity="minimal" # verbosity levels: quiet, minimal, normal, detailed, diagnostic
 LocalEnvironmentName="local"
 DefaultConfiguration="Release" # Configurations: Release, Debug
-DebugConfiguration="Debug" 
+DebugConfiguration="Debug"
 
 WebApiProjectPath="source/server/Espresso/Espresso.WebApi/Espresso.WebApi.csproj"
 ParserProjectPath="source/server/Espresso/Espresso.Dashboard/Espresso.Dashboard.csproj"
@@ -148,7 +148,7 @@ else
 	/p:CoverletOutputFormat=cobertura \
 	$(SolutionPath)
 endif
-	
+
 create-coverage-report::
 	sudo reportgenerator \
 	"-reports:$(UnitTestsDirectory)/*/*/*.xml" \
@@ -159,7 +159,6 @@ infer-csharp::
 	docker-compose -f ./scripts/analysis/infer-csharp.yml up --build
 
 start-dashboard::
-	make compose-database arg1=up arg2="-d"
 ifeq ($(strip $(arg)),)
 	ASPNETCORE_ENVIRONMENT=local \
     DATABASE_NAME=local \
@@ -171,26 +170,26 @@ ifeq ($(strip $(arg)),)
     RABBITMQCONFIGURATION__USERNAME='ipazanin' \
     RABBITMQCONFIGURATION__PASSWORD='Opatija1' \
     RABBITMQCONFIGURATION__HOSTNAME='localhost' \
+    APPCONFIGURATION__ADMINUSERPASSWORD="Opatija123" \
 	dotnet run --project $(ParserProjectPath) --urls $(DashboardUrls) --configuration $(ReleaseConfiguration)
-else ifeq ($(arg), watch)
-    ASPNETCORE_ENVIRONMENT=local \
-    DATABASE_NAME=local \
-    APIKEYSCONFIGURATION__PARSER='0161565a-bc3d-4595-b694-d9a200f28d63' \
-    DATABASECONFIGURATION__ESPRESSODATABASECONNECTIONSTRING=$(EspressoDatabaseConnectionString) \
-    DATABASECONFIGURATION__ESPRESSOIDENTITYDATABASECONNECTIONSTRING=$(EspressoIdentityDatabaseConnectionString) \
-    APPCONFIGURATION__SLACKWEBHOOK=$(SlackWebHook) \
-    APPCONFIGURATION__SERVERURL='http://localhost:8000' \
-    RABBITMQCONFIGURATION__USERNAME="ipazanin" \
-    RABBITMQCONFIGURATION__PASSWORD="Opatija1" \
-    RABBITMQCONFIGURATION__HOSTNAME="localhost" \
-	dotnet watch --project $(ParserProjectPath) run --urls $(DashboardUrls)  --configuration $(DebugConfiguration)
 else
-	echo "Invalid Argument. Accepted arguments: {empty}, watch"
+	ASPNETCORE_ENVIRONMENT=local \
+	DATABASE_NAME=local \
+	APIKEYSCONFIGURATION__PARSER='0161565a-bc3d-4595-b694-d9a200f28d63' \
+	DATABASECONFIGURATION__ESPRESSODATABASECONNECTIONSTRING=$(EspressoDatabaseConnectionString) \
+	DATABASECONFIGURATION__ESPRESSOIDENTITYDATABASECONNECTIONSTRING=$(EspressoIdentityDatabaseConnectionString) \
+	APPCONFIGURATION__SLACKWEBHOOK=$(SlackWebHook) \
+	APPCONFIGURATION__SERVERURL='http://localhost:8000' \
+	RABBITMQCONFIGURATION__USERNAME="ipazanin" \
+	RABBITMQCONFIGURATION__PASSWORD="Opatija1" \
+	RABBITMQCONFIGURATION__HOSTNAME="localhost" \
+    APPCONFIGURATION__ADMINUSERPASSWORD="Opatija123" \
+	dotnet watch --project $(ParserProjectPath) run --urls $(DashboardUrls) --configuration $(DebugConfiguration)
 endif
 
 start-webapi::
 	make compose-database arg1=up arg2="-d"
-ifeq ($(strip $(arg)),)	
+ifeq ($(strip $(arg)),)
 	ASPNETCORE_ENVIRONMENT=local \
     DATABASE_NAME=local \
     APIKEYSCONFIGURATION__ANDROID='cfb490b1-b392-49a8-aa07-4c0d0409312f' \

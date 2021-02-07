@@ -1,7 +1,7 @@
 ﻿using Espresso.Common.Enums;
 using Espresso.Dashboard.Application.Initialization;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+using Espresso.Application.Middleware.SecurityHeaders;
 
 namespace Espresso.Dashboard.Startup
 {
@@ -30,14 +30,24 @@ namespace Espresso.Dashboard.Startup
                 app.UseHsts();
             }
 
+            app.UseSecurityHeadersMiddleware(securityHeadersBuilder =>
+            {
+                securityHeadersBuilder.AddDefaultSecurePolicy();
+            });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapBlazorHub();
+                endpoints.MapHealthChecks("/health");
                 endpoints.MapFallbackToPage("/_Host");
             });
         }

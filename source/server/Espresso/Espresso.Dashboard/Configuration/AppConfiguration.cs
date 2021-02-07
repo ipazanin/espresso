@@ -29,7 +29,7 @@ namespace Espresso.Dashboard.Configuration
 
         public string SlackWebHook => _configuration.GetValue<string>("SlackWebHook");
 
-        public int MaxHttpHandlerRetries => _configuration.GetValue<int>("MaxHttpHandlerRetries");
+        public string AdminUserPassword => _configuration.GetValue<string>("AdminUserPassword");
         #endregion
 
         #region Constructors

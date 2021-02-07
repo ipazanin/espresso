@@ -12,7 +12,7 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
-using Espresso.Application.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace Espresso.Dashboard.Application.Initialization
 {
@@ -25,6 +25,9 @@ namespace Espresso.Dashboard.Application.Initialization
         private readonly IMemoryCache _memoryCache;
         private readonly IEspressoDatabaseContext _context;
         private readonly IEspressoIdentityDatabaseContext _espressoIdentityContext;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly string _adminUserPassword;
         private readonly ILoggerService<DashboardInit> _loggerService;
         #endregion
 
@@ -39,12 +42,18 @@ namespace Espresso.Dashboard.Application.Initialization
             IMemoryCache memoryCache,
             IEspressoDatabaseContext context,
             IEspressoIdentityDatabaseContext espressoIdentityContext,
+            RoleManager<IdentityRole> roleManager,
+            UserManager<IdentityUser> userManager,
+            string adminUserPassword,
             ILoggerService<DashboardInit> loggerService
         )
         {
             _memoryCache = memoryCache;
             _context = context;
             _espressoIdentityContext = espressoIdentityContext;
+            _roleManager = roleManager;
+            _userManager = userManager;
+            _adminUserPassword = adminUserPassword;
             _loggerService = loggerService;
         }
         #endregion
@@ -52,11 +61,11 @@ namespace Espresso.Dashboard.Application.Initialization
         #region Methods
         public async Task InitParserDeleter()
         {
-            await InitEspressoDatabase();
+            await InitEspressoDatabaseAndMemoryCache();
             await InitEspressoIdentityDatabase();
         }
 
-        private async Task InitEspressoDatabase()
+        private async Task InitEspressoDatabaseAndMemoryCache()
         {
             var isInitialized = _memoryCache.Get<IEnumerable<NewsPortal>?>(key: MemoryCacheConstants.NewsPortalKey) != null;
             if (isInitialized)
@@ -170,6 +179,31 @@ namespace Espresso.Dashboard.Application.Initialization
         private async Task InitEspressoIdentityDatabase()
         {
             await _espressoIdentityContext.Database.MigrateAsync();
+            if (!await _roleManager.RoleExistsAsync(roleName: RoleConstants.AdminRoleName))
+            {
+                var adminRole = new IdentityRole(
+                    roleName: RoleConstants.AdminRoleName
+                );
+                await _roleManager.CreateAsync(role: adminRole);
+            }
+
+            var adminUserEmail = "ivan.pazanin1996@gmail.com";
+            if (!await _userManager.Users.AnyAsync(user => user.Email == adminUserEmail))
+            {
+                var adminUser = new IdentityUser
+                {
+                    Email = "ivan.pazanin1996@gmail.com",
+                    NormalizedEmail = "IVAN.PAZANIN1996@GMAIL.COM",
+                    UserName = "ivan.pazanin1996@gmail.com",
+                    NormalizedUserName = "IVAN.PAZANIN1996@GMAIL.COM",
+                    EmailConfirmed = true,
+                    SecurityStamp = Guid.NewGuid().ToString("D"),
+                };
+                var identityResult = await _userManager.CreateAsync(
+                    user: adminUser,
+                    password: _adminUserPassword
+                );
+            }
         }
         #endregion
     }

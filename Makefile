@@ -98,10 +98,10 @@ coverage:
 	make create-coverage-report verbosity=quiet
 
 start-dashboard::
-	make -f scripts/make/backend.make start-dashboard
+	make -f scripts/make/backend.make start-dashboard arg=$(arg) 
 
 start-webapi::
-	make -f scripts/make/backend.make start-webapi
+	make -f scripts/make/backend.make start-webapi arg=$(arg)
 
 infer-csharp::
 	# make -f scripts/make/backend.make build

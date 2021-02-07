@@ -1,0 +1,12 @@
+@inherits PaginationBase;
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        @foreach (var pagingLink in PagingLinks)
+        {
+            <li @onclick=@(() => OnSelectedPage(pagingLink)) style="cursor: pointer;" class=@(GetClass(pagingLink))>
+                <span class="page-link" href="#">@pagingLink.Text</span>
+            </li>
+        }
+    </ul>
+</nav>
