@@ -4,14 +4,16 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Espresso.Persistence.Migrations
+namespace Espresso.Persistence.EspressoDatabaseMigrations
 {
     [DbContext(typeof(EspressoDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210220144211_IPazanin_UpdatedIndexAmpConfiguration")]
+    partial class IPazanin_UpdatedIndexAmpConfiguration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -4049,31 +4051,31 @@ namespace Espresso.Persistence.Migrations
                                 {
                                     RssFeedId = 1,
                                     HasAmpArticles = true,
-                                    TemplateUrl = "https://www.index.hr/mobile/clanak.aspx?id={0}"
+                                    TemplateUrl = "https://www.index.hr/mobile/clanak?id={0}"
                                 },
                                 new
                                 {
                                     RssFeedId = 2,
                                     HasAmpArticles = true,
-                                    TemplateUrl = "https://www.index.hr/mobile/clanak.aspx?id={0}"
+                                    TemplateUrl = "https://www.index.hr/mobile/clanak?id={0}"
                                 },
                                 new
                                 {
                                     RssFeedId = 4,
                                     HasAmpArticles = true,
-                                    TemplateUrl = "https://www.index.hr/mobile/clanak.aspx?id={0}"
+                                    TemplateUrl = "https://www.index.hr/mobile/clanak?id={0}"
                                 },
                                 new
                                 {
                                     RssFeedId = 3,
                                     HasAmpArticles = true,
-                                    TemplateUrl = "https://www.index.hr/mobile/clanak.aspx?id={0}"
+                                    TemplateUrl = "https://www.index.hr/mobile/clanak?id={0}"
                                 },
                                 new
                                 {
                                     RssFeedId = 5,
                                     HasAmpArticles = true,
-                                    TemplateUrl = "https://www.index.hr/mobile/clanak.aspx?id={0}"
+                                    TemplateUrl = "https://www.index.hr/mobile/clanak?id={0}"
                                 },
                                 new
                                 {
