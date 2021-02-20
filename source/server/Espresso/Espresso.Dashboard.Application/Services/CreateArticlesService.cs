@@ -14,6 +14,7 @@ using Espresso.Domain.ValueObjects.ArticleValueObjects;
 using Espresso.Dashboard.Application.IServices;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
+using Espresso.Domain.Enums.NewsPortalEnums;
 
 namespace Espresso.Dashboard.Application.Services
 {
@@ -197,7 +198,7 @@ namespace Espresso.Dashboard.Application.Services
                 return null;
             }
 
-            var articleId = $"{itemId[(itemId.IndexOf("id=") + 3)..]}/";
+            var articleId = $"{itemId[(itemId.IndexOf("id=") + 3)..]}";
             var urlSegments = itemLinks.FirstOrDefault()?.Segments ?? Array.Empty<string>();
 
             var firstArticleSegment = urlSegments.Length < 2 ? "" : urlSegments[1].ToLower();
