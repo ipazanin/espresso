@@ -23,31 +23,31 @@ namespace Espresso.Persistence.DataSeed
             {
                 RssFeedId = (int)RssFeedId.Index_Vijesti,
                 HasAmpArticles = true,
-                TemplateUrl = "https://amp.index.hr/article/{0}{3}"
+                TemplateUrl = "https://www.index.hr/mobile/clanak.aspx?id={0}"
             });
             ampConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Index_Sport,
                 HasAmpArticles = true,
-                TemplateUrl = "https://amp.index.hr/article/{0}{3}"
+                TemplateUrl = "https://www.index.hr/mobile/clanak.aspx?id={0}"
             });
             ampConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Index_Rogue,
                 HasAmpArticles = true,
-                TemplateUrl = "https://amp.index.hr/article/{0}{3}"
+                TemplateUrl = "https://www.index.hr/mobile/clanak.aspx?id={0}"
             });
             ampConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Index_Magazin,
                 HasAmpArticles = true,
-                TemplateUrl = "https://amp.index.hr/article/{0}{3}"
+                TemplateUrl = "https://www.index.hr/mobile/clanak.aspx?id={0}"
             });
             ampConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Index_Auto,
                 HasAmpArticles = true,
-                TemplateUrl = "https://amp.index.hr/article/{0}{3}"
+                TemplateUrl = "https://www.index.hr/mobile/clanak.aspx?id={0}"
             });
 
 
