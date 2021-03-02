@@ -13,8 +13,12 @@ webapi-environment.yml
 # Firebase OAuth Configuration
 firebase-key.json
 
-# VS Code Launch Json
+# Launch Configuration
 .vscode/launch.json
+launchSettings.json
+
+# VS
+.vs/
 
 # .NET Build results
 [Dd]ebug/

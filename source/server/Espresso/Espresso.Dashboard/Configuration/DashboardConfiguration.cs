@@ -5,6 +5,7 @@ namespace Espresso.Dashboard.Configuration
     public class DashboardConfiguration : IDashboardConfiguration
     {
         #region Properties
+
         public ApiKeysConfiguration ApiKeysConfiguration { get; }
         public AppConfiguration AppConfiguration { get; }
         public DatabaseConfiguration DatabaseConfiguration { get; }
@@ -16,9 +17,12 @@ namespace Espresso.Dashboard.Configuration
         public HttpClientConfiguration LoadRssFeedsHttpClientConfiguration { get; }
         public HttpClientConfiguration ScrapeWebHttpClientConfiguration { get; }
         public SystemTextJsonSerializerConfiguration SystemTextJsonSerializerConfiguration { get; }
+        public JwtConfiguration JwtConfiguration { get; }
+
         #endregion
 
         #region Constructors
+
         public DashboardConfiguration(IConfiguration configuration)
         {
             ApiKeysConfiguration = new ApiKeysConfiguration(configuration.GetSection("ApiKeysConfiguration"));
@@ -32,7 +36,9 @@ namespace Espresso.Dashboard.Configuration
             LoadRssFeedsHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:LoadRssFeedsHttpClientConfiguration"));
             ScrapeWebHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:ScrapeWebHttpClientConfiguration"));
             SystemTextJsonSerializerConfiguration = new SystemTextJsonSerializerConfiguration(configuration.GetSection("SystemTextJsonSerializerConfiguration"));
+            JwtConfiguration = new JwtConfiguration(configuration.GetSection("JwtConfiguration"));
         }
+
         #endregion
     }
 }
