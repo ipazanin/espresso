@@ -13,5 +13,6 @@
         public HttpClientConfiguration LoadRssFeedsHttpClientConfiguration { get; }
         public HttpClientConfiguration ScrapeWebHttpClientConfiguration { get; }
         public SystemTextJsonSerializerConfiguration SystemTextJsonSerializerConfiguration { get; }
+        public JwtConfiguration JwtConfiguration { get; }
     }
 }

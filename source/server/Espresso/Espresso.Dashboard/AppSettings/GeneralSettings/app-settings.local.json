@@ -21,5 +21,9 @@
       "MaxRetries": 1,
       "TimeoutInSeconds": 60
     }
+  },
+  "JwtConfiguration": {
+    "Issuers": ["localhost:9000"],
+    "Audiences": ["localhost:9000"]
   }
 }

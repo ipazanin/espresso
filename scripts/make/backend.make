@@ -1,4 +1,5 @@
 SolutionPath="source/server/Espresso/Espresso.sln"
+NugetConfigPath="source/server/Espresso/nuget.config"
 PersistenceProjectPath="source/server/Espresso/Espresso.Persistence/Espresso.Persistence.csproj"
 DefaultVerbosity="minimal" # verbosity levels: quiet, minimal, normal, detailed, diagnostic
 LocalEnvironmentName="local"
@@ -12,6 +13,7 @@ DashboardUrls="http://localhost:9000"
 ReleaseConfiguration="Release"
 DebugConfiguration="Debug"
 
+AdminUserPassword="Opatija123"
 SlackWebHook="https://hooks.slack.com/services/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"
 EspressoDatabaseConnectionString="Server=localhost,1433;Database=EspressoDb;Application Name=Espresso;User=sa;Password=Opatija1;"
 EspressoIdentityDatabaseConnectionString="Server=localhost,1433;Database=EspressoIdentityDb;Application Name=EspressoIdentity;User=sa;Password=Opatija1;"
@@ -25,6 +27,8 @@ EspressoDatabaseContextName="EspressoDatabaseContext"
 EspressoIdentityDatabaseContextName="IdentityDatabaseContext"
 EspressoDatabaseMigrationsFolder="EspressoDatabaseMigrations"
 EspressoIdentityDatabaseMigrationsFolder="IdentityDatabaseMigrations"
+
+LocalLaunchProfile='local'
 
 list::
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | \
@@ -40,6 +44,7 @@ ifeq ($(strip $(verbosity)),)
 	dotnet build \
 	--configuration $(DefaultConfiguration) \
 	--verbosity $(DefaultVerbosity) \
+    --configfile $(NugetConfigPath) \
 	$(SolutionPath)
 else
 	dotnet build \
@@ -119,7 +124,7 @@ update::
 	./scripts/update.sh
 
 restore::
-	dotnet restore $(SolutionPath)
+	dotnet restore --configfile $(NugetConfigPath) $(SolutionPath)
 
 test::
 ifeq ($(strip $(verbosity)),)
@@ -160,31 +165,9 @@ infer-csharp::
 
 start-dashboard::
 ifeq ($(strip $(arg)),)
-	ASPNETCORE_ENVIRONMENT=local \
-    DATABASE_NAME=local \
-    APIKEYSCONFIGURATION__PARSER='0161565a-bc3d-4595-b694-d9a200f28d63' \
-    DATABASECONFIGURATION__ESPRESSODATABASECONNECTIONSTRING=$(EspressoDatabaseConnectionString) \
-    DATABASECONFIGURATION__ESPRESSOIDENTITYDATABASECONNECTIONSTRING=$(EspressoIdentityDatabaseConnectionString) \
-    APPCONFIGURATION__SLACKWEBHOOK=$(SlackWebHook) \
-    APPCONFIGURATION__SERVERURL='http://localhost:8000' \
-    RABBITMQCONFIGURATION__USERNAME='ipazanin' \
-    RABBITMQCONFIGURATION__PASSWORD='Opatija1' \
-    RABBITMQCONFIGURATION__HOSTNAME='localhost' \
-    APPCONFIGURATION__ADMINUSERPASSWORD="Opatija123" \
-	dotnet run --project $(ParserProjectPath) --urls $(DashboardUrls) --configuration $(ReleaseConfiguration)
+	dotnet run --project $(ParserProjectPath) --configuration $(ReleaseConfiguration) --launch-profile $(LocalLaunchProfile)
 else
-	ASPNETCORE_ENVIRONMENT=local \
-	DATABASE_NAME=local \
-	APIKEYSCONFIGURATION__PARSER='0161565a-bc3d-4595-b694-d9a200f28d63' \
-	DATABASECONFIGURATION__ESPRESSODATABASECONNECTIONSTRING=$(EspressoDatabaseConnectionString) \
-	DATABASECONFIGURATION__ESPRESSOIDENTITYDATABASECONNECTIONSTRING=$(EspressoIdentityDatabaseConnectionString) \
-	APPCONFIGURATION__SLACKWEBHOOK=$(SlackWebHook) \
-	APPCONFIGURATION__SERVERURL='http://localhost:8000' \
-	RABBITMQCONFIGURATION__USERNAME="ipazanin" \
-	RABBITMQCONFIGURATION__PASSWORD="Opatija1" \
-	RABBITMQCONFIGURATION__HOSTNAME="localhost" \
-    APPCONFIGURATION__ADMINUSERPASSWORD="Opatija123" \
-	dotnet watch --project $(ParserProjectPath) run --urls $(DashboardUrls) --configuration $(DebugConfiguration)
+	dotnet watch --project $(ParserProjectPath) run --configuration $(DebugConfiguration)
 endif
 
 start-webapi::

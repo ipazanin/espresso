@@ -28,6 +28,8 @@ using Espresso.Common.IServices;
 using Espresso.Application.Utilities;
 using Espresso.Dashboard.Application.Constants;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Espresso.Dashboard.Startup
 {
@@ -334,25 +336,27 @@ namespace Espresso.Dashboard.Startup
         private IServiceCollection AddAuth(IServiceCollection services)
         {
             services.AddOptions();
-            services.AddAuthentication(authenticationOptions =>
-            {
-            });
-            services.AddAuthorization(authorizationOptions =>
-            {
-            });
             services.AddIdentity<IdentityUser, IdentityRole>(identityOptions =>
-            {
-                identityOptions.Password.RequireDigit = true;
-                identityOptions.Password.RequiredLength = 8;
-                identityOptions.Password.RequireLowercase = true;
-                identityOptions.Password.RequireNonAlphanumeric = false;
-                identityOptions.Password.RequireUppercase = true;
+                {
+                    identityOptions.Password.RequireDigit = true;
+                    identityOptions.Password.RequiredLength = 8;
+                    identityOptions.Password.RequireLowercase = true;
+                    identityOptions.Password.RequireNonAlphanumeric = false;
+                    identityOptions.Password.RequireUppercase = true;
 
-                identityOptions.SignIn.RequireConfirmedEmail = true;
+                    identityOptions.SignIn.RequireConfirmedEmail = true;
 
-                identityOptions.User.RequireUniqueEmail = true;
-            })
-            .AddEntityFrameworkStores<EspressoIdentityDatabaseContext>();
+                    identityOptions.User.RequireUniqueEmail = true;
+                })
+                .AddEntityFrameworkStores<EspressoIdentityDatabaseContext>();
+
+            services.AddAuthentication(authenticationOptions =>
+                {
+                });
+
+            services.AddAuthorization(authorizationOptions =>
+                {
+                });
 
             return services;
         }
