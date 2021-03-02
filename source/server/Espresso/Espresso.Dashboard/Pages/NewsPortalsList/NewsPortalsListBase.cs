@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects.PagingDataTransferObjects;
 using Espresso.Common.Constants;
@@ -50,8 +51,9 @@ namespace Espresso.Dashboard.Pages.NewsPortalsList
             await FetchNewsPortals();
         }
 
-        protected async Task DeleteNewsPortal(int newsPortalId)
+        protected Task DeleteNewsPortal(int newsPortalId)
         {
+            throw new NotImplementedException();
         }
 
         protected void OpenNewsPortalDetails(int newsPortalId)

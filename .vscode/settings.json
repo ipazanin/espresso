@@ -56,9 +56,6 @@
     "CQRS",
     "Mediat",
     "Xunit",
-    "parserdeleter",
-    "rabbitmq",
-    "webapi"
   ],
   "csharp.maxProjectFileCountForDiagnosticAnalysis": 0,
   "csharp.semanticHighlighting.enabled": true,
@@ -81,7 +78,8 @@
     "**/obj": true,
     "**/bin": true,
     "**/node_modules": true,
-    "**/client/build": true
+    "**/client/build": true,
+    "**/.vs": true
   },
   "omnisharp.autoStart": true,
   "omnisharp.enableEditorConfigSupport": true,
