@@ -333,7 +333,7 @@ namespace Espresso.Dashboard.Startup
             return services;
         }
 
-        private IServiceCollection AddAuth(IServiceCollection services)
+        private static IServiceCollection AddAuth(IServiceCollection services)
         {
             services.AddOptions();
             services.AddIdentity<IdentityUser, IdentityRole>(identityOptions =>

@@ -17,7 +17,6 @@ namespace Espresso.Dashboard.Configuration
         public HttpClientConfiguration LoadRssFeedsHttpClientConfiguration { get; }
         public HttpClientConfiguration ScrapeWebHttpClientConfiguration { get; }
         public SystemTextJsonSerializerConfiguration SystemTextJsonSerializerConfiguration { get; }
-        public JwtConfiguration JwtConfiguration { get; }
 
         #endregion
 
@@ -36,7 +35,6 @@ namespace Espresso.Dashboard.Configuration
             LoadRssFeedsHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:LoadRssFeedsHttpClientConfiguration"));
             ScrapeWebHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:ScrapeWebHttpClientConfiguration"));
             SystemTextJsonSerializerConfiguration = new SystemTextJsonSerializerConfiguration(configuration.GetSection("SystemTextJsonSerializerConfiguration"));
-            JwtConfiguration = new JwtConfiguration(configuration.GetSection("JwtConfiguration"));
         }
 
         #endregion
