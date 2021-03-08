@@ -295,6 +295,48 @@ namespace Espresso.Persistence.DataSeed
                 NumberOfSkips = 12,
                 CurrentSkip = 0
             });
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.MaxPortal,
+                NumberOfSkips = 11,
+                CurrentSkip = 0
+            });
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.PoslovniDnevnik,
+                NumberOfSkips = 5,
+                CurrentSkip = 0
+            });
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Gp1,
+                NumberOfSkips = 11,
+                CurrentSkip = 0
+            });
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.F1PulsMedia,
+                NumberOfSkips = 7,
+                CurrentSkip = 0
+            });
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Racunalo,
+                NumberOfSkips = 11,
+                CurrentSkip = 0
+            });
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.MobHr,
+                NumberOfSkips = 15,
+                CurrentSkip = 0
+            });
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.StartNews,
+                NumberOfSkips = 21,
+                CurrentSkip = 0
+            });
         }
     }
 }

@@ -430,13 +430,61 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Tech,
                     requestType: RequestType.Normal
                 ),
-
                 new RssFeed(
                     id: (int)RssFeedId.BitnoNet,
                     url: "https://www.bitno.net/feed",
                     newsPortalId: (int)NewsPortalId.BitnoNet,
                     categoryId: (int)CategoryId.Vijesti,
                     requestType: RequestType.Browser
+                ),
+                new RssFeed(
+                    id: (int)RssFeedId.MaxPortal,
+                    url: "https://www.maxportal.hr/feed",
+                    newsPortalId: (int)NewsPortalId.MaxPortal,
+                    categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Normal
+                ),
+                new RssFeed(
+                    id: (int)RssFeedId.PoslovniDnevnik,
+                    url: "https://www.poslovni.hr/feed",
+                    newsPortalId: (int)NewsPortalId.PoslovniDnevnik,
+                    categoryId: (int)CategoryId.Biznis,
+                    requestType: RequestType.Normal
+                ),
+                new RssFeed(
+                    id: (int)RssFeedId.Gp1,
+                    url: "https://www.gp1.hr/feed",
+                    newsPortalId: (int)NewsPortalId.Gp1,
+                    categoryId: (int)CategoryId.AutoMoto,
+                    requestType: RequestType.Normal
+                ),
+                new RssFeed(
+                    id: (int)RssFeedId.F1PulsMedia,
+                    url: "https://f1.pulsmedia.hr/feed",
+                    newsPortalId: (int)NewsPortalId.F1PulsMedia,
+                    categoryId: (int)CategoryId.AutoMoto,
+                    requestType: RequestType.Normal
+                ),
+                new RssFeed(
+                    id: (int)RssFeedId.Racunalo,
+                    url: "https://www.racunalo.com/feed",
+                    newsPortalId: (int)NewsPortalId.Racunalo,
+                    categoryId: (int)CategoryId.Tech,
+                    requestType: RequestType.Normal
+                ),
+                new RssFeed(
+                    id: (int)RssFeedId.MobHr,
+                    url: "https://mob.hr/feed",
+                    newsPortalId: (int)NewsPortalId.MobHr,
+                    categoryId: (int)CategoryId.Tech,
+                    requestType: RequestType.Normal
+                ),
+                new RssFeed(
+                    id: (int)RssFeedId.StartNews,
+                    url: "https://www.startnews.hr/feeds/latest",
+                    newsPortalId: (int)NewsPortalId.StartNews,
+                    categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Normal
                 ),
             };
 

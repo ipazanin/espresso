@@ -36,7 +36,7 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         NogometPlus = 15,
         [Display(Name = "Lider")]
         Lider = 16,
-        [Display(Name = "Poslovni Dnevnik")]
+        [Display(Name = "Poslovni dnevnik")]
         PoslovniDnevnik = 17,
         [Display(Name = "Bug")]
         Bug = 18,
@@ -255,6 +255,18 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         [Display(Name = "KAportal.hr")]
         KaPortalHr = 127,
         [Display(Name = "Radio Mrežnica")]
-        RadioMreznica = 128
+        RadioMreznica = 128,
+        [Display(Name = "Maxportal")]
+        MaxPortal = 129,
+        [Display(Name = "GP1")]
+        Gp1 = 130,
+        [Display(Name = "F1.pulsmedia.hr")]
+        F1PulsMedia = 131,
+        [Display(Name = "Racunalo.com")]
+        Racunalo = 132,
+        [Display(Name = "mob.hr")]
+        MobHr = 133,
+        [Display(Name = "Startnews")]
+        StartNews = 134
     }
 }

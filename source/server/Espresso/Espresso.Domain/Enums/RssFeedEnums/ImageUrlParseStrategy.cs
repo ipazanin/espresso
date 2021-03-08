@@ -4,7 +4,6 @@
     {
         SecondLinkOrFromSummary = 1,
         FromContent = 2,
-        FromFirstElementExtension = 3,
-        FromSecondElementExtension = 4
+        FromElementExtension = 3
     }
 }

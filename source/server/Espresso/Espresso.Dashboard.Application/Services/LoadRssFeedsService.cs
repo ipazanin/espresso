@@ -45,6 +45,9 @@ namespace Espresso.Dashboard.Application.Services
             CancellationToken cancellationToken
         )
         {
+#if DEBUG
+            rssFeeds = rssFeeds.Where(rssFeed => rssFeed.Id == (int)RssFeedId.PoslovniDnevnik);
+#endif
             var parsedArticles = new ConcurrentQueue<RssFeedItem>();
 
             var getRssFeedRequestTasks = new List<Task>();

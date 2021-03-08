@@ -149,7 +149,6 @@ namespace Espresso.Persistence.DataSeed
                 replacementValue: "</notused>",
                 rssFeedId: (int)RssFeedId.Netokracija
             ));
-
             builder.HasData(new RssFeedContentModifier(
                 id: id++,
                 sourceValue: "<content:encoded>",
@@ -161,6 +160,31 @@ namespace Espresso.Persistence.DataSeed
                 sourceValue: "</content:encoded>",
                 replacementValue: "</description>",
                 rssFeedId: (int)RssFeedId.Netokracija
+            ));
+
+            builder.HasData(new RssFeedContentModifier(
+                id: id++,
+                sourceValue: "<description>",
+                replacementValue: "<notused>",
+                rssFeedId: (int)RssFeedId.Gp1
+            ));
+            builder.HasData(new RssFeedContentModifier(
+                id: id++,
+                sourceValue: "</description>",
+                replacementValue: "</notused>",
+                rssFeedId: (int)RssFeedId.Gp1
+            ));
+            builder.HasData(new RssFeedContentModifier(
+                id: id++,
+                sourceValue: "<content:encoded>",
+                replacementValue: "<description>",
+                rssFeedId: (int)RssFeedId.Gp1
+            ));
+            builder.HasData(new RssFeedContentModifier(
+                id: id++,
+                sourceValue: "</content:encoded>",
+                replacementValue: "</description>",
+                rssFeedId: (int)RssFeedId.Gp1
             ));
         }
     }

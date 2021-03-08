@@ -5,8 +5,8 @@
     "MaxAgeOfArticlesInDays": 2
   },
   "ArticleSimilarityConfiguration": {
-    "ArticlePublishDateTimeDiferenceThresholdInHours": 6,
-    "MaxAgeOfSimilarArticleCheckingInHours": 26
+    "ArticlePublishDateTimeDiferenceThresholdInHours": 4,
+    "MaxAgeOfSimilarArticleCheckingInHours": 4
   },
   "CronJobsConfiguration": {
     "DeleteArticlesCronExpression": "* * * * *",
