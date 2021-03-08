@@ -6,7 +6,7 @@ namespace Espresso.Dashboard.Data
 {
     public class WeatherForecastService
     {
-        private static readonly string[] Summaries = new[]
+        private static readonly string[] s_summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
@@ -18,7 +18,7 @@ namespace Espresso.Dashboard.Data
             {
                 Date = startDate.AddDays(index),
                 TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
+                Summary = s_summaries[rng.Next(s_summaries.Length)]
             }).ToArray());
         }
     }

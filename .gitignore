@@ -48,3 +48,9 @@ node_modules/
 
 # Mac OS
 .DS_Store
+
+# Visual Studio
+.vs/
+
+# Properties Folder launchSettings.json
+**/Properties/launchSettings.json

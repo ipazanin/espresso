@@ -171,6 +171,13 @@
         BitnoNet = 170,
         PloceOnline = 171,
         KaPortalHr = 172,
-        RadioMreznica = 173
+        RadioMreznica = 173,
+        MaxPortal = 174,
+        PoslovniDnevnik = 175,
+        Gp1 = 176,
+        F1PulsMedia = 177,
+        Racunalo = 178,
+        MobHr = 179,
+        StartNews = 180
     }
 }

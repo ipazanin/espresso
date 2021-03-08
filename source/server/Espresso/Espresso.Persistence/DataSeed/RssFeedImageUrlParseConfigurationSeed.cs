@@ -151,7 +151,9 @@ namespace Espresso.Persistence.DataSeed
             {
                 RssFeedId = (int)RssFeedId.N1,
                 XPath = "//figure[contains(@class, 'media')]//img",
-                ImageUrlParseStrategy = ImageUrlParseStrategy.FromFirstElementExtension
+                ImageUrlParseStrategy = ImageUrlParseStrategy.FromElementExtension,
+                ElementExtensionIndex = 0,
+                IsSavedInHtmlElementWithSrcAttribute = false
             });
 
 
@@ -248,7 +250,9 @@ namespace Espresso.Persistence.DataSeed
             {
                 RssFeedId = (int)RssFeedId.Scena,
                 XPath = "//div[contains(@class, 'mycontent')]//img",
-                ImageUrlParseStrategy = ImageUrlParseStrategy.FromSecondElementExtension
+                ImageUrlParseStrategy = ImageUrlParseStrategy.FromElementExtension,
+                ElementExtensionIndex = 1,
+                IsSavedInHtmlElementWithSrcAttribute = true
             });
 
             imageUrlParseConfigurationBuilder.HasData(new
@@ -316,7 +320,9 @@ namespace Espresso.Persistence.DataSeed
             {
                 RssFeedId = (int)RssFeedId.MotoriHr,
                 XPath = "//div[contains(@class, 'content')]//img",
-                ImageUrlParseStrategy = ImageUrlParseStrategy.FromSecondElementExtension
+                ImageUrlParseStrategy = ImageUrlParseStrategy.FromElementExtension,
+                ElementExtensionIndex = 1,
+                IsSavedInHtmlElementWithSrcAttribute = true
             });
 
             imageUrlParseConfigurationBuilder.HasData(new
@@ -404,6 +410,14 @@ namespace Espresso.Persistence.DataSeed
                 RssFeedId = (int)RssFeedId.BitnoNet,
                 XPath = "//section[contains(@class, 'article-content')]//picture[contains(@class, 'wp-caption')]//img[@data-lazy-src]",
                 AttributeName = "data-lazy-src"
+            });
+
+            imageUrlParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.MobHr,
+                ImageUrlParseStrategy = ImageUrlParseStrategy.FromElementExtension,
+                ElementExtensionIndex = 2,
+                IsSavedInHtmlElementWithSrcAttribute = true
             });
         }
     }

@@ -234,36 +234,22 @@ namespace Espresso.Dashboard.Application.Services
             CancellationToken cancellationToken
         )
         {
-            string? imageUrl;
-            switch (rssFeed.ImageUrlParseConfiguration.ImageUrlParseStrategy)
+            var elementExtensionIndex = rssFeed.ImageUrlParseConfiguration.ElementExtensionIndex;
+            var isSavedInHtmlElementWithSrcAttribute = rssFeed.ImageUrlParseConfiguration.IsSavedInHtmlElementWithSrcAttribute;
+            var imageUrl = rssFeed.ImageUrlParseConfiguration.ImageUrlParseStrategy switch
             {
-                case ImageUrlParseStrategy.SecondLinkOrFromSummary:
-                default:
-                    imageUrl = itemLinks?.Count() > 1 ? itemLinks.ElementAt(1)?.ToString() : null;
-                    if (imageUrl is null)
-                    {
-                        imageUrl = _htmlParsingService.GetSrcAttributeFromFirstImgElement(itemSummary);
-                    }
-
-                    break;
-                case ImageUrlParseStrategy.FromContent:
-                    imageUrl = _htmlParsingService.GetSrcAttributeFromFirstImgElement(itemContent);
-                    break;
-                case ImageUrlParseStrategy.FromFirstElementExtension:
-                    imageUrl = elementExtensions?.FirstOrDefault();
-                    break;
-                case ImageUrlParseStrategy.FromSecondElementExtension:
-                    if (elementExtensions != null)
-                    {
-                        var htmlString = elementExtensions.Count() > 1 ? elementExtensions?.ElementAt(1) : null;
-                        imageUrl = _htmlParsingService.GetSrcAttributeFromFirstImgElement(htmlString);
-                    }
-                    else
-                    {
-                        imageUrl = null;
-                    }
-                    break;
-            }
+                ImageUrlParseStrategy.FromContent => _htmlParsingService.GetSrcAttributeFromFirstImgElement(itemContent),
+                ImageUrlParseStrategy.FromElementExtension => elementExtensionIndex is null || elementExtensions is null ?
+                    null :
+                    elementExtensions.Count() <= elementExtensionIndex.Value ?
+                        null :
+                        isSavedInHtmlElementWithSrcAttribute == true ?
+                            _htmlParsingService.GetSrcAttributeFromFirstImgElement(elementExtensions.ElementAt(elementExtensionIndex.Value)) :
+                            elementExtensions.ElementAt(elementExtensionIndex.Value),
+                ImageUrlParseStrategy.SecondLinkOrFromSummary or _ => itemLinks?.Count() > 1 ?
+                    itemLinks.ElementAt(1)?.ToString() :
+                    _htmlParsingService.GetSrcAttributeFromFirstImgElement(itemSummary)
+            };
 
             var shouldImageBeWebScraped = rssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped is null ?
                 string.IsNullOrEmpty(imageUrl) : rssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped.Value;
