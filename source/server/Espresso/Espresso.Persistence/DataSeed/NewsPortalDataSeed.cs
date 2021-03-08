@@ -591,6 +591,76 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global
                 ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.MaxPortal,
+                    name: NewsPortalId.MaxPortal.GetDisplayName(),
+                    baseUrl: "https://www.maxportal.hr",
+                    iconUrl: $"Icons/{NewsPortalId.MaxPortal}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2021, 3, 7, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Vijesti,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.PoslovniDnevnik,
+                    name: NewsPortalId.PoslovniDnevnik.GetDisplayName(),
+                    baseUrl: "https://www.poslovni.hr",
+                    iconUrl: $"Icons/{NewsPortalId.PoslovniDnevnik}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2021, 3, 7, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Biznis,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.Gp1,
+                    name: NewsPortalId.Gp1.GetDisplayName(),
+                    baseUrl: "https://www.gp1.hr",
+                    iconUrl: $"Icons/{NewsPortalId.Gp1}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2021, 3, 7, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.AutoMoto,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.F1PulsMedia,
+                    name: NewsPortalId.F1PulsMedia.GetDisplayName(),
+                    baseUrl: "https://f1.pulsmedia.hr",
+                    iconUrl: $"Icons/{NewsPortalId.F1PulsMedia}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2021, 3, 7, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.AutoMoto,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.Racunalo,
+                    name: NewsPortalId.Racunalo.GetDisplayName(),
+                    baseUrl: "https://www.racunalo.com",
+                    iconUrl: $"Icons/{NewsPortalId.Racunalo}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2021, 3, 7, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Tech,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.MobHr,
+                    name: NewsPortalId.MobHr.GetDisplayName(),
+                    baseUrl: "https://mob.hr",
+                    iconUrl: $"Icons/{NewsPortalId.MobHr}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2021, 3, 7, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Tech,
+                    regionId: (int)RegionId.Global
+                ),
+                new NewsPortal(
+                    id: (int)NewsPortalId.StartNews,
+                    name: NewsPortalId.StartNews.GetDisplayName(),
+                    baseUrl: "https://www.startnews.hr/",
+                    iconUrl: $"Icons/{NewsPortalId.StartNews}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2021, 3, 7, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Vijesti,
+                    regionId: (int)RegionId.Global
+                ),
             };
 
             builder.HasData(newsPortals);

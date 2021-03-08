@@ -551,7 +551,7 @@ namespace Espresso.Persistence.DataSeed
             imageUrlParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.KaPortalHr,
-                ImageUrlParseStrategy = ImageUrlParseStrategy.FromFirstElementExtension
+                ImageUrlParseStrategy = ImageUrlParseStrategy.FromElementExtension
             });
         }
 

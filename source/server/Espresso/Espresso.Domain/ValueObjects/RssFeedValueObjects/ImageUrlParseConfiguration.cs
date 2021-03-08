@@ -13,9 +13,11 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         public const ImageUrlParseStrategy ImageUrlParseStrategyDefaultValue = ImageUrlParseStrategy.SecondLinkOrFromSummary;
 
         public const string ImgElementXPathDefaultValue = "";
+
         public const int ImgElementXPathHasMaxLength = 300;
 
         public const string AttributeNameDefaultValue = "src";
+
         public const int AttributeNameMaxLength = 100;
 
         public static bool? ShouldImageUrlBeWebScrapedDefaultValue => null;
@@ -23,7 +25,12 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         public const ImageUrlWebScrapeType ImageUrlWebScrapeTypeDefaultValue = ImageUrlWebScrapeType.Attribute;
 
         public const string? JsonWebScrapePropertyNamesDefaultValue = null;
+
         public const int JsonWebScrapePropertyNamesHasMaxLength = 300;
+
+        public static int? ElementExtensionIndexDefaultValue => null;
+
+        public static bool? IsSavedInHtmlElementWithSrcAttributeDefaultValue => null;
         #endregion
 
         #region Properties
@@ -38,6 +45,13 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         public ImageUrlWebScrapeType ImageUrlWebScrapeType { get; private set; }
 
         public string? JsonWebScrapePropertyNames { get; private set; }
+
+        /// <summary>
+        /// Index of element extension containing Image Url 
+        /// </summary>
+        public int? ElementExtensionIndex { get; private set; }
+
+        public bool? IsSavedInHtmlElementWithSrcAttribute { get; private set; }
         #endregion
 
         #region Constructors
@@ -56,7 +70,9 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
             string attributeName,
             bool shouldImageUrlBeWebScraped,
             ImageUrlWebScrapeType imageUrlWebScrapeType,
-            string jsonWebScrapePropertyNames
+            string jsonWebScrapePropertyNames,
+            int? elementExtensionIndex,
+            bool? isSavedInHtmlElementWithSrcAttribute
         )
         {
             ImageUrlParseStrategy = imageUrlParseStrategy;
@@ -65,6 +81,8 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
             ShouldImageUrlBeWebScraped = shouldImageUrlBeWebScraped;
             ImageUrlWebScrapeType = imageUrlWebScrapeType;
             JsonWebScrapePropertyNames = jsonWebScrapePropertyNames;
+            ElementExtensionIndex = elementExtensionIndex;
+            IsSavedInHtmlElementWithSrcAttribute = isSavedInHtmlElementWithSrcAttribute;
         }
         #endregion
 

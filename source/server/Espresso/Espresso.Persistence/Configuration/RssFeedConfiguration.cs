@@ -119,6 +119,14 @@ namespace Espresso.Persistence.Configuration
                 .HasMaxLength(ImageUrlParseConfiguration.JsonWebScrapePropertyNamesHasMaxLength)
                 .HasDefaultValue(ImageUrlParseConfiguration.JsonWebScrapePropertyNamesDefaultValue);
 
+            imageUrlParseConfiguration
+                .Property(imageUrlConfig => imageUrlConfig.ElementExtensionIndex)
+                .HasDefaultValue(ImageUrlParseConfiguration.ElementExtensionIndexDefaultValue);
+
+
+            imageUrlParseConfiguration
+                .Property(imageUrlConfig => imageUrlConfig.IsSavedInHtmlElementWithSrcAttribute)
+                .HasDefaultValue(ImageUrlParseConfiguration.IsSavedInHtmlElementWithSrcAttributeDefaultValue);
         }
     }
 }

@@ -1,0 +1,820 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 3.81
+# Copyright (C) 2006  Free Software Foundation, Inc.
+# This is free software; see the source for copying conditions.
+# There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# This program built for i386-apple-darwin11.3.0
+ 
+make: *** No rule to make target `all'.  Stop.
+
+
+# Make data base, printed on Fri May 27 19:07:37 2022
+
+# Variables
+
+# makefile (from `Makefile', line 299)
+EspressoDatabaseMigrationsFolder = "EspressoDatabaseMigrations"
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# makefile (from `Makefile', line 474)
+ClientAppDirectory = "source/client"
+# environment
+ELECTRON_NO_ATTACH_CONSOLE = 1
+# makefile (from `Makefile', line 32)
+DefaultReactEnvironment = "production"
+# environment
+LC_CTYPE = UTF-8
+# environment
+VSCODE_LOG_NATIVE = false
+# makefile (from `Makefile', line 303)
+WebApiLocalLaunchProfile = 'web-api-local'
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# makefile (from `Makefile', line 288)
+SlackWebHook = "https://hooks.slack.com/services/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"
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# automatic
+ 
+@F = $(notdir $@)
+# makefile
+CURDIR := /Users/ivan.pazanin/Projects/personal/espresso-backend
+# makefile
+SHELL = /bin/sh
+# makefile (from `Makefile', line 272)
+SolutionPath = "Espresso.sln"
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-gb","availableLanguages":{},"_languagePackSupport":true}
+# environment
+_ = /usr/bin/make
+# makefile (from `Makefile', line 302)
+DashboardLocalLaunchProfile = 'dashboard-local'
+# makefile (from `Makefile', line 1)
+MAKEFILE_LIST :=  Makefile
+# makefile (from `Makefile', line 475)
+TestReactAppEnvironment = "test"
+# makefile (from `Makefile', line 290)
+EspressoIdentityDatabaseConnectionString = "User ID=sa;Password=Opatija1;Host=localhost;Port=1433;Database=EspressoIdentityDb;" 
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# environment
+__CFBundleIdentifier = com.microsoft.VSCode
+# environment
+INFOPATH = /opt/homebrew/share/info:
+# makefile (from `Makefile', line 21)
+EspressoWebApiDockerfilePath = "source/server/WebApi/Espresso.WebApi/Dockerfile"
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/xn/5ny5mkfs4fl1m3_jz5k_6xlc0000gn/T/vscode-ipc-59ec074d-6de3-4e3c-b1d8-2cedbd746654.sock
+# makefile (from `Makefile', line 287)
+AdminUserPassword = "Opatija123"
+# makefile (from `Makefile', line 37)
+DashboardEnvironmentComposeFile = "scripts/compose/dashboard-environment-postgres.yml"
+# environment
+VSCODE_CWD = /Users/ivan.pazanin/Projects/personal/espresso-backend
+# makefile (from `Makefile', line 294)
+UnitTestsDirectory = "server/UnitTests"
+# environment
+PATH = /usr/local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:~/.dotnet/tools
+# makefile (from `Makefile', line 27)
+DashboardDockerImage = "ghcr.io/espresso-news/espresso-backend/espresso-dashboard"
+# makefile (from `Makefile', line 275)
+DefaultVerbosity = "minimal" 
+# makefile (from `Makefile', line 26)
+WebApiDockerImage = "ghcr.io/espresso-news/espresso-backend/espresso-webapi"
+# environment
+LSCOLORS = Gxfxcxdxbxegedabagacad
+# makefile (from `Makefile', line 300)
+EspressoIdentityDatabaseMigrationsFolder = "IdentityDatabaseMigrations"
+# makefile (from `Makefile', line 19)
+DefaultDockerImageTag = latest
+# makefile (from `Makefile', line 280)
+WebApiProjectPath = "source/server/WebApi/Espresso.WebApi/Espresso.WebApi.csproj"
+# makefile (from `Makefile', line 39)
+WebApiEnvironmentComposeFile = "scripts/compose/webapi-environment-postgres.yml"
+# environment
+LaunchInstanceID = 9CD3FB1F-061F-4B80-8C63-AE8312EC6550
+# environment
+VSCODE_LOG_STACK = false
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# makefile (from `Makefile', line 35)
+DatabaseEnvironmentComposeFile = "scripts/compose/database-environment-postgres.yml"
+# default
+.FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
+# makefile (from `Makefile', line 281)
+DashboardProjectPath = "source/server/Dashboard/Espresso.Dashboard/Espresso.Dashboard.csproj"
+# environment
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.NFkGHhNbZx/Listeners
+# automatic
+%F = $(notdir $%)
+# makefile (from `Makefile', line 30)
+DashboardDockerImageGoogleContainerRegistry = "gcr.io/espresso-8c4ac/espresso-dashboard"
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+PWD = /Users/ivan.pazanin/Projects/personal/espresso-backend
+# makefile (from `Makefile', line 274)
+PersistenceProjectPath = "source/server/Shared/Espresso.Persistence/Espresso.Persistence.csproj"
+# makefile (from `Makefile', line 298)
+EspressoIdentityDatabaseContextName = "EspressoIdentityDatabaseContext"
+# makefile (from `Makefile', line 29)
+WebApiDockerImageGoogleContainerRegistry = "gcr.io/espresso-8c4ac/espresso-webapi"
+# makefile (from `Makefile', line 24)
+DockerBuildContextPath = "."
+# environment
+HOMEBREW_CELLAR = /opt/homebrew/Cellar
+# environment
+UPDATE_ZSH_DAYS = 1
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# environment
+MANPATH = /opt/homebrew/share/man::
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+HOME = /Users/ivan.pazanin
+# makefile (from `Makefile', line 293)
+UnitTestRelativeResultsPath = "TestReports"
+# environment
+POWERLINE_COMMAND = oh-my-posh
+# default
+MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles
+# environment
+VSCODE_CLI = 1
+# environment
+ 
+VSCODE_CODE_CACHE_PATH = /Users/ivan.pazanin/Library/Application Support/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+# environment
+LOGNAME = ivan.pazanin
+# makefile (from `Makefile', line 276)
+LocalEnvironmentName = "local"
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# environment
+CONDA_PROMPT_MODIFIER = false
+# environment
+ZSH = /Users/ivan.pazanin/.oh-my-zsh
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# makefile (from `Makefile', line 285)
+DebugConfiguration = "Debug"
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# makefile (from `Makefile', line 38)
+WebApiComposeFile = "scripts/compose/webapi.yml"
+# makefile (from `Makefile', line 292)
+UnitTestResultsPath = "server/UnitTests/TestReports"
+# environment
+XPC_FLAGS = 0x0
+# makefile (from `Makefile', line 36)
+DashboardComposeFile = "scripts/compose/dashboard.yml"
+# environment
+COLORTERM = truecolor
+# default
+MAKE = $(MAKE_COMMAND)
+# environment
+LC_TERMINAL = iTerm2
+# environment
+SHLVL = 3
+# environment
+POSH_THEME = /Users/ivan.pazanin/.oh-my-posh/ipazanin.omp.json
+# default
+MAKE_VERSION := 3.81
+# environment
+USER = ivan.pazanin
+# makefile
+.DEFAULT_GOAL := list
+# makefile (from `Makefile', line 22)
+EspressoParserDockerfilePath = "source/server/Dashboard/Espresso.Dashboard/Dockerfile"
+# default
+MAKECMDGOALS := all
+# environment
+TERM_SESSION_ID = w0t2p0:62E781C3-6A27-48B0-AF09-EFFCC1F76D15
+# makefile (from `Makefile', line 273)
+NugetConfigPath = "nuget.config"
+# environment
+LESS = -R
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# default
+MAKE_COMMAND := /Library/Developer/CommandLineTools/usr/bin/make
+# environment
+TERM_PROGRAM = iTerm.app
+# default
+.VARIABLES := 
+# environment
+TMPDIR = /var/folders/xn/5ny5mkfs4fl1m3_jz5k_6xlc0000gn/T/
+# automatic
+*F = $(notdir $*)
+# environment
+VSCODE_IPC_HOOK = /Users/ivan.pazanin/Library/Application Support/Code/1.67.2-main.sock
+# makefile
+MAKEFLAGS = Rrqp
+# environment
+MFLAGS = -Rrqp
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+TERM_PROGRAM_VERSION = 3.4.15
+# environment
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.5596793.5596799.BF19C71A-F294-482D-89F7-C79A236A7168
+# environment
+LC_TERMINAL_VERSION = 3.4.15
+# environment
+HOMEBREW_PREFIX = /opt/homebrew
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# automatic
++F = $(notdir $+)
+# environment
+ITERM_SESSION_ID = w0t2p0:62E781C3-6A27-48B0-AF09-EFFCC1F76D15
+# environment
+HOMEBREW_REPOSITORY = /opt/homebrew
+# environment
+COLORFGBG = 7;0
+# makefile (from `Makefile', line 278)
+DefaultConfiguration = $(DebugConfiguration) 
+# makefile (from `Makefile', line 297)
+EspressoDatabaseContextName = "EspressoDatabaseContext"
+# environment
+__CF_USER_TEXT_ENCODING = 0x1F5:0x0:0x0
+# environment
+COMMAND_MODE = unix2003
+# makefile (from `Makefile', line 284)
+ReleaseConfiguration = "Release"
+# default
+MAKEFILES := 
+# automatic
+<F = $(notdir $<)
+# environment
+ITERM_PROFILE = Default
+# makefile (from `Makefile', line 283)
+DashboardUrls = "http://localhost:9000"
+# environment
+PAGER = less
+# environment
+LC_ALL = C
+# environment
+SECURITYSESSIONID = 186b2
+# automatic
+^F = $(notdir $^)
+# makefile (from `Makefile', line 289)
+EspressoDatabaseConnectionString = "User ID=sa;Password=Opatija1;Host=localhost;Port=1433;Database=EspressoDb;" 
+# default
+SUFFIXES := 
+# makefile (from `Makefile', line 41)
+RabbitMqEnvironmentComposeFile = "scripts/compose/rabbitmq-environment.yml"
+# makefile (from `Makefile', line 295)
+UnitTestsLogFileName = "TestResults.xml"
+# makefile (from `Makefile', line 282)
+WebApiUrls = "http://localhost:8000"
+# makefile (from `Makefile', line 34)
+DatabaseComposeFile = "scripts/compose/database.yml"
+# environment
+MAKELEVEL := 0
+# makefile (from `Makefile', line 40)
+RabbitMqComposeFile = "scripts/compose/rabbitmq.yml"
+# environment
+LANG = C
+# environment
+TERM = xterm-256color
+# environment
+VSCODE_PID = 976
+# variable set hash-table stats:
+# Load=134/1024=13%, Rehash=0, Collisions=7/176=4%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 16777234, inode 500646): 19 files, no impossibilities.
+
+# 19 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+# Not a target:
+all:
+#  Command-line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+database-update-espresso-database::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 348):
+	dotnet ef database update \
+	--project $(PersistenceProjectPath) \
+	--context $(EspressoDatabaseContextName) \
+	--configuration $(DefaultConfiguration) \
+	--verbose \
+	-- $(EspressoDatabaseConnectionString)
+	
+
+docker-build::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 266):
+	make docker-build-webapi v=$(v)
+	make docker-build-dashboard v=$(v)
+	
+
+infer-csharp::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 454):
+	docker-compose -f ./scripts/analysis/infer-csharp.yml up --build
+	
+
+docker-build-webapi::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 205):
+	docker build \
+	-f $(EspressoWebApiDockerfilePath) \
+	-t $(WebApiDockerImage):$(DefaultDockerImageTag) \
+	--platform linux/amd64 \
+	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
+	$(DockerBuildContextPath)
+	docker push $(WebApiDockerImage):$(DefaultDockerImageTag)
+	docker build \
+	-f $(EspressoWebApiDockerfilePath) \
+	-t $(WebApiDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag) \
+	--platform linux/amd64 \
+	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
+	$(DockerBuildContextPath)
+	docker push $(WebApiDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag)	
+	
+
+migration-add-identity-database::
+ 
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 382):
+	dotnet ef migrations add \
+	--project $(PersistenceProjectPath) \
+	--context $(EspressoIdentityDatabaseContextName) \
+	--output-dir $(EspressoIdentityDatabaseMigrationsFolder) \
+	--configuration $(DefaultConfiguration) \
+	--verbose \
+	$(name) \
+	-- $(EspressoIdentityDatabaseConnectionString)
+	
+
+compose-database::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 51):
+	docker-compose \
+	-f $(DatabaseComposeFile) \
+	-f $(DatabaseEnvironmentComposeFile) \
+	up --build $(arg2)
+	
+
+restore::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 404):
+	dotnet restore --configfile $(NugetConfigPath) $(SolutionPath)
+	
+
+test-coverage::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 424):
+	dotnet test \
+	--verbosity $(DefaultVerbosity) \
+	--logger 'xunit;LogFileName=$(UnitTestsLogFileName)' \
+	--results-directory $(UnitTestResultsPath) \
+	/p:CollectCoverage=true \
+	/p:CoverletOutput=$(UnitTestRelativeResultsPath)/ \
+	/p:CoverletOutputFormat=cobertura \
+	$(SolutionPath)
+	
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+format::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-03-19 15:21:18
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+update::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 401):
+	./scripts/update.sh
+	
+
+rebuild::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 13):
+	make rebuild-backend
+	make rebuild-frontend
+	
+
+start-webapi::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 464):
+	dotnet run --project $(WebApiProjectPath) --configuration $(ReleaseConfiguration) --launch-profile $(WebApiLocalLaunchProfile)
+	
+
+docker-build-dashboard::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 238):
+	docker build \
+	-f $(EspressoParserDockerfilePath) \
+	-t $(DashboardDockerImage):$(DefaultDockerImageTag) \
+	--platform linux/amd64 \
+	$(DockerBuildContextPath)
+	docker push $(DashboardDockerImage):$(DefaultDockerImageTag)
+	docker build \
+	-f $(EspressoParserDockerfilePath) \
+	-t $(DashboardDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag) \
+	--platform linux/amd64 \
+	$(DockerBuildContextPath)
+	docker push $(DashboardDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag)	
+	
+
+test::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 417):
+	dotnet test --verbosity $(DefaultVerbosity) $(SolutionPath)
+	
+
+format-fix::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+build::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 322):
+	dotnet build \
+	--configuration $(DefaultConfiguration) \
+	--verbosity $(DefaultVerbosity) \
+	--configfile $(NugetConfigPath) \
+	$(SolutionPath)
+	
+
+health-check::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 10):
+	make health-check-backend
+	
+
+create-coverage-report::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 444):
+	sudo reportgenerator \
+	"-reports:$(UnitTestsDirectory)/*/*/*.xml" \
+	"-targetdir:$(UnitTestResultsPath)" \
+	-reporttypes:Html
+	
+
+migration-remove-identity-database::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 392):
+	dotnet ef migrations remove \
+	--project $(PersistenceProjectPath) \
+	--context $(EspressoIdentityDatabaseContextName) \
+	--output-dir $(EspressoIdentityDatabaseMigrationsFolder) \
+	--configuration $(DefaultConfiguration) \
+	--verbose \
+	-- $(EspressoIdentityDatabaseConnectionString)
+	
+
+start-dashboard::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 457):
+	dotnet run --project $(DashboardProjectPath) --configuration $(ReleaseConfiguration) --launch-profile $(DashboardLocalLaunchProfile)
+	
+
+rebuild-backend::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 313):
+	make clean
+	make build
+	
+
+watch-webapi::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 468):
+	dotnet watch run --project $(WebApiProjectPath) --configuration $(DebugConfiguration)
+	
+
+health-check-backend::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 306):
+	make restore
+ 
+	make build
+	make test
+	make format
+	
+
+rebuild-frontend::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 484):
+	cd $(ClientAppDirectory)
+	rm -rf node_modules
+	rm -rf build
+	make install
+	make build-frontend
+	
+
+test-frontend::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 505):
+	cd $(ClientAppDirectory); \
+	CI=true REACT_APP_ENVIRONMENT=test \
+	./node_modules/.bin/react-scripts test
+	
+
+migration-add-espresso-database::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 356):
+	dotnet ef migrations add \
+	--project $(PersistenceProjectPath) \
+	--context $(EspressoDatabaseContextName) \
+	--output-dir $(EspressoDatabaseMigrationsFolder) \
+	--configuration $(DefaultConfiguration) \
+	--verbose \
+	$(name) \
+	-- $(EspressoDatabaseConnectionString)
+	
+
+watch-dashboard::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 461):
+	dotnet watch run --project $(DashboardProjectPath)
+	
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+build-frontend::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 495):
+	cd $(ClientAppDirectory); \
+	REACT_APP_ENVIRONMENT=production \
+	./node_modules/.bin/react-scripts build
+	
+
+publish::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 336):
+	dotnet publish \
+	--configuration $(DefaultConfiguration) \
+	--verbosity $(DefaultVerbosity) \
+	$(SolutionPath)
+	
+
+health-check-frontend::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 478):
+	make install
+	make build-frontend
+	make lint
+	make test-frontend
+	
+
+clean::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 317):
+	dotnet clean --configuration $(DefaultConfiguration) --verbosity $(DefaultVerbosity) $(SolutionPath)
+	dotnet clean --configuration $(DebugConfiguration) --verbosity $(DefaultVerbosity) $(SolutionPath)
+	
+
+coverage:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 450):
+	make test-coverage verbosity=quiet
+	make create-coverage-report verbosity=quiet
+	
+
+compose-rabbitmq::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 68):
+	docker-compose \
+	-f $(RabbitMqComposeFile) \
+	-f $(RabbitMqEnvironmentComposeFile) \
+	up --build
+	
+
+compose-webapi::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 116):
+	docker-compose \
+	-f $(DatabaseComposeFile) \
+	-f $(DatabaseEnvironmentComposeFile) \
+	-f $(WebApiComposeFile) \
+	-f $(WebApiEnvironmentComposeFile) \
+	up --build
+	
+
+list::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 5):
+	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | \
+	awk -v RS= -F: '/^# File/,/^# Finished Make data base/ \
+	{if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
+	
+
+compose-local::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 144):
+	docker-compose \
+	-f $(DatabaseComposeFile) \
+	-f $(DatabaseEnvironmentComposeFile) \
+	-f $(WebApiComposeFile) \
+	-f $(WebApiEnvironmentComposeFile) \
+	-f $(DashboardComposeFile) \
+	-f $(DashboardEnvironmentComposeFile) \
+	up --build
+	
+
+compose-local-rabbitmq::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 178):
+	docker-compose \
+	-f $(DatabaseComposeFile) \
+	-f $(DatabaseEnvironmentComposeFile) \
+	-f $(WebApiComposeFile) \
+	-f $(WebApiEnvironmentComposeFile) \
+	-f $(DashboardComposeFile) \
+	-f $(DashboardEnvironmentComposeFile) \
+	-f $(RabbitMqComposeFile) \
+	-f $(RabbitMqEnvironmentComposeFile) \
+	up --build
+	
+
+migration-remove-espresso-database::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 366):
+	dotnet ef migrations remove \
+	--project $(PersistenceProjectPath) \
+	--context $(EspressoDatabaseContextName) \
+	--configuration $(DefaultConfiguration) \
+	--verbose \
+	-- $(EspressoDatabaseConnectionString)
+	
+
+lint::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 500):
+	cd $(ClientAppDirectory); \
+	./node_modules/.bin/eslint --ext .ts,.tsx src/ \
+	--fix --cache --cache-location=./node_modules/.cache/
+	
+
+compose-dashboard::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 90):
+	docker-compose \
+	-f $(DatabaseComposeFile) \
+	-f $(DatabaseEnvironmentComposeFile) \
+	-f $(DashboardComposeFile) \
+	-f $(DashboardEnvironmentComposeFile) \
+	up --build
+	
+
+consolidate::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+database-update-identity-database::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 374):
+	dotnet ef database update \
+	--project $(PersistenceProjectPath) \
+	--context $(EspressoIdentityDatabaseContextName) \
+	--configuration $(DefaultConfiguration) \
+	--verbose \
+	-- $(EspressoIdentityDatabaseConnectionString)
+	
+
+install::
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 491):
+	cd $(ClientAppDirectory); \
+	npm install
+	
+
+# files hash-table stats:
+# Load=47/1024=5%, Rehash=0, Collisions=4/101=4%
+# VPATH Search Paths
+
+# No `vpath' search paths.
+
+# No general (`VPATH' variable) search path.
+
+# # of strings in strcache: 1
+# # of strcache buffers: 1
+# strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
+# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
+
+# Finished Make data base on Fri May 27 19:07:37 2022
+
+ 
