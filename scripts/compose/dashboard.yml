@@ -7,6 +7,9 @@ services:
     build:
       context: ../../source
       dockerfile: server/Espresso/Espresso.Dashboard/Dockerfile
+    ports:
+      - '9000:80'
+      - '9001:443'
     networks:
       - espresso
 
