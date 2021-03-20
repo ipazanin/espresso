@@ -20,6 +20,8 @@
       "type": "process",
       "args": [
         "build",
+        "--configuration",
+        "Debug",
         "${workspaceFolder}/source/server/Espresso/Espresso.WebApi/Espresso.WebApi.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
@@ -44,6 +46,8 @@
       "type": "process",
       "args": [
         "build",
+        "--configuration",
+        "Debug",
         "${workspaceFolder}/source/server/Espresso/Espresso.Dashboard/Espresso.Dashboard.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
