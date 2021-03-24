@@ -130,7 +130,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
             }
 
             var featuredArticles = savedArticles
-                .FiltereFeaturedArticles(
+                .FilterFeaturedArticles(
                     categoryIds: null,
                     newsPortalIds: null,
                     maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
@@ -143,7 +143,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                 request.FeaturedArticlesTake - featuredArticles.Count();
 
             var trendingArticles = savedArticles
-                .FiltereTrendingArticles(
+                .FilterTrendingArticles(
                     maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
                     articleCreateDateTime: null
                 )

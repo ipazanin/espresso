@@ -51,19 +51,21 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
                 ?.Where(categoryId => categoryId != default);
 
             var featuredArticles = articles
-                .FiltereFeaturedArticles(
+                .FilterFeaturedArticles(
                     categoryIds: null,
                     newsPortalIds: null,
                     maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
                     articleCreateDateTime: null
                 )
+                .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
                 .OrderFeaturedArticles(categoryIds);
 
             var trendingArticles = articles
-                .FiltereTrendingArticles(
+                .FilterTrendingArticles(
                     maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
                     articleCreateDateTime: null
                 )
+                .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
                 .OrderArticlesByTrendingScore();
 
             var articleDtos = featuredArticles
