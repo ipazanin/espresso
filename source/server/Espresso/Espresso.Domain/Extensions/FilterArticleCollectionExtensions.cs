@@ -178,7 +178,7 @@ namespace Espresso.Domain.Extensions
             return filteredArticles;
         }
 
-        public static IEnumerable<Article> FiltereFeaturedArticles(
+        public static IEnumerable<Article> FilterFeaturedArticles(
             this IEnumerable<Article> articles,
             IEnumerable<int>? categoryIds,
             IEnumerable<int>? newsPortalIds,
@@ -206,7 +206,7 @@ namespace Espresso.Domain.Extensions
         }
 
 
-        public static IEnumerable<Article> FiltereTrendingArticles(
+        public static IEnumerable<Article> FilterTrendingArticles(
             this IEnumerable<Article> articles,
             TimeSpan maxAgeOfTrendingArticle,
             DateTime? articleCreateDateTime
