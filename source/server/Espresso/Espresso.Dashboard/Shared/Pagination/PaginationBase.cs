@@ -16,7 +16,7 @@ namespace Espresso.Dashboard.Shared.Pagination
         [Parameter]
         public EventCallback<int> SelectedPage { get; set; }
 
-        protected List<PagingLink> PagingLinks { get; set; } = new List<PagingLink>();
+        protected List<PaginationLink> PagingLinks { get; set; } = new List<PaginationLink>();
 
         protected override void OnInitialized()
         {
@@ -25,9 +25,9 @@ namespace Espresso.Dashboard.Shared.Pagination
 
         private void CreatePaginationLinks()
         {
-            PagingLinks = new List<PagingLink>
+            PagingLinks = new List<PaginationLink>
             {
-                new PagingLink(
+                new PaginationLink(
                     page: PagingMetadata!.CurrentPage - 1,
                     enabled: PagingMetadata.HasPrevious(),
                     text: "Previous",
@@ -40,7 +40,7 @@ namespace Espresso.Dashboard.Shared.Pagination
                 if (i >= PagingMetadata.CurrentPage - Spread && i <= PagingMetadata.CurrentPage + Spread)
                 {
                     PagingLinks
-                        .Add(new PagingLink(
+                        .Add(new PaginationLink(
                             page: i,
                             enabled: true,
                             text: i.ToString(),
@@ -49,20 +49,15 @@ namespace Espresso.Dashboard.Shared.Pagination
                 }
             }
             PagingLinks
-                .Add(new PagingLink(
+                .Add(new PaginationLink(
                     page: PagingMetadata.CurrentPage + 1,
                     enabled: PagingMetadata.HasNext(),
                     text: "Next",
                     active: false
                 ));
-
-            System.Console.WriteLine("-------------------------------------------------------------");
-            System.Console.WriteLine("PaginationBase CreatePaginationLinks");
-            System.Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(PagingMetadata));
-            System.Console.WriteLine("-------------------------------------------------------------");
         }
 
-        protected async Task OnSelectedPage(PagingLink link)
+        protected async Task OnSelectedPage(PaginationLink link)
         {
             if (link.Page == PagingMetadata!.CurrentPage || !link.Enabled)
             {
@@ -82,7 +77,7 @@ namespace Espresso.Dashboard.Shared.Pagination
             CreatePaginationLinks();
         }
 
-        protected string GetClass(PagingLink link)
+        protected string GetClass(PaginationLink link)
         {
             var cssClass = "page-item " + (link.Enabled ? " " : "disabled ") + (link.Active ? "active" : "");
             return cssClass;

@@ -53,7 +53,8 @@ namespace Espresso.Dashboard.Pages.NewsPortalsList
 
         protected Task DeleteNewsPortal(int newsPortalId)
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
+            return Task.CompletedTask;
         }
 
         protected void OpenNewsPortalDetails(int newsPortalId)

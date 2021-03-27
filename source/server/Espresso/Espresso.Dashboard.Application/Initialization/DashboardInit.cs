@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +20,8 @@ namespace Espresso.Dashboard.Application.Initialization
     /// </summary>
     public class DashboardInit : IDashboardInit
     {
-        #region Fileds
+        #region Fields
+
         private readonly IMemoryCache _memoryCache;
         private readonly IEspressoDatabaseContext _context;
         private readonly IEspressoIdentityDatabaseContext _espressoIdentityContext;
@@ -29,12 +29,23 @@ namespace Espresso.Dashboard.Application.Initialization
         private readonly UserManager<IdentityUser> _userManager;
         private readonly string _adminUserPassword;
         private readonly ILoggerService<DashboardInit> _loggerService;
-        #endregion
 
+        private readonly IEnumerable<string> _adminUserEmails = new[]
+        {
+            "ivan.pazanin1996@gmail.com",
+            "miro@espressonews.co",
+            "nikola.dadic@gmail.com"
+        };
+
+        #endregion
         #region Constructors
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="context"></param>
+        /// <param name="memoryCache"></param>
+        /// <param name="context"></param>
+        /// <param name="memoryCache"></param>
         /// <param name="context"></param>
         /// <param name="memoryCache"></param>
         /// <param name="loggerFactory"></param>
@@ -187,22 +198,28 @@ namespace Espresso.Dashboard.Application.Initialization
                 await _roleManager.CreateAsync(role: adminRole);
             }
 
-            var adminUserEmail = "ivan.pazanin1996@gmail.com";
-            if (!await _userManager.Users.AnyAsync(user => user.Email == adminUserEmail))
+
+            foreach (var adminUserEmail in _adminUserEmails)
             {
-                var adminUser = new IdentityUser
+                if (!await _userManager.Users.AnyAsync(user => user.Email == adminUserEmail))
                 {
-                    Email = "ivan.pazanin1996@gmail.com",
-                    NormalizedEmail = "IVAN.PAZANIN1996@GMAIL.COM",
-                    UserName = "ivan.pazanin1996@gmail.com",
-                    NormalizedUserName = "IVAN.PAZANIN1996@GMAIL.COM",
-                    EmailConfirmed = true,
-                    SecurityStamp = Guid.NewGuid().ToString("D"),
-                };
-                var identityResult = await _userManager.CreateAsync(
-                    user: adminUser,
-                    password: _adminUserPassword
-                );
+                    var adminUser = new IdentityUser
+                    {
+                        Email = adminUserEmail,
+                        NormalizedEmail = _userManager.NormalizeEmail(adminUserEmail),
+                        UserName = adminUserEmail,
+                        NormalizedUserName = _userManager.NormalizeEmail(adminUserEmail),
+                        EmailConfirmed = true
+                    };
+
+                    adminUser.SecurityStamp = await _userManager.GetSecurityStampAsync(adminUser);
+
+                    var identityResult = await _userManager.CreateAsync(
+                        user: adminUser,
+                        password: _adminUserPassword
+                    );
+                    await _userManager.AddToRoleAsync(adminUser, RoleConstants.AdminRoleName);
+                }
             }
         }
         #endregion

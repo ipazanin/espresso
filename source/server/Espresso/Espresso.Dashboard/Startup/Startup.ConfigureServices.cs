@@ -30,6 +30,8 @@ using Espresso.Dashboard.Application.Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Components.Authorization;
+using Espresso.Dashboard.Areas.Identity;
 
 namespace Espresso.Dashboard.Startup
 {
@@ -131,6 +133,11 @@ namespace Espresso.Dashboard.Startup
                 appEnvironment: _dashboardConfiguration.AppConfiguration.AppEnvironment,
                 version: _dashboardConfiguration.AppConfiguration.Version
             ));
+
+            services.AddScoped<IEmailService, SendGridEmailService>(serviceProvider => new SendGridEmailService(
+                sendGridKey: _dashboardConfiguration.AppConfiguration.SendGridApiKey
+            ));
+
             return services;
         }
 
@@ -336,6 +343,7 @@ namespace Espresso.Dashboard.Startup
         private static IServiceCollection AddAuth(IServiceCollection services)
         {
             services.AddOptions();
+            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddIdentity<IdentityUser, IdentityRole>(identityOptions =>
                 {
                     identityOptions.Password.RequireDigit = true;
@@ -344,11 +352,12 @@ namespace Espresso.Dashboard.Startup
                     identityOptions.Password.RequireNonAlphanumeric = false;
                     identityOptions.Password.RequireUppercase = true;
 
-                    identityOptions.SignIn.RequireConfirmedEmail = true;
+                    identityOptions.SignIn.RequireConfirmedEmail = false;
 
                     identityOptions.User.RequireUniqueEmail = true;
                 })
-                .AddEntityFrameworkStores<EspressoIdentityDatabaseContext>();
+                .AddEntityFrameworkStores<EspressoIdentityDatabaseContext>()
+                .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>(TokenOptions.DefaultProvider);
 
             services.AddAuthentication(authenticationOptions =>
                 {
