@@ -100,6 +100,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                     titleSearchTerm: request.TitleSearchQuery,
                     articleCreateDateTime: firstArticleCreateDateTime
                 )
+                .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
                 .Skip(request.Skip)
                 .Take(request.Take);
 
@@ -122,12 +123,13 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
             }
 
             var featuredArticles = savedArticles
-                .FiltereFeaturedArticles(
+                .FilterFeaturedArticles(
                     categoryIds: null,
                     newsPortalIds: null,
                     maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
                     articleCreateDateTime: firstArticleCreateDateTime
                 )
+                .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
                 .OrderFeaturedArticles(categoryIds);
 
             var trendingArticlesTake = request.FeaturedArticlesTake - featuredArticles.Count() <= 0 ?
@@ -135,10 +137,11 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                 request.FeaturedArticlesTake - featuredArticles.Count();
 
             var trendingArticles = savedArticles
-                .FiltereTrendingArticles(
+                .FilterTrendingArticles(
                     maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
                     articleCreateDateTime: null
                 )
+                .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
                 .OrderArticlesByTrendingScore()
                 .Take(trendingArticlesTake)
                 .OrderArticlesByCategory(categoryIds);

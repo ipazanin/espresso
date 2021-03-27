@@ -39,7 +39,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles
             );
 
             var articleDtos = articles
-                .FiltereTrendingArticles(
+                .FilterTrendingArticles(
                     maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
                     articleCreateDateTime: firstArticle?.CreateDateTime
                 )

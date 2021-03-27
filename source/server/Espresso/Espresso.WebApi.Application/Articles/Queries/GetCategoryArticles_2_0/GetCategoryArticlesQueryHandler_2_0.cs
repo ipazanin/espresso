@@ -19,7 +19,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
         private readonly IMemoryCache _memoryCache;
         #endregion
 
-        #region Contructors
+        #region Constructors
         public GetCategoryArticlesQueryHandler_2_0(
             IMemoryCache memoryCache
         )
@@ -56,6 +56,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
                     titleSearchTerm: request.TitleSearchQuery,
                     articleCreateDateTime: firstArticle?.CreateDateTime
                 )
+                .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
                 .Skip(request.Skip)
                 .Take(request.Take);
 
