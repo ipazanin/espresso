@@ -30,6 +30,8 @@ namespace Espresso.Dashboard.Configuration
         public string SlackWebHook => _configuration.GetValue<string>("SlackWebHook");
 
         public string AdminUserPassword => _configuration.GetValue<string>("AdminUserPassword");
+
+        public string SendGridApiKey => _configuration.GetValue<string>(nameof(SendGridApiKey));
         #endregion
 
         #region Constructors
