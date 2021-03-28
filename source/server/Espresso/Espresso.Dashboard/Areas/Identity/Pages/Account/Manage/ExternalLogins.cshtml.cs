@@ -22,14 +22,14 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
 
-        public IList<UserLoginInfo> CurrentLogins { get; set; }
+        public IList<UserLoginInfo> CurrentLogins { get; set; } = null!;
 
-        public IList<AuthenticationScheme> OtherLogins { get; set; }
+        public IList<AuthenticationScheme> OtherLogins { get; set; } = null!;
 
         public bool ShowRemoveButton { get; set; }
 
         [TempData]
-        public string StatusMessage { get; set; }
+        public string? StatusMessage { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
