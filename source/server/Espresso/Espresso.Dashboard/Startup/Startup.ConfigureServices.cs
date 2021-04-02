@@ -28,8 +28,6 @@ using Espresso.Common.IServices;
 using Espresso.Application.Utilities;
 using Espresso.Dashboard.Application.Constants;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Components.Authorization;
 using Espresso.Dashboard.Areas.Identity;
 

@@ -54,20 +54,19 @@ namespace Espresso.Domain.Extensions
             string targetedApiVersion
         )
         {
-            return articles;
-            // if (!(deviceType == DeviceType.Ios && targetedApiVersion == "2.0"))
-            // {
-            //     return articles;
-            // }
+            if (!(deviceType == DeviceType.Ios && targetedApiVersion == "2.0"))
+            {
+                return articles;
+            }
 
-            // var filteredArticles = articles.Where(
-            //     article => !BannedKeywords.Any(
-            //         bannedKeyword => article.Title.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase) ||
-            //             article.Summary.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase)
-            //     )
-            // );
+            var filteredArticles = articles.Where(
+                article => !BannedKeywords.Any(
+                    bannedKeyword => article.Title.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase) ||
+                        article.Summary.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase)
+                )
+            );
 
-            // return filteredArticles;
+            return filteredArticles;
         }
 
         public static IEnumerable<Article> FilterArticles(

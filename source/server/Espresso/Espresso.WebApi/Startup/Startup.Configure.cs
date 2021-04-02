@@ -55,19 +55,21 @@ namespace Espresso.WebApi.Startup
                 options.RoutePrefix = SwaggerApiExplorerRoute;
             });
 
-            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions
-            {
-                Path = "/graphql-playground",
-                GraphQLEndPoint = "/graphql",
-                Headers = new Dictionary<string, object>
+            app.UseGraphQLPlayground(
+                options: new PlaygroundOptions
                 {
-                  { HttpHeaderConstants.ApiKeyHeaderName, "" },
-                  { HttpHeaderConstants.ApiVersionHeaderName, "1.4" },
-                  { HttpHeaderConstants.DeviceTypeHeaderName, DeviceType.WebApp },
-                  { HttpHeaderConstants.VersionHeaderName, "1.0.0" }
+                    GraphQLEndPoint = "/graphql",
+                    Headers = new Dictionary<string, object>
+                    {
+                      { HttpHeaderConstants.ApiKeyHeaderName, "" },
+                      { HttpHeaderConstants.ApiVersionHeaderName, "1.4" },
+                      { HttpHeaderConstants.DeviceTypeHeaderName, DeviceType.WebApp },
+                      { HttpHeaderConstants.VersionHeaderName, "1.0.0" }
+                    },
+                    EditorReuseHeaders = true,
                 },
-                EditorReuseHeaders = true,
-            });
+                path: "/graphql-playground"
+            );
 
             app.UseRouting();
             app.UseAuthentication();
