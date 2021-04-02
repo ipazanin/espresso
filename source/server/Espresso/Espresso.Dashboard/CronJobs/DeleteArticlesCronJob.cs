@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
-using Espresso.Application.IServices;
+using Espresso.Application.Services.Contracts;
 using Espresso.Common.Enums;
 using Espresso.Dashboard.Application.DeleteOldArticles;
 using Espresso.Dashboard.Configuration;

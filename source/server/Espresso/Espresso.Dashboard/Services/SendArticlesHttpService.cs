@@ -6,16 +6,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Application.Extensions;
-using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
-using Espresso.Common.IServices;
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
 using Espresso.Dashboard.Application.Constants;
 using Espresso.Dashboard.Application.IServices;
 using Microsoft.Extensions.Logging;
+using Espresso.Common.Services.Contracts;
+using Espresso.Application.Services.Contracts;
 
 namespace Espresso.Dashboard.Services
 {

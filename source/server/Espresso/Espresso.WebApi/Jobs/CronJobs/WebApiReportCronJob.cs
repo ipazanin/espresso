@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
-using Espresso.Application.IServices;
+using Espresso.Application.Services.Contracts;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Utilities;

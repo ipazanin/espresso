@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Espresso.Domain.Entities;
 using Espresso.Common.Enums;
 
-namespace Espresso.Application.IServices
+namespace Espresso.Application.Services.Contracts
 {
     public interface ISlackService
     {
@@ -21,6 +21,8 @@ namespace Espresso.Application.IServices
             int yesterdayIosCount,
             int totalAndroidCount,
             int totalIosCount,
+            int activeUsers,
+            decimal revenue,
             CancellationToken cancellationToken
         );
 

@@ -1,5 +1,5 @@
 ﻿using Espresso.Application.Infrastructure.MediatorInfrastructure;
-using Espresso.Application.IServices;
+using Espresso.Application.Services.Contracts;
 using Espresso.Dashboard.Configuration;
 using Espresso.Persistence.Database;
 using Espresso.Persistence.IRepositories;
@@ -8,7 +8,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Espresso.Dashboard.Application.IServices;
-using Espresso.Application.Services;
 using Espresso.Dashboard.Application.Services;
 using Espresso.Dashboard.ParseRssFeeds.Validators;
 using Espresso.Dashboard.ParseRssFeeds;
@@ -24,12 +23,14 @@ using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Dashboard.Application.Initialization;
 using Espresso.Application.Models;
 using Espresso.Common.Services;
-using Espresso.Common.IServices;
+using Espresso.Common.Services.Contracts;
 using Espresso.Application.Utilities;
 using Espresso.Dashboard.Application.Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Components.Authorization;
 using Espresso.Dashboard.Areas.Identity;
+using Espresso.Common.Services.Implementations;
+using Espresso.Application.Services.Implementations;
 
 namespace Espresso.Dashboard.Startup
 {

@@ -36,6 +36,7 @@ namespace Espresso.Dashboard.Application.Initialization
             "miro@espressonews.co",
             "nikola.dadic@gmail.com",
             "iferencak@profico.hr",
+            "pero.pavlovicit@gmail.com"
         };
 
         #endregion

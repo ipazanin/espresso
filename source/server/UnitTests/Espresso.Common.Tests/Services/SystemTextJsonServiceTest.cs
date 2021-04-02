@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Espresso.Common.Services;
+using Espresso.Common.Services.Implementations;
 using Espresso.Common.Tests.TestUtilities.Models;
 using Xunit;
 

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Espresso.Common.IServices;
+using Espresso.Common.Services.Contracts;
 
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
 {

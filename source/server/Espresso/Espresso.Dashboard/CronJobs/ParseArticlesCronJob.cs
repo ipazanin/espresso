@@ -1,12 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.IServices;
 using Espresso.Common.Enums;
 using Espresso.Dashboard.Configuration;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Espresso.Dashboard.ParseRssFeeds;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
+using Espresso.Application.Services.Contracts;
 
 namespace Espresso.Dashboard.CronJobs
 {

@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
-using Espresso.Common.IServices;
+using Espresso.Common.Services.Contracts;
 using Espresso.WebApi.DataTransferObjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;

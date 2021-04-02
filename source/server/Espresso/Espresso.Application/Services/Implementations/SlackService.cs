@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.IServices;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Microsoft.Extensions.Caching.Memory;
@@ -14,15 +13,15 @@ using Espresso.Domain.Entities;
 using System.Linq;
 using Espresso.Application.DataTransferObjects.SlackDataTransferObjects;
 using Espresso.Application.Models;
-using Espresso.Common.IServices;
+using Espresso.Common.Services.Contracts;
 using Espresso.Dashboard.Application.Constants;
+using Espresso.Application.Services.Contracts;
 
-namespace Espresso.Application.Services
+namespace Espresso.Application.Services.Implementations
 {
     public class SlackService : ISlackService
     {
         #region Constants
-        private const int EspressoDownloadsMileStone = 10000;
         private static readonly TimeSpan s_exceptionMessageCooldownInterval = TimeSpan.FromHours(4);
 
         private const string ErrorsBotIconEmoji = ":no_entry:";
@@ -34,16 +33,15 @@ namespace Espresso.Application.Services
         private const string WarningBotUsername = "warning-bot";
         private const string WarningsChannel = "#warnings-backend-bot";
         private const string IvanPazaninUserName = "@ipazanin";
+#pragma warning restore IDE0051
 
         private const string MissingCategoriesErrorsBotIconEmoji = ":warning:";
         private const string MissingCategoriesErrorsBotUsername = "warning-bot";
         private const string MissingCategoriesErrorsChannel = "#missing-categories-errors-bot";
 
-#pragma warning restore IDE0051
-
-        private const string AppDownloadsBotIconEmoji = ":tada:";
-        private const string AppDownloadsBotUsername = "app-downloads-bot";
-        private const string AppDownloadsChannel = "#marketing-bot";
+        private const string MarketingBotIconEmoji = ":bar_chart:";
+        private const string MarketingBotUsername = "marketing-bot";
+        private const string MarketingBitChannel = "#marketing-bot";
 
         private const string NewNewsPortalRequestBotIconEmoji = ":email:";
         private const string NewNewsPortalRequestBotUsername = "new-source-bot";
@@ -104,7 +102,7 @@ namespace Espresso.Application.Services
                 $":exclamation: Exception Message: {exceptionMessage}\n" +
                 $":exclamation: Inner Exception Message: {innerExceptionMessage}\n";
 
-            return Log(
+            return SendToSlack(
                 data: new SlackWebHookRequestBodyDto(
                     userName: ErrorBotUsername,
                     iconEmoji: ErrorsBotIconEmoji,
@@ -122,41 +120,70 @@ namespace Espresso.Application.Services
             int yesterdayIosCount,
             int totalAndroidCount,
             int totalIosCount,
+            int activeUsers,
+            decimal revenue,
             CancellationToken cancellationToken
         )
         {
-            var text = $":calendar: Yesterday: Android +{yesterdayAndroidCount}, " +
-                $"iOS +{yesterdayIosCount}, total: +{yesterdayAndroidCount + yesterdayIosCount}\n" +
-                $":robot_face: Lifetime Android: {totalAndroidCount}\n" +
-                $":apple: Lifetime iOS: {totalIosCount}\n" +
-                $":chart_with_upwards_trend: Lifetime: {totalAndroidCount + totalIosCount}";
+            var blocks = new List<SlackBlock>
+            {
+                new SlackTextFieldsImageSectionBlock(
+                    text: new SlackMarkdownTextBlock($"Downloads:"),
+                    fields: new List<SlackMarkdownTextBlock>()
+                    {
+                            new SlackMarkdownTextBlock($"Android"),
+                            new SlackMarkdownTextBlock(yesterdayAndroidCount.ToString()),
+                            new SlackMarkdownTextBlock($"iOS"),
+                            new SlackMarkdownTextBlock(yesterdayIosCount.ToString()),
+                            new SlackMarkdownTextBlock($"Total Android"),
+                            new SlackMarkdownTextBlock(totalAndroidCount.ToString()),
+                            new SlackMarkdownTextBlock($"Total iOS"),
+                            new SlackMarkdownTextBlock(totalIosCount.ToString()),
+                            new SlackMarkdownTextBlock($"Total"),
+                            new SlackMarkdownTextBlock((totalIosCount + totalAndroidCount).ToString()),
+                    },
+                    accessory: new SlackImageBlock(
+                        imageUrl: "https://aux.iconspalace.com/uploads/download-icon-256-361231194.png",
+                        altText: "Downloads Icon"
+                    )
+                ),
+                new SlackDividerBlock(),
+                new SlackTextFieldsImageSectionBlock(
+                    text: new SlackMarkdownTextBlock($"Active Users:"),
+                    fields: new List<SlackMarkdownTextBlock>()
+                    {
+                            new SlackMarkdownTextBlock(activeUsers.ToString()),
+                    },
+                    accessory: new SlackImageBlock(
+                        imageUrl: "https://cdn1.iconfinder.com/data/icons/ui-colored-3-of-3/100/UI_3__23-512.png",
+                        altText: "Active Users Icon"
+                    )
+                ),
+                new SlackDividerBlock(),
+                new SlackTextFieldsImageSectionBlock(
+                    text: new SlackMarkdownTextBlock($"Revenue:"),
+                    fields: new List<SlackMarkdownTextBlock>()
+                    {
+                            new SlackMarkdownTextBlock($"{revenue:0.##}$"),
+                    },
+                    accessory: new SlackImageBlock(
+                        imageUrl: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency/256/Dollar-USD-icon.png",
+                        altText: "Revenue Icon"
+                    )
+                ),
+            };
 
-            await Log(
+            await SendToSlack(
                 data: new SlackWebHookRequestBodyDto(
-                    userName: AppDownloadsBotUsername,
-                    iconEmoji: AppDownloadsBotIconEmoji,
-                    text: text,
-                    channel: AppDownloadsChannel,
-                    blocks: Array.Empty<SlackBlock>()
+                    userName: MarketingBotUsername,
+                    iconEmoji: MarketingBotIconEmoji,
+                    text: "Analytics Data",
+                    channel: MarketingBitChannel,
+                    blocks: blocks
                 ),
 
                 cancellationToken: cancellationToken
             );
-
-            if (totalAndroidCount + totalIosCount == EspressoDownloadsMileStone)
-            {
-                await Log(
-                    data: new SlackWebHookRequestBodyDto(
-                        userName: "Alkos-Bot",
-                        iconEmoji: ":fire:",
-                        text: $"@channel {EspressoDownloadsMileStone} Downloadova, Woooooo espresso ide pit " +
-                        ":champagne::beer::beers::tropical_drink::clinking_glasses::wine_glass::cocktail::tumbler_glass:",
-                        channel: AppDownloadsChannel,
-                    blocks: Array.Empty<SlackBlock>()
-                    ),
-                    cancellationToken: cancellationToken
-                );
-            }
         }
 
         public Task LogMissingCategoriesError(
@@ -171,7 +198,7 @@ namespace Espresso.Application.Services
                 $":email: Article Url: {articleUrl}\n" +
                 $":email: Url-SegmentIndex:Category Map: {urlCategories}\n";
 
-            return Log(
+            return SendToSlack(
                 data: new SlackWebHookRequestBodyDto(
                     userName: MissingCategoriesErrorsBotUsername,
                     iconEmoji: MissingCategoriesErrorsBotIconEmoji,
@@ -195,7 +222,7 @@ namespace Espresso.Application.Services
                 $"Email: {email}\n" +
                 $"Url: {url}";
 
-            return Log(
+            return SendToSlack(
                 data: new SlackWebHookRequestBodyDto(
                     userName: NewNewsPortalRequestBotUsername,
                     iconEmoji: NewNewsPortalRequestBotIconEmoji,
@@ -224,7 +251,7 @@ namespace Espresso.Application.Services
                 );
             }
 
-            return Log(
+            return SendToSlack(
                 data: new SlackWebHookRequestBodyDto(
                     userName: BackendStatisticsBotUsername,
                     iconEmoji: BackendStatisticsBotIconEmoji,
@@ -279,7 +306,7 @@ namespace Espresso.Application.Services
                 blocks.Add(new SlackDividerBlock());
             }
 
-            await Log(
+            await SendToSlack(
                 data: new SlackWebHookRequestBodyDto(
                     userName: BackendStatisticsBotUsername,
                     iconEmoji: BackendStatisticsBotIconEmoji,
@@ -289,82 +316,6 @@ namespace Espresso.Application.Services
                 ),
                 cancellationToken: cancellationToken
             );
-
-            #region TODO: Move to another method and add cron job to execute once a week
-            // blocks.Clear();
-            // blocks.Add(new SlackHeaderBlock(new SlackPlainTextBlock("Top News Portals")));
-
-            // foreach (var (newsPortal, numberOfClicks, articles) in topNewsPortals)
-            // {
-            //     var numberOfArticles = articles.Count();
-            //     var newsPortalsBlock = new SlackTextFieldsImageSectionBlock(
-            //         text: new SlackMarkdownTextBlock($"<{newsPortal.BaseUrl}|{newsPortal.Name}>"),
-            //         fields: new List<SlackMarkdownTextBlock>
-            //         {
-            //             new SlackMarkdownTextBlock("*Category*"),
-            //             new SlackMarkdownTextBlock(newsPortal.Category!.Name),
-            //             new SlackMarkdownTextBlock("*Number Of Clicks*"),
-            //             new SlackMarkdownTextBlock(numberOfClicks.ToString()),
-            //             new SlackMarkdownTextBlock("*Clicks %*"),
-            //             new SlackMarkdownTextBlock($"{Math.Round(totalNumberOfClicks == 0 ? 0 : 100 * numberOfClicks / (double)totalNumberOfClicks, 2)}%"),
-            //             new SlackMarkdownTextBlock("*Clicks Per Article*"),
-            //             new SlackMarkdownTextBlock($"{Math.Round(numberOfArticles == 0 ? 0 : numberOfClicks / (double)numberOfArticles, 2)}"),
-            //         },
-            //         accessory: new SlackImageBlock(
-            //             imageUrl: $"https://espressonews.co/{newsPortal.IconUrl}" ?? "https://via.placeholder.com/350x150.jpg",
-            //             altText: "news portal image"
-            //         )
-            //     );
-
-            //     blocks.Add(newsPortalsBlock);
-            //     blocks.Add(new SlackDividerBlock());
-            // }
-
-            // await Log(
-            //     data: new SlackWebHookRequestBodyDto(
-            //         userName: BackendStatisticsBotUsername,
-            //         iconEmoji: BackendStatisticsBotIconEmoji,
-            //         text: "News Portals",
-            //         channel: BackendStatisticsChannel,
-            //         blocks: blocks
-            //     ),
-            //     cancellationToken: cancellationToken
-            // );
-            // blocks.Clear();
-
-            // blocks.Add(new SlackHeaderBlock(new SlackPlainTextBlock("Categories")));
-
-
-            // foreach (var (category, numberOfClicks, articles) in categoriesWithNumberOfClicks)
-            // {
-            //     var numberOfArticles = articles.Count();
-            //     var categoriesBlock = new SlackTextFieldsSectionBlock(
-            //         text: new SlackMarkdownTextBlock($"*{category.Name}*"),
-            //         fields: new List<SlackMarkdownTextBlock>
-            //         {
-            //             new SlackMarkdownTextBlock("*Number Of Clicks*"),
-            //             new SlackMarkdownTextBlock(numberOfClicks.ToString()),
-            //             new SlackMarkdownTextBlock("*Clicks %*"),
-            //             new SlackMarkdownTextBlock($"{Math.Round(totalNumberOfClicks == 0 ? 0 : 100 * numberOfClicks / (double)totalNumberOfClicks, 2)}%"),
-            //             new SlackMarkdownTextBlock("*Clicks Per Article*"),
-            //             new SlackMarkdownTextBlock($"{Math.Round(numberOfArticles == 0 ? 0 : numberOfClicks / (double)numberOfArticles, 2)}"),
-            //         }
-            //     );
-            //     blocks.Add(categoriesBlock);
-            //     blocks.Add(new SlackDividerBlock());
-            // }
-
-            // await Log(
-            //     data: new SlackWebHookRequestBodyDto(
-            //         userName: BackendStatisticsBotUsername,
-            //         iconEmoji: BackendStatisticsBotIconEmoji,
-            //         text: "Categories",
-            //         channel: BackendStatisticsChannel,
-            //         blocks: blocks
-            //     ),
-            //     cancellationToken: cancellationToken
-            // );
-            #endregion
         }
 
         public Task LogPushNotification(
@@ -396,7 +347,7 @@ namespace Espresso.Application.Services
                 )
             };
 
-            return Log(
+            return SendToSlack(
                 data: new SlackWebHookRequestBodyDto(
                     userName: PushNotificationBotUsername,
                     iconEmoji: PushNotificationBotIconEmoji,
@@ -410,9 +361,9 @@ namespace Espresso.Application.Services
         #endregion
 
         #region Private Methods
-        private async Task Log(
-                SlackWebHookRequestBodyDto data,
-                CancellationToken cancellationToken
+        private async Task SendToSlack(
+            SlackWebHookRequestBodyDto data,
+            CancellationToken cancellationToken
         )
         {
             if (!_applicationInformation.AppEnvironment.Equals(AppEnvironment.Prod))
