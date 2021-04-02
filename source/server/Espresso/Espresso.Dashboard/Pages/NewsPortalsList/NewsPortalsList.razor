@@ -30,9 +30,9 @@ else
             @foreach (var newsPortal in Response.NewsPortals.Items)
             {
                 <NewsPortalListItem 
-                    NewsPortal=@(newsPortal) 
-                    DeleteNewsPortalHandler=@(DeleteNewsPortal)
-                    OpenNewsPortalDetailsHandler=@(OpenNewsPortalDetails) 
+                    NewsPortal="@(newsPortal)"
+                    DeleteNewsPortalHandler="@(DeleteNewsPortal)"
+                    OpenNewsPortalDetailsHandler="@(OpenNewsPortalDetails)" 
                 />
             }
         </tbody>
@@ -41,8 +41,8 @@ else
     <div class="container">
         <div class="row">
             <div class="col">
-                <Pagination PagingMetadata=@(Response.NewsPortals.PagingMetadata) Spread=@(2)
-                    SelectedPage=@(SelectedPage) />
+                <Pagination PagingMetadata="@(Response.NewsPortals.PagingMetadata)" Spread=@(2)
+                    SelectedPage="@(SelectedPage)" />
             </div>
         </div>
     </div>
