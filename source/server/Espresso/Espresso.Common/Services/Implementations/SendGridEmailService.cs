@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
-using Espresso.Common.IServices;
+using Espresso.Common.Services.Contracts;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-namespace Espresso.Common.Services
+namespace Espresso.Common.Services.Implementations
 {
     public class SendGridEmailService : IEmailService
     {

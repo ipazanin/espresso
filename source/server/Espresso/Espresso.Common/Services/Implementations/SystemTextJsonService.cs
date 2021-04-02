@@ -5,9 +5,9 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
-using Espresso.Common.IServices;
+using Espresso.Common.Services.Contracts;
 
-namespace Espresso.Common.Services
+namespace Espresso.Common.Services.Implementations
 {
     public class SystemTextJsonService : IJsonService
     {

@@ -3,7 +3,7 @@
     "Environment": 1
   },
   "CronJobsConfiguration": {
-    "ApplicationDownloadStatisticsCronExpression": "1 1 * * *",
+    "AnalyticsCronExpression": "1 1 * * *",
     "WebApiReportCronExpression": "1 1 * * *"
   },
   "DateTimeConfiguration": {

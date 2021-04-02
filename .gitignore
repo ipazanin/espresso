@@ -12,6 +12,7 @@ webapi-environment.yml
 
 # Firebase OAuth Configuration
 firebase-key.json
+google-analytics-key.json
 
 # Launch Configuration
 .vscode/launch.json

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Espresso.WebApi.Application.Exceptions;
-using Espresso.Application.IServices;
+using Espresso.Application.Services.Contracts;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;

@@ -2,6 +2,7 @@
 using Espresso.Dashboard.Application.Initialization;
 using Microsoft.AspNetCore.Builder;
 using Espresso.Application.Middleware.SecurityHeaders;
+using Espresso.Domain.IServices;
 
 namespace Espresso.Dashboard.Startup
 {
@@ -11,12 +12,20 @@ namespace Espresso.Dashboard.Startup
         /// 
         /// </summary>
         /// <param name="app"></param>
+        /// <param name="loggerService"></param>
         /// <param name="memoryCacheInit"></param>
         public void Configure(
             IApplicationBuilder app,
+            ILoggerService<Startup> loggerService,
             IDashboardInit memoryCacheInit
         )
         {
+            loggerService.Log(
+                eventName: "WebApi Startup",
+                logLevel: Microsoft.Extensions.Logging.LogLevel.Information,
+                namedArguments: new (string, object)[] { ("version", _dashboardConfiguration.AppConfiguration.Version) }
+            );
+
             memoryCacheInit.InitParserDeleter().GetAwaiter().GetResult();
 
             if (_dashboardConfiguration.AppConfiguration.AppEnvironment == AppEnvironment.Local)

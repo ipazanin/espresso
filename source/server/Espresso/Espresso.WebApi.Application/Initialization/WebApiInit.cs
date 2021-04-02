@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
-using Espresso.Domain.Entities;
 using Espresso.Common.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
@@ -23,17 +21,12 @@ namespace Espresso.WebApi.Application.Initialization
     /// </summary>
     public class WebApiInit : IWebApiInit
     {
-        #region Constants
         private const string ConfigurationFileName = "firebase-key.json";
-        #endregion
 
-        #region Fileds
         private readonly IMemoryCache _memoryCache;
         private readonly IEspressoDatabaseContext _context;
         private readonly ILoggerService<WebApiInit> _loggerService;
-        #endregion
 
-        #region Constructors
         /// <summary>
         /// 
         /// </summary>
@@ -50,14 +43,12 @@ namespace Espresso.WebApi.Application.Initialization
             _context = context;
             _loggerService = loggerService;
         }
-        #endregion
 
-        #region Public Methods
         public async Task InitWebApi()
         {
             var stopwatch = Stopwatch.StartNew();
 
-            InitializeFireBase();
+            InitializeGoogleServices();
 
             await _context.Database.MigrateAsync();
 
@@ -139,7 +130,6 @@ namespace Espresso.WebApi.Application.Initialization
                 value: articles
             );
 
-            DisplaySimilarArticles(articles);
             #endregion
 
             stopwatch.Stop();
@@ -159,44 +149,17 @@ namespace Espresso.WebApi.Application.Initialization
 
             _loggerService.Log(eventName, LogLevel.Information, arguments);
         }
-        #endregion
 
-        #region Private Methods
-        private static void InitializeFireBase()
+        private static void InitializeGoogleServices()
         {
+            var firebaseKeyPath = Path.Combine(
+                path1: AppDomain.CurrentDomain.BaseDirectory ?? "",
+                path2: ConfigurationFileName
+            );
             FirebaseApp.Create(new AppOptions()
             {
-                Credential = GoogleCredential.FromFile(
-                    path: Path.Combine(
-                        path1: AppDomain.CurrentDomain.BaseDirectory ?? "",
-                        path2: ConfigurationFileName
-                    )
-                ),
+                Credential = GoogleCredential.FromFile(firebaseKeyPath),
             });
         }
-#pragma warning disable CA1822
-#pragma warning disable IDE0060
-        private void DisplaySimilarArticles(
-            IEnumerable<Article> articles
-        )
-        {
-            #region For Viewwing Similar Articles
-            // var mainArticles = articles.Where(article => article.SubordinateArticles.Count != 0);
-
-            // foreach (var mainArticle in mainArticles)
-            // {
-            //     var subordinateArticleTitles = mainArticle
-            //         .SubordinateArticles
-            //         .Select((article, index) => ($"Similar Article {index}", article.SubordinateArticle.Title as object));
-
-            //     _loggerService.Log("Similar Articles", LogLevel.Information, new (string, object)[]
-            //     {
-            //         ("Main Article", mainArticle.Title)
-            //     }.Union(subordinateArticleTitles));
-            // }
-            #endregion
-        }
-#pragma warning restore
-        #endregion
     }
 }

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Espresso.Common.IServices
+namespace Espresso.Common.Services.Contracts
 {
     public interface IEmailService
     {

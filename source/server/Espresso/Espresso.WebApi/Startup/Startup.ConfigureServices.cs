@@ -3,13 +3,11 @@ using System.Net.Http;
 using System.Reflection;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
-using Espresso.Application.IServices;
+using Espresso.Application.Services.Contracts;
 using Espresso.Application.Models;
-using Espresso.Application.Services;
 using Espresso.Application.Utilities;
 using Espresso.Common.Constants;
-using Espresso.Common.IServices;
-using Espresso.Common.Services;
+using Espresso.Common.Services.Contracts;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Services;
 using Espresso.Dashboard.Application.Constants;
@@ -31,6 +29,8 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
+using Espresso.Application.Services.Implementations;
+using Espresso.Common.Services.Implementations;
 
 namespace Espresso.WebApi.Startup
 {
@@ -210,6 +210,8 @@ namespace Espresso.WebApi.Startup
                 )
             );
 
+            services.AddScoped<IGoogleAnalyticsService, GoogleAnalyticsService>();
+
             return services;
         }
 
@@ -251,11 +253,11 @@ namespace Espresso.WebApi.Startup
         /// <returns></returns>
         private IServiceCollection AddJobs(IServiceCollection services)
         {
-            services.AddCronJob<ApplicationDownloadStatisticsCronJob>(cronJobConfiguration =>
+            services.AddCronJob<AnalyticsCronJob>(cronJobConfiguration =>
                 {
                     cronJobConfiguration.CronExpression = _webApiConfiguration
                         .CronJobsConfiguration
-                        .ApplicationDownloadStatisticsCronExpression;
+                        .AnalyticsCronExpression;
                     cronJobConfiguration.TimeZoneInfo = TimeZoneInfo.Utc;
                     cronJobConfiguration.Version = _webApiConfiguration.AppConfiguration.Version;
                     cronJobConfiguration.AppEnvironment = _webApiConfiguration.AppConfiguration.AppEnvironment;

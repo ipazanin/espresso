@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Espresso.Common.Constants;
+using Espresso.Domain.IServices;
 
 namespace Espresso.WebApi.Startup
 {
@@ -19,13 +20,21 @@ namespace Espresso.WebApi.Startup
         /// </summary>
         /// <param name="app"></param>
         /// <param name="memoryCacheInit"></param>
+        /// <param name="loggerService"></param>
         /// <param name="env"></param>
         public void Configure(
             IApplicationBuilder app,
             IWebApiInit memoryCacheInit,
+            ILoggerService<Startup> loggerService,
             IWebHostEnvironment env
         )
         {
+            loggerService.Log(
+                eventName: "WebApi Startup",
+                logLevel: Microsoft.Extensions.Logging.LogLevel.Information,
+                namedArguments: new (string, object)[] { ("version", _webApiConfiguration.AppConfiguration.Version) }
+            );
+
             memoryCacheInit.InitWebApi().GetAwaiter().GetResult();
 
 

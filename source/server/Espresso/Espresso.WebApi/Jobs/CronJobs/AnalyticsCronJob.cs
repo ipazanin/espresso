@@ -3,21 +3,26 @@ using System.Threading;
 using System.Linq;
 using Espresso.Common.Enums;
 using Espresso.Persistence.IRepositories;
-using Espresso.Application.IServices;
+using Espresso.Application.Services.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
-using Espresso.WebApi.Configuration;
 using Espresso.Domain.Utilities;
+using System.Collections;
+using System.Collections.Generic;
+using Espresso.Domain.Entities;
 
 namespace Espresso.WebApi.Jobs.CronJobs
 {
     /// <summary>
     /// 
     /// </summary>
-    public class ApplicationDownloadStatisticsCronJob : CronJob<ApplicationDownloadStatisticsCronJob>
+    public class AnalyticsCronJob : CronJob<AnalyticsCronJob>
     {
+
         #region Fields
+
         private readonly IServiceScopeFactory _scopeFactory;
+
         #endregion
 
         #region Constructors
@@ -27,9 +32,9 @@ namespace Espresso.WebApi.Jobs.CronJobs
         /// <param name="serviceScopeFactory"></param>
         /// <param name="cronJobConfiguration"></param>
         /// <returns></returns>
-        public ApplicationDownloadStatisticsCronJob(
+        public AnalyticsCronJob(
             IServiceScopeFactory serviceScopeFactory,
-            ICronJobConfiguration<ApplicationDownloadStatisticsCronJob> cronJobConfiguration
+            ICronJobConfiguration<AnalyticsCronJob> cronJobConfiguration
         ) : base(
             cronJobConfiguration: cronJobConfiguration,
             serviceScopeFactory: serviceScopeFactory
@@ -51,8 +56,29 @@ namespace Espresso.WebApi.Jobs.CronJobs
             var serviceProvider = scope.ServiceProvider;
             var applicationDownloadRepository = serviceProvider.GetRequiredService<IApplicationDownloadRepository>();
             var slackService = serviceProvider.GetRequiredService<ISlackService>();
+            var googleAnalyticsService = serviceProvider.GetRequiredService<IGoogleAnalyticsService>();
 
             var applicationDownloads = await applicationDownloadRepository.GetApplicationDownloads();
+            var (todayAndroidCount, todayIosCount, totalAndroidCount, totalIosCount) = CalculateAppDownloadsPerDeviceType(applicationDownloads);
+
+            var activeUsers = await googleAnalyticsService.GetNumberOfActiveUsersFromYesterday();
+            var revenue = await googleAnalyticsService.GetTotalRevenueFromYesterday();
+
+            await slackService.LogAppDownloadStatistics(
+                    yesterdayAndroidCount: todayAndroidCount,
+                    yesterdayIosCount: todayIosCount,
+                    totalAndroidCount: totalAndroidCount,
+                    totalIosCount: totalIosCount,
+                    activeUsers: activeUsers,
+                    revenue: revenue,
+                    cancellationToken: cancellationToken
+            );
+        }
+
+        private static (int todayAndroidCount, int todayIosCount, int totalAndroidCount, int totalIosCount) CalculateAppDownloadsPerDeviceType(
+            IEnumerable<ApplicationDownload> applicationDownloads
+        )
+        {
 
             var todayAndroidCount = applicationDownloads.Count(applicationDownloads =>
                 applicationDownloads.MobileDeviceType == DeviceType.Android &&
@@ -73,13 +99,7 @@ namespace Espresso.WebApi.Jobs.CronJobs
                 applicationDownloads.DownloadedTime.Date <= DateTimeUtility.YesterdaysDate
             );
 
-            await slackService.LogAppDownloadStatistics(
-                    yesterdayAndroidCount: todayAndroidCount,
-                    yesterdayIosCount: todayIosCount,
-                    totalAndroidCount: totalAndroidCount,
-                    totalIosCount: totalIosCount,
-                    cancellationToken: cancellationToken
-            );
+            return (todayAndroidCount, todayIosCount, totalAndroidCount, totalIosCount);
         }
         #endregion
     }

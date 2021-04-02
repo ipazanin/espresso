@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.IServices;
+using Espresso.Application.Services.Contracts;
 using MediatR;
 
 namespace Espresso.WebApi.Application.NewsPortals.Commands.NewSourcesRequest

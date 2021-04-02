@@ -15,7 +15,7 @@ using Espresso.Domain.IServices;
 using Espresso.Dashboard.Application.IServices;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
-using Espresso.Common.IServices;
+using Espresso.Common.Services.Contracts;
 using Espresso.Dashboard.Application.Constants;
 using Espresso.Domain.ValueObjects.RssFeedValueObjects;
 
