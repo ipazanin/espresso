@@ -8,7 +8,7 @@
     "Version": "2.1.8"
   },
   "CronJobsConfiguration": {
-    "AnalyticsCronExpression": "0 9 * * *",
+    "AnalyticsCronExpression": "0 10 * * *",
     "WebApiReportCronExpression": "0 9 * * *"
   },
   "DateTimeConfiguration": {

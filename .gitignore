@@ -6,9 +6,12 @@ database-settings.local-production.json
 
 # Docker Compose
 database-environment.yml
+database-environment-postgres.yml
 dashboard-environment.yml
-rabbitmq-environment.yml
+dashboard-environment-postgres.yml
 webapi-environment.yml
+webapi-environment-postgres.yml
+rabbitmq-environment.yml
 
 # Firebase OAuth Configuration
 firebase-key.json
