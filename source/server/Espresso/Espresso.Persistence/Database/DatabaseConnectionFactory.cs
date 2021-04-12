@@ -1,5 +1,5 @@
 ﻿using System.Data;
-using Microsoft.Data.SqlClient;
+using Npgsql;
 
 namespace Espresso.Persistence.Database
 {
@@ -21,7 +21,7 @@ namespace Espresso.Persistence.Database
         #region Methods
         public IDbConnection CreateDatabaseConnection()
         {
-            return new SqlConnection(_connectionString);
+            return new NpgsqlConnection(_connectionString);
         }
         #endregion
     }

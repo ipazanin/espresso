@@ -2,17 +2,18 @@ version: '3.8'
 services:
   espresso-database:
     container_name: espresso-database
-    image: 'microsoft/mssql-server-linux:2017-latest'
+    image: 'postgres'
     ports:
-      - '1433:1433'
+      - '1433:5432'
     volumes:
-      - espresso-database-data:/var/opt/mssql/data
+      - espresso-database-data-postgres:/var/lib/postgresql/data
+      # - espresso-database-data:/var/opt/mssql/data
     networks:
       - espresso
 
 volumes:
-  espresso-database-data:
+  # espresso-database-data:
+  espresso-database-data-postgres:
 
 networks:
   espresso:
-  

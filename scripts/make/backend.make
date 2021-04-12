@@ -15,8 +15,8 @@ DebugConfiguration="Debug"
 
 AdminUserPassword="Opatija123"
 SlackWebHook="https://hooks.slack.com/services/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"
-EspressoDatabaseConnectionString="Server=localhost,1433;Database=EspressoDb;Application Name=Espresso;User=sa;Password=Opatija1;"
-EspressoIdentityDatabaseConnectionString="Server=localhost,1433;Database=EspressoIdentityDb;Application Name=EspressoIdentity;User=sa;Password=Opatija1;"
+EspressoDatabaseConnectionString="User ID=sa;Password=Opatija1;Host=localhost;Port=1433;Database=EspressoDb;" #"Server=localhost,1433;Database=EspressoDb;Application Name=Espresso;User=sa;Password=Opatija1;"
+EspressoIdentityDatabaseConnectionString="User ID=sa;Password=Opatija1;Host=localhost;Port=1433;Database=EspressoIdentityDb;" #"Server=localhost,1433;Database=EspressoIdentityDb;Application Name=EspressoIdentity;User=sa;Password=Opatija1;"
 
 UnitTestResultsPath="server/UnitTests/TestReports"
 UnitTestRelativeResultsPath="TestReports"
@@ -24,7 +24,7 @@ UnitTestsDirectory="server/UnitTests"
 UnitTestsLogFileName="TestResults.xml"
 
 EspressoDatabaseContextName="EspressoDatabaseContext"
-EspressoIdentityDatabaseContextName="IdentityDatabaseContext"
+EspressoIdentityDatabaseContextName="EspressoIdentityDatabaseContext"
 EspressoDatabaseMigrationsFolder="EspressoDatabaseMigrations"
 EspressoIdentityDatabaseMigrationsFolder="IdentityDatabaseMigrations"
 

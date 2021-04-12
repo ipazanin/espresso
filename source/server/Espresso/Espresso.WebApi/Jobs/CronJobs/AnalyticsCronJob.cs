@@ -2,14 +2,14 @@
 using System.Threading;
 using System.Linq;
 using Espresso.Common.Enums;
-using Espresso.Persistence.IRepositories;
 using Espresso.Application.Services.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Domain.Utilities;
-using System.Collections;
 using System.Collections.Generic;
 using Espresso.Domain.Entities;
+using Espresso.Persistence.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace Espresso.WebApi.Jobs.CronJobs
 {
@@ -54,11 +54,11 @@ namespace Espresso.WebApi.Jobs.CronJobs
         {
             using var scope = _scopeFactory.CreateScope();
             var serviceProvider = scope.ServiceProvider;
-            var applicationDownloadRepository = serviceProvider.GetRequiredService<IApplicationDownloadRepository>();
+            var espressoDatabaseContext = serviceProvider.GetRequiredService<IEspressoDatabaseContext>();
             var slackService = serviceProvider.GetRequiredService<ISlackService>();
             var googleAnalyticsService = serviceProvider.GetRequiredService<IGoogleAnalyticsService>();
 
-            var applicationDownloads = await applicationDownloadRepository.GetApplicationDownloads();
+            var applicationDownloads = await espressoDatabaseContext.ApplicationDownload.ToListAsync(cancellationToken);
             var (todayAndroidCount, todayIosCount, totalAndroidCount, totalIosCount) = CalculateAppDownloadsPerDeviceType(applicationDownloads);
 
             var activeUsers = await googleAnalyticsService.GetNumberOfActiveUsersFromYesterday();

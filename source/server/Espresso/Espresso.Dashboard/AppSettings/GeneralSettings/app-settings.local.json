@@ -9,7 +9,6 @@
     "MaxAgeOfSimilarArticleCheckingInHours": 4
   },
   "CronJobsConfiguration": {
-    "DeleteArticlesCronExpression": "* * * * *",
     "ParseArticlesCronExpression": "* * * * *"
   },
   "HttpClientConfiguration": {

@@ -166,13 +166,11 @@ namespace Espresso.Domain.Entities
         /// </summary>
         /// <param name="other"></param>
         /// <returns>If article should be updated</returns>
-        public
-        (
-            bool shouldUpdate,
+        public (
+            bool isSaved,
             IEnumerable<ArticleCategory> articleCategoriesToCreate,
             IEnumerable<ArticleCategory> articleCategoriesToDelete
-        )
-        Update(Article other)
+        ) Update(Article other)
         {
             var shouldUpdate = false;
             if (!Url.Equals(other.Url))
@@ -222,16 +220,14 @@ namespace Espresso.Domain.Entities
 
             foreach (var otherArticleCategory in other.ArticleCategories)
             {
-                if (
-                    !ArticleCategories.Any(articleCategory => articleCategory.CategoryId.Equals(otherArticleCategory.CategoryId))
-                )
+                if (!ArticleCategories.Any(articleCategory => articleCategory.CategoryId.Equals(otherArticleCategory.CategoryId)))
                 {
                     var newArticleCategory = new ArticleCategory(
-                        id: Guid.NewGuid(),
+                        id: otherArticleCategory.Id,
                         articleId: Id,
                         categoryId: otherArticleCategory.CategoryId,
                         article: null,
-                        category: otherArticleCategory.Category
+                        category: null
                     );
                     articleCategoriesToCreate.Add(newArticleCategory);
                     ArticleCategories.Add(newArticleCategory);
@@ -287,6 +283,12 @@ namespace Espresso.Domain.Entities
         {
             NewsPortal = newsPortal;
             NewsPortalId = newsPortal.Id;
+        }
+
+        public void SetRssFeed(RssFeed rssFeed)
+        {
+            RssFeed = rssFeed;
+            RssFeedId = rssFeed.Id;
         }
 
         public void RemoveSimilarArticles()

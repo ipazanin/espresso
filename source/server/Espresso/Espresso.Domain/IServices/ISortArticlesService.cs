@@ -9,8 +9,8 @@ namespace Espresso.Domain.IServices
         public (
             IEnumerable<Article> createdArticles,
             IEnumerable<Article> updatedArticles,
-            IEnumerable<ArticleCategory> articleCategoriesToCreate,
-            IEnumerable<ArticleCategory> articleCategoriesToDelete
+            IEnumerable<ArticleCategory> createArticleCategories,
+            IEnumerable<ArticleCategory> deleteArticleCategories
         ) SortArticles(
             IEnumerable<Article> articles,
             IDictionary<Guid, Article> savedArticles

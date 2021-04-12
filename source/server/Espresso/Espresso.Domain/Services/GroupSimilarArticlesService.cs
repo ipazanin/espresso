@@ -11,18 +11,23 @@ namespace Espresso.Domain.Services
     public class GroupSimilarArticlesService : IGroupSimilarArticlesService
     {
         #region Constants
+
         private const double MaxSimilarityScore = 1d;
+
         #endregion
 
         #region Fields
+
         private readonly double _similarityScoreThreshold;
         private readonly TimeSpan _articlePublishDateTimeDiferenceThreshold;
         private readonly ILoggerService<GroupSimilarArticlesService> _loggerService;
         private readonly TimeSpan _maxAgeOfSimilarArticleChecking;
         private readonly int _minimalNumberOfWordsForArticleToBeComparable;
+
         #endregion
 
         #region Constructors
+
         public GroupSimilarArticlesService(
             double similarityScoreThreshold,
             TimeSpan articlePublishDateTimeDiferenceThreshold,
@@ -37,19 +42,23 @@ namespace Espresso.Domain.Services
             _maxAgeOfSimilarArticleChecking = maxAgeOfSimilarArticleChecking;
             _minimalNumberOfWordsForArticleToBeComparable = minimalNumberOfWordsForArticleToBeComparable;
         }
+
         #endregion
 
         #region Methods
+
         public IEnumerable<SimilarArticle> GroupSimilarArticles(
             IEnumerable<Article> articles,
+            ISet<Guid> subordinateArticleIds,
             DateTime lastSimilarityGroupingTime
         )
         {
             var maxAgeOfSimilarArticleCheckingDateTime = DateTime.UtcNow - _maxAgeOfSimilarArticleChecking;
+
             var orderedArticles = articles
                 .Where(
                     article => article.PublishDateTime > maxAgeOfSimilarArticleCheckingDateTime &&
-                        article.MainArticle is null &&
+                        !subordinateArticleIds.Contains(article.Id) &&
                         LanguageUtility
                             .SeparateWords(article.Title)
                             .RemoveUnImpactfulCroatianWords()
@@ -69,16 +78,12 @@ namespace Espresso.Domain.Services
                 var articlesSimilarArticles = GetSimilarArticlesForArticle(
                     possibleMainArticle: article,
                     notMatchedArticles: notMatchedArticles,
+                    subordinateArticleIds: subordinateArticleIds,
                     lastSimilarityGroupingTime: lastSimilarityGroupingTime
                 );
 
                 similarArticles.AddRange(articlesSimilarArticles);
                 notMatchedArticles.Remove(article);
-
-                foreach (var articlesSimilarArticle in articlesSimilarArticles)
-                {
-                    notMatchedArticles.Remove(articlesSimilarArticle.SubordinateArticle!);
-                }
 
                 _loggerService.Log(
                     eventName: "GroupSimilarArticles Batch",
@@ -96,7 +101,8 @@ namespace Espresso.Domain.Services
 
         private IEnumerable<SimilarArticle> GetSimilarArticlesForArticle(
             Article possibleMainArticle,
-            IEnumerable<Article> notMatchedArticles,
+            IList<Article> notMatchedArticles,
+            ISet<Guid> subordinateArticleIds,
             DateTime lastSimilarityGroupingTime
         )
         {
@@ -115,7 +121,8 @@ namespace Espresso.Domain.Services
                             possibleMainArticle.CreateDateTime > lastSimilarityGroupingTime ||
                             notMatchedArticle.CreateDateTime > lastSimilarityGroupingTime
                         )
-                );
+                )
+                .ToList();
 
             foreach (var possibleSimilarArticle in possibleSimilarArticles)
             {
@@ -130,11 +137,13 @@ namespace Espresso.Domain.Services
                         id: Guid.NewGuid(),
                         similarityScore: similarityScore,
                         mainArticleId: possibleMainArticle.Id,
-                        mainArticle: possibleMainArticle,
+                        mainArticle: null,
                         subordinateArticleId: possibleSimilarArticle.Id,
-                        subordinateArticle: possibleSimilarArticle
+                        subordinateArticle: null
                     );
                     similarArticles.Add(similarArticle);
+                    subordinateArticleIds.Add(similarArticle.SubordinateArticleId);
+                    notMatchedArticles.Remove(possibleSimilarArticle);
 
                     _loggerService.Log(
                         eventName: "Similar Articles Found",
@@ -144,10 +153,8 @@ namespace Espresso.Domain.Services
                             ("Similarity Score", similarityScore),
                             ("Main Article Title", possibleMainArticle.Title),
                             ("Subordinate Article Title", possibleSimilarArticle.Title),
-                            ("Main Article Source", possibleMainArticle.NewsPortal!.Name),
-                            ("Subordinate Article Source", possibleSimilarArticle.NewsPortal!.Name),
-                            ("Main Article Category", possibleMainArticle.ArticleCategories.FirstOrDefault()?.Category?.Name!),
-                            ("Subordinate Article Category", possibleSimilarArticle.ArticleCategories.FirstOrDefault()?.Category?.Name!),
+                            ("Main Article Source", possibleMainArticle.NewsPortal?.Name ?? possibleMainArticle.NewsPortalId.ToString()),
+                            ("Subordinate Article Source", possibleSimilarArticle.NewsPortal?.Name ?? possibleSimilarArticle.NewsPortalId.ToString()),
                         }
                     );
                 }
@@ -230,6 +237,7 @@ namespace Espresso.Domain.Services
             }
             return matchedCases / length;
         }
+
         #endregion
     }
 }

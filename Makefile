@@ -34,12 +34,12 @@ compose-local-rabbitmq::
 docker-build-webapi::
 	make -f scripts/make/docker.make docker-build-webapi  v=$(v)
 
-docker-build-parserdeleter::
-	make -f scripts/make/docker.make docker-build-parserdeleter v=$(v)
+docker-build-dashboard::
+	make -f scripts/make/docker.make docker-build-dashboard v=$(v)
 
 docker-build::
 	make docker-build-webapi v=$(v)
-	make docker-build-parserdeleter v=$(v)
+	make docker-build-dashboard v=$(v)
 
 # backend
 health-check-backend::

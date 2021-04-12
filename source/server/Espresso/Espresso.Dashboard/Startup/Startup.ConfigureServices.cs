@@ -2,8 +2,6 @@
 using Espresso.Application.Services.Contracts;
 using Espresso.Dashboard.Configuration;
 using Espresso.Persistence.Database;
-using Espresso.Persistence.IRepositories;
-using Espresso.Persistence.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -56,13 +54,10 @@ namespace Espresso.Dashboard.Startup
         {
             services.AddMemoryCache();
             services.AddTransient<IDashboardInit, DashboardInit>(serviceProvider => new DashboardInit(
-                memoryCache: serviceProvider.GetRequiredService<IMemoryCache>(),
-                context: serviceProvider.GetRequiredService<IEspressoDatabaseContext>(),
                 espressoIdentityContext: serviceProvider.GetRequiredService<IEspressoIdentityDatabaseContext>(),
                 roleManager: serviceProvider.GetRequiredService<RoleManager<IdentityRole>>(),
                 userManager: serviceProvider.GetRequiredService<UserManager<IdentityUser>>(),
-                adminUserPassword: _dashboardConfiguration.AppConfiguration.AdminUserPassword,
-                loggerService: serviceProvider.GetRequiredService<ILoggerService<DashboardInit>>()
+                adminUserPassword: _dashboardConfiguration.AppConfiguration.AdminUserPassword
             ));
             services.AddSingleton(serviceProvider => _dashboardConfiguration);
 
@@ -258,11 +253,11 @@ namespace Espresso.Dashboard.Startup
         {
             services.AddDbContext<IEspressoDatabaseContext, EspressoDatabaseContext>(options =>
              {
-                 options.UseSqlServer(
+                 options.UseNpgsql(
                      connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString,
-                     sqlServerOptionsAction: sqlServerOptions =>
+                     npgsqlOptionsAction: npgOptions =>
                      {
-                         sqlServerOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
+                         npgOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
                      }
                  );
                  options.UseQueryTrackingBehavior(_dashboardConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
@@ -272,11 +267,11 @@ namespace Espresso.Dashboard.Startup
 
             services.AddDbContext<IEspressoIdentityDatabaseContext, EspressoIdentityDatabaseContext>(options =>
             {
-                options.UseSqlServer(
+                options.UseNpgsql(
                     connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoIdentityDatabaseConnectionString,
-                    sqlServerOptionsAction: sqlServerOptions =>
+                    npgsqlOptionsAction: npgOptions =>
                     {
-                        sqlServerOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
+                        npgOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
                     }
                 );
                 options.UseQueryTrackingBehavior(_dashboardConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
@@ -286,11 +281,11 @@ namespace Espresso.Dashboard.Startup
 
             services.AddDbContext<EspressoIdentityDatabaseContext>(options =>
             {
-                options.UseSqlServer(
+                options.UseNpgsql(
                     connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoIdentityDatabaseConnectionString,
-                    sqlServerOptionsAction: sqlServerOptions =>
+                    npgsqlOptionsAction: npgOptions =>
                     {
-                        sqlServerOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
+                        npgOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
                     }
                 );
                 options.UseQueryTrackingBehavior(_dashboardConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
@@ -302,10 +297,6 @@ namespace Espresso.Dashboard.Startup
             services.AddScoped<IDatabaseConnectionFactory, DatabaseConnectionFactory>(serviceProvider => new DatabaseConnectionFactory(
                 connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString
             ));
-            services.AddScoped<IApplicationDownloadRepository, ApplicationDownloadRepository>();
-            services.AddScoped<IArticleCategoryRepository, ArticleCategoryRepository>();
-            services.AddScoped<IArticleRepository, ArticleRepository>();
-            services.AddScoped<ISimilarArticleRepository, SimilarArticleRepository>();
 
             return services;
         }
@@ -317,15 +308,6 @@ namespace Espresso.Dashboard.Startup
         /// <returns></returns>
         private IServiceCollection AddJobs(IServiceCollection services)
         {
-            services.AddCronJob<DeleteArticlesCronJob>(cronJobConfiguration =>
-            {
-                cronJobConfiguration.CronExpression = _dashboardConfiguration
-                    .CronJobsConfiguration
-                    .DeleteArticlesCronExpression;
-                cronJobConfiguration.TimeZoneInfo = TimeZoneInfo.Utc;
-                cronJobConfiguration.AppEnvironment = _dashboardConfiguration.AppConfiguration.AppEnvironment;
-                cronJobConfiguration.Version = _dashboardConfiguration.AppConfiguration.Version;
-            });
             services.AddCronJob<ParseArticlesCronJob>(cronJobConfiguration =>
             {
                 cronJobConfiguration.CronExpression = _dashboardConfiguration
