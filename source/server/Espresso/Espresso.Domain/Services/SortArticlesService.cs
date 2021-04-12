@@ -11,8 +11,8 @@ namespace Espresso.Domain.Services
         public (
             IEnumerable<Article> createdArticles,
             IEnumerable<Article> updatedArticles,
-            IEnumerable<ArticleCategory> articleCategoriesToCreate,
-            IEnumerable<ArticleCategory> articleCategoriesToDelete
+            IEnumerable<ArticleCategory> createArticleCategories,
+            IEnumerable<ArticleCategory> deleteArticleCategories
         ) SortArticles(
             IEnumerable<Article> articles,
             IDictionary<Guid, Article> savedArticles
@@ -20,8 +20,8 @@ namespace Espresso.Domain.Services
         {
             var createArticles = new List<Article>();
             var updateArticles = new List<Article>();
-            var articleCategoriesToCreate = new List<ArticleCategory>();
-            var articleCategoriesToDelete = new List<ArticleCategory>();
+            var createArticleCategories = new List<ArticleCategory>();
+            var deleteArticleCategories = new List<ArticleCategory>();
 
             var savedArticlesArticleIdDictionary = new Dictionary<(int newsPortalId, string articleUrl), Guid>();
             var savedArticlesTitleDictionary = new Dictionary<(int newsPortalId, string title), Guid>();
@@ -43,22 +43,21 @@ namespace Espresso.Domain.Services
                 )
                 {
                     var savedArticle = savedArticles[savedArticleId];
-                    var (shouldUpdate, createArticleCategories, deleteArticleCategories) = savedArticle.Update(article);
+                    var (shouldUpdate, articleCategoriesToCreate, articleCategoriesToDelete) = savedArticle.Update(article);
                     if (shouldUpdate)
                     {
-                        articleCategoriesToCreate.AddRange(createArticleCategories);
-                        articleCategoriesToDelete.AddRange(deleteArticleCategories);
+                        createArticleCategories.AddRange(articleCategoriesToCreate);
+                        deleteArticleCategories.AddRange(articleCategoriesToDelete);
                         updateArticles.Add(savedArticle);
                     }
                 }
                 else
                 {
                     createArticles.Add(article);
-                    articleCategoriesToCreate.AddRange(article.ArticleCategories);
                 }
             }
 
-            return (createArticles, updateArticles, articleCategoriesToCreate, articleCategoriesToDelete);
+            return (createArticles, updateArticles, createArticleCategories, deleteArticleCategories);
         }
 
         public IEnumerable<Article> RemoveDuplicateArticles(IEnumerable<Article> articles)

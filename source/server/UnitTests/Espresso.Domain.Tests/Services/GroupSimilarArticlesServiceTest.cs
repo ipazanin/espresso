@@ -72,7 +72,7 @@ namespace Espresso.Domain.Tests.Services
             #endregion
 
             #region Act
-            var similarArticles = service.GroupSimilarArticles(articles, new DateTime());
+            var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), new DateTime());
             var actualSimilarArticlesCount = similarArticles.Count();
             #endregion
 
@@ -109,7 +109,7 @@ namespace Espresso.Domain.Tests.Services
             #endregion
 
             #region Act
-            var similarArticles = service.GroupSimilarArticles(articles, new DateTime());
+            var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), new DateTime());
             var actualSimilarArticlesCount = similarArticles.Count();
             #endregion
 
@@ -156,7 +156,7 @@ namespace Espresso.Domain.Tests.Services
             #endregion
 
             #region Act
-            var similarArticles = service.GroupSimilarArticles(articles, new DateTime());
+            var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), new DateTime());
             var actualSimilarArticlesCount = similarArticles.Count();
             #endregion
 
@@ -216,7 +216,7 @@ namespace Espresso.Domain.Tests.Services
             #endregion
 
             #region Act
-            var similarArticles = service.GroupSimilarArticles(articles, new DateTime());
+            var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), new DateTime());
             var actualSimilarArticlesCount = similarArticles.Count();
             #endregion
 
@@ -275,7 +275,7 @@ namespace Espresso.Domain.Tests.Services
             #endregion
 
             #region Act
-            var similarArticles = service.GroupSimilarArticles(articles, new DateTime());
+            var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), new DateTime());
             var actualSimilarArticlesCount = similarArticles.Count();
             #endregion
 

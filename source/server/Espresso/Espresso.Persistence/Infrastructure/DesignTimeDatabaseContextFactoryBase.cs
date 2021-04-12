@@ -62,7 +62,7 @@ namespace Espresso.Persistence.Infrastructure
 
             optionsBuilder.EnableSensitiveDataLogging();
 
-            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseNpgsql(connectionString);
 
             return CreateNewInstance(optionsBuilder.Options);
         }

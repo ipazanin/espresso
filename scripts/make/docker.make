@@ -6,16 +6,19 @@ EspressoParserDockerfilePath="source/server/Espresso/Espresso.Dashboard/Dockerfi
 DockerBuildContextPath="source"
 
 WebApiDockerImage="docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi"
-ParserDockerImage="docker.pkg.github.com/espresso-news/espresso-backend/espresso-dashboard"
+DashboardDockerImage="docker.pkg.github.com/espresso-news/espresso-backend/espresso-dashboard"
+
+WebApiDockerImageGoogleContainerRegistry="gcr.io/espresso-8c4ac/espresso-webapi"
+DashboardDockerImageGoogleContainerRegistry="gcr.io/espresso-8c4ac/espresso-dashboard"
 
 DefaultReactEnvironment="production"
 
 DatabaseComposeFile="scripts/compose/database.yml"
-DatabaseEnvironmentComposeFile="scripts/compose/database-environment.yml"
+DatabaseEnvironmentComposeFile="scripts/compose/database-environment-postgres.yml"
 DashboardComposeFile="scripts/compose/dashboard.yml"
-DashboardEnvironmentComposeFile="scripts/compose/dashboard-environment.yml"
+DashboardEnvironmentComposeFile="scripts/compose/dashboard-environment-postgres.yml"
 WebApiComposeFile="scripts/compose/webapi.yml"
-WebApiEnvironmentComposeFile="scripts/compose/webapi-environment.yml"
+WebApiEnvironmentComposeFile="scripts/compose/webapi-environment-postgres.yml"
 RabbitMqComposeFile="scripts/compose/rabbitmq.yml"
 RabbitMqEnvironmentComposeFile="scripts/compose/rabbitmq-environment.yml"
 
@@ -182,35 +185,53 @@ endif
 docker-build-webapi::
 ifeq ($(strip $(v)),)
 	docker build \
-	--force-rm \
 	-f $(EspressoWebApiDockerfilePath) \
 	-t $(WebApiDockerImage):$(DefaultDockerImageTag) \
 	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
 	$(DockerBuildContextPath)
 	docker push $(WebApiDockerImage):$(DefaultDockerImageTag)
+	docker build \
+	-f $(EspressoWebApiDockerfilePath) \
+	-t $(WebApiDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag) \
+	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
+	$(DockerBuildContextPath)
+	docker push $(WebApiDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag)	
 else
 	docker build \
-	--force-rm \
 	-f $(EspressoWebApiDockerfilePath) \
 	-t $(WebApiDockerImage):$(v) \
 	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
 	$(DockerBuildContextPath)
 	docker push $(WebApiDockerImage):$(v)
+	docker build \
+	-f $(EspressoWebApiDockerfilePath) \
+	-t $(WebApiDockerImageGoogleContainerRegistry):$(v) \
+	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
+	$(DockerBuildContextPath)
+	docker push $(WebApiDockerImageGoogleContainerRegistry):$(v)	
 endif
 
-docker-build-parserdeleter::
+docker-build-dashboard::
 ifeq ($(strip $(v)),)
 	docker build \
-	--force-rm \
 	-f $(EspressoParserDockerfilePath) \
-	-t $(ParserDockerImage):$(DefaultDockerImageTag) \
+	-t $(DashboardDockerImage):$(DefaultDockerImageTag) \
 	$(DockerBuildContextPath)
-	docker push $(ParserDockerImage):$(DefaultDockerImageTag)
+	docker push $(DashboardDockerImage):$(DefaultDockerImageTag)
+	docker build \
+	-f $(EspressoParserDockerfilePath) \
+	-t $(DashboardDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag) \
+	$(DockerBuildContextPath)
+	docker push $(DashboardDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag)	
 else
 	docker build \
-	--force-rm \
 	-f $(EspressoParserDockerfilePath) \
-	-t $(ParserDockerImage):$(v) \
+	-t $(DashboardDockerImage):$(v) \
 	$(DockerBuildContextPath)
-	docker push $(ParserDockerImage):$(v)
+	docker push $(DashboardDockerImage):$(v)
+	docker build \
+	-f $(EspressoParserDockerfilePath) \
+	-t $(DashboardDockerImageGoogleContainerRegistry):$(v) \
+	$(DockerBuildContextPath)
+	docker push $(DashboardDockerImageGoogleContainerRegistry):$(v)		
 endif

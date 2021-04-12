@@ -2,30 +2,37 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Enums;
-using Espresso.Persistence.IRepositories;
+using Espresso.Persistence.Database;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Espresso.WebApi.Application.ApplicationDownloads.Queries.GetApplicationDownloadStatistics
 {
     public class GetApplicationDownloadStatisticsQueryHandler : IRequestHandler<GetApplicationDownloadStatisticsQuery, GetApplicationDownloadStatisticsQueryResponse>
     {
         #region Fields
-        private readonly IApplicationDownloadRepository _applicationDownloadRepository;
+
+        private readonly IEspressoDatabaseContext _espressoDatabaseContext;
+
         #endregion
 
         #region Constructors
+
         public GetApplicationDownloadStatisticsQueryHandler(
-            IApplicationDownloadRepository applicationDownloadRepository
+            IEspressoDatabaseContext espressoDatabaseContext
         )
         {
-            _applicationDownloadRepository = applicationDownloadRepository;
+            _espressoDatabaseContext = espressoDatabaseContext;
         }
+
         #endregion
 
         #region Methods
         public async Task<GetApplicationDownloadStatisticsQueryResponse> Handle(GetApplicationDownloadStatisticsQuery request, CancellationToken cancellationToken)
         {
-            var applicationDownloads = await _applicationDownloadRepository.GetApplicationDownloads();
+            var applicationDownloads = await _espressoDatabaseContext
+                .ApplicationDownload
+                .ToListAsync(cancellationToken);
 
             var androidCount = applicationDownloads.Count(
                 predicate: applicationDownload => applicationDownload.MobileDeviceType == DeviceType.Android

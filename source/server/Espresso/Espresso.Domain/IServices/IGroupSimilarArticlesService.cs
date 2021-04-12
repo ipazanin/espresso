@@ -8,6 +8,7 @@ namespace Espresso.Domain.IServices
     {
         public IEnumerable<SimilarArticle> GroupSimilarArticles(
             IEnumerable<Article> articles,
+            ISet<Guid> subordinateArticleIds,
             DateTime lastSimilarityGroupingTime
         );
     }

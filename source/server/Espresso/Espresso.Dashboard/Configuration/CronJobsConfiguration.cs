@@ -10,11 +10,10 @@ namespace Espresso.Dashboard.Configuration
         #endregion
 
         #region Properties
-        public string DeleteArticlesCronExpression =>
-            _configuration.GetValue<string>("DeleteArticlesCronExpression");
 
         public string ParseArticlesCronExpression =>
             _configuration.GetValue<string>("ParseArticlesCronExpression");
+
         #endregion
 
         #region Constructors

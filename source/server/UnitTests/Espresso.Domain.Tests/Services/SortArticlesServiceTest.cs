@@ -159,38 +159,6 @@ namespace Espresso.Domain.Tests.Services
         }
 
         [Fact]
-        public void SortArticles_ReturnsCreateArticleCategoriesWithSingleArticleCategory_WhenArticlesCollectionHasSingleArticleWithSingleArticleCategoryAndSavedArticlesCollectionIsEmpty()
-        {
-            #region Arrange
-            var articles = new List<Article>
-            {
-                ArticleUtility.CreateDefaultArticleWith(default, default!, default!, default!)
-            };
-            var savedArticles = new List<Article>()
-                .ToDictionary(article => article.Id);
-
-            var expectedCreatedArticleCategoriesCount = 1;
-
-            var sortArticlesService = new SortArticlesService();
-            #endregion Arrange
-
-            #region Act
-            var (_, _, actualCreateArticleCategories, _) = sortArticlesService.SortArticles(
-                articles: articles,
-                savedArticles: savedArticles
-            );
-            #endregion Act
-
-            #region Assert
-            var actualCreatedArticlesCount = actualCreateArticleCategories.Count();
-            Assert.Equal(
-                expected: expectedCreatedArticleCategoriesCount,
-                actual: actualCreatedArticlesCount
-            );
-            #endregion Assert
-        }
-
-        [Fact]
         public void SortArticles_ReturnsUpdateArticlesWithSingleArticle_WhenArticlesCollectionHasSingleArticleAndSavedArticlesCollectionHasArticleWithSameNewsPortalIdAndUrl()
         {
             #region Arrange

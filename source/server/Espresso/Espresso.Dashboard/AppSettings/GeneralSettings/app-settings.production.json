@@ -1,10 +1,9 @@
 ﻿{
   "AppConfiguration": {
-    "ServerUrl": "https://espressonews.co",
+    "ServerUrl": "http://35.190.116.69",
     "Environment": 3
   },
   "CronJobsConfiguration": {
-    "DeleteArticlesCronExpression": "*/10 * * * *",
     "ParseArticlesCronExpression": "*/1 * * * *"
   }
 }

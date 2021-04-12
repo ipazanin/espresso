@@ -12,8 +12,6 @@ using Espresso.Domain.IServices;
 using Espresso.Domain.Services;
 using Espresso.Dashboard.Application.Constants;
 using Espresso.Persistence.Database;
-using Espresso.Persistence.IRepositories;
-using Espresso.Persistence.Repositories;
 using Espresso.WebApi.Application.Initialization;
 using Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals;
 using Espresso.WebApi.Authentication;
@@ -224,11 +222,11 @@ namespace Espresso.WebApi.Startup
         {
             services.AddDbContext<IEspressoDatabaseContext, EspressoDatabaseContext>(options =>
             {
-                options.UseSqlServer(
+                options.UseNpgsql(
                     connectionString: _webApiConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString,
-                    sqlServerOptionsAction: sqlServerOptions =>
+                    npgsqlOptionsAction: npgOptions =>
                     {
-                        sqlServerOptions.CommandTimeout(_webApiConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
+                        npgOptions.CommandTimeout(_webApiConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
                     }
                 );
                 options.UseQueryTrackingBehavior(_webApiConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
@@ -239,9 +237,6 @@ namespace Espresso.WebApi.Startup
             services.AddScoped<IDatabaseConnectionFactory>(
                 serviceProvider => new DatabaseConnectionFactory(_webApiConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString)
             );
-            services.AddScoped<IApplicationDownloadRepository, ApplicationDownloadRepository>();
-            services.AddScoped<IArticleCategoryRepository, ArticleCategoryRepository>();
-            services.AddScoped<IArticleRepository, ArticleRepository>();
 
             return services;
         }

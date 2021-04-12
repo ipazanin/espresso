@@ -6,7 +6,7 @@ namespace Espresso.Domain.IServices
 {
     public interface IRemoveOldArticlesService
     {
-        public int RemoveOldArticlesFromCollection(IDictionary<Guid, Article> articles);
+        public IEnumerable<Article> RemoveOldArticlesFromCollection(IDictionary<Guid, Article> articles);
 
         public IEnumerable<Article> RemoveOldArticles(IEnumerable<Article> articles);
     }

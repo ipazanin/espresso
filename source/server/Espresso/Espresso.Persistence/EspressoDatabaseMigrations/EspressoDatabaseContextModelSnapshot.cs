@@ -3,46 +3,44 @@ using System;
 using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace Espresso.Persistence.Migrations
+namespace Espresso.Persistence.EspressoDatabaseMigrations
 {
     [DbContext(typeof(EspressoDatabaseContext))]
-    [Migration("20210103131823_IPazanin_FixedPrigorskiHrDisplayName")]
-    partial class IPazanin_FixedPrigorskiHrDisplayName
+    partial class EspressoDatabaseContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.1");
+                .HasAnnotation("Relational:MaxIdentifierLength", 63)
+                .HasAnnotation("ProductVersion", "5.0.4")
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity("Espresso.Domain.Entities.ApplicationDownload", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime>("DownloadedTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("MobileAppVersion")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("character varying(20)");
 
                     b.Property<int>("MobileDeviceType")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("WebApiVersion")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("character varying(10)");
 
                     b.HasKey("Id");
 
@@ -53,51 +51,51 @@ namespace Espresso.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreateDateTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("NewsPortalId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("NumberOfClicks")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("PublishDateTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("RssFeedId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Summary")
                         .IsRequired()
                         .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
+                        .HasColumnType("character varying(2000)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<decimal>("TrendingScore")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric");
 
                     b.Property<DateTime>("UpdateDateTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<string>("WebUrl")
                         .IsRequired()
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.HasKey("Id");
 
@@ -114,13 +112,13 @@ namespace Espresso.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("ArticleId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -135,36 +133,36 @@ namespace Espresso.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("CategoryType")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Color")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("KeyWordsRegexPattern")
                         .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("character varying(20)");
 
                     b.Property<int?>("Position")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("SortIndex")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("character varying(20)");
 
                     b.HasKey("Id");
 
@@ -276,35 +274,35 @@ namespace Espresso.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("BaseUrl")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("IconUrl")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<bool?>("IsNewOverride")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<int>("RegionId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -877,6 +875,86 @@ namespace Espresso.Persistence.Migrations
                         },
                         new
                         {
+                            Id = 125,
+                            BaseUrl = "https://www.bitno.net",
+                            CategoryId = 1,
+                            CreatedAt = new DateTime(2021, 1, 16, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/BitnoNet.png",
+                            Name = "Bitno.net",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 129,
+                            BaseUrl = "https://www.maxportal.hr",
+                            CategoryId = 1,
+                            CreatedAt = new DateTime(2021, 3, 7, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/MaxPortal.png",
+                            Name = "Maxportal",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 17,
+                            BaseUrl = "https://www.poslovni.hr",
+                            CategoryId = 7,
+                            CreatedAt = new DateTime(2021, 3, 7, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/PoslovniDnevnik.png",
+                            Name = "Poslovni dnevnik",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 130,
+                            BaseUrl = "https://www.gp1.hr",
+                            CategoryId = 8,
+                            CreatedAt = new DateTime(2021, 3, 7, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/Gp1.png",
+                            Name = "GP1",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 131,
+                            BaseUrl = "https://f1.pulsmedia.hr",
+                            CategoryId = 8,
+                            CreatedAt = new DateTime(2021, 3, 7, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/F1PulsMedia.png",
+                            Name = "F1.pulsmedia.hr",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 132,
+                            BaseUrl = "https://www.racunalo.com",
+                            CategoryId = 5,
+                            CreatedAt = new DateTime(2021, 3, 7, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/Racunalo.png",
+                            Name = "Racunalo.com",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 133,
+                            BaseUrl = "https://mob.hr",
+                            CategoryId = 5,
+                            CreatedAt = new DateTime(2021, 3, 7, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/MobHr.png",
+                            Name = "mob.hr",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 134,
+                            BaseUrl = "https://www.startnews.hr/",
+                            CategoryId = 1,
+                            CreatedAt = new DateTime(2021, 3, 7, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/StartNews.png",
+                            Name = "Startnews",
+                            RegionId = 1
+                        },
+                        new
+                        {
                             Id = 37,
                             BaseUrl = "https://www.dalmacijadanas.hr",
                             CategoryId = 12,
@@ -1033,6 +1111,16 @@ namespace Espresso.Persistence.Migrations
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/ZadarskiList.png",
                             Name = "Zadarski List",
+                            RegionId = 2
+                        },
+                        new
+                        {
+                            Id = 126,
+                            BaseUrl = "https://ploce.com.hr",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2021, 1, 23, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/PloceOnline.png",
+                            Name = "Ploče Online",
                             RegionId = 2
                         },
                         new
@@ -1257,6 +1345,26 @@ namespace Espresso.Persistence.Migrations
                         },
                         new
                         {
+                            Id = 127,
+                            BaseUrl = "https://kaportal.net.hr",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2021, 1, 23, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/KaPortalHr.png",
+                            Name = "KAportal.hr",
+                            RegionId = 5
+                        },
+                        new
+                        {
+                            Id = 128,
+                            BaseUrl = "https://radio-mreznica.hr",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2021, 1, 23, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/RadioMreznica.png",
+                            Name = "Radio Mrežnica",
+                            RegionId = 5
+                        },
+                        new
+                        {
                             Id = 53,
                             BaseUrl = "https://sjever.hr",
                             CategoryId = 12,
@@ -1464,6 +1572,16 @@ namespace Espresso.Persistence.Migrations
                             IconUrl = "Icons/Zupanjac.png",
                             Name = "Županjac.net",
                             RegionId = 7
+                        },
+                        new
+                        {
+                            Id = 124,
+                            BaseUrl = "https://press032.com",
+                            CategoryId = 12,
+                            CreatedAt = new DateTime(2021, 1, 16, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IconUrl = "Icons/Press032.png",
+                            Name = "PRESS 032",
+                            RegionId = 7
                         });
                 });
 
@@ -1471,38 +1589,38 @@ namespace Espresso.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ArticleUrl")
                         .IsRequired()
                         .HasMaxLength(5000)
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("character varying(5000)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("InternalName")
                         .IsRequired()
                         .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<bool>("IsSoundEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<string>("Topic")
                         .IsRequired()
                         .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("character varying(1000)");
 
                     b.HasKey("Id");
 
@@ -1513,18 +1631,18 @@ namespace Espresso.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Subtitle")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
 
@@ -1570,7 +1688,7 @@ namespace Espresso.Persistence.Migrations
                         new
                         {
                             Id = 5,
-                            Name = "Zagreb",
+                            Name = "Zagreb i okolica",
                             Subtitle = "Lokalne vijesti iz grada Zagreba i okolice"
                         });
                 });
@@ -1579,22 +1697,22 @@ namespace Espresso.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("NewsPortalId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("RequestType")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                        .HasColumnType("character varying(300)");
 
                     b.HasKey("Id");
 
@@ -2391,6 +2509,70 @@ namespace Espresso.Persistence.Migrations
                         },
                         new
                         {
+                            Id = 170,
+                            CategoryId = 1,
+                            NewsPortalId = 125,
+                            RequestType = 2,
+                            Url = "https://www.bitno.net/feed"
+                        },
+                        new
+                        {
+                            Id = 174,
+                            CategoryId = 1,
+                            NewsPortalId = 129,
+                            RequestType = 1,
+                            Url = "https://www.maxportal.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 175,
+                            CategoryId = 7,
+                            NewsPortalId = 17,
+                            RequestType = 1,
+                            Url = "https://www.poslovni.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 176,
+                            CategoryId = 8,
+                            NewsPortalId = 130,
+                            RequestType = 1,
+                            Url = "https://www.gp1.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 177,
+                            CategoryId = 8,
+                            NewsPortalId = 131,
+                            RequestType = 1,
+                            Url = "https://f1.pulsmedia.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 178,
+                            CategoryId = 5,
+                            NewsPortalId = 132,
+                            RequestType = 1,
+                            Url = "https://www.racunalo.com/feed"
+                        },
+                        new
+                        {
+                            Id = 179,
+                            CategoryId = 5,
+                            NewsPortalId = 133,
+                            RequestType = 1,
+                            Url = "https://mob.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 180,
+                            CategoryId = 1,
+                            NewsPortalId = 134,
+                            RequestType = 1,
+                            Url = "https://www.startnews.hr/feeds/latest"
+                        },
+                        new
+                        {
                             Id = 83,
                             CategoryId = 12,
                             NewsPortalId = 37,
@@ -2860,6 +3042,38 @@ namespace Espresso.Persistence.Migrations
                             NewsPortalId = 123,
                             RequestType = 1,
                             Url = "https://zupanjac.net/feed"
+                        },
+                        new
+                        {
+                            Id = 169,
+                            CategoryId = 12,
+                            NewsPortalId = 124,
+                            RequestType = 1,
+                            Url = "https://press032.com/feed"
+                        },
+                        new
+                        {
+                            Id = 171,
+                            CategoryId = 12,
+                            NewsPortalId = 126,
+                            RequestType = 1,
+                            Url = "https://ploce.com.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 172,
+                            CategoryId = 12,
+                            NewsPortalId = 127,
+                            RequestType = 1,
+                            Url = "https://kaportal.net.hr/feed"
+                        },
+                        new
+                        {
+                            Id = 173,
+                            CategoryId = 12,
+                            NewsPortalId = 128,
+                            RequestType = 1,
+                            Url = "https://radio-mreznica.hr/feed"
                         });
                 });
 
@@ -2867,22 +3081,22 @@ namespace Espresso.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("RssFeedId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("UrlRegex")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<int>("UrlSegmentIndex")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -3619,21 +3833,21 @@ namespace Espresso.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ReplacementValue")
                         .IsRequired()
                         .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<int>("RssFeedId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("SourceValue")
                         .IsRequired()
                         .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("character varying(1000)");
 
                     b.HasKey("Id");
 
@@ -3809,6 +4023,34 @@ namespace Espresso.Persistence.Migrations
                             ReplacementValue = "</description>",
                             RssFeedId = 57,
                             SourceValue = "</content:encoded>"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            ReplacementValue = "<notused>",
+                            RssFeedId = 176,
+                            SourceValue = "<description>"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            ReplacementValue = "</notused>",
+                            RssFeedId = 176,
+                            SourceValue = "</description>"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            ReplacementValue = "<description>",
+                            RssFeedId = 176,
+                            SourceValue = "<content:encoded>"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            ReplacementValue = "</description>",
+                            RssFeedId = 176,
+                            SourceValue = "</content:encoded>"
                         });
                 });
 
@@ -3816,16 +4058,16 @@ namespace Espresso.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("MainArticleId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<double>("SimilarityScore")
-                        .HasColumnType("float");
+                        .HasColumnType("double precision");
 
                     b.Property<Guid>("SubordinateArticleId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -3854,17 +4096,17 @@ namespace Espresso.Persistence.Migrations
                     b.OwnsOne("Espresso.Domain.ValueObjects.ArticleValueObjects.EditorConfiguration", "EditorConfiguration", b1 =>
                         {
                             b1.Property<Guid>("ArticleId")
-                                .HasColumnType("uniqueidentifier");
+                                .HasColumnType("uuid");
 
                             b1.Property<int?>("FeaturedPosition")
-                                .HasColumnType("int");
+                                .HasColumnType("integer");
 
                             b1.Property<bool?>("IsFeatured")
-                                .HasColumnType("bit");
+                                .HasColumnType("boolean");
 
                             b1.Property<bool>("IsHidden")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("bit")
+                                .HasColumnType("boolean")
                                 .HasDefaultValue(false);
 
                             b1.HasKey("ArticleId");
@@ -3939,15 +4181,15 @@ namespace Espresso.Persistence.Migrations
                         {
                             b1.Property<int>("RssFeedId")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .UseIdentityColumn();
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                             b1.Property<bool>("HasAmpArticles")
-                                .HasColumnType("bit");
+                                .HasColumnType("boolean");
 
                             b1.Property<string>("TemplateUrl")
                                 .HasMaxLength(300)
-                                .HasColumnType("nvarchar(300)");
+                                .HasColumnType("character varying(300)");
 
                             b1.HasKey("RssFeedId");
 
@@ -3961,31 +4203,31 @@ namespace Espresso.Persistence.Migrations
                                 {
                                     RssFeedId = 1,
                                     HasAmpArticles = true,
-                                    TemplateUrl = "https://amp.index.hr/article/{0}{3}"
+                                    TemplateUrl = "https://www.index.hr/mobile/clanak.aspx?id={0}"
                                 },
                                 new
                                 {
                                     RssFeedId = 2,
                                     HasAmpArticles = true,
-                                    TemplateUrl = "https://amp.index.hr/article/{0}{3}"
+                                    TemplateUrl = "https://www.index.hr/mobile/clanak.aspx?id={0}"
                                 },
                                 new
                                 {
                                     RssFeedId = 4,
                                     HasAmpArticles = true,
-                                    TemplateUrl = "https://amp.index.hr/article/{0}{3}"
+                                    TemplateUrl = "https://www.index.hr/mobile/clanak.aspx?id={0}"
                                 },
                                 new
                                 {
                                     RssFeedId = 3,
                                     HasAmpArticles = true,
-                                    TemplateUrl = "https://amp.index.hr/article/{0}{3}"
+                                    TemplateUrl = "https://www.index.hr/mobile/clanak.aspx?id={0}"
                                 },
                                 new
                                 {
                                     RssFeedId = 5,
                                     HasAmpArticles = true,
-                                    TemplateUrl = "https://amp.index.hr/article/{0}{3}"
+                                    TemplateUrl = "https://www.index.hr/mobile/clanak.aspx?id={0}"
                                 },
                                 new
                                 {
@@ -4059,12 +4301,12 @@ namespace Espresso.Persistence.Migrations
                         {
                             b1.Property<int>("RssFeedId")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .UseIdentityColumn();
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                             b1.Property<int>("CategoryParseStrategy")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
+                                .HasColumnType("integer")
                                 .HasDefaultValue(1);
 
                             b1.HasKey("RssFeedId");
@@ -4151,32 +4393,45 @@ namespace Espresso.Persistence.Migrations
                         {
                             b1.Property<int>("RssFeedId")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .UseIdentityColumn();
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                            b1.Property<string>("AttributeName")
+                                .IsRequired()
+                                .ValueGeneratedOnAdd()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasDefaultValue("src");
+
+                            b1.Property<int?>("ElementExtensionIndex")
+                                .HasColumnType("integer");
 
                             b1.Property<int>("ImageUrlParseStrategy")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
+                                .HasColumnType("integer")
                                 .HasDefaultValue(1);
 
                             b1.Property<int>("ImageUrlWebScrapeType")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
+                                .HasColumnType("integer")
                                 .HasDefaultValue(1);
 
-                            b1.Property<string>("ImgElementXPath")
-                                .IsRequired()
-                                .ValueGeneratedOnAdd()
-                                .HasMaxLength(300)
-                                .HasColumnType("nvarchar(300)")
-                                .HasDefaultValue("");
+                            b1.Property<bool?>("IsSavedInHtmlElementWithSrcAttribute")
+                                .HasColumnType("boolean");
 
                             b1.Property<string>("JsonWebScrapePropertyNames")
                                 .HasMaxLength(300)
-                                .HasColumnType("nvarchar(300)");
+                                .HasColumnType("character varying(300)");
 
                             b1.Property<bool?>("ShouldImageUrlBeWebScraped")
-                                .HasColumnType("bit");
+                                .HasColumnType("boolean");
+
+                            b1.Property<string>("XPath")
+                                .IsRequired()
+                                .ValueGeneratedOnAdd()
+                                .HasMaxLength(300)
+                                .HasColumnType("character varying(300)")
+                                .HasDefaultValue("");
 
                             b1.HasKey("RssFeedId");
 
@@ -4190,518 +4445,542 @@ namespace Espresso.Persistence.Migrations
                                 {
                                     RssFeedId = 1,
                                     ImageUrlParseStrategy = 1,
-                                    ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
+                                    XPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 2,
                                     ImageUrlParseStrategy = 1,
-                                    ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
+                                    XPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 3,
                                     ImageUrlParseStrategy = 1,
-                                    ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
+                                    XPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 4,
                                     ImageUrlParseStrategy = 1,
-                                    ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
+                                    XPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 5,
                                     ImageUrlParseStrategy = 1,
-                                    ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
+                                    XPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 6,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
+                                    XPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 7,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
+                                    XPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 8,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
+                                    XPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 9,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
+                                    XPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 10,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
+                                    XPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 11,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
+                                    XPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 12,
-                                    ImgElementXPath = "//img[contains(@class, 'media-object adaptive lazy')]"
+                                    XPath = "//img[contains(@class, 'media-object adaptive lazy')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 13,
-                                    ImgElementXPath = "//img[contains(@class, 'media-object adaptive lazy')]"
+                                    XPath = "//img[contains(@class, 'media-object adaptive lazy')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 14,
-                                    ImgElementXPath = "//div[contains(@class, 'featured-img')]//img"
+                                    XPath = "//div[contains(@class, 'featured-img')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 15,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    XPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 16,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    XPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 17,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    XPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 18,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    XPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 19,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    XPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 20,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    XPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 21,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    XPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 22,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    XPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 23,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    XPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 24,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    XPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 25,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    XPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 26,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    XPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 27,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    XPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 28,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    XPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 29,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    XPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 30,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    XPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 31,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    XPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 32,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    XPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 33,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    XPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 34,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    XPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 35,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    XPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 36,
-                                    ImgElementXPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
+                                    XPath = "//img[contains(@class, 'lateImage lateImageLoaded')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 37,
                                     ImageUrlWebScrapeType = 2,
-                                    ImgElementXPath = "//script[contains(@type, 'application/ld+json')]",
                                     JsonWebScrapePropertyNames = "image,url",
-                                    ShouldImageUrlBeWebScraped = true
+                                    ShouldImageUrlBeWebScraped = true,
+                                    XPath = "//script[contains(@type, 'application/ld+json')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 39,
-                                    ImgElementXPath = "//div[contains(@class, 'thumb')]//img"
+                                    XPath = "//div[contains(@class, 'thumb')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 40,
-                                    ImgElementXPath = "//div[contains(@class, 'featured-img')]//img"
+                                    XPath = "//div[contains(@class, 'featured-img')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 42,
-                                    ImgElementXPath = "//figure[contains(@class, 'article-main-img')]//img"
+                                    XPath = "//figure[contains(@class, 'article-main-img')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 43,
-                                    ImgElementXPath = "//figure[contains(@class, 'article-image main-image')]//img"
+                                    XPath = "//figure[contains(@class, 'article-image main-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 44,
-                                    ImgElementXPath = "//img[contains(@class, 'naslovna')]"
+                                    XPath = "//img[contains(@class, 'naslovna')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 47,
-                                    ImgElementXPath = "//div[contains(@class, 'post-img')]//img"
+                                    XPath = "//div[contains(@class, 'post-img')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 48,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    XPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 49,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    XPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 50,
-                                    ImgElementXPath = "//img[contains(@class, 'card__image')]"
+                                    XPath = "//img[contains(@class, 'card__image')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 54,
-                                    ImgElementXPath = "//div[contains(@class, 'entry-content')]//img"
+                                    XPath = "//div[contains(@class, 'entry-content')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 55,
-                                    ImgElementXPath = "//div[contains(@class, 'attribute-image')]//img"
+                                    XPath = "//div[contains(@class, 'attribute-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 56,
-                                    ImgElementXPath = "//div[contains(@class, 'img-holder')]//img"
+                                    XPath = "//div[contains(@class, 'img-holder')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 57,
                                     ImageUrlParseStrategy = 2,
-                                    ImgElementXPath = "//div[contains(@class, 'post__hero')]//img"
+                                    XPath = "//div[contains(@class, 'post__hero')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 58,
-                                    ImgElementXPath = "//div[contains(@class, 'postFeaturedImg postFeaturedImg--single')]//img"
+                                    XPath = "//div[contains(@class, 'postFeaturedImg postFeaturedImg--single')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 59,
-                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                    XPath = "//div[contains(@class, 'td-post-featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 61,
-                                    ImgElementXPath = "//div[contains(@class, 'first-image')]//img"
+                                    XPath = "//div[contains(@class, 'first-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 62,
                                     ImageUrlParseStrategy = 2,
-                                    ImgElementXPath = "//figure[contains(@class, 'dcms-image article-image')]//img"
+                                    XPath = "//figure[contains(@class, 'dcms-image article-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 63,
-                                    ImgElementXPath = "//div[contains(@class, 'post-thumbnail')]//img"
+                                    XPath = "//div[contains(@class, 'post-thumbnail')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 64,
-                                    ImgElementXPath = "//figure[contains(@class, 'figure')]//img"
+                                    XPath = "//figure[contains(@class, 'figure')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 65,
+                                    ElementExtensionIndex = 0,
                                     ImageUrlParseStrategy = 3,
-                                    ImgElementXPath = "//figure[contains(@class, 'media')]//img"
+                                    IsSavedInHtmlElementWithSrcAttribute = false,
+                                    XPath = "//figure[contains(@class, 'media')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 66,
-                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                    XPath = "//div[contains(@class, 'td-post-featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 67,
-                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img"
+                                    XPath = "//div[contains(@class, 'image-slider')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 68,
-                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img"
+                                    XPath = "//div[contains(@class, 'image-slider')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 69,
-                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img"
+                                    XPath = "//div[contains(@class, 'image-slider')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 70,
-                                    ImgElementXPath = "//div[contains(@class, 'image-slider')]//img"
+                                    XPath = "//div[contains(@class, 'image-slider')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 71,
-                                    ImgElementXPath = "//picture[contains(@class, 'pic')]//img"
+                                    XPath = "//picture[contains(@class, 'pic')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 72,
-                                    ImgElementXPath = "//div[contains(@class, 'img-holder inner')]//img"
+                                    XPath = "//div[contains(@class, 'img-holder inner')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 74,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    XPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 81,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    XPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 75,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    XPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 76,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    XPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 80,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    XPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 77,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    XPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 78,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    XPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 79,
-                                    ImgElementXPath = "//div[contains(@class, 'pd-hero-image')]//img"
+                                    XPath = "//div[contains(@class, 'pd-hero-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 82,
-                                    ImageUrlParseStrategy = 4,
-                                    ImgElementXPath = "//div[contains(@class, 'mycontent')]//img"
+                                    ElementExtensionIndex = 1,
+                                    ImageUrlParseStrategy = 3,
+                                    IsSavedInHtmlElementWithSrcAttribute = true,
+                                    XPath = "//div[contains(@class, 'mycontent')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 84,
-                                    ImgElementXPath = "//div[contains(@class, 'single-post-media')]//img"
+                                    XPath = "//div[contains(@class, 'single-post-media')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 85,
-                                    ImgElementXPath = "//img[contains(@class, 'article__figure_img')]"
+                                    XPath = "//img[contains(@class, 'article__figure_img')]"
                                 },
                                 new
                                 {
                                     RssFeedId = 144,
-                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                    XPath = "//div[contains(@class, 'td-post-featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 145,
-                                    ImgElementXPath = "//div[contains(@class, 'entry-image featured-image')]//img"
+                                    XPath = "//div[contains(@class, 'entry-image featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 146,
-                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                    XPath = "//div[contains(@class, 'td-post-featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 147,
-                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                    XPath = "//div[contains(@class, 'td-post-featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 148,
-                                    ImgElementXPath = "//div[contains(@class, 'img')]//img"
+                                    XPath = "//div[contains(@class, 'img')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 150,
                                     ImageUrlParseStrategy = 1,
-                                    ImgElementXPath = "//div[contains(@class, 'main-content')]//img"
+                                    XPath = "//div[contains(@class, 'main-content')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 151,
-                                    ImgElementXPath = "//div[contains(@class, 'article')]//img"
+                                    XPath = "//div[contains(@class, 'article')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 152,
-                                    ImgElementXPath = "//div[contains(@class, 'site-content')]//img"
+                                    XPath = "//div[contains(@class, 'site-content')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 153,
-                                    ImageUrlParseStrategy = 4,
-                                    ImgElementXPath = "//div[contains(@class, 'content')]//img"
+                                    ElementExtensionIndex = 1,
+                                    ImageUrlParseStrategy = 3,
+                                    IsSavedInHtmlElementWithSrcAttribute = true,
+                                    XPath = "//div[contains(@class, 'content')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 154,
-                                    ImgElementXPath = "//div[contains(@class, 'td-post-content')]//img"
+                                    XPath = "//div[contains(@class, 'td-post-content')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 155,
-                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                    XPath = "//div[contains(@class, 'td-post-featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 156,
-                                    ImgElementXPath = "//div[contains(@class, 'intro-image-over')]//img"
+                                    XPath = "//div[contains(@class, 'intro-image-over')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 157,
-                                    ImgElementXPath = "//main[contains(@class, 'main-content')]//img"
+                                    XPath = "//main[contains(@class, 'main-content')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 158,
-                                    ImgElementXPath = "//div[contains(@class, 'post-img')]//img"
+                                    XPath = "//div[contains(@class, 'post-img')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 159,
-                                    ImgElementXPath = "//div[contains(@class, 'news')]//img"
+                                    XPath = "//div[contains(@class, 'news')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 160,
-                                    ImgElementXPath = "//div[contains(@class, 'field-items')]//img"
+                                    XPath = "//div[contains(@class, 'field-items')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 161,
-                                    ImgElementXPath = "//figure[contains(@class, 'post-gallery')]//img",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ShouldImageUrlBeWebScraped = false,
+                                    XPath = "//figure[contains(@class, 'post-gallery')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 162,
-                                    ImgElementXPath = "//div[contains(@class, 'zox-post-main')]//img"
+                                    XPath = "//div[contains(@class, 'zox-post-main')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 163,
-                                    ImgElementXPath = "//div[contains(@class, 'content')]//img"
+                                    XPath = "//div[contains(@class, 'content')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 164,
-                                    ImgElementXPath = "",
-                                    ShouldImageUrlBeWebScraped = false
+                                    ShouldImageUrlBeWebScraped = false,
+                                    XPath = ""
                                 },
                                 new
                                 {
                                     RssFeedId = 165,
-                                    ImgElementXPath = "//div[contains(@class, 'td-post-featured-image')]//img"
+                                    XPath = "//div[contains(@class, 'td-post-featured-image')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 166,
-                                    ImgElementXPath = "//div[contains(@class, 'site-featured-image')]//img"
+                                    XPath = "//div[contains(@class, 'site-featured-image')]//img"
+                                },
+                                new
+                                {
+                                    RssFeedId = 170,
+                                    AttributeName = "data-lazy-src",
+                                    XPath = "//section[contains(@class, 'article-content')]//picture[contains(@class, 'wp-caption')]//img[@data-lazy-src]"
+                                },
+                                new
+                                {
+                                    RssFeedId = 179,
+                                    ElementExtensionIndex = 2,
+                                    ImageUrlParseStrategy = 3,
+                                    IsSavedInHtmlElementWithSrcAttribute = true
                                 },
                                 new
                                 {
                                     RssFeedId = 83,
-                                    ImgElementXPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img"
+                                    XPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 96,
                                     ImageUrlParseStrategy = 2,
-                                    ImgElementXPath = "//figure[contains(@class, 'img-container')]//img"
+                                    XPath = "//figure[contains(@class, 'img-container')]//img"
                                 },
                                 new
                                 {
                                     RssFeedId = 168,
-                                    ImgElementXPath = "//div[contains(@class, 'feature-img')]//img"
+                                    XPath = "//div[contains(@class, 'feature-img')]//img"
+                                },
+                                new
+                                {
+                                    RssFeedId = 172,
+                                    ImageUrlParseStrategy = 3
                                 });
                         });
 
@@ -4709,14 +4988,14 @@ namespace Espresso.Persistence.Migrations
                         {
                             b1.Property<int>("RssFeedId")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .UseIdentityColumn();
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                             b1.Property<int?>("CurrentSkip")
-                                .HasColumnType("int");
+                                .HasColumnType("integer");
 
                             b1.Property<int?>("NumberOfSkips")
-                                .HasColumnType("int");
+                                .HasColumnType("integer");
 
                             b1.HasKey("RssFeedId");
 
@@ -4974,6 +5253,54 @@ namespace Espresso.Persistence.Migrations
                                 },
                                 new
                                 {
+                                    RssFeedId = 170,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 12
+                                },
+                                new
+                                {
+                                    RssFeedId = 174,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 11
+                                },
+                                new
+                                {
+                                    RssFeedId = 175,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 5
+                                },
+                                new
+                                {
+                                    RssFeedId = 176,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 11
+                                },
+                                new
+                                {
+                                    RssFeedId = 177,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 7
+                                },
+                                new
+                                {
+                                    RssFeedId = 178,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 11
+                                },
+                                new
+                                {
+                                    RssFeedId = 179,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 15
+                                },
+                                new
+                                {
+                                    RssFeedId = 180,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 21
+                                },
+                                new
+                                {
                                     RssFeedId = 111,
                                     CurrentSkip = 0,
                                     NumberOfSkips = 5
@@ -4995,6 +5322,18 @@ namespace Espresso.Persistence.Migrations
                                     RssFeedId = 168,
                                     CurrentSkip = 0,
                                     NumberOfSkips = 4
+                                },
+                                new
+                                {
+                                    RssFeedId = 169,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 7
+                                },
+                                new
+                                {
+                                    RssFeedId = 171,
+                                    CurrentSkip = 0,
+                                    NumberOfSkips = 3
                                 });
                         });
 

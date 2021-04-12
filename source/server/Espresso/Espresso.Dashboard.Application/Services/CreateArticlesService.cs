@@ -144,8 +144,8 @@ namespace Espresso.Dashboard.Application.Services
                     newsPortalId: rssFeed.NewsPortalId,
                     rssFeedId: rssFeed.Id,
                     articleCategories: articleData.ArticleCategories,
-                    newsPortal: rssFeed.NewsPortal,
-                    rssFeed: rssFeed,
+                    newsPortal: null,
+                    rssFeed: null,
                     subordinateArticles: null,
                     mainArticle: null
                 );
@@ -394,7 +394,7 @@ namespace Espresso.Dashboard.Application.Services
                             articleId: articleId,
                             categoryId: rssFeedCategory.CategoryId,
                             article: null,
-                            category: rssFeedCategory.Category
+                            category: null
                         ));
                     }
                 }
@@ -413,7 +413,7 @@ namespace Espresso.Dashboard.Application.Services
                 articleId: articleId,
                 categoryId: rssFeed.CategoryId,
                 article: null,
-                category: rssFeed.Category
+                category: null
             );
         }
 

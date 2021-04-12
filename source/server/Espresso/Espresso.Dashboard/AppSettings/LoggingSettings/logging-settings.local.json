@@ -12,7 +12,7 @@
       "Espresso.Dashboard.Application.Services.ScrapeWebService": "None",
       "Espresso.Dashboard.Services.SendArticlesHttpService": "Warning",
       "Microsoft": "Warning",
-      "Microsoft.EntityFrameworkCore": "Warning",
+      "Microsoft.EntityFrameworkCore": "Information",
       "System": "Warning"
     }
   }
