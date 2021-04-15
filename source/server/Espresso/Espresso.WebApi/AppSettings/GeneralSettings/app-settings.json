@@ -5,7 +5,7 @@
     "MajorVersion": 2,
     "MinorVersion": 1,
     "NewNewsPortalsPosition": 3,
-    "Version": "2.1.9"
+    "Version": "2.1.10"
   },
   "CronJobsConfiguration": {
     "AnalyticsCronExpression": "0 10 * * *",

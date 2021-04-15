@@ -1,16 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
-using Espresso.Common.Enums;
-using Espresso.Domain.Entities;
-using Espresso.Common.Extensions;
-using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 
 namespace Espresso.Dashboard.Application.Initialization
