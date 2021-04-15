@@ -21,7 +21,7 @@ namespace Espresso.Dashboard.Startup
         )
         {
             loggerService.Log(
-                eventName: "WebApi Startup",
+                eventName: "Dashboard Startup",
                 logLevel: Microsoft.Extensions.Logging.LogLevel.Information,
                 namedArguments: new (string, object)[] { ("version", _dashboardConfiguration.AppConfiguration.Version) }
             );

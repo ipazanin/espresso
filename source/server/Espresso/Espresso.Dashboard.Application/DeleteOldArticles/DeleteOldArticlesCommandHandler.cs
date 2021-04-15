@@ -36,6 +36,11 @@ namespace Espresso.Dashboard.Application.DeleteOldArticles
         {
             var oldArticles = _removeOldArticlesService.RemoveOldArticlesFromCollection(request.Articles);
 
+            var similarArticlesToDelete = oldArticles
+                .SelectMany(oldArticle => oldArticle.SubordinateArticles.Append(oldArticle.MainArticle))
+                .Where(similarArticle => similarArticle is not null);
+
+            _espressoDatabaseContext.SimilarArticles.RemoveRange(similarArticlesToDelete!);
             _espressoDatabaseContext.Articles.RemoveRange(oldArticles);
             var numberOfDeletedDatabaseArticles = await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
 
