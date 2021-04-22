@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
-using Espresso.Domain.Records;
 using MediatR;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Logging;
 using Espresso.Dashboard.Application.IServices;
 using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
@@ -20,24 +15,25 @@ namespace Espresso.Dashboard.ParseRssFeeds
     public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand, ParseRssFeedsCommandResponse>
     {
         #region Fields
+
         private readonly ICreateArticleService _parseArticlesService;
         private readonly ILoadRssFeedsService _loadRssFeedsService;
         private readonly ISortArticlesService _sortArticlesService;
         private readonly IGroupSimilarArticlesService _groupSimilarArticlesService;
         private readonly ISendArticlesService _sendArticlesService;
         private readonly IEspressoDatabaseContext _espressoDatabaseContext;
-        private readonly ILoggerService<ParseRssFeedsCommandHandler> _loggerService;
+
         #endregion
 
         #region Constructors
+
         public ParseRssFeedsCommandHandler(
             ICreateArticleService parseArticlesService,
             ILoadRssFeedsService loadRssFeedsService,
             ISortArticlesService sortArticlesService,
             IGroupSimilarArticlesService groupSimilarArticlesService,
             ISendArticlesService sendArticlesService,
-            IEspressoDatabaseContext espressoDatabaseContext,
-            ILoggerService<ParseRssFeedsCommandHandler> loggerService
+            IEspressoDatabaseContext espressoDatabaseContext
         )
         {
             _parseArticlesService = parseArticlesService;
@@ -47,11 +43,12 @@ namespace Espresso.Dashboard.ParseRssFeeds
             _groupSimilarArticlesService = groupSimilarArticlesService;
             _sendArticlesService = sendArticlesService;
             _espressoDatabaseContext = espressoDatabaseContext;
-            _loggerService = loggerService;
         }
+
         #endregion
 
         #region Methods
+
         public async Task<ParseRssFeedsCommandResponse> Handle(
             ParseRssFeedsCommand request,
             CancellationToken cancellationToken
@@ -62,7 +59,7 @@ namespace Espresso.Dashboard.ParseRssFeeds
                 cancellationToken: cancellationToken
             );
 
-            var articles = await GetArticlesFromLoadedRssFeeds(
+            var articles = await _parseArticlesService.CreateArticlesFromRssFeedItems(
                 rssFeedItems: rssFeedItems,
                 categories: request.Categories,
                 cancellationToken: cancellationToken
@@ -74,11 +71,13 @@ namespace Espresso.Dashboard.ParseRssFeeds
                 request.Articles.Values.Max(article => article.CreateDateTime) :
                 new DateTime();
 
-            var (createArticles, updateArticles, createArticleCategories, deleteArticleCategories) = _sortArticlesService
+            var (createArticles, updateArticlesWithModifiedProperties, createArticleCategories, deleteArticleCategories) = _sortArticlesService
                 .SortArticles(
                     articles: uniqueArticles,
                     savedArticles: request.Articles
                 );
+
+            var updateArticles = updateArticlesWithModifiedProperties.Select(updatedArticleWithModifiedproperties => updatedArticleWithModifiedproperties.article);
 
             UpdateSavedArticles(
                 savedArticles: request.Articles,
@@ -92,8 +91,13 @@ namespace Espresso.Dashboard.ParseRssFeeds
             );
 
             _espressoDatabaseContext.Articles.AddRange(createArticles);
-            // NOTE: EF updates all values including attached entities (ArticleCategories)
-            _espressoDatabaseContext.Articles.UpdateRange(updateArticles);
+            foreach (var (article, modifiedProperties) in updateArticlesWithModifiedProperties)
+            {
+                foreach (var modifiedProperty in modifiedProperties)
+                {
+                    _espressoDatabaseContext.Entry(article).Property(modifiedProperty).IsModified = true;
+                }
+            }
             _espressoDatabaseContext.ArticleCategories.AddRange(createArticleCategories);
             _espressoDatabaseContext.ArticleCategories.RemoveRange(deleteArticleCategories);
             _espressoDatabaseContext.SimilarArticles.AddRange(similarArticles);
@@ -111,47 +115,6 @@ namespace Espresso.Dashboard.ParseRssFeeds
                 CreatedArticles = createArticles.Count(),
                 UpdatedArticles = updateArticles.Count()
             };
-        }
-
-        private async Task<IEnumerable<Article>> GetArticlesFromLoadedRssFeeds(
-            IEnumerable<RssFeedItem> rssFeedItems,
-            IEnumerable<Category> categories,
-            CancellationToken cancellationToken
-        )
-        {
-            var initialCapacity = rssFeedItems.Count();
-            var parsedArticles = new ConcurrentDictionary<Guid, Article>();
-
-            var tasks = new List<Task>();
-
-            foreach (var rssFeedItem in rssFeedItems)
-            {
-                tasks.Add(Task.Run(async () =>
-                {
-                    try
-                    {
-                        var (article, isValid) = await _parseArticlesService.CreateArticleAsync(
-                            rssFeedItem: rssFeedItem,
-                            categories: categories,
-                            cancellationToken: cancellationToken
-                        );
-
-                        if (isValid && article != null)
-                        {
-                            parsedArticles.TryAdd(article.Id, article);
-                        }
-                    }
-                    catch (Exception exception)
-                    {
-                        var eventName = "Create Article Unhandled Exception";
-                        _loggerService.Log(eventName, exception, LogLevel.Error);
-                    }
-                }, cancellationToken));
-            }
-
-            await Task.WhenAll(tasks);
-
-            return parsedArticles.Values;
         }
 
         private static void UpdateSavedArticles(

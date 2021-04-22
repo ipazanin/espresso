@@ -4,7 +4,7 @@
     <ul class="pagination justify-content-center">
         @foreach (var pagingLink in PagingLinks)
         {
-            <li @onclick=@(() => OnSelectedPage(pagingLink)) style="cursor: pointer;" class=@(GetClass(pagingLink))>
+            <li @onclick="@(_ => OnSelectedPage(pagingLink))" style="cursor: pointer;" class=@(GetClass(pagingLink))>
                 <span class="page-link" href="#">@pagingLink.Text</span>
             </li>
         }

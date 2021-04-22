@@ -1,6 +1,6 @@
 ﻿using System;
-using Espresso.Common.Constants;
 using Espresso.Common.Enums;
+using Espresso.Domain.Entities;
 using FluentValidation;
 
 namespace Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplicationDownload
@@ -9,7 +9,7 @@ namespace Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplic
     {
         public CreateApplicationDownloadCommandValidator()
         {
-            RuleFor(createApplicationDownloadCommand => createApplicationDownloadCommand.ConsumerVersion).NotEmpty().MaximumLength(PropertyConstraintConstants.ApplicationDownloadMobileAppVersionHasMaxLenght);
+            RuleFor(createApplicationDownloadCommand => createApplicationDownloadCommand.ConsumerVersion).NotEmpty().MaximumLength(ApplicationDownload.MobileAppVersionMaxLenght);
 
             RuleFor(createApplicationDownloadCommand => createApplicationDownloadCommand.DeviceType).Must(mobileDeviceType => Enum.IsDefined(typeof(DeviceType), mobileDeviceType) && mobileDeviceType != DeviceType.Undefined);
         }

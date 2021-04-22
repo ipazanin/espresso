@@ -13,7 +13,7 @@ namespace Espresso.Persistence.Configuration
         {
             #region Property Mapping
             builder.Property(rssFeed => rssFeed.Url)
-                .HasMaxLength(PropertyConstraintConstants.RssFeedUrlHasMaxLength);
+                .HasMaxLength(RssFeed.UrlMaxLength);
             #endregion
 
             #region Value Object Mapping
@@ -66,7 +66,7 @@ namespace Espresso.Persistence.Configuration
 
             ampConfigurationBuilder
                 .Property(ampConfiguration => ampConfiguration!.TemplateUrl)
-                .HasMaxLength(PropertyConstraintConstants.RssFeedAmpConfigurationTemplateUrlHasMaxLength);
+                .HasMaxLength(RssFeed.AmpConfigurationTemplateUrlMaxLength);
 
             ampConfigurationBuilder
                 .Property(ampConfiguration => ampConfiguration!.HasAmpArticles);

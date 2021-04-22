@@ -267,6 +267,8 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         [Display(Name = "mob.hr")]
         MobHr = 133,
         [Display(Name = "Startnews")]
-        StartNews = 134
+        StartNews = 134,
+        [Display(Name = "Viral.hr")]
+        Viral = 135,
     }
 }

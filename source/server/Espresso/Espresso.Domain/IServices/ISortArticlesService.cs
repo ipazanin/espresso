@@ -8,7 +8,7 @@ namespace Espresso.Domain.IServices
     {
         public (
             IEnumerable<Article> createdArticles,
-            IEnumerable<Article> updatedArticles,
+            IEnumerable<(Article article, IEnumerable<string> modifiedProperties)> updatedArticlesWithModifiedProperties,
             IEnumerable<ArticleCategory> createArticleCategories,
             IEnumerable<ArticleCategory> deleteArticleCategories
         ) SortArticles(

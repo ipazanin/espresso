@@ -13,19 +13,24 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3
     public class GetConfigurationQueryHandler : IRequestHandler<GetConfigurationQuery_1_3, GetConfigurationQueryResponse_1_3>
     {
         #region Fields
+
         private readonly IMemoryCache _memoryCache;
+
         #endregion
 
         #region Constructors
+
         public GetConfigurationQueryHandler(
             IMemoryCache memoryCache
         )
         {
             _memoryCache = memoryCache;
         }
+
         #endregion
 
         #region Methods
+
         public Task<GetConfigurationQueryResponse_1_3> Handle(GetConfigurationQuery_1_3 request, CancellationToken cancellationToken)
         {
             var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
@@ -33,7 +38,7 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3
 
             var newsPortalDtos = newsPortals
                 .OrderBy(keySelector: newsPortal => newsPortal.Name)
-                .Where(predicate: newsPortal => !newsPortal.CategoryId.Equals((int)CategoryId.Local))
+                .Where(predicate: newsPortal => !newsPortal.CategoryId.Equals((int)CategoryId.Local) && newsPortal.IsEnabled)
                 .Select(selector: GetConfigurationNewsPortal_1_3.GetProjection().Compile());
 
             var categoryDtos = categories
@@ -49,6 +54,7 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3
 
             return Task.FromResult(result: response);
         }
+
         #endregion
     }
 }

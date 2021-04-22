@@ -12,7 +12,7 @@ namespace Espresso.Persistence.Configuration
         {
             #region Property Mapping
             builder.Property(rssFeedcategory => rssFeedcategory.UrlRegex)
-                .HasMaxLength(PropertyConstraintConstants.RssFeedCategoryUrlRegexHasMaxLength);
+                .HasMaxLength(RssFeedCategory.UrlRegexMaxLength);
             #endregion
 
             #region Relationship Mapping

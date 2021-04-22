@@ -10,7 +10,7 @@ namespace Espresso.Domain.Services
     {
         public (
             IEnumerable<Article> createdArticles,
-            IEnumerable<Article> updatedArticles,
+            IEnumerable<(Article article, IEnumerable<string> modifiedProperties)> updatedArticlesWithModifiedProperties,
             IEnumerable<ArticleCategory> createArticleCategories,
             IEnumerable<ArticleCategory> deleteArticleCategories
         ) SortArticles(
@@ -19,7 +19,7 @@ namespace Espresso.Domain.Services
         )
         {
             var createArticles = new List<Article>();
-            var updateArticles = new List<Article>();
+            var updatedArticlesWithModifiedProperties = new List<(Article article, IEnumerable<string> modifiedProperties)>();
             var createArticleCategories = new List<ArticleCategory>();
             var deleteArticleCategories = new List<ArticleCategory>();
 
@@ -43,12 +43,13 @@ namespace Espresso.Domain.Services
                 )
                 {
                     var savedArticle = savedArticles[savedArticleId];
-                    var (shouldUpdate, articleCategoriesToCreate, articleCategoriesToDelete) = savedArticle.Update(article);
+                    var (shouldUpdate, articleCategoriesToCreate, articleCategoriesToDelete, modifiedProperties) = savedArticle.Update(article);
+
                     if (shouldUpdate)
                     {
                         createArticleCategories.AddRange(articleCategoriesToCreate);
                         deleteArticleCategories.AddRange(articleCategoriesToDelete);
-                        updateArticles.Add(savedArticle);
+                        updatedArticlesWithModifiedProperties.Add((savedArticle, modifiedProperties));
                     }
                 }
                 else
@@ -57,7 +58,7 @@ namespace Espresso.Domain.Services
                 }
             }
 
-            return (createArticles, updateArticles, createArticleCategories, deleteArticleCategories);
+            return (createArticles, updatedArticlesWithModifiedProperties, createArticleCategories, deleteArticleCategories);
         }
 
         public IEnumerable<Article> RemoveDuplicateArticles(IEnumerable<Article> articles)

@@ -18,6 +18,7 @@ using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
 using Microsoft.Extensions.Logging;
 using Espresso.Dashboard.Application.Constants;
+using Espresso.Domain.Enums.NewsPortalEnums;
 
 namespace Espresso.Dashboard.Application.Services
 {
@@ -48,6 +49,8 @@ namespace Espresso.Dashboard.Application.Services
             var parsedArticles = new ConcurrentQueue<RssFeedItem>();
 
             var getRssFeedRequestTasks = new List<Task>();
+
+            // rssFeeds = rssFeeds.Where(f => f.NewsPortalId is (int)NewsPortalId.Index or (int)NewsPortalId.IndexHrZagreb);
 
             foreach (var rssFeed in rssFeeds)
             {
@@ -98,7 +101,11 @@ namespace Espresso.Dashboard.Application.Services
                         var exceptionMessage = exception.Message;
                         var eventName = Event.RssFeedLoading.GetDisplayName();
                         var innerExceptionMessage = exception.InnerException?.Message ?? "";
-                        var arguments = new (string, object)[] { (nameof(rssFeedUrl), rssFeedUrl) };
+                        var arguments = new (string, object)[]
+                        {
+                            (nameof(rssFeedUrl), rssFeedUrl),
+                            ("IsEnabled", rssFeed.NewsPortal?.IsEnabled.ToString() ?? "Empty"),
+                        };
 
                         _loggerService.Log(eventName, exception, LogLevel.Error, arguments);
                     }

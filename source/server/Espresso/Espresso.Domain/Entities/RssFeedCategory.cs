@@ -4,6 +4,14 @@ namespace Espresso.Domain.Entities
 {
     public class RssFeedCategory : IEntity<int, RssFeedCategory>
     {
+
+
+        #region Constants
+
+        public const int UrlRegexMaxLength = 100;
+
+        #endregion
+
         #region Properties
         public int Id { get; private set; }
 

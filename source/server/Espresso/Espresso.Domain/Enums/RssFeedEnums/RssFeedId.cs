@@ -178,6 +178,7 @@
         F1PulsMedia = 177,
         Racunalo = 178,
         MobHr = 179,
-        StartNews = 180
+        StartNews = 180,
+        Viral = 181
     }
 }

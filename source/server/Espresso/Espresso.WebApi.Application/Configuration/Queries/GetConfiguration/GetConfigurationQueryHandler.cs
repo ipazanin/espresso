@@ -32,7 +32,8 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
             var regions = _memoryCache.Get<IEnumerable<Region>>(key: MemoryCacheConstants.RegionKey);
 
             var newsPortalDtos = newsPortals
-                .OrderBy(keySelector: newsPortal => newsPortal.Name)
+                .Where(newsPortal => newsPortal.IsEnabled)
+                .OrderBy(newsPortal => newsPortal.Name)
                 .Select(
                     selector: GetConfigurationNewsPortal
                         .GetProjection(

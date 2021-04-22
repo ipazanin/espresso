@@ -15,20 +15,24 @@ using Espresso.Dashboard.Application.IServices;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using Espresso.Domain.Enums.NewsPortalEnums;
+using System.Collections.Concurrent;
 
 namespace Espresso.Dashboard.Application.Services
 {
     public class CreateArticleService : ICreateArticleService
     {
         #region Fields
+
         private readonly IScrapeWebService _webScrapingService;
         private readonly IParseHtmlService _htmlParsingService;
         private readonly IValidator<ArticleData> _articleDataValidator;
         private readonly ILoggerService<CreateArticleService> _loggerService;
         private readonly TimeSpan _maxAgeOfArticle;
+
         #endregion
 
         #region Constructors
+
         public CreateArticleService(
             IScrapeWebService webScrapingService,
             IParseHtmlService htmlParsingService,
@@ -43,10 +47,55 @@ namespace Espresso.Dashboard.Application.Services
             _loggerService = loggerService;
             _maxAgeOfArticle = maxAgeOfArticle;
         }
+
         #endregion
 
         #region Public Methods
-        public async Task<(Article? article, bool isValid)> CreateArticleAsync(
+
+        public async Task<IEnumerable<Article>> CreateArticlesFromRssFeedItems(
+            IEnumerable<RssFeedItem> rssFeedItems,
+            IEnumerable<Category> categories,
+            CancellationToken cancellationToken
+        )
+        {
+            var initialCapacity = rssFeedItems.Count();
+            var parsedArticles = new ConcurrentQueue<Article>();
+
+            var tasks = new List<Task>();
+
+            foreach (var rssFeedItem in rssFeedItems)
+            {
+                var task = Task.Run(async () =>
+                {
+                    try
+                    {
+                        var (article, isValid) = await CreateArticleAsync(
+                            rssFeedItem: rssFeedItem,
+                            categories: categories,
+                            cancellationToken: cancellationToken
+                        );
+
+                        if (isValid && article != null)
+                        {
+                            parsedArticles.Enqueue(article);
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        var eventName = "Create Article Unhandled Exception";
+                        _loggerService.Log(eventName, exception, LogLevel.Error);
+                    }
+                }, cancellationToken);
+                tasks.Add(task);
+            }
+
+            await Task.WhenAll(tasks);
+
+            return parsedArticles;
+        }
+
+
+        private async Task<(Article? article, bool isValid)> CreateArticleAsync(
             RssFeedItem rssFeedItem,
             IEnumerable<Category> categories,
             CancellationToken cancellationToken
@@ -435,6 +484,7 @@ namespace Espresso.Dashboard.Application.Services
                 return $"{baseUrl}{urlFragmentOrFullUrl}";
             }
         }
+
         #endregion
     }
 }

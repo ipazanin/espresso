@@ -3,15 +3,17 @@ using System;
 using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Espresso.Persistence.EspressoDatabaseMigrations
 {
     [DbContext(typeof(EspressoDatabaseContext))]
-    partial class EspressoDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210422181233_FixedRssFeeds2")]
+    partial class FixedRssFeeds2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -820,7 +822,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 8,
                             CreatedAt = new DateTime(2020, 9, 24, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/VozimHr.png",
-                            IsEnabled = false,
+                            IsEnabled = true,
                             Name = "Vozim.HR",
                             RegionId = 1
                         },
@@ -864,7 +866,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/AlJazeera.png",
-                            IsEnabled = false,
+                            IsEnabled = true,
                             Name = "Al Jazeera Balkans",
                             RegionId = 1
                         },
@@ -2775,7 +2777,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             Id = 113,
                             CategoryId = 12,
                             NewsPortalId = 67,
-                            RequestType = 2,
+                            RequestType = 1,
                             Url = "https://www.dubrovniknet.hr/feed"
                         },
                         new
@@ -4014,325 +4016,229 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                         {
                             Id = 1,
                             OrderIndex = 1,
-                            ReplacementValue = "<notused>",
-                            RssFeedId = 5,
-                            SourceValue = "<description>"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            OrderIndex = 2,
-                            ReplacementValue = "</notused>",
-                            RssFeedId = 5,
-                            SourceValue = "</description>"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            OrderIndex = 3,
                             ReplacementValue = "<description>",
                             RssFeedId = 5,
                             SourceValue = "<content>"
                         },
                         new
                         {
-                            Id = 4,
-                            OrderIndex = 4,
+                            Id = 2,
+                            OrderIndex = 2,
                             ReplacementValue = "</description>",
                             RssFeedId = 5,
+                            SourceValue = "</content>"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            OrderIndex = 1,
+                            ReplacementValue = "<description>",
+                            RssFeedId = 3,
+                            SourceValue = "<content>"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            OrderIndex = 2,
+                            ReplacementValue = "</description>",
+                            RssFeedId = 3,
                             SourceValue = "</content>"
                         },
                         new
                         {
                             Id = 5,
                             OrderIndex = 1,
-                            ReplacementValue = "<notused>",
-                            RssFeedId = 3,
-                            SourceValue = "<description>"
+                            ReplacementValue = "<description>",
+                            RssFeedId = 4,
+                            SourceValue = "<content>"
                         },
                         new
                         {
                             Id = 6,
                             OrderIndex = 2,
-                            ReplacementValue = "</notused>",
-                            RssFeedId = 3,
-                            SourceValue = "</description>"
+                            ReplacementValue = "</description>",
+                            RssFeedId = 4,
+                            SourceValue = "</content>"
                         },
                         new
                         {
                             Id = 7,
-                            OrderIndex = 3,
+                            OrderIndex = 1,
                             ReplacementValue = "<description>",
-                            RssFeedId = 3,
+                            RssFeedId = 2,
                             SourceValue = "<content>"
                         },
                         new
                         {
                             Id = 8,
-                            OrderIndex = 4,
+                            OrderIndex = 2,
                             ReplacementValue = "</description>",
-                            RssFeedId = 3,
+                            RssFeedId = 2,
                             SourceValue = "</content>"
                         },
                         new
                         {
                             Id = 9,
                             OrderIndex = 1,
-                            ReplacementValue = "<notused>",
-                            RssFeedId = 4,
-                            SourceValue = "<description>"
+                            ReplacementValue = "<description>",
+                            RssFeedId = 1,
+                            SourceValue = "<content>"
                         },
                         new
                         {
                             Id = 10,
                             OrderIndex = 2,
-                            ReplacementValue = "</notused>",
-                            RssFeedId = 4,
-                            SourceValue = "</description>"
+                            ReplacementValue = "</description>",
+                            RssFeedId = 1,
+                            SourceValue = "</content>"
                         },
                         new
                         {
                             Id = 11,
-                            OrderIndex = 3,
+                            OrderIndex = 1,
                             ReplacementValue = "<description>",
-                            RssFeedId = 4,
+                            RssFeedId = 96,
                             SourceValue = "<content>"
                         },
                         new
                         {
                             Id = 12,
-                            OrderIndex = 4,
+                            OrderIndex = 2,
                             ReplacementValue = "</description>",
-                            RssFeedId = 4,
+                            RssFeedId = 96,
                             SourceValue = "</content>"
                         },
                         new
                         {
                             Id = 13,
                             OrderIndex = 1,
-                            ReplacementValue = "<notused>",
-                            RssFeedId = 2,
-                            SourceValue = "<description>"
+                            ReplacementValue = "<link>",
+                            RssFeedId = 70,
+                            SourceValue = "<thumb>"
                         },
                         new
                         {
                             Id = 14,
                             OrderIndex = 2,
-                            ReplacementValue = "</notused>",
-                            RssFeedId = 2,
-                            SourceValue = "</description>"
+                            ReplacementValue = "</link>",
+                            RssFeedId = 70,
+                            SourceValue = "</thumb>"
                         },
                         new
                         {
                             Id = 15,
-                            OrderIndex = 3,
-                            ReplacementValue = "<description>",
-                            RssFeedId = 2,
-                            SourceValue = "<content>"
+                            OrderIndex = 1,
+                            ReplacementValue = "<link>",
+                            RssFeedId = 69,
+                            SourceValue = "<thumb>"
                         },
                         new
                         {
                             Id = 16,
-                            OrderIndex = 4,
-                            ReplacementValue = "</description>",
-                            RssFeedId = 2,
-                            SourceValue = "</content>"
+                            OrderIndex = 2,
+                            ReplacementValue = "</link>",
+                            RssFeedId = 69,
+                            SourceValue = "</thumb>"
                         },
                         new
                         {
                             Id = 17,
                             OrderIndex = 1,
-                            ReplacementValue = "<description>",
-                            RssFeedId = 1,
-                            SourceValue = "<content>"
+                            ReplacementValue = "<link>",
+                            RssFeedId = 68,
+                            SourceValue = "<thumb>"
                         },
                         new
                         {
                             Id = 18,
                             OrderIndex = 2,
-                            ReplacementValue = "</description>",
-                            RssFeedId = 1,
-                            SourceValue = "</content>"
+                            ReplacementValue = "</link>",
+                            RssFeedId = 68,
+                            SourceValue = "</thumb>"
                         },
                         new
                         {
                             Id = 19,
-                            OrderIndex = 3,
-                            ReplacementValue = "<description>",
-                            RssFeedId = 1,
-                            SourceValue = "<content>"
+                            OrderIndex = 1,
+                            ReplacementValue = "<link>",
+                            RssFeedId = 67,
+                            SourceValue = "<thumb>"
                         },
                         new
                         {
                             Id = 20,
-                            OrderIndex = 4,
-                            ReplacementValue = "</description>",
-                            RssFeedId = 1,
-                            SourceValue = "</content>"
+                            OrderIndex = 2,
+                            ReplacementValue = "</link>",
+                            RssFeedId = 67,
+                            SourceValue = "</thumb>"
                         },
                         new
                         {
                             Id = 21,
                             OrderIndex = 1,
-                            ReplacementValue = "<description>",
-                            RssFeedId = 96,
-                            SourceValue = "<content>"
+                            ReplacementValue = "<notused>",
+                            RssFeedId = 57,
+                            SourceValue = "<description>"
                         },
                         new
                         {
                             Id = 22,
                             OrderIndex = 2,
-                            ReplacementValue = "</description>",
-                            RssFeedId = 96,
-                            SourceValue = "</content>"
+                            ReplacementValue = "</notused>",
+                            RssFeedId = 57,
+                            SourceValue = "</description>"
                         },
                         new
                         {
                             Id = 23,
                             OrderIndex = 3,
                             ReplacementValue = "<description>",
-                            RssFeedId = 96,
-                            SourceValue = "<content>"
+                            RssFeedId = 57,
+                            SourceValue = "<content:encoded>"
                         },
                         new
                         {
                             Id = 24,
                             OrderIndex = 4,
                             ReplacementValue = "</description>",
-                            RssFeedId = 96,
-                            SourceValue = "</content>"
+                            RssFeedId = 57,
+                            SourceValue = "</content:encoded>"
                         },
                         new
                         {
                             Id = 25,
                             OrderIndex = 1,
-                            ReplacementValue = "<link>",
-                            RssFeedId = 70,
-                            SourceValue = "<thumb>"
+                            ReplacementValue = "<notused>",
+                            RssFeedId = 176,
+                            SourceValue = "<description>"
                         },
                         new
                         {
                             Id = 26,
                             OrderIndex = 2,
-                            ReplacementValue = "</link>",
-                            RssFeedId = 70,
-                            SourceValue = "</thumb>"
+                            ReplacementValue = "</notused>",
+                            RssFeedId = 176,
+                            SourceValue = "</description>"
                         },
                         new
                         {
                             Id = 27,
-                            OrderIndex = 1,
-                            ReplacementValue = "<link>",
-                            RssFeedId = 69,
-                            SourceValue = "<thumb>"
+                            OrderIndex = 3,
+                            ReplacementValue = "<description>",
+                            RssFeedId = 176,
+                            SourceValue = "<content:encoded>"
                         },
                         new
                         {
                             Id = 28,
-                            OrderIndex = 2,
-                            ReplacementValue = "</link>",
-                            RssFeedId = 69,
-                            SourceValue = "</thumb>"
+                            OrderIndex = 4,
+                            ReplacementValue = "</description>",
+                            RssFeedId = 176,
+                            SourceValue = "</content:encoded>"
                         },
                         new
                         {
                             Id = 29,
-                            OrderIndex = 1,
-                            ReplacementValue = "<link>",
-                            RssFeedId = 68,
-                            SourceValue = "<thumb>"
-                        },
-                        new
-                        {
-                            Id = 30,
-                            OrderIndex = 2,
-                            ReplacementValue = "</link>",
-                            RssFeedId = 68,
-                            SourceValue = "</thumb>"
-                        },
-                        new
-                        {
-                            Id = 31,
-                            OrderIndex = 1,
-                            ReplacementValue = "<link>",
-                            RssFeedId = 67,
-                            SourceValue = "<thumb>"
-                        },
-                        new
-                        {
-                            Id = 32,
-                            OrderIndex = 2,
-                            ReplacementValue = "</link>",
-                            RssFeedId = 67,
-                            SourceValue = "</thumb>"
-                        },
-                        new
-                        {
-                            Id = 33,
-                            OrderIndex = 1,
-                            ReplacementValue = "<notused>",
-                            RssFeedId = 57,
-                            SourceValue = "<description>"
-                        },
-                        new
-                        {
-                            Id = 34,
-                            OrderIndex = 2,
-                            ReplacementValue = "</notused>",
-                            RssFeedId = 57,
-                            SourceValue = "</description>"
-                        },
-                        new
-                        {
-                            Id = 35,
-                            OrderIndex = 3,
-                            ReplacementValue = "<description>",
-                            RssFeedId = 57,
-                            SourceValue = "<content:encoded>"
-                        },
-                        new
-                        {
-                            Id = 36,
-                            OrderIndex = 4,
-                            ReplacementValue = "</description>",
-                            RssFeedId = 57,
-                            SourceValue = "</content:encoded>"
-                        },
-                        new
-                        {
-                            Id = 37,
-                            OrderIndex = 1,
-                            ReplacementValue = "<notused>",
-                            RssFeedId = 176,
-                            SourceValue = "<description>"
-                        },
-                        new
-                        {
-                            Id = 38,
-                            OrderIndex = 2,
-                            ReplacementValue = "</notused>",
-                            RssFeedId = 176,
-                            SourceValue = "</description>"
-                        },
-                        new
-                        {
-                            Id = 39,
-                            OrderIndex = 3,
-                            ReplacementValue = "<description>",
-                            RssFeedId = 176,
-                            SourceValue = "<content:encoded>"
-                        },
-                        new
-                        {
-                            Id = 40,
-                            OrderIndex = 4,
-                            ReplacementValue = "</description>",
-                            RssFeedId = 176,
-                            SourceValue = "</content:encoded>"
-                        },
-                        new
-                        {
-                            Id = 41,
                             OrderIndex = 1,
                             ReplacementValue = "",
                             RssFeedId = 63,

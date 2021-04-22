@@ -35,7 +35,7 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 # install and cache app dependencies
 COPY client/package.json /usr/src/app/package.json
-RUN npm install
+RUN npm install --force
 
 # Copy rest of Client Application files
 COPY client/. /usr/src/app

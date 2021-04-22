@@ -31,7 +31,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Dalmacija
+                    regionId: (int)RegionId.Dalmacija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.DalmacijaNews,
@@ -41,7 +42,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Dalmacija
+                    regionId: (int)RegionId.Dalmacija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.DalmatinskiPortal,
@@ -51,7 +53,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Dalmacija
+                    regionId: (int)RegionId.Dalmacija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.DubrovackiDnevnik,
@@ -61,7 +64,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Dalmacija
+                    regionId: (int)RegionId.Dalmacija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.SlobodnaDalmacija_Dalmacija,
@@ -71,7 +75,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Dalmacija
+                    regionId: (int)RegionId.Dalmacija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.SlobodnaDalmacija_Split,
@@ -81,7 +86,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Dalmacija
+                    regionId: (int)RegionId.Dalmacija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.DubrovnikNet,
@@ -91,7 +97,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Dalmacija
+                    regionId: (int)RegionId.Dalmacija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.MakarskaDanas,
@@ -101,7 +108,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Dalmacija
+                    regionId: (int)RegionId.Dalmacija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.MakarskaHr,
@@ -111,7 +119,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Dalmacija
+                    regionId: (int)RegionId.Dalmacija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.PortalOko,
@@ -121,7 +130,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Dalmacija
+                    regionId: (int)RegionId.Dalmacija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.AntenaZadar,
@@ -131,7 +141,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Dalmacija
+                    regionId: (int)RegionId.Dalmacija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.RadioImotski,
@@ -141,7 +152,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Dalmacija
+                    regionId: (int)RegionId.Dalmacija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.ImotskeNovine,
@@ -151,7 +163,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Dalmacija
+                    regionId: (int)RegionId.Dalmacija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.PortalKastela,
@@ -161,7 +174,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Dalmacija
+                    regionId: (int)RegionId.Dalmacija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.HukNet,
@@ -171,7 +185,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Dalmacija
+                    regionId: (int)RegionId.Dalmacija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.ZadarskiList,
@@ -181,7 +196,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Dalmacija
+                    regionId: (int)RegionId.Dalmacija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.PloceOnline,
@@ -191,7 +207,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2021, 1, 23, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Dalmacija
+                    regionId: (int)RegionId.Dalmacija,
+                    isEnabled: true
                 ),                                                                                                                                                                                                                                                       
                 #endregion
 
@@ -204,7 +221,8 @@ namespace Espresso.Persistence.DataSeed
                 //     isNewOverride: null,
                 //     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                 //     categoryId: (int)CategoryId.Local,
-                //     regionId: (int)RegionId.Istra
+                //     regionId: (int)RegionId.Istra,
+                //     isEnabled: true
                 // ),
                 new NewsPortal(
                     id:(int)NewsPortalId.NoviList,
@@ -214,7 +232,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Istra
+                    regionId: (int)RegionId.Istra,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.Parentium,
@@ -224,7 +243,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Istra
+                    regionId: (int)RegionId.Istra,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.IVijesti,
@@ -234,7 +254,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Istra
+                    regionId: (int)RegionId.Istra,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.IstarskaZupanija,
@@ -244,7 +265,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Istra
+                    regionId: (int)RegionId.Istra,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.IstraTerraMagica,
@@ -254,7 +276,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Istra
+                    regionId: (int)RegionId.Istra,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.IPress,
@@ -264,7 +287,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Istra
+                    regionId: (int)RegionId.Istra,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.RijekaDanas,
@@ -274,7 +298,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Istra
+                    regionId: (int)RegionId.Istra,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.Fiuman,
@@ -284,7 +309,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Istra
+                    regionId: (int)RegionId.Istra,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.Riportal,
@@ -294,7 +320,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Istra
+                    regionId: (int)RegionId.Istra,
+                    isEnabled: true
                 ),                                                                                                       
                 #endregion
 
@@ -307,7 +334,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Lika
+                    regionId: (int)RegionId.Lika,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.LikaExpress,
@@ -317,7 +345,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Lika
+                    regionId: (int)RegionId.Lika,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.LikaOnline,
@@ -327,7 +356,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Lika
+                    regionId: (int)RegionId.Lika,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.LikaPlus,
@@ -337,7 +367,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Lika
+                    regionId: (int)RegionId.Lika,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.GsPress,
@@ -347,7 +378,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Lika
+                    regionId: (int)RegionId.Lika,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.OgPortal,
@@ -357,7 +389,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 10, 17, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Lika
+                    regionId: (int)RegionId.Lika,
+                    isEnabled: true
                 ),                                  
                 #endregion
 
@@ -370,7 +403,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Zagreb
+                    regionId: (int)RegionId.Zagreb,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.ZagrebInfo,
@@ -380,7 +414,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Zagreb
+                    regionId: (int)RegionId.Zagreb,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.Zagrebancija,
@@ -390,7 +425,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Zagreb
+                    regionId: (int)RegionId.Zagreb,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.ZagrebOnline,
@@ -400,7 +436,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Zagreb
+                    regionId: (int)RegionId.Zagreb,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.ZagrebackiList,
@@ -410,7 +447,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Zagreb
+                    regionId: (int)RegionId.Zagreb,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.ZgPortal,
@@ -420,7 +458,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Zagreb
+                    regionId: (int)RegionId.Zagreb,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.GradZagreb,
@@ -430,7 +469,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Zagreb
+                    regionId: (int)RegionId.Zagreb,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.KaPortalHr,
@@ -440,7 +480,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2021, 1, 23, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Zagreb
+                    regionId: (int)RegionId.Zagreb,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.RadioMreznica,
@@ -450,7 +491,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2021, 1, 23, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Zagreb
+                    regionId: (int)RegionId.Zagreb,
+                    isEnabled: true
                 ),                                                                                                                               
                 #endregion
 
@@ -463,7 +505,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.SjevernaHrvatska
+                    regionId: (int)RegionId.SjevernaHrvatska,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.PrigorskiHr,
@@ -473,7 +516,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.SjevernaHrvatska
+                    regionId: (int)RegionId.SjevernaHrvatska,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.PodravinaHr,
@@ -483,7 +527,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.SjevernaHrvatska
+                    regionId: (int)RegionId.SjevernaHrvatska,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.SisakInfo,
@@ -493,7 +538,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.SjevernaHrvatska
+                    regionId: (int)RegionId.SjevernaHrvatska,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.PlusRegionalniTjednik,
@@ -503,7 +549,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.SjevernaHrvatska
+                    regionId: (int)RegionId.SjevernaHrvatska,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.GlasPodravineIPrigorja,
@@ -513,7 +560,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.SjevernaHrvatska
+                    regionId: (int)RegionId.SjevernaHrvatska,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.MedimurjeInfo,
@@ -523,7 +571,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.SjevernaHrvatska
+                    regionId: (int)RegionId.SjevernaHrvatska,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.MedimurskeNovine,
@@ -533,7 +582,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.SjevernaHrvatska
+                    regionId: (int)RegionId.SjevernaHrvatska,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.ZagorjeCom,
@@ -543,7 +593,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.SjevernaHrvatska
+                    regionId: (int)RegionId.SjevernaHrvatska,
+                    isEnabled: true
                 ),                                                                                                                       
                 #endregion
 
@@ -557,7 +608,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Slavonija
+                    regionId: (int)RegionId.Slavonija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.GlasSlavonije,
@@ -567,7 +619,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Slavonija
+                    regionId: (int)RegionId.Slavonija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.SlavonskiHr,
@@ -577,7 +630,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Slavonija
+                    regionId: (int)RegionId.Slavonija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.OsijekNews,
@@ -587,7 +641,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Slavonija
+                    regionId: (int)RegionId.Slavonija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.InformativniCentarVirovitica,
@@ -597,7 +652,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Slavonija
+                    regionId: (int)RegionId.Slavonija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.NovskaIn,
@@ -607,7 +663,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Slavonija
+                    regionId: (int)RegionId.Slavonija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.NovostiHr,
@@ -617,7 +674,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Slavonija
+                    regionId: (int)RegionId.Slavonija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.Portal53,
@@ -627,7 +685,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Slavonija
+                    regionId: (int)RegionId.Slavonija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.SbPlusHr,
@@ -637,7 +696,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Slavonija
+                    regionId: (int)RegionId.Slavonija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.PozeskaKronika,
@@ -647,7 +707,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Slavonija
+                    regionId: (int)RegionId.Slavonija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.Osijek031,
@@ -657,7 +718,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Slavonija
+                    regionId: (int)RegionId.Slavonija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.Zupanjac,
@@ -667,7 +729,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 10, 26, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Slavonija
+                    regionId: (int)RegionId.Slavonija,
+                    isEnabled: true
                 ),
                 new NewsPortal(
                     id:(int)NewsPortalId.Press032,
@@ -677,7 +740,8 @@ namespace Espresso.Persistence.DataSeed
                     isNewOverride: null,
                     createdAt: new DateTime(2021, 1, 16, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
-                    regionId: (int)RegionId.Slavonija
+                    regionId: (int)RegionId.Slavonija,
+                    isEnabled: true
                 ),                               
                 #endregion                                            
             };
