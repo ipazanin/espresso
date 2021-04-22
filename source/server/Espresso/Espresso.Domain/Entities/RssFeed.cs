@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.Infrastructure;
 using Espresso.Domain.ValueObjects.RssFeedValueObjects;
@@ -7,6 +8,15 @@ namespace Espresso.Domain.Entities
 {
     public class RssFeed : IEntity<int, RssFeed>
     {
+
+        #region Constants
+
+        public const int UrlMaxLength = 300;
+
+        public const int AmpConfigurationTemplateUrlMaxLength = 300;
+
+        #endregion
+
         #region Properties
         public int Id { get; private set; }
 
@@ -74,12 +84,15 @@ namespace Espresso.Domain.Entities
         #region Methods
         public bool ShouldParse()
         {
-            return SkipParseConfiguration?.ShouldParse() != false;
+            return NewsPortal?.IsEnabled == true && SkipParseConfiguration?.ShouldParse() != false;
         }
 
         public string ModifyContent(string feedContent)
         {
-            foreach (var rssFeedContentModifier in RssFeedContentModifiers)
+            var orderedRssFeedContentModifiers = RssFeedContentModifiers
+                .OrderBy(rssFeedContentModifier => rssFeedContentModifier.OrderIndex);
+
+            foreach (var rssFeedContentModifier in orderedRssFeedContentModifiers)
             {
                 feedContent = feedContent.Replace(rssFeedContentModifier.SourceValue, rssFeedContentModifier.ReplacementValue);
             }

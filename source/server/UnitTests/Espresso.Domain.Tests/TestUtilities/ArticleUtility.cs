@@ -52,7 +52,8 @@ namespace Espresso.Domain.Tests.TestUtilities
                 isNewOverride: null,
                 createdAt: default,
                 categoryId: default,
-                regionId: default
+                regionId: default,
+                isEnabled: true
             );
 
             var article = new Article(

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
@@ -11,8 +9,8 @@ using Espresso.WebApi.GraphQl.Infrastructure;
 using Espresso.WebApi.Infrastructure;
 using Espresso.WebApi.RequestData.Body;
 using Espresso.WebApi.RequestData.Header;
-using FluentValidation;
 using GraphQL;
+using GraphQL.Execution;
 using GraphQL.Types;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -51,14 +49,14 @@ namespace Espresso.WebApi.Controllers
         /// <summary>
         /// </summary>
         /// <param name="cancellationToken"></param>
-        /// <param name="basicInformationsHeaderParameters">Basic App Informations</param>
+        /// <param name="basicInformationsHeaderParameters">Basic App Information</param>
         /// <param name="query"></param>
         /// <returns></returns>
-        /// <response code="200">When operation is sucessfull</response>
+        /// <response code="200">When operation is successfull</response>
         /// <response code="400">If validation fails</response>
         /// <response code="401">If API Key is invalid or missing</response>
         /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="404">If resource is nout found</response>
+        /// <response code="404">If resource is not found</response>
         /// <response code="500">If unhandled exception occurred</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -104,7 +102,9 @@ namespace Espresso.WebApi.Controllers
                 };
             });
 
-            return Ok(new { data = result.Data });
+            var data = ((ExecutionNode)result.Data).ToValue();
+
+            return Ok(new { data });
         }
     }
 }

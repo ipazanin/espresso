@@ -3,15 +3,17 @@ using System;
 using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Espresso.Persistence.EspressoDatabaseMigrations
 {
     [DbContext(typeof(EspressoDatabaseContext))]
-    partial class EspressoDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210418201741_Added")]
+    partial class Added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -325,7 +327,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Index.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Index.hr",
                             RegionId = 1
                         },
@@ -336,7 +338,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/DvadesetCetiriSata.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "24 sata",
                             RegionId = 1
                         },
@@ -347,7 +349,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 2,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/SportskeNovosti.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Sportske Novosti",
                             RegionId = 1
                         },
@@ -358,7 +360,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/JutarnjiList.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Jutarnji List",
                             RegionId = 1
                         },
@@ -369,7 +371,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/NetHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Net.hr",
                             RegionId = 1
                         },
@@ -380,7 +382,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/SlobodnaDalmacija.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Slobodna Dalmacija",
                             RegionId = 1
                         },
@@ -391,7 +393,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/TPortal.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "tportal",
                             RegionId = 1
                         },
@@ -402,7 +404,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/VecernjiList.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Večernji List",
                             RegionId = 1
                         },
@@ -413,7 +415,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Telegram.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Telegram",
                             RegionId = 1
                         },
@@ -424,7 +426,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Dnevnik.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Dnevnik",
                             RegionId = 1
                         },
@@ -435,7 +437,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 2,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Gol.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Gol",
                             RegionId = 1
                         },
@@ -446,7 +448,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/RtlVijesti.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "RTL Vijesti",
                             RegionId = 1
                         },
@@ -457,7 +459,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 2,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/NogometPlus.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Nogomet Plus",
                             RegionId = 1
                         },
@@ -468,7 +470,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 7,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Lider.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Lider",
                             RegionId = 1
                         },
@@ -479,7 +481,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Bug.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Bug",
                             RegionId = 1
                         },
@@ -490,7 +492,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/VidiHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Vidi.hr",
                             RegionId = 1
                         },
@@ -501,7 +503,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Zimo.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Zimo",
                             RegionId = 1
                         },
@@ -512,7 +514,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Netokracija.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Netokracija",
                             RegionId = 1
                         },
@@ -523,7 +525,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 7,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/PoslovniPuls.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Poslovni Puls",
                             RegionId = 1
                         },
@@ -534,7 +536,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/PcChip.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "PCchip",
                             RegionId = 1
                         },
@@ -545,7 +547,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 4,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Cosmopolitan.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Cosmopolitan",
                             RegionId = 1
                         },
@@ -556,7 +558,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 4,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/WallHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Wall.hr",
                             RegionId = 1
                         },
@@ -567,7 +569,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 4,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/LjepotaIZdravlje.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Ljepota i zdravlje",
                             RegionId = 1
                         },
@@ -578,7 +580,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 8,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Autonet.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Autonet",
                             RegionId = 1
                         },
@@ -589,7 +591,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/N1.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "N1",
                             RegionId = 1
                         },
@@ -600,7 +602,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/NarodHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Narod HR",
                             RegionId = 1
                         },
@@ -611,7 +613,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 6, 25, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Hrt.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "HRT",
                             RegionId = 1
                         },
@@ -622,7 +624,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 6, 28, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/StoPosto.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "100posto",
                             RegionId = 1
                         },
@@ -633,7 +635,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 11,
                             CreatedAt = new DateTime(2020, 6, 28, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Dnevno.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Dnevno.Hr",
                             RegionId = 1
                         },
@@ -644,7 +646,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 7, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/DirektnoHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Direktno",
                             RegionId = 1
                         },
@@ -655,7 +657,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 3,
                             CreatedAt = new DateTime(2020, 7, 13, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Scena.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Scena",
                             RegionId = 1
                         },
@@ -666,7 +668,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Nacional.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Nacional",
                             RegionId = 1
                         },
@@ -677,7 +679,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Express.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Express",
                             RegionId = 1
                         },
@@ -688,7 +690,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 9, 10, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/OtvorenoHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Otvoreno.hr",
                             RegionId = 1
                         },
@@ -699,7 +701,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 9, 10, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/GeoPolitika.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Geopolitika News",
                             RegionId = 1
                         },
@@ -710,7 +712,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 9, 10, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/PovijestHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Povijest.hr",
                             RegionId = 1
                         },
@@ -721,7 +723,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2020, 9, 10, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Dnevno7.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "7dnevno",
                             RegionId = 1
                         },
@@ -732,7 +734,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 2,
                             CreatedAt = new DateTime(2020, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/BasketballHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Basketball.hr",
                             RegionId = 1
                         },
@@ -743,7 +745,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 6,
                             CreatedAt = new DateTime(2020, 9, 21, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/JoomBoos.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "JoomBoos",
                             RegionId = 1
                         },
@@ -754,7 +756,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 9, 21, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/IctBusiness.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "ICT Business",
                             RegionId = 1
                         },
@@ -765,7 +767,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 9, 23, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Hcl.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "HCL Gaming Portal",
                             RegionId = 1
                         },
@@ -776,7 +778,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 7,
                             CreatedAt = new DateTime(2020, 9, 23, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/ProfitirajHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Profitiraj.hr",
                             RegionId = 1
                         },
@@ -787,7 +789,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 8,
                             CreatedAt = new DateTime(2020, 9, 24, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/MotoriHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "motori.hr",
                             RegionId = 1
                         },
@@ -798,7 +800,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 8,
                             CreatedAt = new DateTime(2020, 9, 24, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/AutoportalHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Autoportal.hr",
                             RegionId = 1
                         },
@@ -809,7 +811,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 8,
                             CreatedAt = new DateTime(2020, 9, 24, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/AutopressHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "AutopressHR",
                             RegionId = 1
                         },
@@ -831,7 +833,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 8,
                             CreatedAt = new DateTime(2020, 9, 24, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/AutoMotorSport.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "AUTO MOTOR I SPORT",
                             RegionId = 1
                         },
@@ -842,7 +844,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 2,
                             CreatedAt = new DateTime(2020, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Hoopster.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Hoopster.hr",
                             RegionId = 1
                         },
@@ -853,7 +855,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 2,
                             CreatedAt = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/PrvaHnl.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Hrvatski Telekom Prva liga",
                             RegionId = 1
                         },
@@ -875,7 +877,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/HifiMedia.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "hifimedia",
                             RegionId = 1
                         },
@@ -886,7 +888,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/GeekHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Geek.hr",
                             RegionId = 1
                         },
@@ -897,7 +899,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 9,
                             CreatedAt = new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/VizKultura.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "vizkultura.hr",
                             RegionId = 1
                         },
@@ -908,7 +910,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 9,
                             CreatedAt = new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/ZivotUmjetnosti.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Život umjetnosti",
                             RegionId = 1
                         },
@@ -919,7 +921,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 9,
                             CreatedAt = new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/SvijetKulture.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "SVIJET KULTURE",
                             RegionId = 1
                         },
@@ -930,7 +932,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 5,
                             CreatedAt = new DateTime(2020, 10, 10, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/GamerHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Gamer.hr",
                             RegionId = 1
                         },
@@ -941,7 +943,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2021, 1, 16, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/BitnoNet.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Bitno.net",
                             RegionId = 1
                         },
@@ -952,7 +954,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2021, 3, 7, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/MaxPortal.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Maxportal",
                             RegionId = 1
                         },
@@ -963,7 +965,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 7,
                             CreatedAt = new DateTime(2021, 3, 7, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/PoslovniDnevnik.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Poslovni dnevnik",
                             RegionId = 1
                         },
@@ -974,7 +976,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 8,
                             CreatedAt = new DateTime(2021, 3, 7, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Gp1.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "GP1",
                             RegionId = 1
                         },
@@ -985,7 +987,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 8,
                             CreatedAt = new DateTime(2021, 3, 7, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/F1PulsMedia.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "F1.pulsmedia.hr",
                             RegionId = 1
                         },
@@ -996,7 +998,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 5,
                             CreatedAt = new DateTime(2021, 3, 7, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Racunalo.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Racunalo.com",
                             RegionId = 1
                         },
@@ -1007,7 +1009,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 5,
                             CreatedAt = new DateTime(2021, 3, 7, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/MobHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "mob.hr",
                             RegionId = 1
                         },
@@ -1018,7 +1020,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2021, 3, 7, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/StartNews.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Startnews",
                             RegionId = 1
                         },
@@ -1029,7 +1031,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 6,
                             CreatedAt = new DateTime(2021, 4, 21, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Viral.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Viral.hr",
                             RegionId = 1
                         },
@@ -1040,7 +1042,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/DalmacijaDanas.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Dalmacija Danas",
                             RegionId = 2
                         },
@@ -1051,7 +1053,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/DalmacijaNews.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Dalmacija News",
                             RegionId = 2
                         },
@@ -1062,7 +1064,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/DalmatinskiPortal.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Dalmatinski Portal",
                             RegionId = 2
                         },
@@ -1073,7 +1075,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/DubrovackiDnevnik.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Dubrovački Dnevnik.hr",
                             RegionId = 2
                         },
@@ -1084,7 +1086,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/SlobodnaDalmacija_Dalmacija.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Slobodna Dalmacija - Dalmacija",
                             RegionId = 2
                         },
@@ -1095,7 +1097,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/SlobodnaDalmacija_Split.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Slobodna Dalmacija - Split",
                             RegionId = 2
                         },
@@ -1106,7 +1108,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/DubrovnikNet.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Dubrovniknet.hr",
                             RegionId = 2
                         },
@@ -1117,7 +1119,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/MakarskaDanas.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "MakarskaDanas",
                             RegionId = 2
                         },
@@ -1128,7 +1130,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/MakarskaHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Makarska",
                             RegionId = 2
                         },
@@ -1139,7 +1141,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/PortalOko.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Portaloko.hr",
                             RegionId = 2
                         },
@@ -1150,7 +1152,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/AntenaZadar.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Antena portal Zadar",
                             RegionId = 2
                         },
@@ -1161,7 +1163,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/RadioImotski.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Radio Imotski",
                             RegionId = 2
                         },
@@ -1172,7 +1174,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/ImotskeNovine.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Imotske Novine",
                             RegionId = 2
                         },
@@ -1183,7 +1185,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/PortalKastela.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Portal Grada Kaštela",
                             RegionId = 2
                         },
@@ -1194,7 +1196,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/HukNet.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Huknet",
                             RegionId = 2
                         },
@@ -1205,7 +1207,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/ZadarskiList.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Zadarski List",
                             RegionId = 2
                         },
@@ -1216,7 +1218,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2021, 1, 23, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/PloceOnline.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Ploče Online",
                             RegionId = 2
                         },
@@ -1227,7 +1229,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/NoviList.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Novi list",
                             RegionId = 3
                         },
@@ -1238,7 +1240,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Parentium.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Parentium",
                             RegionId = 3
                         },
@@ -1249,7 +1251,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/IVijesti.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "iVijesti",
                             RegionId = 3
                         },
@@ -1260,7 +1262,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/IstarskaZupanija.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Istarska Županija",
                             RegionId = 3
                         },
@@ -1271,7 +1273,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/IstraTerraMagica.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Istra Terra Magica",
                             RegionId = 3
                         },
@@ -1282,7 +1284,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/IPress.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "iPress",
                             RegionId = 3
                         },
@@ -1293,7 +1295,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/RijekaDanas.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Rijeka Danas",
                             RegionId = 3
                         },
@@ -1304,7 +1306,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Fiuman.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Fiuman",
                             RegionId = 3
                         },
@@ -1315,7 +1317,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Riportal.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Riportal",
                             RegionId = 3
                         },
@@ -1326,7 +1328,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/LikaKlub.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Lika Klub",
                             RegionId = 4
                         },
@@ -1337,7 +1339,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/LikaExpress.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Lika express",
                             RegionId = 4
                         },
@@ -1348,7 +1350,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/LikaOnline.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Lika Online",
                             RegionId = 4
                         },
@@ -1359,7 +1361,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/LikaPlus.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Lika plus",
                             RegionId = 4
                         },
@@ -1370,7 +1372,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/GsPress.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "GS Press",
                             RegionId = 4
                         },
@@ -1381,7 +1383,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 10, 17, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/OgPortal.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "OG Portal",
                             RegionId = 4
                         },
@@ -1392,7 +1394,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/IndexHrZagreb.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Index.Hr - Zagreb",
                             RegionId = 5
                         },
@@ -1403,7 +1405,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/ZagrebInfo.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Zagreb Info",
                             RegionId = 5
                         },
@@ -1414,7 +1416,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Zagrebancija.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Zagrebancija",
                             RegionId = 5
                         },
@@ -1425,7 +1427,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/ZagrebOnline.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Zagreb Online",
                             RegionId = 5
                         },
@@ -1436,7 +1438,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/ZagrebackiList.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Zagrebački List",
                             RegionId = 5
                         },
@@ -1447,7 +1449,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/ZgPortal.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "ZG portal",
                             RegionId = 5
                         },
@@ -1458,7 +1460,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/GradZagreb.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Grad Zagreb",
                             RegionId = 5
                         },
@@ -1469,7 +1471,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2021, 1, 23, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/KaPortalHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "KAportal.hr",
                             RegionId = 5
                         },
@@ -1480,7 +1482,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2021, 1, 23, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/RadioMreznica.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Radio Mrežnica",
                             RegionId = 5
                         },
@@ -1491,7 +1493,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/SjeverHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Sjever.hr",
                             RegionId = 6
                         },
@@ -1502,7 +1504,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/PrigorskiHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Prigorski.hr",
                             RegionId = 6
                         },
@@ -1513,7 +1515,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/PodravinaHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "ePodravina.hr",
                             RegionId = 6
                         },
@@ -1524,7 +1526,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/SisakInfo.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Sisak.Info",
                             RegionId = 6
                         },
@@ -1535,7 +1537,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/PlusRegionalniTjednik.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "7Plus Regionalni Tjednik",
                             RegionId = 6
                         },
@@ -1546,7 +1548,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/GlasPodravineIPrigorja.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Glas Podravine i Prigorja",
                             RegionId = 6
                         },
@@ -1557,7 +1559,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/MedimurjeInfo.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Međimurje Info",
                             RegionId = 6
                         },
@@ -1568,7 +1570,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/MedimurskeNovine.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Međimurske Novine",
                             RegionId = 6
                         },
@@ -1579,7 +1581,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/ZagorjeCom.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Zagorje.com",
                             RegionId = 6
                         },
@@ -1590,7 +1592,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/BaranjaInfo.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Baranja info",
                             RegionId = 7
                         },
@@ -1601,7 +1603,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/GlasSlavonije.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Glas Slavonije",
                             RegionId = 7
                         },
@@ -1612,7 +1614,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/SlavonskiHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Slavonski Hr",
                             RegionId = 7
                         },
@@ -1623,7 +1625,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/OsijekNews.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Osijek NEWS",
                             RegionId = 7
                         },
@@ -1634,7 +1636,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/InformativniCentarVirovitica.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Informativni Centar Virovitica",
                             RegionId = 7
                         },
@@ -1645,7 +1647,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/NovskaIn.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Novska.IN",
                             RegionId = 7
                         },
@@ -1656,7 +1658,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/NovostiHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Novosti.hr",
                             RegionId = 7
                         },
@@ -1667,7 +1669,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Portal53.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Portal53",
                             RegionId = 7
                         },
@@ -1678,7 +1680,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/SbPlusHr.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "SBplus.hr",
                             RegionId = 7
                         },
@@ -1689,7 +1691,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/PozeskaKronika.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Požeška Kronika",
                             RegionId = 7
                         },
@@ -1700,7 +1702,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Osijek031.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Osijek031",
                             RegionId = 7
                         },
@@ -1711,7 +1713,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2020, 10, 26, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Zupanjac.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "Županjac.net",
                             RegionId = 7
                         },
@@ -1722,7 +1724,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             CreatedAt = new DateTime(2021, 1, 16, 0, 0, 0, 0, DateTimeKind.Utc),
                             IconUrl = "Icons/Press032.png",
-                            IsEnabled = true,
+                            IsEnabled = false,
                             Name = "PRESS 032",
                             RegionId = 7
                         });
@@ -2775,7 +2777,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             Id = 113,
                             CategoryId = 12,
                             NewsPortalId = 67,
-                            RequestType = 2,
+                            RequestType = 1,
                             Url = "https://www.dubrovniknet.hr/feed"
                         },
                         new
@@ -2880,7 +2882,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             CategoryId = 12,
                             NewsPortalId = 61,
                             RequestType = 1,
-                            Url = "https://www.istra-istria.hr/en/articles/rss/novosti"
+                            Url = "http://www.istra-istria.hr/index.php?id=2415&type=100"
                         },
                         new
                         {
@@ -4014,329 +4016,225 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                         {
                             Id = 1,
                             OrderIndex = 1,
-                            ReplacementValue = "<notused>",
-                            RssFeedId = 5,
-                            SourceValue = "<description>"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            OrderIndex = 2,
-                            ReplacementValue = "</notused>",
-                            RssFeedId = 5,
-                            SourceValue = "</description>"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            OrderIndex = 3,
                             ReplacementValue = "<description>",
                             RssFeedId = 5,
                             SourceValue = "<content>"
                         },
                         new
                         {
-                            Id = 4,
-                            OrderIndex = 4,
+                            Id = 2,
+                            OrderIndex = 2,
                             ReplacementValue = "</description>",
                             RssFeedId = 5,
+                            SourceValue = "</content>"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            OrderIndex = 1,
+                            ReplacementValue = "<description>",
+                            RssFeedId = 3,
+                            SourceValue = "<content>"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            OrderIndex = 2,
+                            ReplacementValue = "</description>",
+                            RssFeedId = 3,
                             SourceValue = "</content>"
                         },
                         new
                         {
                             Id = 5,
                             OrderIndex = 1,
-                            ReplacementValue = "<notused>",
-                            RssFeedId = 3,
-                            SourceValue = "<description>"
+                            ReplacementValue = "<description>",
+                            RssFeedId = 4,
+                            SourceValue = "<content>"
                         },
                         new
                         {
                             Id = 6,
                             OrderIndex = 2,
-                            ReplacementValue = "</notused>",
-                            RssFeedId = 3,
-                            SourceValue = "</description>"
+                            ReplacementValue = "</description>",
+                            RssFeedId = 4,
+                            SourceValue = "</content>"
                         },
                         new
                         {
                             Id = 7,
-                            OrderIndex = 3,
+                            OrderIndex = 1,
                             ReplacementValue = "<description>",
-                            RssFeedId = 3,
+                            RssFeedId = 2,
                             SourceValue = "<content>"
                         },
                         new
                         {
                             Id = 8,
-                            OrderIndex = 4,
+                            OrderIndex = 2,
                             ReplacementValue = "</description>",
-                            RssFeedId = 3,
+                            RssFeedId = 2,
                             SourceValue = "</content>"
                         },
                         new
                         {
                             Id = 9,
                             OrderIndex = 1,
-                            ReplacementValue = "<notused>",
-                            RssFeedId = 4,
-                            SourceValue = "<description>"
+                            ReplacementValue = "<description>",
+                            RssFeedId = 1,
+                            SourceValue = "<content>"
                         },
                         new
                         {
                             Id = 10,
                             OrderIndex = 2,
-                            ReplacementValue = "</notused>",
-                            RssFeedId = 4,
-                            SourceValue = "</description>"
+                            ReplacementValue = "</description>",
+                            RssFeedId = 1,
+                            SourceValue = "</content>"
                         },
                         new
                         {
                             Id = 11,
-                            OrderIndex = 3,
+                            OrderIndex = 1,
                             ReplacementValue = "<description>",
-                            RssFeedId = 4,
+                            RssFeedId = 96,
                             SourceValue = "<content>"
                         },
                         new
                         {
                             Id = 12,
-                            OrderIndex = 4,
+                            OrderIndex = 2,
                             ReplacementValue = "</description>",
-                            RssFeedId = 4,
+                            RssFeedId = 96,
                             SourceValue = "</content>"
                         },
                         new
                         {
                             Id = 13,
                             OrderIndex = 1,
-                            ReplacementValue = "<notused>",
-                            RssFeedId = 2,
-                            SourceValue = "<description>"
+                            ReplacementValue = "<link>",
+                            RssFeedId = 70,
+                            SourceValue = "<thumb>"
                         },
                         new
                         {
                             Id = 14,
                             OrderIndex = 2,
-                            ReplacementValue = "</notused>",
-                            RssFeedId = 2,
-                            SourceValue = "</description>"
+                            ReplacementValue = "</link>",
+                            RssFeedId = 70,
+                            SourceValue = "</thumb>"
                         },
                         new
                         {
                             Id = 15,
-                            OrderIndex = 3,
-                            ReplacementValue = "<description>",
-                            RssFeedId = 2,
-                            SourceValue = "<content>"
+                            OrderIndex = 1,
+                            ReplacementValue = "<link>",
+                            RssFeedId = 69,
+                            SourceValue = "<thumb>"
                         },
                         new
                         {
                             Id = 16,
-                            OrderIndex = 4,
-                            ReplacementValue = "</description>",
-                            RssFeedId = 2,
-                            SourceValue = "</content>"
+                            OrderIndex = 2,
+                            ReplacementValue = "</link>",
+                            RssFeedId = 69,
+                            SourceValue = "</thumb>"
                         },
                         new
                         {
                             Id = 17,
                             OrderIndex = 1,
-                            ReplacementValue = "<description>",
-                            RssFeedId = 1,
-                            SourceValue = "<content>"
+                            ReplacementValue = "<link>",
+                            RssFeedId = 68,
+                            SourceValue = "<thumb>"
                         },
                         new
                         {
                             Id = 18,
                             OrderIndex = 2,
-                            ReplacementValue = "</description>",
-                            RssFeedId = 1,
-                            SourceValue = "</content>"
+                            ReplacementValue = "</link>",
+                            RssFeedId = 68,
+                            SourceValue = "</thumb>"
                         },
                         new
                         {
                             Id = 19,
-                            OrderIndex = 3,
-                            ReplacementValue = "<description>",
-                            RssFeedId = 1,
-                            SourceValue = "<content>"
+                            OrderIndex = 1,
+                            ReplacementValue = "<link>",
+                            RssFeedId = 67,
+                            SourceValue = "<thumb>"
                         },
                         new
                         {
                             Id = 20,
-                            OrderIndex = 4,
-                            ReplacementValue = "</description>",
-                            RssFeedId = 1,
-                            SourceValue = "</content>"
+                            OrderIndex = 2,
+                            ReplacementValue = "</link>",
+                            RssFeedId = 67,
+                            SourceValue = "</thumb>"
                         },
                         new
                         {
                             Id = 21,
                             OrderIndex = 1,
-                            ReplacementValue = "<description>",
-                            RssFeedId = 96,
-                            SourceValue = "<content>"
+                            ReplacementValue = "<notused>",
+                            RssFeedId = 57,
+                            SourceValue = "<description>"
                         },
                         new
                         {
                             Id = 22,
                             OrderIndex = 2,
-                            ReplacementValue = "</description>",
-                            RssFeedId = 96,
-                            SourceValue = "</content>"
+                            ReplacementValue = "</notused>",
+                            RssFeedId = 57,
+                            SourceValue = "</description>"
                         },
                         new
                         {
                             Id = 23,
                             OrderIndex = 3,
                             ReplacementValue = "<description>",
-                            RssFeedId = 96,
-                            SourceValue = "<content>"
+                            RssFeedId = 57,
+                            SourceValue = "<content:encoded>"
                         },
                         new
                         {
                             Id = 24,
                             OrderIndex = 4,
                             ReplacementValue = "</description>",
-                            RssFeedId = 96,
-                            SourceValue = "</content>"
+                            RssFeedId = 57,
+                            SourceValue = "</content:encoded>"
                         },
                         new
                         {
                             Id = 25,
                             OrderIndex = 1,
-                            ReplacementValue = "<link>",
-                            RssFeedId = 70,
-                            SourceValue = "<thumb>"
+                            ReplacementValue = "<notused>",
+                            RssFeedId = 176,
+                            SourceValue = "<description>"
                         },
                         new
                         {
                             Id = 26,
                             OrderIndex = 2,
-                            ReplacementValue = "</link>",
-                            RssFeedId = 70,
-                            SourceValue = "</thumb>"
+                            ReplacementValue = "</notused>",
+                            RssFeedId = 176,
+                            SourceValue = "</description>"
                         },
                         new
                         {
                             Id = 27,
-                            OrderIndex = 1,
-                            ReplacementValue = "<link>",
-                            RssFeedId = 69,
-                            SourceValue = "<thumb>"
+                            OrderIndex = 3,
+                            ReplacementValue = "<description>",
+                            RssFeedId = 176,
+                            SourceValue = "<content:encoded>"
                         },
                         new
                         {
                             Id = 28,
-                            OrderIndex = 2,
-                            ReplacementValue = "</link>",
-                            RssFeedId = 69,
-                            SourceValue = "</thumb>"
-                        },
-                        new
-                        {
-                            Id = 29,
-                            OrderIndex = 1,
-                            ReplacementValue = "<link>",
-                            RssFeedId = 68,
-                            SourceValue = "<thumb>"
-                        },
-                        new
-                        {
-                            Id = 30,
-                            OrderIndex = 2,
-                            ReplacementValue = "</link>",
-                            RssFeedId = 68,
-                            SourceValue = "</thumb>"
-                        },
-                        new
-                        {
-                            Id = 31,
-                            OrderIndex = 1,
-                            ReplacementValue = "<link>",
-                            RssFeedId = 67,
-                            SourceValue = "<thumb>"
-                        },
-                        new
-                        {
-                            Id = 32,
-                            OrderIndex = 2,
-                            ReplacementValue = "</link>",
-                            RssFeedId = 67,
-                            SourceValue = "</thumb>"
-                        },
-                        new
-                        {
-                            Id = 33,
-                            OrderIndex = 1,
-                            ReplacementValue = "<notused>",
-                            RssFeedId = 57,
-                            SourceValue = "<description>"
-                        },
-                        new
-                        {
-                            Id = 34,
-                            OrderIndex = 2,
-                            ReplacementValue = "</notused>",
-                            RssFeedId = 57,
-                            SourceValue = "</description>"
-                        },
-                        new
-                        {
-                            Id = 35,
-                            OrderIndex = 3,
-                            ReplacementValue = "<description>",
-                            RssFeedId = 57,
-                            SourceValue = "<content:encoded>"
-                        },
-                        new
-                        {
-                            Id = 36,
-                            OrderIndex = 4,
-                            ReplacementValue = "</description>",
-                            RssFeedId = 57,
-                            SourceValue = "</content:encoded>"
-                        },
-                        new
-                        {
-                            Id = 37,
-                            OrderIndex = 1,
-                            ReplacementValue = "<notused>",
-                            RssFeedId = 176,
-                            SourceValue = "<description>"
-                        },
-                        new
-                        {
-                            Id = 38,
-                            OrderIndex = 2,
-                            ReplacementValue = "</notused>",
-                            RssFeedId = 176,
-                            SourceValue = "</description>"
-                        },
-                        new
-                        {
-                            Id = 39,
-                            OrderIndex = 3,
-                            ReplacementValue = "<description>",
-                            RssFeedId = 176,
-                            SourceValue = "<content:encoded>"
-                        },
-                        new
-                        {
-                            Id = 40,
                             OrderIndex = 4,
                             ReplacementValue = "</description>",
                             RssFeedId = 176,
                             SourceValue = "</content:encoded>"
-                        },
-                        new
-                        {
-                            Id = 41,
-                            OrderIndex = 1,
-                            ReplacementValue = "",
-                            RssFeedId = 63,
-                            SourceValue = "\n"
                         });
                 });
 

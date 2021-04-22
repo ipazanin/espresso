@@ -7,6 +7,15 @@ namespace Espresso.Domain.Entities
 {
     public class ApplicationDownload : IEntity<int, ApplicationDownload>
     {
+
+        #region Constants
+
+        public const int WebApiVersionMaxLenght = 10;
+
+        public const int MobileAppVersionMaxLenght = 20;
+
+        #endregion
+
         #region Properties
         public int Id { get; private set; }
 

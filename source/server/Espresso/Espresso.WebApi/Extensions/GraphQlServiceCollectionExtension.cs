@@ -45,7 +45,6 @@ namespace Espresso.WebApi.Extensions
             services.AddScoped<ISchema, GraphQlSchema>();
             services.AddScoped<IDocumentExecuter, DocumentExecuter>();
             services.AddScoped<IDocumentWriter, DocumentWriter>();
-
             services.AddScoped<RootGraphQlQuery>();
             services.AddScoped<RootGraphQlMutation>();
 

@@ -72,8 +72,8 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
 
             var response = new UpdateInMemoryArticlesCommandResponse
             {
-                NumberOfUpdatedArticles = request.CreatedArticles.Count(),
-                NumberOfCreatedArticles = request.UpdatedArticles.Count()
+                NumberOfUpdatedArticles = request.UpdatedArticles.Count(),
+                NumberOfCreatedArticles = request.CreatedArticles.Count()
             };
 
             return Task.FromResult(response);

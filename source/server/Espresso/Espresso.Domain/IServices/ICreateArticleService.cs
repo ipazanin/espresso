@@ -9,8 +9,9 @@ namespace Espresso.Domain.IServices
 {
     public interface ICreateArticleService
     {
-        public Task<(Article? article, bool isValid)> CreateArticleAsync(
-            RssFeedItem rssFeedItem,
+
+        public Task<IEnumerable<Article>> CreateArticlesFromRssFeedItems(
+            IEnumerable<RssFeedItem> rssFeedItems,
             IEnumerable<Category> categories,
             CancellationToken cancellationToken
         );

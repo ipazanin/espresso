@@ -10,10 +10,10 @@ namespace Espresso.Persistence.Configuration
         public void Configure(EntityTypeBuilder<ApplicationDownload> builder)
         {
             builder.Property(applicationDownload => applicationDownload.WebApiVersion)
-                .HasMaxLength(PropertyConstraintConstants.ApplicationDownloadWebApiVersionHasMaxLenght);
+                .HasMaxLength(ApplicationDownload.WebApiVersionMaxLenght);
 
             builder.Property(applicationDownload => applicationDownload.MobileAppVersion)
-                .HasMaxLength(PropertyConstraintConstants.ApplicationDownloadMobileAppVersionHasMaxLenght);
+                .HasMaxLength(ApplicationDownload.MobileAppVersionMaxLenght);
 
             builder.Property(applicationDownload => applicationDownload.MobileDeviceType);
 

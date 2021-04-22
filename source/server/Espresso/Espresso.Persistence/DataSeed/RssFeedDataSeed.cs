@@ -81,7 +81,13 @@ namespace Espresso.Persistence.DataSeed
 
                 new RssFeed((int)RssFeedId.Gol_Sport, "https://gol.dnevnik.hr/assets/feed/articles", (int)NewsPortalId.Gol, (int)CategoryId.Sport, requestType: RequestType.Normal),
 
-                new RssFeed((int)RssFeedId.RtlVijesti_Sport, "https://sportnet.rtl.hr/rss/", (int)NewsPortalId.RtlVijesti, (int)CategoryId.Sport, requestType: RequestType.Normal),
+                new RssFeed(
+                    id: (int)RssFeedId.RtlVijesti_Sport,
+                    url: "https://sportnet.rtl.hr/rss/",
+                    newsPortalId: (int)NewsPortalId.RtlVijesti,
+                    categoryId: (int)CategoryId.Sport,
+                    requestType: RequestType.Browser
+                ),
 
                 new RssFeed((int)RssFeedId.NogometPlus_Nogomet, "http://www.nogometplus.net/index.php/feed/", (int)NewsPortalId.NogometPlus, (int)CategoryId.Sport, requestType: RequestType.Normal),
 
@@ -372,7 +378,7 @@ namespace Espresso.Persistence.DataSeed
                     url: "http://prvahnl.hr/rss",
                     newsPortalId: (int)NewsPortalId.PrvaHnl,
                     categoryId: (int)CategoryId.Sport,
-                    requestType: RequestType.Normal
+                    requestType: RequestType.Browser
                 ),
 
                 new RssFeed(
@@ -484,6 +490,13 @@ namespace Espresso.Persistence.DataSeed
                     url: "https://www.startnews.hr/feeds/latest",
                     newsPortalId: (int)NewsPortalId.StartNews,
                     categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Normal
+                ),
+                new RssFeed(
+                    id: (int)RssFeedId.Viral,
+                    url: "https://viral.hr/feed",
+                    newsPortalId: (int)NewsPortalId.Viral,
+                    categoryId: (int)CategoryId.Viral,
                     requestType: RequestType.Normal
                 ),
             };

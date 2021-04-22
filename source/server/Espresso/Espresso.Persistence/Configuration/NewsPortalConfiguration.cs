@@ -1,5 +1,4 @@
-﻿using Espresso.Common.Constants;
-using Espresso.Domain.Entities;
+﻿using Espresso.Domain.Entities;
 using Espresso.Persistence.DataSeed;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,13 +10,16 @@ namespace Espresso.Persistence.Configuration
         public void Configure(EntityTypeBuilder<NewsPortal> builder)
         {
             builder.Property(newsPortal => newsPortal.Name)
-                .HasMaxLength(PropertyConstraintConstants.NEWSPORTAL_NAME_HASMAXLENGHT);
+                .HasMaxLength(NewsPortal.NameMaxLength);
 
             builder.Property(newsPortal => newsPortal.BaseUrl)
-                .HasMaxLength(PropertyConstraintConstants.NEWSPORTAL_BASEURL_HASMAXLENGHT);
+                .HasMaxLength(NewsPortal.BaseUrlMaxLength);
 
             builder.Property(newsPortal => newsPortal.IconUrl)
-                .HasMaxLength(PropertyConstraintConstants.NEWSPORTAL_ICONURL_HASMAXLENGHT);
+                .HasMaxLength(NewsPortal.IconUrlMaxlength);
+
+            builder.Property(newsPortal => newsPortal.IsEnabled)
+                .HasDefaultValue(NewsPortal.IsEnabledDefaultValue);
 
             builder.HasMany(newsPortal => newsPortal.RssFeeds)
                 .WithOne(rssFeed => rssFeed.NewsPortal!)

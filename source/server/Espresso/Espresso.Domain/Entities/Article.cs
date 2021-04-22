@@ -169,34 +169,41 @@ namespace Espresso.Domain.Entities
         public (
             bool isSaved,
             IEnumerable<ArticleCategory> articleCategoriesToCreate,
-            IEnumerable<ArticleCategory> articleCategoriesToDelete
+            IEnumerable<ArticleCategory> articleCategoriesToDelete,
+            IEnumerable<string> modifiedProperties
         ) Update(Article other)
         {
             var shouldUpdate = false;
+            var modifiedProperties = new List<string>();
             if (!Url.Equals(other.Url))
             {
                 Url = other.Url;
                 shouldUpdate = true;
+                modifiedProperties.Add(nameof(Url));
             }
             if (!WebUrl.Equals(other.WebUrl))
             {
                 WebUrl = other.WebUrl;
                 shouldUpdate = true;
+                modifiedProperties.Add(nameof(WebUrl));
             }
             if (!Summary.Equals(other.Summary))
             {
                 Summary = other.Summary;
                 shouldUpdate = true;
+                modifiedProperties.Add(nameof(Summary));
             }
             if (!Title.Equals(other.Title))
             {
                 Title = other.Title;
                 shouldUpdate = true;
+                modifiedProperties.Add(nameof(Title));
             }
             if (!(ImageUrl is null ? other.ImageUrl is null : ImageUrl.Equals(other.ImageUrl)))
             {
                 ImageUrl = other.ImageUrl;
                 shouldUpdate = true;
+                modifiedProperties.Add(nameof(ImageUrl));
             }
 
             var articleCategoriesToDelete = new List<ArticleCategory>();
@@ -247,7 +254,7 @@ namespace Espresso.Domain.Entities
             }
 
 
-            return (shouldUpdate, articleCategoriesToCreate, articleCategoriesToDelete);
+            return (shouldUpdate, articleCategoriesToCreate, articleCategoriesToDelete, modifiedProperties);
         }
 
         public void UpdateNewsPortalAndArticlecategories(

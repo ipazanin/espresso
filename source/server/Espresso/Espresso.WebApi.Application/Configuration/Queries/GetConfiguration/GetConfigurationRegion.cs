@@ -34,6 +34,7 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
                 Subtitle = region.Subtitle,
                 NewsPortals = region
                     .NewsPortals
+                    .Where(newsPortal => newsPortal.IsEnabled)
                     .Select(
                         GetConfigurationNewsPortal
                             .GetProjection(maxAgeOfNewNewsPortal)

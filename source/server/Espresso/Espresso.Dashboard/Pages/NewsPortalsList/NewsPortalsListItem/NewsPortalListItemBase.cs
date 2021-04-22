@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Espresso.Dashboard.Application.NewsPortals.GetNewsPortals;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace Espresso.Dashboard.Pages.NewsPortalsList.NewsPortalsListItem
 {
@@ -19,7 +20,7 @@ namespace Espresso.Dashboard.Pages.NewsPortalsList.NewsPortalsListItem
         #endregion Properties
 
         #region Methods
-        public async Task DeleteButtonClickHandler()
+        public async Task DeleteButtonClickHandler(MouseEventArgs _)
         {
             var task = DeleteNewsPortalHandler?.Invoke(NewsPortal.Id);
             if (task is not null)
@@ -28,7 +29,7 @@ namespace Espresso.Dashboard.Pages.NewsPortalsList.NewsPortalsListItem
             }
         }
 
-        public void DetailsButtonClickHandler()
+        public void DetailsButtonClickHandler(MouseEventArgs _)
         {
             OpenNewsPortalDetailsHandler?.Invoke(NewsPortal.Id);
         }

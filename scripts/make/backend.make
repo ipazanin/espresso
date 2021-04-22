@@ -88,7 +88,6 @@ migration-remove-espresso-database::
 	dotnet ef migrations remove \
     --project $(PersistenceProjectPath) \
     --context $(EspressoDatabaseContextName) \
-    --output-dir $(EspressoDatabaseMigrationsFolder) \
     --configuration $(DefaultConfiguration) \
 	--verbose \
     -- $(EspressoDatabaseConnectionString)

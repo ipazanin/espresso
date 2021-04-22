@@ -194,14 +194,14 @@ namespace Espresso.Persistence.DataSeed
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.ProfitirajHr,
-                NumberOfSkips = 11,
+                NumberOfSkips = 5,
                 CurrentSkip = 0
             });
 
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.MotoriHr,
-                NumberOfSkips = 17,
+                NumberOfSkips = 6,
                 CurrentSkip = 0
             });
 
@@ -229,14 +229,14 @@ namespace Espresso.Persistence.DataSeed
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.AutoMotorSport,
-                NumberOfSkips = 17,
+                NumberOfSkips = 8,
                 CurrentSkip = 0
             });
 
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Hoopster,
-                NumberOfSkips = 19,
+                NumberOfSkips = 7,
                 CurrentSkip = 0
             });
 
@@ -271,7 +271,7 @@ namespace Espresso.Persistence.DataSeed
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.ZivotUmjetnosti,
-                NumberOfSkips = 27,
+                NumberOfSkips = 6,
                 CurrentSkip = 0
             });
 
@@ -285,20 +285,20 @@ namespace Espresso.Persistence.DataSeed
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.GamerHr,
-                NumberOfSkips = 31,
+                NumberOfSkips = 5,
                 CurrentSkip = 0
             });
 
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.BitnoNet,
-                NumberOfSkips = 12,
+                NumberOfSkips = 5,
                 CurrentSkip = 0
             });
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.MaxPortal,
-                NumberOfSkips = 11,
+                NumberOfSkips = 3,
                 CurrentSkip = 0
             });
             skipParseConfigurationBuilder.HasData(new
@@ -310,7 +310,7 @@ namespace Espresso.Persistence.DataSeed
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Gp1,
-                NumberOfSkips = 11,
+                NumberOfSkips = 6,
                 CurrentSkip = 0
             });
             skipParseConfigurationBuilder.HasData(new
@@ -322,19 +322,25 @@ namespace Espresso.Persistence.DataSeed
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Racunalo,
-                NumberOfSkips = 11,
+                NumberOfSkips = 5,
                 CurrentSkip = 0
             });
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.MobHr,
-                NumberOfSkips = 15,
+                NumberOfSkips = 9,
                 CurrentSkip = 0
             });
             skipParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.StartNews,
-                NumberOfSkips = 21,
+                NumberOfSkips = 7,
+                CurrentSkip = 0
+            });
+            skipParseConfigurationBuilder.HasData(new
+            {
+                RssFeedId = (int)RssFeedId.Viral,
+                NumberOfSkips = 3,
                 CurrentSkip = 0
             });
         }

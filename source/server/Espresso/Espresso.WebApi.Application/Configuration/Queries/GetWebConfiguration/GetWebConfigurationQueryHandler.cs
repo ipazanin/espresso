@@ -55,7 +55,7 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetWebConfiguration
             }
 
             var newsPortalIds = newsPortals
-                .Where(newsPortal => !newsPortal.CategoryId.Equals((int)CategoryId.Local))
+                .Where(newsPortal => !newsPortal.CategoryId.Equals((int)CategoryId.Local) && newsPortal.IsEnabled)
                 .Select(newsPortal => newsPortal.Id);
 
             var response = new GetWebConfigurationQueryResponse

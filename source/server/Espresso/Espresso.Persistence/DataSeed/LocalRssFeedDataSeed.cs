@@ -74,7 +74,7 @@ namespace Espresso.Persistence.DataSeed
                     url: "https://www.dubrovniknet.hr/feed",
                     newsPortalId: (int)NewsPortalId.DubrovnikNet,
                     categoryId: (int)CategoryId.Local,
-                    requestType: RequestType.Normal
+                    requestType: RequestType.Browser
                 ),
                 new RssFeed(
                     id: (int)RssFeedId.MakarskaDanas,
@@ -163,7 +163,7 @@ namespace Espresso.Persistence.DataSeed
                 ),
                 new RssFeed(
                     id: (int)RssFeedId.IstarskaZupanija,
-                    url: "http://www.istra-istria.hr/index.php?id=2415&type=100",
+                    url: "https://www.istra-istria.hr/en/articles/rss/novosti",
                     newsPortalId: (int)NewsPortalId.IstarskaZupanija,
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal

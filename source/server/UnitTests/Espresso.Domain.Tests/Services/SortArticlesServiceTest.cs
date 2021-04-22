@@ -56,13 +56,16 @@ namespace Espresso.Domain.Tests.Services
             #endregion Arrange
 
             #region Act
-            var (_, actualUpdateArticles, _, _) = sortArticlesService.SortArticles(
+            var (_, actualUpdateArticlesWithModifiedProperties, _, _) = sortArticlesService.SortArticles(
                 articles: articles,
                 savedArticles: savedArticles
             );
             #endregion Act
 
             #region Assert
+
+            var actualUpdateArticles = actualUpdateArticlesWithModifiedProperties.Select(aricleWithProperties => aricleWithProperties.article);
+
             Assert.Equal(
                 expected: expectedUpdateArticles,
                 actual: actualUpdateArticles

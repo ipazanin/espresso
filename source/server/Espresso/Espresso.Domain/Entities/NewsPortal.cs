@@ -8,7 +8,21 @@ namespace Espresso.Domain.Entities
 {
     public class NewsPortal : IEntity<int, NewsPortal>
     {
+
+        #region Constants
+
+        public const bool IsEnabledDefaultValue = true;
+
+        public const int NameMaxLength = 100;
+
+        public const int BaseUrlMaxLength = 100;
+
+        public const int IconUrlMaxlength = 100;
+
+        #endregion
+
         #region Properties
+
         public int Id { get; private set; }
 
         public string Name { get; set; }
@@ -21,6 +35,11 @@ namespace Espresso.Domain.Entities
 
         public DateTime CreatedAt { get; private set; }
 
+        /// <summary>
+        /// Allows news portal to be saved in database but not used in application
+        /// </summary>
+        public bool IsEnabled { get; private set; }
+
         public int RegionId { get; private set; }
 
         public Region? Region { get; private set; }
@@ -32,13 +51,15 @@ namespace Espresso.Domain.Entities
         public ICollection<RssFeed> RssFeeds { get; private set; } = new List<RssFeed>();
 
         public ICollection<Article> Articles { get; private set; } = new List<Article>();
+
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// ORM Constructor
         /// </summary>
-        public NewsPortal()
+        private NewsPortal()
         {
             Name = null!;
             BaseUrl = null!;
@@ -53,7 +74,8 @@ namespace Espresso.Domain.Entities
             bool? isNewOverride,
             DateTime createdAt,
             int categoryId,
-            int regionId
+            int regionId,
+            bool isEnabled
         )
         {
             Id = id;
@@ -64,10 +86,13 @@ namespace Espresso.Domain.Entities
             CreatedAt = createdAt;
             CategoryId = categoryId;
             RegionId = regionId;
+            IsEnabled = isEnabled;
         }
+
         #endregion
 
         #region Methods        
+
         public static Expression<Func<NewsPortal, bool>> GetCategorySugestedNewsPortalsPredicate(
             IEnumerable<int>? newsPortalIds,
             int categoryId,
@@ -105,6 +130,7 @@ namespace Espresso.Domain.Entities
                     newsPortal.CreatedAt > newNewsPortalMinDate
                 );
         }
+
         #endregion
     }
 }
