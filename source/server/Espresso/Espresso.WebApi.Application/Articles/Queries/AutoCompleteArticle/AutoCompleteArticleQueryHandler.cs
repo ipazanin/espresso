@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
-using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Utilities;
 using MediatR;

@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace Espresso.Application.DataTransferObjects.PagingDataTransferObjects
 {
     /// <summary>

@@ -35,8 +35,6 @@ namespace Espresso.Domain.Entities
         /// <summary>
         /// ORM Constructor
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="urlRegex"></param>
         public RssFeedCategory()
         {
             UrlRegex = null!;

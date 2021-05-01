@@ -1,54 +1,54 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
+using Espresso.Common.Constants;
 using Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles;
 using Espresso.WebApi.Application.Notifications.Commands.SendArticlesNotifications;
 using Espresso.WebApi.Application.Notifications.Commands.SendPushNotification;
 using Espresso.WebApi.Application.Notifications.Queries.GetPushNotifications;
-using Espresso.Common.Constants;
 using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
+using Espresso.WebApi.DataTransferObjects;
 using Espresso.WebApi.Infrastructure;
+using Espresso.WebApi.RequestData.Body;
+using Espresso.WebApi.RequestData.Header;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Espresso.WebApi.DataTransferObjects;
-using Espresso.WebApi.RequestData.Header;
-using Espresso.WebApi.RequestData.Body;
-using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 
 namespace Espresso.WebApi.Controllers
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class NotificationsController : ApiController
     {
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>
         public NotificationsController(
             ISender sender,
             IWebApiConfiguration webApiConfiguration
-        ) : base(sender, webApiConfiguration)
+        )
+            : base(sender, webApiConfiguration)
         {
         }
 
         /// <summary>
-        /// Sends notification to mobile app about new articles
+        /// Sends notification to mobile app about new articles.
         /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="articlesRequest"></param>
-        /// <returns>Response object containing app configuration</returns>
-        /// <response code="200">Response object containing app configuration</response>
-        /// <response code="400">If validation fails</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="basicInformationsHeaderParameters"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Response object containing app configuration.</returns>
+        /// <response code="200">Response object containing app configuration.</response>
+        /// <response code="400">If validation fails.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -93,19 +93,18 @@ namespace Espresso.WebApi.Controllers
             return Ok();
         }
 
-
         /// <summary>
-        /// Sends Push notification to mobile apps
+        /// Sends Push notification to mobile apps.
         /// </summary>
-        /// <param name="cancellationToken"></param>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="sendPushNotificationRequestBody"></param>
-        /// <returns>OK</returns>
-        /// <response code="200">Response object containing app configuration</response>
-        /// <response code="400">If Request body is invalid</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="cancellationToken"></param>
+        /// <returns>OK.</returns>
+        /// <response code="200">Response object containing app configuration.</response>
+        /// <response code="400">If Request body is invalid.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -127,11 +126,11 @@ namespace Espresso.WebApi.Controllers
                 request: new SendPushNotificationCommand
                 {
                     ArticleId = sendPushNotificationRequestBody.ArticleId,
-                    InternalName = sendPushNotificationRequestBody.InternalName ?? "",
-                    Title = sendPushNotificationRequestBody.Title ?? "",
-                    Message = sendPushNotificationRequestBody.Message ?? "",
-                    Topic = sendPushNotificationRequestBody.Topic ?? "",
-                    ArticleUrl = sendPushNotificationRequestBody.ArticleUrl ?? "",
+                    InternalName = sendPushNotificationRequestBody.InternalName ?? string.Empty,
+                    Title = sendPushNotificationRequestBody.Title ?? string.Empty,
+                    Message = sendPushNotificationRequestBody.Message ?? string.Empty,
+                    Topic = sendPushNotificationRequestBody.Topic ?? string.Empty,
+                    ArticleUrl = sendPushNotificationRequestBody.ArticleUrl ?? string.Empty,
                     IsSoundEnabled = sendPushNotificationRequestBody.IsSoundEnabled,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
@@ -144,18 +143,18 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Get Push notifications
+        /// Get Push notifications.
         /// </summary>
-        /// <param name="cancellationToken"></param>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="take"></param>
         /// <param name="skip"></param>
-        /// <returns>Response object containing push notifications</returns>
-        /// <response code="200">Response object containing app configuration</response>
-        /// <response code="400">If Request body is invalid</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Response object containing push notifications.</returns>
+        /// <response code="200">Response object containing app configuration.</response>
+        /// <response code="400">If Request body is invalid.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]

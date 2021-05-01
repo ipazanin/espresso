@@ -23,7 +23,7 @@ FROM dotnet-builder AS dotnet-publisher
 RUN dotnet publish "Espresso.WebApi.csproj" -c Release -o /app/server/publish
 
 # Client App
-FROM node AS client-builder
+FROM node:14 AS client-builder
 ARG REACT_APP_ENVIRONMENT
 
 # set working directory
@@ -35,7 +35,7 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 # install and cache app dependencies
 COPY client/package.json /usr/src/app/package.json
-RUN npm install --force
+RUN npm install
 
 # Copy rest of Client Application files
 COPY client/. /usr/src/app

@@ -14,7 +14,6 @@ using Espresso.Domain.ValueObjects.ArticleValueObjects;
 using Espresso.Dashboard.Application.IServices;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
-using Espresso.Domain.Enums.NewsPortalEnums;
 using System.Collections.Concurrent;
 
 namespace Espresso.Dashboard.Application.Services

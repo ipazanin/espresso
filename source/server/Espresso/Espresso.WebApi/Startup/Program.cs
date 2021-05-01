@@ -7,12 +7,12 @@ using Microsoft.Extensions.Hosting;
 namespace Espresso.WebApi.Startup
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
-    internal sealed class Program
+    internal static class Program
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="args"></param>
         public static void Main(string[] args)
@@ -21,18 +21,17 @@ namespace Espresso.WebApi.Startup
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="args"></param>
-        /// <returns></returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(configureOptions =>
                 {
-                    var environmentName = Environment.GetEnvironmentVariable(EnvironmentVariableNamesConstants.AspNetCoreEnvironment) ?? "";
-                    var databaseName = Environment.GetEnvironmentVariable(EnvironmentVariableNamesConstants.DatabaseName) ?? "";
+                    var environmentName = Environment.GetEnvironmentVariable(EnvironmentVariableNamesConstants.AspNetCoreEnvironment) ?? string.Empty;
+                    var databaseName = Environment.GetEnvironmentVariable(EnvironmentVariableNamesConstants.DatabaseName) ?? string.Empty;
 
-                    var configuration = configureOptions
+                    _ = configureOptions
                         .AddJsonFile(path: $"AppSettings/GeneralSettings/app-settings.json", optional: false)
                         .AddJsonFile(path: $"AppSettings/GeneralSettings/app-settings.{environmentName}.json", optional: false)
                         .AddJsonFile(path: $"AppSettings/LoggingSettings/logging-settings.json", optional: false)
@@ -42,9 +41,6 @@ namespace Espresso.WebApi.Startup
                         .AddEnvironmentVariables()
                         .Build();
                 })
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
     }
 }

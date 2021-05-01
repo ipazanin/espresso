@@ -1,9 +1,8 @@
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Application.Infrastructure.BackgroundJobsInfrastructure;
-using Espresso.Application.Services.Contracts;
 using Espresso.Common.Enums;
 using Espresso.Common.Services.Contracts;
 using Espresso.Domain.IServices;
@@ -18,23 +17,21 @@ using RabbitMQ.Client.Events;
 namespace Espresso.WebApi.Services
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class ReceiveArticlesBackgroundJob : BackgroundJob<ReceiveArticlesBackgroundJob>
     {
         #region Fields
         private readonly IWebApiConfiguration _webApiConfiguration;
         private readonly IJsonService _jsonService;
-        private readonly string _hostName;
         private readonly string _queueName;
-        private readonly IConnection _connection;
         private readonly IModel _channel;
         private readonly EventingBasicConsumer _consumer;
         #endregion
 
         #region Constructors
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="serviceScopeFactory"></param>
         /// <param name="webApiConfiguration"></param>
@@ -53,23 +50,23 @@ namespace Espresso.WebApi.Services
             int port,
             string userName,
             string password
-        ) : base(serviceScopeFactory: serviceScopeFactory)
+        )
+            : base(serviceScopeFactory: serviceScopeFactory)
         {
             _webApiConfiguration = webApiConfiguration;
             _jsonService = jsonService;
-            _hostName = hostName;
             _queueName = queueName;
 
             var factory = new ConnectionFactory()
             {
-                HostName = _hostName,
+                HostName = hostName,
                 Port = port,
                 UserName = userName,
-                Password = password
+                Password = password,
             };
 
-            _connection = factory.CreateConnection();
-            _channel = _connection.CreateModel();
+            var connection = factory.CreateConnection();
+            _channel = connection.CreateModel();
 
             _channel.QueueDeclare(
                 queue: queueName,
@@ -85,12 +82,12 @@ namespace Espresso.WebApi.Services
 
         #region Methods
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public override Task DoWork(CancellationToken cancellationToken)
         {
+#pragma warning disable AsyncFixer03 // Fire-and-forget async-void methods or delegates
             _consumer.Received += async (model, basicDeliveryArguments) =>
             {
                 var body = basicDeliveryArguments.Body.ToArray();
@@ -126,8 +123,8 @@ namespace Espresso.WebApi.Services
                         _channel.BasicNack(deliveryTag: basicDeliveryArguments.DeliveryTag, multiple: false, requeue: true);
                     }
                 }
-
             };
+#pragma warning restore AsyncFixer03 // Fire-and-forget async-void methods or delegates
 
             _channel.BasicConsume(
                 queue: _queueName,

@@ -1,6 +1,6 @@
 ﻿using System;
-using Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles;
 using Espresso.Common.Constants;
+using Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetTrendingArticlesTypes;
 using Espresso.WebApi.GraphQl.Infrastructure;
@@ -30,12 +30,12 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                         new QueryArgument<NonNullGraphType<IntGraphType>>
                         {
                             Name = "take",
-                            DefaultValue = DefaultValueConstants.DefaultTake
+                            DefaultValue = DefaultValueConstants.DefaultTake,
                         },
                         new QueryArgument<NonNullGraphType<IntGraphType>>
                         {
                             Name = "skip",
-                            DefaultValue = DefaultValueConstants.DefaultSkip
+                            DefaultValue = DefaultValueConstants.DefaultSkip,
                         },
                         new QueryArgument<StringGraphType>
                         {

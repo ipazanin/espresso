@@ -13,16 +13,15 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 namespace Espresso.WebApi.Extensions
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static class SwaggerServiceCollectionExtensions
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        /// <returns></returns>
         public static IServiceCollection AddSwaggerServices(this IServiceCollection services, IWebApiConfiguration configuration)
         {
             services.AddSwaggerGen(options => ConfigureSwagger(options, configuration));
@@ -51,15 +50,6 @@ namespace Espresso.WebApi.Extensions
 
             options.DocInclusionPredicate((version, desc) =>
             {
-                var basicInformationHeaders = desc.ParameterDescriptions
-                    .FirstOrDefault(
-                        parameterDescription => parameterDescription.Name
-                            .Equals(
-                                nameof(BasicInformationsHeaderParameters),
-                                StringComparison.InvariantCultureIgnoreCase
-                            )
-                    );
-
                 var apiVersions = desc
                     .ActionDescriptor
                     .GetApiVersionModel()
@@ -77,7 +67,7 @@ namespace Espresso.WebApi.Extensions
                 Description = "API Key",
                 In = ParameterLocation.Header,
                 Name = HttpHeaderConstants.ApiKeyHeaderName,
-                Type = SecuritySchemeType.ApiKey
+                Type = SecuritySchemeType.ApiKey,
             });
 
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -91,11 +81,11 @@ namespace Espresso.WebApi.Extensions
                             Reference = new OpenApiReference
                             {
                                 Type = ReferenceType.SecurityScheme,
-                                Id = HttpHeaderConstants.ApiKeyHeaderName
+                                Id = HttpHeaderConstants.ApiKeyHeaderName,
                             },
                         },
                         Array.Empty<string>()
-                    }
+                    },
                 });
         }
 

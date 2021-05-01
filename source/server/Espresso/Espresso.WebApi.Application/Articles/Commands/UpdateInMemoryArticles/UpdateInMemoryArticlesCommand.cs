@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Espresso.Application.DataTransferObjects;
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 

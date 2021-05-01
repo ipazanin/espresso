@@ -11,7 +11,7 @@ namespace Espresso.Application.Middleware.SecurityHeaders
         private readonly SecurityHeadersPolicy _policy = new();
 
         /// <summary>
-        /// Add default headers in accordance with most secure approach
+        /// Add default headers in accordance with most secure approach.
         /// </summary>
         public SecurityHeadersBuilder AddDefaultSecurePolicy()
         {
@@ -26,7 +26,7 @@ namespace Espresso.Application.Middleware.SecurityHeaders
         #region Frame Options
         /// <summary>
         /// Add X-Frame-Options DENY to all requests.
-        /// The page cannot be displayed in a frame, regardless of the site attempting to do so
+        /// The page cannot be displayed in a frame, regardless of the site attempting to do so.
         /// </summary>
         public SecurityHeadersBuilder AddFrameOptionsDeny()
         {
@@ -48,7 +48,7 @@ namespace Espresso.Application.Middleware.SecurityHeaders
         /// Add X-Frame-Options ALLOW-FROM {uri} to all requests, where the uri is provided
         /// The page can only be displayed in a frame on the specified origin.
         /// </summary>
-        /// <param name="uri">The uri of the origin in which the page may be displayed in a frame</param>
+        /// <param name="uri">The uri of the origin in which the page may be displayed in a frame.</param>
         public SecurityHeadersBuilder AddFrameOptionsSameOrigin(string uri)
         {
             _policy.SetHeaders[HttpHeaderConstants.FrameOptionsHeader] = string.Format(HttpHeaderConstants.FrameOptionsAllowFromUri, uri);
@@ -59,7 +59,7 @@ namespace Espresso.Application.Middleware.SecurityHeaders
         #region XSS Protection
         /// <summary>
         /// Add X-XSS-Protection 1 to all requests.
-        /// Enables the XSS Protections
+        /// Enables the XSS Protections.
         /// </summary>
         public SecurityHeadersBuilder AddXssProtectionEnabled()
         {
@@ -121,7 +121,7 @@ namespace Espresso.Application.Middleware.SecurityHeaders
 
         /// <summary>
         /// Add Strict-Transport-Security max-age=0 to all requests.
-        /// Tells the user-agent to remove, or not cache the host in the STS cache
+        /// Tells the user-agent to remove, or not cache the host in the STS cache.
         /// </summary>
         public SecurityHeadersBuilder AddStrictTransportSecurityNoCache()
         {
@@ -143,11 +143,10 @@ namespace Espresso.Application.Middleware.SecurityHeaders
         #endregion
 
         /// <summary>
-        /// Adds a custom header to all requests
+        /// Adds a custom header to all requests.
         /// </summary>
-        /// <param name="header">The header name</param>
-        /// <param name="value">The value for the header</param>
-        /// <returns></returns>
+        /// <param name="header">The header name.</param>
+        /// <param name="value">The value for the header.</param>
         public SecurityHeadersBuilder AddCustomHeader(string header, string value)
         {
             if (string.IsNullOrEmpty(header))
@@ -160,10 +159,9 @@ namespace Espresso.Application.Middleware.SecurityHeaders
         }
 
         /// <summary>
-        /// Remove a header from all requests
+        /// Remove a header from all requests.
         /// </summary>
-        /// <param name="header">The to remove</param>
-        /// <returns></returns>
+        /// <param name="header">The to remove.</param>
         public SecurityHeadersBuilder RemoveHeader(string header)
         {
             if (string.IsNullOrEmpty(header))

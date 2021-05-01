@@ -1,5 +1,5 @@
+﻿using Espresso.Domain.Entities;
 using Xunit;
-using Espresso.Domain.Entities;
 
 namespace Espresso.Domain.Tests.Entities
 {
@@ -10,7 +10,7 @@ namespace Espresso.Domain.Tests.Entities
         public void IncrementNumberOfClicks_IncreasesNumberOfClicksByOne()
         {
             #region Arrange
-            var numberOfClicks = 0;
+            const int numberOfClicks = 0;
             var article = new Article(
                 id: default,
                 url: default!,

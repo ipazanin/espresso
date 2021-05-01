@@ -3,7 +3,7 @@ namespace Espresso.Common.Constants
     /// <summary>
     /// RoleConstants
     /// </summary>
-    public class RoleConstants
+    public static class RoleConstants
     {
         #region Constants
         public const string AdminRoleName = "Admin";

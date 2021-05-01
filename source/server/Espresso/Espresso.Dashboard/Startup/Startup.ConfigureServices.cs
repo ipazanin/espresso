@@ -20,7 +20,6 @@ using Espresso.Dashboard.Services;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Dashboard.Application.Initialization;
 using Espresso.Application.Models;
-using Espresso.Common.Services;
 using Espresso.Common.Services.Contracts;
 using Espresso.Application.Utilities;
 using Espresso.Dashboard.Application.Constants;
@@ -202,7 +201,7 @@ namespace Espresso.Dashboard.Startup
             services.AddScoped<IGroupSimilarArticlesService>(
                 serviceProvider => new GroupSimilarArticlesService(
                     similarityScoreThreshold: _dashboardConfiguration.ArticleSimilarityConfiguration.SimilarityScoreThreshold,
-                    articlePublishDateTimeDiferenceThreshold: _dashboardConfiguration.ArticleSimilarityConfiguration.ArticlePublishDateTimeDiferenceThreshold,
+                    articlePublishDateTimeDiferenceThreshold: _dashboardConfiguration.ArticleSimilarityConfiguration.ArticlePublishDateTimeDifferenceThreshold,
                     loggerService: serviceProvider.GetRequiredService<ILoggerService<GroupSimilarArticlesService>>(),
                     maxAgeOfSimilarArticleChecking: _dashboardConfiguration.ArticleSimilarityConfiguration.MaxAgeOfSimilarArticleChecking,
                     minimalNumberOfWordsForArticleToBeComparable: _dashboardConfiguration.ArticleSimilarityConfiguration.MinimalNumberOfWordsForArticleToBeComparable

@@ -1,57 +1,56 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
+using Espresso.Common.Constants;
+using Espresso.Common.Enums;
 using Espresso.WebApi.Application.Configuration.Queries.GetConfiguration;
 using Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3;
 using Espresso.WebApi.Application.Configuration.Queries.GetWebConfiguration;
-using Espresso.Common.Constants;
-using Espresso.Common.Enums;
 using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
+using Espresso.WebApi.DataTransferObjects;
 using Espresso.WebApi.Infrastructure;
+using Espresso.WebApi.RequestData.Header;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Espresso.WebApi.DataTransferObjects;
-using Espresso.WebApi.RequestData.Header;
-using System;
 
 namespace Espresso.WebApi.Controllers
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class ConfigurationController : ApiController
     {
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>
         public ConfigurationController(
             ISender sender,
             IWebApiConfiguration webApiConfiguration
-        ) : base(sender, webApiConfiguration)
+        )
+            : base(sender, webApiConfiguration)
         {
         }
 
         /// <summary>
-        /// Get Web Configuration
+        /// Get Web Configuration.
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Get /api/web-configuration
+        ///     Get /api/web-configuration.
         /// </remarks>
-        /// <param name="cancellationToken"></param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <returns>Response object containing app configuration</returns>
-        /// <response code="200">Response object containing app configuration</response>
-        /// <response code="400">If validation fails</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Response object containing app configuration.</returns>
+        /// <response code="200">Response object containing app configuration.</response>
+        /// <response code="400">If validation fails.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetConfigurationQueryResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -90,20 +89,20 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Get App Configuration
+        /// Get App Configuration.
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Get /api/configuration
+        ///     Get /api/configuration.
         /// </remarks>
-        /// <param name="cancellationToken"></param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <returns>Response object containing app configuration</returns>
-        /// <response code="200">Response object containing app configuration</response>
-        /// <response code="40">If validation fails</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Response object containing app configuration.</returns>
+        /// <response code="200">Response object containing app configuration.</response>
+        /// <response code="40">If validation fails.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetConfigurationQueryResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -141,20 +140,20 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Get App Configuration
+        /// Get App Configuration.
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Get /api/configuration
+        ///     Get /api/configuration.
         /// </remarks>
-        /// <param name="cancellationToken"></param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <returns>Response object containing app configuration</returns>
-        /// <response code="200">Response object containing app configuration</response>
-        /// <response code="400">If validation fails</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Response object containing app configuration.</returns>
+        /// <response code="200">Response object containing app configuration.</response>
+        /// <response code="400">If validation fails.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetConfigurationQueryResponse_1_3))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -185,21 +184,21 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Get App Configuration
+        /// Get App Configuration.
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Get /api/configuration
+        ///     Get /api/configuration.
         /// </remarks>
-        /// <param name="mobileAppVersion">Mobile app version</param>
-        /// <param name="mobileDeviceType">Mobile device type</param>
-        /// <param name="cancellationToken">Mobile Device Type (1 = Android, 2 = Ios)</param>
-        /// <returns>Response object containing app configuration</returns>
-        /// <response code="200">Response object containing app configuration</response>
-        /// <response code="400">If <paramref name="mobileAppVersion"/> is empty or longer than 20 characters or deviceType is not 1 or 2</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="mobileAppVersion">Mobile app version.</param>
+        /// <param name="mobileDeviceType">Mobile device type.</param>
+        /// <param name="cancellationToken">Mobile Device Type (1 = Android, 2 = Ios).</param>
+        /// <returns>Response object containing app configuration.</returns>
+        /// <response code="200">Response object containing app configuration.</response>
+        /// <response code="400">If <paramref name="mobileAppVersion"/> is empty or longer than 20 characters or deviceType is not 1 or 2.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetConfigurationQueryResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -229,6 +228,5 @@ namespace Espresso.WebApi.Controllers
                 );
             return Ok(getNewsPortalsQueryResponse);
         }
-
     }
 }

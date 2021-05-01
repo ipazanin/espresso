@@ -12,13 +12,13 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
         #region Properties
         public Guid Id { get; private set; }
 
-        public string Url { get; private set; } = "";
+        public string Url { get; private set; } = string.Empty;
 
-        public string WebUrl { get; private set; } = "";
+        public string WebUrl { get; private set; } = string.Empty;
 
-        public string Summary { get; private set; } = "";
+        public string Summary { get; private set; } = string.Empty;
 
-        public string Title { get; private set; } = "";
+        public string Title { get; private set; } = string.Empty;
 
         public string? ImageUrl { get; private set; }
 
@@ -106,7 +106,7 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
                 ArticleCategories = article.ArticleCategories.Select(articleCategoryDtoProjection),
                 MainArticle = article.MainArticle == null ?
                     null :
-                    similarArticleDtoProjection.Invoke(article.MainArticle)
+                    similarArticleDtoProjection.Invoke(article.MainArticle),
             };
         }
         #endregion

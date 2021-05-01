@@ -1,5 +1,4 @@
-﻿using Espresso.Common.Constants;
-using Espresso.Domain.Entities;
+﻿using Espresso.Domain.Entities;
 using Espresso.Persistence.DataSeed;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

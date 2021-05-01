@@ -35,7 +35,7 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
             return articleCategory => new ArticleCategoryDto
             {
                 Id = articleCategory.Id,
-                CategoryId = articleCategory.CategoryId
+                CategoryId = articleCategory.CategoryId,
             };
         }
         #endregion

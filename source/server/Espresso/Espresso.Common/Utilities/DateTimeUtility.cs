@@ -14,7 +14,7 @@ namespace Espresso.Domain.Utilities
         public static long CurrentMilliseconds => GetMilliseconds(DateTime.UtcNow);
 
         /// <summary>
-        /// 
+        /// Yesterdays Date
         /// </summary>
         /// <returns></returns>
         public static DateTime YesterdaysDate => DateTime.UtcNow.AddDays(-1).Date;

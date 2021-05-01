@@ -1,52 +1,52 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Espresso.WebApi.Application.Categories.Queries.GetCategories;
 using Espresso.Common.Constants;
+using Espresso.WebApi.Application.Categories.Queries.GetCategories;
 using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
+using Espresso.WebApi.DataTransferObjects;
 using Espresso.WebApi.Infrastructure;
+using Espresso.WebApi.RequestData.Header;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Espresso.WebApi.DataTransferObjects;
-using Espresso.WebApi.RequestData.Header;
 
 namespace Espresso.WebApi.Controllers
 {
     /// <summary>
-    /// Categories Controller
+    /// Categories Controller.
     /// </summary>
     public class CategoriesController : ApiController
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>
         public CategoriesController(
             ISender sender,
             IWebApiConfiguration webApiConfiguration
-        ) : base(sender, webApiConfiguration)
+        )
+            : base(sender, webApiConfiguration)
         {
         }
 
-
         /// <summary>
-        /// Get all Espresso categories
+        /// Get all Espresso categories.
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Get /api/categories
+        ///     Get /api/categories.
         /// </remarks>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns>Response object containing Espresso categories</returns>
-        /// <response code="200">Response object containing Espresso categories</response>
-        /// <response code="400">If validation fails</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <returns>Response object containing Espresso categories.</returns>
+        /// <response code="200">Response object containing Espresso categories.</response>
+        /// <response code="400">If validation fails.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetCategoriesQueryResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]

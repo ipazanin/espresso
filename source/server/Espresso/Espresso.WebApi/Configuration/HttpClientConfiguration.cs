@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 namespace Espresso.WebApi.Configuration
 {
     /// <summary>
-    /// HttpClientConfiguration
+    /// HttpClientConfiguration.
     /// </summary>
     public class HttpClientConfiguration
     {
@@ -16,13 +16,11 @@ namespace Espresso.WebApi.Configuration
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
         public int MaxRetries => _configurationSection.GetValue<int>("MaxRetries");
 
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
         public TimeSpan Timeout => TimeSpan.FromSeconds(
             _configurationSection.GetValue<int>("TimeoutInSeconds")
         );
@@ -30,7 +28,7 @@ namespace Espresso.WebApi.Configuration
 
         #region Constructors
         /// <summary>
-        /// HttpClientConfiguration Constructor
+        /// HttpClientConfiguration Constructor.
         /// </summary>
         public HttpClientConfiguration(
             IConfigurationSection configurationSection

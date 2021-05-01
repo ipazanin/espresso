@@ -1,7 +1,6 @@
 using System;
 using System.Linq.Expressions;
 using Espresso.Domain.Entities;
-using Espresso.Domain.Enums.CategoryEnums;
 
 namespace Espresso.Dashboard.Application.NewsPortals.GetNewsPortals
 {

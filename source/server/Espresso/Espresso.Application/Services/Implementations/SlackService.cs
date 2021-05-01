@@ -1,40 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Common.Constants;
-using Espresso.Common.Enums;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Logging;
-using Espresso.Domain.IServices;
-using Espresso.Domain.Entities;
-using System.Linq;
 using Espresso.Application.DataTransferObjects.SlackDataTransferObjects;
 using Espresso.Application.Models;
+using Espresso.Application.Services.Contracts;
+using Espresso.Common.Constants;
+using Espresso.Common.Enums;
 using Espresso.Common.Services.Contracts;
 using Espresso.Dashboard.Application.Constants;
-using Espresso.Application.Services.Contracts;
+using Espresso.Domain.Entities;
+using Espresso.Domain.IServices;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 
 namespace Espresso.Application.Services.Implementations
 {
     public class SlackService : ISlackService
     {
         #region Constants
-        private static readonly TimeSpan s_exceptionMessageCooldownInterval = TimeSpan.FromHours(4);
 
         private const string ErrorsBotIconEmoji = ":no_entry:";
         private const string ErrorBotUsername = "error-bot";
         private const string ErrorsChannel = "#errors-backend-bot";
-
-#pragma warning disable IDE0051
-        private const string WarningBotIconEmoji = ":warning:";
-        private const string WarningBotUsername = "warning-bot";
-        private const string WarningsChannel = "#warnings-backend-bot";
-        private const string IvanPazaninUserName = "@ipazanin";
-#pragma warning restore IDE0051
-
         private const string MissingCategoriesErrorsBotIconEmoji = ":warning:";
         private const string MissingCategoriesErrorsBotUsername = "warning-bot";
         private const string MissingCategoriesErrorsChannel = "#missing-categories-errors-bot";
@@ -57,6 +48,8 @@ namespace Espresso.Application.Services.Implementations
         #endregion
 
         #region Fields
+        private static readonly TimeSpan s_exceptionMessageCooldownInterval = TimeSpan.FromHours(4);
+
         private readonly IMemoryCache _memoryCache;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILoggerService<SlackService> _loggerService;
@@ -110,12 +103,11 @@ namespace Espresso.Application.Services.Implementations
                     channel: ErrorsChannel,
                     blocks: Array.Empty<SlackBlock>()
                 ),
-
                 cancellationToken: cancellationToken
             );
         }
 
-        public async Task LogAppDownloadStatistics(
+        public Task LogAppDownloadStatistics(
             int yesterdayAndroidCount,
             int yesterdayIosCount,
             int totalAndroidCount,
@@ -128,18 +120,18 @@ namespace Espresso.Application.Services.Implementations
             var blocks = new List<SlackBlock>
             {
                 new SlackTextFieldsImageSectionBlock(
-                    text: new SlackMarkdownTextBlock($"Downloads:"),
+                    text: new SlackMarkdownTextBlock("Downloads:"),
                     fields: new List<SlackMarkdownTextBlock>()
                     {
-                            new SlackMarkdownTextBlock($"Android"),
+                            new SlackMarkdownTextBlock("Android"),
                             new SlackMarkdownTextBlock(yesterdayAndroidCount.ToString()),
-                            new SlackMarkdownTextBlock($"iOS"),
+                            new SlackMarkdownTextBlock("iOS"),
                             new SlackMarkdownTextBlock(yesterdayIosCount.ToString()),
-                            new SlackMarkdownTextBlock($"Total Android"),
+                            new SlackMarkdownTextBlock("Total Android"),
                             new SlackMarkdownTextBlock(totalAndroidCount.ToString()),
-                            new SlackMarkdownTextBlock($"Total iOS"),
+                            new SlackMarkdownTextBlock("Total iOS"),
                             new SlackMarkdownTextBlock(totalIosCount.ToString()),
-                            new SlackMarkdownTextBlock($"Total"),
+                            new SlackMarkdownTextBlock("Total"),
                             new SlackMarkdownTextBlock((totalIosCount + totalAndroidCount).ToString()),
                     },
                     accessory: new SlackImageBlock(
@@ -149,7 +141,7 @@ namespace Espresso.Application.Services.Implementations
                 ),
                 new SlackDividerBlock(),
                 new SlackTextFieldsImageSectionBlock(
-                    text: new SlackMarkdownTextBlock($"Active Users:"),
+                    text: new SlackMarkdownTextBlock("Active Users:"),
                     fields: new List<SlackMarkdownTextBlock>()
                     {
                             new SlackMarkdownTextBlock(activeUsers.ToString()),
@@ -161,7 +153,7 @@ namespace Espresso.Application.Services.Implementations
                 ),
                 new SlackDividerBlock(),
                 new SlackTextFieldsImageSectionBlock(
-                    text: new SlackMarkdownTextBlock($"Revenue:"),
+                    text: new SlackMarkdownTextBlock("Revenue:"),
                     fields: new List<SlackMarkdownTextBlock>()
                     {
                             new SlackMarkdownTextBlock($"{revenue:0.##}$"),
@@ -173,7 +165,7 @@ namespace Espresso.Application.Services.Implementations
                 ),
             };
 
-            await SendToSlack(
+            return SendToSlack(
                 data: new SlackWebHookRequestBodyDto(
                     userName: MarketingBotUsername,
                     iconEmoji: MarketingBotIconEmoji,
@@ -181,7 +173,6 @@ namespace Espresso.Application.Services.Implementations
                     channel: MarketingBitChannel,
                     blocks: blocks
                 ),
-
                 cancellationToken: cancellationToken
             );
         }
@@ -193,7 +184,7 @@ namespace Espresso.Application.Services.Implementations
             CancellationToken cancellationToken
         )
         {
-            var text = $":blue_book: Request Name: Missing Categories\n" +
+            var text = ":blue_book: Request Name: Missing Categories\n" +
                 $":email: Rss Feed Url: {rssFeedUrl}\n" +
                 $":email: Article Url: {articleUrl}\n" +
                 $":email: Url-SegmentIndex:Category Map: {urlCategories}\n";
@@ -217,7 +208,7 @@ namespace Espresso.Application.Services.Implementations
             CancellationToken cancellationToken
         )
         {
-            var text = $"There’s a request for new source\n" +
+            var text = "There’s a request for new source\n" +
                 $"Source Name: {newsPortalName}\n" +
                 $"Email: {email}\n" +
                 $"Url: {url}";
@@ -244,11 +235,14 @@ namespace Espresso.Application.Services.Implementations
 
             foreach (var (name, count, duration) in data)
             {
-                textBuilder.Append(
-                    $"{name}\n" +
-                    $"\t:chart_with_upwards_trend: Daily Count: {count}\n" +
-                    $"\t:clock1: Duration: {duration}\n\n"
-                );
+                textBuilder.Append(name)
+                    .Append('\n')
+                    .Append("\t:chart_with_upwards_trend: Daily Count: ")
+                    .Append(count)
+                    .Append('\n')
+                    .Append("\t:clock1: Duration: ")
+                    .Append(duration)
+                    .Append("\n\n");
             }
 
             return SendToSlack(
@@ -263,7 +257,7 @@ namespace Espresso.Application.Services.Implementations
             );
         }
 
-        public async Task LogYesterdaysStatistics(
+        public Task LogYesterdaysStatistics(
             IEnumerable<Article> topArticles,
             int totalNumberOfClicks,
             IEnumerable<(NewsPortal newsPortal, int numberOfClicks, IEnumerable<Article> articles)> topNewsPortals,
@@ -284,17 +278,16 @@ namespace Espresso.Application.Services.Implementations
                     text: new SlackMarkdownTextBlock($"<{article.Url}|{article.Title}>"),
                     fields: new List<SlackMarkdownTextBlock>()
                     {
-                        new SlackMarkdownTextBlock($"*Source*"),
+                        new SlackMarkdownTextBlock("*Source*"),
                         new SlackMarkdownTextBlock($"<{article.NewsPortal!.BaseUrl}|{article.NewsPortal!.Name}>"),
-                        new SlackMarkdownTextBlock($"*Category*"),
+                        new SlackMarkdownTextBlock("*Category*"),
                         new SlackMarkdownTextBlock(article.ArticleCategories.First().Category!.Name),
-                        new SlackMarkdownTextBlock($"*Publish Time*"),
+                        new SlackMarkdownTextBlock("*Publish Time*"),
                         new SlackMarkdownTextBlock(article.PublishDateTime.ToShortTimeString()),
-                        new SlackMarkdownTextBlock($"*Number Of Clicks*"),
+                        new SlackMarkdownTextBlock("*Number Of Clicks*"),
                         new SlackMarkdownTextBlock(article.NumberOfClicks.ToString()),
-                        new SlackMarkdownTextBlock($"*Clicks ‰*"),
+                        new SlackMarkdownTextBlock("*Clicks ‰*"),
                         new SlackMarkdownTextBlock($"{Math.Round(totalNumberOfClicks == 0 ? 0 : 100 * article.NumberOfClicks / (double)totalNumberOfClicks, 2)}‰"),
-
                     },
                     accessory: new SlackImageBlock(
                         imageUrl: article.ImageUrl ?? article.NewsPortal?.IconUrl ?? "https://via.placeholder.com/350x150.jpg",
@@ -306,7 +299,7 @@ namespace Espresso.Application.Services.Implementations
                 blocks.Add(new SlackDividerBlock());
             }
 
-            await SendToSlack(
+            return SendToSlack(
                 data: new SlackWebHookRequestBodyDto(
                     userName: BackendStatisticsBotUsername,
                     iconEmoji: BackendStatisticsBotIconEmoji,
@@ -338,13 +331,13 @@ namespace Espresso.Application.Services.Implementations
                         new SlackMarkdownTextBlock("*Title*"),
                         new SlackMarkdownTextBlock(pushNotification.Title),
                         new SlackMarkdownTextBlock("*Source*"),
-                        new SlackMarkdownTextBlock(article.NewsPortal?.Name ?? ""),
+                        new SlackMarkdownTextBlock(article.NewsPortal?.Name ?? string.Empty),
                     },
                     accessory: new SlackImageBlock(
                         imageUrl: article.ImageUrl ?? "https://via.placeholder.com/350x150.jpg",
                         altText: "article image"
                     )
-                )
+                ),
             };
 
             return SendToSlack(
@@ -391,20 +384,20 @@ namespace Espresso.Application.Services.Implementations
                   }
                   catch (Exception exception)
                   {
-                      var eventName = Event.SlackServiceException.ToString();
+                      const string EventName = nameof(Event.SlackServiceException);
                       var exceptionMessage = exception.Message;
-                      var innerExceptionMessage = exception.InnerException?.Message ?? "";
+                      var innerExceptionMessage = exception.InnerException?.Message ?? string.Empty;
 
                       var arguments = new List<(string parameterName, object parameterValue)>
                       {
-                          (nameof(exceptionMessage),exceptionMessage),
-                          (nameof(innerExceptionMessage),innerExceptionMessage),
+                          (nameof(exceptionMessage), exceptionMessage),
+                          (nameof(innerExceptionMessage), innerExceptionMessage),
                       };
 
-                      _loggerService.Log(eventName, exception, LogLevel.Error, arguments);
+                      _loggerService.Log(EventName, exception, LogLevel.Error, arguments);
                   }
 
-                  return "";
+                  return string.Empty;
               });
         }
         #endregion

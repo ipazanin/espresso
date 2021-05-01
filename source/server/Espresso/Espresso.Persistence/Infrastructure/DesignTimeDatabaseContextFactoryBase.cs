@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.IO;
-using Espresso.Common.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
 
 namespace Espresso.Persistence.Infrastructure
 {

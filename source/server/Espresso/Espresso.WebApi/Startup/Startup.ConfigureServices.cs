@@ -3,14 +3,16 @@ using System.Net.Http;
 using System.Reflection;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
-using Espresso.Application.Services.Contracts;
 using Espresso.Application.Models;
+using Espresso.Application.Services.Contracts;
+using Espresso.Application.Services.Implementations;
 using Espresso.Application.Utilities;
 using Espresso.Common.Constants;
 using Espresso.Common.Services.Contracts;
+using Espresso.Common.Services.Implementations;
+using Espresso.Dashboard.Application.Constants;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Services;
-using Espresso.Dashboard.Application.Constants;
 using Espresso.Persistence.Database;
 using Espresso.WebApi.Application.Initialization;
 using Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals;
@@ -21,21 +23,18 @@ using Espresso.WebApi.Jobs.CronJobs;
 using Espresso.WebApi.Services;
 using FluentValidation.AspNetCore;
 using MediatR;
-using MediatR.Pipeline;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
-using Espresso.Application.Services.Implementations;
-using Espresso.Common.Services.Implementations;
 
 namespace Espresso.WebApi.Startup
 {
     internal sealed partial class Startup
     {
         /// <summary>
-        /// Configures Applications DI IoC Container
+        /// Configures Applications DI IoC Container.
         /// </summary>
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
@@ -55,22 +54,16 @@ namespace Espresso.WebApi.Startup
         /// Essential Services: MemoryCache, Initialization, HttpClient, Configuration ...
         /// </summary>
         /// <param name="services"></param>
-        /// <returns></returns>
-        private IServiceCollection AddEssentials(IServiceCollection services)
+        private void AddEssentials(IServiceCollection services)
         {
             services.AddMemoryCache();
             services.AddTransient<IWebApiInit, WebApiInit>();
             services
                 .AddHttpClient(
                     name: HttpClientConstants.SlackHttpClientName,
-                    configureClient: (serviceProvider, httpClient) =>
-                    {
-                        httpClient.Timeout = _webApiConfiguration.SlackHttpClientConfiguration.Timeout;
-                    }
+                    configureClient: (serviceProvider, httpClient) => httpClient.Timeout = _webApiConfiguration.SlackHttpClientConfiguration.Timeout
                 )
-                .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
-                {
-                })
+                .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler())
                 .AddHttpMessageHandler(serviceProvider => new RetryHttpRequestHandler(
                     maxRetries: _webApiConfiguration.SlackHttpClientConfiguration.MaxRetries
                 ));
@@ -80,16 +73,13 @@ namespace Espresso.WebApi.Startup
                 appEnvironment: _webApiConfiguration.AppConfiguration.AppEnvironment,
                 version: _webApiConfiguration.AppConfiguration.Version
             ));
-
-            return services;
         }
 
         /// <summary>
-        /// Web Api Services 
+        /// Web Api Services.
         /// </summary>
         /// <param name="services"></param>
-        /// <returns></returns>
-        private IServiceCollection AddWebApi(IServiceCollection services)
+        private void AddWebApi(IServiceCollection services)
         {
             services
                 .AddControllers(mvcOptions =>
@@ -118,10 +108,7 @@ namespace Espresso.WebApi.Startup
             services.AddSignalR();
 
             services
-                .AddSpaStaticFiles(configuration =>
-                {
-                    configuration.RootPath = ClientAppStaticFilesDirectory;
-                });
+                .AddSpaStaticFiles(configuration => configuration.RootPath = ClientAppStaticFilesDirectory);
 
             if (_webApiConfiguration.SpaConfiguration.EnableCors)
             {
@@ -160,31 +147,25 @@ namespace Espresso.WebApi.Startup
                 .AddApiKeySupport(options => { });
 
             services.AddTransient<IApiKeyProvider, InMemoryApiKeyProvider>();
-
-            return services;
         }
 
         /// <summary>
-        /// Mediator Services
+        /// Mediator Services.
         /// </summary>
         /// <param name="services"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddMediatRServices(IServiceCollection services)
+        private static void AddMediatRServices(IServiceCollection services)
         {
             services.AddMediatR(typeof(GetNewsPortalsQuery).GetTypeInfo(), typeof(LoggerRequestPipeline<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionRequestPipeline<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggerRequestPipeline<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
-
-            return services;
         }
 
         /// <summary>
-        /// Application Services: SlackService, TrendingScoreService, LoggerService
+        /// Application Services: SlackService, TrendingScoreService, LoggerService.
         /// </summary>
         /// <param name="services"></param>
-        /// <returns></returns>
-        public IServiceCollection AddApplicationServices(IServiceCollection services)
+        private void AddApplicationServices(IServiceCollection services)
         {
             services.AddScoped<ISlackService, SlackService>(serviceProvider => new SlackService(
                 memoryCache: serviceProvider.GetRequiredService<IMemoryCache>(),
@@ -194,40 +175,34 @@ namespace Espresso.WebApi.Startup
                 webHookUrl: _webApiConfiguration.AppConfiguration.SlackWebHook,
                 applicationInformation: serviceProvider.GetRequiredService<ApplicationInformation>()
             ));
-            services.AddTransient<ITrendingScoreService, TrendingScoreService>(serviceProvider => new TrendingScoreService(
+            services.AddTransient<ITrendingScoreService, TrendingScoreService>(_ => new TrendingScoreService(
                 halfOfMaxTrendingScoreValue: _webApiConfiguration.TrendingScoreConfiguration.HalfOfMaxTrendingScoreValue,
                 ageWeight: _webApiConfiguration.TrendingScoreConfiguration.AgeWeight
             ));
             services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
-            services.AddTransient<IJsonService, SystemTextJsonService>(serviceProvider => new SystemTextJsonService(
+            services.AddTransient<IJsonService, SystemTextJsonService>(_ => new SystemTextJsonService(
                 defaultJsonSerializerOptions: _webApiConfiguration.SystemTextJsonSerializerConfiguration.JsonSerializerOptions
             ));
             services.AddScoped<IRemoveOldArticlesService, RemoveOldArticlesService>(
-                serviceProvider => new RemoveOldArticlesService(
+                _ => new RemoveOldArticlesService(
                     maxAgeOfArticle: _webApiConfiguration.DateTimeConfiguration.MaxAgeOfArticle
                 )
             );
 
             services.AddScoped<IGoogleAnalyticsService, GoogleAnalyticsService>();
-
-            return services;
         }
 
         /// <summary>
-        /// Persistence Services
+        /// Persistence Services.
         /// </summary>
         /// <param name="services"></param>
-        /// <returns></returns>
-        private IServiceCollection AddPersistence(IServiceCollection services)
+        private void AddPersistence(IServiceCollection services)
         {
             services.AddDbContext<IEspressoDatabaseContext, EspressoDatabaseContext>(options =>
             {
                 options.UseNpgsql(
                     connectionString: _webApiConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString,
-                    npgsqlOptionsAction: npgOptions =>
-                    {
-                        npgOptions.CommandTimeout(_webApiConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
-                    }
+                    npgsqlOptionsAction: npgOptions => npgOptions.CommandTimeout(_webApiConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds)
                 );
                 options.UseQueryTrackingBehavior(_webApiConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
                 options.EnableDetailedErrors(_webApiConfiguration.DatabaseConfiguration.EnableDetailedErrors);
@@ -235,18 +210,15 @@ namespace Espresso.WebApi.Startup
             });
 
             services.AddScoped<IDatabaseConnectionFactory>(
-                serviceProvider => new DatabaseConnectionFactory(_webApiConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString)
+                _ => new DatabaseConnectionFactory(_webApiConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString)
             );
-
-            return services;
         }
 
         /// <summary>
-        /// Adds Jobs
+        /// Adds Jobs.
         /// </summary>
         /// <param name="services"></param>
-        /// <returns></returns>
-        private IServiceCollection AddJobs(IServiceCollection services)
+        private void AddJobs(IServiceCollection services)
         {
             services.AddCronJob<AnalyticsCronJob>(cronJobConfiguration =>
                 {
@@ -281,8 +253,6 @@ namespace Espresso.WebApi.Startup
                     password: _webApiConfiguration.RabbitMqConfiguration.Password
                 ));
             }
-
-            return services;
         }
     }
 }

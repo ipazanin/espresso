@@ -1,6 +1,6 @@
 ﻿namespace Espresso.Common.Constants
 {
-    public class MimeTypeConstants
+    public static class MimeTypeConstants
     {
         public const string OctetStream = "application/octet-stream";
 

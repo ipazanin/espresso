@@ -52,11 +52,7 @@
     "**/obj/**",
     "**/TestReports/**"
   ],
-  "cSpell.words": [
-    "CQRS",
-    "Mediat",
-    "Xunit",
-  ],
+  "cSpell.words": ["CQRS", "Mediat", "Xunit"],
   "csharp.maxProjectFileCountForDiagnosticAnalysis": 0,
   "csharp.semanticHighlighting.enabled": true,
   "eslint.alwaysShowStatus": true,
@@ -71,7 +67,8 @@
   "eslint.workingDirectories": ["./source/client"],
   "files.associations": {
     "*.make": "makefile",
-    "*.docker": "dockerfile"
+    "*.docker": "dockerfile",
+    "*.ruleset": "xml"
   },
   "files.exclude": {
     "**/.git": true,

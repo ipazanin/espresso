@@ -1,14 +1,15 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Espresso.Common.Enums;
 
 namespace Espresso.WebApi.GraphQl.Infrastructure
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
+#pragma warning disable S3925 // "ISerializable" should be implemented correctly
     public class GraphQlUserContext : Dictionary<string, object>
+#pragma warning restore S3925 // "ISerializable" should be implemented correctly
     {
-
         #region Constants
         private const string TargetedApiVersionKey = nameof(TargetedApiVersionKey);
         private const string ConsumerVersionKey = nameof(ConsumerVersionKey);
@@ -17,7 +18,7 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
 
         #region Properties
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public string TargetedApiVersion
@@ -26,18 +27,20 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
             {
                 if (!TryGetValue(TargetedApiVersionKey, out var value))
                 {
-                    return "";
+                    return string.Empty;
                 }
+
                 return (string)value;
             }
+
             set
             {
-                TryAdd(TargetedApiVersionKey, value ?? "");
+                TryAdd(TargetedApiVersionKey, value ?? string.Empty);
             }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public string ConsumerVersion
@@ -46,18 +49,20 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
             {
                 if (!TryGetValue(ConsumerVersionKey, out var value))
                 {
-                    return "";
+                    return string.Empty;
                 }
+
                 return (string)value;
             }
+
             set
             {
-                TryAdd(ConsumerVersionKey, value ?? "");
+                TryAdd(ConsumerVersionKey, value ?? string.Empty);
             }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public DeviceType DeviceType
@@ -68,15 +73,16 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
                 {
                     return DeviceType.Undefined;
                 }
+
                 return (DeviceType)value;
             }
+
             set
             {
                 TryAdd(DeviceTypeKey, value);
             }
         }
         #endregion
-
 
     }
 }

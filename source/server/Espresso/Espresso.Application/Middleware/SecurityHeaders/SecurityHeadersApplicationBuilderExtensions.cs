@@ -1,20 +1,18 @@
 ﻿using System;
-using Espresso.Application.Middleware.SecurityHeaders;
 using Microsoft.AspNetCore.Builder;
 
 namespace Espresso.Application.Middleware.SecurityHeaders
 {
     /// <summary>
-    /// 
+    /// Security Headers Extensions.
     /// </summary>
     public static class SecurityHeadersApplicationBuilderExtensions
     {
         /// <summary>
-        /// Sets Security Headers
+        /// Sets Security Headers.
         /// </summary>
         /// <param name="app"></param>
         /// <param name="securityHeadersBuilderConfigurationAction"></param>
-        /// <returns></returns>
         public static IApplicationBuilder UseSecurityHeadersMiddleware(
             this IApplicationBuilder app,
             Action<SecurityHeadersBuilder> securityHeadersBuilderConfigurationAction

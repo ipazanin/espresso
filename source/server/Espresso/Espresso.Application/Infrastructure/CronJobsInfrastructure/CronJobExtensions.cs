@@ -1,18 +1,18 @@
-using System;
+﻿using System;
 using Microsoft.Extensions.DependencyInjection;
-using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 
 namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
 {
     /// <summary>
-    /// 
+    /// Cron Jobs Extensions.
     /// </summary>
     public static class CronJobExtensions
     {
         public static IServiceCollection AddCronJob<T>(
             this IServiceCollection services,
             Action<ICronJobConfiguration<T>> options
-        ) where T : CronJob<T>
+        )
+            where T : CronJob<T>
         {
             if (options == null)
             {
@@ -27,26 +27,32 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
 
             if (string.IsNullOrWhiteSpace(config.CronExpression))
             {
+#pragma warning disable S3928 // The parameter name 'CronExpression' is not declared in the argument list.
                 throw new ArgumentNullException(
                     paramName: nameof(CronJobConfiguration<T>.CronExpression),
                     message: "Empty Cron Expression is not allowed."
                 );
+#pragma warning restore S3928
             }
 
             if (string.IsNullOrWhiteSpace(config.Version))
             {
+#pragma warning disable S3928 // The parameter name 'Version' is not declared in the argument list.
                 throw new ArgumentNullException(
                     paramName: nameof(CronJobConfiguration<T>.Version),
                     message: "Empty version is not allowed."
                 );
+#pragma warning restore S3928
             }
 
             if (config.AppEnvironment == default)
             {
+#pragma warning disable S3928 // The parameter name 'AppEnvironment' is not declared in the argument list.
                 throw new ArgumentNullException(
                     paramName: nameof(CronJobConfiguration<T>.AppEnvironment),
                     message: "Empty App environment is not allowed."
                 );
+#pragma warning restore S3928
             }
 
             services.AddSingleton<ICronJobConfiguration<T>>(config);

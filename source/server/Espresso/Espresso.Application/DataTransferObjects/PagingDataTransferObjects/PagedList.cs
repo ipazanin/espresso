@@ -4,12 +4,13 @@ using System.Text.Json.Serialization;
 namespace Espresso.Application.DataTransferObjects.PagingDataTransferObjects
 {
     /// <summary>
-    /// /// PagedList Model
+    /// /// PagedList Model.
     /// </summary>
     public class PagedList<T>
     {
         #region Properties
         public IEnumerable<T> Items { get; init; }
+
         public PagingMetadata PagingMetadata { get; init; }
         #endregion Properties
 

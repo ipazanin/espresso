@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 namespace Espresso.Dashboard.Application.Initialization
 {
     /// <summary>
-    /// 
+    /// Dashboard Initializer
     /// </summary>
     public class DashboardInit : IDashboardInit
     {
@@ -31,15 +31,12 @@ namespace Espresso.Dashboard.Application.Initialization
         #endregion
         #region Constructors
         /// <summary>
-        /// 
+        /// Dashboard Initializer Constructor
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="memoryCache"></param>
-        /// <param name="context"></param>
-        /// <param name="memoryCache"></param>
-        /// <param name="context"></param>
-        /// <param name="memoryCache"></param>
-        /// <param name="loggerFactory"></param>
+        /// <param name="espressoIdentityContext"></param>
+        /// <param name="roleManager"></param>
+        /// <param name="userManager"></param>
+        /// <param name="adminUserPassword"></param>
         public DashboardInit(
             IEspressoIdentityDatabaseContext espressoIdentityContext,
             RoleManager<IdentityRole> roleManager,

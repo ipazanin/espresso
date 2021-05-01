@@ -14,13 +14,13 @@ namespace Espresso.Dashboard.Configuration
 
         #region Properties
         /// <summary>
-        /// 
+        /// Maximum Number Of Retries
         /// </summary>
         /// <returns></returns>
         public int MaxRetries => _configurationSection.GetValue<int>("MaxRetries");
 
         /// <summary>
-        /// 
+        /// HTTP Client Timeout
         /// </summary>
         /// <returns></returns>
         public TimeSpan Timeout => TimeSpan.FromSeconds(

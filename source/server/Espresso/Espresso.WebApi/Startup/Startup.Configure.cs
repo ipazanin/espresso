@@ -1,22 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Espresso.Application.Middleware.SecurityHeaders;
+using Espresso.Common.Constants;
+using Espresso.Common.Enums;
+using Espresso.Domain.IServices;
 using Espresso.WebApi.Application.Hubs;
 using Espresso.WebApi.Application.Initialization;
-using Espresso.Common.Enums;
-using Espresso.Application.Middleware.SecurityHeaders;
 using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Espresso.Common.Constants;
-using Espresso.Domain.IServices;
 
 namespace Espresso.WebApi.Startup
 {
     internal sealed partial class Startup
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="app"></param>
         /// <param name="memoryCacheInit"></param>
@@ -35,19 +35,16 @@ namespace Espresso.WebApi.Startup
                 namedArguments: new (string, object)[] { ("version", _webApiConfiguration.AppConfiguration.Version) }
             );
 
+#pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
             memoryCacheInit.InitWebApi().GetAwaiter().GetResult();
+#pragma warning restore VSTHRD002 // Avoid problematic synchronous waits
 
-
-            app.UseSecurityHeadersMiddleware(securityHeadersBuilder =>
-            {
-                securityHeadersBuilder.AddDefaultSecurePolicy();
-            });
+            app.UseSecurityHeadersMiddleware(securityHeadersBuilder => securityHeadersBuilder.AddDefaultSecurePolicy());
 
             if (_webApiConfiguration.SpaConfiguration.EnableCors)
             {
                 app.UseCors(CustomCorsPolicyName);
             }
-
 
             app.UseHsts();
 
@@ -61,6 +58,7 @@ namespace Espresso.WebApi.Startup
                         name: $"{ApiDescriptionNamePrefix} {apiVersion}"
                     );
                 }
+
                 options.RoutePrefix = SwaggerApiExplorerRoute;
             });
 
@@ -70,10 +68,10 @@ namespace Espresso.WebApi.Startup
                     GraphQLEndPoint = "/graphql",
                     Headers = new Dictionary<string, object>
                     {
-                      { HttpHeaderConstants.ApiKeyHeaderName, "" },
+                      { HttpHeaderConstants.ApiKeyHeaderName, string.Empty },
                       { HttpHeaderConstants.ApiVersionHeaderName, "1.4" },
                       { HttpHeaderConstants.DeviceTypeHeaderName, DeviceType.WebApp },
-                      { HttpHeaderConstants.VersionHeaderName, "1.0.0" }
+                      { HttpHeaderConstants.VersionHeaderName, "1.0.0" },
                     },
                     EditorReuseHeaders = true,
                 },

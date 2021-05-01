@@ -8,14 +8,13 @@ using Espresso.Application.Services.Contracts;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Utilities;
-using Espresso.WebApi.Configuration;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Espresso.WebApi.Jobs.CronJobs
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class WebApiReportCronJob : CronJob<WebApiReportCronJob>
     {
@@ -25,15 +24,15 @@ namespace Espresso.WebApi.Jobs.CronJobs
 
         #region Constructors
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="serviceScopeFactory"></param>
         /// <param name="cronJobConfiguration"></param>
-        /// <returns></returns>
         public WebApiReportCronJob(
             IServiceScopeFactory serviceScopeFactory,
             ICronJobConfiguration<WebApiReportCronJob> cronJobConfiguration
-        ) : base(
+        )
+            : base(
             cronJobConfiguration: cronJobConfiguration,
             serviceScopeFactory: serviceScopeFactory
         )
@@ -44,27 +43,23 @@ namespace Espresso.WebApi.Jobs.CronJobs
 
         #region Methods
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public override async Task StartAsync(CancellationToken cancellationToken)
+        public override Task StartAsync(CancellationToken cancellationToken)
         {
-            await base.StartAsync(cancellationToken);
+            return base.StartAsync(cancellationToken);
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <param name="stoppingToken"></param>
-        /// <returns></returns>
-        public override async Task DoWork(CancellationToken stoppingToken)
+        /// <param name="cancellationToken"></param>
+        public override async Task DoWork(CancellationToken cancellationToken)
         {
             using var scope = _serviceScopeFactory.CreateScope();
             var slackService = scope.ServiceProvider.GetRequiredService<ISlackService>();
             var memoryCache = scope.ServiceProvider.GetRequiredService<IMemoryCache>();
-
-            var data = new List<(string name, int count, TimeSpan duration)>();
 
             var articles = memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey);
             var newsPortals = memoryCache.Get<IEnumerable<NewsPortal>>(MemoryCacheConstants.NewsPortalKey);
@@ -81,7 +76,7 @@ namespace Espresso.WebApi.Jobs.CronJobs
                 totalNumberOfClicks: totalNumberOfClicks,
                 topNewsPortals: topNewsPortals,
                 categoriesWithNumberOfClicks: categoriesWithNumberOfClicks,
-                cancellationToken: stoppingToken
+                cancellationToken: cancellationToken
             );
         }
 
@@ -121,7 +116,7 @@ namespace Espresso.WebApi.Jobs.CronJobs
                     (
                         newsPortal: newsPortals.FirstOrDefault(newsPortal => newsPortal.Id == articlesGroupedByNewsPortal.Key),
                         numberOfClicks: articlesGroupedByNewsPortal.Sum(article => article.NumberOfClicks),
-                        articles = articlesGroupedByNewsPortal.ToList().AsEnumerable()
+                        articles: articlesGroupedByNewsPortal.ToList().AsEnumerable()
                     )
                 )
                 .Where(articleClicksGroupedByNewsPortal => articleClicksGroupedByNewsPortal.newsPortal is not null)
@@ -142,7 +137,7 @@ namespace Espresso.WebApi.Jobs.CronJobs
                     (
                         category: articlesGroupedByCategory.FirstOrDefault()?.ArticleCategories.FirstOrDefault()?.Category,
                         numberOfClicks: articlesGroupedByCategory.Sum(article => article.NumberOfClicks),
-                        articles = articlesGroupedByCategory.ToList().AsEnumerable()
+                        articles: articlesGroupedByCategory.ToList().AsEnumerable()
                     )
                 )
                 .Where(articlesGroupedByCategory => articlesGroupedByCategory.category is not null)

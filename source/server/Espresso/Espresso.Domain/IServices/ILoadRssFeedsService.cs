@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Common.Enums;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Records;
 

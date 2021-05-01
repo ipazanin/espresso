@@ -18,7 +18,6 @@ using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
 using Microsoft.Extensions.Logging;
 using Espresso.Dashboard.Application.Constants;
-using Espresso.Domain.Enums.NewsPortalEnums;
 
 namespace Espresso.Dashboard.Application.Services
 {
