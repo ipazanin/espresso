@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Channels;
+using System.Threading.Tasks;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Services;
 using Espresso.Domain.Tests.TestUtilities;
@@ -296,7 +298,7 @@ namespace Espresso.Domain.Tests.Services
 
         #region RemoveDuplicateArticles
         [Fact]
-        public void RemoveDuplicateArticles_ReturnsListWithUnchangedNumberOfArticles_WhenThereAreNoDuplicateArticlesPresent()
+        public async Task RemoveDuplicateArticles_ReturnsListWithUnchangedNumberOfArticles_WhenThereAreNoDuplicateArticlesPresent()
         {
             #region Arrange
             var articles = new List<Article>
@@ -318,11 +320,17 @@ namespace Espresso.Domain.Tests.Services
             };
             var expectedArticlesCount = articles.Count;
 
+            var channel = Channel.CreateUnbounded<Article>();
+            var writer = channel.Writer;
+
+            articles.ForEach(article => _ = writer.TryWrite(article));
+            writer.Complete();
+
             var sortArticlesService = new SortArticlesService();
             #endregion Arrange
 
             #region Act
-            var actualArticles = sortArticlesService.RemoveDuplicateArticles(articles: articles);
+            var actualArticles = await sortArticlesService.RemoveDuplicateArticles(channel, default);
             #endregion Act
 
             #region Assert
@@ -335,7 +343,7 @@ namespace Espresso.Domain.Tests.Services
         }
 
         [Fact]
-        public void RemoveDuplicateArticles_ReturnsListWithTwoArticlesRemoved_WhenThereAreTwoDuplicateArticlesPresent()
+        public async Task RemoveDuplicateArticles_ReturnsListWithTwoArticlesRemoved_WhenThereAreTwoDuplicateArticlesPresent()
         {
             #region Arrange
             var articles = new List<Article>
@@ -370,12 +378,17 @@ namespace Espresso.Domain.Tests.Services
                 ),
             };
             var expectedArticlesCount = articles.Count - 2;
+            var channel = Channel.CreateUnbounded<Article>();
+            var writer = channel.Writer;
+
+            articles.ForEach(article => _ = writer.TryWrite(article));
+            writer.Complete();
 
             var sortArticlesService = new SortArticlesService();
             #endregion Arrange
 
             #region Act
-            var actualArticles = sortArticlesService.RemoveDuplicateArticles(articles: articles);
+            var actualArticles = await sortArticlesService.RemoveDuplicateArticles(channel, default);
             #endregion Act
 
             #region Assert

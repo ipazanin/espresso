@@ -15,6 +15,7 @@ using Espresso.Dashboard.Application.IServices;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
+using System.Threading.Channels;
 
 namespace Espresso.Dashboard.Application.Services
 {
@@ -51,18 +52,21 @@ namespace Espresso.Dashboard.Application.Services
 
         #region Public Methods
 
-        public async Task<IEnumerable<Article>> CreateArticlesFromRssFeedItems(
-            IEnumerable<RssFeedItem> rssFeedItems,
+        public async Task<Channel<Article>> CreateArticlesFromRssFeedItems(
+            Channel<RssFeedItem> rssFeedItemChannel,
             IEnumerable<Category> categories,
             CancellationToken cancellationToken
         )
         {
-            var initialCapacity = rssFeedItems.Count();
-            var parsedArticles = new ConcurrentQueue<Article>();
+            var reader = rssFeedItemChannel.Reader;
+            var parsedArticlesChannel = Channel.CreateUnbounded<Article>();
+            var writer = parsedArticlesChannel.Writer;
 
             var tasks = new List<Task>();
 
-            foreach (var rssFeedItem in rssFeedItems)
+            var rssFeedItems = reader.ReadAllAsync(cancellationToken);
+
+            await foreach (var rssFeedItem in rssFeedItems)
             {
                 var task = Task.Run(async () =>
                 {
@@ -76,7 +80,7 @@ namespace Espresso.Dashboard.Application.Services
 
                         if (isValid && article != null)
                         {
-                            parsedArticles.Enqueue(article);
+                            _ = writer.TryWrite(article);
                         }
                     }
                     catch (Exception exception)
@@ -89,8 +93,9 @@ namespace Espresso.Dashboard.Application.Services
             }
 
             await Task.WhenAll(tasks);
+            writer.Complete();
 
-            return parsedArticles;
+            return parsedArticlesChannel;
         }
 
 

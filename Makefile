@@ -6,7 +6,6 @@ list::
 
 health-check::
 	make health-check-backend
-	make health-check-frontend
 
 rebuild::
 	make rebuild-backend

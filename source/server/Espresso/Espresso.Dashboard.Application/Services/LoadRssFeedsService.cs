@@ -18,6 +18,7 @@ using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
 using Microsoft.Extensions.Logging;
 using Espresso.Dashboard.Application.Constants;
+using System.Threading.Channels;
 
 namespace Espresso.Dashboard.Application.Services
 {
@@ -40,12 +41,14 @@ namespace Espresso.Dashboard.Application.Services
         #endregion
 
         #region Methods
-        public async Task<IEnumerable<RssFeedItem>> ParseRssFeeds(
+        public async Task<Channel<RssFeedItem>> ParseRssFeeds(
             IEnumerable<RssFeed> rssFeeds,
             CancellationToken cancellationToken
         )
         {
-            var parsedArticles = new ConcurrentQueue<RssFeedItem>();
+            var rssFeedItemsChannel = Channel.CreateUnbounded<RssFeedItem>();
+            var writer = rssFeedItemsChannel.Writer;
+            //var parsedArticles = new ConcurrentQueue<RssFeedItem>();
 
             var getRssFeedRequestTasks = new List<Task>();
 
@@ -90,7 +93,8 @@ namespace Espresso.Dashboard.Application.Services
                                     ?.Select(elementExtension => elementExtension?.GetObject<string?>()),
                             };
 
-                            parsedArticles.Enqueue(rssFeedItem);
+                            _ = writer.TryWrite(rssFeedItem);
+                            //parsedArticles.Enqueue(rssFeedItem);
                         }
 
                     }
@@ -113,7 +117,9 @@ namespace Espresso.Dashboard.Application.Services
 
             await Task.WhenAll(getRssFeedRequestTasks);
 
-            return parsedArticles;
+            writer.Complete();
+
+            return rssFeedItemsChannel;
         }
 
         private async Task<SyndicationFeed> LoadFeed(RssFeed rssFeed, CancellationToken cancellationToken)

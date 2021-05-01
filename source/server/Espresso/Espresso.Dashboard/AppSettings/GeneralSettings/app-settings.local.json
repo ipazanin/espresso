@@ -2,7 +2,7 @@
   "AppConfiguration": {
     "ServerUrl": "http://espresso-webapi:80",
     "Environment": 1,
-    "MaxAgeOfArticlesInDays": 2
+    "MaxAgeOfArticlesInDays": 1
   },
   "ArticleSimilarityConfiguration": {
     "ArticlePublishDateTimeDiferenceThresholdInHours": 4,

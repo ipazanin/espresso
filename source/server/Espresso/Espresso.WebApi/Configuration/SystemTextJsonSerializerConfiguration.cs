@@ -29,7 +29,7 @@ namespace Espresso.WebApi.Configuration
 
         #region Constructors
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="configuration"></param>
         public SystemTextJsonSerializerConfiguration(IConfigurationSection configuration)
