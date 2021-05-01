@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Espresso.Domain.Entities;
@@ -41,7 +41,7 @@ namespace Espresso.Domain.Tests.Services
                 It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()
             ));
 
-            var expectedSimilarArticlesCount = 1;
+            const int ExpectedSimilarArticlesCount = 1;
 
             var articles = new List<Article>
             {
@@ -72,13 +72,13 @@ namespace Espresso.Domain.Tests.Services
             #endregion
 
             #region Act
-            var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), new DateTime());
+            var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
             var actualSimilarArticlesCount = similarArticles.Count();
             #endregion
 
             #region Assert
             Assert.Equal(
-                expected: expectedSimilarArticlesCount,
+                expected: ExpectedSimilarArticlesCount,
                 actual: actualSimilarArticlesCount
             );
             #endregion
@@ -96,7 +96,7 @@ namespace Espresso.Domain.Tests.Services
                 It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()
             ));
 
-            var expectedSimilarArticlesCount = 0;
+            const int ExpectedSimilarArticlesCount = 0;
 
             var articles = new List<Article>();
             var service = new GroupSimilarArticlesService(
@@ -109,13 +109,13 @@ namespace Espresso.Domain.Tests.Services
             #endregion
 
             #region Act
-            var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), new DateTime());
+            var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
             var actualSimilarArticlesCount = similarArticles.Count();
             #endregion
 
             #region Assert
             Assert.Equal(
-                expected: expectedSimilarArticlesCount,
+                expected: ExpectedSimilarArticlesCount,
                 actual: actualSimilarArticlesCount
             );
             #endregion
@@ -133,7 +133,7 @@ namespace Espresso.Domain.Tests.Services
                 It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()
             ));
 
-            var expectedSimilarArticlesCount = 0;
+            const int ExpectedSimilarArticlesCount = 0;
 
             var articles = new List<Article>
             {
@@ -156,13 +156,13 @@ namespace Espresso.Domain.Tests.Services
             #endregion
 
             #region Act
-            var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), new DateTime());
+            var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
             var actualSimilarArticlesCount = similarArticles.Count();
             #endregion
 
             #region Assert
             Assert.Equal(
-                expected: expectedSimilarArticlesCount,
+                expected: ExpectedSimilarArticlesCount,
                 actual: actualSimilarArticlesCount
             );
             #endregion
@@ -185,7 +185,7 @@ namespace Espresso.Domain.Tests.Services
                 It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()
             ));
 
-            var expectedSimilarArticlesCount = 0;
+            const int ExpectedSimilarArticlesCount = 0;
 
             var articles = new List<Article>
             {
@@ -216,13 +216,13 @@ namespace Espresso.Domain.Tests.Services
             #endregion
 
             #region Act
-            var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), new DateTime());
+            var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
             var actualSimilarArticlesCount = similarArticles.Count();
             #endregion
 
             #region Assert
             Assert.Equal(
-                expected: expectedSimilarArticlesCount,
+                expected: ExpectedSimilarArticlesCount,
                 actual: actualSimilarArticlesCount
             );
             #endregion
@@ -244,7 +244,7 @@ namespace Espresso.Domain.Tests.Services
                 It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()
             ));
 
-            var expectedSimilarArticlesCount = 0;
+            const int ExpectedSimilarArticlesCount = 0;
 
             var articles = new List<Article>
             {
@@ -275,13 +275,13 @@ namespace Espresso.Domain.Tests.Services
             #endregion
 
             #region Act
-            var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), new DateTime());
+            var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
             var actualSimilarArticlesCount = similarArticles.Count();
             #endregion
 
             #region Assert
             Assert.Equal(
-                expected: expectedSimilarArticlesCount,
+                expected: ExpectedSimilarArticlesCount,
                 actual: actualSimilarArticlesCount
             );
             #endregion

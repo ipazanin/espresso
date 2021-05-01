@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 namespace Espresso.Dashboard.Configuration
 {
     /// <summary>
-    /// 
+    /// Article Similarity Configuration
     /// </summary>
     public class ArticleSimilarityConfiguration
     {
@@ -14,22 +14,20 @@ namespace Espresso.Dashboard.Configuration
 
         #region Properties
         /// <summary>
-        /// 
+        /// Similarity Score Threshold
         /// </summary>
-        /// <returns></returns>
         public double SimilarityScoreThreshold => _configuration.GetValue<double>("SimilarityScoreThreshold");
 
         /// <summary>
-        /// 
+        /// Article Publish DateTime Difference Threshold
         /// </summary>
-        /// <returns></returns>
-        public TimeSpan ArticlePublishDateTimeDiferenceThreshold =>
+        public TimeSpan ArticlePublishDateTimeDifferenceThreshold =>
             TimeSpan.FromHours(
                 value: _configuration.GetValue<int>("ArticlePublishDateTimeDiferenceThresholdInHours")
             );
 
         /// <summary>
-        /// 
+        /// Max Age Of Similar Article Checking
         /// </summary>
         /// <returns></returns>
         public TimeSpan MaxAgeOfSimilarArticleChecking =>
@@ -38,7 +36,7 @@ namespace Espresso.Dashboard.Configuration
             );
 
         /// <summary>
-        /// 
+        /// Minimal Number Of Words For Article To Be Comparable
         /// </summary>
         /// <returns></returns>
         public int MinimalNumberOfWordsForArticleToBeComparable => _configuration.GetValue<int>("MinimalNumberOfWordsForArticleToBeComparable");
@@ -46,7 +44,7 @@ namespace Espresso.Dashboard.Configuration
 
         #region Constructors
         /// <summary>
-        /// 
+        /// ArticleSimilarityConfiguration Constructor
         /// </summary>
         /// <param name="configuration"></param>
         public ArticleSimilarityConfiguration(IConfigurationSection configuration)

@@ -13,7 +13,8 @@ using Microsoft.Extensions.Logging;
 namespace Espresso.Application.Infrastructure.MediatorInfrastructure
 {
     public class LoggerRequestPipeline<TRequest, TResponse> :
-        IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+        IPipelineBehavior<TRequest, TResponse>
+        where TRequest : notnull
     {
         #region Fields
         private readonly Stopwatch _stopWatch;
@@ -49,8 +50,8 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
                 _ => null
             };
             var requestName = typeof(TRequest).Name;
-            var targetedApiVersion = requestBase?.TargetedApiVersion ?? "";
-            var consumerVersion = requestBase?.ConsumerVersion ?? "";
+            var targetedApiVersion = requestBase?.TargetedApiVersion ?? string.Empty;
+            var consumerVersion = requestBase?.ConsumerVersion ?? string.Empty;
             var deviceType = requestBase?.DeviceType ?? DeviceType.Undefined;
 
             _stopWatch.Start();
@@ -88,11 +89,11 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
             var performanceMeasurementKey = $"{requestName}PerformanceKey";
             var (total, count) = _memoryCache.GetOrCreate(
                 key: performanceMeasurementKey,
-                factory: entry =>
+                factory: _ =>
                 {
-                    var total = new TimeSpan();
-                    var count = 0;
-                    return (total, count);
+                    var total = default(TimeSpan);
+                    const int Count = 0;
+                    return (total, Count);
                 }
             );
             total += duration;

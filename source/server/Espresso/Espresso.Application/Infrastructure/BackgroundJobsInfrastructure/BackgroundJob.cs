@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Domain.IServices;
@@ -11,20 +11,25 @@ namespace Espresso.Application.Infrastructure.BackgroundJobsInfrastructure
     public abstract class BackgroundJob<T> : IHostedService
         where T : BackgroundJob<T>
     {
-        #region Fields
-        protected readonly IServiceScopeFactory ServiceScopeFactory;
+        #region Properties
+
+        protected IServiceScopeFactory ServiceScopeFactory { get; }
+
         #endregion
 
         #region Constructors
+
         protected BackgroundJob(
             IServiceScopeFactory serviceScopeFactory
         )
         {
             ServiceScopeFactory = serviceScopeFactory;
         }
+
         #endregion
 
         #region Methods
+
         public virtual async Task StartAsync(CancellationToken cancellationToken)
         {
             using var scope = ServiceScopeFactory.CreateScope();
@@ -54,7 +59,9 @@ namespace Espresso.Application.Infrastructure.BackgroundJobsInfrastructure
 
         public abstract Task DoWork(CancellationToken cancellationToken);
 
+#pragma warning disable RCS1229 // Use async/await when necessary
         public virtual Task StopAsync(CancellationToken cancellationToken)
+#pragma warning restore RCS1229
         {
             using var scope = ServiceScopeFactory.CreateScope();
             var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService<BackgroundJob<T>>>();
@@ -64,6 +71,7 @@ namespace Espresso.Application.Infrastructure.BackgroundJobsInfrastructure
 
             return Task.CompletedTask;
         }
+
         #endregion
     }
 }

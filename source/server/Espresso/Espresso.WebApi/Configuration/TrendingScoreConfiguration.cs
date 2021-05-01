@@ -15,13 +15,11 @@ namespace Espresso.WebApi.Configuration
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
         public int HalfOfMaxTrendingScoreValue => _configuration.GetValue<int>("HalfOfMaxTrendingScoreValue");
 
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
         public decimal AgeWeight => _configuration.GetValue<decimal>("AgeWeight");
         #endregion
 

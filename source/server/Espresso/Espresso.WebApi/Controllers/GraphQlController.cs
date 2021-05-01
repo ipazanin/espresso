@@ -20,7 +20,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Espresso.WebApi.Controllers
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class GraphQlController : ApiController
     {
@@ -28,19 +28,19 @@ namespace Espresso.WebApi.Controllers
         private readonly IDocumentExecuter _executer;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>
         /// <param name="schema"></param>
         /// <param name="executer"></param>
-        /// <returns></returns>
         public GraphQlController(
             ISender sender,
             IWebApiConfiguration webApiConfiguration,
             ISchema schema,
             IDocumentExecuter executer
-        ) : base(sender, webApiConfiguration)
+        )
+            : base(sender, webApiConfiguration)
         {
             _schema = schema;
             _executer = executer;
@@ -48,16 +48,15 @@ namespace Espresso.WebApi.Controllers
 
         /// <summary>
         /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <param name="basicInformationsHeaderParameters">Basic App Information</param>
+        /// <param name="basicInformationsHeaderParameters">Basic App Information.</param>
         /// <param name="query"></param>
-        /// <returns></returns>
-        /// <response code="200">When operation is successfull</response>
-        /// <response code="400">If validation fails</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="404">If resource is not found</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="cancellationToken"></param>
+        /// <response code="200">When operation is successfull.</response>
+        /// <response code="400">If validation fails.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="404">If resource is not found.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]

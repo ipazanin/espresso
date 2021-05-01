@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 namespace Espresso.Application.Middleware.SecurityHeaders
 {
     /// <summary>
-    /// Security Headers Middleware
+    /// Security Headers Middleware.
     /// </summary>
     public class SecurityHeadersMiddleware
     {
@@ -12,7 +12,7 @@ namespace Espresso.Application.Middleware.SecurityHeaders
         private readonly SecurityHeadersPolicy _policy;
 
         /// <summary>
-        /// 
+        /// Security Headers Middleware Constructor.
         /// </summary>
         /// <param name="next"></param>
         /// <param name="policy"></param>
@@ -23,11 +23,10 @@ namespace Espresso.Application.Middleware.SecurityHeaders
         }
 
         /// <summary>
-        /// 
+        /// Invokes Middleware.
         /// </summary>
         /// <param name="context"></param>
-        /// <returns></returns>
-        public async Task Invoke(HttpContext context)
+        public Task Invoke(HttpContext context)
         {
             var headers = context.Response.Headers;
 
@@ -41,7 +40,7 @@ namespace Espresso.Application.Middleware.SecurityHeaders
                 headers.Remove(header);
             }
 
-            await _next(context);
+            return _next(context);
         }
     }
 }

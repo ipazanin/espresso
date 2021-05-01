@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Espresso.WebApi.Application.Exceptions;
 using Espresso.Application.Services.Contracts;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
+using Espresso.Domain.IServices;
+using Espresso.WebApi.Application.Exceptions;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.DataTransferObjects;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using Espresso.Domain.IServices;
 
 namespace Espresso.WebApi.Filters
 {
     /// <summary>
     /// Custom Exception Filter
-    /// Filters thrown exceptions and sets appropriate HTTP Status Code
+    /// Filters thrown exceptions and sets appropriate HTTP Status Code.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
@@ -33,7 +33,7 @@ namespace Espresso.WebApi.Filters
 
         #region Constructors
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="webApiConfiguration"></param>
         /// <param name="slackService"></param>
@@ -52,7 +52,7 @@ namespace Espresso.WebApi.Filters
 
         #region Methods
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="context"></param>
         public override Task OnExceptionAsync(ExceptionContext context)
@@ -65,10 +65,12 @@ namespace Espresso.WebApi.Filters
                 code = HttpStatusCode.BadRequest;
                 errors = validationException.Errors.Select(validationFailure => validationFailure.ErrorMessage);
             }
+
             if (context.Exception is NotFoundException)
             {
                 code = HttpStatusCode.NotFound;
             }
+
             context.HttpContext.Response.ContentType = MimeTypeConstants.Json;
             context.HttpContext.Response.StatusCode = (int)code;
 
@@ -101,11 +103,10 @@ namespace Espresso.WebApi.Filters
 
             var eventName = Event.CustomExceptionFilterAttribute.GetDisplayName();
             var version = _webApiConfiguration.AppConfiguration.Version;
-            var exceptionMessage = context.Exception.Message;
-            var innerExceptionMessage = context.Exception.InnerException?.Message ?? "";
 
-            var arguments = new (string, object)[]{
-                (nameof(version), version)
+            var arguments = new (string, object)[]
+            {
+                (nameof(version), version),
             };
 
             _loggerService.Log(eventName, context.Exception, LogLevel.Error, arguments);

@@ -1,6 +1,5 @@
 ﻿using System;
 using Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticleScore;
-using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.Infrastructure;
 using GraphQL;
 using GraphQL.Types;
@@ -28,8 +27,8 @@ namespace Espresso.WebApi.GraphQl.ApplicationMutations.ArticlesQueries
                     {
                         new QueryArgument<NonNullGraphType<StringGraphType>>
                         {
-                            Name = "articleId"
-                        }
+                            Name = "articleId",
+                        },
                     }
                 ),
                 resolve: async resolveContext =>

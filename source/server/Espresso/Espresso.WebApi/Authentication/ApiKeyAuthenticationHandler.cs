@@ -15,20 +15,20 @@ using Microsoft.Extensions.Options;
 namespace Espresso.WebApi.Authentication
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthenticationOptions>
     {
         private const string ProblemDetailsContentType = "application/problem+json";
         private const string UnAuthenticatedApiKeyMessage = "Given API Key is Invalid";
         private const string ForbiddenMessage = "Given API Key is Forbidden from requested resource";
-        private const string ApiKeyHeaderName_1_2 = "Espresso-Api-Key";
+        private const string ApiKeyHeaderNameVersion1_2 = "Espresso-Api-Key";
 
         private readonly IApiKeyProvider _apiKeyProvider;
         private readonly IJsonService _jsonService;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="options"></param>
         /// <param name="logger"></param>
@@ -43,7 +43,8 @@ namespace Espresso.WebApi.Authentication
             ISystemClock clock,
             IApiKeyProvider apiKeyProvider,
             IJsonService jsonService
-        ) : base(
+        )
+            : base(
             options: options,
             logger: logger,
             encoder: encoder,
@@ -55,13 +56,12 @@ namespace Espresso.WebApi.Authentication
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <returns></returns>
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             if (!Request.Headers.TryGetValue(HttpHeaderConstants.ApiKeyHeaderName, out var apiKeyHeaderValues) &&
-                !Request.Headers.TryGetValue(ApiKeyHeaderName_1_2, out apiKeyHeaderValues)
+                !Request.Headers.TryGetValue(ApiKeyHeaderNameVersion1_2, out apiKeyHeaderValues)
             )
             {
                 return AuthenticateResult.NoResult();
@@ -80,7 +80,7 @@ namespace Espresso.WebApi.Authentication
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Role, existingApiKey.Role)
+                    new Claim(ClaimTypes.Role, existingApiKey.Role),
                 };
 
                 var identity = new ClaimsIdentity(claims, Options.AuthenticationType);
@@ -95,10 +95,9 @@ namespace Espresso.WebApi.Authentication
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="properties"></param>
-        /// <returns></returns>
         protected override async Task HandleChallengeAsync(AuthenticationProperties properties)
         {
             Response.StatusCode = (int)HttpStatusCode.Unauthorized;
@@ -117,10 +116,9 @@ namespace Espresso.WebApi.Authentication
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="properties"></param>
-        /// <returns></returns>
         protected override async Task HandleForbiddenAsync(AuthenticationProperties properties)
         {
             Response.StatusCode = (int)HttpStatusCode.Forbidden;

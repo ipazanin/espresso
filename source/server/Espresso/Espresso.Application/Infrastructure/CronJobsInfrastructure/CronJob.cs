@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
@@ -13,13 +13,15 @@ using Timer = System.Timers.Timer;
 
 namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
 {
-    public abstract class CronJob<T> : IHostedService, IDisposable where T : CronJob<T>
+    public abstract class CronJob<T> : IHostedService, IDisposable
+        where T : CronJob<T>
     {
         #region Fields
-        private Timer? _timer;
         private readonly CronExpression _expression;
         private readonly ICronJobConfiguration<T> _cronJobConfiguration;
-        protected readonly IServiceScopeFactory ServiceScopeFactory;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
+        private Timer? _timer;
+        private bool _disposedValue;
         #endregion
 
         #region Constructors
@@ -30,14 +32,14 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
         {
             _expression = CronExpression.Parse(cronJobConfiguration.CronExpression);
             _cronJobConfiguration = cronJobConfiguration;
-            ServiceScopeFactory = serviceScopeFactory;
+            _serviceScopeFactory = serviceScopeFactory;
         }
         #endregion
 
         #region Methods
-        public virtual async Task StartAsync(CancellationToken cancellationToken)
+        public virtual Task StartAsync(CancellationToken cancellationToken)
         {
-            await ScheduleJob(cancellationToken);
+            return ScheduleJob(cancellationToken);
         }
 
         protected virtual async Task ScheduleJob(CancellationToken cancellationToken)
@@ -60,6 +62,7 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
             }
 
             _timer = new Timer(delay.TotalMilliseconds);
+#pragma warning disable AsyncFixer03, VSTHRD101 // Avoid unsupported fire-and-forget async-void methods or delegates. Unhandled exceptions will crash the process
             _timer.Elapsed += async (sender, args) =>
             {
                 _timer?.Dispose();
@@ -70,15 +73,16 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
                     cancellationToken: cancellationToken
                 );
             };
+#pragma warning restore AsyncFixer03, VSTHRD101
             _timer.Start();
 
             var eventName = $"{typeof(T).Name} scheduled";
             var arguments = new List<(string argumentName, object argumentValue)>
             {
-                (nameof(occurrence), occurrence)
+                (nameof(occurrence), occurrence),
             };
 
-            using var scope = ServiceScopeFactory.CreateScope();
+            using var scope = _serviceScopeFactory.CreateScope();
             var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService<CronJob<T>>>();
 
             loggerService.Log(eventName, LogLevel.Information, arguments);
@@ -86,9 +90,11 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
 
         public abstract Task DoWork(CancellationToken cancellationToken);
 
+#pragma warning disable RCS1229 // Use async/await when necessary
         public virtual Task StopAsync(CancellationToken cancellationToken)
+#pragma warning restore RCS1229
         {
-            using var scope = ServiceScopeFactory.CreateScope();
+            using var scope = _serviceScopeFactory.CreateScope();
             var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService<CronJob<T>>>();
 
             var eventName = $"{typeof(T).Name} stopped";
@@ -109,7 +115,7 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
                 return;
             }
 
-            using var scope = ServiceScopeFactory.CreateScope();
+            using var scope = _serviceScopeFactory.CreateScope();
             var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService<CronJob<T>>>();
 
             try
@@ -125,12 +131,11 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
 
                 var arguments = new (string argumentName, object argumentValue)[]
                 {
-                    (nameof(occurrence),occurrence),
-                    (nameof(nextOccurrence),nextOccurrence),
-                    (nameof(elapsed),elapsed),
+                    (nameof(occurrence), occurrence),
+                    (nameof(nextOccurrence), nextOccurrence),
+                    (nameof(elapsed), elapsed),
                 };
                 loggerService.Log(eventName, LogLevel.Information, arguments);
-
             }
             catch (Exception exception)
             {
@@ -158,13 +163,25 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
             }
         }
 
-        public virtual void Dispose()
+        protected virtual void Dispose(bool disposing)
         {
-            _timer?.Dispose();
+            if (!_disposedValue)
+            {
+                if (disposing)
+                {
+                    _timer?.Dispose();
+                }
+
+                _disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
         #endregion
     }
-
 }
-

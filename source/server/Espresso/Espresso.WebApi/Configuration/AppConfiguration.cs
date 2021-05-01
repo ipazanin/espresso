@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 namespace Espresso.WebApi.Configuration
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class AppConfiguration
     {
@@ -19,25 +19,23 @@ namespace Espresso.WebApi.Configuration
         #region Properties
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public AppEnvironment AppEnvironment => _configuration.GetValue<AppEnvironment>("Environment");
 
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public int NewNewsPortalsPosition => _configuration.GetValue<int>("NewNewsPortalsPosition");
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <returns></returns>
         public string Version => _configuration.GetValue<string>("Version");
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public ApiVersion ApiVersion => new(
             majorVersion: _configuration.GetValue<int>("MajorVersion"),
@@ -45,7 +43,7 @@ namespace Espresso.WebApi.Configuration
         );
 
         /// <summary>
-        /// All Api Versions
+        /// All Api Versions.
         /// </summary>
         /// <value></value>
         public IEnumerable<ApiVersion> ApiVersions => new[]
@@ -58,25 +56,22 @@ namespace Espresso.WebApi.Configuration
         };
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <returns></returns>
         public TimeSpan Uptime => DateTime.UtcNow - Process.GetCurrentProcess().StartTime.ToUniversalTime();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <returns></returns>
         public int FeaturedArticlesTake => _configuration.GetValue<int>("FeaturedArticlesTake");
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <returns></returns>
         public string SlackWebHook => _configuration.GetValue<string>("SlackWebHook");
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public int MaxHttpHandlerRetries => _configuration.GetValue<int>("MaxHttpHandlerRetries");
@@ -84,7 +79,7 @@ namespace Espresso.WebApi.Configuration
 
         #region Constructors
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="configuration"></param>
         public AppConfiguration(IConfigurationSection configuration)

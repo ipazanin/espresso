@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 namespace Espresso.Dashboard.Configuration
 {
     /// <summary>
-    /// 
+    /// <see cref="JsonSerializer"/> Configuration
     /// </summary>
     public class SystemTextJsonSerializerConfiguration
     {
@@ -14,7 +14,7 @@ namespace Espresso.Dashboard.Configuration
 
         #region Properties
         /// <summary>
-        /// 
+        /// Json Serializer Options
         /// </summary>
         /// <value></value>
         public JsonSerializerOptions JsonSerializerOptions => new()
@@ -29,7 +29,7 @@ namespace Espresso.Dashboard.Configuration
 
         #region Constructors
         /// <summary>
-        /// 
+        /// Creates new instance of SystemTextJsonSerializerConfiguration with provided <paramref name="configuration"/>
         /// </summary>
         /// <param name="configuration"></param>
         public SystemTextJsonSerializerConfiguration(IConfigurationSection configuration)
@@ -40,7 +40,7 @@ namespace Espresso.Dashboard.Configuration
 
         #region Methods
         /// <summary>
-        /// 
+        /// Maps <paramref name="jsonSerializerOptions"/> to defalt <see cref="JsonSerializerOptions"/>
         /// </summary>
         /// <param name="jsonSerializerOptions"></param>
         public void MapJsonSerializerOptionsToDefaultOptions(

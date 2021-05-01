@@ -1,51 +1,50 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplicationDownload;
-using Espresso.WebApi.Application.ApplicationDownloads.Queries.GetApplicationDownloadStatistics;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
+using Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplicationDownload;
+using Espresso.WebApi.Application.ApplicationDownloads.Queries.GetApplicationDownloadStatistics;
 using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
+using Espresso.WebApi.DataTransferObjects;
 using Espresso.WebApi.Infrastructure;
+using Espresso.WebApi.RequestData.Header;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Espresso.WebApi.DataTransferObjects;
-using Espresso.WebApi.RequestData.Header;
 
 namespace Espresso.WebApi.Controllers
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class ApplicationDownloadsController : ApiController
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>
         public ApplicationDownloadsController(
             ISender sender,
             IWebApiConfiguration webApiConfiguration
-        ) : base(sender, webApiConfiguration)
+        )
+            : base(sender, webApiConfiguration)
         {
         }
 
-
         /// <summary>
-        /// Creates New Application Download
+        /// Creates New Application Download.
         /// </summary>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <response code="200">Response object containing articles from provided category</response>
-        /// <response code="400">If validation failed</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <response code="200">Response object containing articles from provided category.</response>
+        /// <response code="400">If validation failed.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -79,16 +78,15 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Creates New Application Download
+        /// Creates New Application Download.
         /// </summary>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <response code="200">Response object containing articles from provided category</response>
-        /// <response code="400">If validation failed</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <response code="200">Response object containing articles from provided category.</response>
+        /// <response code="400">If validation failed.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -120,17 +118,16 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Creates New Application Download
+        /// Creates New Application Download.
         /// </summary>
+        /// <param name="mobileAppVersion">Mobile App Version.</param>
+        /// <param name="mobileDeviceType">Mobile Device Type (1 = Android, 2 = Ios).</param>
         /// <param name="cancellationToken"></param>
-        /// <param name="mobileAppVersion">Mobile App Version</param>
-        /// <param name="mobileDeviceType">Mobile Device Type (1 = Android, 2 = Ios)</param>
-        /// <returns></returns>
-        /// <response code="200">Response object containing articles from provided category</response>
-        /// <response code="400">If <paramref name="mobileAppVersion"/> is empty or longer than 20 characters or deviceType is not 1 or 2</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <response code="200">Response object containing articles from provided category.</response>
+        /// <response code="400">If <paramref name="mobileAppVersion"/> is empty or longer than 20 characters or deviceType is not 1 or 2.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -162,16 +159,16 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Gets App Downloads Statistics
+        /// Gets App Downloads Statistics.
         /// </summary>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns>Response object containing articles from provided category</returns>
-        /// <response code="200">Response object containing articles from popular news portals</response>
-        /// <response code="400">If validation failed</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <returns>Response object containing articles from provided category.</returns>
+        /// <response code="200">Response object containing articles from popular news portals.</response>
+        /// <response code="400">If validation failed.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetApplicationDownloadStatisticsQueryResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -202,18 +199,17 @@ namespace Espresso.WebApi.Controllers
             return Ok(response);
         }
 
-
         /// <summary>
-        /// Gets App Downloads Statistics
+        /// Gets App Downloads Statistics.
         /// </summary>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns>Response object containing articles from provided category</returns>
-        /// <response code="200">Response object containing articles from popular news portals</response>
-        /// <response code="400">If validation failed</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <returns>Response object containing articles from provided category.</returns>
+        /// <response code="200">Response object containing articles from popular news portals.</response>
+        /// <response code="400">If validation failed.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetApplicationDownloadStatisticsQueryResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]

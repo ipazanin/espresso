@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Espresso.Application.DataTransferObjects.SlackDataTransferObjects
 {
@@ -14,7 +13,8 @@ namespace Espresso.Application.DataTransferObjects.SlackDataTransferObjects
         public SlackImageBlock(
             string imageUrl,
             string altText
-        ) : base(type: "image")
+        )
+            : base(type: "image")
         {
             ImageUrl = imageUrl;
             AltText = altText;

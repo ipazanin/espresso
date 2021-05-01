@@ -1,13 +1,12 @@
-using Xunit;
-using Espresso.Domain.Utilities;
+﻿using System;
 using System.Collections.Generic;
-using System;
+using Espresso.Domain.Utilities;
+using Xunit;
 
 namespace Espresso.Domain.Tests.Utilities
 {
     public class LanguageUtilityTest
     {
-
         #region GetSearchTerms
         [Fact]
         public void GetSearchTerms_ReturnsEmptyArray_WhenSearchTermIsNull()
@@ -30,16 +29,16 @@ namespace Espresso.Domain.Tests.Utilities
         public void GetSearchTerms_ReturnsSearchTerms_WhenDelimiterCharacterIsPresent()
         {
             #region Arrange
-            var searchTerm = "word1 word2";
+            const string? SearchTerm = "word1 word2";
             var expectedSearchTerms = new string[]
             {
                 "word1",
-                "word2"
+                "word2",
             };
             #endregion
 
             #region Act
-            var actualSearchTerms = LanguageUtility.GetSearchTerms(searchTerm);
+            var actualSearchTerms = LanguageUtility.GetSearchTerms(SearchTerm);
             #endregion
 
             #region Assert
@@ -47,21 +46,20 @@ namespace Espresso.Domain.Tests.Utilities
             #endregion
         }
 
-
         [Fact]
         public void GetSearchTerms_ReturnsSearchTermsWithCroatianCharactersReplaced_WhenCroatianCharactersArePresent()
         {
             #region Arrange
-            var searchTerm = "word1ž word2č";
+            const string? SearchTerm = "word1ž word2č";
             var expectedSearchTerms = new string[]
             {
                 "word1z",
-                "word2c"
+                "word2c",
             };
             #endregion
 
             #region Act
-            var actualSearchTerms = LanguageUtility.GetSearchTerms(searchTerm);
+            var actualSearchTerms = LanguageUtility.GetSearchTerms(SearchTerm);
             #endregion
 
             #region Assert
@@ -136,24 +134,6 @@ namespace Espresso.Domain.Tests.Utilities
         }
         #endregion
 
-        #region MatchWordsThatBeginWithTerm
-        // [Fact]
-        // public void MatchWordsThatBeginWithTerm_()
-        // {
-        //     #region Arrange
-        //     var expectedWords = Array.Empty<string>();
-        //     #endregion
-
-        //     #region Act
-        //     var actualWords = LanguageUtility.MatchWordsThatBeginWithTerm(sentence);
-        //     #endregion
-
-        //     #region Assert
-        //     Assert.Equal(expected: expectedWords, actual: actualWords);
-        //     #endregion
-        // }
-        #endregion
-
         #region RemoveUnimpactfulCroatianWords
         [Theory]
         [InlineData("ako")]
@@ -168,7 +148,7 @@ namespace Espresso.Domain.Tests.Utilities
             {
                 "Very",
                 "Cool",
-                "Title"
+                "Title",
             };
             words.Add(notImpactfulCroatianWord);
 
@@ -176,12 +156,12 @@ namespace Espresso.Domain.Tests.Utilities
             {
                 "Very",
                 "Cool",
-                "Title"
+                "Title",
             };
             #endregion
 
             #region Act
-            var actualWords = LanguageUtility.RemoveUnImpactfulCroatianWords(words);
+            var actualWords = words.RemoveUnImpactfulCroatianWords();
             #endregion
 
             #region Assert
@@ -197,19 +177,19 @@ namespace Espresso.Domain.Tests.Utilities
             {
                 "Very",
                 "Cool",
-                "Title"
+                "Title",
             };
 
             var expectedWords = new string[]
             {
                 "Very",
                 "Cool",
-                "Title"
+                "Title",
             };
             #endregion
 
             #region Act
-            var actualWords = LanguageUtility.RemoveUnImpactfulCroatianWords(words);
+            var actualWords = words.RemoveUnImpactfulCroatianWords();
             #endregion
 
             #region Assert
@@ -225,14 +205,14 @@ namespace Espresso.Domain.Tests.Utilities
             {
                 "ako",
                 "ne",
-                "ili"
+                "ili",
             };
 
             var expectedWords = Array.Empty<string>();
             #endregion
 
             #region Act
-            var actualWords = LanguageUtility.RemoveUnImpactfulCroatianWords(words);
+            var actualWords = words.RemoveUnImpactfulCroatianWords();
             #endregion
 
             #region Assert

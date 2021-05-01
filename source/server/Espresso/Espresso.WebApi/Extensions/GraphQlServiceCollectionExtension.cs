@@ -19,15 +19,14 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Espresso.WebApi.Extensions
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static class GraphQlServiceCollectionExtension
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="services"></param>
-        /// <returns></returns>
         public static IServiceCollection AddGraphQlServices(
             this IServiceCollection services
         )
@@ -50,7 +49,6 @@ namespace Espresso.WebApi.Extensions
 
             return services;
         }
-
 
         private static IServiceCollection AddGraphQlQueries(this IServiceCollection services)
         {

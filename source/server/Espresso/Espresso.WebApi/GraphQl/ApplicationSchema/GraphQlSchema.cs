@@ -14,7 +14,8 @@ namespace Espresso.WebApi.GraphQl.ApplicationSchema
         /// 
         /// </summary>
         /// <param name="serviceProvider"></param>
-        public GraphQlSchema(IServiceProvider serviceProvider) : base(serviceProvider)
+        public GraphQlSchema(IServiceProvider serviceProvider)
+            : base(serviceProvider)
         {
             Query = serviceProvider.GetService(typeof(RootGraphQlQuery)) as RootGraphQlQuery;
             Mutation = serviceProvider.GetService(typeof(RootGraphQlMutation)) as RootGraphQlMutation;

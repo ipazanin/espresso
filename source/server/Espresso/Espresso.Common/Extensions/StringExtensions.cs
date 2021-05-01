@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace Espresso.Common.Extensions
+﻿namespace Espresso.Common.Extensions
 {
     public static class StringExtensions
     {

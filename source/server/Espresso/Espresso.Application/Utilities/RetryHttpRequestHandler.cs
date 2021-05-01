@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,7 +11,8 @@ namespace Espresso.Application.Utilities
 
         public RetryHttpRequestHandler(
             int maxRetries
-        ) : base()
+        )
+            : base()
         {
             _maxRetries = maxRetries > 0 ? maxRetries : 1;
         }
@@ -33,7 +34,7 @@ namespace Espresso.Application.Utilities
 
             if (response is null)
             {
-                throw new Exception($"Http Request Failed With {_maxRetries} retries!");
+                throw new HttpRequestException($"Http Request Failed With {_maxRetries} retries!");
             }
 
             return response;

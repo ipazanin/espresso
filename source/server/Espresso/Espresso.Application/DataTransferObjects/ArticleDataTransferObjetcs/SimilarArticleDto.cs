@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq.Expressions;
 using System.Text.Json.Serialization;
 using Espresso.Domain.Entities;
@@ -42,7 +42,7 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
                 Id = similarArticle.Id,
                 SimilarityScore = similarArticle.SimilarityScore,
                 MainArticleId = similarArticle.MainArticleId,
-                SubordinateArticleId = similarArticle.SubordinateArticleId
+                SubordinateArticleId = similarArticle.SubordinateArticleId,
             };
         }
         #endregion

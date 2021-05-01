@@ -3,7 +3,7 @@ using System.Net.Http;
 
 namespace Espresso.Application.Extensions
 {
-    public static class HttpClientExtension
+    public static class HttpClientExtensions
     {
         public static HttpClient AddHeadersToHttpClient(
             this HttpClient httpClient,

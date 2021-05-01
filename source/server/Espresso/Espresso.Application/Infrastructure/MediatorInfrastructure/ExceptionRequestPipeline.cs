@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +15,7 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
         where TRequest : notnull
     {
         #region Fields
-        public ILoggerService<ExceptionRequestPipeline<TRequest, TResponse>> _loggerService;
+        private readonly ILoggerService<ExceptionRequestPipeline<TRequest, TResponse>> _loggerService;
         private readonly ISlackService _slackService;
         private readonly ApplicationInformation _applicationInformation;
         #endregion
@@ -48,7 +48,7 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
                 {
                     ("Version", _applicationInformation.Version),
                     ("App Environment", _applicationInformation.AppEnvironment),
-                    ("Request Parameters", request.ToString() ?? ""),
+                    ("Request Parameters", request.ToString() ?? string.Empty),
                 };
 
                 _loggerService.Log(
@@ -68,7 +68,6 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
 
                 throw;
             }
-
         }
     }
     #endregion

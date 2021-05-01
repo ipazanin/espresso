@@ -9,7 +9,7 @@ using Xunit;
 namespace Espresso.Domain.Tests.Services
 {
     /// <summary>
-    /// RemoveOldArticlesService
+    /// RemoveOldArticlesService.
     /// </summary>
     public class RemoveOldArticlesServiceTest
     {

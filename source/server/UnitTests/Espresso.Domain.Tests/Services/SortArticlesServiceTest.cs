@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Espresso.Domain.Entities;
@@ -9,7 +9,7 @@ using Xunit;
 namespace Espresso.Domain.Tests.Services
 {
     /// <summary>
-    /// SortArticlesServiceTest
+    /// SortArticlesServiceTest.
     /// </summary>
     public class SortArticlesServiceTest
     {
@@ -135,12 +135,12 @@ namespace Espresso.Domain.Tests.Services
             #region Arrange
             var articles = new List<Article>
             {
-                ArticleUtility.CreateDefaultArticleWith(default, default!, default!, default!)
+                ArticleUtility.CreateDefaultArticleWith(default, default!, default!, default!),
             };
             var savedArticles = new List<Article>()
                 .ToDictionary(article => article.Id);
 
-            var expectedCreatedArticlesCount = 1;
+            const int ExpectedCreatedArticlesCount = 1;
 
             var sortArticlesService = new SortArticlesService();
             #endregion Arrange
@@ -155,7 +155,7 @@ namespace Espresso.Domain.Tests.Services
             #region Assert
             var actualCreatedArticlesCount = actualCreatedArticles.Count();
             Assert.Equal(
-                expected: expectedCreatedArticlesCount,
+                expected: ExpectedCreatedArticlesCount,
                 actual: actualCreatedArticlesCount
             );
             #endregion Assert
@@ -172,7 +172,7 @@ namespace Espresso.Domain.Tests.Services
                     url: "https://www.google.com",
                     title: "title1",
                     summary: "summary1"
-                )
+                ),
             };
             var savedArticles = new List<Article>
             {
@@ -181,10 +181,10 @@ namespace Espresso.Domain.Tests.Services
                     url: "https://www.google.com",
                     title: "title2",
                     summary: "summary2"
-                )
+                ),
             }.ToDictionary(article => article.Id);
 
-            var expectedUpdatedArticlesCount = 1;
+            const int ExpectedUpdatedArticlesCount = 1;
 
             var sortArticlesService = new SortArticlesService();
             #endregion Arrange
@@ -199,7 +199,7 @@ namespace Espresso.Domain.Tests.Services
             #region Assert
             var actualCreatedArticlesCount = actualUpdatedArticles.Count();
             Assert.Equal(
-                expected: expectedUpdatedArticlesCount,
+                expected: ExpectedUpdatedArticlesCount,
                 actual: actualCreatedArticlesCount
             );
             #endregion Assert
@@ -216,7 +216,7 @@ namespace Espresso.Domain.Tests.Services
                     url: "url1",
                     title: "title1",
                     summary: "summary1"
-                )
+                ),
             };
             var savedArticles = new List<Article>
             {
@@ -225,10 +225,10 @@ namespace Espresso.Domain.Tests.Services
                     url: "url2",
                     title: "title1",
                     summary: "summary2"
-                )
+                ),
             }.ToDictionary(article => article.Id);
 
-            var expectedUpdatedArticlesCount = 1;
+            const int ExpectedUpdatedArticlesCount = 1;
 
             var sortArticlesService = new SortArticlesService();
             #endregion Arrange
@@ -243,7 +243,7 @@ namespace Espresso.Domain.Tests.Services
             #region Assert
             var actualCreatedArticlesCount = actualUpdatedArticles.Count();
             Assert.Equal(
-                expected: expectedUpdatedArticlesCount,
+                expected: ExpectedUpdatedArticlesCount,
                 actual: actualCreatedArticlesCount
             );
             #endregion Assert
@@ -260,7 +260,7 @@ namespace Espresso.Domain.Tests.Services
                     url: "url1",
                     title: "title1",
                     summary: "summary1"
-                )
+                ),
             };
             var savedArticles = new List<Article>
             {
@@ -269,10 +269,10 @@ namespace Espresso.Domain.Tests.Services
                     url: "url2",
                     title: "title2",
                     summary: "summary1"
-                )
+                ),
             }.ToDictionary(article => article.Id);
 
-            var expectedUpdatedArticlesCount = 1;
+            const int ExpectedUpdatedArticlesCount = 1;
 
             var sortArticlesService = new SortArticlesService();
             #endregion Arrange
@@ -287,7 +287,7 @@ namespace Espresso.Domain.Tests.Services
             #region Assert
             var actualCreatedArticlesCount = actualUpdatedArticles.Count();
             Assert.Equal(
-                expected: expectedUpdatedArticlesCount,
+                expected: ExpectedUpdatedArticlesCount,
                 actual: actualCreatedArticlesCount
             );
             #endregion Assert

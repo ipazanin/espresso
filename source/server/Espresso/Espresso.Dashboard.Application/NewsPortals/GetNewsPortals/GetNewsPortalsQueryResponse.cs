@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Espresso.Application.DataTransferObjects.PagingDataTransferObjects;
 
 namespace Espresso.Dashboard.Application.NewsPortals.GetNewsPortals

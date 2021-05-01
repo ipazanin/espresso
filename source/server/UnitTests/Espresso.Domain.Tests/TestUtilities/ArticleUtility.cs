@@ -6,7 +6,7 @@ using Espresso.Domain.ValueObjects.ArticleValueObjects;
 namespace Espresso.Domain.Tests.TestUtilities
 {
     /// <summary>
-    /// ArticleUtility
+    /// ArticleUtility.
     /// </summary>
     public static class ArticleUtility
     {
@@ -24,13 +24,13 @@ namespace Espresso.Domain.Tests.TestUtilities
         {
             var category = new Category(
                 id: categoryId,
-                name: "",
-                color: "",
+                name: string.Empty,
+                color: string.Empty,
                 keyWordsRegexPattern: default,
                 sortIndex: default,
                 position: default,
                 categoryType: default,
-                categoryUrl: ""
+                categoryUrl: string.Empty
             );
 
             var articleCategories = new List<ArticleCategory>()
@@ -41,14 +41,14 @@ namespace Espresso.Domain.Tests.TestUtilities
                     articleId: default,
                     category: category,
                     categoryId: default
-                )
+                ),
             };
 
             var newsPortal = new NewsPortal(
                 id: newsPortalId,
-                name: "",
-                baseUrl: "",
-                iconUrl: "",
+                name: string.Empty,
+                baseUrl: string.Empty,
+                iconUrl: string.Empty,
                 isNewOverride: null,
                 createdAt: default,
                 categoryId: default,
@@ -59,7 +59,7 @@ namespace Espresso.Domain.Tests.TestUtilities
             var article = new Article(
                 id: id,
                 url: url,
-                webUrl: "",
+                webUrl: string.Empty,
                 summary: summary,
                 title: title,
                 imageUrl: default,

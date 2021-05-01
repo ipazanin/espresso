@@ -1,5 +1,4 @@
-﻿using Espresso.Common.Constants;
-using Espresso.Domain.Entities;
+﻿using Espresso.Domain.Entities;
 using Espresso.Domain.ValueObjects.RssFeedValueObjects;
 using Espresso.Persistence.DataSeed;
 using Microsoft.EntityFrameworkCore;

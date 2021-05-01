@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects.PagingDataTransferObjects;
 using Espresso.Common.Constants;
@@ -10,6 +9,7 @@ using Microsoft.AspNetCore.Components;
 namespace Espresso.Dashboard.Pages.NewsPortalsList
 {
     /// <summary>
+    /// Base class for News Portal List Component
     /// </summary>
     [Authorize(Roles = RoleConstants.AdminRoleName)]
     public class NewsPortalsListBase : ComponentBase
@@ -18,8 +18,8 @@ namespace Espresso.Dashboard.Pages.NewsPortalsList
         [Inject]
         protected ISender Sender { get; set; } = null!;
 
-        [Inject]
-        private NavigationManager NavigationManager { get; set; } = null!;
+        // [Inject]
+        // private NavigationManager NavigationManager { get; set; } = null!;
 
         protected GetNewsPortalsQueryResponse? Response { get; private set; }
 

@@ -13,8 +13,8 @@ namespace Espresso.Common.Services.Implementations
     {
         #region Fields
         /// <summary>
+        /// Default JsonSerializerOptions
         /// </summary>
-        /// <value></value>
         private readonly JsonSerializerOptions _defaultJsonSerializerOptions;
         #endregion
 

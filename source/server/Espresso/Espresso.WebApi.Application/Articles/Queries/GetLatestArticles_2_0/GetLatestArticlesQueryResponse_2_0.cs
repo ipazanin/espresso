@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
 {

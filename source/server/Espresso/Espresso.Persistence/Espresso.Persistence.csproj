@@ -4,6 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
     <AnalysisLevel>preview</AnalysisLevel>
     <Nullable>enable</Nullable>
+    <CodeAnalysisRuleSet>../Espresso.ruleset</CodeAnalysisRuleSet>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

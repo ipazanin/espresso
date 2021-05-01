@@ -1,74 +1,75 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Espresso.Common.Constants;
+using Espresso.WebApi.Application.Articles.AutoCompleteArticle;
 using Espresso.WebApi.Application.Articles.Commands.HideArticle;
 using Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticleScore;
 using Espresso.WebApi.Application.Articles.Commands.SetFeaturedArticle;
 using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles;
 using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3;
+using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0;
 using Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles;
 using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles;
 using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_3;
+using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4;
+using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0;
 using Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles;
-using Espresso.Common.Constants;
 using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
+using Espresso.WebApi.DataTransferObjects;
 using Espresso.WebApi.Infrastructure;
+using Espresso.WebApi.RequestData.Body;
+using Espresso.WebApi.RequestData.Header;
+using Espresso.WebApi.RequestData.Query;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Espresso.WebApi.DataTransferObjects;
-using Espresso.WebApi.Application.Articles.AutoCompleteArticle;
-using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4;
-using Espresso.WebApi.RequestData.Header;
-using Espresso.WebApi.RequestData.Query;
-using Espresso.WebApi.RequestData.Body;
-using System.Collections.Generic;
-using System.Linq;
-using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0;
-using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0;
 
 namespace Espresso.WebApi.Controllers
 {
     /// <summary>
-    /// Articles Controller
+    /// Articles Controller.
     /// </summary>
     public class ArticlesController : ApiController
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>
         public ArticlesController(
             ISender sender,
             IWebApiConfiguration webApiConfiguration
-        ) : base(sender, webApiConfiguration)
+        )
+            : base(sender, webApiConfiguration)
         {
         }
 
         #region GetLatestArticles
         /// <summary>
-        /// Get articles from selected <paramref name="newsPortalIds"/> and <paramref name="categoryIds"/>
+        /// Get articles from selected <paramref name="newsPortalIds"/> and <paramref name="categoryIds"/>.
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Get /api/articles
+        ///     Get /api/articles.
         /// </remarks>
         /// <param name="cancellationToken"></param>
-        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
-        /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored</param>
-        /// <param name="titleSearchQuery">Article Title Search Query</param>
+        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
+        /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <param name="articlePaginationParameters">Parameters used for pagination</param>
-        /// <returns>Response object containing articles</returns>
-        /// <response code="200">Response object containing articles</response>
-        /// <response code="400">If validation fails</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
+        /// <param name="titleSearchQuery">Article Title Search Query.</param>
+        /// <returns>Response object containing articles.</returns>
+        /// <response code="200">Response object containing articles.</response>
+        /// <response code="400">If validation fails.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetLatestArticlesQueryResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -113,24 +114,24 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Get articles from selected <paramref name="newsPortalIds"/> and <paramref name="categoryIds"/>
+        /// Get articles from selected <paramref name="newsPortalIds"/> and <paramref name="categoryIds"/>.
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Get /api/articles
+        ///     Get /api/articles.
         /// </remarks>
         /// <param name="cancellationToken"></param>
-        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
-        /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored</param>
-        /// <param name="titleSearchQuery">Article Title Search Query</param>
+        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
+        /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <param name="articlePaginationParameters">Parameters used for pagination</param>
-        /// <returns>Response object containing articles</returns>
-        /// <response code="200">Response object containing articles</response>
-        /// <response code="400">If validation fails</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
+        /// <param name="titleSearchQuery">Article Title Search Query.</param>
+        /// <returns>Response object containing articles.</returns>
+        /// <response code="200">Response object containing articles.</response>
+        /// <response code="400">If validation fails.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetLatestArticlesQueryResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -175,24 +176,24 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Get articles from selected <paramref name="newsPortalIds"/> and <paramref name="categoryIds"/>
+        /// Get articles from selected <paramref name="newsPortalIds"/> and <paramref name="categoryIds"/>.
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Get /api/articles
+        ///     Get /api/articles.
         /// </remarks>
         /// <param name="cancellationToken"></param>
-        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
-        /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored</param>
-        /// <param name="titleSearchQuery">Article Title Search Query</param>
+        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
+        /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <param name="articlePaginationParameters">Parameters used for pagination</param>
-        /// <returns>Response object containing articles</returns>
-        /// <response code="200">Response object containing articles</response>
-        /// <response code="400">If validation fails</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
+        /// <param name="titleSearchQuery">Article Title Search Query.</param>
+        /// <returns>Response object containing articles.</returns>
+        /// <response code="200">Response object containing articles.</response>
+        /// <response code="400">If validation fails.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetLatestArticlesQueryResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -234,24 +235,24 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Get articles from selected <paramref name="newsPortalIds"/> and <paramref name="categoryIds"/>
+        /// Get articles from selected <paramref name="newsPortalIds"/> and <paramref name="categoryIds"/>.
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Get /api/articles/category?<paramref name="take"/>=1&amp;<paramref name="skip"/>=0
+        ///     Get /api/articles/category?<paramref name="take"/>=1&amp;<paramref name="skip"/>=0.
         /// </remarks>
         /// <param name="cancellationToken"></param>
-        /// <param name="take">Number of articles</param>
-        /// <param name="skip">Number of skipped articles</param>
-        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
-        /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored</param>
+        /// <param name="take">Number of articles.</param>
+        /// <param name="skip">Number of skipped articles.</param>
+        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <returns>Response object containing articles</returns>
-        /// <response code="200">Response object containing articles</response>
-        /// <response code="400">If <paramref name="take"/> is not between 0 and 100 or <paramref name="skip"/> is lower than 0</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
+        /// <returns>Response object containing articles.</returns>
+        /// <response code="200">Response object containing articles.</response>
+        /// <response code="400">If <paramref name="take"/> is not between 0 and 100 or <paramref name="skip"/> is lower than 0.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetLatestArticlesQueryResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -293,25 +294,25 @@ namespace Espresso.WebApi.Controllers
 
         #region GetCategoryArticles
         /// <summary>
-        /// Get articles from provided <paramref name="categoryId"/>
+        /// Get articles from provided <paramref name="categoryId"/>.
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Get /api/articles/category
+        ///     Get /api/articles/category.
         /// </remarks>
-        /// <param name="cancellationToken"></param>
-        /// <param name="categoryId">Category Id</param>
+        /// <param name="categoryId">Category Id.</param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <param name="articlePaginationParameters">Parameters used for pagination</param>
-        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
-        /// <param name="regionId">Region ID</param>
-        /// <param name="titleSearchQuery">Article Title Search Query</param>
-        /// <returns>Response object containing articles</returns>
-        /// <response code="200">Response object containing articles</response>
-        /// <response code="400">If validation fails</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
+        /// <param name="cancellationToken"></param>
+        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
+        /// <param name="regionId">Region ID.</param>
+        /// <param name="titleSearchQuery">Article Title Search Query.</param>
+        /// <returns>Response object containing articles.</returns>
+        /// <response code="200">Response object containing articles.</response>
+        /// <response code="400">If validation fails.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetCategoryArticlesQueryResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -355,25 +356,25 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Get articles from provided <paramref name="categoryId"/>
+        /// Get articles from provided <paramref name="categoryId"/>.
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Get /api/articles/category
+        ///     Get /api/articles/category.
         /// </remarks>
-        /// <param name="cancellationToken"></param>
-        /// <param name="categoryId">Category Id</param>
+        /// <param name="categoryId">Category Id.</param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <param name="articlePaginationParameters">Parameters used for pagination</param>
-        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
-        /// <param name="regionId">Region ID</param>
-        /// <param name="titleSearchQuery">Article Title Search Query</param>
-        /// <returns>Response object containing articles</returns>
-        /// <response code="200">Response object containing articles</response>
-        /// <response code="400">If validation fails</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
+        /// <param name="cancellationToken"></param>
+        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
+        /// <param name="regionId">Region ID.</param>
+        /// <param name="titleSearchQuery">Article Title Search Query.</param>
+        /// <returns>Response object containing articles.</returns>
+        /// <response code="200">Response object containing articles.</response>
+        /// <response code="400">If validation fails.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetCategoryArticlesQueryResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -418,24 +419,24 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Get articles from provided <paramref name="categoryId"/>
+        /// Get articles from provided <paramref name="categoryId"/>.
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Get /api/articles/category?<paramref name="take"/>=1&amp;<paramref name="skip"/>=0
+        ///     Get /api/articles/category?<paramref name="take"/>=1&amp;<paramref name="skip"/>=0.
         /// </remarks>
         /// <param name="cancellationToken"></param>
-        /// <param name="take">Number of articles</param>
-        /// <param name="skip">Number of skipped articles</param>
-        /// <param name="categoryId">Category Id</param>
+        /// <param name="take">Number of articles.</param>
+        /// <param name="categoryId">Category Id.</param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored</param>
-        /// <returns>Response object containing articles</returns>
-        /// <response code="200">Response object containing articles</response>
-        /// <response code="400">If <paramref name="take"/> is not between and 100 or <paramref name="skip"/> is lower than 0 or <paramref name="categoryId"/> is not valid category id</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="skip">Number of skipped articles.</param>
+        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
+        /// <returns>Response object containing articles.</returns>
+        /// <response code="200">Response object containing articles.</response>
+        /// <response code="400">If <paramref name="take"/> is not between and 100 or <paramref name="skip"/> is lower than 0 or <paramref name="categoryId"/> is not valid category id.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetCategoryArticlesQueryResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -475,21 +476,21 @@ namespace Espresso.WebApi.Controllers
         #endregion
 
         /// <summary>
-        /// Get trending articles
+        /// Get trending articles.
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Get /api/articles/trending
+        ///     Get /api/articles/trending.
         /// </remarks>
-        /// <param name="cancellationToken"></param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <param name="articlePaginationParameters">Parameters used for pagination</param>
-        /// <returns>Response object containing articles</returns>
-        /// <response code="200">Response object containing articles</response>
-        /// <response code="400">If validation fails</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Response object containing articles.</returns>
+        /// <response code="200">Response object containing articles.</response>
+        /// <response code="400">If validation fails.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetTrendingArticlesQueryResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -526,23 +527,23 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Get featured articles
+        /// Get featured articles.
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Get /api/articles/featured
+        ///     Get /api/articles/featured.
         /// </remarks>
         /// <param name="cancellationToken"></param>
-        /// <param name="newsPortalIds">NewsPortal Ids comma delimited</param>
-        /// <param name="categoryIds">Category Ids comma delimited</param>
+        /// <param name="newsPortalIds">NewsPortal Ids comma delimited.</param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <param name="articlePaginationParameters">Parameters used for pagination</param>
-        /// <returns>Response object containing articles</returns>
-        /// <response code="200">Response object containing articles</response>
-        /// <response code="400">If validation fails</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
+        /// <param name="categoryIds">Category Ids comma delimited.</param>
+        /// <returns>Response object containing articles.</returns>
+        /// <response code="200">Response object containing articles.</response>
+        /// <response code="400">If validation fails.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetTrendingArticlesQueryResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -584,22 +585,21 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Increments Trending Score for article with <paramref name="articleId"/>
+        /// Increments Trending Score for article with <paramref name="articleId"/>.
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     Post /api/articles/score/<paramref name="articleId"/>
+        ///     Post /api/articles/score/<paramref name="articleId"/>.
         /// </remarks>
-        /// <param name="cancellationToken"></param>
-        /// <param name="articleId">Article Id</param>
         /// <param name="basicInformationsHeaderParameters"></param>
-        /// <returns></returns>
-        /// <response code="200">When operation is successfull</response>
-        /// <response code="400">If <paramref name="articleId"/> is not valid Guid</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="404">If resource is not found</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="articleId">Article Id.</param>
+        /// <param name="cancellationToken"></param>
+        /// <response code="200">When operation is successfull.</response>
+        /// <response code="400">If <paramref name="articleId"/> is not valid Guid.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="404">If resource is not found.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -610,6 +610,8 @@ namespace Espresso.WebApi.Controllers
         [ApiVersion("2.1")]
         [ApiVersion("2.0")]
         [ApiVersion("1.4")]
+        [ApiVersion("1.3")]
+        [ApiVersion("1.2")]
         [HttpPatch]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/articles/{articleId}")]
@@ -634,68 +636,18 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Increments Trending Score for article with <paramref name="articleId"/>
+        /// Hide article with <paramref name="articleId"/>.
         /// </summary>
-        /// <remarks>
-        /// Sample request:
-        ///     Post /api/articles/score/<paramref name="articleId"/>
-        /// </remarks>
-        /// <param name="cancellationToken"></param>
-        /// <param name="articleId">Article Id</param>
-        /// <param name="basicInformationsHeaderParameters"></param>
-        /// <returns></returns>
-        /// <response code="200">When operation is successfull</response>
-        /// <response code="400">If <paramref name="articleId"/> is not valid Guid</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="404">If resource is not found</response>
-        /// <response code="500">If unhandled exception occurred</response>
-        [Produces(MimeTypeConstants.Json)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
-        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
-        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionDto))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
-        [ApiVersion("1.3")]
-        [ApiVersion("1.2")]
-        [HttpPatch]
-        [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
-        [Route("api/articles/score/{articleId}")]
-        public async Task<IActionResult> IncrementArticleScore_1_3(
-            [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            [Required] Guid articleId,
-            CancellationToken cancellationToken
-        )
-        {
-            await Sender.Send(
-                request: new IncrementNumberOfClicksCommand
-                {
-                    Id = articleId,
-                    TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
-                    ConsumerVersion = basicInformationsHeaderParameters.Version,
-                    DeviceType = basicInformationsHeaderParameters.DeviceType,
-                },
-                cancellationToken: cancellationToken
-            );
-
-            return Ok();
-        }
-
-        /// <summary>
-        /// Hide article with <paramref name="articleId"/>
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <param name="articleId">Article Id</param>
+        /// <param name="basicInformationsHeaderParameters">Basic App Information.</param>
+        /// <param name="articleId">Article Id.</param>
         /// <param name="isHidden"></param>
-        /// <param name="basicInformationsHeaderParameters">Basic App Information</param>
-        /// <returns></returns>
-        /// <response code="200">When operation is successfull</response>
-        /// <response code="400">If <paramref name="articleId"/> is not valid Guid</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="404">If resource is not found</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="cancellationToken"></param>
+        /// <response code="200">When operation is successfull.</response>
+        /// <response code="400">If <paramref name="articleId"/> is not valid Guid.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="404">If resource is not found.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -731,18 +683,17 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Set featured articles configuration
+        /// Set featured articles configuration.
         /// </summary>
-        /// <param name="cancellationToken"></param>
+        /// <param name="basicInformationsHeaderParameters">Basic App Information.</param>
         /// <param name="requestBody"></param>
-        /// <param name="basicInformationsHeaderParameters">Basic App Information</param>
-        /// <returns></returns>
-        /// <response code="200">When operation is successfull</response>
-        /// <response code="400">If validation fails</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="404">If resource is not found</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="cancellationToken"></param>
+        /// <response code="200">When operation is successfull.</response>
+        /// <response code="400">If validation fails.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="404">If resource is not found.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
@@ -784,19 +735,18 @@ namespace Espresso.WebApi.Controllers
         }
 
         /// <summary>
-        /// Auto Complete Article Titles
+        /// Auto Complete Article Titles.
         /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <param name="basicInformationsHeaderParameters">Basic App Information</param>
+        /// <param name="basicInformationsHeaderParameters">Basic App Information.</param>
         /// <param name="titleSearchQuery"></param>
         /// <param name="paginationParameters"></param>
-        /// <returns></returns>
-        /// <response code="200">When operation is successfull</response>
-        /// <response code="400">If validation fails</response>
-        /// <response code="401">If API Key is invalid or missing</response>
-        /// <response code="403">If API Key is forbiden from requested resource</response>
-        /// <response code="404">If resource is not found</response>
-        /// <response code="500">If unhandled exception occurred</response>
+        /// <param name="cancellationToken"></param>
+        /// <response code="200">When operation is successfull.</response>
+        /// <response code="400">If validation fails.</response>
+        /// <response code="401">If API Key is invalid or missing.</response>
+        /// <response code="403">If API Key is forbiden from requested resource.</response>
+        /// <response code="404">If resource is not found.</response>
+        /// <response code="500">If unhandled exception occurred.</response>
         [Produces(MimeTypeConstants.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]

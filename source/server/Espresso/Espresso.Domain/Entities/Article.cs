@@ -9,7 +9,6 @@ namespace Espresso.Domain.Entities
     public class Article :
         IEntity<Guid, Article>
     {
-
         #region Constants
         public const int SummaryMaxLength = 2000;
         public const int TitleMaxLength = 500;

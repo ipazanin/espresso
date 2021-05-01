@@ -11,7 +11,6 @@ namespace Espresso.WebApi.Authentication
         /// 
         /// </summary>
         /// <param name="providedApiKey"></param>
-        /// <returns></returns>
         public Task<ApiKey> GetApiKey(string providedApiKey);
     }
 }

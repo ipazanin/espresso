@@ -1,6 +1,6 @@
 ﻿namespace Espresso.Common.Constants
 {
-    public class FileExtensionConstants
+    public static class FileExtensionConstants
     {
         public const string Png = ".png";
 

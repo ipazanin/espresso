@@ -15,19 +15,16 @@ namespace Espresso.WebApi.Configuration
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
         public string SpaProxyServerUrl => _configuration.GetValue<string>("SpaProxyServerUrl");
 
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
         public bool UseSpaProxyServer => _configuration.GetValue<bool>("UseSpaProxyServer");
 
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
         public bool EnableCors => _configuration.GetValue<bool>("EnableCors");
         #endregion
 

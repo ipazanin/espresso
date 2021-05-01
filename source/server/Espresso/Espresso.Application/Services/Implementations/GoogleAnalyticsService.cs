@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 namespace Espresso.Application.Services.Implementations
 {
     /// <summary>
-    /// GoogleAnalyticsService
+    /// GoogleAnalyticsService.
     /// </summary>
     public class GoogleAnalyticsService : IGoogleAnalyticsService
     {
@@ -30,21 +30,21 @@ namespace Espresso.Application.Services.Implementations
         #region Constructors
 
         /// <summary>
-        /// GoogleAnalyticsService Constructor
+        /// GoogleAnalyticsService Constructor.
         /// </summary>
         public GoogleAnalyticsService(
             ILoggerService<GoogleAnalyticsService> loggerService
         )
         {
             var googleAnalyticsSecretsFilePath = Path.Combine(
-                path1: AppDomain.CurrentDomain.BaseDirectory ?? "",
+                path1: AppDomain.CurrentDomain.BaseDirectory ?? string.Empty,
                 path2: GoogleAnalyticsSecretsFileName
             );
 
             _loggerService = loggerService;
             _client = new AlphaAnalyticsDataClientBuilder
             {
-                CredentialsPath = googleAnalyticsSecretsFilePath
+                CredentialsPath = googleAnalyticsSecretsFilePath,
             }.Build();
         }
 
@@ -63,7 +63,7 @@ namespace Espresso.Application.Services.Implementations
                     new DateRange
                     {
                         StartDate = "1daysAgo",
-                        EndDate = "today"
+                        EndDate = "today",
                     },
                 },
             };
@@ -86,7 +86,7 @@ namespace Espresso.Application.Services.Implementations
                     new DateRange
                     {
                         StartDate = "1daysAgo",
-                        EndDate = "today"
+                        EndDate = "today",
                     },
                 },
             };
