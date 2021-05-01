@@ -54,22 +54,18 @@ namespace Espresso.Dashboard.ParseRssFeeds
             CancellationToken cancellationToken
         )
         {
-            var rssFeedItems = await _loadRssFeedsService.ParseRssFeeds(
+            var rssFeedItemsChannel = await _loadRssFeedsService.ParseRssFeeds(
                 rssFeeds: request.RssFeeds,
                 cancellationToken: cancellationToken
             );
 
-            var articles = await _parseArticlesService.CreateArticlesFromRssFeedItems(
-                rssFeedItems: rssFeedItems,
+            var articlesChannel = await _parseArticlesService.CreateArticlesFromRssFeedItems(
+                rssFeedItems: rssFeedItemsChannel,
                 categories: request.Categories,
                 cancellationToken: cancellationToken
             );
 
-            var uniqueArticles = _sortArticlesService.RemoveDuplicateArticles(articles);
-
-            var lastSimilarityGroupingTime = request.Articles.Values.Any() ?
-                request.Articles.Values.Max(article => article.CreateDateTime) :
-                new DateTime();
+            var uniqueArticles = await _sortArticlesService.RemoveDuplicateArticles(articlesChannel, cancellationToken);
 
             var (createArticles, updateArticlesWithModifiedProperties, createArticleCategories, deleteArticleCategories) = _sortArticlesService
                 .SortArticles(
@@ -83,6 +79,10 @@ namespace Espresso.Dashboard.ParseRssFeeds
                 savedArticles: request.Articles,
                 changedArticles: createArticles.Union(updateArticles)
             );
+
+            var lastSimilarityGroupingTime = request.Articles.Values.Any() ?
+                request.Articles.Values.Max(article => article.CreateDateTime) :
+                new DateTime();
 
             var similarArticles = _groupSimilarArticlesService.GroupSimilarArticles(
                 articles: request.Articles.Values,

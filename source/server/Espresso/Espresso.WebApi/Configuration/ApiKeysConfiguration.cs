@@ -39,7 +39,7 @@ namespace Espresso.WebApi.Configuration
         public string DevAndroidApiKey => _configuration.GetValue<string>("DevAndroid");
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string DevIosApiKey => _configuration.GetValue<string>("DevIos");
         #endregion

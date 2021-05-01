@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Channels;
+using System.Threading.Tasks;
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
 
@@ -61,16 +64,18 @@ namespace Espresso.Domain.Services
             return (createArticles, updatedArticlesWithModifiedProperties, createArticleCategories, deleteArticleCategories);
         }
 
-        public IEnumerable<Article> RemoveDuplicateArticles(IEnumerable<Article> articles)
+        public async Task<IEnumerable<Article>> RemoveDuplicateArticles(Channel<Article> articlesChannel, CancellationToken cancellationToken)
         {
-            var capacity = articles.Count();
-            var articleIdArticleDictionary = new Dictionary<(int newsPortalId, string articleId), Guid>(capacity);
-            var titleArticleDictionary = new Dictionary<(int newsPortalId, string title), Guid>(capacity);
-            var summaryArticleDictionary = new Dictionary<(int newsPortalId, string summary), Guid>(capacity);
+            var reader = articlesChannel.Reader;
+            var articleIdArticleDictionary = new Dictionary<(int newsPortalId, string articleId), Guid>();
+            var titleArticleDictionary = new Dictionary<(int newsPortalId, string title), Guid>();
+            var summaryArticleDictionary = new Dictionary<(int newsPortalId, string summary), Guid>();
 
-            var uniqueArticles = new Dictionary<Guid, Article>(capacity);
+            var uniqueArticles = new Dictionary<Guid, Article>();
 
-            foreach (var article in articles)
+            var articles = reader.ReadAllAsync(cancellationToken);
+
+            await foreach (var article in articles)
             {
                 if (
                     articleIdArticleDictionary.TryGetValue((article.NewsPortalId, article.Url), out var alreadyParsedArticleId) ||
