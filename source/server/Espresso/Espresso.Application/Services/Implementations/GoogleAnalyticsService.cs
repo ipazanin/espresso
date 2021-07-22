@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Espresso.Application.Services.Contracts;
 using Espresso.Domain.IServices;
-using Google.Analytics.Data.V1Alpha;
+using Google.Analytics.Data.V1Beta;
 using Microsoft.Extensions.Logging;
 
 namespace Espresso.Application.Services.Implementations
@@ -15,7 +15,7 @@ namespace Espresso.Application.Services.Implementations
     {
         #region Constants
 
-        private const string PropertyId = "232499903";
+        private const string PropertyId = "properties/232499903";
         private const string GoogleAnalyticsSecretsFileName = "google-analytics-key.json";
 
         #endregion Constants
@@ -23,7 +23,7 @@ namespace Espresso.Application.Services.Implementations
         #region Fields
 
         private readonly ILoggerService<GoogleAnalyticsService> _loggerService;
-        private readonly AlphaAnalyticsDataClient _client;
+        private readonly BetaAnalyticsDataClient _client;
 
         #endregion Fields
 
@@ -42,7 +42,7 @@ namespace Espresso.Application.Services.Implementations
             );
 
             _loggerService = loggerService;
-            _client = new AlphaAnalyticsDataClientBuilder
+            _client = new BetaAnalyticsDataClientBuilder
             {
                 CredentialsPath = googleAnalyticsSecretsFilePath,
             }.Build();
@@ -56,7 +56,7 @@ namespace Espresso.Application.Services.Implementations
         {
             var request = new RunReportRequest
             {
-                Entity = new Entity { PropertyId = PropertyId },
+                Property = PropertyId,
                 Metrics = { new Metric { Name = "activeUsers" }, },
                 DateRanges =
                 {
@@ -79,7 +79,7 @@ namespace Espresso.Application.Services.Implementations
         {
             var request = new RunReportRequest
             {
-                Entity = new Entity { PropertyId = PropertyId },
+                Property = PropertyId,
                 Metrics = { new Metric { Name = "totalRevenue" }, },
                 DateRanges =
                 {

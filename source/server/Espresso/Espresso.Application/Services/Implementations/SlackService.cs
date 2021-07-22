@@ -365,40 +365,40 @@ namespace Espresso.Application.Services.Implementations
             }
 
             await _memoryCache.GetOrCreateAsync(data.Text, async entry =>
-              {
-                  var httpClient = _httpClientFactory.CreateClient(HttpClientConstants.SlackHttpClientName);
+            {
+                var httpClient = _httpClientFactory.CreateClient(HttpClientConstants.SlackHttpClientName);
 
-                  entry.AbsoluteExpirationRelativeToNow = s_exceptionMessageCooldownInterval;
-                  try
-                  {
-                      var jsonString = await _jsonService.Serialize(data, cancellationToken);
+                entry.AbsoluteExpirationRelativeToNow = s_exceptionMessageCooldownInterval;
+                try
+                {
+                    var jsonString = await _jsonService.Serialize(data, cancellationToken);
 
-                      var content = new StringContent(jsonString, Encoding.UTF8, MimeTypeConstants.Json);
-                      var response = await httpClient.PostAsync(
-                          requestUri: _webHookUrl,
-                          content: content,
-                          cancellationToken: cancellationToken
-                      );
+                    var content = new StringContent(jsonString, Encoding.UTF8, MimeTypeConstants.Json);
+                    var response = await httpClient.PostAsync(
+                        requestUri: _webHookUrl,
+                        content: content,
+                        cancellationToken: cancellationToken
+                    );
 
-                      response.EnsureSuccessStatusCode();
-                  }
-                  catch (Exception exception)
-                  {
-                      const string EventName = nameof(Event.SlackServiceException);
-                      var exceptionMessage = exception.Message;
-                      var innerExceptionMessage = exception.InnerException?.Message ?? string.Empty;
+                    response.EnsureSuccessStatusCode();
+                }
+                catch (Exception exception)
+                {
+                    const string EventName = nameof(Event.SlackServiceException);
+                    var exceptionMessage = exception.Message;
+                    var innerExceptionMessage = exception.InnerException?.Message ?? string.Empty;
 
-                      var arguments = new List<(string parameterName, object parameterValue)>
+                    var arguments = new List<(string parameterName, object parameterValue)>
                       {
                           (nameof(exceptionMessage), exceptionMessage),
                           (nameof(innerExceptionMessage), innerExceptionMessage),
                       };
 
-                      _loggerService.Log(EventName, exception, LogLevel.Error, arguments);
-                  }
+                    _loggerService.Log(EventName, exception, LogLevel.Error, arguments);
+                }
 
-                  return string.Empty;
-              });
+                return string.Empty;
+            });
         }
         #endregion
 
