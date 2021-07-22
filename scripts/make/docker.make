@@ -5,8 +5,8 @@ EspressoParserDockerfilePath="source/server/Espresso/Espresso.Dashboard/Dockerfi
 
 DockerBuildContextPath="source"
 
-WebApiDockerImage="docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi"
-DashboardDockerImage="docker.pkg.github.com/espresso-news/espresso-backend/espresso-dashboard"
+WebApiDockerImage="ghcr.io/espresso-news/espresso-backend/espresso-webapi"
+DashboardDockerImage="ghcr.io/espresso-news/espresso-backend/espresso-dashboard"
 
 WebApiDockerImageGoogleContainerRegistry="gcr.io/espresso-8c4ac/espresso-webapi"
 DashboardDockerImageGoogleContainerRegistry="gcr.io/espresso-8c4ac/espresso-dashboard"
