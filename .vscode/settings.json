@@ -55,6 +55,7 @@
   "cSpell.words": ["CQRS", "Mediat", "Xunit"],
   "csharp.maxProjectFileCountForDiagnosticAnalysis": 0,
   "csharp.semanticHighlighting.enabled": true,
+  "editor.foldingImportsByDefault": true,
   "eslint.alwaysShowStatus": true,
   "eslint.format.enable": true,
   "eslint.lintTask.enable": true,
