@@ -12,6 +12,7 @@ namespace Espresso.WebApi.Configuration
         #endregion
 
         #region Properties
+
         /// <summary>
         /// 
         /// </summary>
@@ -28,7 +29,7 @@ namespace Espresso.WebApi.Configuration
         public string Username => _configuration.GetValue<string>("Username");
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string Password => _configuration.GetValue<string>("Password");
 
@@ -41,9 +42,11 @@ namespace Espresso.WebApi.Configuration
         /// 
         /// </summary>
         public string ArticlesQueueName => _configuration.GetValue<string>("ArticlesQueueName");
+
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// 
         /// </summary>
@@ -52,6 +55,7 @@ namespace Espresso.WebApi.Configuration
         {
             _configuration = configuration;
         }
+
         #endregion
     }
 }

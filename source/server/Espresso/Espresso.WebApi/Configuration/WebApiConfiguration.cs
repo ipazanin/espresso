@@ -26,7 +26,7 @@ namespace Espresso.WebApi.Configuration
             SystemTextJsonSerializerConfiguration = new SystemTextJsonSerializerConfiguration(configuration.GetSection("SystemTextJsonSerializerConfiguration"));
         }
         #endregion
-     
+
         #region Properties
         /// <summary>
         ///

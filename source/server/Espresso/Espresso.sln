@@ -1,27 +1,40 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31521.260
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.Application", "Espresso.Application\Espresso.Application.csproj", "{A30315B2-5C41-4708-8F73-43705A2A7811}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Espresso.Application", "Espresso.Application\Espresso.Application.csproj", "{A30315B2-5C41-4708-8F73-43705A2A7811}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.Domain", "Espresso.Domain\Espresso.Domain.csproj", "{1D5AFDE4-603A-42A0-BB0D-7407C66CC1C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Espresso.Domain", "Espresso.Domain\Espresso.Domain.csproj", "{1D5AFDE4-603A-42A0-BB0D-7407C66CC1C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.WebApi.Application", "Espresso.WebApi.Application\Espresso.WebApi.Application.csproj", "{2076E0C2-B6D8-47C1-AF75-6AB49A4E1FDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Espresso.WebApi.Application", "Espresso.WebApi.Application\Espresso.WebApi.Application.csproj", "{2076E0C2-B6D8-47C1-AF75-6AB49A4E1FDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.Common", "Espresso.Common\Espresso.Common.csproj", "{9926D78D-0FAE-4A0A-AE41-207B024FBCA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Espresso.Common", "Espresso.Common\Espresso.Common.csproj", "{9926D78D-0FAE-4A0A-AE41-207B024FBCA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.Dashboard.Application", "Espresso.Dashboard.Application\Espresso.Dashboard.Application.csproj", "{E904F2DD-E81E-4389-A8E3-146F681DC695}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Espresso.Dashboard.Application", "Espresso.Dashboard.Application\Espresso.Dashboard.Application.csproj", "{E904F2DD-E81E-4389-A8E3-146F681DC695}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.Persistence", "Espresso.Persistence\Espresso.Persistence.csproj", "{B047EB09-E661-4A60-84E3-A2A034D8369B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Espresso.Persistence", "Espresso.Persistence\Espresso.Persistence.csproj", "{B047EB09-E661-4A60-84E3-A2A034D8369B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.WebApi", "Espresso.WebApi\Espresso.WebApi.csproj", "{0C7371BD-FC15-49A7-A7CE-C7D4128EDBF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Espresso.WebApi", "Espresso.WebApi\Espresso.WebApi.csproj", "{0C7371BD-FC15-49A7-A7CE-C7D4128EDBF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.Common.Tests", "..\UnitTests\Espresso.Common.Tests\Espresso.Common.Tests.csproj", "{188B2D66-D686-4B56-89C3-1A9F718930DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Espresso.Common.Tests", "..\UnitTests\Espresso.Common.Tests\Espresso.Common.Tests.csproj", "{188B2D66-D686-4B56-89C3-1A9F718930DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.Domain.Tests", "..\UnitTests\Espresso.Domain.Tests\Espresso.Domain.Tests.csproj", "{DE7E6E4F-6762-46B7-99A1-4C966D14CAE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Espresso.Domain.Tests", "..\UnitTests\Espresso.Domain.Tests\Espresso.Domain.Tests.csproj", "{DE7E6E4F-6762-46B7-99A1-4C966D14CAE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.Dashboard", "Espresso.Dashboard\Espresso.Dashboard.csproj", "{F3B5D074-3701-44B4-B34B-5A5D2CE79A63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Espresso.Dashboard", "Espresso.Dashboard\Espresso.Dashboard.csproj", "{F3B5D074-3701-44B4-B34B-5A5D2CE79A63}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Espresso", "Espresso", "{4285D7BF-D1DA-4F75-946C-82A7C34A24D8}"
+	ProjectSection(SolutionItems) = preProject
+		Espresso.ruleset = Espresso.ruleset
+		nuget.config = nuget.config
+		stylecop.json = stylecop.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{BAAB2F27-53E4-4FCE-9D5D-BF33DDBC9D64}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{86A947B7-6C3D-45AF-BFD6-4CA5DD5B2CD0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{E9FC4F39-160F-43FB-8E2A-DC8ECC9C65B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,9 +44,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A30315B2-5C41-4708-8F73-43705A2A7811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -156,5 +166,26 @@ Global
 		{F3B5D074-3701-44B4-B34B-5A5D2CE79A63}.Release|x64.Build.0 = Release|Any CPU
 		{F3B5D074-3701-44B4-B34B-5A5D2CE79A63}.Release|x86.ActiveCfg = Release|Any CPU
 		{F3B5D074-3701-44B4-B34B-5A5D2CE79A63}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A30315B2-5C41-4708-8F73-43705A2A7811} = {4285D7BF-D1DA-4F75-946C-82A7C34A24D8}
+		{1D5AFDE4-603A-42A0-BB0D-7407C66CC1C3} = {4285D7BF-D1DA-4F75-946C-82A7C34A24D8}
+		{2076E0C2-B6D8-47C1-AF75-6AB49A4E1FDA} = {4285D7BF-D1DA-4F75-946C-82A7C34A24D8}
+		{9926D78D-0FAE-4A0A-AE41-207B024FBCA2} = {4285D7BF-D1DA-4F75-946C-82A7C34A24D8}
+		{E904F2DD-E81E-4389-A8E3-146F681DC695} = {4285D7BF-D1DA-4F75-946C-82A7C34A24D8}
+		{B047EB09-E661-4A60-84E3-A2A034D8369B} = {4285D7BF-D1DA-4F75-946C-82A7C34A24D8}
+		{0C7371BD-FC15-49A7-A7CE-C7D4128EDBF6} = {4285D7BF-D1DA-4F75-946C-82A7C34A24D8}
+		{188B2D66-D686-4B56-89C3-1A9F718930DD} = {BAAB2F27-53E4-4FCE-9D5D-BF33DDBC9D64}
+		{DE7E6E4F-6762-46B7-99A1-4C966D14CAE2} = {BAAB2F27-53E4-4FCE-9D5D-BF33DDBC9D64}
+		{F3B5D074-3701-44B4-B34B-5A5D2CE79A63} = {4285D7BF-D1DA-4F75-946C-82A7C34A24D8}
+		{4285D7BF-D1DA-4F75-946C-82A7C34A24D8} = {E9FC4F39-160F-43FB-8E2A-DC8ECC9C65B1}
+		{BAAB2F27-53E4-4FCE-9D5D-BF33DDBC9D64} = {E9FC4F39-160F-43FB-8E2A-DC8ECC9C65B1}
+		{E9FC4F39-160F-43FB-8E2A-DC8ECC9C65B1} = {86A947B7-6C3D-45AF-BFD6-4CA5DD5B2CD0}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {656518D2-7A5F-48DC-8592-AABBE0A5C59A}
 	EndGlobalSection
 EndGlobal
