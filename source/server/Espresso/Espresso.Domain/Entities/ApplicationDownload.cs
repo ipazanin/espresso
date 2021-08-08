@@ -1,5 +1,8 @@
-﻿using System;
+﻿// ApplicationDownload.cs
+//
+// © 2021 Espresso News. All rights reserved.
 
+using System;
 using Espresso.Common.Enums;
 using Espresso.Domain.Infrastructure;
 
@@ -7,16 +10,10 @@ namespace Espresso.Domain.Entities
 {
     public class ApplicationDownload : IEntity<int, ApplicationDownload>
     {
-
-        #region Constants
-
         public const int WebApiVersionMaxLenght = 10;
 
         public const int MobileAppVersionMaxLenght = 20;
 
-        #endregion
-
-        #region Properties
         public int Id { get; private set; }
 
         public string WebApiVersion { get; private set; }
@@ -24,16 +21,14 @@ namespace Espresso.Domain.Entities
         public string MobileAppVersion { get; private set; }
 
         /// <summary>
-        /// UTC
+        /// Gets uTC.
         /// </summary>
         public DateTime DownloadedTime { get; private set; }
 
         public DeviceType MobileDeviceType { get; private set; }
-        #endregion
 
-        #region Constructors
         /// <summary>
-        /// ORM Constructor
+        /// ORM Constructor.
         /// </summary>
         private ApplicationDownload()
         {
@@ -41,6 +36,13 @@ namespace Espresso.Domain.Entities
             MobileAppVersion = null!;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApplicationDownload"/> class.
+        /// </summary>
+        /// <param name="webApiVersion"></param>
+        /// <param name="mobileAppVersion"></param>
+        /// <param name="downloadedTime"></param>
+        /// <param name="mobileDeviceType"></param>
         public ApplicationDownload(
             string webApiVersion,
             string mobileAppVersion,
@@ -53,6 +55,5 @@ namespace Espresso.Domain.Entities
             DownloadedTime = downloadedTime;
             MobileDeviceType = mobileDeviceType;
         }
-        #endregion
     }
 }

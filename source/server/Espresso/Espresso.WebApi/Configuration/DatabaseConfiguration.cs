@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿// DatabaseConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Espresso.WebApi.Configuration
@@ -8,11 +12,8 @@ namespace Espresso.WebApi.Configuration
     /// </summary>
     public class DatabaseConfiguration
     {
-        #region Fields
         private readonly IConfigurationSection _configuration;
-        #endregion
 
-        #region Properties
         /// <summary>
         ///
         /// </summary>
@@ -37,17 +38,14 @@ namespace Espresso.WebApi.Configuration
         ///
         /// </summary>
         public bool EnableSensitiveDataLogging => _configuration.GetValue<bool>("EnableSensitiveDataLogging");
-        #endregion
 
-        #region Constructors
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="DatabaseConfiguration"/> class.
         /// </summary>
         /// <param name="configuration"></param>
         public DatabaseConfiguration(IConfigurationSection configuration)
         {
             _configuration = configuration;
         }
-        #endregion
     }
 }

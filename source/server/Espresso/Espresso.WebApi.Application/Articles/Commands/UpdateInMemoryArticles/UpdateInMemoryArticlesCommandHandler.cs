@@ -1,4 +1,8 @@
-﻿using System;
+﻿// UpdateInMemoryArticlesCommandHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -16,13 +20,16 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
     public class UpdateInMemoryArticlesCommandHandler :
         IRequestHandler<UpdateInMemoryArticlesCommand, UpdateInMemoryArticlesCommandResponse>
     {
-        #region Fields
         private readonly IMemoryCache _memoryCache;
         private readonly ITrendingScoreService _trendingScoreService;
         private readonly IRemoveOldArticlesService _removeOldArticlesService;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateInMemoryArticlesCommandHandler"/> class.
+        /// </summary>
+        /// <param name="memoryCache"></param>
+        /// <param name="trendingScoreService"></param>
+        /// <param name="removeOldArticlesService"></param>
         public UpdateInMemoryArticlesCommandHandler(
             IMemoryCache memoryCache,
             ITrendingScoreService trendingScoreService,
@@ -33,9 +40,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
             _trendingScoreService = trendingScoreService;
             _removeOldArticlesService = removeOldArticlesService;
         }
-        #endregion
 
-        #region Methods
         public Task<UpdateInMemoryArticlesCommandResponse> Handle(UpdateInMemoryArticlesCommand request, CancellationToken cancellationToken)
         {
             var savedArticlesDictionary = _memoryCache
@@ -49,7 +54,6 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
             var categoriesDictionary = _memoryCache
                 .Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey)
                 .ToDictionary(category => category.Id);
-
 
             var articleDtos = request.CreatedArticles.Union(request.UpdatedArticles);
 
@@ -73,7 +77,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
             var response = new UpdateInMemoryArticlesCommandResponse
             {
                 NumberOfUpdatedArticles = request.UpdatedArticles.Count(),
-                NumberOfCreatedArticles = request.CreatedArticles.Count()
+                NumberOfCreatedArticles = request.CreatedArticles.Count(),
             };
 
             return Task.FromResult(response);
@@ -178,6 +182,5 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
 
             return article;
         }
-        #endregion
     }
 }

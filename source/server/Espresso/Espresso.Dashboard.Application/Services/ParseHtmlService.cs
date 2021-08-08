@@ -1,9 +1,13 @@
-﻿using System.Collections.Generic;
+﻿// ParseHtmlService.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Espresso.Common.Extensions;
-using Espresso.Domain.Entities;
 using Espresso.Dashboard.Application.IServices;
+using Espresso.Domain.Entities;
 using HtmlAgilityPack;
 
 namespace Espresso.Dashboard.Application.Services

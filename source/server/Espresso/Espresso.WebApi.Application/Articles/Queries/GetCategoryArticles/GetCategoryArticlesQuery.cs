@@ -1,11 +1,14 @@
-﻿using System;
+﻿// GetCategoryArticlesQuery.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
 {
     public record GetCategoryArticlesQuery : Request<GetCategoryArticlesQueryResponse>
     {
-        #region Properties
         public int Take { get; init; }
 
         public int Skip { get; init; }
@@ -23,9 +26,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
         public string? TitleSearchQuery { get; init; }
 
         public TimeSpan MaxAgeOfNewNewsPortal { get; init; }
-        #endregion
 
-        #region Constructors
         // public GetCategoryArticlesQuery(
         //     int take,
         //     int skip,
@@ -66,6 +67,5 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
         //     NewNewsPortalsPosition = newNewsPortalsPosition;
         //     TitleSearchQuery = titleSearchQuery;
         // }
-        #endregion
     }
 }

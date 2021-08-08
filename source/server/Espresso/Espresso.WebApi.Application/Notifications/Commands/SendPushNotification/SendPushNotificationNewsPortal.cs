@@ -1,4 +1,8 @@
-﻿using System;
+﻿// SendPushNotificationNewsPortal.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Linq.Expressions;
 using Espresso.Domain.Entities;
 
@@ -6,36 +10,30 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
 {
     public record SendPushNotificationNewsPortal
     {
-        #region Properties
         /// <summary>
-        /// News Portal ID
+        /// Gets news Portal ID.
         /// </summary>
         public int Id { get; private set; }
 
         /// <summary>
-        /// News Portal Name
+        /// Gets news Portal Name.
         /// </summary>
-        public string Name { get; private set; } = "";
+        public string Name { get; private set; } = string.Empty;
 
-        public string IconUrl { get; private set; } = "";
-        #endregion
+        public string IconUrl { get; private set; } = string.Empty;
 
-        #region Constructors
         private SendPushNotificationNewsPortal()
         {
         }
-        #endregion
 
-        #region Methods
         public static Expression<Func<NewsPortal, SendPushNotificationNewsPortal>> GetProjection()
         {
             return newsPortal => new SendPushNotificationNewsPortal
             {
                 Id = newsPortal.Id,
                 Name = newsPortal.Name,
-                IconUrl = newsPortal.IconUrl
+                IconUrl = newsPortal.IconUrl,
             };
         }
-        #endregion
     }
 }

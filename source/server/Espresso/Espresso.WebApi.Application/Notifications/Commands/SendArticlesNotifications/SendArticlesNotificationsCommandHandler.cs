@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿// SendArticlesNotificationsCommandHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.WebApi.Application.Hubs;
@@ -9,24 +13,20 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendArticlesNotific
 {
     public class SendArticlesNotificationsCommandHandler : IRequestHandler<SendArticlesNotificationsCommand>
     {
-        #region Constants
         public const string LatestArticlesClientMethodName = "GetNewArticles";
-        #endregion
-
-        #region Fields
         private readonly IHubContext<ArticlesNotificationHub> _hubContext;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendArticlesNotificationsCommandHandler"/> class.
+        /// </summary>
+        /// <param name="hubContext"></param>
         public SendArticlesNotificationsCommandHandler(
             IHubContext<ArticlesNotificationHub> hubContext
         )
         {
             _hubContext = hubContext;
         }
-        #endregion
 
-        #region Methods
         public async Task<Unit> Handle(SendArticlesNotificationsCommand request, CancellationToken cancellationToken)
         {
             if (!request.CreatedArticles.Any())
@@ -51,6 +51,5 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendArticlesNotific
 
             return Unit.Value;
         }
-        #endregion
     }
 }

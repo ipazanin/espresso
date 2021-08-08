@@ -1,4 +1,8 @@
-﻿using Espresso.WebApi.Application.Configuration.Queries.GetConfiguration;
+﻿// GetConfigurationRegionType.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.WebApi.Application.Configuration.Queries.GetConfiguration;
 using GraphQL.Types;
 
 namespace Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetConfigurationTypes
@@ -9,7 +13,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetConfigu
     public class GetConfigurationRegionType : ObjectGraphType<GetConfigurationRegion>
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="GetConfigurationRegionType"/> class.
         /// </summary>
         public GetConfigurationRegionType()
         {

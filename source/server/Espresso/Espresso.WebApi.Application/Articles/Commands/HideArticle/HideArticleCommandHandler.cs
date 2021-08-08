@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿// HideArticleCommandHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.WebApi.Application.Exceptions;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
+using Espresso.WebApi.Application.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -16,6 +20,11 @@ namespace Espresso.WebApi.Application.Articles.Commands.HideArticle
         private readonly IEspressoDatabaseContext _espressoDatabaseContext;
         private readonly IMemoryCache _memoryCache;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HideArticleCommandHandler"/> class.
+        /// </summary>
+        /// <param name="espressoDatabaseContext"></param>
+        /// <param name="memoryCache"></param>
         public HideArticleCommandHandler(
             IEspressoDatabaseContext espressoDatabaseContext,
             IMemoryCache memoryCache

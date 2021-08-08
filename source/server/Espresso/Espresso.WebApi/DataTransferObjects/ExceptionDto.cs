@@ -1,55 +1,50 @@
-﻿using System.Collections.Generic;
+﻿// ExceptionDto.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using Espresso.Common.Constants;
 
 namespace Espresso.WebApi.DataTransferObjects
 {
     /// <summary>
-    /// 
+    /// Exception data transfer object.
     /// </summary>
     public class ExceptionDto
     {
-        #region Properties
         /// <summary>
-        /// 
+        /// Gets exception message.
         /// </summary>
-        /// <value></value>
         public string ExceptionMessage { get; }
 
         /// <summary>
-        /// 
+        /// Gets inner exception message.
         /// </summary>
-        /// <value></value>
         public string InnerExceptionMessage { get; }
 
         /// <summary>
-        /// 
+        /// Gets exception stack trace.
         /// </summary>
-        /// <value></value>
         public string ExceptionStackTrace { get; }
 
         /// <summary>
-        /// 
+        /// Gets inner exception stack trace.
         /// </summary>
-        /// <value></value>
         public string InnerExceptionStackTrace { get; }
 
         /// <summary>
-        /// 
+        /// gets errors.
         /// </summary>
-        /// <value></value>
         public IEnumerable<string>? Errors { get; }
-        #endregion
-
-        #region  Constructors
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="ExceptionDto"/> class.
         /// </summary>
-        /// <param name="exceptionMessage"></param>
-        /// <param name="innerExceptionMessage"></param>
-        /// <param name="exceptionStackTrace"></param>
-        /// <param name="innerExceptionStackTrace"></param>
-        /// <param name="errors"></param>
+        /// <param name="exceptionMessage">Exception message.</param>
+        /// <param name="innerExceptionMessage">Inner exception message.</param>
+        /// <param name="exceptionStackTrace">Exception stack trace.</param>
+        /// <param name="innerExceptionStackTrace">Inner exception stack trace.</param>
+        /// <param name="errors">Errors.</param>
         public ExceptionDto(
             string exceptionMessage,
             string? innerExceptionMessage,
@@ -64,6 +59,5 @@ namespace Espresso.WebApi.DataTransferObjects
             InnerExceptionStackTrace = innerExceptionStackTrace ?? FormatConstants.EmptyValue;
             Errors = errors;
         }
-        #endregion
     }
 }

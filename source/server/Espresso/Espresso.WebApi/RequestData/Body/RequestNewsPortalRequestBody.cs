@@ -1,4 +1,8 @@
-﻿namespace Espresso.WebApi.RequestData.Body
+﻿// RequestNewsPortalRequestBody.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+namespace Espresso.WebApi.RequestData.Body
 {
     /// <summary>
     /// 

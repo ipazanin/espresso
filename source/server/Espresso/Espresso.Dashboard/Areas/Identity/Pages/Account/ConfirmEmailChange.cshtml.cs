@@ -1,4 +1,8 @@
-﻿using System.Text;
+﻿// ConfirmEmailChange.cshtml.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +18,11 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfirmEmailChangeModel"/> class.
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="signInManager"></param>
         public ConfirmEmailChangeModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
@@ -23,6 +32,13 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
         [TempData]
         public string? StatusMessage { get; set; }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="email"></param>
+        /// <param name="code"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnGetAsync(string? userId, string? email, string? code)
         {
             if (userId == null || email == null || code == null)

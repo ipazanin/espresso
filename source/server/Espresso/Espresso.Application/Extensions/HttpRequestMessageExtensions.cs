@@ -1,9 +1,21 @@
-﻿using System.Net.Http;
+﻿// HttpRequestMessageExtensions.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Net.Http;
 
 namespace Espresso.Application.Extensions
 {
+    /// <summary>
+    /// Http request message extensions.
+    /// </summary>
     public static class HttpRequestMessageExtensions
     {
+        /// <summary>
+        /// Tries to mimic web browser request by adding HTTP headers to <paramref name="request"/>.
+        /// </summary>
+        /// <param name="request">HTTP request message.</param>
+        /// <returns>The <paramref name="request"/>.</returns>
         public static HttpRequestMessage AddBrowserHeadersToHttpRequestMessage(
             this HttpRequestMessage request
         )

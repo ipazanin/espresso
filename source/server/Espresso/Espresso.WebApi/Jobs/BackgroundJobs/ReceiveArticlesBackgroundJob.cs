@@ -1,4 +1,8 @@
-﻿using System;
+﻿// ReceiveArticlesBackgroundJob.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
@@ -21,17 +25,14 @@ namespace Espresso.WebApi.Services
     /// </summary>
     public class ReceiveArticlesBackgroundJob : BackgroundJob<ReceiveArticlesBackgroundJob>
     {
-        #region Fields
         private readonly IWebApiConfiguration _webApiConfiguration;
         private readonly IJsonService _jsonService;
         private readonly string _queueName;
         private readonly IModel _channel;
         private readonly EventingBasicConsumer _consumer;
-        #endregion
 
-        #region Constructors
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="ReceiveArticlesBackgroundJob"/> class.
         /// </summary>
         /// <param name="serviceScopeFactory"></param>
         /// <param name="webApiConfiguration"></param>
@@ -78,9 +79,7 @@ namespace Espresso.WebApi.Services
 
             _consumer = new EventingBasicConsumer(_channel);
         }
-        #endregion
 
-        #region Methods
         /// <summary>
         ///
         /// </summary>
@@ -135,5 +134,4 @@ namespace Espresso.WebApi.Services
             return Task.CompletedTask;
         }
     }
-    #endregion
 }

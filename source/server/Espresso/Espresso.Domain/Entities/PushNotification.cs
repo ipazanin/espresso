@@ -1,32 +1,38 @@
-﻿using System;
+﻿// PushNotification.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Linq.Expressions;
 
 namespace Espresso.Domain.Entities
 {
     public class PushNotification
     {
-        #region Constants
         public const int InternalNameMaxLength = 1000;
         public const int TitleMaxLength = 1000;
         public const int MessageMaxLength = 1000;
         public const int TopicMaxLength = 1000;
         public const int ArticleUrlMaxLength = 5000;
-        #endregion
 
-        #region Properties
         public Guid Id { get; private set; }
-        public string InternalName { get; private set; }
-        public string Title { get; private set; }
-        public string Message { get; private set; }
-        public string Topic { get; private set; }
-        public string ArticleUrl { get; private set; }
-        public bool IsSoundEnabled { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        #endregion
 
-        #region Constructors
+        public string InternalName { get; private set; }
+
+        public string Title { get; private set; }
+
+        public string Message { get; private set; }
+
+        public string Topic { get; private set; }
+
+        public string ArticleUrl { get; private set; }
+
+        public bool IsSoundEnabled { get; private set; }
+
+        public DateTime CreatedAt { get; private set; }
+
         /// <summary>
-        /// ORM Materialisation Constructor
+        /// ORM Materialisation Constructor.
         /// </summary>
         private PushNotification()
         {
@@ -37,6 +43,17 @@ namespace Espresso.Domain.Entities
             ArticleUrl = null!;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PushNotification"/> class.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="internalName"></param>
+        /// <param name="title"></param>
+        /// <param name="message"></param>
+        /// <param name="topic"></param>
+        /// <param name="articleUrl"></param>
+        /// <param name="isSoundEnabled"></param>
+        /// <param name="createdAt"></param>
         public PushNotification(
             Guid id,
             string internalName,
@@ -57,13 +74,10 @@ namespace Espresso.Domain.Entities
             IsSoundEnabled = isSoundEnabled;
             CreatedAt = createdAt;
         }
-        #endregion
 
-        #region Methods
         public static Expression<Func<PushNotification, object>> GetOrderByDescendingExpression()
         {
             return pushNotification => pushNotification.CreatedAt;
         }
-        #endregion
     }
 }

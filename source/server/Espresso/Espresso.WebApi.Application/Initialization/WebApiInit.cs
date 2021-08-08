@@ -1,4 +1,8 @@
-﻿using System;
+﻿// WebApiInit.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -33,6 +37,12 @@ namespace Espresso.WebApi.Application.Initialization
         /// <param name="context"></param>
         /// <param name="loggerService"></param>
         /// <param name="memoryCache"></param>
+/// <summary>
+/// Initializes a new instance of the <see cref="WebApiInit"/> class.
+/// </summary>
+/// <param name="memoryCache"></param>
+/// <param name="context"></param>
+/// <param name="loggerService"></param>
         public WebApiInit(
             IMemoryCache memoryCache,
             IEspressoDatabaseContext context,
@@ -52,7 +62,6 @@ namespace Espresso.WebApi.Application.Initialization
 
             await _context.Database.MigrateAsync();
 
-            #region Regions
             var regions = await _context
                 .Regions
                 .Include(region => region.NewsPortals)
@@ -63,9 +72,7 @@ namespace Espresso.WebApi.Application.Initialization
                 key: MemoryCacheConstants.RegionKey,
                 value: regions.ToList()
             );
-            #endregion
 
-            #region NewsPortals
             var newsPortals = await _context
                 .NewsPortals
                 .Include(newsPortal => newsPortal.Category)
@@ -80,9 +87,7 @@ namespace Espresso.WebApi.Application.Initialization
                 key: MemoryCacheConstants.NewsPortalKey,
                 value: newsPortals.ToList()
             );
-            #endregion
 
-            #region Categories
             var categories = await _context
                 .Categories
                 .Include(category => category.NewsPortals)
@@ -95,9 +100,7 @@ namespace Espresso.WebApi.Application.Initialization
                 key: MemoryCacheConstants.CategoryKey,
                 value: categories
             );
-            #endregion
 
-            #region Articles
             var articles = await _context.Articles
                 .Include(article => article.ArticleCategories)
                 .Include(article => article.MainArticle)
@@ -130,8 +133,6 @@ namespace Espresso.WebApi.Application.Initialization
                 value: articles
             );
 
-            #endregion
-
             stopwatch.Stop();
 
             var eventName = Event.WebApiInit.GetDisplayName();
@@ -153,7 +154,7 @@ namespace Espresso.WebApi.Application.Initialization
         private static void InitializeGoogleServices()
         {
             var firebaseKeyPath = Path.Combine(
-                path1: AppDomain.CurrentDomain.BaseDirectory ?? "",
+                path1: AppDomain.CurrentDomain.BaseDirectory ?? string.Empty,
                 path2: ConfigurationFileName
             );
             FirebaseApp.Create(new AppOptions()

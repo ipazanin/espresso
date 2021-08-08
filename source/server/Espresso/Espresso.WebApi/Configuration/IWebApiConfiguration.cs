@@ -1,4 +1,8 @@
-﻿namespace Espresso.WebApi.Configuration
+﻿// IWebApiConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+namespace Espresso.WebApi.Configuration
 {
     /// <summary>
     ///

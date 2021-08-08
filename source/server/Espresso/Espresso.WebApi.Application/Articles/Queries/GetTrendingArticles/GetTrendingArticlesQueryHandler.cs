@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// GetTrendingArticlesQueryHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,23 +17,21 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles
 {
     public class GetTrendingArticlesQueryHandler : IRequestHandler<GetTrendingArticlesQuery, GetTrendingArticlesQueryResponse>
     {
-        #region Fields
         private readonly IMemoryCache _memoryCache;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetTrendingArticlesQueryHandler"/> class.
+        /// </summary>
+        /// <param name="memoryCache"></param>
         public GetTrendingArticlesQueryHandler(
             IMemoryCache memoryCache
         )
         {
             _memoryCache = memoryCache;
         }
-        #endregion
 
-        #region Methods
         public Task<GetTrendingArticlesQueryResponse> Handle(GetTrendingArticlesQuery request, CancellationToken cancellationToken)
         {
-
             var articles = _memoryCache.Get<IEnumerable<Article>>(
                 key: MemoryCacheConstants.ArticleKey
             );
@@ -50,11 +52,10 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles
 
             var response = new GetTrendingArticlesQueryResponse
             {
-                Articles = articleDtos
+                Articles = articleDtos,
             };
 
             return Task.FromResult(result: response);
         }
-        #endregion
     }
 }

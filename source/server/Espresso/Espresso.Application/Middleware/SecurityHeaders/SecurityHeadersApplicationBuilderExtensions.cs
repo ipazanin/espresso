@@ -1,4 +1,8 @@
-﻿using System;
+﻿// SecurityHeadersApplicationBuilderExtensions.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using Microsoft.AspNetCore.Builder;
 
 namespace Espresso.Application.Middleware.SecurityHeaders
@@ -11,8 +15,9 @@ namespace Espresso.Application.Middleware.SecurityHeaders
         /// <summary>
         /// Sets Security Headers.
         /// </summary>
-        /// <param name="app"></param>
-        /// <param name="securityHeadersBuilderConfigurationAction"></param>
+        /// <param name="app">Application builder.</param>
+        /// <param name="securityHeadersBuilderConfigurationAction">Security headers builder configuration.</param>
+        /// <returns>A reference to this instance after operation is complete.</returns>
         public static IApplicationBuilder UseSecurityHeadersMiddleware(
             this IApplicationBuilder app,
             Action<SecurityHeadersBuilder> securityHeadersBuilderConfigurationAction

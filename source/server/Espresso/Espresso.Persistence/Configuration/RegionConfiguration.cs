@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿// RegionConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
+using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.RegionEnums;
-using Espresso.Common.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

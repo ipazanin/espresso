@@ -1,4 +1,8 @@
-﻿using Espresso.Domain.Entities;
+﻿// RssFeedCategoryParseConfigurationSeed.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.ValueObjects.RssFeedValueObjects;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -15,6 +19,7 @@ namespace Espresso.Persistence.DataSeed
 
             SeedCategoryParseConfiguration(categoryParseConfigurationBuilder);
         }
+
         private static void SeedCategoryParseConfiguration(
             OwnedNavigationBuilder<RssFeed, CategoryParseConfiguration> categoryParseConfigurationBuilder
         )
@@ -22,63 +27,59 @@ namespace Espresso.Persistence.DataSeed
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.JutarnjiList,
-                CategoryParseStrategy = CategoryParseStrategy.FromUrl
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl,
 
             });
 
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.NetHr,
-                CategoryParseStrategy = CategoryParseStrategy.FromUrl
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl,
 
             });
 
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.VecernjiList,
-                CategoryParseStrategy = CategoryParseStrategy.FromUrl
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl,
 
             });
 
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Telegram,
-                CategoryParseStrategy = CategoryParseStrategy.FromUrl
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl,
             });
 
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Dnevnik,
-                CategoryParseStrategy = CategoryParseStrategy.FromUrl
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl,
             });
-
-
 
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.N1,
-                CategoryParseStrategy = CategoryParseStrategy.FromUrl
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl,
             });
-
-
 
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.NarodHr,
-                CategoryParseStrategy = CategoryParseStrategy.FromUrl
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl,
             });
 
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.StoPosto,
-                CategoryParseStrategy = CategoryParseStrategy.FromUrl
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl,
 
             });
 
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Dnevno,
-                CategoryParseStrategy = CategoryParseStrategy.FromUrl
+                CategoryParseStrategy = CategoryParseStrategy.FromUrl,
 
             });
 
@@ -111,8 +112,6 @@ namespace Espresso.Persistence.DataSeed
                 RssFeedId = (int)RssFeedId.Dnevno7,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
             });
-
         }
-
     }
 }

@@ -1,4 +1,8 @@
-﻿using Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles;
+﻿// GetTrendingArticlesQueryResponseType.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles;
 using GraphQL.Types;
 
 namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetTrendingArticlesTypes
@@ -10,7 +14,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetTrendingArtic
         ObjectGraphType<GetTrendingArticlesQueryResponse>
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="GetTrendingArticlesQueryResponseType"/> class.
         /// </summary>
         public GetTrendingArticlesQueryResponseType()
         {

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// GetLatestArticlesQueryHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -14,20 +18,19 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
 {
     public class GetArticlesQueryHandler : IRequestHandler<GetLatestArticlesQuery, GetLatestArticlesQueryResponse>
     {
-        #region Fields
         private readonly IMemoryCache _memoryCache;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetArticlesQueryHandler"/> class.
+        /// </summary>
+        /// <param name="memoryCache"></param>
         public GetArticlesQueryHandler(
             IMemoryCache memoryCache
         )
         {
             _memoryCache = memoryCache;
         }
-        #endregion
 
-        #region Methods
         public Task<GetLatestArticlesQueryResponse> Handle(
             GetLatestArticlesQuery request,
             CancellationToken cancellationToken
@@ -79,7 +82,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                     .OrderByDescending(newsPortal => newsPortal.CreatedAt)
                     .First()
                     .CreatedAt
-                    .ToString(DateTimeConstants.MobileAppDateTimeFormat)
+                    .ToString(DateTimeConstants.MobileAppDateTimeFormat),
             };
 
             return Task.FromResult(result: response);
@@ -93,7 +96,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
             IEnumerable<int>? newsPortalIds
         )
         {
-
             var articles = savedArticles
                 .OrderArticlesByPublishDate()
                 .FilterArticles(
@@ -105,12 +107,11 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
                 .Skip(request.Skip)
                 .Take(request.Take);
 
-
             var projection = GetLatestArticlesArticle.GetProjection().Compile();
             var articleDtos = articles
                 .Select(article => new List<GetLatestArticlesArticle>()
                     {
-                        projection.Invoke(article)
+                        projection.Invoke(article),
                     }.Union(article.SubordinateArticles.Select(similarArticle => projection.Invoke(similarArticle.SubordinateArticle!)))
                 );
 
@@ -191,19 +192,18 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
         private static (IEnumerable<int>? newsPortalIds, IEnumerable<int>? categoryIds) ParseIds(GetLatestArticlesQuery request)
         {
             var newsPortalIds = request.NewsPortalIds
-                ?.Replace(" ", "")
+                ?.Replace(" ", string.Empty)
                 ?.Split(',')
                 ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
                 ?.Where(newsPortalId => newsPortalId != default);
 
             var categoryIds = request.CategoryIds
-                ?.Replace(" ", "")
+                ?.Replace(" ", string.Empty)
                 ?.Split(',')
                 ?.Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
                 ?.Where(categoryId => categoryId != default);
 
             return (newsPortalIds, categoryIds);
         }
-        #endregion
     }
 }

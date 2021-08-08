@@ -1,9 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// NewsPortalId.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.ComponentModel.DataAnnotations;
 
 namespace Espresso.Domain.Enums.NewsPortalEnums
 {
+    /// <summary>
+    /// <see cref="Entities.NewsPortal"/> id.
+    /// </summary>
     public enum NewsPortalId
     {
+#pragma warning disable SA1602 // Enumeration items should be documented
         [Display(Name = "Undefined")]
         Undefined = 0,
         [Display(Name = "Index.hr")]
@@ -270,5 +278,6 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         StartNews = 134,
         [Display(Name = "Viral.hr")]
         Viral = 135,
+#pragma warning restore SA1602 // Enumeration items should be documented
     }
 }

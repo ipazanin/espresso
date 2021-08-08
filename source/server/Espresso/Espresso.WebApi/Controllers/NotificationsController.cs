@@ -1,4 +1,8 @@
-﻿using System.Threading;
+﻿// NotificationsController.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Common.Constants;
@@ -25,7 +29,7 @@ namespace Espresso.WebApi.Controllers
     public class NotificationsController : ApiController
     {
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="NotificationsController"/> class.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>

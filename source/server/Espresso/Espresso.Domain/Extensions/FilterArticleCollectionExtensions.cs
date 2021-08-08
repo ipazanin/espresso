@@ -1,8 +1,12 @@
+﻿// FilterArticleCollectionExtensions.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Espresso.Domain.Entities;
 using Espresso.Common.Enums;
+using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Utilities;
 
@@ -10,7 +14,6 @@ namespace Espresso.Domain.Extensions
 {
     public static class FilterArticleCollectionExtensions
     {
-        #region Constants
         public static IEnumerable<string> BannedKeywords => new List<string>
             {
                 "virus",
@@ -43,11 +46,9 @@ namespace Espresso.Domain.Extensions
                 "stožer",
                 "respirator",
                 "bolest",
-                "ambulant"
+                "ambulant",
             };
-        #endregion
 
-        #region Methods
         public static IEnumerable<Article> FilterArticlesWithCoronaVirusContentForIosRelease(
             this IEnumerable<Article> articles,
             DeviceType deviceType,
@@ -205,7 +206,6 @@ namespace Espresso.Domain.Extensions
             return filteredArticles;
         }
 
-
         public static IEnumerable<Article> FilterTrendingArticles(
             this IEnumerable<Article> articles,
             TimeSpan maxAgeOfTrendingArticle,
@@ -228,6 +228,5 @@ namespace Espresso.Domain.Extensions
 
             return filteredArticles;
         }
-        #endregion
     }
 }

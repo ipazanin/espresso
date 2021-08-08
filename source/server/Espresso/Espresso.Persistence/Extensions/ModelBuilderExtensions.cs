@@ -1,4 +1,8 @@
-﻿using System;
+﻿// ModelBuilderExtensions.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Linq;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;

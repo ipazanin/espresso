@@ -1,4 +1,8 @@
-﻿using System;
+﻿// SortArticlesService.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -99,6 +103,5 @@ namespace Espresso.Domain.Services
 
             return uniqueArticles.Values;
         }
-
     }
 }

@@ -1,36 +1,29 @@
-﻿using System;
+﻿// DesignTimeDatabaseContextFactoryBase.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
 namespace Espresso.Persistence.Infrastructure
 {
     public abstract class DesignTimeDatabaseContextFactoryBase<TContext> :
-        IDesignTimeDbContextFactory<TContext> where TContext : DbContext
+        IDesignTimeDbContextFactory<TContext>
+        where TContext : DbContext
     {
-        #region Constants
         private const string EspressoDatabaseContextName = "EspressoDatabaseContext";
         private const string EspressoDatabaseContextConfigurationPath = "DatabaseConfiguration:EspressoDatabaseConnectionString";
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DesignTimeDatabaseContextFactoryBase{TContext}"/> class.
+        /// </summary>
         protected DesignTimeDatabaseContextFactoryBase()
         {
         }
-        #endregion
 
-        #region Methods
         public TContext CreateDbContext(string[] args)
         {
-            // var basePath = $"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}..{Path.DirectorySeparatorChar}Espresso.Dashboard/AppSettings/DatabaseSettings";
-            // var configurationFilePath = $"database-settings.{Environment.GetEnvironmentVariable(EnvironmentVariableNamesConstants.AspNetCoreEnvironment)}.json";
-            // var configuration = new ConfigurationBuilder()
-            //     .SetBasePath(basePath)
-            //     .AddJsonFile(path: configurationFilePath, optional: false)
-            //     .AddEnvironmentVariables()
-            //     .Build();
-
-            // var connectionString = configuration[EspressoDatabaseContextConfigurationPath];
-
             var connectionString = args.Length != 1 ?
                 throw new Exception("Connection String must be specified as first argument!") :
                 args[0];
@@ -41,7 +34,6 @@ namespace Espresso.Persistence.Infrastructure
         protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);
 
         /// <summary>
-        /// TODO: Add multiple providers
         /// </summary>
         /// <param name="connectionString"></param>
         /// <returns></returns>
@@ -62,6 +54,5 @@ namespace Espresso.Persistence.Infrastructure
 
             return CreateNewInstance(optionsBuilder.Options);
         }
-        #endregion
     }
 }

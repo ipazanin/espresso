@@ -1,4 +1,8 @@
-﻿using System;
+﻿// SwaggerServiceCollectionExtensions.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;

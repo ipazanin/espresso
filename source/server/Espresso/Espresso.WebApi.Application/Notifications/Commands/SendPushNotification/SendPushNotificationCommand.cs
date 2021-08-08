@@ -1,4 +1,8 @@
-﻿using System;
+﻿// SendPushNotificationCommand.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using MediatR;
 
@@ -7,11 +11,11 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
     public record SendPushNotificationCommand : Request<Unit>
     {
         public Guid ArticleId { get; init; }
-        public string InternalName { get; init; } = "";
-        public string Title { get; init; } = "";
-        public string Message { get; init; } = "";
-        public string Topic { get; init; } = "";
-        public string ArticleUrl { get; init; } = "";
+        public string InternalName { get; init; } = string.Empty;
+        public string Title { get; init; } = string.Empty;
+        public string Message { get; init; } = string.Empty;
+        public string Topic { get; init; } = string.Empty;
+        public string ArticleUrl { get; init; } = string.Empty;
         public bool IsSoundEnabled { get; init; }
     }
 }

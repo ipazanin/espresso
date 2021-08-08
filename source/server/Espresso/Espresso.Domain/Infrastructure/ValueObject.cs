@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿// ValueObject.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Espresso.Domain.Infrastructure
 {
     /// <summary>
-    /// Source: https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/microservice-ddd-cqrs-patterns/implement-value-objects
+    /// Source: https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/microservice-ddd-cqrs-patterns/implement-value-objects.
     /// </summary>
     public abstract class ValueObject
     {

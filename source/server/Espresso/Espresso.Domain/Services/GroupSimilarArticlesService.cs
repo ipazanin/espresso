@@ -1,3 +1,7 @@
+﻿// GroupSimilarArticlesService.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,24 +14,21 @@ namespace Espresso.Domain.Services
 {
     public class GroupSimilarArticlesService : IGroupSimilarArticlesService
     {
-        #region Constants
-
         private const double MaxSimilarityScore = 1d;
-
-        #endregion
-
-        #region Fields
-
         private readonly double _similarityScoreThreshold;
         private readonly TimeSpan _articlePublishDateTimeDiferenceThreshold;
         private readonly ILoggerService<GroupSimilarArticlesService> _loggerService;
         private readonly TimeSpan _maxAgeOfSimilarArticleChecking;
         private readonly int _minimalNumberOfWordsForArticleToBeComparable;
 
-        #endregion
-
-        #region Constructors
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GroupSimilarArticlesService"/> class.
+        /// </summary>
+        /// <param name="similarityScoreThreshold"></param>
+        /// <param name="articlePublishDateTimeDiferenceThreshold"></param>
+        /// <param name="loggerService"></param>
+        /// <param name="maxAgeOfSimilarArticleChecking"></param>
+        /// <param name="minimalNumberOfWordsForArticleToBeComparable"></param>
         public GroupSimilarArticlesService(
             double similarityScoreThreshold,
             TimeSpan articlePublishDateTimeDiferenceThreshold,
@@ -42,10 +43,6 @@ namespace Espresso.Domain.Services
             _maxAgeOfSimilarArticleChecking = maxAgeOfSimilarArticleChecking;
             _minimalNumberOfWordsForArticleToBeComparable = minimalNumberOfWordsForArticleToBeComparable;
         }
-
-        #endregion
-
-        #region Methods
 
         public IEnumerable<SimilarArticle> GroupSimilarArticles(
             IEnumerable<Article> articles,
@@ -89,11 +86,11 @@ namespace Espresso.Domain.Services
                     eventName: "GroupSimilarArticles Batch",
                     logLevel: LogLevel.Trace,
                     namedArguments: new (string argumentName, object argumentValue)[]
-                    {
-                        ("Total Number Of Articles", totalCount),
-                        ("Not Matched Articles Count", notMatchedArticles.Count),
-                        ("Current Batch", count++),
-                    }
+                        {
+                            ("Total Number Of Articles", totalCount),
+                            ("Not Matched Articles Count", notMatchedArticles.Count),
+                            ("Current Batch", count++),
+                        }
                 );
             }
             return similarArticles;
@@ -237,7 +234,5 @@ namespace Espresso.Domain.Services
             }
             return matchedCases / length;
         }
-
-        #endregion
     }
 }

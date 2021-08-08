@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿// GetApplicationDownloadStatisticsQueryHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Enums;
@@ -10,14 +14,12 @@ namespace Espresso.WebApi.Application.ApplicationDownloads.Queries.GetApplicatio
 {
     public class GetApplicationDownloadStatisticsQueryHandler : IRequestHandler<GetApplicationDownloadStatisticsQuery, GetApplicationDownloadStatisticsQueryResponse>
     {
-        #region Fields
-
         private readonly IEspressoDatabaseContext _espressoDatabaseContext;
 
-        #endregion
-
-        #region Constructors
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetApplicationDownloadStatisticsQueryHandler"/> class.
+        /// </summary>
+        /// <param name="espressoDatabaseContext"></param>
         public GetApplicationDownloadStatisticsQueryHandler(
             IEspressoDatabaseContext espressoDatabaseContext
         )
@@ -25,9 +27,6 @@ namespace Espresso.WebApi.Application.ApplicationDownloads.Queries.GetApplicatio
             _espressoDatabaseContext = espressoDatabaseContext;
         }
 
-        #endregion
-
-        #region Methods
         public async Task<GetApplicationDownloadStatisticsQueryResponse> Handle(GetApplicationDownloadStatisticsQuery request, CancellationToken cancellationToken)
         {
             var applicationDownloads = await _espressoDatabaseContext
@@ -45,11 +44,10 @@ namespace Espresso.WebApi.Application.ApplicationDownloads.Queries.GetApplicatio
             {
                 AndroidDownloadsCount = androidCount,
                 IosDownloadsCount = iosCount,
-                TotalDownloadCount = androidCount + iosCount
+                TotalDownloadCount = androidCount + iosCount,
             };
 
             return response;
         }
-        #endregion
     }
 }

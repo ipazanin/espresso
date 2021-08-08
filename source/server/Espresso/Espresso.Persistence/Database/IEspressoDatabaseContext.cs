@@ -1,4 +1,8 @@
-﻿using System.Threading;
+﻿// IEspressoDatabaseContext.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -9,30 +13,39 @@ namespace Espresso.Persistence.Database
 {
     public interface IEspressoDatabaseContext
     {
-        #region Properties
-
         public DbSet<NewsPortal> NewsPortals { get; }
+
         public DbSet<RssFeed> RssFeeds { get; }
+
         public DbSet<Article> Articles { get; }
+
         public DbSet<Category> Categories { get; }
+
         public DbSet<ArticleCategory> ArticleCategories { get; }
+
         public DbSet<ApplicationDownload> ApplicationDownload { get; }
+
         public DbSet<RssFeedCategory> RssFeedCategory { get; }
+
         public DbSet<PushNotification> PushNotifications { get; }
+
         public DbSet<Region> Regions { get; }
+
         public DbSet<SimilarArticle> SimilarArticles { get; }
 
         public DatabaseFacade Database { get; }
 
-        #endregion
+        public DbSet<T> Set<T>()
+            where T : class;
 
-        #region Methods
-
-        public DbSet<T> Set<T>() where T : class;
-
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 
-        public EntityEntry<T> Entry<T>(T entity) where T : class;
-        #endregion
+        public EntityEntry<T> Entry<T>(T entity)
+            where T : class;
     }
 }

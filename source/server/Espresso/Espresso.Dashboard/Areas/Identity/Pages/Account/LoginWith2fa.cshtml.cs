@@ -1,4 +1,8 @@
-﻿using System;
+﻿// LoginWith2fa.cshtml.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -15,6 +19,11 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginWith2faModel> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LoginWith2faModel"/> class.
+        /// </summary>
+        /// <param name="signInManager"></param>
+        /// <param name="logger"></param>
         public LoginWith2faModel(SignInManager<IdentityUser> signInManager, ILogger<LoginWith2faModel> logger)
         {
             _signInManager = signInManager;
@@ -40,6 +49,12 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
             public bool RememberMachine { get; set; }
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="rememberMe"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnGetAsync(bool rememberMe, string? returnUrl = null)
         {
             // Ensure the user has gone through the username & password screen first
@@ -56,6 +71,12 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
             return Page();
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="rememberMe"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostAsync(bool rememberMe, string? returnUrl = null)
         {
             if (!ModelState.IsValid)

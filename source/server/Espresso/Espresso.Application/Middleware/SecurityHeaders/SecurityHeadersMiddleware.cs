@@ -1,4 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿// SecurityHeadersMiddleware.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
 namespace Espresso.Application.Middleware.SecurityHeaders
@@ -12,10 +16,11 @@ namespace Espresso.Application.Middleware.SecurityHeaders
         private readonly SecurityHeadersPolicy _policy;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="SecurityHeadersMiddleware"/> class.
         /// Security Headers Middleware Constructor.
         /// </summary>
-        /// <param name="next"></param>
-        /// <param name="policy"></param>
+        /// <param name="next">Next request delegate.</param>
+        /// <param name="policy">Security headers policy.</param>
         public SecurityHeadersMiddleware(RequestDelegate next, SecurityHeadersPolicy policy)
         {
             _next = next;
@@ -25,7 +30,8 @@ namespace Espresso.Application.Middleware.SecurityHeaders
         /// <summary>
         /// Invokes Middleware.
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="context">Http context.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task Invoke(HttpContext context)
         {
             var headers = context.Response.Headers;

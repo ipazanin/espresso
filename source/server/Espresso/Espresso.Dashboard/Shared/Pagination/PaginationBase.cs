@@ -1,3 +1,7 @@
+// PaginationBase.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects.PagingDataTransferObjects;
@@ -32,7 +36,7 @@ namespace Espresso.Dashboard.Shared.Pagination
                     enabled: PagingMetadata.HasPrevious(),
                     text: "Previous",
                     active: false
-                )
+                ),
             };
 
             for (var i = 1; i <= PagingMetadata.TotalPages(); i++)
@@ -57,6 +61,11 @@ namespace Espresso.Dashboard.Shared.Pagination
                 ));
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="link"></param>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         protected async Task OnSelectedPage(PaginationLink link)
         {
             if (link.Page == PagingMetadata!.CurrentPage || !link.Enabled)
@@ -79,7 +88,7 @@ namespace Espresso.Dashboard.Shared.Pagination
 
         protected string GetClass(PaginationLink link)
         {
-            var cssClass = "page-item " + (link.Enabled ? " " : "disabled ") + (link.Active ? "active" : "");
+            var cssClass = "page-item " + (link.Enabled ? " " : "disabled ") + (link.Active ? "active" : string.Empty);
             return cssClass;
         }
     }

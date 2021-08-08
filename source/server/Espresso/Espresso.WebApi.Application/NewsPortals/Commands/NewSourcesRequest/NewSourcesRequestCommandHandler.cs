@@ -1,4 +1,8 @@
-﻿using System.Threading;
+﻿// NewSourcesRequestCommandHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.Services.Contracts;
 using MediatR;
@@ -7,20 +11,19 @@ namespace Espresso.WebApi.Application.NewsPortals.Commands.NewSourcesRequest
 {
     public class NewSourcesRequestCommandHandler : IRequestHandler<NewsSourcesRequestCommand>
     {
-        #region Fields
         private readonly ISlackService _slackService;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NewSourcesRequestCommandHandler"/> class.
+        /// </summary>
+        /// <param name="slackService"></param>
         public NewSourcesRequestCommandHandler(
             ISlackService slackService
         )
         {
             _slackService = slackService;
         }
-        #endregion
 
-        #region Methods
         public async Task<Unit> Handle(
             NewsSourcesRequestCommand request,
             CancellationToken cancellationToken
@@ -36,6 +39,5 @@ namespace Espresso.WebApi.Application.NewsPortals.Commands.NewSourcesRequest
 
             return Unit.Value;
         }
-        #endregion
     }
 }

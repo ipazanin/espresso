@@ -1,10 +1,23 @@
-﻿using System.Collections.Generic;
+﻿// HttpClientExtensions.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Net.Http;
 
 namespace Espresso.Application.Extensions
 {
+    /// <summary>
+    /// Http client extensions.
+    /// </summary>
     public static class HttpClientExtensions
     {
+        /// <summary>
+        /// Adds <paramref name="httpHeaders"/> to <paramref name="httpClient"/>.
+        /// </summary>
+        /// <param name="httpClient">HTTP client.</param>
+        /// <param name="httpHeaders">HTTP headers.</param>
+        /// <returns>The <paramref name="httpClient"/>.</returns>
         public static HttpClient AddHeadersToHttpClient(
             this HttpClient httpClient,
             IEnumerable<(string headerKey, string headerValue)> httpHeaders

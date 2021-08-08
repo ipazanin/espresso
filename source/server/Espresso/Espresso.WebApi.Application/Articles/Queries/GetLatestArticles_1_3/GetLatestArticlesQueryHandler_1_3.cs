@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// GetLatestArticlesQueryHandler_1_3.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,20 +18,19 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_3
 {
     public class GetLatestArticlesQueryHandler_1_3 : IRequestHandler<GetLatestArticlesQuery_1_3, GetLatestArticlesQueryResponse_1_3>
     {
-        #region Fields
         private readonly IMemoryCache _memoryCache;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetLatestArticlesQueryHandler_1_3"/> class.
+        /// </summary>
+        /// <param name="memoryCache"></param>
         public GetLatestArticlesQueryHandler_1_3(
             IMemoryCache memoryCache
         )
         {
             _memoryCache = memoryCache;
         }
-        #endregion
 
-        #region Methods
         public Task<GetLatestArticlesQueryResponse_1_3> Handle(
             GetLatestArticlesQuery_1_3 request,
             CancellationToken cancellationToken
@@ -38,13 +41,13 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_3
             );
 
             var newsPortalIds = request.NewsPortalIds
-                ?.Replace(" ", "")
+                ?.Replace(" ", string.Empty)
                 ?.Split(',')
                 ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
                 ?.Where(newsPortalId => newsPortalId != default);
 
             var categoryIds = request.CategoryIds
-                ?.Replace(" ", "")
+                ?.Replace(" ", string.Empty)
                 ?.Split(',')
                 ?.Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
                 ?.Where(categoryId => categoryId != default);
@@ -67,11 +70,10 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_3
 
             var response = new GetLatestArticlesQueryResponse_1_3
             {
-                Articles = articleDtos
+                Articles = articleDtos,
             };
 
             return Task.FromResult(result: response);
         }
-        #endregion
     }
 }

@@ -1,19 +1,21 @@
-﻿using System.Collections.Generic;
+﻿// DashboardInit.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Persistence.Database;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Espresso.Dashboard.Application.Initialization
 {
     /// <summary>
-    /// Dashboard Initializer
+    /// Dashboard Initializer.
     /// </summary>
     public class DashboardInit : IDashboardInit
     {
-        #region Fields
-
         private readonly IEspressoIdentityDatabaseContext _espressoIdentityContext;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
@@ -25,13 +27,11 @@ namespace Espresso.Dashboard.Application.Initialization
             "miro@espressonews.co",
             "nikola.dadic@gmail.com",
             "iferencak@profico.hr",
-            "pero.pavlovicit@gmail.com"
+            "pero.pavlovicit@gmail.com",
         };
 
-        #endregion
-        #region Constructors
         /// <summary>
-        /// Dashboard Initializer Constructor
+        /// Dashboard Initializer Constructor.
         /// </summary>
         /// <param name="espressoIdentityContext"></param>
         /// <param name="roleManager"></param>
@@ -49,12 +49,10 @@ namespace Espresso.Dashboard.Application.Initialization
             _userManager = userManager;
             _adminUserPassword = adminUserPassword;
         }
-        #endregion
 
-        #region Methods
-        public async Task InitParserDeleter()
+        public Task InitParserDeleter()
         {
-            await InitEspressoIdentityDatabase();
+            return InitEspressoIdentityDatabase();
         }
 
         private async Task InitEspressoIdentityDatabase()
@@ -68,7 +66,6 @@ namespace Espresso.Dashboard.Application.Initialization
                 await _roleManager.CreateAsync(role: adminRole);
             }
 
-
             foreach (var adminUserEmail in _adminUserEmails)
             {
                 if (!await _userManager.Users.AnyAsync(user => user.Email == adminUserEmail))
@@ -79,7 +76,7 @@ namespace Espresso.Dashboard.Application.Initialization
                         NormalizedEmail = _userManager.NormalizeEmail(adminUserEmail),
                         UserName = adminUserEmail,
                         NormalizedUserName = _userManager.NormalizeEmail(adminUserEmail),
-                        EmailConfirmed = true
+                        EmailConfirmed = true,
                     };
 
                     adminUser.SecurityStamp = await _userManager.GetSecurityStampAsync(adminUser);
@@ -92,6 +89,5 @@ namespace Espresso.Dashboard.Application.Initialization
                 }
             }
         }
-        #endregion
     }
 }

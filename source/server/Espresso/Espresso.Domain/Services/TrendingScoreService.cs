@@ -1,3 +1,7 @@
+// TrendingScoreService.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +12,14 @@ namespace Espresso.Domain.Services
 {
     public class TrendingScoreService : ITrendingScoreService
     {
-        #region Fields
         private readonly int _halfOfMaxTrendingScoreValue;
         private readonly decimal _ageWeight;
 
-        #endregion
-
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrendingScoreService"/> class.
+        /// </summary>
+        /// <param name="halfOfMaxTrendingScoreValue"></param>
+        /// <param name="ageWeight"></param>
         public TrendingScoreService(
             int halfOfMaxTrendingScoreValue,
             decimal ageWeight
@@ -23,9 +28,6 @@ namespace Espresso.Domain.Services
             _halfOfMaxTrendingScoreValue = halfOfMaxTrendingScoreValue;
             _ageWeight = ageWeight;
         }
-        #endregion
-
-        #region Methods
 
         public IEnumerable<Article> CalculateTrendingScore(IEnumerable<Article> articles)
         {
@@ -126,6 +128,5 @@ namespace Espresso.Domain.Services
 
             return normalisedTrendingScore;
         }
-        #endregion
     }
 }

@@ -1,4 +1,8 @@
-﻿using System.Threading;
+﻿// CategoriesController.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Application.Categories.Queries.GetCategories;
@@ -20,7 +24,7 @@ namespace Espresso.WebApi.Controllers
     public class CategoriesController : ApiController
     {
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="CategoriesController"/> class.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>

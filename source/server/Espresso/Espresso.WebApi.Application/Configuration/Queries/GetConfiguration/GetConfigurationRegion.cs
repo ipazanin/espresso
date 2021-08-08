@@ -1,4 +1,8 @@
-﻿using System;
+﻿// GetConfigurationRegion.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -8,23 +12,18 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
 {
     public record GetConfigurationRegion
     {
-        #region Properties
         public int Id { get; private set; }
 
-        public string Name { get; private set; } = "";
+        public string Name { get; private set; } = string.Empty;
 
-        public string Subtitle { get; private set; } = "";
+        public string Subtitle { get; private set; } = string.Empty;
 
         public IEnumerable<GetConfigurationNewsPortal> NewsPortals { get; private set; } = new List<GetConfigurationNewsPortal>();
-        #endregion
 
-        #region Constructors
         private GetConfigurationRegion()
         {
         }
-        #endregion
 
-        #region Methods
         public static Expression<Func<Region, GetConfigurationRegion>> GetProjection(TimeSpan maxAgeOfNewNewsPortal)
         {
             return region => new GetConfigurationRegion
@@ -42,6 +41,5 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
                     ),
             };
         }
-        #endregion
     }
 }

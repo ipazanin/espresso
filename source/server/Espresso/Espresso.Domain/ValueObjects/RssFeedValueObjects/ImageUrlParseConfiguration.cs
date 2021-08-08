@@ -1,6 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// ImageUrlParseConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
 
+using System;
+using System.Collections.Generic;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.Infrastructure;
 
@@ -8,8 +11,6 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
 {
     public class ImageUrlParseConfiguration : ValueObject
     {
-        #region Constants
-
         public const ImageUrlParseStrategy ImageUrlParseStrategyDefaultValue = ImageUrlParseStrategy.SecondLinkOrFromSummary;
 
         public const string ImgElementXPathDefaultValue = "";
@@ -31,9 +32,7 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         public static int? ElementExtensionIndexDefaultValue => null;
 
         public static bool? IsSavedInHtmlElementWithSrcAttributeDefaultValue => null;
-        #endregion
 
-        #region Properties
         public ImageUrlParseStrategy ImageUrlParseStrategy { get; private set; }
 
         public string XPath { get; private set; }
@@ -47,16 +46,14 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         public string? JsonWebScrapePropertyNames { get; private set; }
 
         /// <summary>
-        /// Index of element extension containing Image Url 
+        /// Gets index of element extension containing Image Url.
         /// </summary>
         public int? ElementExtensionIndex { get; private set; }
 
         public bool? IsSavedInHtmlElementWithSrcAttribute { get; private set; }
-        #endregion
 
-        #region Constructors
         /// <summary>
-        /// ORM COnstructor
+        /// ORM COnstructor.
         /// </summary>
         private ImageUrlParseConfiguration()
         {
@@ -64,6 +61,17 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
             AttributeName = null!;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageUrlParseConfiguration"/> class.
+        /// </summary>
+        /// <param name="imageUrlParseStrategy"></param>
+        /// <param name="imgElementXPath"></param>
+        /// <param name="attributeName"></param>
+        /// <param name="shouldImageUrlBeWebScraped"></param>
+        /// <param name="imageUrlWebScrapeType"></param>
+        /// <param name="jsonWebScrapePropertyNames"></param>
+        /// <param name="elementExtensionIndex"></param>
+        /// <param name="isSavedInHtmlElementWithSrcAttribute"></param>
         public ImageUrlParseConfiguration(
             ImageUrlParseStrategy imageUrlParseStrategy,
             string imgElementXPath,
@@ -84,9 +92,7 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
             ElementExtensionIndex = elementExtensionIndex;
             IsSavedInHtmlElementWithSrcAttribute = isSavedInHtmlElementWithSrcAttribute;
         }
-        #endregion
 
-        #region Methods
         public IEnumerable<string> GetPropertyNames()
         {
             var propertyNames = JsonWebScrapePropertyNames?.Split(",", StringSplitOptions.RemoveEmptyEntries) ??
@@ -104,6 +110,5 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
             yield return ImageUrlWebScrapeType;
             yield return JsonWebScrapePropertyNames;
         }
-        #endregion
     }
 }

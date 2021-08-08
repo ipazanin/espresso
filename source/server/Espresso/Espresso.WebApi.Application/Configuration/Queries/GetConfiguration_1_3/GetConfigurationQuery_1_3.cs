@@ -1,4 +1,8 @@
-﻿using Espresso.Application.Infrastructure.MediatorInfrastructure;
+﻿// GetConfigurationQuery_1_3.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.Application.Infrastructure.MediatorInfrastructure;
 
 namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3
 {

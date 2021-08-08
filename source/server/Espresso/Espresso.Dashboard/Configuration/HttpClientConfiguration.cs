@@ -1,43 +1,40 @@
+﻿// HttpClientConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using Microsoft.Extensions.Configuration;
 
 namespace Espresso.Dashboard.Configuration
 {
     /// <summary>
-    /// HttpClientConfiguration
+    /// HttpClientConfiguration.
     /// </summary>
     public class HttpClientConfiguration
     {
-        #region Fields
         private readonly IConfigurationSection _configurationSection;
-        #endregion Fields
 
-        #region Properties
         /// <summary>
-        /// Maximum Number Of Retries
+        /// Gets maximum Number Of Retries.
         /// </summary>
-        /// <returns></returns>
         public int MaxRetries => _configurationSection.GetValue<int>("MaxRetries");
 
         /// <summary>
-        /// HTTP Client Timeout
+        /// Gets hTTP Client Timeout.
         /// </summary>
-        /// <returns></returns>
         public TimeSpan Timeout => TimeSpan.FromSeconds(
             _configurationSection.GetValue<int>("TimeoutInSeconds")
         );
-        #endregion Properties
 
-        #region Constructors
         /// <summary>
-        /// HttpClientConfiguration Constructor
+        /// Initializes a new instance of the <see cref="HttpClientConfiguration"/> class.
         /// </summary>
+        /// <param name="configurationSection">Part of app configuration.</param>
         public HttpClientConfiguration(
             IConfigurationSection configurationSection
         )
         {
             _configurationSection = configurationSection;
         }
-        #endregion Constructors
     }
 }

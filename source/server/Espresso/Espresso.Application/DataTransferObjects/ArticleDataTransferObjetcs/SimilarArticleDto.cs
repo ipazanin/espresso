@@ -1,4 +1,8 @@
-﻿using System;
+﻿// SimilarArticleDto.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Linq.Expressions;
 using System.Text.Json.Serialization;
 using Espresso.Domain.Entities;
@@ -7,14 +11,33 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
 {
     public record SimilarArticleDto
     {
-        #region Properties
+        /// <summary>
+        /// Gets id.
+        /// </summary>
         public Guid Id { get; private set; }
-        public double SimilarityScore { get; private set; }
-        public Guid MainArticleId { get; private set; }
-        public Guid SubordinateArticleId { get; private set; }
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Gets similarity score.
+        /// </summary>
+        public double SimilarityScore { get; private set; }
+
+        /// <summary>
+        /// Gets man article id.
+        /// </summary>
+        public Guid MainArticleId { get; private set; }
+
+        /// <summary>
+        /// Gets subordinate article id.
+        /// </summary>
+        public Guid SubordinateArticleId { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SimilarArticleDto"/> class.
+        /// </summary>
+        /// <param name="id">Id.</param>
+        /// <param name="similarityScore">Similarity score.</param>
+        /// <param name="mainArticleId">Main article id.</param>
+        /// <param name="subordinateArticleId">Subordinate article id.</param>
         [JsonConstructor]
         public SimilarArticleDto(
             Guid id,
@@ -32,9 +55,11 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
         private SimilarArticleDto()
         {
         }
-        #endregion
 
-        #region Methods
+        /// <summary>
+        /// Creates <see cref="SimilarArticle"/> to <see cref="SimilarArticleDto"/> projection.
+        /// </summary>
+        /// <returns><see cref="SimilarArticle"/> to <see cref="SimilarArticleDto"/> projection.</returns>
         public static Expression<Func<SimilarArticle, SimilarArticleDto>> GetProjection()
         {
             return similarArticle => new SimilarArticleDto
@@ -45,6 +70,5 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
                 SubordinateArticleId = similarArticle.SubordinateArticleId,
             };
         }
-        #endregion
     }
 }

@@ -1,9 +1,16 @@
-﻿using FluentValidation;
+﻿// GetcategoryArticlesQueryValidator_2_0.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using FluentValidation;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
 {
     public class GetcategoryArticlesQueryValidator_2_0 : AbstractValidator<GetCategoryArticlesQuery_2_0>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetcategoryArticlesQueryValidator_2_0"/> class.
+        /// </summary>
         public GetcategoryArticlesQueryValidator_2_0()
         {
             RuleFor(query => query.Take).GreaterThan(0).LessThan(100);

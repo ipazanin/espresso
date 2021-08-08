@@ -1,4 +1,8 @@
-﻿using System;
+﻿// GetCategoryArticlesQueryHandler_2_0.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -14,20 +18,19 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
 {
     public class GetCategoryArticlesQueryHandler_2_0 : IRequestHandler<GetCategoryArticlesQuery_2_0, GetCategoryArticlesQueryResponse_2_0>
     {
-        #region Fields
         private readonly IMemoryCache _memoryCache;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetCategoryArticlesQueryHandler_2_0"/> class.
+        /// </summary>
+        /// <param name="memoryCache"></param>
         public GetCategoryArticlesQueryHandler_2_0(
             IMemoryCache memoryCache
         )
         {
             _memoryCache = memoryCache;
         }
-        #endregion
 
-        #region Methods
         public Task<GetCategoryArticlesQueryResponse_2_0> Handle(
             GetCategoryArticlesQuery_2_0 request,
             CancellationToken cancellationToken
@@ -42,7 +45,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
             );
 
             var newsPortalIds = request.NewsPortalIds
-                ?.Replace(" ", "")
+                ?.Replace(" ", string.Empty)
                 ?.Split(',')
                 ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
                 ?.Where(newsPortalId => newsPortalId != default);
@@ -72,7 +75,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
             {
                 Articles = articleDtos,
                 NewNewsPortals = newsPortalDtos.OrderBy(newsPortal => random.Next()),
-                NewNewsPortalsPosition = request.NewNewsPortalsPosition
+                NewNewsPortalsPosition = request.NewNewsPortalsPosition,
             };
 
             return Task.FromResult(result: response);
@@ -106,6 +109,5 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
 
             return newsPortalDtos;
         }
-        #endregion
     }
 }

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// AppConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Espresso.Common.Enums;
@@ -12,11 +16,7 @@ namespace Espresso.WebApi.Configuration
     /// </summary>
     public class AppConfiguration
     {
-        #region Fields
         private readonly IConfigurationSection _configuration;
-        #endregion
-
-        #region Properties
 
         /// <summary>
         ///
@@ -43,7 +43,7 @@ namespace Espresso.WebApi.Configuration
         );
 
         /// <summary>
-        /// All Api Versions.
+        /// Gets all Api Versions.
         /// </summary>
         /// <value></value>
         public IEnumerable<ApiVersion> ApiVersions => new[]
@@ -75,17 +75,14 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         /// <value></value>
         public int MaxHttpHandlerRetries => _configuration.GetValue<int>("MaxHttpHandlerRetries");
-        #endregion
 
-        #region Constructors
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="AppConfiguration"/> class.
         /// </summary>
         /// <param name="configuration"></param>
         public AppConfiguration(IConfigurationSection configuration)
         {
             _configuration = configuration;
         }
-        #endregion
     }
 }

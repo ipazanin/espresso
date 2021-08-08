@@ -1,4 +1,8 @@
-﻿using System;
+﻿// GetWebConfigurationCategory.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Linq.Expressions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
@@ -7,27 +11,24 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetWebConfiguration
 {
     public record GetWebConfigurationCategory
     {
-        #region Properties
         /// <summary>
-        /// Category ID
+        /// Gets category ID.
         /// </summary>
         public int Id { get; init; }
 
         /// <summary>
-        /// Category Name
+        /// Gets category Name.
         /// </summary>
-        public string Name { get; init; } = "";
+        public string Name { get; init; } = string.Empty;
 
-        public string Color { get; init; } = "";
+        public string Color { get; init; } = string.Empty;
 
         public int? Position { get; init; }
 
         public CategoryType CategoryType { get; init; }
 
-        public string Url { get; init; } = "";
-        #endregion
+        public string Url { get; init; } = string.Empty;
 
-        #region Methods
         public static Expression<Func<Category, GetWebConfigurationCategory>> GetProjection()
         {
             return category => new GetWebConfigurationCategory
@@ -37,9 +38,8 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetWebConfiguration
                 Color = category.Color,
                 Position = category.Position,
                 CategoryType = category.CategoryType,
-                Url = category.Url
+                Url = category.Url,
             };
         }
-        #endregion
     }
 }

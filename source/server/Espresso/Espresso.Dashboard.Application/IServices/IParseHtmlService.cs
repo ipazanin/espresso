@@ -1,4 +1,8 @@
-﻿using HtmlAgilityPack;
+﻿// IParseHtmlService.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using HtmlAgilityPack;
 
 namespace Espresso.Dashboard.Application.IServices
 {

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// GetCategoryArticlesCategory_2_0.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Linq.Expressions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
@@ -7,31 +11,26 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
 {
     public record GetCategoryArticlesCategory_2_0
     {
-        #region Properties
         /// <summary>
-        /// Category ID
+        /// Gets category ID.
         /// </summary>
         public int Id { get; private set; }
 
         /// <summary>
-        /// Category Name
+        /// Gets category Name.
         /// </summary>
-        public string Name { get; private set; } = "";
+        public string Name { get; private set; } = string.Empty;
 
-        public string Color { get; private set; } = "";
+        public string Color { get; private set; } = string.Empty;
 
         public int? Position { get; private set; }
 
         public CategoryType CategoryType { get; private set; }
-        #endregion
 
-        #region Constructors
         private GetCategoryArticlesCategory_2_0()
         {
         }
-        #endregion
 
-        #region Methods
         public static Expression<Func<Category, GetCategoryArticlesCategory_2_0>> GetProjection()
         {
             return category => new GetCategoryArticlesCategory_2_0
@@ -43,6 +42,5 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
                 CategoryType = category.CategoryType,
             };
         }
-        #endregion
     }
 }

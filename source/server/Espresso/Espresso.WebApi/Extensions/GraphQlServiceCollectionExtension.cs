@@ -1,4 +1,8 @@
-﻿using Espresso.WebApi.GraphQl.ApplicationMutations;
+﻿// GraphQlServiceCollectionExtension.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.WebApi.GraphQl.ApplicationMutations;
 using Espresso.WebApi.GraphQl.ApplicationMutations.ArticlesQueries;
 using Espresso.WebApi.GraphQl.ApplicationQueries;
 using Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries;

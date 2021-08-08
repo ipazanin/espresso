@@ -1,4 +1,8 @@
-﻿using System;
+﻿// GetCategoryArticlesArticle.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,31 +13,30 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
 {
     public record GetCategoryArticlesArticle
     {
-        #region Properties
         /// <summary>
-        /// ID created by app
+        /// Gets iD created by app.
         /// </summary>
         public Guid Id { get; private set; }
 
         /// <summary>
-        /// Article Url provided by RSS Feed
+        /// Gets article Url provided by RSS Feed.
         /// </summary>
-        public string Url { get; private set; } = "";
+        public string Url { get; private set; } = string.Empty;
 
         /// <summary>
-        /// Article Title Parsed from RSS Feed
+        /// Gets article Title Parsed from RSS Feed.
         /// </summary>
-        public string Title { get; private set; } = "";
+        public string Title { get; private set; } = string.Empty;
 
         /// <summary>
-        /// Image URL parsed from src attribute of first img element or second rss feed link, first is 
+        /// Gets image URL parsed from src attribute of first img element or second rss feed link, first is. 
         /// </summary>
         public string? ImageUrl { get; private set; }
 
         /// <summary>
-        /// Article Publish time provided by RSS Feed
+        /// Gets article Publish time provided by RSS Feed.
         /// </summary>
-        public string PublishDateTime { get; private set; } = "";
+        public string PublishDateTime { get; private set; } = string.Empty;
 
         /// <summary>
         /// 
@@ -42,23 +45,19 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
         public int NumberOfClicks { get; private set; }
 
         /// <summary>
-        /// News Portal ID
+        /// Gets news Portal ID.
         /// </summary>
         public GetCategoryArticlesNewsPortal? NewsPortal { get; private set; }
 
         /// <summary>
-        /// List Of Categories article belongs to
+        /// Gets list Of Categories article belongs to.
         /// </summary>
         public IEnumerable<GetCategoryArticlesCategory> Categories { get; private set; } = new List<GetCategoryArticlesCategory>();
-        #endregion
 
-        #region Constructors
         private GetCategoryArticlesArticle()
         {
         }
-        #endregion
 
-        #region Methods
         public static Expression<Func<Article, GetCategoryArticlesArticle>> GetProjection()
         {
             return article => new GetCategoryArticlesArticle
@@ -75,9 +74,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
                 Categories = article.ArticleCategories
                     .AsQueryable()
                     .Select(articleCategory => articleCategory.Category)
-                    .Select(GetCategoryArticlesCategory.GetProjection()!)
+                    .Select(GetCategoryArticlesCategory.GetProjection()!),
             };
         }
-        #endregion
     }
 }

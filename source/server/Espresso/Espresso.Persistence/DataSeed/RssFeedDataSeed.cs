@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// RssFeedDataSeed.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Enums.NewsPortalEnums;
@@ -32,7 +36,6 @@ namespace Espresso.Persistence.DataSeed
                 new RssFeed((int)RssFeedId.Index_Rogue,  "https://www.index.hr/rss/rouge", (int)NewsPortalId.Index, (int)CategoryId.Lifestyle, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.Index_Auto, "https://www.index.hr/rss/auto", (int)NewsPortalId.Index, (int)CategoryId.AutoMoto, requestType: RequestType.Normal),
 
-
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Vijesti, "https://www.24sata.hr/feeds/news.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Vijesti, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Show, "https://www.24sata.hr/feeds/show.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Show, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.DvadesetCetiriSata_Sport, "https://www.24sata.hr/feeds/sport.xml", (int)NewsPortalId.DvadesetCetiriSata, (int)CategoryId.Sport, requestType: RequestType.Normal),
@@ -60,8 +63,6 @@ namespace Espresso.Persistence.DataSeed
                 new RssFeed((int)RssFeedId.SlobodnaDalmacija_Dom, "https://www.slobodnadalmacija.hr/feed/category/271", (int)NewsPortalId.SlobodnaDalmacija, (int)CategoryId.Lifestyle, requestType: RequestType.Browser),
                 new RssFeed((int)RssFeedId.SlobodnaDalmacija_Tehnologija, "https://www.slobodnadalmacija.hr/feed/category/269", (int)NewsPortalId.SlobodnaDalmacija, (int)CategoryId.Tech, requestType: RequestType.Browser),
                 new RssFeed((int)RssFeedId.SlobodnaDalmacija_Viral, "https://www.slobodnadalmacija.hr/feed/category/274", (int)NewsPortalId.SlobodnaDalmacija, (int)CategoryId.Viral, requestType: RequestType.Browser),
-
-
 
                 new RssFeed((int)RssFeedId.TPortal_Vijesti, "https://www.tportal.hr/rss-vijesti.xml", (int)NewsPortalId.TPortal, (int)CategoryId.Vijesti, requestType: RequestType.Normal),
                 new RssFeed((int)RssFeedId.TPortal_Biznis, "https://www.tportal.hr/rss-biznis.xml", (int)NewsPortalId.TPortal, (int)CategoryId.Vijesti, requestType: RequestType.Normal),
@@ -123,28 +124,30 @@ namespace Espresso.Persistence.DataSeed
                     id: (int)RssFeedId.Hrt_Vijesti,
                     url: "https://www.hrt.hr/rss/vijesti/",
                     newsPortalId: (int)NewsPortalId.Hrt,
-                    categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Normal
                 ),
                 new RssFeed(
                     id: (int)RssFeedId.Hrt_Sport,
                     url: "https://www.hrt.hr/rss/sport/",
                     newsPortalId: (int)NewsPortalId.Hrt,
-                    categoryId: (int)CategoryId.Sport, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Sport,
+                    requestType: RequestType.Normal
                 ),
                 new RssFeed(
                     id: (int)RssFeedId.Hrt_Magazin,
                     url: "https://magazin.hrt.hr/feed.xml",
                     newsPortalId: (int)NewsPortalId.Hrt,
-                    categoryId: (int)CategoryId.Show, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Show,
+                    requestType: RequestType.Normal
                 ),
                 new RssFeed(
                     id: (int)RssFeedId.Hrt_Glazba,
                     url: "https://www.hrt.hr/rss/glazba/",
                     newsPortalId: (int)NewsPortalId.Hrt,
-                    categoryId: (int)CategoryId.Show, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Show,
+                    requestType: RequestType.Normal
                 ),
-
-
 
                 new RssFeed(
                     id: (int)RssFeedId.StoPosto,
@@ -154,112 +157,110 @@ namespace Espresso.Persistence.DataSeed
                     requestType: RequestType.Normal
                 ),
 
-
-
                 new RssFeed(
                     id: (int)RssFeedId.Dnevno,
                     url: "https://www.dnevno.hr/feed/",
                     newsPortalId: (int)NewsPortalId.Dnevno,
-                    categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Normal
                 ),
-
-
 
                 new RssFeed(
                     id: (int)RssFeedId.DirektnoHr_Direkt,
                     url: "https://direktno.hr/rss/publish/latest/direkt-50/",
                     newsPortalId: (int)NewsPortalId.DirektnoHr,
-                    categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Normal
                 ),
                 new RssFeed(
                     id: (int)RssFeedId.DirektnoHr_Domovina,
                     url: "https://direktno.hr/rss/publish/latest/domovina-10/",
                     newsPortalId: (int)NewsPortalId.DirektnoHr,
-                    categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Normal
                 ),
                 new RssFeed(
                     id: (int)RssFeedId.DirektnoHr_EuSvijet,
                     url: "https://direktno.hr/rss/publish/latest/eu_svijet/",
                     newsPortalId: (int)NewsPortalId.DirektnoHr,
-                    categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Normal
                 ),
                 new RssFeed(
                     id: (int)RssFeedId.DirektnoHr_Razvoj,
                     url: "https://direktno.hr/rss/publish/latest/razvoj-110/",
                     newsPortalId: (int)NewsPortalId.DirektnoHr,
-                    categoryId: (int)CategoryId.Biznis, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Biznis,
+                    requestType: RequestType.Normal
                 ),
                 new RssFeed(
                     id: (int)RssFeedId.DirektnoHr_Sport,
                     url: "https://direktno.hr/rss/publish/latest/sport-60/",
                     newsPortalId: (int)NewsPortalId.DirektnoHr,
-                    categoryId: (int)CategoryId.Sport, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Sport,
+                    requestType: RequestType.Normal
                 ),
                 new RssFeed(
                     id: (int)RssFeedId.DirektnoHr_Zivot,
                     url: "https://direktno.hr/rss/publish/latest/zivot-70/",
                     newsPortalId: (int)NewsPortalId.DirektnoHr,
-                    categoryId: (int)CategoryId.Show, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Show,
+                    requestType: RequestType.Normal
                 ),
                 new RssFeed(
                     id: (int)RssFeedId.DirektnoHr_Kolumne,
                     url: "https://direktno.hr/rss/publish/latest/kolumne-80/",
                     newsPortalId: (int)NewsPortalId.DirektnoHr,
-                    categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Normal
                 ),
                 new RssFeed(
                     id: (int)RssFeedId.DirektnoHr_Direktno,
                     url: "https://direktno.hr/rss/publish/latest/direktnotv-100/",
                     newsPortalId: (int)NewsPortalId.DirektnoHr,
-                    categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Normal
                 ),
-
-
 
                 new RssFeed(
                     id: (int)RssFeedId.Scena,
                     url: "https://www.scena.hr/feed/",
                     newsPortalId: (int)NewsPortalId.Scena,
-                    categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Browser
+                    categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Browser
                 ),
-
-
 
                 new RssFeed(
                     id: (int)RssFeedId.Nacional,
                     url: "https://www.nacional.hr/feed/",
                     newsPortalId: (int)NewsPortalId.Nacional,
-                    categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Normal
                 ),
-
-
 
                 new RssFeed(
                     id: (int)RssFeedId.Express,
                     url: "https://express.24sata.hr/feeds/placeholder-head/rss_feed",
                     newsPortalId: (int)NewsPortalId.Express,
-                    categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Normal
                 ),
-
-
 
                 new RssFeed(
                     id: (int)RssFeedId.OtvorenoHr,
                     url: "https://otvoreno.hr/feed",
                     newsPortalId: (int)NewsPortalId.OtvorenoHr,
-                    categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Normal
                 ),
-
-
 
                 new RssFeed(
                     id: (int)RssFeedId.GeoPolitika,
                     url: "https://www.geopolitika.news/feed",
                     newsPortalId: (int)NewsPortalId.GeoPolitika,
-                    categoryId: (int)CategoryId.Vijesti, requestType: RequestType.Normal
+                    categoryId: (int)CategoryId.Vijesti,
+                    requestType: RequestType.Normal
                 ),
-
-
 
                 new RssFeed(
                     id: (int)RssFeedId.PovijestHr,
@@ -269,8 +270,6 @@ namespace Espresso.Persistence.DataSeed
                     requestType: RequestType.Normal
                 ),
 
-
-
                 new RssFeed(
                     id: (int)RssFeedId.Dnevno7,
                     url: "https://7dnevno.hr/feed",
@@ -278,8 +277,6 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Vijesti,
                     requestType: RequestType.Normal
                 ),
-
-
 
                 new RssFeed(
                     id: (int)RssFeedId.BasketballHr,
@@ -289,8 +286,6 @@ namespace Espresso.Persistence.DataSeed
                     requestType: RequestType.Normal
                 ),
 
-
-
                 new RssFeed(
                     id: (int)RssFeedId.JoomBoos,
                     url: "https://joomboos.24sata.hr/feeds/axiom-feed/tes-partnerski",
@@ -298,8 +293,6 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Viral,
                     requestType: RequestType.Normal
                 ),
-
-
 
                 new RssFeed(
                     id: (int)RssFeedId.IctBusiness,

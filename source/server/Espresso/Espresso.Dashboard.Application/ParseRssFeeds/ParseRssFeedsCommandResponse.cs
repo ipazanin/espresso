@@ -1,4 +1,8 @@
-﻿namespace Espresso.Dashboard.ParseRssFeeds
+﻿// ParseRssFeedsCommandResponse.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+namespace Espresso.Dashboard.ParseRssFeeds
 {
     public record ParseRssFeedsCommandResponse
     {

@@ -1,4 +1,8 @@
-﻿using Espresso.WebApi.Configuration;
+﻿// ApiController.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.WebApi.Configuration;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +15,7 @@ namespace Espresso.WebApi.Infrastructure
     public abstract class ApiController : ControllerBase
     {
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="ApiController"/> class.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>

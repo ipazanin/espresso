@@ -1,15 +1,17 @@
-﻿using Espresso.Domain.Entities;
+﻿// AnsiUtilityTest.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.Domain.Entities;
 using Xunit;
 
 namespace Espresso.Domain.Tests.Entities
 {
     public class AnsiUtilityTest
     {
-        #region IncrementNumberOfClicks
         [Fact]
         public void IncrementNumberOfClicks_IncreasesNumberOfClicksByOne()
         {
-            #region Arrange
             const int numberOfClicks = 0;
             var article = new Article(
                 id: default,
@@ -32,18 +34,12 @@ namespace Espresso.Domain.Tests.Entities
                 subordinateArticles: default,
                 mainArticle: default
             );
-            #endregion
 
-            #region Act
             article.IncrementNumberOfClicks();
-            #endregion
 
-            #region Assert
-            var expectedNumberOfClicks = numberOfClicks + 1;
+            const int expectedNumberOfClicks = numberOfClicks + 1;
             var actualNumberOfClicks = article.NumberOfClicks;
             Assert.Equal(expectedNumberOfClicks, actualNumberOfClicks);
-            #endregion
         }
-        #endregion
     }
 }

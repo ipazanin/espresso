@@ -1,3 +1,7 @@
+// GetNewsPortalsCategory.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using System.Linq.Expressions;
 using Espresso.Domain.Entities;
@@ -7,12 +11,11 @@ namespace Espresso.Application.NewsPortals
 {
     public record GetNewsPortalsCategory
     {
-        #region Properties
         public int Id { get; private set; }
 
-        public string Name { get; private set; } = "";
+        public string Name { get; private set; } = string.Empty;
 
-        public string Color { get; private set; } = "";
+        public string Color { get; private set; } = string.Empty;
 
         public string? KeyWordsRegexPattern { get; private set; }
 
@@ -21,15 +24,11 @@ namespace Espresso.Application.NewsPortals
         public int? Position { get; private set; }
 
         public CategoryType CategoryType { get; private set; }
-        #endregion
 
-        #region Constructors
         private GetNewsPortalsCategory()
         {
         }
-        #endregion
 
-        #region Methods
         public static Expression<Func<Category, GetNewsPortalsCategory>> GetProjection()
         {
             return category => new GetNewsPortalsCategory
@@ -43,6 +42,5 @@ namespace Espresso.Application.NewsPortals
                 CategoryType = category.CategoryType,
             };
         }
-        #endregion
     }
 }

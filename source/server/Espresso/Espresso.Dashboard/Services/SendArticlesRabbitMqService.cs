@@ -1,3 +1,7 @@
+// SendArticlesRabbitMqService.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -5,8 +9,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Common.Services.Contracts;
-using Espresso.Domain.Entities;
 using Espresso.Dashboard.Application.IServices;
+using Espresso.Domain.Entities;
 using RabbitMQ.Client;
 
 namespace Espresso.Dashboard.Services
@@ -14,15 +18,21 @@ namespace Espresso.Dashboard.Services
     public class SendArticlesRabbitMqService : ISendArticlesService
     {
         private readonly IJsonService _jsonService;
-        #region Fields
         private readonly string _hostName;
         private readonly string _queueName;
         private readonly int _port;
         private readonly string _username;
         private readonly string _password;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendArticlesRabbitMqService"/> class.
+        /// </summary>
+        /// <param name="jsonService"></param>
+        /// <param name="hostName"></param>
+        /// <param name="queueName"></param>
+        /// <param name="port"></param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
         public SendArticlesRabbitMqService(
             IJsonService jsonService,
             string hostName,
@@ -39,9 +49,7 @@ namespace Espresso.Dashboard.Services
             _username = username;
             _password = password;
         }
-        #endregion
 
-        #region Methods
         public async Task SendArticlesMessage(
             IEnumerable<Article> createArticles,
             IEnumerable<Article> updateArticles,
@@ -64,7 +72,7 @@ namespace Espresso.Dashboard.Services
                 HostName = _hostName,
                 Port = _port,
                 UserName = _username,
-                Password = _password
+                Password = _password,
             };
 
             var connection = factory.CreateConnection();
@@ -73,7 +81,7 @@ namespace Espresso.Dashboard.Services
             var properties = channel.CreateBasicProperties();
 
             channel.BasicPublish(
-                exchange: "",
+                exchange: string.Empty,
                 routingKey: _queueName,
                 basicProperties: properties,
                 body: articlesBodyUtf8Bytes
@@ -98,6 +106,5 @@ namespace Espresso.Dashboard.Services
 
             return articlesBodyUtf8Bytes;
         }
-        #endregion
     }
 }

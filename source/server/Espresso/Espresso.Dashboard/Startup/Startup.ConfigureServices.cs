@@ -1,33 +1,39 @@
-﻿using Espresso.Application.Infrastructure.MediatorInfrastructure;
+﻿// Startup.ConfigureServices.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
+using System.Net.Http;
+using Espresso.Application.Infrastructure.CronJobsInfrastructure;
+using Espresso.Application.Infrastructure.MediatorInfrastructure;
+using Espresso.Application.Models;
 using Espresso.Application.Services.Contracts;
-using Espresso.Dashboard.Configuration;
-using Espresso.Persistence.Database;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using Espresso.Application.Services.Implementations;
+using Espresso.Common.Services.Contracts;
+using Espresso.Common.Services.Implementations;
+using Espresso.Dashboard.Application.Constants;
+using Espresso.Dashboard.Application.Initialization;
 using Espresso.Dashboard.Application.IServices;
 using Espresso.Dashboard.Application.Services;
-using Espresso.Dashboard.ParseRssFeeds.Validators;
-using Espresso.Dashboard.ParseRssFeeds;
-using FluentValidation;
-using System;
+using Espresso.Dashboard.Areas.Identity;
+using Espresso.Dashboard.Configuration;
 using Espresso.Dashboard.CronJobs;
-using Microsoft.Extensions.Caching.Memory;
-using System.Net.Http;
+using Espresso.Dashboard.ParseRssFeeds;
+using Espresso.Dashboard.ParseRssFeeds.Validators;
+using Espresso.Dashboard.Services;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Services;
-using Espresso.Dashboard.Services;
-using Espresso.Application.Infrastructure.CronJobsInfrastructure;
-using Espresso.Dashboard.Application.Initialization;
-using Espresso.Application.Models;
-using Espresso.Common.Services.Contracts;
-using Espresso.Application.Utilities;
-using Espresso.Dashboard.Application.Constants;
-using Microsoft.AspNetCore.Identity;
+using Espresso.Persistence.Database;
+using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Components.Authorization;
-using Espresso.Dashboard.Areas.Identity;
-using Espresso.Common.Services.Implementations;
-using Espresso.Application.Services.Implementations;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.DependencyInjection;
+using Polly;
+using Polly.Extensions.Http;
+using Polly.Timeout;
 
 namespace Espresso.Dashboard.Startup
 {
@@ -51,6 +57,11 @@ namespace Espresso.Dashboard.Startup
         /// <returns></returns>
         private IServiceCollection AddEssentials(IServiceCollection services)
         {
+            var retryPolicy = HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .Or<TimeoutRejectedException>() // thrown by Polly's TimeoutPolicy if the inner execution times out
+                .RetryAsync(3);
+
             services.AddMemoryCache();
             services.AddTransient<IDashboardInit, DashboardInit>(serviceProvider => new DashboardInit(
                 espressoIdentityContext: serviceProvider.GetRequiredService<IEspressoIdentityDatabaseContext>(),
@@ -58,76 +69,57 @@ namespace Espresso.Dashboard.Startup
                 userManager: serviceProvider.GetRequiredService<UserManager<IdentityUser>>(),
                 adminUserPassword: _dashboardConfiguration.AppConfiguration.AdminUserPassword
             ));
-            services.AddSingleton(serviceProvider => _dashboardConfiguration);
+            services.AddSingleton(_ => _dashboardConfiguration);
 
             services
                 .AddHttpClient(
                     name: HttpClientConstants.SlackHttpClientName,
-                    configureClient: (serviceProvider, httpClient) =>
-                    {
-                        httpClient.Timeout = _dashboardConfiguration.SlackHttpClientConfiguration.Timeout;
-                    }
+                    configureClient: (_, httpClient) => httpClient.Timeout = _dashboardConfiguration.SlackHttpClientConfiguration.Timeout
                 )
-                .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
-                {
-                })
-                .AddHttpMessageHandler(serviceProvider => new RetryHttpRequestHandler(
-                    maxRetries: _dashboardConfiguration.SlackHttpClientConfiguration.MaxRetries
-                ));
+                .AddPolicyHandler(retryPolicy)
+                .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(20)));
 
             services
                 .AddHttpClient(
                     name: HttpClientConstants.SendArticlesHttpClientName,
-                    configureClient: (serviceProvider, httpClient) =>
+                    configureClient: (_, httpClient) =>
                     {
                         httpClient.Timeout = _dashboardConfiguration.SendArticlesHttpClientConfiguration.Timeout;
                     }
                 )
-                .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
-                {
-                })
-                .AddHttpMessageHandler(serviceProvider => new RetryHttpRequestHandler(
-                    maxRetries: _dashboardConfiguration.SendArticlesHttpClientConfiguration.MaxRetries
-                ));
+                .AddPolicyHandler(retryPolicy)
+                .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(90)));
 
             services
                 .AddHttpClient(
                     name: HttpClientConstants.LoadRssFeedsHttpClientName,
-                    configureClient: (serviceProvider, httpClient) =>
+                    configureClient: (_, httpClient) =>
                     {
                         httpClient.Timeout = _dashboardConfiguration.LoadRssFeedsHttpClientConfiguration.Timeout;
                     }
                 )
-                .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
-                {
-                })
-                .AddHttpMessageHandler(serviceProvider => new RetryHttpRequestHandler(
-                    maxRetries: _dashboardConfiguration.LoadRssFeedsHttpClientConfiguration.MaxRetries
-                ));
+                .AddPolicyHandler(retryPolicy)
+                .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(10)));
 
             services
                 .AddHttpClient(
                     name: HttpClientConstants.ScrapeWebHttpClientName,
-                    configureClient: (serviceProvider, httpClient) =>
+                    configureClient: (_, httpClient) =>
                     {
                         httpClient.Timeout = _dashboardConfiguration.ScrapeWebHttpClientConfiguration.Timeout;
                     }
                 )
-                .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
-                {
-                })
-                .AddHttpMessageHandler(serviceProvider => new RetryHttpRequestHandler(
-                    maxRetries: _dashboardConfiguration.ScrapeWebHttpClientConfiguration.MaxRetries
-                ));
+                .AddPolicyHandler(retryPolicy)
+                .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(10)));
 
             services.AddSingleton<IDashboardConfiguration, DashboardConfiguration>();
             services.AddValidatorsFromAssembly(typeof(ArticleDataValidator).Assembly);
-            services.AddSingleton(serviceProvider => new ApplicationInformation(
+            services.AddSingleton(_ => new ApplicationInformation(
                 appEnvironment: _dashboardConfiguration.AppConfiguration.AppEnvironment,
                 version: _dashboardConfiguration.AppConfiguration.Version
             ));
 
-            services.AddScoped<IEmailService, SendGridEmailService>(serviceProvider => new SendGridEmailService(
+            services.AddScoped<IEmailService, SendGridEmailService>(_ => new SendGridEmailService(
                 sendGridKey: _dashboardConfiguration.AppConfiguration.SendGridApiKey
             ));
 
@@ -135,11 +127,10 @@ namespace Espresso.Dashboard.Startup
         }
 
         /// <summary>
-        /// Web Api Services 
+        /// Web Api Services.
         /// </summary>
-        /// <param name="services"></param>
-        /// <returns></returns>
-        private IServiceCollection AddWebApi(IServiceCollection services)
+        /// <param name="services">Services.</param>
+        private void AddWebApi(IServiceCollection services)
         {
             services.AddServerSideBlazor();
             services.AddRazorPages()
@@ -152,27 +143,22 @@ namespace Espresso.Dashboard.Startup
                         );
                 });
             services.AddHealthChecks();
-
-            return services;
         }
 
         /// <summary>
-        /// Mediator Services
+        /// Mediator Services.
         /// </summary>
-        /// <param name="services"></param>
-        /// <returns></returns>
-        private static IServiceCollection AddMediatRServices(IServiceCollection services)
+        /// <param name="services">Services.</param>
+        private static void AddMediatRServices(IServiceCollection services)
         {
             services.AddMediatR(typeof(ParseRssFeedsCommandHandler), typeof(LoggerRequestPipeline<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionRequestPipeline<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggerRequestPipeline<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
-
-            return services;
         }
 
         /// <summary>
-        /// Application Services: SlackService, TrendingScoreService, LoggerService
+        /// Application Services: SlackService, TrendingScoreService, LoggerService.
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
@@ -244,7 +230,7 @@ namespace Espresso.Dashboard.Startup
         }
 
         /// <summary>
-        /// Persistence Services
+        /// Persistence Services.
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
@@ -292,7 +278,6 @@ namespace Espresso.Dashboard.Startup
                 options.EnableSensitiveDataLogging(_dashboardConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
             });
 
-
             services.AddScoped<IDatabaseConnectionFactory, DatabaseConnectionFactory>(serviceProvider => new DatabaseConnectionFactory(
                 connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString
             ));
@@ -301,7 +286,7 @@ namespace Espresso.Dashboard.Startup
         }
 
         /// <summary>
-        /// Adds Jobs
+        /// Adds Jobs.
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>

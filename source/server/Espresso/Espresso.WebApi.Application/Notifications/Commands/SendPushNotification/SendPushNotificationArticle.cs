@@ -1,4 +1,8 @@
-﻿using System;
+﻿// SendPushNotificationArticle.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,56 +13,50 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
 {
     public record SendPushNotificationArticle
     {
-        #region Properties
         /// <summary>
-        /// ID created by app
+        /// Gets iD created by app.
         /// </summary>
         public Guid Id { get; private set; }
 
         /// <summary>
-        /// Article Url provided by RSS Feed
+        /// Gets article Url provided by RSS Feed.
         /// </summary>
-        public string Url { get; private set; } = "";
+        public string Url { get; private set; } = string.Empty;
 
         /// <summary>
-        /// Article Url provided by RSS Feed
+        /// Gets article Url provided by RSS Feed.
         /// </summary>
-        public string WebUrl { get; private set; } = "";
+        public string WebUrl { get; private set; } = string.Empty;
 
         /// <summary>
-        /// Article Title Parsed from RSS Feed
+        /// Gets article Title Parsed from RSS Feed.
         /// </summary>
-        public string Title { get; private set; } = "";
+        public string Title { get; private set; } = string.Empty;
 
         /// <summary>
-        /// Image URL parsed from src attribute of first img element or second rss feed link, first is 
+        /// Gets image URL parsed from src attribute of first img element or second rss feed link, first is. 
         /// </summary>
         public string? ImageUrl { get; private set; }
 
         /// <summary>
-        /// Article Publish time provided by RSS Feed
+        /// Gets article Publish time provided by RSS Feed.
         /// </summary>
-        public string PublishDateTime { get; private set; } = "";
+        public string PublishDateTime { get; private set; } = string.Empty;
 
         /// <summary>
-        /// News Portal ID
+        /// Gets news Portal ID.
         /// </summary>
         public SendPushNotificationNewsPortal? NewsPortal { get; private set; }
 
         /// <summary>
-        /// List Of Categories article belongs to
+        /// Gets list Of Categories article belongs to.
         /// </summary>
         public IEnumerable<SendPushNotificationCategory> Categories { get; private set; } = new List<SendPushNotificationCategory>();
-        #endregion
 
-        #region Constructors
         private SendPushNotificationArticle()
         {
-
         }
-        #endregion
 
-        #region Methods
         public static Expression<Func<Article, SendPushNotificationArticle>> GetProjection()
         {
             return article => new SendPushNotificationArticle
@@ -75,9 +73,8 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
                 Categories = article.ArticleCategories
                     .AsQueryable()
                     .Select(articleCategory => articleCategory.Category)
-                    .Select(SendPushNotificationCategory.GetProjection()!)
+                    .Select(SendPushNotificationCategory.GetProjection()!),
             };
         }
-        #endregion
     }
 }

@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿// SendArticlesNotificationsCommand.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
+using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using MediatR;
-using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 
 namespace Espresso.WebApi.Application.Notifications.Commands.SendArticlesNotifications
 {

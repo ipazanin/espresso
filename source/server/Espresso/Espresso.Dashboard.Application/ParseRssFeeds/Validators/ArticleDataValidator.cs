@@ -1,4 +1,8 @@
-﻿using System;
+﻿// ArticleDataValidator.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Records;
 using FluentValidation;
@@ -7,6 +11,9 @@ namespace Espresso.Dashboard.ParseRssFeeds.Validators
 {
     public class ArticleDataValidator : AbstractValidator<ArticleData>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArticleDataValidator"/> class.
+        /// </summary>
         public ArticleDataValidator()
         {
             RuleFor(articleData => articleData.Id)

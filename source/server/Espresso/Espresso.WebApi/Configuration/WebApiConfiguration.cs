@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿// WebApiConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Microsoft.Extensions.Configuration;
 
 namespace Espresso.WebApi.Configuration
 {
@@ -7,9 +11,8 @@ namespace Espresso.WebApi.Configuration
     /// </summary>
     public class WebApiConfiguration : IWebApiConfiguration
     {
-        #region Constructors
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="WebApiConfiguration"/> class.
         /// </summary>
         /// <param name="configuration"></param>
         public WebApiConfiguration(IConfiguration configuration)
@@ -25,9 +28,7 @@ namespace Espresso.WebApi.Configuration
             SlackHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:SlackHttpClientConfiguration"));
             SystemTextJsonSerializerConfiguration = new SystemTextJsonSerializerConfiguration(configuration.GetSection("SystemTextJsonSerializerConfiguration"));
         }
-        #endregion
 
-        #region Properties
         /// <summary>
         ///
         /// </summary>
@@ -87,6 +88,5 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         /// <value></value>
         public SystemTextJsonSerializerConfiguration SystemTextJsonSerializerConfiguration { get; }
-        #endregion
     }
 }

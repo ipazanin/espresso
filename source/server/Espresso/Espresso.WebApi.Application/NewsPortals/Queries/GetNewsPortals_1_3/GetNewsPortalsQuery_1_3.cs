@@ -1,4 +1,8 @@
-﻿using Espresso.Application.Infrastructure.MediatorInfrastructure;
+﻿// GetNewsPortalsQuery_1_3.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.Application.Infrastructure.MediatorInfrastructure;
 
 namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals_1_3
 {

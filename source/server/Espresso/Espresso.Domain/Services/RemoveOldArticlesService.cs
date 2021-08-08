@@ -1,3 +1,7 @@
+// RemoveOldArticlesService.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,25 +12,24 @@ namespace Espresso.Domain.Services
 {
     public class RemoveOldArticlesService : IRemoveOldArticlesService
     {
-        #region Fields
         private readonly TimeSpan _maxAgeOfArticle;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RemoveOldArticlesService"/> class.
+        /// </summary>
+        /// <param name="maxAgeOfArticle"></param>
         public RemoveOldArticlesService(
             TimeSpan maxAgeOfArticle
         )
         {
             _maxAgeOfArticle = maxAgeOfArticle;
         }
-        #endregion
 
-        #region Methods
         /// <summary>
         /// 
         /// </summary>
         /// <param name="articles"></param>
-        /// <returns>Removed articles</returns>
+        /// <returns>Removed articles.</returns>
         public IEnumerable<Article> RemoveOldArticlesFromCollection(IDictionary<Guid, Article> articles)
         {
             var maxAgeDate = DateTime.UtcNow - _maxAgeOfArticle;
@@ -55,6 +58,5 @@ namespace Espresso.Domain.Services
 
             return notOldArticles;
         }
-        #endregion
     }
 }

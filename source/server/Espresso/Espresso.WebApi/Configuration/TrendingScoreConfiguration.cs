@@ -1,3 +1,7 @@
+// TrendingScoreConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using Microsoft.Extensions.Configuration;
 
 namespace Espresso.WebApi.Configuration
@@ -7,11 +11,8 @@ namespace Espresso.WebApi.Configuration
     /// </summary>
     public class TrendingScoreConfiguration
     {
-        #region Fields
         private readonly IConfigurationSection _configuration;
-        #endregion
 
-        #region Properties
         /// <summary>
         /// 
         /// </summary>
@@ -21,17 +22,14 @@ namespace Espresso.WebApi.Configuration
         /// 
         /// </summary>
         public decimal AgeWeight => _configuration.GetValue<decimal>("AgeWeight");
-        #endregion
 
-        #region Constructors
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="TrendingScoreConfiguration"/> class.
         /// </summary>
         /// <param name="configuration"></param>
         public TrendingScoreConfiguration(IConfigurationSection configuration)
         {
             _configuration = configuration;
         }
-        #endregion
     }
 }

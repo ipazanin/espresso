@@ -1,4 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿// PersonalData.cshtml.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,6 +13,10 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<IdentityUser> _userManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PersonalDataModel"/> class.
+        /// </summary>
+        /// <param name="userManager"></param>
         public PersonalDataModel(
             UserManager<IdentityUser> userManager
         )
@@ -16,6 +24,10 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
             _userManager = userManager;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnGet()
         {
             var user = await _userManager.GetUserAsync(User);

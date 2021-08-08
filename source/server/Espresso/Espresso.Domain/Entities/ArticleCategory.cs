@@ -1,5 +1,8 @@
-﻿using System;
+﻿// ArticleCategory.cs
+//
+// © 2021 Espresso News. All rights reserved.
 
+using System;
 using Espresso.Domain.Infrastructure;
 
 namespace Espresso.Domain.Entities
@@ -7,7 +10,6 @@ namespace Espresso.Domain.Entities
     public class ArticleCategory :
         IEntity<Guid, ArticleCategory>
     {
-        #region Properties
         public Guid Id { get; private set; }
 
         public Guid ArticleId { get; private set; }
@@ -17,14 +19,20 @@ namespace Espresso.Domain.Entities
         public int CategoryId { get; private set; }
 
         public Category? Category { get; private set; }
-        #endregion
 
-        #region Constructors
         /// <summary>
-        /// ORM Constructor
+        /// ORM Constructor.
         /// </summary>
         private ArticleCategory() { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArticleCategory"/> class.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="articleId"></param>
+        /// <param name="categoryId"></param>
+        /// <param name="article"></param>
+        /// <param name="category"></param>
         public ArticleCategory(
             Guid id,
             Guid articleId,
@@ -39,15 +47,12 @@ namespace Espresso.Domain.Entities
             Article = article;
             Category = category;
         }
-        #endregion
 
-        #region Methods
         public void SetCategory(Category category)
         {
             Category = category;
         }
 
-        #region Object Overrides
         public override bool Equals(object? obj)
         {
             return obj is ArticleCategory category &&
@@ -59,8 +64,5 @@ namespace Espresso.Domain.Entities
         {
             return HashCode.Combine(ArticleId, CategoryId);
         }
-        #endregion
-
-        #endregion
     }
 }

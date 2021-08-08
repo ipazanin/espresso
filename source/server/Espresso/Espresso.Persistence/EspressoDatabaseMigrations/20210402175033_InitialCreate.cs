@@ -1,4 +1,8 @@
-﻿using System;
+﻿// 20210402175033_InitialCreate.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -17,7 +21,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     WebApiVersion = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     MobileAppVersion = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                     DownloadedTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    MobileDeviceType = table.Column<int>(type: "integer", nullable: false)
+                    MobileDeviceType = table.Column<int>(type: "integer", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -36,7 +40,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     SortIndex = table.Column<int>(type: "integer", nullable: true),
                     Position = table.Column<int>(type: "integer", nullable: true),
                     CategoryType = table.Column<int>(type: "integer", nullable: false),
-                    Url = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
+                    Url = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                 },
                 constraints: table =>
                 {
@@ -54,7 +58,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     Topic = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
                     ArticleUrl = table.Column<string>(type: "character varying(5000)", maxLength: 5000, nullable: false),
                     IsSoundEnabled = table.Column<bool>(type: "boolean", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -68,7 +72,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Subtitle = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
+                    Subtitle = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                 },
                 constraints: table =>
                 {
@@ -87,7 +91,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     IsNewOverride = table.Column<bool>(type: "boolean", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     RegionId = table.Column<int>(type: "integer", nullable: false),
-                    CategoryId = table.Column<int>(type: "integer", nullable: false)
+                    CategoryId = table.Column<int>(type: "integer", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -118,7 +122,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     AmpConfiguration_TemplateUrl = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: true),
                     CategoryParseConfiguration_CategoryParseStrategy = table.Column<int>(type: "integer", nullable: false, defaultValue: 1),
                     ImageUrlParseConfiguration_ImageUrlParseStrategy = table.Column<int>(type: "integer", nullable: false, defaultValue: 1),
-                    ImageUrlParseConfiguration_XPath = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false, defaultValue: ""),
+                    ImageUrlParseConfiguration_XPath = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false, defaultValue: string.Empty),
                     ImageUrlParseConfiguration_AttributeName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, defaultValue: "src"),
                     ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped = table.Column<bool>(type: "boolean", nullable: true),
                     ImageUrlParseConfiguration_ImageUrlWebScrapeType = table.Column<int>(type: "integer", nullable: false, defaultValue: 1),
@@ -128,7 +132,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     SkipParseConfiguration_NumberOfSkips = table.Column<int>(type: "integer", nullable: true),
                     SkipParseConfiguration_CurrentSkip = table.Column<int>(type: "integer", nullable: true),
                     NewsPortalId = table.Column<int>(type: "integer", nullable: false),
-                    CategoryId = table.Column<int>(type: "integer", nullable: false)
+                    CategoryId = table.Column<int>(type: "integer", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -166,7 +170,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     EditorConfiguration_IsFeatured = table.Column<bool>(type: "boolean", nullable: true),
                     EditorConfiguration_FeaturedPosition = table.Column<int>(type: "integer", nullable: true),
                     NewsPortalId = table.Column<int>(type: "integer", nullable: false),
-                    RssFeedId = table.Column<int>(type: "integer", nullable: false)
+                    RssFeedId = table.Column<int>(type: "integer", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -194,7 +198,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     UrlRegex = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     UrlSegmentIndex = table.Column<int>(type: "integer", nullable: false),
                     CategoryId = table.Column<int>(type: "integer", nullable: false),
-                    RssFeedId = table.Column<int>(type: "integer", nullable: false)
+                    RssFeedId = table.Column<int>(type: "integer", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -221,7 +225,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     SourceValue = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
                     ReplacementValue = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
-                    RssFeedId = table.Column<int>(type: "integer", nullable: false)
+                    RssFeedId = table.Column<int>(type: "integer", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -240,7 +244,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ArticleId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CategoryId = table.Column<int>(type: "integer", nullable: false)
+                    CategoryId = table.Column<int>(type: "integer", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -266,7 +270,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     SimilarityScore = table.Column<double>(type: "double precision", nullable: false),
                     MainArticleId = table.Column<Guid>(type: "uuid", nullable: false),
-                    SubordinateArticleId = table.Column<Guid>(type: "uuid", nullable: false)
+                    SubordinateArticleId = table.Column<Guid>(type: "uuid", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -300,7 +304,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 4, 1, "#32936F", null, "Lifestyle", null, 5, "/lifestyle" },
                     { 3, 1, "#F4B100", null, "Show", null, 4, "/show" },
                     { 2, 1, "#4CB944", null, "Sport", null, 3, "/sport" },
-                    { 6, 1, "#9055A2", null, "Viral", null, 7, "/viral" }
+                    { 6, 1, "#9055A2", null, "Viral", null, 7, "/viral" },
                 });
 
             migrationBuilder.InsertData(
@@ -314,7 +318,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 3, "Istra & Kvarner", "Rijeka, Pula, Opatija, Pazin, Umag, Poreč, Rovinj..." },
                     { 4, "Lika", "Lokalne vijesti iz Ličko-Senjske županije" },
                     { 6, "Sjeverna Hrvatska", "Međimurje, Podravina, Sisak, Zagorje..." },
-                    { 5, "Zagreb i okolica", "Lokalne vijesti iz grada Zagreba i okolice" }
+                    { 5, "Zagreb i okolica", "Lokalne vijesti iz grada Zagreba i okolice" },
                 });
 
             migrationBuilder.InsertData(
@@ -448,7 +452,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 100, "https://www.geopolitika.news", 1, new DateTime(2020, 9, 10, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/GeoPolitika.png", null, "Geopolitika News", 1 },
                     { 99, "https://otvoreno.hr", 1, new DateTime(2020, 9, 10, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/OtvorenoHr.png", null, "Otvoreno.hr", 1 },
                     { 112, "https://ams.hr", 8, new DateTime(2020, 9, 24, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/AutoMotorSport.png", null, "AUTO MOTOR I SPORT", 1 },
-                    { 128, "https://radio-mreznica.hr", 12, new DateTime(2021, 1, 23, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/RadioMreznica.png", null, "Radio Mrežnica", 5 }
+                    { 128, "https://radio-mreznica.hr", 12, new DateTime(2021, 1, 23, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/RadioMreznica.png", null, "Radio Mrežnica", 5 },
                 });
 
             migrationBuilder.InsertData(
@@ -463,7 +467,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                 {
                     { 86, 12, 40, 1, "https://www.dalmacijanews.hr/rss" },
                     { 87, 12, 41, 1, "https://dalmatinskiportal.hr/sadrzaj/rss/vijesti.xml" },
-                    { 106, 12, 60, 1, "https://dubrovackidnevnik.net.hr/rss" }
+                    { 106, 12, 60, 1, "https://dubrovackidnevnik.net.hr/rss" },
                 });
 
             migrationBuilder.InsertData(
@@ -472,7 +476,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                 values: new object?[,]
                 {
                     { 111, 12, 65, 1, "https://slobodnadalmacija.hr/feed/category/246", 0, 5 },
-                    { 112, 12, 66, 1, "https://slobodnadalmacija.hr/feed/category/253", 0, 5 }
+                    { 112, 12, 66, 1, "https://slobodnadalmacija.hr/feed/category/253", 0, 5 },
                 });
 
             migrationBuilder.InsertData(
@@ -489,7 +493,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 119, 12, 73, 1, "https://imotskenovine.hr/feed" },
                     { 120, 12, 74, 1, "http://www.kastela.org/?format=feed&type=rss" },
                     { 121, 12, 75, 1, "https://huknet1.hr/?feed=rss2" },
-                    { 122, 12, 76, 1, "https://www.zadarskilist.hr/rss.xml" }
+                    { 122, 12, 76, 1, "https://www.zadarskilist.hr/rss.xml" },
                 });
 
             migrationBuilder.InsertData(
@@ -518,7 +522,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                 values: new object?[,]
                 {
                     { 180, 1, 134, 1, "https://www.startnews.hr/feeds/latest", 0, 21 },
-                    { 178, 5, 132, 1, "https://www.racunalo.com/feed", 0, 11 }
+                    { 178, 5, 132, 1, "https://www.racunalo.com/feed", 0, 11 },
                 });
 
             migrationBuilder.InsertData(
@@ -530,7 +534,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 156, 8, 111, 1, "https://vozim.hr/feed", null, null, null, null, "//div[contains(@class, 'intro-image-over')]//img", 0, 8 },
                     { 157, 8, 112, 1, "https://ams.hr/feed", null, null, null, null, "//main[contains(@class, 'main-content')]//img", 0, 17 },
                     { 158, 2, 113, 1, "http://hoopster.hr/feed", null, null, null, null, "//div[contains(@class, 'post-img')]//img", 0, 19 },
-                    { 159, 2, 114, 1, "http://prvahnl.hr/rss", null, null, null, null, "//div[contains(@class, 'news')]//img", 0, 6 }
+                    { 159, 2, 114, 1, "http://prvahnl.hr/rss", null, null, null, null, "//div[contains(@class, 'news')]//img", 0, 6 },
                 });
 
             migrationBuilder.InsertData(
@@ -546,9 +550,9 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 161, 5, 116, 2, "https://www.hifimedia.hr/feed", null, null, null, false, "//figure[contains(@class, 'post-gallery')]//img", 0, 7 },
                     { 162, 5, 117, 1, "https://geek.hr/feed", null, null, null, null, "//div[contains(@class, 'zox-post-main')]//img", 0, 5 },
                     { 163, 9, 118, 1, "https://vizkultura.hr/feed", null, null, null, null, "//div[contains(@class, 'content')]//img", 0, 7 },
-                    { 164, 9, 119, 1, "https://zivotumjetnosti.ipu.hr/feed", null, null, null, false, "", 0, 27 },
+                    { 164, 9, 119, 1, "https://zivotumjetnosti.ipu.hr/feed", null, null, null, false, string.Empty, 0, 27 },
                     { 165, 9, 120, 1, "https://svijetkulture.com/feed", null, null, null, null, "//div[contains(@class, 'td-post-featured-image')]//img", 0, 7 },
-                    { 166, 5, 121, 1, "http://www.gamer.hr/feed", null, null, null, null, "//div[contains(@class, 'site-featured-image')]//img", 0, 31 }
+                    { 166, 5, 121, 1, "http://www.gamer.hr/feed", null, null, null, null, "//div[contains(@class, 'site-featured-image')]//img", 0, 31 },
                 });
 
             migrationBuilder.InsertData(
@@ -564,7 +568,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 174, 1, 129, 1, "https://www.maxportal.hr/feed", 0, 11 },
                     { 175, 7, 17, 1, "https://www.poslovni.hr/feed", 0, 5 },
                     { 176, 8, 130, 1, "https://www.gp1.hr/feed", 0, 11 },
-                    { 177, 8, 131, 1, "https://f1.pulsmedia.hr/feed", 0, 7 }
+                    { 177, 8, 131, 1, "https://f1.pulsmedia.hr/feed", 0, 7 },
                 });
 
             migrationBuilder.InsertData(
@@ -587,7 +591,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 140, 12, 95, 1, "http://portal53.hr/feed" },
                     { 141, 12, 96, 1, "https://sbplus.hr/rss" },
                     { 142, 12, 97, 1, "https://www.pozeska-kronika.hr/component/fpss/module/292.feed?type=rss" },
-                    { 143, 12, 98, 1, "http://www.osijek031.com/news_rss.php" }
+                    { 143, 12, 98, 1, "http://www.osijek031.com/news_rss.php" },
                 });
 
             migrationBuilder.InsertData(
@@ -627,7 +631,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 92, 12, 46, 1, "https://likaclub.eu/feed" },
                     { 93, 12, 47, 2, "http://www.lika-express.hr/feed" },
                     { 94, 12, 48, 1, "https://www.lika-online.com/feed" },
-                    { 95, 12, 49, 1, "http://www.likaplus.hr/rss" }
+                    { 95, 12, 49, 1, "http://www.likaplus.hr/rss" },
                 });
 
             migrationBuilder.InsertData(
@@ -648,7 +652,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 132, 12, 87, 1, "https://regionalni.com/feed" },
                     { 133, 12, 88, 1, "https://www.glaspodravine.hr/feed" },
                     { 134, 12, 89, 1, "https://www.medjimurje.info/feed" },
-                    { 135, 12, 90, 1, "https://www.mnovine.hr/feed" }
+                    { 135, 12, 90, 1, "https://www.mnovine.hr/feed" },
                 });
 
             migrationBuilder.InsertData(
@@ -677,7 +681,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 25, 4, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/270", null, null, null, null, "//img[contains(@class, 'card__image')]", 0, 5 },
                     { 26, 4, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/271", null, null, null, null, "//img[contains(@class, 'card__image')]", 0, 5 },
                     { 27, 5, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/269", null, null, null, null, "//img[contains(@class, 'card__image')]", 0, 5 },
-                    { 28, 6, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/274", null, null, null, null, "//img[contains(@class, 'card__image')]", 0, 5 }
+                    { 28, 6, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/274", null, null, null, null, "//img[contains(@class, 'card__image')]", 0, 5 },
                 });
 
             migrationBuilder.InsertData(
@@ -692,7 +696,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 33, 3, 7, 1, "https://www.tportal.hr/rss-showtime.xml", null, null, null, null, "//img[contains(@class, 'lateImage lateImageLoaded')]" },
                     { 34, 4, 7, 1, "https://www.tportal.hr/rss-Lifestyle.xml", null, null, null, null, "//img[contains(@class, 'lateImage lateImageLoaded')]" },
                     { 35, 6, 7, 1, "https://www.tportal.hr/rss-funbox.xml", null, null, null, null, "//img[contains(@class, 'lateImage lateImageLoaded')]" },
-                    { 36, 9, 7, 1, "https://www.tportal.hr/rss-kultura.xml", null, null, null, null, "//img[contains(@class, 'lateImage lateImageLoaded')]" }
+                    { 36, 9, 7, 1, "https://www.tportal.hr/rss-kultura.xml", null, null, null, null, "//img[contains(@class, 'lateImage lateImageLoaded')]" },
                 });
 
             migrationBuilder.InsertData(
@@ -726,7 +730,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                 values: new object?[,]
                 {
                     { 21, 4, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/265", null, null, null, null, "//img[contains(@class, 'card__image')]", 0, 5 },
-                    { 19, 3, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/263", null, null, null, null, "//img[contains(@class, 'card__image')]", 0, 5 }
+                    { 19, 3, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/263", null, null, null, null, "//img[contains(@class, 'card__image')]", 0, 5 },
                 });
 
             migrationBuilder.InsertData(
@@ -737,7 +741,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 2, 2, 1, 1, "https://www.index.hr/rss/sport", true, "https://www.index.hr/mobile/clanak.aspx?id={0}", null, 1, null, null, null, "//figure[contains(@class, 'img-container')]//img" },
                     { 3, 3, 1, 1, "https://www.index.hr/rss/magazin", true, "https://www.index.hr/mobile/clanak.aspx?id={0}", null, 1, null, null, null, "//figure[contains(@class, 'img-container')]//img" },
                     { 4, 4, 1, 1, "https://www.index.hr/rss/rouge", true, "https://www.index.hr/mobile/clanak.aspx?id={0}", null, 1, null, null, null, "//figure[contains(@class, 'img-container')]//img" },
-                    { 5, 8, 1, 1, "https://www.index.hr/rss/auto", true, "https://www.index.hr/mobile/clanak.aspx?id={0}", null, 1, null, null, null, "//figure[contains(@class, 'img-container')]//img" }
+                    { 5, 8, 1, 1, "https://www.index.hr/rss/auto", true, "https://www.index.hr/mobile/clanak.aspx?id={0}", null, 1, null, null, null, "//figure[contains(@class, 'img-container')]//img" },
                 });
 
             migrationBuilder.InsertData(
@@ -750,7 +754,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 8, 2, 2, 1, "https://www.24sata.hr/feeds/sport.xml", false, null, null, null, null, null, "//img[contains(@class, 'article__figure_img')]" },
                     { 9, 4, 2, 1, "https://www.24sata.hr/feeds/lifestyle.xml", false, null, null, null, null, null, "//img[contains(@class, 'article__figure_img')]" },
                     { 10, 5, 2, 1, "https://www.24sata.hr/feeds/tech.xml", false, null, null, null, null, null, "//img[contains(@class, 'article__figure_img')]" },
-                    { 11, 6, 2, 1, "https://www.24sata.hr/feeds/fun.xml", false, null, null, null, null, null, "//img[contains(@class, 'article__figure_img')]" }
+                    { 11, 6, 2, 1, "https://www.24sata.hr/feeds/fun.xml", false, null, null, null, null, null, "//img[contains(@class, 'article__figure_img')]" },
                 });
 
             migrationBuilder.InsertData(
@@ -777,7 +781,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 16, 2, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/255", null, null, null, null, "//img[contains(@class, 'card__image')]", 0, 5 },
                     { 17, 3, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/262", null, null, null, null, "//img[contains(@class, 'card__image')]", 0, 5 },
                     { 18, 3, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/375", null, null, null, null, "//img[contains(@class, 'card__image')]", 0, 5 },
-                    { 20, 4, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/264", null, null, null, null, "//img[contains(@class, 'card__image')]", 0, 5 }
+                    { 20, 4, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/264", null, null, null, null, "//img[contains(@class, 'card__image')]", 0, 5 },
                 });
 
             migrationBuilder.InsertData(
@@ -798,7 +802,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 78, 2, 35, 1, "https://direktno.hr/rss/publish/latest/sport-60/", null, null, null, null, "//div[contains(@class, 'pd-hero-image')]//img" },
                     { 79, 3, 35, 1, "https://direktno.hr/rss/publish/latest/zivot-70/", null, null, null, null, "//div[contains(@class, 'pd-hero-image')]//img" },
                     { 80, 1, 35, 1, "https://direktno.hr/rss/publish/latest/kolumne-80/", null, null, null, null, "//div[contains(@class, 'pd-hero-image')]//img" },
-                    { 81, 1, 35, 1, "https://direktno.hr/rss/publish/latest/direktnotv-100/", null, null, null, null, "//div[contains(@class, 'pd-hero-image')]//img" }
+                    { 81, 1, 35, 1, "https://direktno.hr/rss/publish/latest/direktnotv-100/", null, null, null, null, "//div[contains(@class, 'pd-hero-image')]//img" },
                 });
 
             migrationBuilder.InsertData(
@@ -822,7 +826,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                 values: new object?[,]
                 {
                     { 144, 1, 99, 1, "https://otvoreno.hr/feed", 2, null, null, null, null, "//div[contains(@class, 'td-post-featured-image')]//img" },
-                    { 145, 1, 100, 1, "https://www.geopolitika.news/feed", 2, null, null, null, null, "//div[contains(@class, 'entry-image featured-image')]//img" }
+                    { 145, 1, 100, 1, "https://www.geopolitika.news/feed", 2, null, null, null, null, "//div[contains(@class, 'entry-image featured-image')]//img" },
                 });
 
             migrationBuilder.InsertData(
@@ -879,7 +883,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 49, 7, 16, 1, "http://lider.media/feed/", null, null, null, null, "//img[contains(@class, 'card__image')]" },
                     { 50, 7, 16, 1, "http://lider.media/feed/", null, null, null, null, "//img[contains(@class, 'card__image')]" },
                     { 54, 5, 18, 1, "http://www.bug.hr/rss/vijesti/", null, null, null, null, "//div[contains(@class, 'entry-content')]//img" },
-                    { 55, 5, 19, 1, "http://www.vidi.hr/rss/feed/vidi", null, null, null, null, "//div[contains(@class, 'attribute-image')]//img" }
+                    { 55, 5, 19, 1, "http://www.vidi.hr/rss/feed/vidi", null, null, null, null, "//div[contains(@class, 'attribute-image')]//img" },
                 });
 
             migrationBuilder.InsertData(
@@ -898,7 +902,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                 values: new object?[,]
                 {
                     { 58, 7, 22, 2, "http://www.poslovnipuls.com/feed/", null, null, null, null, "//div[contains(@class, 'postFeaturedImg postFeaturedImg--single')]//img", 0, 10 },
-                    { 152, 7, 107, 1, "https://profitiraj.hr/feed", null, null, null, null, "//div[contains(@class, 'site-content')]//img", 0, 11 }
+                    { 152, 7, 107, 1, "https://profitiraj.hr/feed", null, null, null, null, "//div[contains(@class, 'site-content')]//img", 0, 11 },
                 });
 
             migrationBuilder.InsertData(
@@ -917,7 +921,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                 values: new object?[,]
                 {
                     { 63, 4, 27, 1, "http://www.ljepotaizdravlje.hr/feed", null, null, null, null, "//div[contains(@class, 'post-thumbnail')]//img" },
-                    { 64, 8, 28, 1, "https://www.autonet.hr/feed/", null, null, null, null, "//figure[contains(@class, 'figure')]//img" }
+                    { 64, 8, 28, 1, "https://www.autonet.hr/feed/", null, null, null, null, "//figure[contains(@class, 'figure')]//img" },
                 });
 
             migrationBuilder.InsertData(
@@ -937,7 +941,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                 {
                     { 67, 1, 31, 1, "https://www.hrt.hr/rss/vijesti/", null, null, null, null, "//div[contains(@class, 'image-slider')]//img", 0, 5 },
                     { 68, 2, 31, 1, "https://www.hrt.hr/rss/sport/", null, null, null, null, "//div[contains(@class, 'image-slider')]//img", 0, 5 },
-                    { 69, 3, 31, 1, "https://magazin.hrt.hr/feed.xml", null, null, null, null, "//div[contains(@class, 'image-slider')]//img", 0, 5 }
+                    { 69, 3, 31, 1, "https://magazin.hrt.hr/feed.xml", null, null, null, null, "//div[contains(@class, 'image-slider')]//img", 0, 5 },
                 });
 
             migrationBuilder.InsertData(
@@ -1044,7 +1048,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 65, 5, 14, "planet-x", 1 },
                     { 64, 6, 14, "vic-dana", 1 },
                     { 12, 2, 37, "sport", 1 },
-                    { 72, 3, 82, "vijesti", 1 }
+                    { 72, 3, 82, "vijesti", 1 },
                 });
 
             migrationBuilder.InsertData(
@@ -1079,7 +1083,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 15, "<link>", 69, "<thumb>" },
                     { 16, "</link>", 69, "</thumb>" },
                     { 22, "</notused>", 57, "</description>" },
-                    { 12, "</description>", 96, "</content>" }
+                    { 12, "</description>", 96, "</content>" },
                 });
 
             migrationBuilder.CreateIndex(

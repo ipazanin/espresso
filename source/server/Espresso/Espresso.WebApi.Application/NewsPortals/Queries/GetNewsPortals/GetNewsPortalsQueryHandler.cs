@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿// GetNewsPortalsQueryHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Domain.Enums.CategoryEnums;
@@ -10,20 +14,19 @@ namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals
 {
     public class GetNewsPortalsQueryHandler : IRequestHandler<GetNewsPortalsQuery, GetNewsPortalsQueryResponse>
     {
-        #region Fields
         private readonly IEspressoDatabaseContext _context;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetNewsPortalsQueryHandler"/> class.
+        /// </summary>
+        /// <param name="context"></param>
         public GetNewsPortalsQueryHandler(
             IEspressoDatabaseContext context
         )
         {
             _context = context;
         }
-        #endregion
 
-        #region Methods
         public async Task<GetNewsPortalsQueryResponse> Handle(GetNewsPortalsQuery request, CancellationToken cancellationToken)
         {
             var query = GetNewsPortalsNewsPortal.Include(_context.NewsPortals);
@@ -37,6 +40,5 @@ namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals
 
             return response;
         }
-        #endregion
     }
 }

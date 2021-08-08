@@ -1,9 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// CategoryId.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.ComponentModel.DataAnnotations;
 
 namespace Espresso.Domain.Enums.CategoryEnums
 {
     /// <summary>
-    /// In Application Categories
+    /// In Application Categories.
     /// </summary>
     public enum CategoryId
     {

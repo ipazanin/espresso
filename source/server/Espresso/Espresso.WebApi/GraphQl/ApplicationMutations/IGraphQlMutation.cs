@@ -1,4 +1,8 @@
-﻿namespace Espresso.WebApi.GraphQl.ApplicationMutations
+﻿// IGraphQlMutation.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+namespace Espresso.WebApi.GraphQl.ApplicationMutations
 {
     /// <summary>
     /// Used as marker for mutations.

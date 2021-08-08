@@ -1,4 +1,8 @@
-﻿using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles;
+﻿// GetCategoryArticlesNewsPortalType.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles;
 using GraphQL.Types;
 
 namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetCategoryArticlesTypes
@@ -9,7 +13,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetCategoryArtic
     public class GetCategoryArticlesNewsPortalType : ObjectGraphType<GetCategoryArticlesNewsPortal>
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="GetCategoryArticlesNewsPortalType"/> class.
         /// </summary>
         public GetCategoryArticlesNewsPortalType()
         {

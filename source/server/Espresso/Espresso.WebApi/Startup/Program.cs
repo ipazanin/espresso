@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Program.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using Espresso.Common.Constants;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

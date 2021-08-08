@@ -1,3 +1,7 @@
+﻿// ICronJobConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using Espresso.Common.Enums;
 
@@ -6,31 +10,27 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
     /// <summary>
     /// Cron Job Configuration Contract.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T"><see cref="CronJob{T}"/>.</typeparam>
     public interface ICronJobConfiguration<T>
     {
         /// <summary>
-        /// Cron Expression.
+        /// Gets or sets cron Expression.
         /// </summary>
-        /// <value></value>
-        string? CronExpression { get; set; }
+        public string? CronExpression { get; set; }
 
         /// <summary>
-        /// Time Zone Information.
+        /// Gets or sets time Zone Information.
         /// </summary>
-        /// <value></value>
-        TimeZoneInfo? TimeZoneInfo { get; set; }
+        public TimeZoneInfo? TimeZoneInfo { get; set; }
 
         /// <summary>
-        /// Application Version.
+        /// Gets or sets application Version.
         /// </summary>
-        /// <value></value>
-        string Version { get; set; }
+        public string Version { get; set; }
 
         /// <summary>
-        /// Application Environment.
+        /// Gets or sets application Environment.
         /// </summary>
-        /// <value></value>
-        AppEnvironment AppEnvironment { get; set; }
+        public AppEnvironment AppEnvironment { get; set; }
     }
 }

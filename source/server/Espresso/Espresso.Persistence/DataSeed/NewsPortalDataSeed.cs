@@ -1,11 +1,15 @@
-﻿using System;
+﻿// NewsPortalDataSeed.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using Espresso.Common.Constants;
+using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RegionEnums;
-using Espresso.Common.Extensions;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Espresso.Persistence.DataSeed
@@ -22,7 +26,7 @@ namespace Espresso.Persistence.DataSeed
             var newsPortals = new List<NewsPortal>
             {
                 new NewsPortal(
-                    id:(int)NewsPortalId.Index,
+                    id: (int)NewsPortalId.Index,
                     name: NewsPortalId.Index.GetDisplayName(),
                     baseUrl: "https://www.index.hr",
                     iconUrl: $"Icons/{NewsPortalId.Index}{FileExtensionConstants.Png}",
@@ -33,7 +37,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.DvadesetCetiriSata,
+                    id: (int)NewsPortalId.DvadesetCetiriSata,
                     name: NewsPortalId.DvadesetCetiriSata.GetDisplayName(),
                     baseUrl: "https://www.24sata.hr",
                     iconUrl: $"Icons/{NewsPortalId.DvadesetCetiriSata}{FileExtensionConstants.Png}",
@@ -44,7 +48,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.SportskeNovosti,
+                    id: (int)NewsPortalId.SportskeNovosti,
                     name: NewsPortalId.SportskeNovosti.GetDisplayName(),
                     baseUrl: "https://sportske.jutarnji.hr",
                     iconUrl: $"Icons/{NewsPortalId.SportskeNovosti}{FileExtensionConstants.Png}",
@@ -55,7 +59,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.JutarnjiList,
+                    id: (int)NewsPortalId.JutarnjiList,
                     name: NewsPortalId.JutarnjiList.GetDisplayName(),
                     baseUrl: "https://sportske.jutarnji.hr",
                     iconUrl: $"Icons/{NewsPortalId.JutarnjiList}{FileExtensionConstants.Png}",
@@ -66,7 +70,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.NetHr,
+                    id: (int)NewsPortalId.NetHr,
                     name: NewsPortalId.NetHr.GetDisplayName(),
                     baseUrl: "https://net.hr",
                     iconUrl: $"Icons/{NewsPortalId.NetHr}{FileExtensionConstants.Png}",
@@ -77,7 +81,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.SlobodnaDalmacija,
+                    id: (int)NewsPortalId.SlobodnaDalmacija,
                     name: NewsPortalId.SlobodnaDalmacija.GetDisplayName(),
                     baseUrl: "https://slobodnadalmacija.hr",
                     iconUrl: $"Icons/{NewsPortalId.SlobodnaDalmacija}{FileExtensionConstants.Png}",
@@ -88,7 +92,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.TPortal,
+                    id: (int)NewsPortalId.TPortal,
                     name: NewsPortalId.TPortal.GetDisplayName(),
                     baseUrl: "https://www.tportal.hr",
                     iconUrl: $"Icons/{NewsPortalId.TPortal}{FileExtensionConstants.Png}",
@@ -99,7 +103,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.VecernjiList,
+                    id: (int)NewsPortalId.VecernjiList,
                     name: NewsPortalId.VecernjiList.GetDisplayName(),
                     baseUrl: "https://www.vecernji.hr",
                     iconUrl: $"Icons/{NewsPortalId.VecernjiList}{FileExtensionConstants.Png}",
@@ -110,7 +114,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.Telegram,
+                    id: (int)NewsPortalId.Telegram,
                     name: NewsPortalId.Telegram.GetDisplayName(),
                     baseUrl: "https://www.telegram.hr",
                     iconUrl: $"Icons/{NewsPortalId.Telegram}{FileExtensionConstants.Png}",
@@ -121,7 +125,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.Dnevnik,
+                    id: (int)NewsPortalId.Dnevnik,
                     name: NewsPortalId.Dnevnik.GetDisplayName(),
                     baseUrl: "https://dnevnik.hr",
                     iconUrl: $"Icons/{NewsPortalId.Dnevnik}{FileExtensionConstants.Png}",
@@ -132,7 +136,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.Gol,
+                    id: (int)NewsPortalId.Gol,
                     name: NewsPortalId.Gol.GetDisplayName(),
                     baseUrl: "https://gol.dnevnik.hr",
                     iconUrl: $"Icons/{NewsPortalId.Gol}{FileExtensionConstants.Png}",
@@ -144,7 +148,7 @@ namespace Espresso.Persistence.DataSeed
                 ),
 
                 new NewsPortal(
-                    id:(int)NewsPortalId.RtlVijesti,
+                    id: (int)NewsPortalId.RtlVijesti,
                     name: NewsPortalId.RtlVijesti.GetDisplayName(),
                     baseUrl: "https://sportnet.rtl.hr",
                     iconUrl: $"Icons/{NewsPortalId.RtlVijesti}{FileExtensionConstants.Png}",
@@ -155,7 +159,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.NogometPlus,
+                    id: (int)NewsPortalId.NogometPlus,
                     name: NewsPortalId.NogometPlus.GetDisplayName(),
                     baseUrl: "http://www.nogometplus.net",
                     iconUrl: $"Icons/{NewsPortalId.NogometPlus}{FileExtensionConstants.Png}",
@@ -166,7 +170,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ), // Nemaju SLS LUL
                 new NewsPortal(
-                    id:(int)NewsPortalId.Lider,
+                    id: (int)NewsPortalId.Lider,
                     name: NewsPortalId.Lider.GetDisplayName(),
                     baseUrl: "https://lider.media",
                     iconUrl: $"Icons/{NewsPortalId.Lider}{FileExtensionConstants.Png}",
@@ -176,7 +180,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.Bug,
+                    id: (int)NewsPortalId.Bug,
                     name: NewsPortalId.Bug.GetDisplayName(),
                     baseUrl: "https://www.bug.hr",
                     iconUrl: $"Icons/{NewsPortalId.Bug}{FileExtensionConstants.Png}",
@@ -187,7 +191,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.VidiHr,
+                    id: (int)NewsPortalId.VidiHr,
                     name: NewsPortalId.VidiHr.GetDisplayName(),
                     baseUrl: "https://www.vidi.hr",
                     iconUrl: $"Icons/{NewsPortalId.VidiHr}{FileExtensionConstants.Png}",
@@ -198,7 +202,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.Zimo,
+                    id: (int)NewsPortalId.Zimo,
                     name: NewsPortalId.Zimo.GetDisplayName(),
                     baseUrl: "https://zimo.dnevnik.hr",
                     iconUrl: $"Icons/{NewsPortalId.Zimo}{FileExtensionConstants.Png}",
@@ -209,7 +213,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.Netokracija,
+                    id: (int)NewsPortalId.Netokracija,
                     name: NewsPortalId.Netokracija.GetDisplayName(),
                     baseUrl: "https://www.netokracija.com",
                     iconUrl: $"Icons/{NewsPortalId.Netokracija}{FileExtensionConstants.Png}",
@@ -220,7 +224,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.PoslovniPuls,
+                    id: (int)NewsPortalId.PoslovniPuls,
                     name: NewsPortalId.PoslovniPuls.GetDisplayName(),
                     baseUrl: "https://poslovnipuls.com",
                     iconUrl: $"Icons/{NewsPortalId.PoslovniPuls}{FileExtensionConstants.Png}",
@@ -231,7 +235,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.PcChip,
+                    id: (int)NewsPortalId.PcChip,
                     name: NewsPortalId.PcChip.GetDisplayName(),
                     baseUrl: "https://pcchip.hr",
                     iconUrl: $"Icons/{NewsPortalId.PcChip}{FileExtensionConstants.Png}",
@@ -242,7 +246,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.Cosmopolitan,
+                    id: (int)NewsPortalId.Cosmopolitan,
                     name: NewsPortalId.Cosmopolitan.GetDisplayName(),
                     baseUrl: "http://www.cosmopolitan.hr",
                     iconUrl: $"Icons/{NewsPortalId.Cosmopolitan}{FileExtensionConstants.Png}",
@@ -253,7 +257,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.WallHr,
+                    id: (int)NewsPortalId.WallHr,
                     name: NewsPortalId.WallHr.GetDisplayName(),
                     baseUrl: "https://wall.hr",
                     iconUrl: $"Icons/{NewsPortalId.WallHr}{FileExtensionConstants.Png}",
@@ -264,7 +268,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.LjepotaIZdravlje,
+                    id: (int)NewsPortalId.LjepotaIZdravlje,
                     name: NewsPortalId.LjepotaIZdravlje.GetDisplayName(),
                     baseUrl: "http://www.ljepotaizdravlje.hr",
                     iconUrl: $"Icons/{NewsPortalId.LjepotaIZdravlje}{FileExtensionConstants.Png}",
@@ -275,7 +279,7 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ), // Nemaju SLS LUL
                 new NewsPortal(
-                    id:(int)NewsPortalId.Autonet,
+                    id: (int)NewsPortalId.Autonet,
                     name: NewsPortalId.Autonet.GetDisplayName(),
                     baseUrl: "https://www.autonet.hr",
                     iconUrl: $"Icons/{NewsPortalId.Autonet}{FileExtensionConstants.Png}",
@@ -286,10 +290,10 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.N1,
-                    name:NewsPortalId.N1.GetDisplayName(),
-                    baseUrl:"https://hr.n1info.com",
-                    iconUrl:$"Icons/{NewsPortalId.N1}{FileExtensionConstants.Png}",
+                    id: (int)NewsPortalId.N1,
+                    name: NewsPortalId.N1.GetDisplayName(),
+                    baseUrl: "https://hr.n1info.com",
+                    iconUrl: $"Icons/{NewsPortalId.N1}{FileExtensionConstants.Png}",
                     isNewOverride: null,
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
@@ -297,13 +301,13 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true
                 ),
                 new NewsPortal(
-                    id:(int)NewsPortalId.NarodHr,
-                    name:NewsPortalId.NarodHr.GetDisplayName(),
-                    baseUrl:"https://narod.hr",
+                    id: (int)NewsPortalId.NarodHr,
+                    name: NewsPortalId.NarodHr.GetDisplayName(),
+                    baseUrl: "https://narod.hr",
                     iconUrl: $"Icons/{NewsPortalId.NarodHr}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt:new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
-                    categoryId:(int)CategoryId.Vijesti,
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global,
                     isEnabled: true
                 ),

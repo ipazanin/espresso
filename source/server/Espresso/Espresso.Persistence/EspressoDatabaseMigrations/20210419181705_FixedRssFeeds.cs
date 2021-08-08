@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿// 20210419181705_FixedRssFeeds.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Espresso.Persistence.EspressoDatabaseMigrations
 {
@@ -900,8 +904,8 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                 columns: new[] { "Id", "OrderIndex", "ReplacementValue", "RssFeedId", "SourceValue" },
                 values: new object[,]
                 {
-                    { 29, 1, "", 63, "\n" },
-                    { 30, 2, "", 63, "	" }
+                    { 29, 1, string.Empty, 63, "\n" },
+                    { 30, 2, string.Empty, 63, "	" },
                 });
 
             migrationBuilder.UpdateData(

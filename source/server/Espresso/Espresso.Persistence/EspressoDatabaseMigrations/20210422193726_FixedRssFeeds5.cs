@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿// 20210422193726_FixedRssFeeds5.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Espresso.Persistence.EspressoDatabaseMigrations
 {
@@ -224,8 +228,8 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     { 33, 1, "<notused>", 57, "<description>" },
                     { 32, 2, "</link>", 67, "</thumb>" },
                     { 31, 1, "<link>", 67, "<thumb>" },
-                    { 41, 1, "", 63, "\n" },
-                    { 30, 2, "</link>", 68, "</thumb>" }
+                    { 41, 1, string.Empty, 63, "\n" },
+                    { 30, 2, "</link>", 68, "</thumb>" },
                 });
         }
 
@@ -492,7 +496,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                 keyColumn: "Id",
                 keyValue: 29,
                 columns: new[] { "ReplacementValue", "RssFeedId", "SourceValue" },
-                values: new object[] { "", 63, "\n" });
+                values: new object[] { string.Empty, 63, "\n" });
         }
     }
 }

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Category.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Espresso.Domain.Enums.CategoryEnums;
@@ -8,7 +12,6 @@ namespace Espresso.Domain.Entities
 {
     public class Category : IEntity<int, Category>
     {
-        #region Constants
         public const int NameHasMaxLenght = 20;
 
         public const int ColorHasMaxLenght = 20;
@@ -16,9 +19,7 @@ namespace Espresso.Domain.Entities
         public const int KeyWordsRegexPatterHasMaxLenght = 1000;
 
         public const int UrlHasMaxLength = 20;
-        #endregion
 
-        #region Properties
         public int Id { get; private set; }
 
         public string Name { get; private set; }
@@ -40,11 +41,9 @@ namespace Espresso.Domain.Entities
         public ICollection<RssFeed> RssFeeds { get; private set; } = new List<RssFeed>();
 
         public ICollection<NewsPortal> NewsPortals { get; private set; } = new List<NewsPortal>();
-        #endregion
 
-        #region Constructors
         /// <summary>
-        /// ORM Constructor
+        /// ORM Constructor.
         /// </summary>
         private Category()
         {
@@ -53,6 +52,17 @@ namespace Espresso.Domain.Entities
             Url = null!;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Category"/> class.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="color"></param>
+        /// <param name="keyWordsRegexPattern"></param>
+        /// <param name="sortIndex"></param>
+        /// <param name="position"></param>
+        /// <param name="categoryType"></param>
+        /// <param name="categoryUrl"></param>
         public Category(
             int id,
             string name,
@@ -73,9 +83,7 @@ namespace Espresso.Domain.Entities
             CategoryType = categoryType;
             Url = categoryUrl;
         }
-        #endregion
 
-        #region Methods
         public static Expression<Func<Category, bool>> GetAllCategoriesExceptGeneralExpression()
         {
             return category => !category.Id.Equals((int)CategoryId.General);
@@ -85,6 +93,5 @@ namespace Espresso.Domain.Entities
         {
             return category => !category.Id.Equals((int)CategoryId.Local);
         }
-        #endregion
     }
 }

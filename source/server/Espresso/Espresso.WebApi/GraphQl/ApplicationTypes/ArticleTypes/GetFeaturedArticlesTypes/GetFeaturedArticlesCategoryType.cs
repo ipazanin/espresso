@@ -1,4 +1,8 @@
-﻿using Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles;
+﻿// GetFeaturedArticlesCategoryType.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles;
 using GraphQL.Types;
 
 namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetFeaturedArticlesTypes
@@ -9,7 +13,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetFeaturedArtic
     public class GetFeaturedArticlesCategoryType : ObjectGraphType<GetFeaturedArticlesCategory>
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="GetFeaturedArticlesCategoryType"/> class.
         /// </summary>
         public GetFeaturedArticlesCategoryType()
         {

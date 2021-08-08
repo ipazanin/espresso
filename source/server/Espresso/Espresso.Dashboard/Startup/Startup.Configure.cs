@@ -1,8 +1,12 @@
-﻿using Espresso.Common.Enums;
-using Espresso.Dashboard.Application.Initialization;
-using Microsoft.AspNetCore.Builder;
+﻿// Startup.Configure.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using Espresso.Application.Middleware.SecurityHeaders;
+using Espresso.Common.Enums;
+using Espresso.Dashboard.Application.Initialization;
 using Espresso.Domain.IServices;
+using Microsoft.AspNetCore.Builder;
 
 namespace Espresso.Dashboard.Startup
 {

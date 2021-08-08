@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// RssFeedCategoryDataSeed.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Enums.RssFeedEnums;
@@ -13,7 +17,6 @@ namespace Espresso.Persistence.DataSeed
             var currentId = 1;
             var rssFeedCategories = new List<RssFeedCategory>
             {
-                #region Jutarnji List
                 new RssFeedCategory(currentId++, "vijesti", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.JutarnjiList),
                 new RssFeedCategory(currentId++, "autoklub", urlSegmentIndex: 1, (int)CategoryId.AutoMoto, (int)RssFeedId.JutarnjiList),
                 new RssFeedCategory(currentId++, "kultura", urlSegmentIndex: 1, (int)CategoryId.Kultura, (int)RssFeedId.JutarnjiList),
@@ -24,9 +27,6 @@ namespace Espresso.Persistence.DataSeed
                 new RssFeedCategory(currentId++, "life", urlSegmentIndex: 1, (int)CategoryId.Lifestyle, (int)RssFeedId.JutarnjiList),
                 new RssFeedCategory(currentId++, "scena", urlSegmentIndex: 1, (int)CategoryId.Show, (int)RssFeedId.JutarnjiList),
                 new RssFeedCategory(currentId++, "spektakli", urlSegmentIndex: 1, (int)CategoryId.Show, (int)RssFeedId.JutarnjiList),
-                #endregion
-
-                #region Vecernji List
                 new RssFeedCategory(currentId++, "vijesti", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.VecernjiList),
                 new RssFeedCategory(currentId++, "sport", urlSegmentIndex: 1, (int)CategoryId.Sport, (int)RssFeedId.VecernjiList),
                 new RssFeedCategory(currentId++, "showbiz", urlSegmentIndex: 1, (int)CategoryId.Show, (int)RssFeedId.VecernjiList),
@@ -35,21 +35,12 @@ namespace Espresso.Persistence.DataSeed
                 new RssFeedCategory(currentId++, "techsci", urlSegmentIndex: 1, (int)CategoryId.Tech, (int)RssFeedId.VecernjiList),
                 new RssFeedCategory(currentId++, "automoto", urlSegmentIndex: 1, (int)CategoryId.AutoMoto, (int)RssFeedId.VecernjiList),
                 new RssFeedCategory(currentId++, "kultura", urlSegmentIndex: 1, (int)CategoryId.Kultura, (int)RssFeedId.VecernjiList),
-                #endregion
-
-                #region Dnevnik
                 new RssFeedCategory(currentId++, "vijesti", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.Dnevnik),
                 new RssFeedCategory(currentId++, "showbuzz", urlSegmentIndex: 1, (int)CategoryId.Show, (int)RssFeedId.Dnevnik),
-                #endregion
-
-                #region Telegram
                 new RssFeedCategory(currentId++, "politika-kriminal", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.Telegram),
                 new RssFeedCategory(currentId++, "zivot", urlSegmentIndex: 1, (int)CategoryId.Lifestyle, (int)RssFeedId.Telegram),
                 new RssFeedCategory(currentId++, "kultura", urlSegmentIndex: 1, (int)CategoryId.Kultura, (int)RssFeedId.Telegram),
                 new RssFeedCategory(currentId++, "na-prvu", urlSegmentIndex: 1, (int)CategoryId.Sport, (int)RssFeedId.Telegram),
-                #endregion 
-
-                #region N1
                 new RssFeedCategory(currentId++, "Vijesti", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.N1),
                 new RssFeedCategory(currentId++, "Svijet", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.N1),
                 new RssFeedCategory(currentId++, "Znanost", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.N1),
@@ -65,25 +56,16 @@ namespace Espresso.Persistence.DataSeed
                 new RssFeedCategory(currentId++, "Kultura", urlSegmentIndex: 1, (int)CategoryId.Kultura, (int)RssFeedId.N1),
                 new RssFeedCategory(currentId++, "Crna-Kronika", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.N1),
                 new RssFeedCategory(currentId++, "Video", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.N1),
-                #endregion
-
-                #region NarodHr
                 new RssFeedCategory(currentId++, "Hrvatska", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.NarodHr),
                 new RssFeedCategory(currentId++, "Sport", urlSegmentIndex: 1, (int)CategoryId.Sport, (int)RssFeedId.NarodHr),
                 new RssFeedCategory(currentId++, "Kultura", urlSegmentIndex: 1, (int)CategoryId.Kultura, (int)RssFeedId.NarodHr),
                 new RssFeedCategory(currentId++, "svijet", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.NarodHr),
                 new RssFeedCategory(currentId++, "koronovirus", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.NarodHr),
                 new RssFeedCategory(currentId++, "svijet", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.NarodHr),
-                #endregion
-
-                #region 100posto
                 new RssFeedCategory(currentId++, "zivot", urlSegmentIndex: 1, (int)CategoryId.Lifestyle, (int)RssFeedId.StoPosto),
                 new RssFeedCategory(currentId++, "news", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.StoPosto),
                 new RssFeedCategory(currentId++, "scena", urlSegmentIndex: 1, (int)CategoryId.Show, (int)RssFeedId.StoPosto),
                 new RssFeedCategory(currentId++, "bubble", urlSegmentIndex: 1, (int)CategoryId.Lifestyle, (int)RssFeedId.StoPosto),
-                #endregion
-
-                #region Dnevno
                 new RssFeedCategory(currentId++, "vijesti", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.Dnevno),
                 new RssFeedCategory(currentId++, "sport", urlSegmentIndex: 1, (int)CategoryId.Sport, (int)RssFeedId.Dnevno),
                 new RssFeedCategory(currentId++, "domovina", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.Dnevno),
@@ -91,9 +73,6 @@ namespace Espresso.Persistence.DataSeed
                 new RssFeedCategory(currentId++, "zdravlje", urlSegmentIndex: 1, (int)CategoryId.Lifestyle, (int)RssFeedId.Dnevno),
                 new RssFeedCategory(currentId++, "korona-virus", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.Dnevno),
                 new RssFeedCategory(currentId++, "auto-moto", urlSegmentIndex: 1, (int)CategoryId.AutoMoto, (int)RssFeedId.Dnevno),
-                #endregion
-
-                #region Nethr
                 new RssFeedCategory(currentId++, "hrvatska", urlSegmentIndex: 2, (int)CategoryId.Vijesti, (int)RssFeedId.NetHr),
                 new RssFeedCategory(currentId++, "crna-kronika", urlSegmentIndex: 2, (int)CategoryId.Vijesti, (int)RssFeedId.NetHr),
                 new RssFeedCategory(currentId++, "svijet", urlSegmentIndex: 2, (int)CategoryId.Vijesti, (int)RssFeedId.NetHr),
@@ -108,43 +87,29 @@ namespace Espresso.Persistence.DataSeed
                 new RssFeedCategory(currentId++, "magazin", urlSegmentIndex: 1, (int)CategoryId.Lifestyle, (int)RssFeedId.NetHr),
                 new RssFeedCategory(currentId++, "tehnoklik", urlSegmentIndex: 1, (int)CategoryId.Tech, (int)RssFeedId.NetHr),
                 new RssFeedCategory(currentId++, "auto", urlSegmentIndex: 1, (int)CategoryId.AutoMoto, (int)RssFeedId.NetHr),
-                #endregion
-
-                #region Scena
                 new RssFeedCategory(currentId++, "lifestyle", urlSegmentIndex: 1, (int)CategoryId.Lifestyle, (int)RssFeedId.Scena),
                 new RssFeedCategory(currentId++, "vijesti", urlSegmentIndex: 1, (int)CategoryId.Show, (int)RssFeedId.Scena),
                 new RssFeedCategory(currentId++, "kultura", urlSegmentIndex: 1, (int)CategoryId.Kultura, (int)RssFeedId.Scena),
                 new RssFeedCategory(currentId++, "televizija", urlSegmentIndex: 1, (int)CategoryId.Show, (int)RssFeedId.Scena),
                 new RssFeedCategory(currentId++, "dogadjanja", urlSegmentIndex: 1, (int)CategoryId.Lifestyle, (int)RssFeedId.Scena),
-                #endregion
-
-                #region Express
                 new RssFeedCategory(currentId++, "top-news", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.Express),
                 new RssFeedCategory(currentId++, "life", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.Express),
                 new RssFeedCategory(currentId++, "ekonomix", urlSegmentIndex: 1, (int)CategoryId.Biznis, (int)RssFeedId.Express),
                 new RssFeedCategory(currentId++, "tehno", urlSegmentIndex: 1, (int)CategoryId.Tech, (int)RssFeedId.Express),
-                #endregion
-
-                #region OtvorenoHr
                 new RssFeedCategory(currentId++, "vijesti", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.OtvorenoHr),
                 new RssFeedCategory(currentId++, "gospodarstvo", urlSegmentIndex: 1, (int)CategoryId.Biznis, (int)RssFeedId.OtvorenoHr),
                 new RssFeedCategory(currentId++, "magazin", urlSegmentIndex: 1, (int)CategoryId.Show, (int)RssFeedId.OtvorenoHr),
                 new RssFeedCategory(currentId++, "kultura", urlSegmentIndex: 1, (int)CategoryId.Kultura, (int)RssFeedId.OtvorenoHr),
                 new RssFeedCategory(currentId++, "sport", urlSegmentIndex: 1, (int)CategoryId.Sport, (int)RssFeedId.OtvorenoHr),
                 new RssFeedCategory(currentId++, "eu-i-svijet", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.OtvorenoHr),
-                #endregion
-
-                #region 7Dnevno
                 new RssFeedCategory(currentId++, "vijesti", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.Dnevno7),
                 new RssFeedCategory(currentId++, "sport", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.Dnevno7),
                 new RssFeedCategory(currentId++, "domovina", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.Dnevno7),
                 new RssFeedCategory(currentId++, "kultura", urlSegmentIndex: 2, (int)CategoryId.Vijesti, (int)RssFeedId.Dnevno7),
                 new RssFeedCategory(currentId++, "zdravlje", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.Dnevno7),
-                #endregion                 
             };
 
             builder.HasData(rssFeedCategories);
         }
-
     }
 }

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// SimilarArticle.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 
 namespace Espresso.Domain.Entities
 {
@@ -9,15 +13,26 @@ namespace Espresso.Domain.Entities
         public double SimilarityScore { get; private set; }
 
         public Guid MainArticleId { get; private set; }
+
         public Article? MainArticle { get; private set; }
 
         public Guid SubordinateArticleId { get; private set; }
+
         public Article? SubordinateArticle { get; private set; }
 
         private SimilarArticle()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SimilarArticle"/> class.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="similarityScore"></param>
+        /// <param name="mainArticleId"></param>
+        /// <param name="mainArticle"></param>
+        /// <param name="subordinateArticleId"></param>
+        /// <param name="subordinateArticle"></param>
         public SimilarArticle(
             Guid id,
             double similarityScore,

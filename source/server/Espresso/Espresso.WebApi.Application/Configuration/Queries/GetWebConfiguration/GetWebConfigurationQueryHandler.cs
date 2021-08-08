@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿// GetWebConfigurationQueryHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
-using Espresso.Domain.Entities;
 using Espresso.Common.Enums;
+using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
@@ -13,20 +17,19 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetWebConfiguration
 {
     public class GetWebConfigurationQueryHandler : IRequestHandler<GetWebConfigurationQuery, GetWebConfigurationQueryResponse>
     {
-        #region Fields
         private readonly IMemoryCache _memoryCache;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetWebConfigurationQueryHandler"/> class.
+        /// </summary>
+        /// <param name="memoryCache"></param>
         public GetWebConfigurationQueryHandler(
             IMemoryCache memoryCache
         )
         {
             _memoryCache = memoryCache;
         }
-        #endregion
 
-        #region Methods
         public Task<GetWebConfigurationQueryResponse> Handle(GetWebConfigurationQuery request, CancellationToken cancellationToken)
         {
             var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
@@ -44,10 +47,10 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetWebConfiguration
                 {
                     Id = -1,
                     Name = "Sve Vijesti",
-                    Color = "",
+                    Color = string.Empty,
                     Position = null,
                     CategoryType = CategoryType.General,
-                    Url = "/"
+                    Url = "/",
                 };
 
                 categoryDtosList.Insert(0, sveVijesticategoryDto);
@@ -61,11 +64,10 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetWebConfiguration
             var response = new GetWebConfigurationQueryResponse
             {
                 Categories = categoryDtos,
-                NewsPortalIds = newsPortalIds
+                NewsPortalIds = newsPortalIds,
             };
 
             return Task.FromResult(result: response);
         }
-        #endregion
     }
 }

@@ -1,4 +1,8 @@
-﻿using System.Threading;
+﻿// NewsPortalsController.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Application.NewsPortals.Commands.NewSourcesRequest;
@@ -23,7 +27,7 @@ namespace Espresso.WebApi.Controllers
     public class NewsPortalsController : ApiController
     {
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="NewsPortalsController"/> class.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>

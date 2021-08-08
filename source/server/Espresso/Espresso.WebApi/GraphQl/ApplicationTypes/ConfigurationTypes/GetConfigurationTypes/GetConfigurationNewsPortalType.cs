@@ -1,4 +1,8 @@
-﻿using Espresso.WebApi.Application.Configuration.Queries.GetConfiguration;
+﻿// GetConfigurationNewsPortalType.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.WebApi.Application.Configuration.Queries.GetConfiguration;
 using GraphQL.Types;
 
 namespace Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetConfigurationTypes
@@ -9,7 +13,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetConfigu
     public class GetConfigurationNewsPortalType : ObjectGraphType<GetConfigurationNewsPortal>
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="GetConfigurationNewsPortalType"/> class.
         /// </summary>
         public GetConfigurationNewsPortalType()
         {

@@ -1,4 +1,8 @@
-﻿using Espresso.Domain.Entities;
+﻿// ArticleConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.Domain.Entities;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -9,7 +13,6 @@ namespace Espresso.Persistence.Configuration
     {
         public void Configure(EntityTypeBuilder<Article> builder)
         {
-            #region Property Mapping
             builder.Property(article => article.Summary)
                 .HasMaxLength(Article.SummaryMaxLength);
 
@@ -24,9 +27,7 @@ namespace Espresso.Persistence.Configuration
 
             builder.Property(article => article.Title)
                 .HasMaxLength(Article.ImageUrlMaxLength);
-            #endregion
 
-            #region ValueObjects
             var editorConfigurationBuilder = builder.OwnsOne(article => article.EditorConfiguration);
 
             editorConfigurationBuilder.Property(editorConfiguration => editorConfiguration.IsHidden)
@@ -37,13 +38,9 @@ namespace Espresso.Persistence.Configuration
 
             editorConfigurationBuilder.Property(editorConfiguration => editorConfiguration.FeaturedPosition)
                 .HasDefaultValue(EditorConfiguration.FeaturedPositionDefaultValue);
-            #endregion
 
-            #region Indices
             builder.HasIndex(article => article.PublishDateTime);
-            #endregion
 
-            #region Relationships
             builder.HasOne(article => article.NewsPortal)
                 .WithMany(newsPortal => newsPortal!.Articles)
                 .HasForeignKey(article => article.NewsPortalId)
@@ -68,7 +65,6 @@ namespace Espresso.Persistence.Configuration
                 .WithOne(similarArticle => similarArticle!.SubordinateArticle!)
                 .HasForeignKey<SimilarArticle>(similarArticle => similarArticle.SubordinateArticleId)
                 .OnDelete(DeleteBehavior.Restrict);
-            #endregion
         }
     }
 }

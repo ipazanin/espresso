@@ -1,3 +1,7 @@
+// SendArticlesHttpService.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,16 +10,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Application.Extensions;
+using Espresso.Application.Services.Contracts;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
-using Espresso.Domain.Entities;
-using Espresso.Domain.IServices;
+using Espresso.Common.Services.Contracts;
 using Espresso.Dashboard.Application.Constants;
 using Espresso.Dashboard.Application.IServices;
+using Espresso.Domain.Entities;
+using Espresso.Domain.IServices;
 using Microsoft.Extensions.Logging;
-using Espresso.Common.Services.Contracts;
-using Espresso.Application.Services.Contracts;
 
 namespace Espresso.Dashboard.Services
 {
@@ -29,10 +33,18 @@ namespace Espresso.Dashboard.Services
         private readonly string _currentVersion;
         private readonly string _serverUrl;
         private readonly HttpClient _httpClient;
-        #region Fields
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendArticlesHttpService"/> class.
+        /// </summary>
+        /// <param name="httpClientFactory"></param>
+        /// <param name="loggerService"></param>
+        /// <param name="slackService"></param>
+        /// <param name="jsonService"></param>
+        /// <param name="parserApiKey"></param>
+        /// <param name="targetedApiVersion"></param>
+        /// <param name="currentVersion"></param>
+        /// <param name="serverUrl"></param>
         public SendArticlesHttpService(
             IHttpClientFactory httpClientFactory,
             ILoggerService<SendArticlesHttpService> loggerService,
@@ -53,9 +65,7 @@ namespace Espresso.Dashboard.Services
             _serverUrl = serverUrl;
             _httpClient = httpClientFactory.CreateClient(HttpClientConstants.SendArticlesHttpClientName);
         }
-        #endregion
 
-        #region Methods
         public async Task SendArticlesMessage(
             IEnumerable<Article> createArticles,
             IEnumerable<Article> updateArticles,
@@ -97,8 +107,6 @@ namespace Espresso.Dashboard.Services
                 );
 
                 response.EnsureSuccessStatusCode();
-
-                return;
             }
             catch (Exception exception)
             {
@@ -106,7 +114,7 @@ namespace Espresso.Dashboard.Services
                 var version = _currentVersion;
                 var arguments = new (string parameterName, object parameterValue)[]
                 {
-                    (nameof(version), version)
+                    (nameof(version), version),
                 };
 
                 _loggerService.Log(eventName, exception, LogLevel.Error, arguments);
@@ -119,6 +127,5 @@ namespace Espresso.Dashboard.Services
                 );
             }
         }
-        #endregion
     }
 }

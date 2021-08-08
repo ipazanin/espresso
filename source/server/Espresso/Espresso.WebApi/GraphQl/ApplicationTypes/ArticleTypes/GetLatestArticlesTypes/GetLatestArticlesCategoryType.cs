@@ -1,4 +1,8 @@
-﻿using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles;
+﻿// GetLatestArticlesCategoryType.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles;
 using GraphQL.Types;
 
 namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetLatestArticlesTypes
@@ -9,7 +13,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetLatestArticle
     public class GetLatestArticlesCategoryType : ObjectGraphType<GetLatestArticlesCategory>
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="GetLatestArticlesCategoryType"/> class.
         /// </summary>
         public GetLatestArticlesCategoryType()
         {

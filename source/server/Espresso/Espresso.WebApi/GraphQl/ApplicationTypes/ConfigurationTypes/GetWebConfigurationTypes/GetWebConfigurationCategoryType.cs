@@ -1,4 +1,8 @@
-﻿using Espresso.WebApi.Application.Configuration.Queries.GetWebConfiguration;
+﻿// GetWebConfigurationCategoryType.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.WebApi.Application.Configuration.Queries.GetWebConfiguration;
 using GraphQL.Types;
 
 namespace Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetWebCategoryArticlesTypes
@@ -9,7 +13,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetWebCate
     public class GetWebConfigurationCategoryType : ObjectGraphType<GetWebConfigurationCategory>
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="GetWebConfigurationCategoryType"/> class.
         /// </summary>
         public GetWebConfigurationCategoryType()
         {

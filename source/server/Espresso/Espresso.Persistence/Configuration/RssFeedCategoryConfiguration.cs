@@ -1,4 +1,8 @@
-﻿using Espresso.Domain.Entities;
+﻿// RssFeedCategoryConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.Domain.Entities;
 using Espresso.Persistence.DataSeed;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -9,22 +13,15 @@ namespace Espresso.Persistence.Configuration
     {
         public void Configure(EntityTypeBuilder<RssFeedCategory> builder)
         {
-            #region Property Mapping
             builder.Property(rssFeedcategory => rssFeedcategory.UrlRegex)
                 .HasMaxLength(RssFeedCategory.UrlRegexMaxLength);
-            #endregion
 
-            #region Relationship Mapping
             builder.HasOne(rssFeedCategory => rssFeedCategory.RssFeed)
                 .WithMany(rssFeed => rssFeed!.RssFeedCategories)
                 .HasForeignKey(rssFeedCategory => rssFeedCategory.RssFeedId)
                 .OnDelete(DeleteBehavior.Cascade);
-            #endregion
 
-            #region Data Seed
             RssFeedCategoryDataSeed.Seed(builder);
-            #endregion
         }
-
     }
 }

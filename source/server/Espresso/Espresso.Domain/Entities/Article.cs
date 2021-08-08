@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Article.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Espresso.Domain.Infrastructure;
@@ -9,7 +13,6 @@ namespace Espresso.Domain.Entities
     public class Article :
         IEntity<Guid, Article>
     {
-        #region Constants
         public const int SummaryMaxLength = 2000;
         public const int TitleMaxLength = 500;
         public const int UrlMaxLength = 500;
@@ -17,9 +20,7 @@ namespace Espresso.Domain.Entities
         public const int ImageUrlMaxLength = 500;
 
         public const decimal TrendingScoreDefaultValue = 0m;
-        #endregion
 
-        #region Properties
         public Guid Id { get; private set; }
 
         public string Url { get; private set; }
@@ -33,7 +34,7 @@ namespace Espresso.Domain.Entities
         public string? ImageUrl { get; private set; }
 
         /// <summary>
-        /// Date Time when article was created in Espresso App
+        /// Gets date Time when article was created in Espresso App.
         /// </summary> 
         public DateTime CreateDateTime { get; private set; }
 
@@ -47,7 +48,6 @@ namespace Espresso.Domain.Entities
 
         public EditorConfiguration EditorConfiguration { get; private set; }
 
-        #region Relationships
         public int NewsPortalId { get; private set; }
 
         public NewsPortal? NewsPortal { get; private set; }
@@ -61,13 +61,9 @@ namespace Espresso.Domain.Entities
         public ICollection<SimilarArticle> SubordinateArticles { get; private set; } = new List<SimilarArticle>();
 
         public SimilarArticle? MainArticle { get; private set; }
-        #endregion
 
-        #endregion
-
-        #region Constructors
         /// <summary>
-        /// ORM Constructor
+        /// ORM Constructor.
         /// </summary>
         private Article()
         {
@@ -78,6 +74,28 @@ namespace Espresso.Domain.Entities
             EditorConfiguration = null!;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Article"/> class.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="url"></param>
+        /// <param name="webUrl"></param>
+        /// <param name="summary"></param>
+        /// <param name="title"></param>
+        /// <param name="imageUrl"></param>
+        /// <param name="createDateTime"></param>
+        /// <param name="updateDateTime"></param>
+        /// <param name="publishDateTime"></param>
+        /// <param name="numberOfClicks"></param>
+        /// <param name="trendingScore"></param>
+        /// <param name="editorConfiguration"></param>
+        /// <param name="newsPortalId"></param>
+        /// <param name="rssFeedId"></param>
+        /// <param name="articleCategories"></param>
+        /// <param name="newsPortal"></param>
+        /// <param name="rssFeed"></param>
+        /// <param name="subordinateArticles"></param>
+        /// <param name="mainArticle"></param>
         public Article(
             Guid id,
             string url,
@@ -120,9 +138,7 @@ namespace Espresso.Domain.Entities
             SubordinateArticles = subordinateArticles?.ToList() ?? SubordinateArticles;
             MainArticle = mainArticle;
         }
-        #endregion
 
-        #region Methods
         /// <summary>
         /// 
         /// </summary>
@@ -161,10 +177,10 @@ namespace Espresso.Domain.Entities
         }
 
         /// <summary>
-        /// Updates Article if necessary
+        /// Updates Article if necessary.
         /// </summary>
         /// <param name="other"></param>
-        /// <returns>If article should be updated</returns>
+        /// <returns>If article should be updated.</returns>
         public (
             bool isSaved,
             IEnumerable<ArticleCategory> articleCategoriesToCreate,
@@ -252,7 +268,6 @@ namespace Espresso.Domain.Entities
                 articleCategoriesToDelete.Clear();
             }
 
-
             return (shouldUpdate, articleCategoriesToCreate, articleCategoriesToDelete, modifiedProperties);
         }
 
@@ -325,6 +340,5 @@ namespace Espresso.Domain.Entities
         {
             MainArticle = null;
         }
-        #endregion
     }
 }

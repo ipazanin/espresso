@@ -1,4 +1,8 @@
-﻿using System;
+﻿// LoggerRequestPipeline.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
@@ -12,18 +16,26 @@ using Microsoft.Extensions.Logging;
 
 namespace Espresso.Application.Infrastructure.MediatorInfrastructure
 {
+    /// <summary>
+    /// <see cref="Mediator"/> pipeline for request logging.
+    /// </summary>
+    /// <typeparam name="TRequest">Mediator request.</typeparam>
+    /// <typeparam name="TResponse">Mediator response.</typeparam>
     public class LoggerRequestPipeline<TRequest, TResponse> :
         IPipelineBehavior<TRequest, TResponse>
         where TRequest : notnull
     {
-        #region Fields
         private readonly Stopwatch _stopWatch;
         private readonly IMemoryCache _memoryCache;
         private readonly ILoggerService<LoggerRequestPipeline<TRequest, TResponse>> _loggerService;
         private readonly ApplicationInformation _applicationInformation;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LoggerRequestPipeline{TRequest, TResponse}"/> class.
+        /// </summary>
+        /// <param name="memoryCache">Memory cache.</param>
+        /// <param name="loggerService">Logger service.</param>
+        /// <param name="applicationInformation">Application information.</param>
         public LoggerRequestPipeline(
             IMemoryCache memoryCache,
             ILoggerService<LoggerRequestPipeline<TRequest, TResponse>> loggerService,
@@ -35,9 +47,8 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
             _loggerService = loggerService;
             _applicationInformation = applicationInformation;
         }
-        #endregion
 
-        #region Methods
+        /// <inheritdoc/>
         public async Task<TResponse> Handle(
             TRequest request,
             CancellationToken cancellationToken,
@@ -103,6 +114,5 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
 
             return total / count;
         }
-        #endregion
     }
 }

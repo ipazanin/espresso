@@ -1,4 +1,8 @@
-﻿using System;
+﻿// GetConfigurationCategoryWithNewsPortals.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,33 +13,28 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
 {
     public record GetConfigurationCategoryWithNewsPortals
     {
-        #region Properties
         /// <summary>
-        /// Category ID
+        /// Gets category ID.
         /// </summary>
         public int Id { get; private set; }
 
         /// <summary>
-        /// Category Name
+        /// Gets category Name.
         /// </summary>
-        public string Name { get; private set; } = "";
+        public string Name { get; private set; } = string.Empty;
 
-        public string Color { get; private set; } = "";
+        public string Color { get; private set; } = string.Empty;
 
         public int? Position { get; private set; }
 
         public CategoryType CategoryType { get; private set; }
 
         public IEnumerable<GetConfigurationNewsPortal> NewsPortals { get; private set; } = new List<GetConfigurationNewsPortal>();
-        #endregion
 
-        #region Constructors
         private GetConfigurationCategoryWithNewsPortals()
         {
         }
-        #endregion
 
-        #region Methods
         public static Expression<Func<Category, GetConfigurationCategoryWithNewsPortals>> GetProjection(TimeSpan maxAgeOfNewNewsPortal)
         {
             return category => new GetConfigurationCategoryWithNewsPortals
@@ -50,9 +49,8 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
                         GetConfigurationNewsPortal
                             .GetProjection(maxAgeOfNewNewsPortal)
                             .Compile()
-                    )
+                    ),
             };
         }
-        #endregion
     }
 }

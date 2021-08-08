@@ -1,21 +1,23 @@
-﻿using System;
+﻿// ParseRssFeedsCommandHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Espresso.Dashboard.Application.IServices;
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
-using MediatR;
-using Espresso.Dashboard.Application.IServices;
 using Espresso.Persistence.Database;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Espresso.Dashboard.ParseRssFeeds
 {
     public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand, ParseRssFeedsCommandResponse>
     {
-        #region Fields
-
         private readonly ICreateArticleService _parseArticlesService;
         private readonly ILoadRssFeedsService _loadRssFeedsService;
         private readonly ISortArticlesService _sortArticlesService;
@@ -23,10 +25,15 @@ namespace Espresso.Dashboard.ParseRssFeeds
         private readonly ISendArticlesService _sendArticlesService;
         private readonly IEspressoDatabaseContext _espressoDatabaseContext;
 
-        #endregion
-
-        #region Constructors
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParseRssFeedsCommandHandler"/> class.
+        /// </summary>
+        /// <param name="parseArticlesService"></param>
+        /// <param name="loadRssFeedsService"></param>
+        /// <param name="sortArticlesService"></param>
+        /// <param name="groupSimilarArticlesService"></param>
+        /// <param name="sendArticlesService"></param>
+        /// <param name="espressoDatabaseContext"></param>
         public ParseRssFeedsCommandHandler(
             ICreateArticleService parseArticlesService,
             ILoadRssFeedsService loadRssFeedsService,
@@ -44,10 +51,6 @@ namespace Espresso.Dashboard.ParseRssFeeds
             _sendArticlesService = sendArticlesService;
             _espressoDatabaseContext = espressoDatabaseContext;
         }
-
-        #endregion
-
-        #region Methods
 
         public async Task<ParseRssFeedsCommandResponse> Handle(
             ParseRssFeedsCommand request,
@@ -113,7 +116,7 @@ namespace Espresso.Dashboard.ParseRssFeeds
             return new ParseRssFeedsCommandResponse
             {
                 CreatedArticles = createArticles.Count(),
-                UpdatedArticles = updateArticles.Count()
+                UpdatedArticles = updateArticles.Count(),
             };
         }
 
@@ -127,8 +130,5 @@ namespace Espresso.Dashboard.ParseRssFeeds
                 savedArticles[changedArticle.Id] = changedArticle;
             }
         }
-
-        #endregion
     }
 }
-

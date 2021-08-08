@@ -1,4 +1,8 @@
-﻿using System.Text.Json;
+﻿// SystemTextJsonSerializerConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 
 namespace Espresso.WebApi.Configuration
@@ -8,11 +12,8 @@ namespace Espresso.WebApi.Configuration
     /// </summary>
     public class SystemTextJsonSerializerConfiguration
     {
-        #region Fields
         private readonly IConfigurationSection _configuration;
-        #endregion
 
-        #region Properties
         /// <summary>
         /// 
         /// </summary>
@@ -25,20 +26,16 @@ namespace Espresso.WebApi.Configuration
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             ReadCommentHandling = _configuration.GetValue<JsonCommentHandling>("ReadCommentHandling"),
         };
-        #endregion
 
-        #region Constructors
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="SystemTextJsonSerializerConfiguration"/> class.
         /// </summary>
         /// <param name="configuration"></param>
         public SystemTextJsonSerializerConfiguration(IConfigurationSection configuration)
         {
             _configuration = configuration;
         }
-        #endregion
 
-        #region Methods
         /// <summary>
         /// 
         /// </summary>
@@ -53,6 +50,5 @@ namespace Espresso.WebApi.Configuration
             jsonSerializerOptions.MaxDepth = JsonSerializerOptions.MaxDepth;
             jsonSerializerOptions.ReadCommentHandling = JsonSerializerOptions.ReadCommentHandling;
         }
-        #endregion Methods
     }
 }

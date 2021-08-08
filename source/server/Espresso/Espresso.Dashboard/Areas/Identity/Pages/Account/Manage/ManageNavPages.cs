@@ -1,4 +1,8 @@
-﻿using System;
+﻿// ManageNavPages.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage

@@ -1,4 +1,8 @@
-﻿namespace Espresso.WebApi.Application.ApplicationDownloads.Queries.GetApplicationDownloadStatistics
+﻿// GetApplicationDownloadStatisticsQueryResponse.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+namespace Espresso.WebApi.Application.ApplicationDownloads.Queries.GetApplicationDownloadStatistics
 {
     public record GetApplicationDownloadStatisticsQueryResponse
     {

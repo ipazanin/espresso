@@ -1,4 +1,8 @@
-﻿using System;
+﻿// LoadRssFeedsService.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -7,29 +11,31 @@ using System.Linq;
 using System.Net.Http;
 using System.ServiceModel.Syndication;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Xml;
 using Espresso.Application.Extensions;
 using Espresso.Common.Enums;
+using Espresso.Common.Extensions;
+using Espresso.Dashboard.Application.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.RssFeedEnums;
-using Espresso.Common.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
 using Microsoft.Extensions.Logging;
-using Espresso.Dashboard.Application.Constants;
-using System.Threading.Channels;
 
 namespace Espresso.Dashboard.Application.Services
 {
     public class LoadRssFeedsService : ILoadRssFeedsService
     {
-        #region Fields
         private readonly ILoggerService<LoadRssFeedsService> _loggerService;
         private readonly HttpClient _httpClient;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LoadRssFeedsService"/> class.
+        /// </summary>
+        /// <param name="httpClientFactory"></param>
+        /// <param name="loggerService"></param>
         public LoadRssFeedsService(
             IHttpClientFactory httpClientFactory,
             ILoggerService<LoadRssFeedsService> loggerService
@@ -38,9 +44,7 @@ namespace Espresso.Dashboard.Application.Services
             _httpClient = httpClientFactory.CreateClient(HttpClientConstants.LoadRssFeedsHttpClientName);
             _loggerService = loggerService;
         }
-        #endregion
 
-        #region Methods
         public async Task<Channel<RssFeedItem>> ParseRssFeeds(
             IEnumerable<RssFeed> rssFeeds,
             CancellationToken cancellationToken
@@ -96,14 +100,13 @@ namespace Espresso.Dashboard.Application.Services
                             _ = writer.TryWrite(rssFeedItem);
                             //parsedArticles.Enqueue(rssFeedItem);
                         }
-
                     }
                     catch (Exception exception)
                     {
                         var rssFeedUrl = rssFeed.Url;
                         var exceptionMessage = exception.Message;
                         var eventName = Event.RssFeedLoading.GetDisplayName();
-                        var innerExceptionMessage = exception.InnerException?.Message ?? "";
+                        var innerExceptionMessage = exception.InnerException?.Message ?? string.Empty;
                         var arguments = new (string, object)[]
                         {
                             (nameof(rssFeedUrl), rssFeedUrl),
@@ -170,6 +173,5 @@ namespace Espresso.Dashboard.Application.Services
 
             return feedContent;
         }
-        #endregion
     }
 }

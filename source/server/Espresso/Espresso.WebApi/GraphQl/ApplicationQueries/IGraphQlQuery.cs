@@ -1,4 +1,8 @@
-﻿namespace Espresso.WebApi.GraphQl.ApplicationQueries
+﻿// IGraphQlQuery.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+namespace Espresso.WebApi.GraphQl.ApplicationQueries
 {
     /// <summary>
     ///

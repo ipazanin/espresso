@@ -1,27 +1,33 @@
-﻿using System.Collections.Generic;
+﻿// IncrementNumberOfClicksCommandHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.WebApi.Application.Exceptions;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
-using Espresso.Persistence.Database;
-using MediatR;
-
-using Microsoft.Extensions.Caching.Memory;
 using Espresso.Domain.IServices;
+using Espresso.Persistence.Database;
+using Espresso.WebApi.Application.Exceptions;
+using MediatR;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticleScore
 {
     public class IncrementNumberOfClicksCommandHandler : IRequestHandler<IncrementNumberOfClicksCommand>
     {
-        #region Fields
         private readonly IMemoryCache _memoryCache;
         private readonly IEspressoDatabaseContext _context;
         private readonly ITrendingScoreService _trendingScoreService;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IncrementNumberOfClicksCommandHandler"/> class.
+        /// </summary>
+        /// <param name="memoryCache"></param>
+        /// <param name="context"></param>
+        /// <param name="trendingScoreService"></param>
         public IncrementNumberOfClicksCommandHandler(
             IMemoryCache memoryCache,
             IEspressoDatabaseContext context,
@@ -32,9 +38,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticle
             _context = context;
             _trendingScoreService = trendingScoreService;
         }
-        #endregion
 
-        #region Methods
         public async Task<Unit> Handle(IncrementNumberOfClicksCommand request, CancellationToken cancellationToken)
         {
             var memoryCacheArticles = _memoryCache
@@ -69,6 +73,5 @@ namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticle
 
             return Unit.Value;
         }
-        #endregion
     }
 }

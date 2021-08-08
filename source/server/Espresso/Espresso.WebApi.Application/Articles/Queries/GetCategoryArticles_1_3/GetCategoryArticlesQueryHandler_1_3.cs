@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// GetCategoryArticlesQueryHandler_1_3.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,20 +17,19 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
 {
     public class GetCategoryArticlesQueryHandler_1_3 : IRequestHandler<GetCategoryArticlesQuery_1_3, GetCategoryArticlesQueryResponse_1_3>
     {
-        #region Fields
         private readonly IMemoryCache _memoryCache;
-        #endregion
 
-        #region Contructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetCategoryArticlesQueryHandler_1_3"/> class.
+        /// </summary>
+        /// <param name="memoryCache"></param>
         public GetCategoryArticlesQueryHandler_1_3(
             IMemoryCache memoryCache
         )
         {
             _memoryCache = memoryCache;
         }
-        #endregion
 
-        #region Methods
         public Task<GetCategoryArticlesQueryResponse_1_3> Handle(GetCategoryArticlesQuery_1_3 request, CancellationToken cancellationToken)
         {
             var articles = _memoryCache.Get<IEnumerable<Article>>(
@@ -34,7 +37,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
             );
 
             var newsPortalIds = request.NewsPortalIds
-                ?.Replace(" ", "")
+                ?.Replace(" ", string.Empty)
                 ?.Split(',')
                 ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
                 ?.Where(newsPortalId => newsPortalId != default);
@@ -53,11 +56,10 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
 
             var response = new GetCategoryArticlesQueryResponse_1_3
             {
-                Articles = articleDtos
+                Articles = articleDtos,
             };
 
             return Task.FromResult(result: response);
         }
-        #endregion
     }
 }

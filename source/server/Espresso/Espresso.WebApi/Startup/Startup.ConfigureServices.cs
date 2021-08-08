@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Startup.ConfigureServices.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Net.Http;
 using System.Reflection;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
@@ -6,7 +10,6 @@ using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using Espresso.Application.Models;
 using Espresso.Application.Services.Contracts;
 using Espresso.Application.Services.Implementations;
-using Espresso.Application.Utilities;
 using Espresso.Common.Constants;
 using Espresso.Common.Services.Contracts;
 using Espresso.Common.Services.Implementations;
@@ -28,6 +31,9 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
+using Polly.Extensions.Http;
+using Polly.Timeout;
 
 namespace Espresso.WebApi.Startup
 {
@@ -58,18 +64,22 @@ namespace Espresso.WebApi.Startup
         {
             services.AddMemoryCache();
             services.AddTransient<IWebApiInit, WebApiInit>();
+
+            var retryPolicy = HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .Or<TimeoutRejectedException>() // thrown by Polly's TimeoutPolicy if the inner execution times out
+                .RetryAsync(3);
+
             services
                 .AddHttpClient(
                     name: HttpClientConstants.SlackHttpClientName,
-                    configureClient: (serviceProvider, httpClient) => httpClient.Timeout = _webApiConfiguration.SlackHttpClientConfiguration.Timeout
+                    configureClient: (_, httpClient) => httpClient.Timeout = _webApiConfiguration.SlackHttpClientConfiguration.Timeout
                 )
-                .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler())
-                .AddHttpMessageHandler(serviceProvider => new RetryHttpRequestHandler(
-                    maxRetries: _webApiConfiguration.SlackHttpClientConfiguration.MaxRetries
-                ));
+                .AddPolicyHandler(retryPolicy)
+                .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(20)));
 
-            services.AddSingleton(serviceProvider => _webApiConfiguration);
-            services.AddSingleton(serviceProvider => new ApplicationInformation(
+            services.AddSingleton(_ => _webApiConfiguration);
+            services.AddSingleton(_ => new ApplicationInformation(
                 appEnvironment: _webApiConfiguration.AppConfiguration.AppEnvironment,
                 version: _webApiConfiguration.AppConfiguration.Version
             ));

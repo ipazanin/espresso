@@ -1,4 +1,8 @@
-﻿using Espresso.Common.Constants;
+﻿// BasicInformationsHeaderParameters.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +13,6 @@ namespace Espresso.WebApi.RequestData.Header
     /// </summary>
     public class BasicInformationsHeaderParameters
     {
-        #region Properties
         /// <summary>
         /// 
         /// </summary>
@@ -27,6 +30,5 @@ namespace Espresso.WebApi.RequestData.Header
         /// </summary>
         [FromHeader(Name = HttpHeaderConstants.DeviceTypeHeaderName)]
         public DeviceType DeviceType { get; set; } = DeviceType.Undefined;
-        #endregion
     }
 }

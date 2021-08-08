@@ -1,4 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// ApplicationDownloadsController.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
@@ -23,7 +27,7 @@ namespace Espresso.WebApi.Controllers
     public class ApplicationDownloadsController : ApiController
     {
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="ApplicationDownloadsController"/> class.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>

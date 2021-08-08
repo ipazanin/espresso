@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// GetConfigurationQueryResponse_1_3.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 
 namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3
 {

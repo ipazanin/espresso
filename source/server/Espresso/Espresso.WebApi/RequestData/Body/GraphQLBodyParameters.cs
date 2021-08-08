@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// GraphQLBodyParameters.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using GraphQL.SystemTextJson;
 

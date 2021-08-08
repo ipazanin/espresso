@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿// SpaConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Microsoft.Extensions.Configuration;
 
 namespace Espresso.WebApi.Configuration
 {
@@ -7,11 +11,8 @@ namespace Espresso.WebApi.Configuration
     /// </summary>
     public class SpaConfiguration
     {
-        #region Fields
         private readonly IConfigurationSection _configuration;
-        #endregion
 
-        #region Properties
         /// <summary>
         /// 
         /// </summary>
@@ -26,17 +27,14 @@ namespace Espresso.WebApi.Configuration
         /// 
         /// </summary>
         public bool EnableCors => _configuration.GetValue<bool>("EnableCors");
-        #endregion
 
-        #region Constructors
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="SpaConfiguration"/> class.
         /// </summary>
         /// <param name="configuration"></param>
         public SpaConfiguration(IConfigurationSection configuration)
         {
             _configuration = configuration;
         }
-        #endregion
     }
 }

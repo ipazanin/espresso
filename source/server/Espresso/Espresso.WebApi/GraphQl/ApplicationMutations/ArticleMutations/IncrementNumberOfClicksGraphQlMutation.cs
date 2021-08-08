@@ -1,4 +1,8 @@
-﻿using System;
+﻿// IncrementNumberOfClicksGraphQlMutation.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticleScore;
 using Espresso.WebApi.GraphQl.Infrastructure;
 using GraphQL;
@@ -13,7 +17,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationMutations.ArticlesQueries
     public class IncrementNumberOfClicksGraphQlMutation : ObjectGraphType, IGraphQlMutation
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="IncrementNumberOfClicksGraphQlMutation"/> class.
         /// </summary>
         /// <param name="mediator"></param>
         public IncrementNumberOfClicksGraphQlMutation(

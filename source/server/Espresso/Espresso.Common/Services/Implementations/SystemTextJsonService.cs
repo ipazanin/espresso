@@ -1,3 +1,7 @@
+﻿// SystemTextJsonService.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -9,25 +13,26 @@ using Espresso.Common.Services.Contracts;
 
 namespace Espresso.Common.Services.Implementations
 {
+    /// <inheritdoc/>
     public class SystemTextJsonService : IJsonService
     {
-        #region Fields
         /// <summary>
-        /// Default JsonSerializerOptions
+        /// Default JsonSerializerOptions.
         /// </summary>
         private readonly JsonSerializerOptions _defaultJsonSerializerOptions;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SystemTextJsonService"/> class.
+        /// </summary>
+        /// <param name="defaultJsonSerializerOptions">Default <see cref="JsonSerializerOptions"/>.</param>
         public SystemTextJsonService(
             JsonSerializerOptions defaultJsonSerializerOptions
         )
         {
             _defaultJsonSerializerOptions = defaultJsonSerializerOptions;
         }
-        #endregion
 
-        #region Methods
+        /// <inheritdoc/>
         public async Task<string> Serialize<TValue>(
             TValue value,
             CancellationToken cancellationToken
@@ -51,6 +56,7 @@ namespace Espresso.Common.Services.Implementations
             return jsonValue;
         }
 
+        /// <inheritdoc/>
         public string Serialize<TValue>(TValue value)
         {
             var jsonString = JsonSerializer.Serialize(
@@ -61,6 +67,7 @@ namespace Espresso.Common.Services.Implementations
             return jsonString;
         }
 
+        /// <inheritdoc/>
         public async Task<TValue?> Deserialize<TValue>(
             string json,
             CancellationToken cancellationToken
@@ -79,6 +86,7 @@ namespace Espresso.Common.Services.Implementations
             return value;
         }
 
+        /// <inheritdoc/>
         public async Task<TValue?> Deserialize<TValue>(
             byte[] utf8Bytes,
             CancellationToken cancellationToken
@@ -86,7 +94,7 @@ namespace Espresso.Common.Services.Implementations
         {
             var stream = new MemoryStream(utf8Bytes)
             {
-                Position = 0
+                Position = 0,
             };
 
             var value = await JsonSerializer.DeserializeAsync<TValue?>(
@@ -98,6 +106,7 @@ namespace Espresso.Common.Services.Implementations
             return value;
         }
 
+        /// <inheritdoc/>
         public TValue? Deserialize<TValue>(string json)
         {
             var value = JsonSerializer.Deserialize<TValue?>(
@@ -108,6 +117,7 @@ namespace Espresso.Common.Services.Implementations
             return value;
         }
 
+        /// <inheritdoc/>
         public async Task<HttpContent> GetJsonHttpContent<TValue>(
             TValue value,
             CancellationToken cancellationToken
@@ -123,6 +133,5 @@ namespace Espresso.Common.Services.Implementations
 
             return httpRequestMessage;
         }
-        #endregion
     }
 }

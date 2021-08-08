@@ -1,4 +1,8 @@
-﻿using System;
+﻿// ArticlesController.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -38,7 +42,7 @@ namespace Espresso.WebApi.Controllers
     public class ArticlesController : ApiController
     {
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="ArticlesController"/> class.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>
@@ -50,7 +54,6 @@ namespace Espresso.WebApi.Controllers
         {
         }
 
-        #region GetLatestArticles
         /// <summary>
         /// Get articles from selected <paramref name="newsPortalIds"/> and <paramref name="categoryIds"/>.
         /// </summary>
@@ -60,9 +63,9 @@ namespace Espresso.WebApi.Controllers
         /// </remarks>
         /// <param name="cancellationToken"></param>
         /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
-        /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
+        /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
         /// <param name="titleSearchQuery">Article Title Search Query.</param>
         /// <returns>Response object containing articles.</returns>
         /// <response code="200">Response object containing articles.</response>
@@ -122,9 +125,9 @@ namespace Espresso.WebApi.Controllers
         /// </remarks>
         /// <param name="cancellationToken"></param>
         /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
-        /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
+        /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
         /// <param name="titleSearchQuery">Article Title Search Query.</param>
         /// <returns>Response object containing articles.</returns>
         /// <response code="200">Response object containing articles.</response>
@@ -184,9 +187,9 @@ namespace Espresso.WebApi.Controllers
         /// </remarks>
         /// <param name="cancellationToken"></param>
         /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
-        /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
+        /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
         /// <param name="titleSearchQuery">Article Title Search Query.</param>
         /// <returns>Response object containing articles.</returns>
         /// <response code="200">Response object containing articles.</response>
@@ -241,14 +244,14 @@ namespace Espresso.WebApi.Controllers
         /// Sample request:
         ///     Get /api/articles/category?<paramref name="take"/>=1&amp;<paramref name="skip"/>=0.
         /// </remarks>
-        /// <param name="cancellationToken"></param>
+        /// <param name="basicInformationsHeaderParameters">App information header parameters.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
         /// <param name="take">Number of articles.</param>
         /// <param name="skip">Number of skipped articles.</param>
         /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
-        /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
         /// <returns>Response object containing articles.</returns>
-        /// <response code="200">Response object containing articles.</response>
+        /// <response code="200">Response object from version 1.3 containing articles.</response>
         /// <response code="400">If <paramref name="take"/> is not between 0 and 100 or <paramref name="skip"/> is lower than 0.</response>
         /// <response code="401">If API Key is invalid or missing.</response>
         /// <response code="403">If API Key is forbiden from requested resource.</response>
@@ -290,9 +293,7 @@ namespace Espresso.WebApi.Controllers
 
             return Ok(response);
         }
-        #endregion
 
-        #region GetCategoryArticles
         /// <summary>
         /// Get articles from provided <paramref name="categoryId"/>.
         /// </summary>
@@ -426,9 +427,9 @@ namespace Espresso.WebApi.Controllers
         ///     Get /api/articles/category?<paramref name="take"/>=1&amp;<paramref name="skip"/>=0.
         /// </remarks>
         /// <param name="cancellationToken"></param>
-        /// <param name="take">Number of articles.</param>
         /// <param name="categoryId">Category Id.</param>
         /// <param name="basicInformationsHeaderParameters"></param>
+        /// <param name="take">Number of articles.</param>
         /// <param name="skip">Number of skipped articles.</param>
         /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
         /// <returns>Response object containing articles.</returns>
@@ -473,7 +474,6 @@ namespace Espresso.WebApi.Controllers
 
             return Ok(articles);
         }
-        #endregion
 
         /// <summary>
         /// Get trending articles.
@@ -534,9 +534,9 @@ namespace Espresso.WebApi.Controllers
         ///     Get /api/articles/featured.
         /// </remarks>
         /// <param name="cancellationToken"></param>
-        /// <param name="newsPortalIds">NewsPortal Ids comma delimited.</param>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
+        /// <param name="newsPortalIds">NewsPortal Ids comma delimited.</param>
         /// <param name="categoryIds">Category Ids comma delimited.</param>
         /// <returns>Response object containing articles.</returns>
         /// <response code="200">Response object containing articles.</response>

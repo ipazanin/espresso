@@ -1,4 +1,8 @@
-﻿using System;
+﻿// CreateApplicationDownloadCommanHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.Models;
@@ -10,12 +14,14 @@ namespace Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplic
 {
     public class CreateApplicationDownloadCommanHandler : IRequestHandler<CreateApplicationDownloadCommand>
     {
-        #region Fields
         private readonly IEspressoDatabaseContext _context;
         private readonly ApplicationInformation _applicationInformation;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateApplicationDownloadCommanHandler"/> class.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="applicationInformation"></param>
         public CreateApplicationDownloadCommanHandler(
             IEspressoDatabaseContext context,
             ApplicationInformation applicationInformation
@@ -24,9 +30,7 @@ namespace Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplic
             _context = context;
             _applicationInformation = applicationInformation;
         }
-        #endregion
 
-        #region Methods
         public async Task<Unit> Handle(CreateApplicationDownloadCommand request, CancellationToken cancellationToken)
         {
             var applicationDownload = new ApplicationDownload(
@@ -43,7 +47,5 @@ namespace Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplic
 
             return Unit.Value;
         }
-
-        #endregion
     }
 }
