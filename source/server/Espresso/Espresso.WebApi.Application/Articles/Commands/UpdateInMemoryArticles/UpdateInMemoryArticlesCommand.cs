@@ -1,4 +1,8 @@
-﻿using System;
+﻿// UpdateInMemoryArticlesCommand.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;

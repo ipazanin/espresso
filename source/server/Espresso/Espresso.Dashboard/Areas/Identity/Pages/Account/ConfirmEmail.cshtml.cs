@@ -1,4 +1,8 @@
-﻿using System.Text;
+﻿// ConfirmEmail.cshtml.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +17,10 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
     {
         private readonly UserManager<IdentityUser> _userManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfirmEmailModel"/> class.
+        /// </summary>
+        /// <param name="userManager"></param>
         public ConfirmEmailModel(UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
@@ -21,6 +29,12 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
         [TempData]
         public string? StatusMessage { get; set; }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="code"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnGetAsync(string? userId, string? code)
         {
             if (userId == null || code == null)

@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// GetConfigurationQueryHandler_1_3.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,24 +16,18 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3
 {
     public class GetConfigurationQueryHandler : IRequestHandler<GetConfigurationQuery_1_3, GetConfigurationQueryResponse_1_3>
     {
-        #region Fields
-
         private readonly IMemoryCache _memoryCache;
 
-        #endregion
-
-        #region Constructors
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetConfigurationQueryHandler"/> class.
+        /// </summary>
+        /// <param name="memoryCache"></param>
         public GetConfigurationQueryHandler(
             IMemoryCache memoryCache
         )
         {
             _memoryCache = memoryCache;
         }
-
-        #endregion
-
-        #region Methods
 
         public Task<GetConfigurationQueryResponse_1_3> Handle(GetConfigurationQuery_1_3 request, CancellationToken cancellationToken)
         {
@@ -49,12 +47,10 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3
             var response = new GetConfigurationQueryResponse_1_3
             {
                 Categories = categoryDtos,
-                NewsPortals = newsPortalDtos
+                NewsPortals = newsPortalDtos,
             };
 
             return Task.FromResult(result: response);
         }
-
-        #endregion
     }
 }

@@ -286,3 +286,7 @@ csharp_style_var_elsewhere = true:warning
 # Not enforced as a build 'warning' for 'VisualStudio' layer due to large number of false positives from https://github.com/dotnet/roslyn-analyzers/issues/3857 and https://github.com/dotnet/roslyn-analyzers/issues/3858
 # Additionally, there is a risk of accidentally breaking an internal API that partners rely on though IVT.
 dotnet_diagnostic.CA1822.severity = suggestion
+
+# IDE0073: File header
+dotnet_diagnostic.IDE0073.severity = warning
+file_header_template = {fileName}\n\n© 2021 Espresso News. All rights reserved.

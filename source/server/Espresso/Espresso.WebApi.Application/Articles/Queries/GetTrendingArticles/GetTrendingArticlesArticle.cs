@@ -1,4 +1,8 @@
-﻿using System;
+﻿// GetTrendingArticlesArticle.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,55 +13,50 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles
 {
     public record GetTrendingArticlesArticle
     {
-        #region Properties
         /// <summary>
-        /// ID created by app
+        /// Gets iD created by app.
         /// </summary>
         public Guid Id { get; private set; }
 
         /// <summary>
-        /// Article Url provided by RSS Feed
+        /// Gets article Url provided by RSS Feed.
         /// </summary>
-        public string Url { get; private set; } = "";
+        public string Url { get; private set; } = string.Empty;
 
         /// <summary>
-        /// Article Title Parsed from RSS Feed
+        /// Gets article Title Parsed from RSS Feed.
         /// </summary>
-        public string Title { get; private set; } = "";
+        public string Title { get; private set; } = string.Empty;
 
         /// <summary>
-        /// Image URL parsed from src attribute of first img element or second rss feed link, first is 
+        /// Gets image URL parsed from src attribute of first img element or second rss feed link, first is. 
         /// </summary>
         public string? ImageUrl { get; private set; }
 
         /// <summary>
-        /// Article Publish time provided by RSS Feed
+        /// Gets article Publish time provided by RSS Feed.
         /// </summary>
-        public string PublishDateTime { get; private set; } = "";
+        public string PublishDateTime { get; private set; } = string.Empty;
 
         /// <summary>
-        /// Trending Score
+        /// Gets trending Score.
         /// </summary>
         public int TrendingScore { get; private set; }
 
         /// <summary>
-        /// News Portal
+        /// Gets news Portal.
         /// </summary>
         public GetTrendingArticlesNewsPortal? NewsPortal { get; private set; }
 
         /// <summary>
-        /// List Of Categories article belongs to
+        /// Gets list Of Categories article belongs to.
         /// </summary>
         public IEnumerable<GetTrendingArticlesCategory> Categories { get; private set; } = new List<GetTrendingArticlesCategory>();
-        #endregion
 
-        #region Constructors
         private GetTrendingArticlesArticle()
         {
         }
-        #endregion
 
-        #region Methods
         public static Expression<Func<Article, GetTrendingArticlesArticle>> GetProjection()
         {
             return article => new GetTrendingArticlesArticle
@@ -73,9 +72,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles
                 Categories = article.ArticleCategories
                     .Select(articleCategory => articleCategory.Category)
                     .Select(GetTrendingArticlesCategory.GetProjection().Compile()!),
-                TrendingScore = (int)article.TrendingScore
+                TrendingScore = (int)article.TrendingScore,
             };
         }
-        #endregion
     }
 }

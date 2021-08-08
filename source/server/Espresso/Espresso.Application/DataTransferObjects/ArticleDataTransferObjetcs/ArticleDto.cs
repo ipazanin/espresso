@@ -1,3 +1,7 @@
+﻿// ArticleDto.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,39 +13,102 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
 {
     public record ArticleDto
     {
-        #region Properties
+        /// <summary>
+        /// Gets article id.
+        /// </summary>
         public Guid Id { get; private set; }
 
+        /// <summary>
+        /// Gets article url.
+        /// </summary>
         public string Url { get; private set; } = string.Empty;
 
+        /// <summary>
+        /// Gets article web url.
+        /// </summary>
+        /// <remarks>
+        /// Web url might differ from url because url might be AMP url.
+        /// </remarks>
         public string WebUrl { get; private set; } = string.Empty;
 
+        /// <summary>
+        /// Gets article summary.
+        /// </summary>
         public string Summary { get; private set; } = string.Empty;
 
+        /// <summary>
+        /// Gets article title.
+        /// </summary>
         public string Title { get; private set; } = string.Empty;
 
+        /// <summary>
+        /// gets article image url.
+        /// </summary>
         public string? ImageUrl { get; private set; }
 
+        /// <summary>
+        /// Gets date time when article was created in aplication.
+        /// </summary>
         public DateTime CreateDateTime { get; private set; }
 
+        /// <summary>
+        /// Gets date time when article was updated in application.
+        /// </summary>
         public DateTime UpdateDateTime { get; private set; }
 
+        /// <summary>
+        /// Gets date time when article was published.
+        /// </summary>
         public DateTime PublishDateTime { get; private set; }
 
+        /// <summary>
+        /// Gets number of clicks on this article in application.
+        /// </summary>
         public int NumberOfClicks { get; private set; }
 
+        /// <summary>
+        /// Gets calculated trending score based on age and number of clicks.
+        /// </summary>
         public decimal TrendingScore { get; private set; }
 
+        /// <summary>
+        /// Gets associated news portal id.
+        /// </summary>
         public int NewsPortalId { get; private set; }
 
+        /// <summary>
+        /// Gets associated rss feed id.
+        /// </summary>
         public int RssFeedId { get; private set; }
 
+        /// <summary>
+        /// Gets article categories.
+        /// </summary>
         public IEnumerable<ArticleCategoryDto> ArticleCategories { get; private set; } = new List<ArticleCategoryDto>();
 
+        /// <summary>
+        /// Gets main similar article.
+        /// </summary>
         public SimilarArticleDto? MainArticle { get; private set; }
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArticleDto"/> class.
+        /// </summary>
+        /// <param name="id">Id.</param>
+        /// <param name="url">Url.</param>
+        /// <param name="webUrl">Web url.</param>
+        /// <param name="summary">Summary.</param>
+        /// <param name="title">Title.</param>
+        /// <param name="imageUrl">Image Url.</param>
+        /// <param name="createDateTime">Create date time.</param>
+        /// <param name="updateDateTime">Update date time.</param>
+        /// <param name="publishDateTime">Publish date time.</param>
+        /// <param name="numberOfClicks">Number of clicks.</param>
+        /// <param name="trendingScore">Trending score.</param>
+        /// <param name="newsPortalId">News portal id.</param>
+        /// <param name="rssFeedId">Rss feed id.</param>
+        /// <param name="articleCategories">Article categories.</param>
+        /// <param name="mainArticle">Main similar article.</param>
         [JsonConstructor]
         public ArticleDto(
             Guid id,
@@ -81,9 +148,11 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
         private ArticleDto()
         {
         }
-        #endregion
 
-        #region Methods
+        /// <summary>
+        /// Creates <see cref="Article"/> to <see cref="ArticleDto"/> projection.
+        /// </summary>
+        /// <returns><see cref="Article"/> to <see cref="ArticleDto"/> projection.</returns>
         public static Expression<Func<Article, ArticleDto>> GetProjection()
         {
             var articleCategoryDtoProjection = ArticleCategoryDto.GetProjection().Compile();
@@ -109,6 +178,5 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
                     similarArticleDtoProjection.Invoke(article.MainArticle),
             };
         }
-        #endregion
     }
 }

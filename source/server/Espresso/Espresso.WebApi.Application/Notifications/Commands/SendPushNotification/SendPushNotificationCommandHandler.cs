@@ -1,10 +1,14 @@
-﻿using System;
+﻿// SendPushNotificationCommandHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.Services.Contracts;
 using Espresso.Application.Models;
+using Espresso.Application.Services.Contracts;
 using Espresso.Common.Constants;
 using Espresso.Common.Services.Contracts;
 using Espresso.Domain.Entities;
@@ -18,21 +22,23 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
 {
     public class SendPushNotificationCommandHandler : IRequestHandler<SendPushNotificationCommand>
     {
-        #region Constants
         private const string DefaultSoundName = "default";
         private const string DisabledSoundName = "";
         private const int DefaultBadge = 1;
-        #endregion
-
-        #region Fields
         private readonly IEspressoDatabaseContext _espressoDatabaseContext;
         private readonly IMemoryCache _memoryCache;
         private readonly IJsonService _jsonService;
         private readonly ISlackService _slackService;
         private readonly ApplicationInformation _applicationInformation;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendPushNotificationCommandHandler"/> class.
+        /// </summary>
+        /// <param name="espressoDatabaseContext"></param>
+        /// <param name="memoryCache"></param>
+        /// <param name="jsonService"></param>
+        /// <param name="slackService"></param>
+        /// <param name="applicationInformation"></param>
         public SendPushNotificationCommandHandler(
             IEspressoDatabaseContext espressoDatabaseContext,
             IMemoryCache memoryCache,
@@ -47,9 +53,7 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
             _slackService = slackService;
             _applicationInformation = applicationInformation;
         }
-        #endregion
 
-        #region Methods
         public async Task<Unit> Handle(SendPushNotificationCommand request, CancellationToken cancellationToken)
         {
             if (_applicationInformation.AppEnvironment != Common.Enums.AppEnvironment.Prod)
@@ -97,10 +101,10 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
                         Badge = DefaultBadge,
                         Sound = request.IsSoundEnabled ?
                             DefaultSoundName :
-                            DisabledSoundName
-                    }
+                            DisabledSoundName,
+                    },
                 },
-                Data = customData
+                Data = customData,
             };
 
             var messaging = FirebaseMessaging.DefaultInstance;
@@ -135,6 +139,5 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
                 $"ESPR-{DateTime.UtcNow.ToString(DateTimeConstants.PushNotificationInternalNameFormat)}" :
                 internalName;
         }
-        #endregion
     }
 }

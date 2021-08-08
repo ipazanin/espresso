@@ -1,22 +1,33 @@
+﻿// RevalidatingIdentityAuthenticationStateProvider.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
+using System.Security.Claims;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
-using System.Security.Claims;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Areas.Identity
 {
     public class RevalidatingIdentityAuthenticationStateProvider<TUser>
-        : RevalidatingServerAuthenticationStateProvider where TUser : class
+        : RevalidatingServerAuthenticationStateProvider
+        where TUser : class
     {
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IdentityOptions _options;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RevalidatingIdentityAuthenticationStateProvider{TUser}"/> class.
+        /// </summary>
+        /// <param name="loggerFactory"></param>
+        /// <param name="scopeFactory"></param>
+        /// <param name="optionsAccessor"></param>
         public RevalidatingIdentityAuthenticationStateProvider(
             ILoggerFactory loggerFactory,
             IServiceScopeFactory scopeFactory,

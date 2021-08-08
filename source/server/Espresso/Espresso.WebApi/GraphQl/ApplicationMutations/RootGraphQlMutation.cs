@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// RootGraphQlMutation.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using GraphQL.Types;
 
 namespace Espresso.WebApi.GraphQl.ApplicationMutations
@@ -9,7 +13,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationMutations
     public class RootGraphQlMutation : ObjectGraphType
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="RootGraphQlMutation"/> class.
         /// </summary>
         /// <param name="graphQlMutations"></param>
         public RootGraphQlMutation(IEnumerable<IGraphQlMutation> graphQlMutations)

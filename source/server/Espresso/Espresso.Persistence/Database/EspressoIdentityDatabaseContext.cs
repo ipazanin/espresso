@@ -1,28 +1,27 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿// EspressoIdentityDatabaseContext.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Espresso.Persistence.Database
 {
     public class EspressoIdentityDatabaseContext : IdentityDbContext, IEspressoIdentityDatabaseContext
     {
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EspressoIdentityDatabaseContext"/> class.
+        /// </summary>
+        /// <param name="options"></param>
         public EspressoIdentityDatabaseContext(DbContextOptions<EspressoIdentityDatabaseContext> options)
             : base(options)
         {
             ChangeTracker.LazyLoadingEnabled = false;
-        }
-        #endregion
-
-        #region Methods
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
         }
-        #endregion
     }
 }

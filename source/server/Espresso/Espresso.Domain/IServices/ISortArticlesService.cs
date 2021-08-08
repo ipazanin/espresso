@@ -1,4 +1,8 @@
-﻿using System;
+﻿// ISortArticlesService.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Channels;
@@ -19,6 +23,12 @@ namespace Espresso.Domain.IServices
             IDictionary<Guid, Article> savedArticles
         );
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="articlesChannel"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public Task<IEnumerable<Article>> RemoveDuplicateArticles(Channel<Article> articlesChannel, CancellationToken cancellationToken);
     }
 }

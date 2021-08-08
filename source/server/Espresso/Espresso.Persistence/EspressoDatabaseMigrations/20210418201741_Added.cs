@@ -1,4 +1,8 @@
-﻿using System;
+﻿// 20210418201741_Added.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Espresso.Persistence.EspressoDatabaseMigrations

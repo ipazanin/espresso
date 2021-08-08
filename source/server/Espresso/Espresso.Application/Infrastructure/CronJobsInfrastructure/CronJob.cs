@@ -1,4 +1,8 @@
-﻿using System;
+﻿// CronJob.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
@@ -13,18 +17,24 @@ using Timer = System.Timers.Timer;
 
 namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
 {
+    /// <summary>
+    /// Represents scheduled background job.
+    /// </summary>
+    /// <typeparam name="T">Cron job.</typeparam>
     public abstract class CronJob<T> : IHostedService, IDisposable
         where T : CronJob<T>
     {
-        #region Fields
         private readonly CronExpression _expression;
         private readonly ICronJobConfiguration<T> _cronJobConfiguration;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private Timer? _timer;
         private bool _disposedValue;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CronJob{T}"/> class.
+        /// </summary>
+        /// <param name="cronJobConfiguration">Cron job configuration.</param>
+        /// <param name="serviceScopeFactory">Service scope factory.</param>
         protected CronJob(
             ICronJobConfiguration<T> cronJobConfiguration,
             IServiceScopeFactory serviceScopeFactory
@@ -34,14 +44,18 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
             _cronJobConfiguration = cronJobConfiguration;
             _serviceScopeFactory = serviceScopeFactory;
         }
-        #endregion
 
-        #region Methods
+        /// <inheritdoc />
         public virtual Task StartAsync(CancellationToken cancellationToken)
         {
             return ScheduleJob(cancellationToken);
         }
 
+        /// <summary>
+        /// Schedules cron job.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         protected virtual async Task ScheduleJob(CancellationToken cancellationToken)
         {
             var occurrence = _expression.GetNextOccurrence(
@@ -88,8 +102,14 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
             loggerService.Log(eventName, LogLevel.Information, arguments);
         }
 
+        /// <summary>
+        /// Cron job work.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         public abstract Task DoWork(CancellationToken cancellationToken);
 
+        /// <inheritdoc />
 #pragma warning disable RCS1229 // Use async/await when necessary
         public virtual Task StopAsync(CancellationToken cancellationToken)
 #pragma warning restore RCS1229
@@ -163,6 +183,11 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
             }
         }
 
+        /// <summary>
+        /// Performs application defined tasks associated with freeing,
+        /// releasing, or reseting unmanaged resources.
+        /// </summary>
+        /// <param name="disposing">Is disposing.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)
@@ -176,12 +201,11 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
             }
         }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
-
-        #endregion
     }
 }

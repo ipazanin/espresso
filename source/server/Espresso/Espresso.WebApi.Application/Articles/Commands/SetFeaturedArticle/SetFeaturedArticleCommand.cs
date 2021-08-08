@@ -1,4 +1,8 @@
-﻿using System;
+﻿// SetFeaturedArticleCommand.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using MediatR;

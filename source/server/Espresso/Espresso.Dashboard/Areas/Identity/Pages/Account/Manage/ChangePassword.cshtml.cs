@@ -1,9 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// ChangePassword.cshtml.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
 {
     public class ChangePasswordModel : PageModel
@@ -12,6 +17,12 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ChangePasswordModel> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ChangePasswordModel"/> class.
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="signInManager"></param>
+        /// <param name="logger"></param>
         public ChangePasswordModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
@@ -47,6 +58,10 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
             public string ConfirmPassword { get; set; } = null!;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -64,6 +79,10 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

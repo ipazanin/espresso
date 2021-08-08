@@ -1,3 +1,7 @@
+// LanguageUtility.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +50,7 @@ namespace Espresso.Domain.Utilities
             var searchRegexPattern = $"{StartOfWordCharactersRegex}{term}{AllowedCharactersRegex}*{DelimiterCharactersRegex}";
 
             var matchedWords = Regex.Matches(sentence, searchRegexPattern, RegexOptions.IgnoreCase)
-                .Select(match => Regex.Replace(match.Value, DelimiterCharactersRegex, ""));
+                .Select(match => Regex.Replace(match.Value, DelimiterCharactersRegex, string.Empty));
 
             return matchedWords;
         }

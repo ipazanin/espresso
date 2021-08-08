@@ -1,4 +1,8 @@
-﻿using System;
+﻿// GetCategoryArticlesQueryHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -14,27 +18,26 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
 {
     public class GetCategoryArticlesQueryHandler : IRequestHandler<GetCategoryArticlesQuery, GetCategoryArticlesQueryResponse>
     {
-        #region Fields
         private readonly IMemoryCache _memoryCache;
-        #endregion
 
-        #region Contructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetCategoryArticlesQueryHandler"/> class.
+        /// </summary>
+        /// <param name="memoryCache"></param>
         public GetCategoryArticlesQueryHandler(
             IMemoryCache memoryCache
         )
         {
             _memoryCache = memoryCache;
         }
-        #endregion
 
-        #region Methods
         public Task<GetCategoryArticlesQueryResponse> Handle(
             GetCategoryArticlesQuery request,
             CancellationToken cancellationToken
         )
         {
             var newsPortalIds = request.NewsPortalIds
-                ?.Replace(" ", "")
+                ?.Replace(" ", string.Empty)
                 ?.Split(',')
                 ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
                 ?.Where(newsPortalId => newsPortalId != default);
@@ -53,7 +56,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
             {
                 Articles = articleDtos,
                 NewNewsPortals = newsPortalDtos,
-                NewNewsPortalsPosition = request.NewNewsPortalsPosition
+                NewNewsPortalsPosition = request.NewNewsPortalsPosition,
             };
 
             return Task.FromResult(result: response);
@@ -119,12 +122,11 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
             var articleDtos = filteredArticles
                 .Select(article => new List<GetCategoryArticlesArticle>()
                     {
-                        projection.Invoke(article)
+                        projection.Invoke(article),
                     }.Union(article.SubordinateArticles.Select(similarArticle => projection.Invoke(similarArticle.SubordinateArticle!)))
                 );
 
             return articleDtos;
         }
-        #endregion
     }
 }

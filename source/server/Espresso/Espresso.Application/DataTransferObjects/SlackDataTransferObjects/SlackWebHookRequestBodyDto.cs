@@ -1,25 +1,48 @@
-﻿using System.Collections.Generic;
+﻿// SlackWebHookRequestBodyDto.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Espresso.Application.DataTransferObjects.SlackDataTransferObjects
 {
     public record SlackWebHookRequestBodyDto
     {
-        // [JsonPropertyName("username")]
+        /// <summary>
+        /// Gets slack username.
+        /// </summary>
         public string Username { get; }
 
+        /// <summary>
+        /// Gets message icon emoji.
+        /// </summary>
         [JsonPropertyName("icon_emoji")]
         public string IconEmoji { get; }
 
-        // [JsonPropertyName("text")]
+        /// <summary>
+        /// Gets message text.
+        /// </summary>
         public string Text { get; }
 
-        // [JsonPropertyName("blocks")]
+        /// <summary>
+        /// Gets message blocks.
+        /// </summary>
         public IEnumerable<object> Blocks { get; }
 
-        // [JsonPropertyName("channel")]
+        /// <summary>
+        /// Gets channel name.
+        /// </summary>
         public string Channel { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SlackWebHookRequestBodyDto"/> class.
+        /// </summary>
+        /// <param name="userName">Sender username.</param>
+        /// <param name="iconEmoji">Sender icon emoji.</param>
+        /// <param name="text">Message text.</param>
+        /// <param name="channel">Receiving channel.</param>
+        /// <param name="blocks">Message blocks.</param>
         public SlackWebHookRequestBodyDto(
             string userName,
             string iconEmoji,

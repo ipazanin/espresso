@@ -1,30 +1,32 @@
+// LoggerService.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Espresso.Domain.IServices;
 using Espresso.Common.Utilities;
+using Espresso.Domain.IServices;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 
 namespace Espresso.Domain.Services
 {
-    public class LoggerService<TCaller> : ILoggerService<TCaller> where TCaller : class
+    public class LoggerService<TCaller> : ILoggerService<TCaller>
+        where TCaller : class
     {
-        #region Fields
         private readonly ILogger<TCaller> _logger;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LoggerService{TCaller}"/> class.
+        /// </summary>
+        /// <param name="loggerFactory"></param>
         public LoggerService(ILoggerFactory loggerFactory)
         {
             _logger = loggerFactory.CreateLogger<TCaller>();
         }
-        #endregion
 
-        #region Methods
-
-        #region Public Methods
         public void Log(
             string eventName,
             LogLevel logLevel,
@@ -65,7 +67,7 @@ namespace Espresso.Domain.Services
             var defaultArguments = new List<object>
             {
                 eventName,
-                errorMessage
+                errorMessage,
             };
 
             var (message, loggerArguments) = GetMessageAndArguments(
@@ -95,7 +97,7 @@ namespace Espresso.Domain.Services
             {
                 eventName,
                 exception.Message,
-                exception.InnerException?.Message ?? ""
+                exception.InnerException?.Message ?? string.Empty,
             };
 
             var (message, loggerArguments) = GetMessageAndArguments(
@@ -107,9 +109,7 @@ namespace Espresso.Domain.Services
 
             Log(message, loggerArguments, logLevel, exception);
         }
-        #endregion
 
-        #region Private Methods
         private static (string message, object[] args) GetMessageAndArguments(
             StringBuilder messageBuilder,
             IEnumerable<(string argumentName, object argumentValue)>? arguments,
@@ -152,7 +152,6 @@ namespace Espresso.Domain.Services
                 case LogLevel.Critical:
                     _logger.LogCritical(exception: exception, message: message, args: args);
                     break;
-                case LogLevel.None:
                 default:
                     break;
             }
@@ -179,8 +178,5 @@ namespace Espresso.Domain.Services
                 _ => $"{AnsiUtility.EncodeParameterName(argumentName)}: {AnsiUtility.EncodeObject(count++)}\n\t",
             };
         }
-        #endregion
-
-        #endregion
     }
 }

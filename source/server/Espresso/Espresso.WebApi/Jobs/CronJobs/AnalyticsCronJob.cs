@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// AnalyticsCronJob.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,15 +22,10 @@ namespace Espresso.WebApi.Jobs.CronJobs
     /// </summary>
     public class AnalyticsCronJob : CronJob<AnalyticsCronJob>
     {
-        #region Fields
-
         private readonly IServiceScopeFactory _scopeFactory;
 
-        #endregion
-
-        #region Constructors
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="AnalyticsCronJob"/> class.
         /// </summary>
         /// <param name="serviceScopeFactory"></param>
         /// <param name="cronJobConfiguration"></param>
@@ -41,9 +40,7 @@ namespace Espresso.WebApi.Jobs.CronJobs
         {
             _scopeFactory = serviceScopeFactory;
         }
-        #endregion
 
-        #region  Methods
         /// <summary>
         ///
         /// </summary>
@@ -98,6 +95,5 @@ namespace Espresso.WebApi.Jobs.CronJobs
 
             return (todayAndroidCount, todayIosCount, totalAndroidCount, totalIosCount);
         }
-        #endregion
     }
 }

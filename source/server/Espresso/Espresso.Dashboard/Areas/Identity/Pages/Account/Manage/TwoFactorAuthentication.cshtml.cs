@@ -1,4 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿// TwoFactorAuthentication.cshtml.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,6 +16,11 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TwoFactorAuthenticationModel"/> class.
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="signInManager"></param>
         public TwoFactorAuthenticationModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager)
@@ -32,6 +41,10 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string? StatusMessage { get; set; }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnGet()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -48,6 +61,10 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnPost()
         {
             var user = await _userManager.GetUserAsync(User);

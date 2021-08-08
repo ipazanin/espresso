@@ -1,3 +1,7 @@
+// ExampleSubClassWithPublicSetters.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 namespace Espresso.Common.Tests.TestUtilities.Models
 {
     /// <summary>
@@ -5,17 +9,13 @@ namespace Espresso.Common.Tests.TestUtilities.Models
     /// </summary>
     public record ExampleSubClassWithPublicSetters
     {
-        #region Properties
         public int FourthPropertyFirstProperty { get; set; }
-        #endregion Properties
 
-        #region Constructors
         /// <summary>
-        /// ExampleClass Constructor
+        /// ExampleClass Constructor.
         /// </summary>
         public ExampleSubClassWithPublicSetters()
         {
         }
-        #endregion Constructors
     }
 }

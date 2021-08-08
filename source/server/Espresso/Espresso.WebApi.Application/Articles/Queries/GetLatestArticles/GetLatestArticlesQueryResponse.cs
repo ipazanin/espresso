@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿// GetLatestArticlesQueryResponse.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
 {
     public record GetLatestArticlesQueryResponse
     {
-        #region Properties
         public IEnumerable<IEnumerable<GetLatestArticlesArticle>> Articles { get; init; } = new List<IEnumerable<GetLatestArticlesArticle>>();
 
         public IEnumerable<GetLatestArticlesArticle> FeaturedArticles { get; init; } = new List<GetLatestArticlesArticle>();
@@ -13,7 +16,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
 
         public int NewNewsPortalsPosition { get; init; }
 
-        public string LastAddedNewsPortalDate { get; init; } = "";
-        #endregion
+        public string LastAddedNewsPortalDate { get; init; } = string.Empty;
     }
 }

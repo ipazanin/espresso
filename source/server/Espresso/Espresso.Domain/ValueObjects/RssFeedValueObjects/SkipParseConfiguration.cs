@@ -1,30 +1,34 @@
-﻿using System.Collections.Generic;
+﻿// SkipParseConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
 
+using System.Collections.Generic;
 using Espresso.Domain.Infrastructure;
 
 namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
 {
     public class SkipParseConfiguration : ValueObject
     {
-        #region Properties
         public int? NumberOfSkips { get; private set; }
 
         public int? CurrentSkip { get; private set; }
-        #endregion
 
-        #region Constructors
         /// <summary>
-        /// ORM COnstructor
+        /// ORM COnstructor.
         /// </summary>
         private SkipParseConfiguration() { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SkipParseConfiguration"/> class.
+        /// </summary>
+        /// <param name="numberOfSkips"></param>
+        /// <param name="currentSkip"></param>
         public SkipParseConfiguration(int? numberOfSkips, int? currentSkip)
         {
             NumberOfSkips = numberOfSkips;
             CurrentSkip = currentSkip;
         }
-        #endregion
 
-        #region Methods
         public bool ShouldParse()
         {
             if (NumberOfSkips is null && CurrentSkip is null)
@@ -42,6 +46,5 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
             yield return NumberOfSkips;
             yield return CurrentSkip;
         }
-        #endregion
     }
 }

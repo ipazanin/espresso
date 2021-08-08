@@ -1,4 +1,8 @@
-﻿using Espresso.Domain.Entities;
+﻿// SimilarArticleConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,7 +12,6 @@ namespace Espresso.Persistence.Configuration
     {
         public void Configure(EntityTypeBuilder<SimilarArticle> builder)
         {
-            #region Relationships
             builder.HasOne(similarArticle => similarArticle.MainArticle)
                 .WithMany(article => article!.SubordinateArticles)
                 .HasForeignKey(similarArticle => similarArticle.MainArticleId)
@@ -18,7 +21,6 @@ namespace Espresso.Persistence.Configuration
                 .WithOne(article => article!.MainArticle!)
                 .HasForeignKey<SimilarArticle>(similarArticle => similarArticle.SubordinateArticleId)
                 .OnDelete(DeleteBehavior.Restrict);
-            #endregion
         }
     }
 }

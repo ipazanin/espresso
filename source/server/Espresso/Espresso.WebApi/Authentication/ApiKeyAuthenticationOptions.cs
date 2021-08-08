@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿// ApiKeyAuthenticationOptions.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Microsoft.AspNetCore.Authentication;
 
 namespace Espresso.WebApi.Authentication
 {

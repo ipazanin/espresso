@@ -1,3 +1,7 @@
+// DateTimeConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using Microsoft.Extensions.Configuration;
 
@@ -8,11 +12,7 @@ namespace Espresso.WebApi.Configuration
     /// </summary>
     public class DateTimeConfiguration
     {
-        #region Fields
         private readonly IConfigurationSection _configuration;
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// 
@@ -45,17 +45,14 @@ namespace Espresso.WebApi.Configuration
         public TimeSpan MaxAgeOfNewNewsPortal => TimeSpan.FromDays(
             value: _configuration.GetValue<int>("MaxAgeOfNewNewsPortalInDays")
         );
-        #endregion
 
-        #region Constructors
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="DateTimeConfiguration"/> class.
         /// </summary>
         /// <param name="configuration"></param>
         public DateTimeConfiguration(IConfigurationSection configuration)
         {
             _configuration = configuration;
         }
-        #endregion
     }
 }

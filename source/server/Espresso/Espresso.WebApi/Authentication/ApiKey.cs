@@ -1,4 +1,8 @@
-﻿using System;
+﻿// ApiKey.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 
 namespace Espresso.WebApi.Authentication
 {
@@ -7,7 +11,6 @@ namespace Espresso.WebApi.Authentication
     /// </summary>
     public class ApiKey
     {
-        #region Constants
         /// <summary>
         /// 
         /// </summary>
@@ -27,9 +30,7 @@ namespace Espresso.WebApi.Authentication
         /// 
         /// </summary>
         public const string DevMobileAppRole = nameof(DevMobileAppRole);
-        #endregion
 
-        #region Properties
         /// <summary>
         /// 
         /// </summary>
@@ -44,11 +45,9 @@ namespace Espresso.WebApi.Authentication
         /// 
         /// </summary>
         public string Key { get; }
-        #endregion
 
-        #region Constructors
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="ApiKey"/> class.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="role"></param>
@@ -63,6 +62,5 @@ namespace Espresso.WebApi.Authentication
             Role = role ?? throw new ArgumentNullException(nameof(role));
             Key = key ?? throw new ArgumentNullException(nameof(key));
         }
-        #endregion
     }
 }

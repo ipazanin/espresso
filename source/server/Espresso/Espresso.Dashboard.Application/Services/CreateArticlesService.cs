@@ -1,38 +1,44 @@
-﻿using System;
+﻿// CreateArticlesService.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
-using Espresso.Domain.IServices;
 using Espresso.Common.Enums;
+using Espresso.Common.Extensions;
+using Espresso.Dashboard.Application.IServices;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.RssFeedEnums;
-using Espresso.Common.Extensions;
+using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
-using Espresso.Dashboard.Application.IServices;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
-using System.Collections.Concurrent;
-using System.Threading.Channels;
 
 namespace Espresso.Dashboard.Application.Services
 {
     public class CreateArticleService : ICreateArticleService
     {
-        #region Fields
-
         private readonly IScrapeWebService _webScrapingService;
         private readonly IParseHtmlService _htmlParsingService;
         private readonly IValidator<ArticleData> _articleDataValidator;
         private readonly ILoggerService<CreateArticleService> _loggerService;
         private readonly TimeSpan _maxAgeOfArticle;
 
-        #endregion
-
-        #region Constructors
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateArticleService"/> class.
+        /// </summary>
+        /// <param name="webScrapingService"></param>
+        /// <param name="htmlParsingService"></param>
+        /// <param name="articleDataValidator"></param>
+        /// <param name="loggerService"></param>
+        /// <param name="maxAgeOfArticle"></param>
         public CreateArticleService(
             IScrapeWebService webScrapingService,
             IParseHtmlService htmlParsingService,
@@ -47,10 +53,6 @@ namespace Espresso.Dashboard.Application.Services
             _loggerService = loggerService;
             _maxAgeOfArticle = maxAgeOfArticle;
         }
-
-        #endregion
-
-        #region Public Methods
 
         public async Task<Channel<Article>> CreateArticlesFromRssFeedItems(
             Channel<RssFeedItem> rssFeedItemChannel,
@@ -85,7 +87,7 @@ namespace Espresso.Dashboard.Application.Services
                     }
                     catch (Exception exception)
                     {
-                        var eventName = "Create Article Unhandled Exception";
+                        const string? eventName = "Create Article Unhandled Exception";
                         _loggerService.Log(eventName, exception, LogLevel.Error);
                     }
                 }, cancellationToken);
@@ -98,7 +100,6 @@ namespace Espresso.Dashboard.Application.Services
             return parsedArticlesChannel;
         }
 
-
         private async Task<(Article? article, bool isValid)> CreateArticleAsync(
             RssFeedItem rssFeedItem,
             IEnumerable<Category> categories,
@@ -107,7 +108,7 @@ namespace Espresso.Dashboard.Application.Services
         {
             var id = Guid.NewGuid();
             var utcNow = DateTime.UtcNow;
-            var initialNumberOfClicks = 0;
+            const int initialNumberOfClicks = 0;
 
             var title = rssFeedItem.Title;
 
@@ -164,7 +165,7 @@ namespace Espresso.Dashboard.Application.Services
                 UpdateDateTime = utcNow,
                 Url = url,
                 WebUrl = webUrl,
-                ArticleCategories = articlecategories
+                ArticleCategories = articlecategories,
             };
 
             return CreateArticle(
@@ -172,9 +173,7 @@ namespace Espresso.Dashboard.Application.Services
                 rssFeed: rssFeedItem.RssFeed
             );
         }
-        #endregion
 
-        #region Private Methods
         private (Article? article, bool isValid) CreateArticle(ArticleData articleData, RssFeed rssFeed)
         {
             var validationResult = _articleDataValidator.Validate(articleData);
@@ -212,7 +211,7 @@ namespace Espresso.Dashboard.Application.Services
                 var eventName = Event.CreateArticle.GetDisplayName();
                 var parameters = new (string, object)[]
                 {
-                    (nameof(rssFeedUrl), rssFeedUrl)
+                    (nameof(rssFeedUrl), rssFeedUrl),
                 };
 
                 _loggerService.Log(eventName, exceptionMessage, LogLevel.Error, parameters);
@@ -254,10 +253,10 @@ namespace Espresso.Dashboard.Application.Services
             var articleId = $"{itemId[(itemId.IndexOf("id=") + 3)..]}";
             var urlSegments = itemLinks.FirstOrDefault()?.Segments ?? Array.Empty<string>();
 
-            var firstArticleSegment = urlSegments.Length < 2 ? "" : urlSegments[1].ToLower();
-            var secondArticleSegment = urlSegments.Length < 3 ? "" : urlSegments[2].ToLower();
-            var thirdArticleSegment = urlSegments.Length < 4 ? "" : urlSegments[3].ToLower();
-            var fourthArticleSegment = urlSegments.Length < 5 ? "" : urlSegments[4].ToLower();
+            var firstArticleSegment = urlSegments.Length < 2 ? string.Empty : urlSegments[1].ToLower();
+            var secondArticleSegment = urlSegments.Length < 3 ? string.Empty : urlSegments[2].ToLower();
+            var thirdArticleSegment = urlSegments.Length < 4 ? string.Empty : urlSegments[3].ToLower();
+            var fourthArticleSegment = urlSegments.Length < 5 ? string.Empty : urlSegments[4].ToLower();
 
             var articleUrl = string.Format(
                 rssFeed.AmpConfiguration.TemplateUrl,
@@ -318,11 +317,11 @@ namespace Espresso.Dashboard.Application.Services
 
                 var eventName = Event.ImageUrlWebScrapingData.GetDisplayName();
                 var rssFeedUrl = rssFeed.Url;
-                var newsPortalName = rssFeed.NewsPortal?.Name ?? "";
+                var newsPortalName = rssFeed.NewsPortal?.Name ?? string.Empty;
                 var arguments = new (string, object)[]{
                     (nameof(rssFeedUrl), rssFeedUrl),
                     (nameof(newsPortalName), newsPortalName),
-                    (nameof(imageUrl), imageUrl ?? "")
+                    (nameof(imageUrl), imageUrl ?? string.Empty),
                 };
 
                 _loggerService.Log(eventName, LogLevel.Information, arguments);
@@ -367,9 +366,7 @@ namespace Espresso.Dashboard.Application.Services
 
             switch (rssFeed.CategoryParseConfiguration.CategoryParseStrategy)
             {
-                case CategoryParseStrategy.Undefined:
                 default:
-                case CategoryParseStrategy.FromRssFeed:
                     var articleCategoriesFromRssFeed = GetArticleCategoriesFromRssFeed(
                         articleId: articleId,
                         rssFeed: rssFeed
@@ -434,7 +431,7 @@ namespace Espresso.Dashboard.Application.Services
                 {
                     var secondUrlSegment = itemUrl?
                         .Segments[rssFeedCategory.UrlSegmentIndex]
-                        .Replace("/", "").ToLower();
+                        .Replace("/", string.Empty).ToLower();
 
                     if (
                         !string.IsNullOrEmpty(rssFeedCategory.UrlRegex) &&
@@ -488,7 +485,5 @@ namespace Espresso.Dashboard.Application.Services
                 return $"{baseUrl}{urlFragmentOrFullUrl}";
             }
         }
-
-        #endregion
     }
 }

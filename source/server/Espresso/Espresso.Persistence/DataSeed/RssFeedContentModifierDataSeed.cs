@@ -1,4 +1,8 @@
-﻿using Espresso.Domain.Entities;
+﻿// RssFeedContentModifierDataSeed.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -301,7 +305,7 @@ namespace Espresso.Persistence.DataSeed
             builder.HasData(new RssFeedContentModifier(
                 id: id++,
                 sourceValue: "\n",
-                replacementValue: "",
+                replacementValue: string.Empty,
                 orderIndex: 1,
                 rssFeedId: (int)RssFeedId.LjepotaIZdravlje
             ));

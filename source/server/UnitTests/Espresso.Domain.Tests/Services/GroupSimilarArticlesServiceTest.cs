@@ -1,4 +1,8 @@
-﻿using System;
+﻿// GroupSimilarArticlesServiceTest.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Espresso.Domain.Entities;
@@ -13,7 +17,6 @@ namespace Espresso.Domain.Tests.Services
 {
     public class GroupSimilarArticlesServiceTest
     {
-        #region GroupSimilarArticles
         [InlineData("Very Cool Title", "Very Cool Title")]
         [InlineData("Very Cool Title", "Title Cool Ver Very")]
         [InlineData("Robert Mikac: Od rujna kriza s covidom izmakla kontroli", "Stručnjak za krizna upravljanja: Covid kriza od rujna je izmakla Vladinoj kontroli. Treba uključiti sustav domovinske sigurnost. Predlažem tri koraka")]
@@ -32,7 +35,6 @@ namespace Espresso.Domain.Tests.Services
             string secondArticleTitle
         )
         {
-            #region Arrange
             var loggerServiceMock = new Mock<ILoggerService<GroupSimilarArticlesService>>(MockBehavior.Strict);
 
             loggerServiceMock.Setup(loggerService => loggerService.Log(
@@ -69,25 +71,19 @@ namespace Espresso.Domain.Tests.Services
                 maxAgeOfSimilarArticleChecking: TimeSpan.FromHours(32),
                 minimalNumberOfWordsForArticleToBeComparable: 1
             );
-            #endregion
 
-            #region Act
             var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
             var actualSimilarArticlesCount = similarArticles.Count();
-            #endregion
 
-            #region Assert
             Assert.Equal(
                 expected: ExpectedSimilarArticlesCount,
                 actual: actualSimilarArticlesCount
             );
-            #endregion
         }
 
         [Fact]
         public void GroupSimilarArticles_ReturnsSimilarArticleCollectionWithZeroSimmilarArticles_WhenArticlesListIsEmpty()
         {
-            #region Arrange
             var loggerServiceMock = new Mock<ILoggerService<GroupSimilarArticlesService>>(MockBehavior.Strict);
 
             loggerServiceMock.Setup(loggerService => loggerService.Log(
@@ -106,25 +102,19 @@ namespace Espresso.Domain.Tests.Services
                 maxAgeOfSimilarArticleChecking: TimeSpan.FromHours(32),
                 minimalNumberOfWordsForArticleToBeComparable: 1
             );
-            #endregion
 
-            #region Act
             var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
             var actualSimilarArticlesCount = similarArticles.Count();
-            #endregion
 
-            #region Assert
             Assert.Equal(
                 expected: ExpectedSimilarArticlesCount,
                 actual: actualSimilarArticlesCount
             );
-            #endregion
         }
 
         [Fact]
         public void GroupSimilarArticles_ReturnsSimilarArticleCollectionWithZeroSimmilarArticles_WhenArticlesListContainsOneArticle()
         {
-            #region Arrange
             var loggerServiceMock = new Mock<ILoggerService<GroupSimilarArticlesService>>(MockBehavior.Strict);
 
             loggerServiceMock.Setup(loggerService => loggerService.Log(
@@ -153,19 +143,14 @@ namespace Espresso.Domain.Tests.Services
                 maxAgeOfSimilarArticleChecking: TimeSpan.FromHours(32),
                 minimalNumberOfWordsForArticleToBeComparable: 1
             );
-            #endregion
 
-            #region Act
             var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
             var actualSimilarArticlesCount = similarArticles.Count();
-            #endregion
 
-            #region Assert
             Assert.Equal(
                 expected: ExpectedSimilarArticlesCount,
                 actual: actualSimilarArticlesCount
             );
-            #endregion
         }
 
         [InlineData("Very Cool Title", "Very Different NotTitle")]
@@ -176,7 +161,6 @@ namespace Espresso.Domain.Tests.Services
             string secondArticleTitle
         )
         {
-            #region Arrange
             var loggerServiceMock = new Mock<ILoggerService<GroupSimilarArticlesService>>(MockBehavior.Strict);
 
             loggerServiceMock.Setup(loggerService => loggerService.Log(
@@ -213,19 +197,14 @@ namespace Espresso.Domain.Tests.Services
                 maxAgeOfSimilarArticleChecking: TimeSpan.FromHours(32),
                 minimalNumberOfWordsForArticleToBeComparable: 1
             );
-            #endregion
 
-            #region Act
             var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
             var actualSimilarArticlesCount = similarArticles.Count();
-            #endregion
 
-            #region Assert
             Assert.Equal(
                 expected: ExpectedSimilarArticlesCount,
                 actual: actualSimilarArticlesCount
             );
-            #endregion
         }
 
         [InlineData("Very Cool Title", "Very Cool Title")]
@@ -235,7 +214,6 @@ namespace Espresso.Domain.Tests.Services
             string secondArticleTitle
         )
         {
-            #region Arrange
             var loggerServiceMock = new Mock<ILoggerService<GroupSimilarArticlesService>>(MockBehavior.Strict);
 
             loggerServiceMock.Setup(loggerService => loggerService.Log(
@@ -272,20 +250,14 @@ namespace Espresso.Domain.Tests.Services
                 maxAgeOfSimilarArticleChecking: TimeSpan.FromHours(32),
                 minimalNumberOfWordsForArticleToBeComparable: 1
             );
-            #endregion
 
-            #region Act
             var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
             var actualSimilarArticlesCount = similarArticles.Count();
-            #endregion
 
-            #region Assert
             Assert.Equal(
                 expected: ExpectedSimilarArticlesCount,
                 actual: actualSimilarArticlesCount
             );
-            #endregion
         }
-        #endregion
     }
 }

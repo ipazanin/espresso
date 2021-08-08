@@ -1,4 +1,8 @@
-﻿namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
+﻿// UpdateInMemoryArticlesCommandResponse.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
 {
     public record UpdateInMemoryArticlesCommandResponse
     {

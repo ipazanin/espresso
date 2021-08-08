@@ -1,3 +1,7 @@
+﻿// GoogleAnalyticsService.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -13,25 +17,16 @@ namespace Espresso.Application.Services.Implementations
     /// </summary>
     public class GoogleAnalyticsService : IGoogleAnalyticsService
     {
-        #region Constants
-
         private const string PropertyId = "properties/232499903";
         private const string GoogleAnalyticsSecretsFileName = "google-analytics-key.json";
-
-        #endregion Constants
-
-        #region Fields
-
         private readonly ILoggerService<GoogleAnalyticsService> _loggerService;
         private readonly BetaAnalyticsDataClient _client;
 
-        #endregion Fields
-
-        #region Constructors
-
         /// <summary>
+        /// Initializes a new instance of the <see cref="GoogleAnalyticsService"/> class.
         /// GoogleAnalyticsService Constructor.
         /// </summary>
+        /// <param name="loggerService">Logger service.</param>
         public GoogleAnalyticsService(
             ILoggerService<GoogleAnalyticsService> loggerService
         )
@@ -48,10 +43,7 @@ namespace Espresso.Application.Services.Implementations
             }.Build();
         }
 
-        #endregion Constructors
-
-        #region Methods
-
+        /// <inheritdoc/>
         public async Task<int> GetNumberOfActiveUsersFromYesterday()
         {
             var request = new RunReportRequest
@@ -75,6 +67,7 @@ namespace Espresso.Application.Services.Implementations
             return numberOfActiveUsers;
         }
 
+        /// <inheritdoc/>
         public async Task<decimal> GetTotalRevenueFromYesterday()
         {
             var request = new RunReportRequest
@@ -117,7 +110,5 @@ namespace Espresso.Application.Services.Implementations
                 throw;
             }
         }
-
-        #endregion Methods
     }
 }

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// ExceptionRequestPipeline.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,17 +14,25 @@ using Microsoft.Extensions.Logging;
 
 namespace Espresso.Application.Infrastructure.MediatorInfrastructure
 {
+    /// <summary>
+    /// <see cref="Mediator"/> pipeline to catch and handle uncaught exceptions.
+    /// </summary>
+    /// <typeparam name="TRequest">Mediator request.</typeparam>
+    /// <typeparam name="TResponse">Mediator response.</typeparam>
     public class ExceptionRequestPipeline<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
         where TRequest : notnull
     {
-        #region Fields
         private readonly ILoggerService<ExceptionRequestPipeline<TRequest, TResponse>> _loggerService;
         private readonly ISlackService _slackService;
         private readonly ApplicationInformation _applicationInformation;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExceptionRequestPipeline{TRequest, TResponse}"/> class.
+        /// </summary>
+        /// <param name="loggerService">Logger service.</param>
+        /// <param name="slackService">Slack service.</param>
+        /// <param name="applicationInformation">Application information.</param>
         public ExceptionRequestPipeline(
             ILoggerService<ExceptionRequestPipeline<TRequest, TResponse>> loggerService,
             ISlackService slackService,
@@ -32,9 +44,7 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
             _applicationInformation = applicationInformation;
         }
 
-        #endregion
-
-        #region Methods
+        /// <inheritdoc/>
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             try
@@ -70,5 +80,4 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
             }
         }
     }
-    #endregion
 }

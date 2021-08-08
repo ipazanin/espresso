@@ -1,16 +1,15 @@
+// NewsPortalDetailsBase.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using Microsoft.AspNetCore.Components;
 
 namespace Espresso.Dashboard.Pages.NewsPortalDetails
 {
     /// <summary>
-    /// NewsPortalDetailsBase
+    /// NewsPortalDetailsBase.
     /// </summary>
     public class NewsPortalDetailsBase : ComponentBase
     {
-        #region Properties
-        #endregion Properties
-
-        #region Methods
-        #endregion Methods
     }
 }

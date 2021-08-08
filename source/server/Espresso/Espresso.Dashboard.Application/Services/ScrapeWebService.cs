@@ -1,4 +1,8 @@
-﻿using System;
+﻿// ScrapeWebService.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -9,28 +13,32 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.Extensions;
 using Espresso.Common.Enums;
-using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Common.Extensions;
-using Espresso.Domain.IServices;
-using Espresso.Dashboard.Application.IServices;
-using HtmlAgilityPack;
-using Microsoft.Extensions.Logging;
 using Espresso.Common.Services.Contracts;
 using Espresso.Dashboard.Application.Constants;
+using Espresso.Dashboard.Application.IServices;
+using Espresso.Domain.Enums.RssFeedEnums;
+using Espresso.Domain.IServices;
 using Espresso.Domain.ValueObjects.RssFeedValueObjects;
+using HtmlAgilityPack;
+using Microsoft.Extensions.Logging;
 
 namespace Espresso.Dashboard.Application.Services
 {
     public class ScrapeWebService : IScrapeWebService
     {
-        #region Fields
         private readonly HttpClient _httpClient;
         private readonly IParseHtmlService _parseHtmlService;
         private readonly ILoggerService<ScrapeWebService> _loggerService;
         private readonly IJsonService _jsonService;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScrapeWebService"/> class.
+        /// </summary>
+        /// <param name="parseHtmlService"></param>
+        /// <param name="httpClientFactory"></param>
+        /// <param name="loggerService"></param>
+        /// <param name="jsonService"></param>
         public ScrapeWebService(
             IParseHtmlService parseHtmlService,
             IHttpClientFactory httpClientFactory,
@@ -43,11 +51,7 @@ namespace Espresso.Dashboard.Application.Services
             _loggerService = loggerService;
             _jsonService = jsonService;
         }
-        #endregion
 
-        #region Methods
-
-        #region Public Methods
         public async Task<string?> GetSrcAttributeFromElementDefinedByXPath(
             string? articleUrl,
             RequestType requestType,
@@ -94,9 +98,7 @@ namespace Espresso.Dashboard.Application.Services
 
             return imageUrl;
         }
-        #endregion
 
-        #region Private Methods
         private async Task<string?> GetImageUrlFromJsonObjectFromScriptTag(
             HtmlNodeCollection elementTags,
             IEnumerable<string> propertyNames,
@@ -139,7 +141,7 @@ namespace Espresso.Dashboard.Application.Services
                     namedArguments: new (string, object)[]
                     {
                         (nameof(jsonText), jsonText),
-                        (nameof(propertyNames), string.Join(", ", propertyNames))
+                        (nameof(propertyNames), string.Join(", ", propertyNames)),
                     }
                 );
                 return null;
@@ -157,7 +159,6 @@ namespace Espresso.Dashboard.Application.Services
                 using var request = new HttpRequestMessage(HttpMethod.Get, articleUrl);
                 switch (requestType)
                 {
-                    case RequestType.Normal:
                     default:
                         {
                             using var response = await _httpClient.SendAsync(request: request, cancellationToken: cancellationToken);
@@ -200,7 +201,5 @@ namespace Espresso.Dashboard.Application.Services
 
             _loggerService.Log(eventName, exception, LogLevel.Error, arguments);
         }
-        #endregion
     }
-    #endregion
 }

@@ -1,3 +1,7 @@
+// NewsPortalListItemBase.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using System.Threading.Tasks;
 using Espresso.Dashboard.Application.NewsPortals.GetNewsPortals;
@@ -8,7 +12,6 @@ namespace Espresso.Dashboard.Pages.NewsPortalsList.NewsPortalsListItem
 {
     public class NewsPortalListItemBase : ComponentBase
     {
-        #region Properties
         [Parameter]
         public GetNewsPortalsNewsPortal NewsPortal { get; set; } = null!;
 
@@ -17,9 +20,12 @@ namespace Espresso.Dashboard.Pages.NewsPortalsList.NewsPortalsListItem
 
         [Parameter]
         public Action<int>? OpenNewsPortalDetailsHandler { get; set; }
-        #endregion Properties
 
-        #region Methods
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="_"></param>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         public async Task DeleteButtonClickHandler(MouseEventArgs _)
         {
             var task = DeleteNewsPortalHandler?.Invoke(NewsPortal.Id);
@@ -33,6 +39,5 @@ namespace Espresso.Dashboard.Pages.NewsPortalsList.NewsPortalsListItem
         {
             OpenNewsPortalDetailsHandler?.Invoke(NewsPortal.Id);
         }
-        #endregion Methods
     }
 }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -29,7 +29,12 @@
   </ItemGroup>
 
   <!-- Analyzers -->
-  <ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <AdditionalFiles Include="..\..\Espresso\stylecop.json" Link="Properties\stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
     <PackageReference Include="Roslynator.Analyzers" Version="3.1.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -60,6 +65,10 @@
     </PackageReference>
     <PackageReference Include="xunit.analyzers" Version="0.10.0" />
   </ItemGroup>
+
+  <!-- Analyzers -->
+
+
   <ItemGroup>
     <Folder Include="Entities\" />
   </ItemGroup>

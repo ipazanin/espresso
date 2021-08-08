@@ -1,25 +1,31 @@
-﻿using System.Collections.Generic;
+﻿// SetFeaturedArticleCommandHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.WebApi.Application.Exceptions;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
+using Espresso.WebApi.Application.Exceptions;
 using MediatR;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Espresso.WebApi.Application.Articles.Commands.SetFeaturedArticle
 {
     public class SetFeaturedArticleCommandHandler : IRequestHandler<SetFeaturedArticleCommand>
     {
-        #region Fields
         private readonly IMemoryCache _memoryCache;
         private readonly IEspressoDatabaseContext _context;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SetFeaturedArticleCommandHandler"/> class.
+        /// </summary>
+        /// <param name="memoryCache"></param>
+        /// <param name="context"></param>
         public SetFeaturedArticleCommandHandler(
             IMemoryCache memoryCache,
             IEspressoDatabaseContext context
@@ -28,9 +34,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.SetFeaturedArticle
             _memoryCache = memoryCache;
             _context = context;
         }
-        #endregion
 
-        #region Methods
         public async Task<Unit> Handle(
             SetFeaturedArticleCommand request,
             CancellationToken cancellationToken
@@ -74,6 +78,5 @@ namespace Espresso.WebApi.Application.Articles.Commands.SetFeaturedArticle
 
             return Unit.Value;
         }
-        #endregion
     }
 }

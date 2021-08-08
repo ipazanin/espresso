@@ -3,7 +3,14 @@
   "settings": {
     "documentationRules": {
       "xmlHeader": false,
-      "documentExposedElements": true
+      "documentExposedElements": true,
+      "documentationCulture": "en-US",
+      "documentInterfaces": true,
+      "documentInternalElements": true,
+      "documentPrivateElements": false,
+      "documentPrivateFields": false,
+      "fileNamingConvention": "stylecop",
+      "excludeFromPunctuationCheck": ["seealso"]
     },
     "orderingRules": {
       "systemUsingDirectivesFirst": true,
@@ -14,7 +21,23 @@
         "accessibility",
         "static",
         "readonly"
-      ]
+      ],
+      "blankLinesBetweenUsingGroups": "omit"
+    },
+    "indentation": {
+      "indentationSize": 4,
+      "tabSize": 4,
+      "useTabs": false
+    },
+    "layoutRules": {
+      "allowConsecutiveUsings": true,
+      "newlineAtEndOfFile": "require"
+    },
+    "maintainabilityRules": {
+      "topLevelTypes": ["class", "delegate", "enum", "interface", "struct"]
+    },
+    "readabilityRules": {
+      "allowBuiltInTypeAliases": false
     }
   }
 }

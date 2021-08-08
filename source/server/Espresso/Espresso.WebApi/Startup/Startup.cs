@@ -1,4 +1,8 @@
-﻿using Espresso.Common.Constants;
+﻿// Startup.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.Common.Constants;
 using Espresso.WebApi.Configuration;
 using Microsoft.Extensions.Configuration;
 
@@ -6,7 +10,6 @@ namespace Espresso.WebApi.Startup
 {
     internal sealed partial class Startup
     {
-        #region Constants
         private const string CustomCorsPolicyName = nameof(CustomCorsPolicyName);
         private const string ClientAppStaticFilesDirectory = "../../../client/build";
         private const string ClientAppDirectory = "../../../client";
@@ -14,20 +17,14 @@ namespace Espresso.WebApi.Startup
         private const string ApiDescriptionNamePrefix = "Espresso API";
         private const string SwaggerApiExplorerRoute = "docs";
         private const string SwaggerDocumentDefinitionRoutePrefix = "swagger";
-        #endregion
-
-        #region Fields
         private readonly IWebApiConfiguration _webApiConfiguration;
-        #endregion
 
-        #region Constructors
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="Startup"/> class.
         /// </summary>
         public Startup(IConfiguration configuration)
         {
             _webApiConfiguration = new WebApiConfiguration(configuration);
         }
-        #endregion
     }
 }

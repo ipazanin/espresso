@@ -1,4 +1,8 @@
-﻿using System;
+﻿// GetNewsPortalsNewsPortal.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -10,33 +14,28 @@ namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals
 {
     public class GetNewsPortalsNewsPortal
     {
-        #region Properties
         /// <summary>
-        /// News Portal ID
+        /// Gets news Portal ID.
         /// </summary>
         public int Id { get; private set; }
 
         /// <summary>
-        /// News Portal Name
+        /// Gets news Portal Name.
         /// </summary>
-        public string Name { get; private set; } = "";
+        public string Name { get; private set; } = string.Empty;
 
-        public string IconUrl { get; private set; } = "";
+        public string IconUrl { get; private set; } = string.Empty;
 
         public GetNewsPortalsCategory Category { get; private set; } = null!;
 
         public GetNewsPortalsRegion Region { get; private set; } = null!;
 
         public IEnumerable<GetNewsPortalsRssFeed> RssFeeds { get; private set; } = new List<GetNewsPortalsRssFeed>();
-        #endregion
 
-        #region Constructors
         private GetNewsPortalsNewsPortal()
         {
         }
-        #endregion
 
-        #region Methods
         public static Expression<Func<NewsPortal, GetNewsPortalsNewsPortal>> GetProjection()
         {
             var categoryProjection = GetNewsPortalsCategory.GetProjection().Compile();
@@ -52,7 +51,7 @@ namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals
                     .RssFeeds
                     .AsQueryable()
                     .Select(rssFeedProjection),
-                Region = regionProjection.Invoke(newsPortal.Region!)
+                Region = regionProjection.Invoke(newsPortal.Region!),
             };
         }
 
@@ -65,6 +64,5 @@ namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals
                 .Include(newsPortal => newsPortal.RssFeeds)
                 .ThenInclude(rssFeed => rssFeed.RssFeedContentModifiers);
         }
-        #endregion
     }
 }

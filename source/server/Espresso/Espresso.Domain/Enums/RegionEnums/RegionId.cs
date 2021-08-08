@@ -1,4 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// RegionId.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.ComponentModel.DataAnnotations;
 
 namespace Espresso.Domain.Enums.RegionEnums
 {
@@ -17,7 +21,6 @@ namespace Espresso.Domain.Enums.RegionEnums
         [Display(Name = "Sjeverna Hrvatska")]
         SjevernaHrvatska = 6,
         [Display(Name = "Slavonija & Baranja")]
-        Slavonija = 7
+        Slavonija = 7,
     }
 }
-

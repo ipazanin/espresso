@@ -1,4 +1,8 @@
-﻿using System;
+﻿// NewsPortal.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -6,11 +10,11 @@ using Espresso.Domain.Infrastructure;
 
 namespace Espresso.Domain.Entities
 {
+    /// <summary>
+    /// Represents news source, for example www.index.hr.
+    /// </summary>
     public class NewsPortal : IEntity<int, NewsPortal>
     {
-
-        #region Constants
-
         public const bool IsEnabledDefaultValue = true;
 
         public const int NameMaxLength = 100;
@@ -19,10 +23,7 @@ namespace Espresso.Domain.Entities
 
         public const int IconUrlMaxlength = 100;
 
-        #endregion
-
-        #region Properties
-
+#pragma warning disable RCS1170 // Use read-only auto-implemented property.
         public int Id { get; private set; }
 
         public string Name { get; set; }
@@ -36,7 +37,7 @@ namespace Espresso.Domain.Entities
         public DateTime CreatedAt { get; private set; }
 
         /// <summary>
-        /// Allows news portal to be saved in database but not used in application
+        /// Gets a value indicating whether allows news portal to be saved in database but not used in application.
         /// </summary>
         public bool IsEnabled { get; private set; }
 
@@ -51,14 +52,14 @@ namespace Espresso.Domain.Entities
         public ICollection<RssFeed> RssFeeds { get; private set; } = new List<RssFeed>();
 
         public ICollection<Article> Articles { get; private set; } = new List<Article>();
-
-        #endregion
-
-        #region Constructors
+#pragma warning restore RCS1170 // Use read-only auto-implemented property.
 
         /// <summary>
-        /// ORM Constructor
+        /// Initializes a new instance of the <see cref="NewsPortal"/> class.
         /// </summary>
+        /// <remarks>
+        /// ORM Constructor.
+        /// </remarks>
         private NewsPortal()
         {
             Name = null!;
@@ -66,6 +67,18 @@ namespace Espresso.Domain.Entities
             IconUrl = null!;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NewsPortal"/> class.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="baseUrl"></param>
+        /// <param name="iconUrl"></param>
+        /// <param name="isNewOverride"></param>
+        /// <param name="createdAt"></param>
+        /// <param name="categoryId"></param>
+        /// <param name="regionId"></param>
+        /// <param name="isEnabled"></param>
         public NewsPortal(
             int id,
             string name,
@@ -88,10 +101,6 @@ namespace Espresso.Domain.Entities
             RegionId = regionId;
             IsEnabled = isEnabled;
         }
-
-        #endregion
-
-        #region Methods        
 
         public static Expression<Func<NewsPortal, bool>> GetCategorySugestedNewsPortalsPredicate(
             IEnumerable<int>? newsPortalIds,
@@ -130,7 +139,5 @@ namespace Espresso.Domain.Entities
                     newsPortal.CreatedAt > newNewsPortalMinDate
                 );
         }
-
-        #endregion
     }
 }

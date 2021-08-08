@@ -1,4 +1,8 @@
-﻿using System;
+﻿// GetArticlesQueryHandler_1_4.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -15,20 +19,19 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4
     public class GetArticlesQueryHandler_1_4 :
         IRequestHandler<GetLatestArticlesQuery_1_4, GetLatestArticlesQueryResponse_1_4>
     {
-        #region Fields
         private readonly IMemoryCache _memoryCache;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetArticlesQueryHandler_1_4"/> class.
+        /// </summary>
+        /// <param name="memoryCache"></param>
         public GetArticlesQueryHandler_1_4(
             IMemoryCache memoryCache
         )
         {
             _memoryCache = memoryCache;
         }
-        #endregion
 
-        #region Methods
         public Task<GetLatestArticlesQueryResponse_1_4> Handle(
             GetLatestArticlesQuery_1_4 request,
             CancellationToken cancellationToken
@@ -43,13 +46,13 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4
             );
 
             var newsPortalIds = request.NewsPortalIds
-                ?.Replace(" ", "")
+                ?.Replace(" ", string.Empty)
                 ?.Split(',')
                 ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
                 ?.Where(newsPortalId => newsPortalId != default);
 
             var categoryIds = request.CategoryIds
-                ?.Replace(" ", "")
+                ?.Replace(" ", string.Empty)
                 ?.Split(',')
                 ?.Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
                 ?.Where(categoryId => categoryId != default);
@@ -86,11 +89,10 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4
             {
                 Articles = articleDtos,
                 NewNewsPortals = newsPortalDtos.OrderBy(newsPortal => random.Next()),
-                NewNewsPortalsPosition = request.NewNewsPortalsPosition
+                NewNewsPortalsPosition = request.NewNewsPortalsPosition,
             };
 
             return Task.FromResult(result: response);
         }
-        #endregion
     }
 }

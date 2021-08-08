@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// SecurityHeadersPolicy.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 
 namespace Espresso.Application.Middleware.SecurityHeaders
 {
@@ -8,12 +12,12 @@ namespace Espresso.Application.Middleware.SecurityHeaders
     public class SecurityHeadersPolicy
     {
         /// <summary>
-        /// Headers to set.
+        /// Gets headers to set.
         /// </summary>
         public IDictionary<string, string> SetHeaders { get; } = new Dictionary<string, string>();
 
         /// <summary>
-        /// Headers to remove.
+        /// Gets headers to remove.
         /// </summary>
         public ISet<string> RemoveHeaders { get; } = new HashSet<string>();
     }

@@ -1,25 +1,21 @@
-﻿using Espresso.Domain.Infrastructure;
+﻿// RssFeedCategory.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.Domain.Infrastructure;
 
 namespace Espresso.Domain.Entities
 {
     public class RssFeedCategory : IEntity<int, RssFeedCategory>
     {
-
-
-        #region Constants
-
         public const int UrlRegexMaxLength = 100;
 
-        #endregion
-
-        #region Properties
         public int Id { get; private set; }
 
         public string UrlRegex { get; private set; }
 
         public int UrlSegmentIndex { get; private set; }
 
-        #region Relations
         public int CategoryId { get; private set; }
 
         public Category? Category { get; private set; }
@@ -27,19 +23,23 @@ namespace Espresso.Domain.Entities
         public int RssFeedId { get; private set; }
 
         public RssFeed? RssFeed { get; private set; }
-        #endregion
 
-        #endregion
-
-        #region Constructors
         /// <summary>
-        /// ORM Constructor
+        /// ORM Constructor.
         /// </summary>
         public RssFeedCategory()
         {
             UrlRegex = null!;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RssFeedCategory"/> class.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="urlRegex"></param>
+        /// <param name="urlSegmentIndex"></param>
+        /// <param name="categoryId"></param>
+        /// <param name="rssFeedId"></param>
         public RssFeedCategory(int id, string urlRegex, int urlSegmentIndex, int categoryId, int rssFeedId)
         {
             Id = id;
@@ -48,6 +48,5 @@ namespace Espresso.Domain.Entities
             RssFeedId = rssFeedId;
             CategoryId = categoryId;
         }
-        #endregion
     }
 }

@@ -1,20 +1,21 @@
-﻿using System.Text.Json;
+﻿// SystemTextJsonSerializerConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 
 namespace Espresso.Dashboard.Configuration
 {
     /// <summary>
-    /// <see cref="JsonSerializer"/> Configuration
+    /// <see cref="JsonSerializer"/> Configuration.
     /// </summary>
     public class SystemTextJsonSerializerConfiguration
     {
-        #region Fields
         private readonly IConfigurationSection _configuration;
-        #endregion
 
-        #region Properties
         /// <summary>
-        /// Json Serializer Options
+        /// Gets json Serializer Options.
         /// </summary>
         /// <value></value>
         public JsonSerializerOptions JsonSerializerOptions => new()
@@ -25,22 +26,18 @@ namespace Espresso.Dashboard.Configuration
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             ReadCommentHandling = _configuration.GetValue<JsonCommentHandling>("ReadCommentHandling"),
         };
-        #endregion
 
-        #region Constructors
         /// <summary>
-        /// Creates new instance of SystemTextJsonSerializerConfiguration with provided <paramref name="configuration"/>
+        /// Creates new instance of SystemTextJsonSerializerConfiguration with provided <paramref name="configuration"/>.
         /// </summary>
         /// <param name="configuration"></param>
         public SystemTextJsonSerializerConfiguration(IConfigurationSection configuration)
         {
             _configuration = configuration;
         }
-        #endregion
 
-        #region Methods
         /// <summary>
-        /// Maps <paramref name="jsonSerializerOptions"/> to defalt <see cref="JsonSerializerOptions"/>
+        /// Maps <paramref name="jsonSerializerOptions"/> to defalt <see cref="JsonSerializerOptions"/>.
         /// </summary>
         /// <param name="jsonSerializerOptions"></param>
         public void MapJsonSerializerOptionsToDefaultOptions(
@@ -53,6 +50,5 @@ namespace Espresso.Dashboard.Configuration
             jsonSerializerOptions.MaxDepth = JsonSerializerOptions.MaxDepth;
             jsonSerializerOptions.ReadCommentHandling = JsonSerializerOptions.ReadCommentHandling;
         }
-        #endregion Methods
     }
 }

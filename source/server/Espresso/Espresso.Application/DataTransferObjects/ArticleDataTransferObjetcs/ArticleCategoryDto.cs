@@ -1,3 +1,7 @@
+﻿// ArticleCategoryDto.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using System.Linq.Expressions;
 using System.Text.Json.Serialization;
@@ -7,13 +11,21 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
 {
     public record ArticleCategoryDto
     {
-        #region Properties
+        /// <summary>
+        /// Gets id.
+        /// </summary>
         public Guid Id { get; private set; }
 
+        /// <summary>
+        /// Gets category id.
+        /// </summary>
         public int CategoryId { get; private set; }
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArticleCategoryDto"/> class.
+        /// </summary>
+        /// <param name="id">Article id.</param>
+        /// <param name="categoryId">Category id.</param>
         [JsonConstructor]
         public ArticleCategoryDto(
             Guid id,
@@ -27,9 +39,11 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
         private ArticleCategoryDto()
         {
         }
-        #endregion
 
-        #region Methods
+        /// <summary>
+        /// Creates <see cref="ArticleCategory"/> to <see cref="ArticleCategoryDto"/> projection.
+        /// </summary>
+        /// <returns><see cref="ArticleCategory"/> to <see cref="ArticleCategoryDto"/> projection.</returns>
         public static Expression<Func<ArticleCategory, ArticleCategoryDto>> GetProjection()
         {
             return articleCategory => new ArticleCategoryDto
@@ -38,6 +52,5 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
                 CategoryId = articleCategory.CategoryId,
             };
         }
-        #endregion
     }
 }

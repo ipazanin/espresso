@@ -1,7 +1,15 @@
-﻿namespace Espresso.Domain.Enums.RssFeedEnums
+﻿// RssFeedId.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+namespace Espresso.Domain.Enums.RssFeedEnums
 {
+    /// <summary>
+    /// <see cref="Entities.RssFeed"/> id.
+    /// </summary>
     public enum RssFeedId
     {
+#pragma warning disable SA1602 // Enumeration items should be documented
         Undefined = 0,
         Index_Vijesti = 1,
         Index_Sport = 2,
@@ -179,6 +187,7 @@
         Racunalo = 178,
         MobHr = 179,
         StartNews = 180,
-        Viral = 181
+        Viral = 181,
+#pragma warning restore SA1602 // Enumeration items should be documented
     }
 }

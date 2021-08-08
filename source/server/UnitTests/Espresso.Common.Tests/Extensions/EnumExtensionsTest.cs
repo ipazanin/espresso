@@ -1,3 +1,7 @@
+// EnumExtensionsTest.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
@@ -7,114 +11,74 @@ namespace Espresso.Common.Tests.Extensions
 {
     public class EnumExtensionsTest
     {
-
-        #region  Methods
-
-        #region GetDisplayName
         [Fact]
         public void GetDisplayName_WithUndefinedEnum_ReturnsUndefinedString()
         {
-            #region Arrange
-            var undefinedEnum = (AppEnvironment)(-1);
-            var expectedDisplayName = FormatConstants.Undefined;
-            #endregion
+            const AppEnvironment undefinedEnum = (AppEnvironment)(-1);
+            const string? expectedDisplayName = FormatConstants.Undefined;
 
-            #region Act
             var actualDisplayName = undefinedEnum.GetDisplayName();
-            #endregion
 
-            #region Assert
             Assert.Equal(
                 expected: expectedDisplayName,
                 actual: actualDisplayName
             );
-            #endregion
         }
 
         [Fact]
         public void GetDisplayName_WithEnumValueWithoutDisplayNameAttribute_ReturnsEnumStringValue()
         {
-            #region Arrange
-            var enumValueWithoutDisplayAttribute = AppEnvironment.Local;
+            const AppEnvironment enumValueWithoutDisplayAttribute = AppEnvironment.Local;
             var expectedDisplayName = enumValueWithoutDisplayAttribute.ToString();
-            #endregion
 
-            #region Act
             var actualDisplayName = enumValueWithoutDisplayAttribute.GetDisplayName();
-            #endregion
 
-            #region Assert
             Assert.Equal(
                 expected: expectedDisplayName,
                 actual: actualDisplayName
             );
-            #endregion
         }
 
         [Fact]
         public void GetDisplayName_WithEnumValueWithDisplayNameAttribute_ReturnsDisplayNameValue()
         {
-            #region Arrange
-            var enumValueWithDisplayAttribute = AppEnvironment.Prod;
-            var expectedDisplayName = "Production";
-            #endregion
+            const AppEnvironment enumValueWithDisplayAttribute = AppEnvironment.Prod;
+            const string? expectedDisplayName = "Production";
 
-            #region Act
             var actualDisplayName = enumValueWithDisplayAttribute.GetDisplayName();
-            #endregion
 
-            #region Assert
             Assert.Equal(
                 expected: expectedDisplayName,
                 actual: actualDisplayName
             );
-            #endregion
         }
-        #endregion
 
-        #region GetIntegerValueAsString
         [Fact]
         public void GetIntegerValueAsString_WithUndefinedEnum_ReturnsIntegerValueAsString()
         {
-            #region Arrange
-            var undefinedEnum = (AppEnvironment)(-1);
+            const AppEnvironment undefinedEnum = (AppEnvironment)(-1);
             var expectedValue = ((int)undefinedEnum).ToString();
-            #endregion
 
-            #region Act
             var actualValue = undefinedEnum.GetIntegerValueAsString();
-            #endregion
 
-            #region Assert
             Assert.Equal(
                 expected: expectedValue,
                 actual: actualValue
             );
-            #endregion
         }
 
         [Fact]
         public void GetIntegerValueAsString_WithDefinedEnum_ReturnsIntegerValueAsString()
         {
-            #region Arrange
-            var definedEnum = AppEnvironment.Local;
+            const AppEnvironment definedEnum = AppEnvironment.Local;
             var expectedValue = ((int)definedEnum).ToString();
-            #endregion
 
-            #region Act
             var actualValue = definedEnum.GetIntegerValueAsString();
-            #endregion
 
-            #region Assert
             Assert.Equal(
                 expected: expectedValue,
                 actual: actualValue
             );
-            #endregion
         }
-        #endregion
-
-        #endregion
-
     }
 }

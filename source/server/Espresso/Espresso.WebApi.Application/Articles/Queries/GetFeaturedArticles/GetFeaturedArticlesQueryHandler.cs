@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// GetFeaturedArticlesQueryHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,20 +18,19 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
     public class GetFeaturedArticlesQueryHandler :
         IRequestHandler<GetFeaturedArticlesQuery, GetFeaturedArticlesQueryResponse>
     {
-        #region Fields
         private readonly IMemoryCache _memoryCache;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetFeaturedArticlesQueryHandler"/> class.
+        /// </summary>
+        /// <param name="memoryCache"></param>
         public GetFeaturedArticlesQueryHandler(
             IMemoryCache memoryCache
         )
         {
             _memoryCache = memoryCache;
         }
-        #endregion
 
-        #region Methods
         public Task<GetFeaturedArticlesQueryResponse> Handle(GetFeaturedArticlesQuery request, CancellationToken cancellationToken)
         {
             var articles = _memoryCache.Get<IEnumerable<Article>>(
@@ -39,13 +42,13 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
             );
 
             var newsPortalIds = request.NewsPortalIds
-                ?.Replace(" ", "")
+                ?.Replace(" ", string.Empty)
                 ?.Split(',')
                 ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
                 ?.Where(newsPortalId => newsPortalId != default);
 
             var categoryIds = request.CategoryIds
-                ?.Replace(" ", "")
+                ?.Replace(" ", string.Empty)
                 ?.Split(',')
                 ?.Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
                 ?.Where(categoryId => categoryId != default);
@@ -75,11 +78,10 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
 
             var response = new GetFeaturedArticlesQueryResponse
             {
-                Articles = articleDtos
+                Articles = articleDtos,
             };
 
             return Task.FromResult(result: response);
         }
-        #endregion
     }
 }

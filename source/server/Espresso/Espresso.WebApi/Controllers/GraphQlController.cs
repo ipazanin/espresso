@@ -1,4 +1,8 @@
-﻿using System.Threading;
+﻿// GraphQlController.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
@@ -28,7 +32,7 @@ namespace Espresso.WebApi.Controllers
         private readonly IDocumentExecuter _executer;
 
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="GraphQlController"/> class.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="webApiConfiguration"></param>

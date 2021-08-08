@@ -1,11 +1,14 @@
-﻿using System;
+﻿// GetLatestArticlesQuery_1_4.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4
 {
     public record GetLatestArticlesQuery_1_4 : Request<GetLatestArticlesQueryResponse_1_4>
     {
-        #region Properties
         public int Take { get; init; }
 
         public int Skip { get; init; }
@@ -21,6 +24,5 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4
         public string? TitleSearchQuery { get; init; }
 
         public TimeSpan MaxAgeOfNewNewsPortal { get; init; }
-        #endregion
     }
 }

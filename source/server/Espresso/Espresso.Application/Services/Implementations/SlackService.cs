@@ -1,4 +1,8 @@
-﻿using System;
+﻿// SlackService.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -19,10 +23,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Espresso.Application.Services.Implementations
 {
+    /// <inheritdoc/>
     public class SlackService : ISlackService
     {
-        #region Constants
-
         private const string ErrorsBotIconEmoji = ":no_entry:";
         private const string ErrorBotUsername = "error-bot";
         private const string ErrorsChannel = "#errors-backend-bot";
@@ -45,9 +48,6 @@ namespace Espresso.Application.Services.Implementations
         private const string PushNotificationBotIconEmoji = ":bell:";
         private const string PushNotificationBotUsername = "push-bot";
         private const string PushNotificationChannel = "#general";
-        #endregion
-
-        #region Fields
         private static readonly TimeSpan s_exceptionMessageCooldownInterval = TimeSpan.FromHours(4);
 
         private readonly IMemoryCache _memoryCache;
@@ -56,9 +56,16 @@ namespace Espresso.Application.Services.Implementations
         private readonly IJsonService _jsonService;
         private readonly string _webHookUrl;
         private readonly ApplicationInformation _applicationInformation;
-        #endregion
 
-        #region Constructor
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SlackService"/> class.
+        /// </summary>
+        /// <param name="memoryCache">Memory cache.</param>
+        /// <param name="httpClientFactory">HTTP client factory.</param>
+        /// <param name="loggerService">Logger service.</param>
+        /// <param name="jsonService">JSON service.</param>
+        /// <param name="webHookUrl">Slack web hook url.</param>
+        /// <param name="applicationInformation">Application information.</param>
         public SlackService(
             IMemoryCache memoryCache,
             IHttpClientFactory httpClientFactory,
@@ -75,11 +82,8 @@ namespace Espresso.Application.Services.Implementations
             _webHookUrl = webHookUrl;
             _applicationInformation = applicationInformation;
         }
-        #endregion
 
-        #region Methods
-
-        #region  Public Methods
+        /// <inheritdoc/>
         public Task LogError(
             string eventName,
             string message,
@@ -107,6 +111,7 @@ namespace Espresso.Application.Services.Implementations
             );
         }
 
+        /// <inheritdoc/>
         public Task LogAppDownloadStatistics(
             int yesterdayAndroidCount,
             int yesterdayIosCount,
@@ -177,6 +182,7 @@ namespace Espresso.Application.Services.Implementations
             );
         }
 
+        /// <inheritdoc/>
         public Task LogMissingCategoriesError(
             string rssFeedUrl,
             string articleUrl,
@@ -201,6 +207,7 @@ namespace Espresso.Application.Services.Implementations
             );
         }
 
+        /// <inheritdoc/>
         public Task LogNewNewsPortalRequest(
             string newsPortalName,
             string email,
@@ -225,38 +232,7 @@ namespace Espresso.Application.Services.Implementations
             );
         }
 
-        public Task LogPerformance(
-            string applicationName,
-            IEnumerable<(string name, int count, TimeSpan duration)> data,
-            CancellationToken cancellationToken
-        )
-        {
-            var textBuilder = new StringBuilder($"{applicationName} Performance\n");
-
-            foreach (var (name, count, duration) in data)
-            {
-                textBuilder.Append(name)
-                    .Append('\n')
-                    .Append("\t:chart_with_upwards_trend: Daily Count: ")
-                    .Append(count)
-                    .Append('\n')
-                    .Append("\t:clock1: Duration: ")
-                    .Append(duration)
-                    .Append("\n\n");
-            }
-
-            return SendToSlack(
-                data: new SlackWebHookRequestBodyDto(
-                    userName: BackendStatisticsBotUsername,
-                    iconEmoji: BackendStatisticsBotIconEmoji,
-                    text: textBuilder.ToString(),
-                    channel: BackendStatisticsChannel,
-                    blocks: Array.Empty<SlackBlock>()
-                ),
-                cancellationToken: cancellationToken
-            );
-        }
-
+        /// <inheritdoc/>
         public Task LogYesterdaysStatistics(
             IEnumerable<Article> topArticles,
             int totalNumberOfClicks,
@@ -311,6 +287,7 @@ namespace Espresso.Application.Services.Implementations
             );
         }
 
+        /// <inheritdoc/>
         public Task LogPushNotification(
             PushNotification pushNotification,
             Article article,
@@ -351,9 +328,7 @@ namespace Espresso.Application.Services.Implementations
                 cancellationToken: cancellationToken
             );
         }
-        #endregion
 
-        #region Private Methods
         private async Task SendToSlack(
             SlackWebHookRequestBodyDto data,
             CancellationToken cancellationToken
@@ -400,8 +375,5 @@ namespace Espresso.Application.Services.Implementations
                 return string.Empty;
             });
         }
-        #endregion
-
-        #endregion
     }
 }

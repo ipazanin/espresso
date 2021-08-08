@@ -1,3 +1,7 @@
+﻿// SendGridEmailService.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System.Threading.Tasks;
 using Espresso.Common.Services.Contracts;
 using SendGrid;
@@ -5,6 +9,9 @@ using SendGrid.Helpers.Mail;
 
 namespace Espresso.Common.Services.Implementations
 {
+    /// <summary>
+    /// Send grid email sender service.
+    /// </summary>
     public class SendGridEmailService : IEmailService
     {
         private const string SenderEmail = "dashboard-noreply@espressonews.co";
@@ -12,6 +19,10 @@ namespace Espresso.Common.Services.Implementations
 
         private readonly string _sendGridKey;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendGridEmailService"/> class.
+        /// </summary>
+        /// <param name="sendGridKey">Send grid API key.</param>
         public SendGridEmailService(
             string sendGridKey
         )
@@ -19,6 +30,7 @@ namespace Espresso.Common.Services.Implementations
             _sendGridKey = sendGridKey;
         }
 
+        /// <inheritdoc/>
         public async Task<bool> SendMail(
             string to,
             string subject,

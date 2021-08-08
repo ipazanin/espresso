@@ -1,3 +1,7 @@
+// AutoCompleteArticleQueryHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,18 +17,17 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
 {
     public class AutoCompleteArticleQueryHandler : IRequestHandler<AutoCompleteArticleQuery, AutoCompleteArticleQueryResponse>
     {
-        #region Fields
         private readonly IMemoryCache _memoryCache;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AutoCompleteArticleQueryHandler"/> class.
+        /// </summary>
+        /// <param name="memoryCache"></param>
         public AutoCompleteArticleQueryHandler(IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
         }
-        #endregion
 
-        #region Methods
         public Task<AutoCompleteArticleQueryResponse> Handle(AutoCompleteArticleQuery request, CancellationToken cancellationToken)
         {
             var articles = _memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey);
@@ -33,7 +36,7 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
 
             var result = new AutoCompleteArticleQueryResponse
             {
-                MatchedWords = matchedWords
+                MatchedWords = matchedWords,
             };
 
             return Task.FromResult(result);
@@ -75,6 +78,5 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
 
             return result.Union(filteredMatches, StringComparer.InvariantCultureIgnoreCase);
         }
-        #endregion
     }
 }

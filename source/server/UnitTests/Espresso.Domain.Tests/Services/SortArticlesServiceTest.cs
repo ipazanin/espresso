@@ -1,4 +1,8 @@
-﻿using System;
+﻿// SortArticlesServiceTest.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Channels;
@@ -15,11 +19,9 @@ namespace Espresso.Domain.Tests.Services
     /// </summary>
     public class SortArticlesServiceTest
     {
-        #region SortArticles
         [Fact]
         public void SortArticles_ReturnsEmptyCreateArticles_WhenArticlesCollectionIsEmpty()
         {
-            #region Arrange
             var articles = new List<Article>();
             var savedArticles = new List<Article>()
                 .ToDictionary(article => article.Id);
@@ -27,27 +29,21 @@ namespace Espresso.Domain.Tests.Services
             var expectedCreatedArticles = new List<Article>();
 
             var sortArticlesService = new SortArticlesService();
-            #endregion Arrange
 
-            #region Act
             var (actualCreatedArticles, _, _, _) = sortArticlesService.SortArticles(
                 articles: articles,
                 savedArticles: savedArticles
             );
-            #endregion Act
 
-            #region Assert
             Assert.Equal(
                 expected: expectedCreatedArticles,
                 actual: actualCreatedArticles
             );
-            #endregion Assert
         }
 
         [Fact]
         public void SortArticles_ReturnsEmptyUpdateArticles_WhenArticlesCollectionIsEmpty()
         {
-            #region Arrange
             var articles = new List<Article>();
             var savedArticles = new List<Article>()
                 .ToDictionary(article => article.Id);
@@ -55,16 +51,11 @@ namespace Espresso.Domain.Tests.Services
             var expectedUpdateArticles = new List<Article>();
 
             var sortArticlesService = new SortArticlesService();
-            #endregion Arrange
 
-            #region Act
             var (_, actualUpdateArticlesWithModifiedProperties, _, _) = sortArticlesService.SortArticles(
                 articles: articles,
                 savedArticles: savedArticles
             );
-            #endregion Act
-
-            #region Assert
 
             var actualUpdateArticles = actualUpdateArticlesWithModifiedProperties.Select(aricleWithProperties => aricleWithProperties.article);
 
@@ -72,13 +63,11 @@ namespace Espresso.Domain.Tests.Services
                 expected: expectedUpdateArticles,
                 actual: actualUpdateArticles
             );
-            #endregion Assert
         }
 
         [Fact]
         public void SortArticles_ReturnsEmptyCreateArticleCategories_WhenArticlesCollectionIsEmpty()
         {
-            #region Arrange
             var articles = new List<Article>();
             var savedArticles = new List<Article>()
                 .ToDictionary(article => article.Id);
@@ -86,27 +75,21 @@ namespace Espresso.Domain.Tests.Services
             var expectedCreatedArticleCategories = new List<ArticleCategory>();
 
             var sortArticlesService = new SortArticlesService();
-            #endregion Arrange
 
-            #region Act
             var (_, _, actualCreatedArticleCategories, _) = sortArticlesService.SortArticles(
                 articles: articles,
                 savedArticles: savedArticles
             );
-            #endregion Act
 
-            #region Assert
             Assert.Equal(
                 expected: expectedCreatedArticleCategories,
                 actual: actualCreatedArticleCategories
             );
-            #endregion Assert
         }
 
         [Fact]
         public void SortArticles_ReturnsEmptyUpdateArticleCategories_WhenArticlesCollectionIsEmpty()
         {
-            #region Arrange
             var articles = new List<Article>();
             var savedArticles = new List<Article>()
                 .ToDictionary(article => article.Id);
@@ -114,27 +97,21 @@ namespace Espresso.Domain.Tests.Services
             var expectedUpdateArticleCategories = new List<ArticleCategory>();
 
             var sortArticlesService = new SortArticlesService();
-            #endregion Arrange
 
-            #region Act
             var (_, _, _, actualUpdateArticleCategories) = sortArticlesService.SortArticles(
                 articles: articles,
                 savedArticles: savedArticles
             );
-            #endregion Act
 
-            #region Assert
             Assert.Equal(
                 expected: expectedUpdateArticleCategories,
                 actual: actualUpdateArticleCategories
             );
-            #endregion Assert
         }
 
         [Fact]
         public void SortArticles_ReturnsCreateArticlesWithSingleArticle_WhenArticlesCollectionHasSingleArticleAndSavedArticlesCollectionIsEmpty()
         {
-            #region Arrange
             var articles = new List<Article>
             {
                 ArticleUtility.CreateDefaultArticleWith(default, default!, default!, default!),
@@ -145,28 +122,22 @@ namespace Espresso.Domain.Tests.Services
             const int ExpectedCreatedArticlesCount = 1;
 
             var sortArticlesService = new SortArticlesService();
-            #endregion Arrange
 
-            #region Act
             var (actualCreatedArticles, _, _, _) = sortArticlesService.SortArticles(
                 articles: articles,
                 savedArticles: savedArticles
             );
-            #endregion Act
 
-            #region Assert
             var actualCreatedArticlesCount = actualCreatedArticles.Count();
             Assert.Equal(
                 expected: ExpectedCreatedArticlesCount,
                 actual: actualCreatedArticlesCount
             );
-            #endregion Assert
         }
 
         [Fact]
         public void SortArticles_ReturnsUpdateArticlesWithSingleArticle_WhenArticlesCollectionHasSingleArticleAndSavedArticlesCollectionHasArticleWithSameNewsPortalIdAndUrl()
         {
-            #region Arrange
             var articles = new List<Article>
             {
                 ArticleUtility.CreateDefaultArticleWith(
@@ -189,28 +160,22 @@ namespace Espresso.Domain.Tests.Services
             const int ExpectedUpdatedArticlesCount = 1;
 
             var sortArticlesService = new SortArticlesService();
-            #endregion Arrange
 
-            #region Act
             var (_, actualUpdatedArticles, _, _) = sortArticlesService.SortArticles(
                 articles: articles,
                 savedArticles: savedArticles
             );
-            #endregion Act
 
-            #region Assert
             var actualCreatedArticlesCount = actualUpdatedArticles.Count();
             Assert.Equal(
                 expected: ExpectedUpdatedArticlesCount,
                 actual: actualCreatedArticlesCount
             );
-            #endregion Assert
         }
 
         [Fact]
         public void SortArticles_ReturnsUpdateArticlesWithSingleArticle_WhenArticlesCollectionHasSingleArticleAndSavedArticlesCollectionHasArticleWithSameNewsPortalIdAndTitle()
         {
-            #region Arrange
             var articles = new List<Article>
             {
                 ArticleUtility.CreateDefaultArticleWith(
@@ -233,28 +198,22 @@ namespace Espresso.Domain.Tests.Services
             const int ExpectedUpdatedArticlesCount = 1;
 
             var sortArticlesService = new SortArticlesService();
-            #endregion Arrange
 
-            #region Act
             var (_, actualUpdatedArticles, _, _) = sortArticlesService.SortArticles(
                 articles: articles,
                 savedArticles: savedArticles
             );
-            #endregion Act
 
-            #region Assert
             var actualCreatedArticlesCount = actualUpdatedArticles.Count();
             Assert.Equal(
                 expected: ExpectedUpdatedArticlesCount,
                 actual: actualCreatedArticlesCount
             );
-            #endregion Assert
         }
 
         [Fact]
         public void SortArticles_ReturnsUpdateArticlesWithSingleArticle_WhenArticlesCollectionHasSingleArticleAndSavedArticlesCollectionHasArticleWithSameNewsPortalIdAndSummary()
         {
-            #region Arrange
             var articles = new List<Article>
             {
                 ArticleUtility.CreateDefaultArticleWith(
@@ -277,30 +236,26 @@ namespace Espresso.Domain.Tests.Services
             const int ExpectedUpdatedArticlesCount = 1;
 
             var sortArticlesService = new SortArticlesService();
-            #endregion Arrange
 
-            #region Act
             var (_, actualUpdatedArticles, _, _) = sortArticlesService.SortArticles(
                 articles: articles,
                 savedArticles: savedArticles
             );
-            #endregion Act
 
-            #region Assert
             var actualCreatedArticlesCount = actualUpdatedArticles.Count();
             Assert.Equal(
                 expected: ExpectedUpdatedArticlesCount,
                 actual: actualCreatedArticlesCount
             );
-            #endregion Assert
         }
-        #endregion SortArticles
 
-        #region RemoveDuplicateArticles
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task RemoveDuplicateArticles_ReturnsListWithUnchangedNumberOfArticles_WhenThereAreNoDuplicateArticlesPresent()
         {
-            #region Arrange
             var articles = new List<Article>
             {
                 ArticleUtility.CreateDefaultArticleWith(
@@ -327,25 +282,23 @@ namespace Espresso.Domain.Tests.Services
             writer.Complete();
 
             var sortArticlesService = new SortArticlesService();
-            #endregion Arrange
 
-            #region Act
             var actualArticles = await sortArticlesService.RemoveDuplicateArticles(channel, default);
-            #endregion Act
 
-            #region Assert
             var actualArticlesCount = actualArticles.Count();
             Assert.Equal(
                 expected: expectedArticlesCount,
                 actual: actualArticlesCount
             );
-            #endregion Assert
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
         public async Task RemoveDuplicateArticles_ReturnsListWithTwoArticlesRemoved_WhenThereAreTwoDuplicateArticlesPresent()
         {
-            #region Arrange
             var articles = new List<Article>
             {
                 ArticleUtility.CreateDefaultArticleWith(
@@ -385,20 +338,14 @@ namespace Espresso.Domain.Tests.Services
             writer.Complete();
 
             var sortArticlesService = new SortArticlesService();
-            #endregion Arrange
 
-            #region Act
             var actualArticles = await sortArticlesService.RemoveDuplicateArticles(channel, default);
-            #endregion Act
 
-            #region Assert
             var actualArticlesCount = actualArticles.Count();
             Assert.Equal(
                 expected: expectedArticlesCount,
                 actual: actualArticlesCount
             );
-            #endregion Assert
         }
-        #endregion RemoveDuplicateArticles
     }
 }

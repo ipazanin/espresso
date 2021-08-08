@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿// DeleteOldArticlesCommandHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Domain.IServices;
@@ -9,12 +13,14 @@ namespace Espresso.Dashboard.Application.DeleteOldArticles
 {
     public class DeleteOldArticlesCommandHandler : IRequestHandler<DeleteOldArticlesCommand, DeleteOldArticlesCommandResponse>
     {
-        #region Fields
         private readonly IEspressoDatabaseContext _espressoDatabaseContext;
         private readonly IRemoveOldArticlesService _removeOldArticlesService;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteOldArticlesCommandHandler"/> class.
+        /// </summary>
+        /// <param name="espressoDatabaseContext"></param>
+        /// <param name="removeOldArticlesService"></param>
         public DeleteOldArticlesCommandHandler(
             IEspressoDatabaseContext espressoDatabaseContext,
             IRemoveOldArticlesService removeOldArticlesService
@@ -23,9 +29,7 @@ namespace Espresso.Dashboard.Application.DeleteOldArticles
             _espressoDatabaseContext = espressoDatabaseContext;
             _removeOldArticlesService = removeOldArticlesService;
         }
-        #endregion
 
-        #region Methods
         public async Task<DeleteOldArticlesCommandResponse> Handle(DeleteOldArticlesCommand request, CancellationToken cancellationToken)
         {
             var oldArticles = _removeOldArticlesService.RemoveOldArticlesFromCollection(request.Articles);
@@ -42,11 +46,10 @@ namespace Espresso.Dashboard.Application.DeleteOldArticles
 
             var response = new DeleteOldArticlesCommandResponse
             {
-                NumberOfDeletedDatabaseArticles = numberOfDeletedDatabaseArticles
+                NumberOfDeletedDatabaseArticles = numberOfDeletedDatabaseArticles,
             };
 
             return response;
         }
-        #endregion
     }
 }

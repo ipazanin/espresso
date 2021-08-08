@@ -1,3 +1,7 @@
+﻿// OrderArticleCollectionExtensions.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System.Collections.Generic;
 using System.Linq;
 using Espresso.Domain.Entities;
@@ -6,7 +10,6 @@ namespace Espresso.Common.Extensions
 {
     public static class OrderArticleCollectionExtensions
     {
-        #region Methods
         public static IOrderedEnumerable<Article> OrderFeaturedArticles(
             this IEnumerable<Article> articles,
             IEnumerable<int>? categoryIds
@@ -19,21 +22,17 @@ namespace Espresso.Common.Extensions
                     categoryWithOrderIndex => categoryWithOrderIndex.index
                 );
 
-            var halfOfMaxValue = int.MaxValue / 2;
+            const int HalfOfMaxValue = int.MaxValue / 2;
 
             var orderedArticles = articles
                 .OrderBy(
-                    article => article.EditorConfiguration.FeaturedPosition == null ?
-                        (
-                            categoriesWithOrderIndex == null ?
-                                halfOfMaxValue :
+                    article => article.EditorConfiguration.FeaturedPosition ?? (categoriesWithOrderIndex == null ?
+                                HalfOfMaxValue :
                                 (
                                     categoriesWithOrderIndex.ContainsKey(article.ArticleCategories.First().CategoryId) ?
-                                        halfOfMaxValue + categoriesWithOrderIndex[article.ArticleCategories.First().CategoryId] :
+                                        HalfOfMaxValue + categoriesWithOrderIndex[article.ArticleCategories.First().CategoryId] :
                                         int.MaxValue
-                                )
-                        ) :
-                        article.EditorConfiguration.FeaturedPosition
+                                ))
                 )
                 .OrderArticlesByTrendingScore();
 
@@ -57,15 +56,15 @@ namespace Espresso.Common.Extensions
                     categoryWithOrderIndex => categoryWithOrderIndex.index
                 );
 
-            var halfOfMaxValue = int.MaxValue / 2;
+            const int HalfOfMaxValue = int.MaxValue / 2;
 
             var orderedArticles = articles
                 .OrderBy(
                     article => categoriesWithOrderIndex == null ?
-                        halfOfMaxValue :
+                        HalfOfMaxValue :
                         (
                             categoriesWithOrderIndex.ContainsKey(article.ArticleCategories.FirstOrDefault()?.CategoryId ?? 0) ?
-                                halfOfMaxValue + categoriesWithOrderIndex[article.ArticleCategories.First().CategoryId] :
+                                HalfOfMaxValue + categoriesWithOrderIndex[article.ArticleCategories.First().CategoryId] :
                                 int.MaxValue
                         )
                 )
@@ -100,6 +99,5 @@ namespace Espresso.Common.Extensions
 
             return orderedArticles;
         }
-        #endregion
     }
 }

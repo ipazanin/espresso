@@ -1,14 +1,15 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿// RabbitMqConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Microsoft.Extensions.Configuration;
 
 namespace Espresso.Dashboard.Configuration
 {
     public class RabbitMqConfiguration
     {
-        #region Fields
         private readonly IConfigurationSection _configuration;
-        #endregion
 
-        #region Properties
         public string HostName => _configuration.GetValue<string>("HostName");
 
         public int Port => _configuration.GetValue<int>("Port");
@@ -20,13 +21,14 @@ namespace Espresso.Dashboard.Configuration
         public bool UseRabbitMqServer => _configuration.GetValue<bool>("UseRabbitMqServer");
 
         public string ArticlesQueueName => _configuration.GetValue<string>("ArticlesQueueName");
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RabbitMqConfiguration"/> class.
+        /// </summary>
+        /// <param name="configuration"></param>
         public RabbitMqConfiguration(IConfigurationSection configuration)
         {
             _configuration = configuration;
         }
-        #endregion
     }
 }

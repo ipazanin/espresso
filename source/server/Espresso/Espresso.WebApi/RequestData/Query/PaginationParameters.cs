@@ -1,3 +1,7 @@
+// PaginationParameters.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace Espresso.WebApi.RequestData.Query

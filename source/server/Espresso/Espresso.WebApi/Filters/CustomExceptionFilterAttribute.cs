@@ -1,4 +1,8 @@
-﻿using System;
+﻿// CustomExceptionFilterAttribute.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -25,15 +29,12 @@ namespace Espresso.WebApi.Filters
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
     {
-        #region Fields
         private readonly IWebApiConfiguration _webApiConfiguration;
         private readonly ISlackService _slackService;
         private readonly ILoggerService<CustomExceptionFilterAttribute> _loggerService;
-        #endregion
 
-        #region Constructors
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="CustomExceptionFilterAttribute"/> class.
         /// </summary>
         /// <param name="webApiConfiguration"></param>
         /// <param name="slackService"></param>
@@ -48,9 +49,7 @@ namespace Espresso.WebApi.Filters
             _slackService = slackService;
             _loggerService = loggerService;
         }
-        #endregion 
 
-        #region Methods
         /// <summary>
         ///
         /// </summary>
@@ -118,6 +117,5 @@ namespace Espresso.WebApi.Filters
                     cancellationToken: default
             );
         }
-        #endregion
     }
 }

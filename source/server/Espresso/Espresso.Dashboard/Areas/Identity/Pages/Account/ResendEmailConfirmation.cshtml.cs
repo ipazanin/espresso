@@ -1,4 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// ResendEmailConfirmation.cshtml.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -18,6 +22,11 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailService _emailService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResendEmailConfirmationModel"/> class.
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="emailService"></param>
         public ResendEmailConfirmationModel(UserManager<IdentityUser> userManager, IEmailService emailService)
         {
             _userManager = userManager;
@@ -38,6 +47,10 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
         {
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

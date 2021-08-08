@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// Startup.Configure.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.IO;
 using Espresso.Application.Middleware.SecurityHeaders;
 using Espresso.Common.Constants;

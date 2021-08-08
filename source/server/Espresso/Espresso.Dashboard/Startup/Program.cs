@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Program.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using Espresso.Common.Constants;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
@@ -18,8 +22,8 @@ namespace Espresso.Dashboard.Startup
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(configureOptions =>
                 {
-                    var environmentName = Environment.GetEnvironmentVariable(EnvironmentVariableNamesConstants.AspNetCoreEnvironment) ?? "";
-                    var databaseName = Environment.GetEnvironmentVariable(EnvironmentVariableNamesConstants.DatabaseName) ?? "";
+                    var environmentName = Environment.GetEnvironmentVariable(EnvironmentVariableNamesConstants.AspNetCoreEnvironment) ?? string.Empty;
+                    var databaseName = Environment.GetEnvironmentVariable(EnvironmentVariableNamesConstants.DatabaseName) ?? string.Empty;
 
                     var configuration = configureOptions
                         .AddJsonFile(path: $"AppSettings/GeneralSettings/app-settings.json", optional: false)
@@ -42,6 +46,5 @@ namespace Espresso.Dashboard.Startup
                         );
                     });
                 });
-
     }
 }

@@ -1,4 +1,8 @@
-﻿using Espresso.Domain.Entities;
+﻿// RssFeedConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.Domain.Entities;
 using Espresso.Domain.ValueObjects.RssFeedValueObjects;
 using Espresso.Persistence.DataSeed;
 using Microsoft.EntityFrameworkCore;
@@ -10,19 +14,14 @@ namespace Espresso.Persistence.Configuration
     {
         public void Configure(EntityTypeBuilder<RssFeed> builder)
         {
-            #region Property Mapping
             builder.Property(rssFeed => rssFeed.Url)
                 .HasMaxLength(RssFeed.UrlMaxLength);
-            #endregion
 
-            #region Value Object Mapping
             ConfigureAmpConfiguration(builder);
             ConfigureSkipParseConfiguration(builder);
             ConfigureCategoryParseConfiguration(builder);
             ConfigureImageUrlParseConfiguration(builder);
-            #endregion
 
-            #region Relations Mapping
             builder.HasOne(rssFeed => rssFeed.NewsPortal)
                 .WithMany(newsPortal => newsPortal!.RssFeeds)
                 .HasForeignKey(rssFeed => rssFeed.NewsPortalId)
@@ -47,16 +46,13 @@ namespace Espresso.Persistence.Configuration
                 .WithOne(rssFeedContentModifier => rssFeedContentModifier.RssFeed!)
                 .HasForeignKey(rssFeedContentModifier => rssFeedContentModifier.RssFeedId)
                 .OnDelete(DeleteBehavior.Cascade);
-            #endregion
 
-            #region Data Seed
             RssFeedDataSeed.Seed(builder);
             RssFeedAmpConfigurationSeed.Seed(builder);
             RssFeedSkipParseConfigurationSeed.Seed(builder);
             RssFeedCategoryParseConfigurationSeed.Seed(builder);
             RssFeedImageUrlParseConfigurationSeed.Seed(builder);
             LocalRssFeedDataSeed.Seed(builder);
-            #endregion
         }
 
         private static void ConfigureAmpConfiguration(EntityTypeBuilder<RssFeed> builder)
@@ -73,7 +69,6 @@ namespace Espresso.Persistence.Configuration
 
         private static void ConfigureSkipParseConfiguration(EntityTypeBuilder<RssFeed> builder)
         {
-
             var skipParseConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.SkipParseConfiguration);
         }
 
@@ -121,7 +116,6 @@ namespace Espresso.Persistence.Configuration
             imageUrlParseConfiguration
                 .Property(imageUrlConfig => imageUrlConfig.ElementExtensionIndex)
                 .HasDefaultValue(ImageUrlParseConfiguration.ElementExtensionIndexDefaultValue);
-
 
             imageUrlParseConfiguration
                 .Property(imageUrlConfig => imageUrlConfig.IsSavedInHtmlElementWithSrcAttribute)

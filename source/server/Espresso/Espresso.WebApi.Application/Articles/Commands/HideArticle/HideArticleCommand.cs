@@ -1,4 +1,8 @@
-﻿using System;
+﻿// HideArticleCommand.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using MediatR;
 

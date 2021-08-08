@@ -1,4 +1,8 @@
-﻿using System;
+﻿// GenerateRecoveryCodes.cshtml.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +17,11 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<GenerateRecoveryCodesModel> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenerateRecoveryCodesModel"/> class.
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="logger"></param>
         public GenerateRecoveryCodesModel(
             UserManager<IdentityUser> userManager,
             ILogger<GenerateRecoveryCodesModel> logger)
@@ -27,6 +36,10 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string? StatusMessage { get; set; }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -45,6 +58,10 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);

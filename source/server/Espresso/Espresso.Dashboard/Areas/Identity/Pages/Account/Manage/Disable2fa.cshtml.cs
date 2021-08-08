@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Disable2fa.cshtml.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +16,11 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<Disable2faModel> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Disable2faModel"/> class.
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="logger"></param>
         public Disable2faModel(
             UserManager<IdentityUser> userManager,
             ILogger<Disable2faModel> logger)
@@ -23,6 +32,10 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string? StatusMessage { get; set; }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnGet()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -39,6 +52,10 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);

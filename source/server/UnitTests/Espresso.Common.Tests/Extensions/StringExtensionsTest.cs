@@ -1,3 +1,7 @@
+// StringExtensionsTest.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using Espresso.Common.Extensions;
 using Xunit;
 
@@ -5,28 +9,18 @@ namespace Espresso.Common.Tests.Extensions
 {
     public class StringExtensionsTest
     {
-
-        #region  Methods
-
-        #region RemoveExtraWhiteSpaceCharacters
         [Fact]
         public void RemoveExtraWhiteSpaceCharacters_WithStringWithNoEmptyCharacters_ReturnsUnmodifiedString()
         {
-            #region Arrange
-            var stringValue = "someValue";
+            const string? stringValue = "someValue";
             var expectedStringValue = stringValue;
-            #endregion
 
-            #region Act
             var actualStringValue = stringValue.RemoveExtraWhiteSpaceCharacters();
-            #endregion
 
-            #region Assert
             Assert.Equal(
                 expected: expectedStringValue,
                 actual: actualStringValue
             );
-            #endregion
         }
 
         [Theory]
@@ -57,26 +51,16 @@ namespace Espresso.Common.Tests.Extensions
         [InlineData('\u0085')]
         public void RemoveExtraWhiteSpaceCharacters_WithStringWithEmptyCharacters_ReturnsStringWithoutExtraWhiteSpaceCharacters(char whiteSpaceCharacter)
         {
-            #region Arrange
             var stringValue = $"{whiteSpaceCharacter}{whiteSpaceCharacter}{whiteSpaceCharacter}some" +
                 $"{whiteSpaceCharacter}{whiteSpaceCharacter}{whiteSpaceCharacter}Value{whiteSpaceCharacter}{whiteSpaceCharacter}{whiteSpaceCharacter}";
             var expectedStringValue = $"{whiteSpaceCharacter}some{whiteSpaceCharacter}Value{whiteSpaceCharacter}";
-            #endregion
 
-            #region Act
             var actualStringValue = stringValue.RemoveExtraWhiteSpaceCharacters();
-            #endregion
 
-            #region Assert
             Assert.Equal(
                 expected: expectedStringValue,
                 actual: actualStringValue
             );
-            #endregion
         }
-        #endregion
-
-        #endregion
-
     }
 }

@@ -1,4 +1,8 @@
-﻿namespace Espresso.Domain.Enums.CategoryEnums
+﻿// CategoryType.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+namespace Espresso.Domain.Enums.CategoryEnums
 {
     public enum CategoryType
     {

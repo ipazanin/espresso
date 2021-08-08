@@ -1,4 +1,8 @@
-﻿using System;
+﻿// WebApiReportCronJob.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -18,13 +22,10 @@ namespace Espresso.WebApi.Jobs.CronJobs
     /// </summary>
     public class WebApiReportCronJob : CronJob<WebApiReportCronJob>
     {
-        #region Fields
         private readonly IServiceScopeFactory _serviceScopeFactory;
-        #endregion
 
-        #region Constructors
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="WebApiReportCronJob"/> class.
         /// </summary>
         /// <param name="serviceScopeFactory"></param>
         /// <param name="cronJobConfiguration"></param>
@@ -39,9 +40,7 @@ namespace Espresso.WebApi.Jobs.CronJobs
         {
             _serviceScopeFactory = serviceScopeFactory;
         }
-        #endregion
 
-        #region Methods
         /// <summary>
         ///
         /// </summary>
@@ -146,6 +145,5 @@ namespace Espresso.WebApi.Jobs.CronJobs
 
             return categoriesOrderedByNumberOfClicks!;
         }
-        #endregion
     }
 }

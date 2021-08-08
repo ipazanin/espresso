@@ -1,4 +1,8 @@
-﻿using System;
+﻿// GetLatestArticlesQueryHandler_2_0.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -14,20 +18,19 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
 {
     public class GetArticlesQueryHandler_2_0 : IRequestHandler<GetLatestArticlesQuery_2_0, GetLatestArticlesQueryResponse_2_0>
     {
-        #region Fields
         private readonly IMemoryCache _memoryCache;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetArticlesQueryHandler_2_0"/> class.
+        /// </summary>
+        /// <param name="memoryCache"></param>
         public GetArticlesQueryHandler_2_0(
             IMemoryCache memoryCache
         )
         {
             _memoryCache = memoryCache;
         }
-        #endregion
 
-        #region Methods
         public Task<GetLatestArticlesQueryResponse_2_0> Handle(
             GetLatestArticlesQuery_2_0 request,
             CancellationToken cancellationToken
@@ -77,7 +80,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                     .OrderByDescending(newsPortal => newsPortal.CreatedAt)
                     .First()
                     .CreatedAt
-                    .ToString(DateTimeConstants.MobileAppDateTimeFormat)
+                    .ToString(DateTimeConstants.MobileAppDateTimeFormat),
             };
 
             return Task.FromResult(result: response);
@@ -91,7 +94,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
             IEnumerable<int>? newsPortalIds
         )
         {
-
             var articles = savedArticles
                 .OrderArticlesByPublishDate()
                 .FilterArticles_2_0(
@@ -184,19 +186,18 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
         private static (IEnumerable<int>? newsPortalIds, IEnumerable<int>? categoryIds) ParseIds(GetLatestArticlesQuery_2_0 request)
         {
             var newsPortalIds = request.NewsPortalIds
-                ?.Replace(" ", "")
+                ?.Replace(" ", string.Empty)
                 ?.Split(',')
                 ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
                 ?.Where(newsPortalId => newsPortalId != default);
 
             var categoryIds = request.CategoryIds
-                ?.Replace(" ", "")
+                ?.Replace(" ", string.Empty)
                 ?.Split(',')
                 ?.Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
                 ?.Where(categoryId => categoryId != default);
 
             return (newsPortalIds, categoryIds);
         }
-        #endregion
     }
 }

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// AppConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Diagnostics;
 using Espresso.Common.Enums;
 using Microsoft.Extensions.Configuration;
@@ -7,11 +11,8 @@ namespace Espresso.Dashboard.Configuration
 {
     public class AppConfiguration
     {
-        #region Fields
         private readonly IConfigurationSection _configuration;
-        #endregion
 
-        #region Properties
         public string RssFeedParserMajorMinorVersion => $"{_configuration.GetValue<int>("MajorVersion")}.{_configuration.GetValue<int>("MinorVersion")}";
 
         public string ServerUrl => _configuration.GetValue<string>("ServerUrl");
@@ -32,13 +33,14 @@ namespace Espresso.Dashboard.Configuration
         public string AdminUserPassword => _configuration.GetValue<string>("AdminUserPassword");
 
         public string SendGridApiKey => _configuration.GetValue<string>(nameof(SendGridApiKey));
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppConfiguration"/> class.
+        /// </summary>
+        /// <param name="configuration"></param>
         public AppConfiguration(IConfigurationSection configuration)
         {
             _configuration = configuration;
         }
-        #endregion
     }
 }

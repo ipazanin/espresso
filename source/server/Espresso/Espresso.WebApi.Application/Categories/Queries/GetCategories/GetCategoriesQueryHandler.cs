@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// GetCategoriesQueryHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,20 +15,19 @@ namespace Espresso.WebApi.Application.Categories.Queries.GetCategories
 {
     public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, GetCategoriesQueryResponse>
     {
-        #region Fields
         private readonly IMemoryCache _memoryCache;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetCategoriesQueryHandler"/> class.
+        /// </summary>
+        /// <param name="memoryCache"></param>
         public GetCategoriesQueryHandler(
             IMemoryCache memoryCache
         )
         {
             _memoryCache = memoryCache;
         }
-        #endregion
 
-        #region Methods
         public Task<GetCategoriesQueryResponse> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
         {
             var categories = _memoryCache.Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey);
@@ -34,11 +37,10 @@ namespace Espresso.WebApi.Application.Categories.Queries.GetCategories
 
             var response = new GetCategoriesQueryResponse
             {
-                Categories = categoryDtos
+                Categories = categoryDtos,
             };
 
             return Task.FromResult(result: response);
         }
-        #endregion
     }
 }

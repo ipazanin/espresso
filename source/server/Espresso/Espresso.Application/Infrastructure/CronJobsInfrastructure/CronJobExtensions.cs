@@ -1,4 +1,8 @@
-﻿using System;
+﻿// CronJobExtensions.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
@@ -8,6 +12,13 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
     /// </summary>
     public static class CronJobExtensions
     {
+        /// <summary>
+        /// Adds cron job to <paramref name="services"/>.
+        /// </summary>
+        /// <typeparam name="T">Cron job.</typeparam>
+        /// <param name="services">Services.</param>
+        /// <param name="options">Builds cron job options.</param>
+        /// <returns>A reference to this instance after operation is complete.</returns>
         public static IServiceCollection AddCronJob<T>(
             this IServiceCollection services,
             Action<ICronJobConfiguration<T>> options

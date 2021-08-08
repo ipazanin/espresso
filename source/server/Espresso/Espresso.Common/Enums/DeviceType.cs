@@ -1,9 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// DeviceType.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.ComponentModel.DataAnnotations;
 
 namespace Espresso.Common.Enums
 {
+    /// <summary>
+    /// Device type.
+    /// </summary>
     public enum DeviceType
     {
+#pragma warning disable SA1602 // Enumeration items should be documented
         [Display(Name = "Undefined")]
         Undefined = 0,
         [Display(Name = "Android")]
@@ -22,5 +30,6 @@ namespace Espresso.Common.Enums
         WebApp = 7,
         [Display(Name = "Web Api")]
         WebApi = 8,
+#pragma warning restore SA1602 // Enumeration items should be documented
     }
 }

@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// GetNewsPortalsQueryHandler_1_3.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,20 +16,19 @@ namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals_1_3
 {
     public class GetNewsPortalsQueryHandler_1_3 : IRequestHandler<GetNewsPortalsQuery_1_3, GetNewsPortalsQueryResponse_1_3>
     {
-        #region Fields
         private readonly IMemoryCache _memoryCache;
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetNewsPortalsQueryHandler_1_3"/> class.
+        /// </summary>
+        /// <param name="memoryCache"></param>
         public GetNewsPortalsQueryHandler_1_3(
             IMemoryCache memoryCache
         )
         {
             _memoryCache = memoryCache;
         }
-        #endregion
 
-        #region Methods
         public Task<GetNewsPortalsQueryResponse_1_3> Handle(GetNewsPortalsQuery_1_3 request, CancellationToken cancellationToken)
         {
             var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
@@ -38,6 +41,5 @@ namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals_1_3
 
             return Task.FromResult(result: response);
         }
-        #endregion
     }
 }

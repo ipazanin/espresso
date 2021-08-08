@@ -1,3 +1,7 @@
+// GetNewsPortalsRssFeed.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,22 +12,18 @@ namespace Espresso.Application.NewsPortals
 {
     public class GetNewsPortalsRssFeed
     {
-        #region Properties
         public int Id { get; private set; }
 
-        public string Url { get; private set; } = "";
+        public string Url { get; private set; } = string.Empty;
 
         public IEnumerable<GetNewsPortalsRssFeedContentModifier> RssFeedContentModifiers { get; private set; } = new List<GetNewsPortalsRssFeedContentModifier>();
-        public IEnumerable<GetNewsPortalsRssFeedCategory> RssFeedCategories { get; private set; } = new List<GetNewsPortalsRssFeedCategory>();
-        #endregion
 
-        #region Constructors
+        public IEnumerable<GetNewsPortalsRssFeedCategory> RssFeedCategories { get; private set; } = new List<GetNewsPortalsRssFeedCategory>();
+
         private GetNewsPortalsRssFeed()
         {
         }
-        #endregion
 
-        #region Methods
         public static Expression<Func<RssFeed, GetNewsPortalsRssFeed>> GetProjection()
         {
             var rssFeedContentModifierProjection = GetNewsPortalsRssFeedContentModifier.GetProjection();
@@ -37,10 +37,8 @@ namespace Espresso.Application.NewsPortals
                     .Select(rssFeedContentModifierProjection),
                 RssFeedCategories = rssFeed.RssFeedCategories
                     .AsQueryable()
-                    .Select(rssFeedCategoryProjection)
+                    .Select(rssFeedCategoryProjection),
             };
         }
-        #endregion
-
     }
 }

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// GetConfigurationGraphQlQuery.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using Espresso.WebApi.Application.Configuration.Queries.GetConfiguration;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetConfigurationTypes;
@@ -14,7 +18,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries
     public class GetConfigurationGraphQlQuery : ObjectGraphType, IGraphQlQuery
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="GetConfigurationGraphQlQuery"/> class.
         /// </summary>
         /// <param name="mediator"></param>
         /// <param name="webApiConfiguration"></param>

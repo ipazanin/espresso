@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// ApiKeyAuthenticationHandler.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
@@ -28,7 +32,7 @@ namespace Espresso.WebApi.Authentication
         private readonly IJsonService _jsonService;
 
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="ApiKeyAuthenticationHandler"/> class.
         /// </summary>
         /// <param name="options"></param>
         /// <param name="logger"></param>

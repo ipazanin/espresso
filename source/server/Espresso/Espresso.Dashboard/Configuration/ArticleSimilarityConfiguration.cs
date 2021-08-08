@@ -1,25 +1,26 @@
+// ArticleSimilarityConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using Microsoft.Extensions.Configuration;
 
 namespace Espresso.Dashboard.Configuration
 {
     /// <summary>
-    /// Article Similarity Configuration
+    /// Article Similarity Configuration.
     /// </summary>
     public class ArticleSimilarityConfiguration
     {
-        #region Fields
         private readonly IConfigurationSection _configuration;
-        #endregion
 
-        #region Properties
         /// <summary>
-        /// Similarity Score Threshold
+        /// Gets similarity Score Threshold.
         /// </summary>
         public double SimilarityScoreThreshold => _configuration.GetValue<double>("SimilarityScoreThreshold");
 
         /// <summary>
-        /// Article Publish DateTime Difference Threshold
+        /// Gets article Publish DateTime Difference Threshold.
         /// </summary>
         public TimeSpan ArticlePublishDateTimeDifferenceThreshold =>
             TimeSpan.FromHours(
@@ -27,7 +28,7 @@ namespace Espresso.Dashboard.Configuration
             );
 
         /// <summary>
-        /// Max Age Of Similar Article Checking
+        /// Gets max Age Of Similar Article Checking.
         /// </summary>
         /// <returns></returns>
         public TimeSpan MaxAgeOfSimilarArticleChecking =>
@@ -36,21 +37,18 @@ namespace Espresso.Dashboard.Configuration
             );
 
         /// <summary>
-        /// Minimal Number Of Words For Article To Be Comparable
+        /// Gets minimal Number Of Words For Article To Be Comparable.
         /// </summary>
         /// <returns></returns>
         public int MinimalNumberOfWordsForArticleToBeComparable => _configuration.GetValue<int>("MinimalNumberOfWordsForArticleToBeComparable");
-        #endregion
 
-        #region Constructors
         /// <summary>
-        /// ArticleSimilarityConfiguration Constructor
+        /// ArticleSimilarityConfiguration Constructor.
         /// </summary>
         /// <param name="configuration"></param>
         public ArticleSimilarityConfiguration(IConfigurationSection configuration)
         {
             _configuration = configuration;
         }
-        #endregion
     }
 }

@@ -1,12 +1,19 @@
-﻿namespace Espresso.Common.Extensions
+﻿// StringExtensions.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+namespace Espresso.Common.Extensions
 {
+    /// <summary>
+    /// <see cref="string"/> extensions.
+    /// </summary>
     public static class StringExtensions
     {
         /// <summary>
-        /// Removes extra white space characters
+        /// Removes extra white space characters from <paramref name="input"/>.
         /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
+        /// <param name="input">Input <see cref="string"/>.</param>
+        /// <returns>Resulting <see cref="string"/>.</returns>
         public static string RemoveExtraWhiteSpaceCharacters(this string input)
         {
             var len = input.Length;

@@ -1,4 +1,8 @@
-﻿using Espresso.Domain.Entities;
+﻿// ApplicationDownloadConfiguration.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

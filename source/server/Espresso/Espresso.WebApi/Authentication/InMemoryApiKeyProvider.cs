@@ -1,4 +1,8 @@
-﻿using System;
+﻿// InMemoryApiKeyProvider.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Espresso.WebApi.Configuration;
@@ -10,13 +14,10 @@ namespace Espresso.WebApi.Authentication
     /// </summary>
     public class InMemoryApiKeyProvider : IApiKeyProvider
     {
-        #region Fields
         private readonly IDictionary<string, ApiKey> _apiKeys;
-        #endregion
 
-        #region Constructors
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="InMemoryApiKeyProvider"/> class.
         /// </summary>
         /// <param name="configuration"></param>
         public InMemoryApiKeyProvider(
@@ -75,7 +76,6 @@ namespace Espresso.WebApi.Authentication
                 },
             };
         }
-        #endregion
 
         /// <summary>
         /// 

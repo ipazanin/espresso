@@ -1,10 +1,17 @@
-﻿using Espresso.Domain.Entities;
+﻿// SendPushNotificationCommandValidator.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Espresso.Domain.Entities;
 using FluentValidation;
 
 namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotification
 {
     public class SendPushNotificationCommandValidator : AbstractValidator<SendPushNotificationCommand>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendPushNotificationCommandValidator"/> class.
+        /// </summary>
         public SendPushNotificationCommandValidator()
         {
             RuleFor(requets => requets.InternalName)

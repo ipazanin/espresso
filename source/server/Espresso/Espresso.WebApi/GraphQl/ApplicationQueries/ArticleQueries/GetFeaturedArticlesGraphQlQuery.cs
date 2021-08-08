@@ -1,4 +1,8 @@
-﻿using System;
+﻿// GetFeaturedArticlesGraphQlQuery.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles;
 using Espresso.WebApi.Configuration;
@@ -16,7 +20,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
     public class GetFeaturedArticlesGraphQlQuery : ObjectGraphType, IGraphQlQuery
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="GetFeaturedArticlesGraphQlQuery"/> class.
         /// </summary>
         /// <param name="mediator"></param>
         /// <param name="webApiConfiguration"></param>

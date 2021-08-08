@@ -1,30 +1,32 @@
-﻿using System.Threading;
+﻿// ParseArticlesCronJob.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Common.Enums;
-using Espresso.Dashboard.Configuration;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using Espresso.Dashboard.ParseRssFeeds;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Application.Services.Contracts;
-using Espresso.Dashboard.Application.DeleteOldArticles;
-using System.Collections.Generic;
-using Espresso.Domain.Entities;
-using System;
-using System.Diagnostics;
-using Espresso.Persistence.Database;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
+using Espresso.Dashboard.Application.DeleteOldArticles;
+using Espresso.Dashboard.Configuration;
+using Espresso.Dashboard.ParseRssFeeds;
+using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
+using Espresso.Persistence.Database;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Espresso.Dashboard.CronJobs
 {
     public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
     {
-        #region Fields
-
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
         private readonly IDashboardConfiguration _configuration;
@@ -37,9 +39,11 @@ namespace Espresso.Dashboard.CronJobs
 
         private ISet<Guid> SubordinateArticleIds { get; set; } = new HashSet<Guid>();
 
-        #endregion
-
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParseArticlesCronJob"/> class.
+        /// </summary>
+        /// <param name="cronJobConfiguration"></param>
+        /// <param name="serviceScopeFactory"></param>
         public ParseArticlesCronJob(
             ICronJobConfiguration<ParseArticlesCronJob> cronJobConfiguration,
             IServiceScopeFactory serviceScopeFactory
@@ -53,9 +57,6 @@ namespace Espresso.Dashboard.CronJobs
             using var scope = _serviceScopeFactory.CreateScope();
             _configuration = scope.ServiceProvider.GetRequiredService<IDashboardConfiguration>();
         }
-        #endregion
-
-        #region Methods
 
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
@@ -122,7 +123,7 @@ namespace Espresso.Dashboard.CronJobs
                 (nameof(categoriesCount), categoriesCount),
                 (nameof(newsPortalsCount), newsPortalsCount),
                 (nameof(allArticlesCount), allArticlesCount),
-                (nameof(rssFeedCount), rssFeedCount)
+                (nameof(rssFeedCount), rssFeedCount),
             };
 
             loggerService.Log(eventName, LogLevel.Information, arguments);
@@ -146,7 +147,7 @@ namespace Espresso.Dashboard.CronJobs
                     Articles = Articles,
                     RssFeeds = RssFeeds,
                     Categories = Categories,
-                    SubordinateArticleIds = SubordinateArticleIds
+                    SubordinateArticleIds = SubordinateArticleIds,
                 },
                 cancellationToken: cancellationToken
             );
@@ -155,12 +156,10 @@ namespace Espresso.Dashboard.CronJobs
                 request: new DeleteOldArticlesCommand
                 {
                     Articles = Articles,
-                    MaxAgeOfOldArticles = _configuration.AppConfiguration.MaxAgeOfArticles
+                    MaxAgeOfOldArticles = _configuration.AppConfiguration.MaxAgeOfArticles,
                 },
                 cancellationToken: cancellationToken
             );
-
         }
-        #endregion
     }
 }

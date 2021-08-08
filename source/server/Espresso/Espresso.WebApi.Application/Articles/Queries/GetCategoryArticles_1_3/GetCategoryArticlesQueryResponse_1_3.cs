@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// GetCategoryArticlesQueryResponse_1_3.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
 {

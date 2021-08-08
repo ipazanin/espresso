@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// GraphQlUserContext.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using Espresso.Common.Enums;
 
 namespace Espresso.WebApi.GraphQl.Infrastructure
@@ -10,13 +14,10 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
     public class GraphQlUserContext : Dictionary<string, object>
 #pragma warning restore S3925 // "ISerializable" should be implemented correctly
     {
-        #region Constants
         private const string TargetedApiVersionKey = nameof(TargetedApiVersionKey);
         private const string ConsumerVersionKey = nameof(ConsumerVersionKey);
         private const string DeviceTypeKey = nameof(DeviceTypeKey);
-        #endregion
 
-        #region Properties
         /// <summary>
         ///
         /// </summary>
@@ -82,7 +83,5 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
                 TryAdd(DeviceTypeKey, value);
             }
         }
-        #endregion
-
     }
 }

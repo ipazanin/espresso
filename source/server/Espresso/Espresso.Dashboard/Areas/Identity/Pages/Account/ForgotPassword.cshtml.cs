@@ -1,13 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Encodings.Web;
+﻿// ForgotPassword.cshtml.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Espresso.Common.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Espresso.Common.Services.Contracts;
 
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account
 {
@@ -17,6 +21,11 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailService _emailService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ForgotPasswordModel"/> class.
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="emailService"></param>
         public ForgotPasswordModel(UserManager<IdentityUser> userManager, IEmailService emailService)
         {
             _userManager = userManager;
@@ -33,6 +42,10 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
             public string Email { get; set; } = null!;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)

@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// RssFeed.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Collections.Generic;
 using System.Linq;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.Infrastructure;
@@ -8,23 +12,16 @@ namespace Espresso.Domain.Entities
 {
     public class RssFeed : IEntity<int, RssFeed>
     {
-
-        #region Constants
-
         public const int UrlMaxLength = 300;
 
         public const int AmpConfigurationTemplateUrlMaxLength = 300;
 
-        #endregion
-
-        #region Properties
         public int Id { get; private set; }
 
         public string Url { get; private set; }
 
         public RequestType RequestType { get; private set; }
 
-        #region Value Objects
         public AmpConfiguration? AmpConfiguration { get; private set; }
 
         public CategoryParseConfiguration CategoryParseConfiguration { get; private set; }
@@ -34,9 +31,7 @@ namespace Espresso.Domain.Entities
         public SkipParseConfiguration? SkipParseConfiguration { get; private set; }
 
         public ICollection<RssFeedContentModifier> RssFeedContentModifiers { get; private set; } = new List<RssFeedContentModifier>();
-        #endregion
 
-        #region Relations
         public ICollection<RssFeedCategory> RssFeedCategories { get; private set; } = new List<RssFeedCategory>();
 
         public int NewsPortalId { get; private set; }
@@ -48,13 +43,9 @@ namespace Espresso.Domain.Entities
         public Category? Category { get; private set; }
 
         public ICollection<Article> Articles { get; private set; } = new List<Article>();
-        #endregion
 
-        #endregion
-
-        #region Constructors
         /// <summary>
-        /// ORM Constructor
+        /// ORM Constructor.
         /// </summary>
         private RssFeed()
         {
@@ -63,6 +54,14 @@ namespace Espresso.Domain.Entities
             ImageUrlParseConfiguration = null!;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RssFeed"/> class.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="url"></param>
+        /// <param name="newsPortalId"></param>
+        /// <param name="categoryId"></param>
+        /// <param name="requestType"></param>
         public RssFeed(
             int id,
             string url,
@@ -79,9 +78,7 @@ namespace Espresso.Domain.Entities
             CategoryParseConfiguration = null!;
             ImageUrlParseConfiguration = null!;
         }
-        #endregion
 
-        #region Methods
         public bool ShouldParse()
         {
             return NewsPortal?.IsEnabled == true && SkipParseConfiguration?.ShouldParse() != false;
@@ -99,6 +96,5 @@ namespace Espresso.Domain.Entities
 
             return feedContent;
         }
-        #endregion
     }
 }

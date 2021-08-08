@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -24,7 +24,12 @@
   </ItemGroup>
 
   <!-- Analyzers -->
-  <ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <AdditionalFiles Include="..\stylecop.json" Link="Properties\stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
     <PackageReference Include="Roslynator.Analyzers" Version="3.2.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -54,5 +59,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
+  <!-- Analyzers -->
+
 
 </Project>

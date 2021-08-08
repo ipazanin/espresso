@@ -1,4 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿// ResetAuthenticator.cshtml.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,6 +16,12 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ResetAuthenticatorModel> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResetAuthenticatorModel"/> class.
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="signInManager"></param>
+        /// <param name="logger"></param>
         public ResetAuthenticatorModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
@@ -25,6 +35,10 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string? StatusMessage { get; set; }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnGet()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -36,6 +50,10 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
