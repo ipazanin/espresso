@@ -1,8 +1,0 @@
-﻿{
-  "AppConfiguration": {
-    "Environment": 2
-  },
-  "SpaConfiguration": {
-    "EnableCors": true
-  }
-}

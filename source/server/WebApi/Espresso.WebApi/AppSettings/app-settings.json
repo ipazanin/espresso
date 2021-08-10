@@ -2,10 +2,7 @@
   "AllowedHosts": "*",
   "AppConfiguration": {
     "FeaturedArticlesTake": 10,
-    "MajorVersion": 2,
-    "MinorVersion": 1,
-    "NewNewsPortalsPosition": 3,
-    "Version": "2.1.14"
+    "NewNewsPortalsPosition": 3
   },
   "CronJobsConfiguration": {
     "AnalyticsCronExpression": "0 10 * * *",
@@ -43,5 +40,11 @@
   "TrendingScoreConfiguration": {
     "AgeWeight": 0.9,
     "HalfOfMaxTrendingScoreValue": 500
+  },
+  "Logging": {
+    "Console": {
+      "TimestampFormat": "\nHH:mm:ss.ff - ",
+      "UseUtcTimestamp": true
+    }
   }
 }

@@ -79,6 +79,7 @@
   <!-- Configuration Files -->
 
   <ItemGroup>
+    
     <Content Update="firebase-key.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -86,47 +87,36 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
 
-    <Content Update="AppSettings/DatabaseSettings/database-settings.development.json">
+    <Content Update="AppSettings/app-settings.development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="AppSettings/DatabaseSettings/database-settings.json">
+    <Content Update="AppSettings/app-settings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="AppSettings/DatabaseSettings/database-settings.local-production.json">
+    <Content Update="AppSettings/app-settings.local.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="AppSettings/DatabaseSettings/database-settings.local.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="AppSettings/DatabaseSettings/database-settings.production.json">
+    <Content Update="AppSettings/app-settings.production.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
 
-    <Content Update="AppSettings/GeneralSettings/app-settings.development.json">
+    <ContentWithTargetPath Include="../../configuration/app-settings.development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="AppSettings/GeneralSettings/app-settings.json">
+      <TargetPath>/configuration/app-settings.development.json</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="../../configuration/app-settings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="AppSettings/GeneralSettings/app-settings.local.json">
+      <TargetPath>/configuration/app-settings.json</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="../../configuration/app-settings.local.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="AppSettings/GeneralSettings/app-settings.production.json">
+      <TargetPath>/configuration/app-settings.local.json</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="../../configuration/app-settings.production.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+      <TargetPath>/configuration/app-settings.production.json</TargetPath>
+    </ContentWithTargetPath>
 
-    <Content Update="AppSettings/LoggingSettings/logging-settings.development.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="AppSettings/LoggingSettings/logging-settings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="AppSettings/LoggingSettings/logging-settings.local.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="AppSettings/LoggingSettings/logging-settings.production.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   
   <!-- Configuration Files -->

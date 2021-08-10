@@ -1,4 +1,7 @@
 ﻿{
+  "SpaConfiguration": {
+    "EnableCors": true
+  },
   "Logging": {
     "LogLevel": {
       "Default": "Information",

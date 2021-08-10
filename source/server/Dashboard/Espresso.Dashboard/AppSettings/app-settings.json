@@ -1,9 +1,6 @@
 ﻿{
   "AppConfiguration": {
-    "MajorVersion": 2,
-    "MaxAgeOfArticlesInDays": 5,
-    "MinorVersion": 1,
-    "Version": "2.1.14"
+    "MaxAgeOfArticlesInDays": 5
   },
   "ArticleSimilarityConfiguration": {
     "ArticlePublishDateTimeDiferenceThresholdInHours": 24,
@@ -40,5 +37,11 @@
     "MaxDepth": 100,
     "PropertyNameCaseInsensitive": true,
     "ReadCommentHandling": 1
+  },
+  "Logging": {
+    "Console": {
+      "TimestampFormat": "\nHH:mm:ss.ff - ",
+      "UseUtcTimestamp": true
+    }
   }
 }

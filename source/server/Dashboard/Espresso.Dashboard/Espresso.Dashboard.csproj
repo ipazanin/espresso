@@ -23,55 +23,6 @@
     <PackageReference Include="Polly" Version="7.2.2" />
   </ItemGroup>
 
-  <!-- Configuration Files -->
-
-  <ItemGroup>
-    <Content Update="AppSettings/DatabaseSettings/database-settings.development.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="AppSettings/DatabaseSettings/database-settings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="AppSettings/DatabaseSettings/database-settings.local-production.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="AppSettings/DatabaseSettings/database-settings.local.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="AppSettings/DatabaseSettings/database-settings.production.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-
-    <Content Update="AppSettings/GeneralSettings/app-settings.development.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="AppSettings/GeneralSettings/app-settings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="AppSettings/GeneralSettings/app-settings.local.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="AppSettings/GeneralSettings/app-settings.production.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-
-    <Content Update="AppSettings/LoggingSettings/logging-settings.development.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="AppSettings/LoggingSettings/logging-settings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="AppSettings/LoggingSettings/logging-settings.local.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="AppSettings/LoggingSettings/logging-settings.production.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-
-  </ItemGroup>
-
-  <!-- Configuration Files -->
-
   <!-- Analyzers -->
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">
@@ -110,13 +61,43 @@
   </ItemGroup>
 
   <!-- Analyzers -->
-  
-  <!-- Resources -->
+
+  <!-- Configuration Files -->
 
   <ItemGroup>
-    <AdditionalFiles Include="..\..\Resources\Icons" Link="wwwroot\Icons" />
+
+    <Content Update="AppSettings/app-settings.development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="AppSettings/app-settings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="AppSettings/app-settings.local.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="AppSettings/app-settings.production.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+
+    <ContentWithTargetPath Include="../../configuration/app-settings.development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>/configuration/app-settings.development.json</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="../../configuration/app-settings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>/configuration/app-settings.json</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="../../configuration/app-settings.local.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>/configuration/app-settings.local.json</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="../../configuration/app-settings.production.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>/configuration/app-settings.production.json</TargetPath>
+    </ContentWithTargetPath>
+
   </ItemGroup>
 
-  <!-- Resources -->
+  <!-- Configuration Files -->
 
 </Project>
