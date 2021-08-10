@@ -1,0 +1,9 @@
+﻿{
+  "AppConfiguration": {
+    "ServerUrl": "https://espressonews.co",
+    "Environment": 3
+  },
+  "CronJobsConfiguration": {
+    "ParseArticlesCronExpression": "*/1 * * * *"
+  }
+}

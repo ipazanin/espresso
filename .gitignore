@@ -17,10 +17,6 @@ rabbitmq-environment.yml
 firebase-key.json
 google-analytics-key.json
 
-# Launch Configuration
-.vscode/launch.json
-launchSettings.json
-
 # VS
 .vs/
 
