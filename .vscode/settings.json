@@ -85,6 +85,25 @@
   "omnisharp.enableMsBuildLoadProjectsOnDemand": false,
   "omnisharp.enableRoslynAnalyzers": true,
   "omnisharp.projectLoadTimeout": 360,
+  "omnisharp.defaultLaunchSolution": "Espresso.sln",
+  "omnisharp.enableAsyncCompletion": true,
+  "omnisharp.useEditorFormattingSettings": true,
+  "omnisharp.organizeImportsOnFormat": true,
   "prettier.configPath": "./source/client/.prettierrc",
-  "typescript.updateImportsOnFileMove.enabled": "always"
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "**/obj": true,
+    "**/bin": true
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/.hg/store/**": true,
+    "**/obj": true,
+    "**/bin": true
+  }
 }

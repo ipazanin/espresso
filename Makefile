@@ -18,8 +18,8 @@ compose-database::
 compose-rabbitmq::
 	make -f scripts/make/docker.make compose-rabbitmq arg=$(arg)
 
-compose-parser::
-	make -f scripts/make/docker.make compose-parser arg=$(arg)
+compose-dashboard::
+	make -f scripts/make/docker.make compose-dashboard arg=$(arg)
 
 compose-webapi::
 	make -f scripts/make/docker.make compose-webapi arg=$(arg)

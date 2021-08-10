@@ -15,6 +15,7 @@ namespace Espresso.Common.Tests.TestUtilities.Models
         public ExampleSubClassWithPublicSetters? FourthProperty { get; set; }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ExampleClassWithPublicSetters"/> class.
         /// ExampleClass Constructor.
         /// </summary>
         public ExampleClassWithPublicSetters()
