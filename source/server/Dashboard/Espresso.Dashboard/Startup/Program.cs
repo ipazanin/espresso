@@ -3,6 +3,7 @@
 // © 2021 Espresso News. All rights reserved.
 
 using System;
+using System.IO;
 using Espresso.Common.Constants;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
@@ -23,22 +24,21 @@ namespace Espresso.Dashboard.Startup
                 .ConfigureAppConfiguration(configureOptions =>
                 {
                     var environmentName = Environment.GetEnvironmentVariable(EnvironmentVariableNamesConstants.AspNetCoreEnvironment) ?? string.Empty;
-                    var databaseName = Environment.GetEnvironmentVariable(EnvironmentVariableNamesConstants.DatabaseName) ?? string.Empty;
 
-                    var configuration = configureOptions
-                        .AddJsonFile(path: $"AppSettings/GeneralSettings/app-settings.json", optional: false)
-                        .AddJsonFile(path: $"AppSettings/GeneralSettings/app-settings.{environmentName}.json", optional: false)
-                        .AddJsonFile(path: $"AppSettings/LoggingSettings/logging-settings.json", optional: false)
-                        .AddJsonFile(path: $"AppSettings/LoggingSettings/logging-settings.{environmentName}.json", optional: false)
-                        .AddJsonFile(path: $"AppSettings/DatabaseSettings/database-settings.json", optional: false)
-                        .AddJsonFile(path: $"AppSettings/DatabaseSettings/database-settings.{databaseName}.json", optional: false)
+                    var parentDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
+
+                    _ = configureOptions
+                        .AddJsonFile(path: $"{parentDirectory}/configuration/app-settings.json", optional: false)
+                        .AddJsonFile(path: $"{parentDirectory}/configuration/app-settings.{environmentName}.json", optional: false)
+                        .AddJsonFile(path: $"AppSettings/app-settings.json", optional: false)
+                        .AddJsonFile(path: $"AppSettings/app-settings.{environmentName}.json", optional: false)
                         .AddEnvironmentVariables()
                         .Build();
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.ConfigureAppConfiguration((ctx, cb) =>
+                    webBuilder.ConfigureAppConfiguration((ctx, _) =>
                     {
                         StaticWebAssetsLoader.UseStaticWebAssets(
                             environment: ctx.HostingEnvironment,

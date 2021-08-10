@@ -13,10 +13,5 @@ namespace Espresso.Common.Constants
         /// Environment variable used by ASP.NET Core framework for environment.
         /// </summary>
         public const string AspNetCoreEnvironment = "ASPNETCORE_ENVIRONMENT";
-
-        /// <summary>
-        /// Database to use environment variable name.
-        /// </summary>
-        public const string DatabaseName = "DATABASE_NAME";
     }
 }

@@ -1,4 +1,10 @@
 ﻿{
+  "AppConfiguration": {
+    "ServerUrl": "https://espressonews.co"
+  },
+  "CronJobsConfiguration": {
+    "ParseArticlesCronExpression": "*/1 * * * *"
+  },
   "Logging": {
     "LogLevel": {
       "Default": "Information",

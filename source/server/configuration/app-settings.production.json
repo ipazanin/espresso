@@ -1,4 +1,7 @@
 ﻿{
+  "AppConfiguration": {
+    "Environment": 3
+  },
   "DatabaseConfiguration": {
     "EnableDetailedErrors": false,
     "EnableSensitiveDataLogging": false

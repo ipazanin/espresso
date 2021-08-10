@@ -1,4 +1,25 @@
 ﻿{
+  "AppConfiguration": {
+    "ServerUrl": "http://espresso-webapi:80",
+    "MaxAgeOfArticlesInDays": 1
+  },
+  "ArticleSimilarityConfiguration": {
+    "ArticlePublishDateTimeDiferenceThresholdInHours": 4,
+    "MaxAgeOfSimilarArticleCheckingInHours": 4
+  },
+  "CronJobsConfiguration": {
+    "ParseArticlesCronExpression": "* * * * *"
+  },
+  "HttpClientConfiguration": {
+    "LoadRssFeedsHttpClientConfiguration": {
+      "MaxRetries": 1,
+      "TimeoutInSeconds": 60
+    },
+    "ScrapeWebHttpClientConfiguration": {
+      "MaxRetries": 1,
+      "TimeoutInSeconds": 60
+    }
+  },
   "Logging": {
     "LogLevel": {
       "Default": "Information",
