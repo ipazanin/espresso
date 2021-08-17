@@ -9,11 +9,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Espresso.Persistence.DataSeed
 {
+    /// <summary>
+    /// <see cref="ImageUrlParseConfiguration"/> data seed.
+    /// </summary>
     internal static class RssFeedImageUrlParseConfigurationSeed
     {
-        public static void Seed(
-            EntityTypeBuilder<RssFeed> builder
-        )
+        /// <summary>
+        /// Seeds entity data.
+        /// </summary>
+        /// <param name="builder">Entity builder.</param>
+        public static void Seed(EntityTypeBuilder<RssFeed> builder)
         {
             var imageUrlParseConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.ImageUrlParseConfiguration);
 

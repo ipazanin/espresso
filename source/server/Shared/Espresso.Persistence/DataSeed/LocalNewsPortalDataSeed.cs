@@ -14,8 +14,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Espresso.Persistence.DataSeed
 {
+    /// <summary>
+    /// Local <see cref="NewsPortal"/> data seed.
+    /// </summary>
     internal static class LocalNewsPortalDataSeed
     {
+        /// <summary>
+        /// Seeds entity data.
+        /// </summary>
+        /// <param name="builder">Entity builder.</param>
         public static void SeedData(EntityTypeBuilder<NewsPortal> builder)
         {
             SeedLocalNewsPortals(builder);

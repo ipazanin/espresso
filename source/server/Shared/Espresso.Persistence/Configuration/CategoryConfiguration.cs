@@ -11,8 +11,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Espresso.Persistence.Configuration
 {
+    /// <summary>
+    /// <see cref="Category"/> entity configuration.
+    /// </summary>
     public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
+        /// <inheritdoc/>
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.Property(category => category.Name)

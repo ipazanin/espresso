@@ -7,6 +7,9 @@ using Npgsql;
 
 namespace Espresso.Persistence.Database
 {
+    /// <summary>
+    /// Dataase connection factory.
+    /// </summary>
     public class DatabaseConnectionFactory : IDatabaseConnectionFactory
     {
         private readonly string _connectionString;
@@ -14,7 +17,7 @@ namespace Espresso.Persistence.Database
         /// <summary>
         /// Initializes a new instance of the <see cref="DatabaseConnectionFactory"/> class.
         /// </summary>
-        /// <param name="connectionString"></param>
+        /// <param name="connectionString">Database connection string.</param>
         public DatabaseConnectionFactory(
             string connectionString
         )
@@ -22,6 +25,7 @@ namespace Espresso.Persistence.Database
             _connectionString = connectionString;
         }
 
+        /// <inheritdoc/>
         public IDbConnection CreateDatabaseConnection()
         {
             return new NpgsqlConnection(_connectionString);

@@ -7,8 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Espresso.Persistence.Infrastructure
 {
+    /// <inheritdoc/>
     public class EspressoIdentityDatabaseContextFactory : DesignTimeDatabaseContextFactoryBase<EspressoIdentityDatabaseContext>
     {
+        /// <inheritdoc/>
         protected override EspressoIdentityDatabaseContext CreateNewInstance(DbContextOptions<EspressoIdentityDatabaseContext> options)
         {
             return new EspressoIdentityDatabaseContext(options);

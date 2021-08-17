@@ -8,9 +8,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Espresso.Persistence.IdentityDatabaseMigrations
 {
+    /// <inheritdoc/>
     [DbContext(typeof(EspressoIdentityDatabaseContext))]
     partial class EspressoIdentityDatabaseContextModelSnapshot : ModelSnapshot
     {
+        /// <inheritdoc/>
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618

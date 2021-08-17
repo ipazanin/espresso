@@ -14,8 +14,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Espresso.Persistence.DataSeed
 {
+    /// <summary>
+    /// <see cref="NewsPortal"/> data seed.
+    /// </summary>
     internal static class NewsPortalDataSeed
     {
+        /// <summary>
+        /// Seeds entity data.
+        /// </summary>
+        /// <param name="builder">Entity builder.</param>
         public static void SeedData(EntityTypeBuilder<NewsPortal> builder)
         {
             SeedNewsPortals(builder);
@@ -175,7 +182,8 @@ namespace Espresso.Persistence.DataSeed
                     baseUrl: "https://lider.media",
                     iconUrl: $"Icons/{NewsPortalId.Lider}{FileExtensionConstants.Png}",
                     isNewOverride: null,
-                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc), categoryId: (int)CategoryId.Biznis,
+                    createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Biznis,
                     regionId: (int)RegionId.Global,
                     isEnabled: true
                 ),

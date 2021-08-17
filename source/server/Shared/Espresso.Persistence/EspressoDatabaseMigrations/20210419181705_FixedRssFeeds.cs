@@ -6,8 +6,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Espresso.Persistence.EspressoDatabaseMigrations
 {
+    /// <inheritdoc/>
     public partial class FixedRssFeeds : Migration
     {
+        /// <inheritdoc/>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.UpdateData(
@@ -905,7 +907,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                 values: new object[,]
                 {
                     { 29, 1, string.Empty, 63, "\n" },
-                    { 30, 2, string.Empty, 63, "	" },
+                    { 30, 2, string.Empty, 63, "\t" },
                 });
 
             migrationBuilder.UpdateData(
@@ -916,6 +918,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                 value: "https://www.istra-istria.hr/en/articles/rss/novosti");
         }
 
+        /// <inheritdoc/>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(

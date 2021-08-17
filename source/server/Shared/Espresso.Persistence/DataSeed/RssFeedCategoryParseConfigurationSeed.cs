@@ -9,11 +9,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Espresso.Persistence.DataSeed
 {
+    /// <summary>
+    /// <see cref="RssFeedCategory"/> data seed.
+    /// </summary>
     internal static class RssFeedCategoryParseConfigurationSeed
     {
-        public static void Seed(
-            EntityTypeBuilder<RssFeed> builder
-        )
+        /// <summary>
+        /// Seeds entity data.
+        /// </summary>
+        /// <param name="builder">Entity builder.</param>
+        public static void Seed(EntityTypeBuilder<RssFeed> builder)
         {
             var categoryParseConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.CategoryParseConfiguration);
 
@@ -28,21 +33,18 @@ namespace Espresso.Persistence.DataSeed
             {
                 RssFeedId = (int)RssFeedId.JutarnjiList,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
-
             });
 
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.NetHr,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
-
             });
 
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.VecernjiList,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
-
             });
 
             categoryParseConfigurationBuilder.HasData(new
@@ -73,14 +75,12 @@ namespace Espresso.Persistence.DataSeed
             {
                 RssFeedId = (int)RssFeedId.StoPosto,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
-
             });
 
             categoryParseConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.Dnevno,
                 CategoryParseStrategy = CategoryParseStrategy.FromUrl,
-
             });
 
             categoryParseConfigurationBuilder.HasData(new

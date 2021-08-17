@@ -1,6 +1,6 @@
-// LocalRssFeedDataSeed.cs
+﻿// LocalRssFeedDataSeed.cs
 //
-// � 2021 Espresso News. All rights reserved.
+// © 2021 Espresso News. All rights reserved.
 
 using System.Collections.Generic;
 using Espresso.Domain.Entities;
@@ -12,13 +12,20 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Espresso.Persistence.DataSeed
 {
+    /// <summary>
+    /// Local <see cref="RssFeed"/> data seed.
+    /// </summary>
     public static class LocalRssFeedDataSeed
     {
+        /// <summary>
+        /// Seeds entity data.
+        /// </summary>
+        /// <param name="builder">Entity builder.</param>
         public static void Seed(EntityTypeBuilder<RssFeed> builder)
         {
-            var ampConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.AmpConfiguration);
+            _ = builder.OwnsOne(rssFeed => rssFeed.AmpConfiguration);
             var skipParseConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.SkipParseConfiguration);
-            var categoryParseConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.CategoryParseConfiguration);
+            _ = builder.OwnsOne(rssFeed => rssFeed.CategoryParseConfiguration);
             var imageUrlParseConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.ImageUrlParseConfiguration);
 
             SeedLocalRssFeeds(builder);
@@ -178,28 +185,28 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal
                 ),
-               new RssFeed(
+                new RssFeed(
                     id: (int)RssFeedId.IPress,
                     url: "https://www.ipress.hr/index.php?format=feed&type=rss",
                     newsPortalId: (int)NewsPortalId.IPress,
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal
                 ),
-               new RssFeed(
+                new RssFeed(
                     id: (int)RssFeedId.RijekaDanas,
                     url: "https://www.rijekadanas.com/feed",
                     newsPortalId: (int)NewsPortalId.RijekaDanas,
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal
                 ),
-               new RssFeed(
+                new RssFeed(
                     id: (int)RssFeedId.Fiuman,
                     url: "https://www.fiuman.hr/feed",
                     newsPortalId: (int)NewsPortalId.Fiuman,
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal
                 ),
-               new RssFeed(
+                new RssFeed(
                     id: (int)RssFeedId.Riportal,
                     url: "https://riportal.net.hr/feed",
                     newsPortalId: (int)NewsPortalId.Riportal,
@@ -235,14 +242,14 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal
                 ),
-               new RssFeed(
+                new RssFeed(
                     id: (int)RssFeedId.GsPress,
                     url: "https://www.gspress.net/feed",
                     newsPortalId: (int)NewsPortalId.GsPress,
                     categoryId: (int)CategoryId.Local,
                     requestType: RequestType.Normal
                 ),
-               new RssFeed(
+                new RssFeed(
                     id: (int)RssFeedId.OgPortal,
                     url: "https://ogportal.com/feed",
                     newsPortalId: (int)NewsPortalId.OgPortal,

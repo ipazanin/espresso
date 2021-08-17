@@ -8,8 +8,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Espresso.Persistence.DataSeed
 {
+    /// <summary>
+    /// <see cref="RssFeedContentModifier"/> data seed.
+    /// </summary>
     public static class RssFeedContentModifierDataSeed
     {
+        /// <summary>
+        /// Seeds entity data.
+        /// </summary>
+        /// <param name="builder">Entity builder.</param>
         public static void Seed(EntityTypeBuilder<RssFeedContentModifier> builder)
         {
             var id = 1;
@@ -303,7 +310,7 @@ namespace Espresso.Persistence.DataSeed
                 rssFeedId: (int)RssFeedId.Gp1
             ));
             builder.HasData(new RssFeedContentModifier(
-                id: id++,
+                id: id,
                 sourceValue: "\n",
                 replacementValue: string.Empty,
                 orderIndex: 1,

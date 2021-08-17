@@ -8,13 +8,14 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace Espresso.Persistence.Infrastructure
 {
+    /// <summary>
+    /// Design time database context factory base.
+    /// </summary>
+    /// <typeparam name="TContext"><see cref="DbContext"/> class.</typeparam>
     public abstract class DesignTimeDatabaseContextFactoryBase<TContext> :
         IDesignTimeDbContextFactory<TContext>
         where TContext : DbContext
     {
-        private const string EspressoDatabaseContextName = "EspressoDatabaseContext";
-        private const string EspressoDatabaseContextConfigurationPath = "DatabaseConfiguration:EspressoDatabaseConnectionString";
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DesignTimeDatabaseContextFactoryBase{TContext}"/> class.
         /// </summary>
@@ -22,6 +23,11 @@ namespace Espresso.Persistence.Infrastructure
         {
         }
 
+        /// <summary>
+        /// Creates new instance of <typeparamref name="TContext"/>.
+        /// </summary>
+        /// <param name="args">Command line arguments.</param>
+        /// <returns>Database context.</returns>
         public TContext CreateDbContext(string[] args)
         {
             var connectionString = args.Length != 1 ?
@@ -31,17 +37,18 @@ namespace Espresso.Persistence.Infrastructure
             return Create(connectionString);
         }
 
+        /// <summary>
+        /// Creates new instance of <typeparamref name="TContext"/>.
+        /// </summary>
+        /// <param name="options">Database context options.</param>
+        /// <returns>Database context.</returns>
         protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);
 
-        /// <summary>
-        /// </summary>
-        /// <param name="connectionString"></param>
-        /// <returns></returns>
         private TContext Create(string connectionString)
         {
             if (string.IsNullOrEmpty(connectionString))
             {
-                throw new ArgumentException($"Connection string is null or empty.", nameof(connectionString));
+                throw new ArgumentException("Connection string is null or empty.", nameof(connectionString));
             }
 
             Console.WriteLine($"{nameof(DesignTimeDatabaseContextFactoryBase<TContext>)}.{nameof(Create)}(string): Connection string: '{connectionString}'.");

@@ -11,8 +11,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Espresso.Persistence.Configuration
 {
+    /// <summary>
+    /// <see cref="Region"/> entity configuration.
+    /// </summary>
     public class RegionConfiguration : IEntityTypeConfiguration<Region>
     {
+        /// <inheritdoc/>
         public void Configure(EntityTypeBuilder<Region> builder)
         {
             builder.Property(region => region.Name)

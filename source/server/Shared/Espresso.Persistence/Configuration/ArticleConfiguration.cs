@@ -9,8 +9,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Espresso.Persistence.Configuration
 {
+    /// <summary>
+    /// <see cref="Article"/> entity configuration.
+    /// </summary>
     public class ArticleConfiguration : IEntityTypeConfiguration<Article>
     {
+        /// <inheritdoc/>
         public void Configure(EntityTypeBuilder<Article> builder)
         {
             builder.Property(article => article.Summary)
