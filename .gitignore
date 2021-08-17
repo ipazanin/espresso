@@ -55,6 +55,7 @@ node_modules/
 
 # Visual Studio
 .vs/
+*.csproj.user
 
 # Properties Folder launchSettings.json
 **/Properties/launchSettings.json

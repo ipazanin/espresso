@@ -8,8 +8,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Espresso.Persistence.Configuration
 {
+    /// <summary>
+    /// <see cref="SimilarArticle"/> entity configuration.
+    /// </summary>
     public class SimilarArticleConfiguration : IEntityTypeConfiguration<SimilarArticle>
     {
+        /// <inheritdoc/>
         public void Configure(EntityTypeBuilder<SimilarArticle> builder)
         {
             builder.HasOne(similarArticle => similarArticle.MainArticle)

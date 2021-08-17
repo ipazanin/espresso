@@ -2,11 +2,11 @@ ClientAppDirectory="source/client"
 TestReactAppEnvironment="test"
 
 rebuild-frontend::
-	cd $(ClientAppDirectory); \
-	rm -rf node_modules \
+	cd $(ClientAppDirectory)
+	rm -rf node_modules
 	rm -rf build
-	make -f scripts/make/frontend/Makefile install
-	make -f scripts/make/frontend/Makefile build-frontend
+	make -f scripts/make/frontend.make install
+	make -f scripts/make/frontend.make build-frontend
 
 install::
 	cd $(ClientAppDirectory); \

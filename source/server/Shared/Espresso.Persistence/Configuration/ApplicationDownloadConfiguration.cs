@@ -8,8 +8,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Espresso.Persistence.Configuration
 {
+    /// <summary>
+    /// <see cref="ApplicationDownload"/> entity configuration.
+    /// </summary>
     public class ApplicationDownloadConfiguration : IEntityTypeConfiguration<ApplicationDownload>
     {
+        /// <inheritdoc/>
         public void Configure(EntityTypeBuilder<ApplicationDownload> builder)
         {
             builder.Property(applicationDownload => applicationDownload.WebApiVersion)

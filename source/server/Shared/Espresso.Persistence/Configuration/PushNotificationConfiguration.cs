@@ -8,8 +8,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Espresso.Persistence.Configuration
 {
+    /// <summary>
+    /// <see cref="PushNotification"/> entity configuration.
+    /// </summary>
     public class PushNotificationConfiguration : IEntityTypeConfiguration<PushNotification>
     {
+        /// <inheritdoc/>
         public void Configure(EntityTypeBuilder<PushNotification> builder)
         {
             builder.Property(pushNotification => pushNotification.ArticleUrl)

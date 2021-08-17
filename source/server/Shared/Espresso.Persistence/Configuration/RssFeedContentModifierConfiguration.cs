@@ -9,8 +9,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Espresso.Persistence.Configuration
 {
+    /// <summary>
+    /// <see cref="RssFeedContentModifier"/> entity configuration.
+    /// </summary>
     public class RssFeedContentModifierConfiguration : IEntityTypeConfiguration<RssFeedContentModifier>
     {
+        /// <inheritdoc/>
         public void Configure(EntityTypeBuilder<RssFeedContentModifier> builder)
         {
             builder.Property(rssfeedContentModifier => rssfeedContentModifier.SourceValue)

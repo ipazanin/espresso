@@ -9,8 +9,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Espresso.Persistence.Configuration
 {
+    /// <summary>
+    /// <see cref="RssFeedCategory"/> entity configuration.
+    /// </summary>
     public class RssFeedCategoryConfiguration : IEntityTypeConfiguration<RssFeedCategory>
     {
+        /// <inheritdoc/>
         public void Configure(EntityTypeBuilder<RssFeedCategory> builder)
         {
             builder.Property(rssFeedcategory => rssFeedcategory.UrlRegex)

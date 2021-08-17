@@ -7,8 +7,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Espresso.Persistence.EspressoDatabaseMigrations
 {
+    /// <inheritdoc/>
     public partial class Added : Migration
     {
+        /// <inheritdoc/>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.UpdateData(
@@ -113,6 +115,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                 values: new object[] { 181, 6, 135, 1, "https://viral.hr/feed", 0, 3 });
         }
 
+        /// <inheritdoc/>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(

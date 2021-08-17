@@ -10,8 +10,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Espresso.Persistence.Configuration
 {
+    /// <summary>
+    /// <see cref="RssFeed"/> entity configuration.
+    /// </summary>
     public class RssFeedConfiguration : IEntityTypeConfiguration<RssFeed>
     {
+        /// <inheritdoc/>
         public void Configure(EntityTypeBuilder<RssFeed> builder)
         {
             builder.Property(rssFeed => rssFeed.Url)
@@ -69,7 +73,7 @@ namespace Espresso.Persistence.Configuration
 
         private static void ConfigureSkipParseConfiguration(EntityTypeBuilder<RssFeed> builder)
         {
-            var skipParseConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.SkipParseConfiguration);
+            _ = builder.OwnsOne(rssFeed => rssFeed.SkipParseConfiguration);
         }
 
         private static void ConfigureCategoryParseConfiguration(EntityTypeBuilder<RssFeed> builder)

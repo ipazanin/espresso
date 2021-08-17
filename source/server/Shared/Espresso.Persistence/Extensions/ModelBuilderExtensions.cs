@@ -9,10 +9,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Espresso.Persistence.Extensions
 {
+    /// <summary>
+    /// <see cref="ModelBuilder"/> extensions.
+    /// </summary>
     public static class ModelBuilderExtensions
     {
         private const string ApplyConfigurationMethodName = "ApplyConfiguration";
 
+        /// <summary>
+        /// Applies all <see cref="IEntityTypeConfiguration{TEntity}"/> in <paramref name="configurationsAssembly"/>.
+        /// </summary>
+        /// <param name="modelBuilder">Model builder.</param>
+        /// <param name="configurationsAssembly">Assembly.</param>
         public static void ApplyAllConfigurations(
             this ModelBuilder modelBuilder,
             Assembly configurationsAssembly
@@ -23,15 +31,16 @@ namespace Espresso.Persistence.Extensions
                 .GetMethods(BindingFlags.Instance | BindingFlags.Public)
                 .First(method => method.Name.Equals(ApplyConfigurationMethodName, StringComparison.OrdinalIgnoreCase));
 
-            var ret = configurationsAssembly
+            _ = configurationsAssembly
                 .GetTypes()
                 .Select(
                     assemblyType =>
                     (
                         assemblyType,
-                        iEntityTypeConfigurationInterface: assemblyType
-                            .GetInterfaces()
-                            .FirstOrDefault(i => i.Name.Equals(typeof(IEntityTypeConfiguration<>).Name, StringComparison.Ordinal))
+                        iEntityTypeConfigurationInterface: Array.Find(
+                            array: assemblyType.GetInterfaces(),
+                            match: i => i.Name.Equals(typeof(IEntityTypeConfiguration<>).Name, StringComparison.Ordinal)
+                        )
                     )
                 )
                 .Where(assemblyTypeAndInterface => assemblyTypeAndInterface.iEntityTypeConfigurationInterface != null)

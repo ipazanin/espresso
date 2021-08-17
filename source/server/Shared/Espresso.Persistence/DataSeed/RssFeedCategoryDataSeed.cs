@@ -10,8 +10,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Espresso.Persistence.DataSeed
 {
+    /// <summary>
+    /// <see cref="RssFeedCategory"/> data seed.
+    /// </summary>
     internal static class RssFeedCategoryDataSeed
     {
+        /// <summary>
+        /// Seeds entity data.
+        /// </summary>
+        /// <param name="builder">Entity builder.</param>
         public static void Seed(EntityTypeBuilder<RssFeedCategory> builder)
         {
             var currentId = 1;
