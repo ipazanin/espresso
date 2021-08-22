@@ -33,6 +33,9 @@
     <!-- "Use "Async" suffix in names of methods that return an awaitable type. " -->
     <Rule Id="SA1200" Action="None" />
 
+    <!-- "Opening parenthesis should not be preceded by space" -->
+    <Rule Id="SA1008" Action="None" />
+
     <!-- The file header is missing or not located at the top of the file. [Espresso.Application] -->
     <Rule Id="SA1633" Action="None" />
 

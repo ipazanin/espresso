@@ -9,9 +9,11 @@ using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using Espresso.Application.Models;
 using Espresso.Application.Services.Contracts;
 using Espresso.Application.Services.Implementations;
+using Espresso.Common.Constants;
 using Espresso.Common.Services.Contracts;
 using Espresso.Common.Services.Implementations;
 using Espresso.Dashboard.Application.Constants;
+using Espresso.Dashboard.Application.HealthChecks;
 using Espresso.Dashboard.Application.Initialization;
 using Espresso.Dashboard.Application.IServices;
 using Espresso.Dashboard.Application.Services;
@@ -142,7 +144,24 @@ namespace Espresso.Dashboard.Startup
                             jsonSerializerOptions: jsonOptions.JsonSerializerOptions
                         );
                 });
-            services.AddHealthChecks();
+
+            services.AddSingleton<ReadinessHealthCheck>();
+            services.AddHealthChecks()
+                .AddCheck<StartupHealthCheck>(
+                    name: nameof(StartupHealthCheck),
+                    failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
+                    tags: new[] { HealthCheckConstants.StartupTag }
+                )
+                .AddCheck<ReadinessHealthCheck>(
+                    name: nameof(ReadinessHealthCheck),
+                    failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
+                    tags: new[] { HealthCheckConstants.ReadinessTag }
+                )
+                .AddCheck<LivenessHealthCheck>(
+                    name: nameof(LivenessHealthCheck),
+                    failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
+                    tags: new[] { HealthCheckConstants.LivenessTag }
+                );
         }
 
         /// <summary>

@@ -17,6 +17,7 @@ using Espresso.Dashboard.Application.Constants;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Services;
 using Espresso.Persistence.Database;
+using Espresso.WebApi.Application.HealthChecks;
 using Espresso.WebApi.Application.Initialization;
 using Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals;
 using Espresso.WebApi.Authentication;
@@ -114,7 +115,24 @@ namespace Espresso.WebApi.Startup
 
             services.AddResponseCaching();
 
-            services.AddHealthChecks();
+            services.AddSingleton<ReadinessHealthCheck>();
+            services.AddHealthChecks()
+                .AddCheck<StartupHealthCheck>(
+                    name: nameof(StartupHealthCheck),
+                    failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
+                    tags: new[] { HealthCheckConstants.StartupTag }
+                )
+                .AddCheck<ReadinessHealthCheck>(
+                    name: nameof(ReadinessHealthCheck),
+                    failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
+                    tags: new[] { HealthCheckConstants.ReadinessTag }
+                )
+                .AddCheck<LivenessHealthCheck>(
+                    name: nameof(LivenessHealthCheck),
+                    failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
+                    tags: new[] { HealthCheckConstants.LivenessTag }
+                );
+
             services.AddSignalR();
 
             services

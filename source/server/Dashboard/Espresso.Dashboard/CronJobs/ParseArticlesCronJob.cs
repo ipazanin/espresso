@@ -10,9 +10,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Application.Services.Contracts;
+using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
 using Espresso.Dashboard.Application.DeleteOldArticles;
+using Espresso.Dashboard.Application.HealthChecks;
 using Espresso.Dashboard.Configuration;
 using Espresso.Dashboard.ParseRssFeeds;
 using Espresso.Domain.Entities;
@@ -20,6 +22,7 @@ using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -27,8 +30,9 @@ namespace Espresso.Dashboard.CronJobs
 {
     public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
     {
+        private readonly IMemoryCache _memoryCache;
         private readonly IServiceScopeFactory _serviceScopeFactory;
-
+        private readonly ReadinessHealthCheck _readinessHealthCheck;
         private readonly IDashboardConfiguration _configuration;
 
         private IDictionary<Guid, Article> Articles { get; set; } = new Dictionary<Guid, Article>();
@@ -45,15 +49,19 @@ namespace Espresso.Dashboard.CronJobs
         /// <param name="cronJobConfiguration"></param>
         /// <param name="serviceScopeFactory"></param>
         public ParseArticlesCronJob(
+            IMemoryCache memoryCache,
             ICronJobConfiguration<ParseArticlesCronJob> cronJobConfiguration,
-            IServiceScopeFactory serviceScopeFactory
-        ) : base(
-            cronJobConfiguration: cronJobConfiguration,
-            serviceScopeFactory: serviceScopeFactory
+            IServiceScopeFactory serviceScopeFactory,
+            ReadinessHealthCheck readinessHealthCheck
         )
+            : base(
+                cronJobConfiguration: cronJobConfiguration,
+                serviceScopeFactory: serviceScopeFactory
+            )
         {
+            _memoryCache = memoryCache;
             _serviceScopeFactory = serviceScopeFactory;
-
+            _readinessHealthCheck = readinessHealthCheck;
             using var scope = _serviceScopeFactory.CreateScope();
             _configuration = scope.ServiceProvider.GetRequiredService<IDashboardConfiguration>();
         }
@@ -102,8 +110,12 @@ namespace Espresso.Dashboard.CronJobs
                 .ToListAsync(cancellationToken: cancellationToken);
 
             RssFeeds = rssFeeds;
+
             Categories = categories;
+
             Articles = articles.ToDictionary(article => article.Id);
+            _memoryCache.Set(MemoryCacheConstants.ArticleKey, Articles);
+
             SubordinateArticleIds = similarArticles
                 .Select(similarArticle => similarArticle.SubordinateArticleId)
                 .ToHashSet();
@@ -128,13 +140,14 @@ namespace Espresso.Dashboard.CronJobs
 
             loggerService.Log(eventName, LogLevel.Information, arguments);
 
+            _readinessHealthCheck.ReadinessTaskCompleted = true;
+
             await base.StartAsync(cancellationToken);
         }
 
         public override async Task DoWork(CancellationToken cancellationToken)
         {
             using var scope = _serviceScopeFactory.CreateScope();
-            var slackService = scope.ServiceProvider.GetRequiredService<ISlackService>();
 
             var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
@@ -163,6 +176,7 @@ namespace Espresso.Dashboard.CronJobs
                 },
                 cancellationToken: cancellationToken
             );
+            _memoryCache.Set(MemoryCacheConstants.ArticleKey, Articles);
         }
     }
 }
