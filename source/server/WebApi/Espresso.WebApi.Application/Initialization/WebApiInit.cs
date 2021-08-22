@@ -12,6 +12,7 @@ using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
 using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
+using Espresso.WebApi.Application.HealthChecks;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,7 @@ namespace Espresso.WebApi.Application.Initialization
         private readonly IMemoryCache _memoryCache;
         private readonly IEspressoDatabaseContext _context;
         private readonly ILoggerService<WebApiInit> _loggerService;
+        private readonly ReadinessHealthCheck _readinessHealthCheck;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WebApiInit"/> class.
@@ -46,12 +48,14 @@ namespace Espresso.WebApi.Application.Initialization
         public WebApiInit(
             IMemoryCache memoryCache,
             IEspressoDatabaseContext context,
-            ILoggerService<WebApiInit> loggerService
+            ILoggerService<WebApiInit> loggerService,
+            ReadinessHealthCheck readinessHealthCheck
         )
         {
             _memoryCache = memoryCache;
             _context = context;
             _loggerService = loggerService;
+            _readinessHealthCheck = readinessHealthCheck;
         }
 
         public async Task InitWebApi()
@@ -149,6 +153,8 @@ namespace Espresso.WebApi.Application.Initialization
             };
 
             _loggerService.Log(eventName, LogLevel.Information, arguments);
+
+            _readinessHealthCheck.ReadinessTaskCompleted = true;
         }
 
         private static void InitializeGoogleServices()

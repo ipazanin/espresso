@@ -12,6 +12,7 @@ using Espresso.WebApi.Application.Hubs;
 using Espresso.WebApi.Application.Initialization;
 using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -39,9 +40,7 @@ namespace Espresso.WebApi.Startup
                 namedArguments: new (string, object)[] { ("version", _webApiConfiguration.AppConfiguration.Version) }
             );
 
-#pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
             memoryCacheInit.InitWebApi().GetAwaiter().GetResult();
-#pragma warning restore VSTHRD002 // Avoid problematic synchronous waits
 
             app.UseSecurityHeadersMiddleware(securityHeadersBuilder => securityHeadersBuilder.AddDefaultSecurePolicy());
 
@@ -106,7 +105,18 @@ namespace Espresso.WebApi.Startup
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHealthChecks("/health");
+                endpoints.MapHealthChecks("/health/startup", new HealthCheckOptions
+                {
+                    Predicate = check => check.Tags.Contains(HealthCheckConstants.StartupTag),
+                });
+                endpoints.MapHealthChecks("/health/readiness", new HealthCheckOptions
+                {
+                    Predicate = check => check.Tags.Contains(HealthCheckConstants.ReadinessTag),
+                });
+                endpoints.MapHealthChecks("/health/liveness", new HealthCheckOptions
+                {
+                    Predicate = check => check.Tags.Contains(HealthCheckConstants.LivenessTag),
+                });
                 endpoints.MapHub<ArticlesNotificationHub>("/notifications/articles");
             });
         }

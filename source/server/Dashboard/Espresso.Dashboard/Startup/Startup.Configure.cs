@@ -3,10 +3,12 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Espresso.Application.Middleware.SecurityHeaders;
+using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Dashboard.Application.Initialization;
 using Espresso.Domain.IServices;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 namespace Espresso.Dashboard.Startup
 {
@@ -48,7 +50,6 @@ namespace Espresso.Dashboard.Startup
                 securityHeadersBuilder.AddDefaultSecurePolicy();
             });
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -60,7 +61,18 @@ namespace Espresso.Dashboard.Startup
             {
                 endpoints.MapControllers();
                 endpoints.MapBlazorHub();
-                endpoints.MapHealthChecks("/health");
+                endpoints.MapHealthChecks("/health/startup", new HealthCheckOptions
+                {
+                    Predicate = check => check.Tags.Contains(HealthCheckConstants.StartupTag),
+                });
+                endpoints.MapHealthChecks("/health/readiness", new HealthCheckOptions
+                {
+                    Predicate = check => check.Tags.Contains(HealthCheckConstants.ReadinessTag),
+                });
+                endpoints.MapHealthChecks("/health/liveness", new HealthCheckOptions
+                {
+                    Predicate = check => check.Tags.Contains(HealthCheckConstants.LivenessTag),
+                });
                 endpoints.MapFallbackToPage("/_Host");
             });
         }

@@ -329,7 +329,7 @@ namespace Espresso.Application.Services.Implementations
             );
         }
 
-        private async Task SendToSlack(
+        public async Task SendToSlack(
             SlackWebHookRequestBodyDto data,
             CancellationToken cancellationToken
         )
