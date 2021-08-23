@@ -1,0 +1,40 @@
+﻿{
+  "AppConfiguration": {
+    "ServerUrl": "http://espresso-webapi:80",
+    "MaxAgeOfArticlesInDays": 1
+  },
+  "ArticleSimilarityConfiguration": {
+    "ArticlePublishDateTimeDiferenceThresholdInHours": 4,
+    "MaxAgeOfSimilarArticleCheckingInHours": 4
+  },
+  "CronJobsConfiguration": {
+    "ParseArticlesCronExpression": "* * * * *"
+  },
+  "HttpClientConfiguration": {
+    "LoadRssFeedsHttpClientConfiguration": {
+      "MaxRetries": 1,
+      "TimeoutInSeconds": 60
+    },
+    "ScrapeWebHttpClientConfiguration": {
+      "MaxRetries": 1,
+      "TimeoutInSeconds": 60
+    }
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Espresso.Application.Infrastructure.CronJobsInfrastructure.CronJob": "Information",
+      "Espresso.Application.Infrastructure.MediatorInfrastructure.ExceptionRequestPipeline": "Information",
+      "Espresso.Application.Infrastructure.MediatorInfrastructure.LoggerRequestPipeline": "Information",
+      "Espresso.Domain.Services.GroupSimilarArticlesService": "Information",
+      "Espresso.Dashboard.Application.CQRS.RssFeeds.Commands.ParseRssFeeds.ParseRssFeedsCommandHandler": "Information",
+      "Espresso.Dashboard.Application.Services.CreateArticleService": "None",
+      "Espresso.Dashboard.Application.Services.LoadRssFeedsService": "Information",
+      "Espresso.Dashboard.Application.Services.ScrapeWebService": "Information",
+      "Espresso.Dashboard.Services.SendArticlesHttpService": "Warning",
+      "Microsoft": "Warning",
+      "Microsoft.EntityFrameworkCore": "Information",
+      "System": "Warning"
+    }
+  }
+}

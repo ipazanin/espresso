@@ -1,8 +1,0 @@
-﻿{
-  "DatabaseConfiguration": {
-    "CommandTimeoutInSeconds": 360,
-    "QueryTrackingBehavior": 1,
-    "EnableDetailedErrors": false,
-    "EnableSensitiveDataLogging": false
-  }
-}

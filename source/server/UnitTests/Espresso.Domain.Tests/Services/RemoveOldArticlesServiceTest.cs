@@ -1,3 +1,7 @@
+// RemoveOldArticlesServiceTest.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +17,9 @@ namespace Espresso.Domain.Tests.Services
     /// </summary>
     public class RemoveOldArticlesServiceTest
     {
-        #region RemoveOldArticles
         [Fact]
         public void RemoveOldArticles_ReturnsUnchangedNumberOfArticles_WhenNoArticlesAreOlderThanProvidedThreshold()
         {
-            #region Arrange
             var articles = new List<Article>
             {
                 ArticleUtility.CreateDefaultArticleWith(
@@ -29,25 +31,19 @@ namespace Espresso.Domain.Tests.Services
             var sortArticlesService = new RemoveOldArticlesService(
                 maxAgeOfArticle: TimeSpan.FromHours(1)
             );
-            #endregion Arrange
 
-            #region Act
             var actualArticles = sortArticlesService.RemoveOldArticles(articles: articles);
-            #endregion Act
 
-            #region Assert
             var actualArticlesCount = actualArticles.Count();
             Assert.Equal(
                 expected: expectedArticlesCount,
                 actual: actualArticlesCount
             );
-            #endregion Assert
         }
 
         [Fact]
         public void RemoveOldArticles_ReturnsOneLessArticle_WhenOneArticleIsOlderThanProvidedPublishDateTimeThreshold()
         {
-            #region Arrange
             var articles = new List<Article>
             {
                 ArticleUtility.CreateDefaultArticleWith(
@@ -59,20 +55,14 @@ namespace Espresso.Domain.Tests.Services
             var sortArticlesService = new RemoveOldArticlesService(
                 maxAgeOfArticle: TimeSpan.FromHours(1)
             );
-            #endregion Arrange
 
-            #region Act
             var actualArticles = sortArticlesService.RemoveOldArticles(articles: articles);
-            #endregion Act
 
-            #region Assert
             var actualArticlesCount = actualArticles.Count();
             Assert.Equal(
                 expected: expectedArticlesCount,
                 actual: actualArticlesCount
             );
-            #endregion Assert
         }
-        #endregion RemoveOldArticles
     }
 }

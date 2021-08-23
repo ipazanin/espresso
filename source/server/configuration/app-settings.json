@@ -1,0 +1,13 @@
+﻿{
+  "AppConfiguration": {
+    "MajorVersion": 2,
+    "MinorVersion": 1,
+    "Version": "2.1.15"
+  },
+  "DatabaseConfiguration": {
+    "CommandTimeoutInSeconds": 360,
+    "QueryTrackingBehavior": 1,
+    "EnableDetailedErrors": false,
+    "EnableSensitiveDataLogging": false
+  }
+}

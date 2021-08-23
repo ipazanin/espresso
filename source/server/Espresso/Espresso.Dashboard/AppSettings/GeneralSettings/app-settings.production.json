@@ -1,9 +1,0 @@
-﻿{
-  "AppConfiguration": {
-    "ServerUrl": "http://35.190.116.69",
-    "Environment": 3
-  },
-  "CronJobsConfiguration": {
-    "ParseArticlesCronExpression": "*/1 * * * *"
-  }
-}

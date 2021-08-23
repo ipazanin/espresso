@@ -1,13 +1,13 @@
-SolutionPath="source/server/Espresso/Espresso.sln"
-NugetConfigPath="source/server/Espresso/nuget.config"
-PersistenceProjectPath="source/server/Espresso/Espresso.Persistence/Espresso.Persistence.csproj"
+SolutionPath="Espresso.sln"
+NugetConfigPath="source/server/nuget.config"
+PersistenceProjectPath="source/server/Shared/Espresso.Persistence/Espresso.Persistence.csproj"
 DefaultVerbosity="minimal" # verbosity levels: quiet, minimal, normal, detailed, diagnostic
 LocalEnvironmentName="local"
 DebugConfiguration="Debug"
 DefaultConfiguration=$(DebugConfiguration) # Configurations: Release, Debug
 
-WebApiProjectPath="source/server/Espresso/Espresso.WebApi/Espresso.WebApi.csproj"
-ParserProjectPath="source/server/Espresso/Espresso.Dashboard/Espresso.Dashboard.csproj"
+WebApiProjectPath="source/server/WebApi/Espresso.WebApi/Espresso.WebApi.csproj"
+ParserProjectPath="source/server/Dashboard/Espresso.Dashboard/Espresso.Dashboard.csproj"
 WebApiUrls="http://localhost:8000"
 DashboardUrls="http://localhost:9000"
 ReleaseConfiguration="Release"

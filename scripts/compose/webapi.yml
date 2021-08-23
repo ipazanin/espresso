@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     build:
       context: ../../source
-      dockerfile: server/Espresso/Espresso.WebApi/Dockerfile
+      dockerfile: server/WebApi/Espresso.WebApi/Dockerfile
     ports:
       - '8000:80'
       - '8001:443'

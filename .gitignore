@@ -17,10 +17,6 @@ rabbitmq-environment.yml
 firebase-key.json
 google-analytics-key.json
 
-# Launch Configuration
-.vscode/launch.json
-launchSettings.json
-
 # VS
 .vs/
 
@@ -59,6 +55,7 @@ node_modules/
 
 # Visual Studio
 .vs/
+*.csproj.user
 
 # Properties Folder launchSettings.json
 **/Properties/launchSettings.json

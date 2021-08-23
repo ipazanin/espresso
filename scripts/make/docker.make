@@ -1,7 +1,7 @@
 DefaultDockerImageTag=latest
 
-EspressoWebApiDockerfilePath="source/server/Espresso/Espresso.WebApi/Dockerfile"
-EspressoParserDockerfilePath="source/server/Espresso/Espresso.Dashboard/Dockerfile"
+EspressoWebApiDockerfilePath="source/server/WebApi/Espresso.WebApi/Dockerfile"
+EspressoParserDockerfilePath="source/server/Dashboard/Espresso.Dashboard/Dockerfile"
 
 DockerBuildContextPath="source"
 
@@ -60,25 +60,25 @@ else
 	echo "Invalid Argument. Accepted arguments: up, down"
 endif
 
-compose-parser::
+compose-dashboard::
 ifeq ($(arg), up)
 	docker-compose \
 	-f $(DatabaseComposeFile) \
-	-f $(DatabaseEnvironmentComposeFile) \	
+	-f $(DatabaseEnvironmentComposeFile) \
 	-f $(DashboardComposeFile) \
 	-f $(DashboardEnvironmentComposeFile) \
 	up --build
 else ifeq ($(strip $(arg)),)
 	docker-compose \
 	-f $(DatabaseComposeFile) \
-	-f $(DatabaseEnvironmentComposeFile) \	
+	-f $(DatabaseEnvironmentComposeFile) \
 	-f $(DashboardComposeFile) \
 	-f $(DashboardEnvironmentComposeFile) \
 	up --build
 else ifeq ($(arg), down)
 	docker-compose \
 	-f $(DatabaseComposeFile) \
-	-f $(DatabaseEnvironmentComposeFile) \	
+	-f $(DatabaseEnvironmentComposeFile) \
 	-f $(DashboardComposeFile) \
 	-f $(DashboardEnvironmentComposeFile) \
 	down

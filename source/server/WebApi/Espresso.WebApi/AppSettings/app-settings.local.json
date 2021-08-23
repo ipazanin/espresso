@@ -1,0 +1,24 @@
+﻿{
+  "CronJobsConfiguration": {
+    "AnalyticsCronExpression": "1 1 * * *",
+    "WebApiReportCronExpression": "1 1 * * *"
+  },
+  "DateTimeConfiguration": {
+    "MaxAgeOfArticlesInDays": 1
+  },
+  "SpaConfiguration": {
+    "SpaProxyServerUrl": "http://docker.for.mac.localhost:3000",
+    "UseSpaProxyServer": false
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Espresso.Application.Infrastructure.CronJobsInfrastructure.CronJob": "Information",
+      "Espresso.Application.Infrastructure.MediatorInfrastructure.ExceptionRequestPipeline": "Information",
+      "Espresso.Application.Infrastructure.MediatorInfrastructure.LoggerRequestPipeline": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.EntityFrameworkCore": "Warning",
+      "System": "Warning"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+@page "/news-portals/{Id:int}"
+@inherits NewsPortalDetailsBase
+
+@if (NewsPortalDetails is null)
+{
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="project-info-box mt-0">
+                    <h5><strong>@(NewsPortalDetails.Name)</strong> Details</h5>
+                </div><!-- / project-info-box -->
+
+            <div class="project-info-box">
+                    <p><b>Base Url:</b> @(NewsPortalDetails.BaseUrl)</p>
+                    <p><b>Icon url:</b> @(NewsPortalDetails.IconUrl)</p>
+                    <p><b>Is new override:</b> @(NewsPortalDetails.IsNewOverride)</p>
+                    <p><b>Created At:</b> @(NewsPortalDetails.CreatedAt)</p>
+                    <p><b>Category:</b> @(NewsPortalDetails.Category)</p>
+                    <p><b>Region:</b> @(NewsPortalDetails.Region)</p>
+                </div><!-- / project-info-box -->
+        </div><!-- / column -->
+
+        <div class="col-md-7">
+                <img src="@(NewsPortalDetails.IconUrl)" alt="project-image" class="rounded">
+                <div class="project-info-box">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Url</th>
+                                <th scope="col">Category</th>
+                                <th scope="col" data-toggle="tooltip" data-placement="top" title="Category Parse Strategy">
+                                    CPS
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var rssFeed in NewsPortalDetails.RssFeeds)
+                            {
+                                <tr>
+                                    <th scope="col">@rssFeed.Url</th>
+                                    <th scope="col">@rssFeed.Category</th>
+                                    <th scope="col">@rssFeed.CategoryParseStrategy</th>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div><!-- / project-info-box -->
+        </div><!-- / column -->
+    </div>
+    </div>
+}
+
+

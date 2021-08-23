@@ -1,0 +1,47 @@
+﻿{
+  "AppConfiguration": {
+    "MaxAgeOfArticlesInDays": 5
+  },
+  "ArticleSimilarityConfiguration": {
+    "ArticlePublishDateTimeDiferenceThresholdInHours": 24,
+    "MaxAgeOfSimilarArticleCheckingInHours": 26,
+    "MinimalNumberOfWordsForArticleToBeComparable": 4,
+    "SimilarityScoreThreshold": 0.65
+  },
+  "HttpClientConfiguration": {
+    "SlackHttpClientConfiguration": {
+      "MaxRetries": 1,
+      "TimeoutInSeconds": 5
+    },
+    "SendArticlesHttpClientConfiguration": {
+      "MaxRetries": 3,
+      "TimeoutInSeconds": 60
+    },
+    "LoadRssFeedsHttpClientConfiguration": {
+      "MaxRetries": 1,
+      "TimeoutInSeconds": 10
+    },
+    "ScrapeWebHttpClientConfiguration": {
+      "MaxRetries": 1,
+      "TimeoutInSeconds": 10
+    }
+  },
+  "RabbitMqConfiguration": {
+    "ArticlesQueueName": "articles-queue",
+    "HostName": "rabbitmq",
+    "Port": 5672,
+    "UseRabbitMqServer": false
+  },
+  "SystemTextJsonSerializerConfiguration": {
+    "AllowTrailingCommas": true,
+    "MaxDepth": 100,
+    "PropertyNameCaseInsensitive": true,
+    "ReadCommentHandling": 1
+  },
+  "Logging": {
+    "Console": {
+      "TimestampFormat": "\nHH:mm:ss.ff - ",
+      "UseUtcTimestamp": true
+    }
+  }
+}

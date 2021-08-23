@@ -1,0 +1,24 @@
+﻿{
+  "AppConfiguration": {
+    "ServerUrl": "https://espressonews.co"
+  },
+  "CronJobsConfiguration": {
+    "ParseArticlesCronExpression": "*/1 * * * *"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Espresso.Application.Infrastructure.CronJobsInfrastructure.CronJob": "Information",
+      "Espresso.Application.Infrastructure.MediatorInfrastructure.ExceptionRequestPipeline": "Information",
+      "Espresso.Application.Infrastructure.MediatorInfrastructure.LoggerRequestPipeline": "Information",
+      "Espresso.Domain.Services.GroupSimilarArticlesService": "Information",
+      "Espresso.Dashboard.Application.CQRS.RssFeeds.Commands.ParseRssFeeds.ParseRssFeedsCommandHandler": "None",
+      "Espresso.Dashboard.Application.Services.CreateArticleService": "None",
+      "Espresso.Dashboard.Application.Services.LoadRssFeedsService": "None",
+      "Espresso.Dashboard.Application.Services.ScrapeWebService": "None",
+      "Espresso.Dashboard.Services.SendArticlesHttpService": "Information",
+      "Microsoft": "Warning",
+      "System": "Warning"
+    }
+  }
+}

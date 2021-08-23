@@ -1,3 +1,7 @@
+// ExampleClassWithPublicSetters.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 namespace Espresso.Common.Tests.TestUtilities.Models
 {
     /// <summary>
@@ -5,20 +9,17 @@ namespace Espresso.Common.Tests.TestUtilities.Models
     /// </summary>
     public record ExampleClassWithPublicSetters
     {
-        #region Properties
         public string? FirstProperty { get; set; }
         public int SecondProperty { get; set; }
         public bool ThirdProperty { get; set; }
         public ExampleSubClassWithPublicSetters? FourthProperty { get; set; }
-        #endregion Properties
 
-        #region Constructors
         /// <summary>
-        /// ExampleClass Constructor
+        /// Initializes a new instance of the <see cref="ExampleClassWithPublicSetters"/> class.
+        /// ExampleClass Constructor.
         /// </summary>
         public ExampleClassWithPublicSetters()
         {
         }
-        #endregion Constructors
     }
 }

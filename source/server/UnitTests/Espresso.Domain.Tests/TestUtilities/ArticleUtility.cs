@@ -1,3 +1,7 @@
+// ArticleUtility.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
 using System;
 using System.Collections.Generic;
 using Espresso.Domain.Entities;
@@ -10,7 +14,6 @@ namespace Espresso.Domain.Tests.TestUtilities
     /// </summary>
     public static class ArticleUtility
     {
-        #region Methods
         public static Article CreateDefaultArticleWith(
             int newsPortalId = default,
             string url = "",
@@ -80,6 +83,5 @@ namespace Espresso.Domain.Tests.TestUtilities
 
             return article;
         }
-        #endregion Methods
     }
 }
