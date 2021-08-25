@@ -2,8 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Threading;
-using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles;
@@ -20,6 +18,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Controllers
 {

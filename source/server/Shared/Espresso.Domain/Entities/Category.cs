@@ -2,11 +2,11 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using Espresso.Domain.Enums.CategoryEnums;
+using Espresso.Domain.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Espresso.Domain.Enums.CategoryEnums;
-using Espresso.Domain.Infrastructure;
 
 namespace Espresso.Domain.Entities
 {

@@ -2,10 +2,10 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Threading.Tasks;
 using Espresso.Common.Services.Contracts;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System.Threading.Tasks;
 
 namespace Espresso.Common.Services.Implementations
 {

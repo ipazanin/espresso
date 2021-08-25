@@ -13,7 +13,7 @@
       "excludeFromPunctuationCheck": ["seealso"]
     },
     "orderingRules": {
-      "systemUsingDirectivesFirst": true,
+      "systemUsingDirectivesFirst": false,
       "usingDirectivesPlacement": "outsideNamespace",
       "elementOrder": [
         "kind",

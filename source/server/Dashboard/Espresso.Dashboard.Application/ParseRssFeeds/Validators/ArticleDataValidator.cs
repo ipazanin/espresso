@@ -2,10 +2,10 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Records;
 using FluentValidation;
+using System;
 
 namespace Espresso.Dashboard.ParseRssFeeds.Validators
 {

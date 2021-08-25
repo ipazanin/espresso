@@ -2,11 +2,11 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using Espresso.Common.Constants;
+using Espresso.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Espresso.Common.Constants;
-using Espresso.Domain.Entities;
 
 namespace Espresso.Dashboard.Application.NewsPortals.GetNewsPortalDetails
 {

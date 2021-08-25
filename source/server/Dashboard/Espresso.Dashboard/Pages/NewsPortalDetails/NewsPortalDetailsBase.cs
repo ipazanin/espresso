@@ -2,11 +2,11 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Threading.Tasks;
 using Espresso.Dashboard.Application.NewsPortals.GetNewsPortalDetails;
 using Espresso.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Components;
+using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Pages.NewsPortalDetails
 {

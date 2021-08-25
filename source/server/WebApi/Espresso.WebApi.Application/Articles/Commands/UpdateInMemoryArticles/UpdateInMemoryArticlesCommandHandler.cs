@@ -2,11 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
@@ -14,6 +9,11 @@ using Espresso.Domain.IServices;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
 {

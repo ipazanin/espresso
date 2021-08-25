@@ -2,8 +2,8 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Collections.Generic;
 using Espresso.Domain.Infrastructure;
+using System.Collections.Generic;
 
 namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
 {

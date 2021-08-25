@@ -2,9 +2,9 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using GraphQL.SystemTextJson;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using GraphQL.SystemTextJson;
 
 namespace Espresso.WebApi.RequestData.Body
 {

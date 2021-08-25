@@ -2,9 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Application.Infrastructure.BackgroundJobsInfrastructure;
 using Espresso.Common.Enums;
@@ -17,6 +14,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Services
 {

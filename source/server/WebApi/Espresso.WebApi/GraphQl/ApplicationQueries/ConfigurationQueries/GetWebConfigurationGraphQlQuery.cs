@@ -2,13 +2,13 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
 using Espresso.WebApi.Application.Configuration.Queries.GetWebConfiguration;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetWebCategoryArticlesTypes;
 using Espresso.WebApi.GraphQl.Infrastructure;
 using GraphQL.Types;
 using MediatR;
+using System;
 
 namespace Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries
 {
