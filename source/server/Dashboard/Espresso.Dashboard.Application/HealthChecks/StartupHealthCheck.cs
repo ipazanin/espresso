@@ -2,9 +2,9 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Espresso.Dashboard.Application.HealthChecks
 {

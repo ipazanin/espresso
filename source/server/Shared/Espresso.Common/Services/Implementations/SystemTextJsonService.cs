@@ -2,14 +2,14 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using Espresso.Common.Constants;
+using Espresso.Common.Services.Contracts;
 using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Common.Constants;
-using Espresso.Common.Services.Contracts;
 
 namespace Espresso.Common.Services.Implementations
 {

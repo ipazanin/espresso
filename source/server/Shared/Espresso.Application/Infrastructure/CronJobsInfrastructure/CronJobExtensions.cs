@@ -2,8 +2,8 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
 {

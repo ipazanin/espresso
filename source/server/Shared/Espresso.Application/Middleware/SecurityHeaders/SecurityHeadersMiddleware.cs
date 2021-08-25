@@ -2,8 +2,8 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
 namespace Espresso.Application.Middleware.SecurityHeaders
 {

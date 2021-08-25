@@ -2,8 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
-using System.Collections.Generic;
 using Espresso.Common.Constants;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
@@ -11,6 +9,8 @@ using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RegionEnums;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using System.Collections.Generic;
 
 namespace Espresso.Persistence.DataSeed
 {

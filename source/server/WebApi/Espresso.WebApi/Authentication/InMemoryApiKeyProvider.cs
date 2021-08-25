@@ -2,10 +2,10 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using Espresso.WebApi.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Espresso.WebApi.Configuration;
 
 namespace Espresso.WebApi.Authentication
 {

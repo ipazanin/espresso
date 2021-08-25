@@ -2,9 +2,9 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
 using Espresso.Common.Constants;
 using Espresso.Domain.Utilities;
+using System;
 using Xunit;
 
 namespace Espresso.Common.Tests.Utilities

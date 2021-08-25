@@ -2,17 +2,17 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 using Cronos;
 using Espresso.Application.Services.Contracts;
 using Espresso.Domain.IServices;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using Timer = System.Timers.Timer;
 
 namespace Espresso.Application.Infrastructure.CronJobsInfrastructure

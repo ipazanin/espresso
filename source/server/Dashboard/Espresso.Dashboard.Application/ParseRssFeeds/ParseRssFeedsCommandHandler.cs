@@ -2,11 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Dashboard.Application.IServices;
 using Espresso.Domain.Entities;
@@ -15,6 +10,11 @@ using Espresso.Persistence.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.ParseRssFeeds
 {

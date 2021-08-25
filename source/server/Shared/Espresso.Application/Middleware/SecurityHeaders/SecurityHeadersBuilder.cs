@@ -2,8 +2,8 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
 using Espresso.Common.Constants;
+using System;
 
 namespace Espresso.Application.Middleware.SecurityHeaders
 {

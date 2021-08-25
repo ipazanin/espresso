@@ -2,11 +2,11 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using Espresso.Domain.Infrastructure;
+using Espresso.Domain.ValueObjects.ArticleValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Espresso.Domain.Infrastructure;
-using Espresso.Domain.ValueObjects.ArticleValueObjects;
 
 namespace Espresso.Domain.Entities
 {

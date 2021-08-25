@@ -2,10 +2,10 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
-using System.Collections.Generic;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using MediatR;
+using System;
+using System.Collections.Generic;
 
 namespace Espresso.WebApi.Application.Articles.Commands.SetFeaturedArticle
 {

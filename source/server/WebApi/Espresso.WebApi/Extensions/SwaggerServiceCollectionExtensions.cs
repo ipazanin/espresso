@@ -2,10 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.RequestData.Header;
@@ -13,6 +9,10 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace Espresso.WebApi.Extensions
 {

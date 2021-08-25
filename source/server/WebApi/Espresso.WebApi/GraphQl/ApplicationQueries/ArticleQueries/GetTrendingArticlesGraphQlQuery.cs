@@ -2,7 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles;
 using Espresso.WebApi.Configuration;
@@ -11,6 +10,7 @@ using Espresso.WebApi.GraphQl.Infrastructure;
 using GraphQL;
 using GraphQL.Types;
 using MediatR;
+using System;
 
 namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
 {

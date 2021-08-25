@@ -2,9 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
-using System.Net.Http;
-using System.Reflection;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using Espresso.Application.Models;
@@ -35,6 +32,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Extensions.Http;
 using Polly.Timeout;
+using System;
+using System.Net.Http;
+using System.Reflection;
 
 namespace Espresso.WebApi.Startup
 {

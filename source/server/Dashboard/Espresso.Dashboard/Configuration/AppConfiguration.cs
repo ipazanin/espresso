@@ -2,10 +2,10 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
-using System.Diagnostics;
 using Espresso.Common.Enums;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Diagnostics;
 
 namespace Espresso.Dashboard.Configuration
 {

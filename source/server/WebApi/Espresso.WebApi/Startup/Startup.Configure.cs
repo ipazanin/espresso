@@ -2,8 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Collections.Generic;
-using System.IO;
 using Espresso.Application.Middleware.SecurityHeaders;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
@@ -15,6 +13,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Espresso.WebApi.Startup
 {

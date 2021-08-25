@@ -2,11 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Application.Services.Contracts;
 using Espresso.Common.Constants;
@@ -14,6 +9,11 @@ using Espresso.Domain.Entities;
 using Espresso.Domain.Utilities;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Jobs.CronJobs
 {

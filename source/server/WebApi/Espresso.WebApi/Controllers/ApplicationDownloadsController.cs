@@ -2,9 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.ComponentModel.DataAnnotations;
-using System.Threading;
-using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplicationDownload;
@@ -18,6 +15,9 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Controllers
 {

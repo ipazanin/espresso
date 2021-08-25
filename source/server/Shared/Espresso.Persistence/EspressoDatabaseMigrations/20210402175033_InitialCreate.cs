@@ -2,9 +2,9 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using System;
 
 namespace Espresso.Persistence.EspressoDatabaseMigrations
 {

@@ -2,10 +2,10 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects.PagingDataTransferObjects;
 using Microsoft.AspNetCore.Components;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Shared.Pagination
 {

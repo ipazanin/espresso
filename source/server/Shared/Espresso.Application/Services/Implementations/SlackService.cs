@@ -2,13 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects.SlackDataTransferObjects;
 using Espresso.Application.Models;
 using Espresso.Application.Services.Contracts;
@@ -20,6 +13,13 @@ using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Espresso.Application.Services.Implementations
 {
