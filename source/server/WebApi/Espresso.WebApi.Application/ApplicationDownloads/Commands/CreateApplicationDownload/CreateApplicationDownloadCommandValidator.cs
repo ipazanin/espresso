@@ -2,10 +2,10 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
 using Espresso.Common.Enums;
 using Espresso.Domain.Entities;
 using FluentValidation;
+using System;
 
 namespace Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplicationDownload
 {

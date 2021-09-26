@@ -2,15 +2,15 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Services;
 using Espresso.Domain.Tests.TestUtilities;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Espresso.Domain.Tests.Services

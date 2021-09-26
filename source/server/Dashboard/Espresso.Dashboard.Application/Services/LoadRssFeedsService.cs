@@ -2,6 +2,15 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using Espresso.Application.Extensions;
+using Espresso.Common.Enums;
+using Espresso.Common.Extensions;
+using Espresso.Dashboard.Application.Constants;
+using Espresso.Domain.Entities;
+using Espresso.Domain.Enums.RssFeedEnums;
+using Espresso.Domain.IServices;
+using Espresso.Domain.Records;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -14,15 +23,6 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Xml;
-using Espresso.Application.Extensions;
-using Espresso.Common.Enums;
-using Espresso.Common.Extensions;
-using Espresso.Dashboard.Application.Constants;
-using Espresso.Domain.Entities;
-using Espresso.Domain.Enums.RssFeedEnums;
-using Espresso.Domain.IServices;
-using Espresso.Domain.Records;
-using Microsoft.Extensions.Logging;
 
 namespace Espresso.Dashboard.Application.Services
 {

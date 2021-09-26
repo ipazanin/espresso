@@ -2,15 +2,15 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Espresso.Application.Models;
 using Espresso.Application.Services.Contracts;
 using Espresso.Domain.IServices;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Espresso.Application.Infrastructure.MediatorInfrastructure
 {

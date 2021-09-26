@@ -2,13 +2,13 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
-using System.IO;
-using System.Threading.Tasks;
 using Espresso.Application.Services.Contracts;
 using Espresso.Domain.IServices;
 using Google.Analytics.Data.V1Beta;
 using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Espresso.Application.Services.Implementations
 {

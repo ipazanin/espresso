@@ -2,12 +2,12 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account
 {

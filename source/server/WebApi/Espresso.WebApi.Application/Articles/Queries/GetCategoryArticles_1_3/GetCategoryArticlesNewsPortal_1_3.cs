@@ -2,9 +2,9 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using Espresso.Domain.Entities;
 using System;
 using System.Linq.Expressions;
-using Espresso.Domain.Entities;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
 {

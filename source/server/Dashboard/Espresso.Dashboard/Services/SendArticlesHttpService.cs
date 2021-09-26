@@ -2,12 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Application.Extensions;
 using Espresso.Application.Services.Contracts;
@@ -20,6 +14,12 @@ using Espresso.Dashboard.Application.IServices;
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Services
 {

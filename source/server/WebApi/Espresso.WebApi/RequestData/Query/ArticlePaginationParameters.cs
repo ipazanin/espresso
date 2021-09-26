@@ -2,8 +2,8 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Espresso.WebApi.RequestData.Query
 {

@@ -2,12 +2,12 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using Espresso.Application.DataTransferObjects.SlackDataTransferObjects;
+using Espresso.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Espresso.Application.DataTransferObjects.SlackDataTransferObjects;
-using Espresso.Domain.Entities;
 
 namespace Espresso.Application.Services.Contracts
 {

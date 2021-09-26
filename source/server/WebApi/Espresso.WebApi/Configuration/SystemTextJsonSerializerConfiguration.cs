@@ -2,8 +2,8 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Text.Json;
 using Microsoft.Extensions.Configuration;
+using System.Text.Json;
 
 namespace Espresso.WebApi.Configuration
 {

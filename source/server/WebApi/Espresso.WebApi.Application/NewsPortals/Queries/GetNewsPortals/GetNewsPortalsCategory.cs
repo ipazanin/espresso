@@ -2,10 +2,10 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
-using System.Linq.Expressions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
+using System;
+using System.Linq.Expressions;
 
 namespace Espresso.Application.NewsPortals
 {

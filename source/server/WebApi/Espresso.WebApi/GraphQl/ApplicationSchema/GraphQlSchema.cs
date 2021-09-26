@@ -2,10 +2,10 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
 using Espresso.WebApi.GraphQl.ApplicationMutations;
 using Espresso.WebApi.GraphQl.ApplicationQueries;
 using GraphQL.Types;
+using System;
 
 namespace Espresso.WebApi.GraphQl.ApplicationSchema
 {

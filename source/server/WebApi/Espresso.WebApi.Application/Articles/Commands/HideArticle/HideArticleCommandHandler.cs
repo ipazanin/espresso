@@ -2,16 +2,16 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
 using Espresso.WebApi.Application.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Application.Articles.Commands.HideArticle
 {

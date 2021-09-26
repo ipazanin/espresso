@@ -2,7 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Threading.Tasks;
 using Espresso.Application.DataTransferObjects.PagingDataTransferObjects;
 using Espresso.Common.Constants;
 using Espresso.Dashboard.Application.NewsPortals.GetNewsPortals;
@@ -11,6 +10,7 @@ using Espresso.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Pages.NewsPortalsList
 {

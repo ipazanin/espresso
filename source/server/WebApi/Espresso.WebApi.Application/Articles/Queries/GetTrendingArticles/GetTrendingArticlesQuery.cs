@@ -2,8 +2,8 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
+using System;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles
 {

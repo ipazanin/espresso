@@ -2,8 +2,8 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Collections.Generic;
 using GraphQL.Types;
+using System.Collections.Generic;
 
 namespace Espresso.WebApi.GraphQl.ApplicationQueries
 {

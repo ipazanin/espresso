@@ -1,9 +1,9 @@
-// DateTimeConfiguration.cs
+﻿// DateTimeConfiguration.cs
 //
-// � 2021 Espresso News. All rights reserved.
+// © 2021 Espresso News. All rights reserved.
 
-using System;
 using Microsoft.Extensions.Configuration;
+using System;
 
 namespace Espresso.WebApi.Configuration
 {
