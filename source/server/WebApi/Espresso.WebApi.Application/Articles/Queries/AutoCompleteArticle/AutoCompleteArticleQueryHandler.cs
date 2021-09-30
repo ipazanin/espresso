@@ -1,9 +1,10 @@
-// AutoCompleteArticleQueryHandler.cs
+﻿// AutoCompleteArticleQueryHandler.cs
 //
-// � 2021 Espresso News. All rights reserved.
+// © 2021 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Extensions;
 using Espresso.Domain.Utilities;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
@@ -32,7 +33,11 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
         {
             var articles = _memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey);
 
-            var matchedWords = GetMatchedWords(request, articles);
+            var keyWordsToFilterOut = request.KeyWordsToFilterOut is null ?
+                Enumerable.Empty<string>() :
+                request.KeyWordsToFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+            var matchedWords = GetMatchedWords(request, articles, keyWordsToFilterOut);
 
             var result = new AutoCompleteArticleQueryResponse
             {
@@ -44,7 +49,8 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
 
         public static IEnumerable<string> GetMatchedWords(
             AutoCompleteArticleQuery request,
-            IEnumerable<Article> articles
+            IEnumerable<Article> articles,
+            IEnumerable<string> keyWordsToFilterOut
         )
         {
             if (request.TitleSearchQuery is null)
@@ -65,6 +71,7 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
             }
 
             var matchedArticleTitleWords = articles
+                .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
                 .SelectMany(article => LanguageUtility.MatchWordsThatBeginWithTerm(searchTerm, article.Title));
 
             matchedWords.AddRange(matchedArticleTitleWords);

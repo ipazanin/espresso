@@ -1,6 +1,6 @@
-// AutoCompleteArticleQuery.cs
+﻿// AutoCompleteArticleQuery.cs
 //
-// � 2021 Espresso News. All rights reserved.
+// © 2021 Espresso News. All rights reserved.
 
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 
@@ -13,5 +13,7 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
         public int Take { get; init; }
 
         public int Skip { get; init; }
+
+        public string? KeyWordsToFilterOut { get; init; }
     }
 }

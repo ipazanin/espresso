@@ -49,13 +49,17 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
             var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
                 key: MemoryCacheConstants.NewsPortalKey
             );
+            var keyWordsToFilterOut = request.KeyWordsToFilterOut is null ?
+                Enumerable.Empty<string>() :
+                request.KeyWordsToFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
             var articles = GetLatestArticles(
                 savedArticles: savedArticles,
                 firstArticleCreateDateTime: firstArticle?.CreateDateTime,
                 request: request,
                 categoryIds: categoryIds,
-                newsPortalIds: newsPortalIds
+                newsPortalIds: newsPortalIds,
+                keyWordsToFilterOut: keyWordsToFilterOut
             );
 
             var newNewsPortals = GetNewNewsPortals(
@@ -67,7 +71,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                 savedArticles: savedArticles,
                 firstArticleCreateDateTime: firstArticle?.CreateDateTime,
                 request: request,
-                categoryIds: categoryIds
+                categoryIds: categoryIds,
+                keyWordsToFilterOut: keyWordsToFilterOut
             );
 
             var response = new GetLatestArticlesQueryResponse_2_0
@@ -91,7 +96,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
             DateTime? firstArticleCreateDateTime,
             GetLatestArticlesQuery_2_0 request,
             IEnumerable<int>? categoryIds,
-            IEnumerable<int>? newsPortalIds
+            IEnumerable<int>? newsPortalIds,
+            IEnumerable<string> keyWordsToFilterOut
         )
         {
             var articles = savedArticles
@@ -102,6 +108,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                     titleSearchTerm: request.TitleSearchQuery,
                     articleCreateDateTime: firstArticleCreateDateTime
                 )
+                .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
                 // .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
                 .Skip(request.Skip)
                 .Take(request.Take);
@@ -116,7 +123,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
             IEnumerable<Article> savedArticles,
             DateTime? firstArticleCreateDateTime,
             GetLatestArticlesQuery_2_0 request,
-            IEnumerable<int>? categoryIds
+            IEnumerable<int>? categoryIds,
+            IEnumerable<string> keyWordsToFilterOut
         )
         {
             if (request.Skip != 0)
@@ -125,6 +133,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
             }
 
             var featuredArticles = savedArticles
+                .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
                 .FilterFeaturedArticles(
                     categoryIds: null,
                     newsPortalIds: null,
@@ -139,6 +148,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                 request.FeaturedArticlesTake - featuredArticles.Count();
 
             var trendingArticles = savedArticles
+                .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
                 .FilterTrendingArticles(
                     maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
                     articleCreateDateTime: null

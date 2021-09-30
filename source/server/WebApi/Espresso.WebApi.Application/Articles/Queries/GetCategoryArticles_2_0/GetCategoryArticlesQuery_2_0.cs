@@ -26,5 +26,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
         public string? TitleSearchQuery { get; init; }
 
         public TimeSpan MaxAgeOfNewNewsPortal { get; init; }
+
+        public string? KeyWordsToFilterOut { get; init; }
     }
 }

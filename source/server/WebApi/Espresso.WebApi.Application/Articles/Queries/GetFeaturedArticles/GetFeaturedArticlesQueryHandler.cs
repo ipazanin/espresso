@@ -8,6 +8,7 @@ using Espresso.Domain.Entities;
 using Espresso.Domain.Extensions;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -37,23 +38,18 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
                 key: MemoryCacheConstants.ArticleKey
             );
 
-            var firstArticle = articles.FirstOrDefault(
-                article => article.Id.Equals(request.FirstArticleId)
-            );
-
-            var newsPortalIds = request.NewsPortalIds
-                ?.Replace(" ", string.Empty)
-                ?.Split(',')
-                ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
-                ?.Where(newsPortalId => newsPortalId != default);
-
             var categoryIds = request.CategoryIds
                 ?.Replace(" ", string.Empty)
                 ?.Split(',')
                 ?.Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
                 ?.Where(categoryId => categoryId != default);
 
+            var keyWordsToFilterOut = request.KeyWordsToFilterOut is null ?
+                Enumerable.Empty<string>() :
+                request.KeyWordsToFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
             var featuredArticles = articles
+                .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
                 .FilterFeaturedArticles(
                     categoryIds: null,
                     newsPortalIds: null,
@@ -64,6 +60,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
                 .OrderFeaturedArticles(categoryIds);
 
             var trendingArticles = articles
+                .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
                 .FilterTrendingArticles(
                     maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
                     articleCreateDateTime: null

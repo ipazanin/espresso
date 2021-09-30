@@ -67,6 +67,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
         /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
         /// <param name="titleSearchQuery">Article Title Search Query.</param>
+        /// <param name="keyWordsToFilterOut"></param>
         /// <returns>Response object containing articles.</returns>
         /// <response code="200">Response object containing articles.</response>
         /// <response code="400">If validation fails.</response>
@@ -79,7 +80,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
-        [ApiVersion("2.1")]
+        [ApiVersion("2.2")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/articles")]
@@ -89,7 +90,8 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken,
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] string? categoryIds = null,
-            [FromQuery] string? titleSearchQuery = null
+            [FromQuery] string? titleSearchQuery = null,
+            [FromQuery] string? keyWordsToFilterOut = null
         )
         {
             var response = await Sender.Send(
@@ -109,6 +111,7 @@ namespace Espresso.WebApi.Controllers
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    KeyWordsToFilterOut = keyWordsToFilterOut,
                 },
                 cancellationToken: cancellationToken
             );
@@ -129,6 +132,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
         /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
         /// <param name="titleSearchQuery">Article Title Search Query.</param>
+        /// <param name="keyWordsToFilterOut"></param>
         /// <returns>Response object containing articles.</returns>
         /// <response code="200">Response object containing articles.</response>
         /// <response code="400">If validation fails.</response>
@@ -141,6 +145,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.1")]
         [ApiVersion("2.0")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
@@ -151,7 +156,8 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken,
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] string? categoryIds = null,
-            [FromQuery] string? titleSearchQuery = null
+            [FromQuery] string? titleSearchQuery = null,
+            [FromQuery] string? keyWordsToFilterOut = null
         )
         {
             var response = await Sender.Send(
@@ -171,6 +177,7 @@ namespace Espresso.WebApi.Controllers
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    KeyWordsToFilterOut = keyWordsToFilterOut,
                 },
                 cancellationToken: cancellationToken
             );
@@ -308,6 +315,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
         /// <param name="regionId">Region ID.</param>
         /// <param name="titleSearchQuery">Article Title Search Query.</param>
+        /// <param name="keyWordsToFilterOut"></param>
         /// <returns>Response object containing articles.</returns>
         /// <response code="200">Response object containing articles.</response>
         /// <response code="400">If validation fails.</response>
@@ -320,7 +328,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
-        [ApiVersion("2.1")]
+        [ApiVersion("2.2")]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
         [Route("api/categories/{categoryId}/articles")]
@@ -331,7 +339,8 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken,
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] int? regionId = null,
-            [FromQuery] string? titleSearchQuery = null
+            [FromQuery] string? titleSearchQuery = null,
+            [FromQuery] string? keyWordsToFilterOut = null
         )
         {
             var articles = await Sender.Send(
@@ -349,6 +358,7 @@ namespace Espresso.WebApi.Controllers
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    KeyWordsToFilterOut = keyWordsToFilterOut,
                 },
                 cancellationToken: cancellationToken
             );
@@ -370,6 +380,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
         /// <param name="regionId">Region ID.</param>
         /// <param name="titleSearchQuery">Article Title Search Query.</param>
+        /// <param name="keyWordsToFilterOut"></param>
         /// <returns>Response object containing articles.</returns>
         /// <response code="200">Response object containing articles.</response>
         /// <response code="400">If validation fails.</response>
@@ -382,6 +393,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.1")]
         [ApiVersion("2.0")]
         [ApiVersion("1.4")]
         [HttpGet]
@@ -394,7 +406,8 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken,
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] int? regionId = null,
-            [FromQuery] string? titleSearchQuery = null
+            [FromQuery] string? titleSearchQuery = null,
+            [FromQuery] string? keyWordsToFilterOut = null
         )
         {
             var articles = await Sender.Send(
@@ -412,6 +425,7 @@ namespace Espresso.WebApi.Controllers
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    KeyWordsToFilterOut = keyWordsToFilterOut,
                 },
                 cancellationToken: cancellationToken
             );
@@ -550,6 +564,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.2")]
         [ApiVersion("2.1")]
         [ApiVersion("2.0")]
         [ApiVersion("1.4")]
@@ -561,7 +576,8 @@ namespace Espresso.WebApi.Controllers
             [FromQuery] ArticlePaginationParameters articlePaginationParameters,
             CancellationToken cancellationToken,
             [FromQuery] string? newsPortalIds = null,
-            [FromQuery] string? categoryIds = null
+            [FromQuery] string? categoryIds = null,
+            [FromQuery] string? keyWordsToFilterOut = null
         )
         {
             var response = await Sender.Send(
@@ -577,6 +593,7 @@ namespace Espresso.WebApi.Controllers
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
+                    KeyWordsToFilterOut = keyWordsToFilterOut,
                 },
                 cancellationToken: cancellationToken
             );
@@ -607,6 +624,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.2")]
         [ApiVersion("2.1")]
         [ApiVersion("2.0")]
         [ApiVersion("1.4")]
@@ -655,6 +673,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.2")]
         [ApiVersion("2.1")]
         [ApiVersion("2.0")]
         [HttpDelete]
@@ -701,6 +720,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.2")]
         [ApiVersion("2.1")]
         [ApiVersion("2.0")]
         [HttpPatch]
@@ -741,6 +761,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="titleSearchQuery"></param>
         /// <param name="paginationParameters"></param>
         /// <param name="cancellationToken"></param>
+        /// <param name="keyWordsToFilterOut"></param>
         /// <response code="200">When operation is successfull.</response>
         /// <response code="400">If validation fails.</response>
         /// <response code="401">If API Key is invalid or missing.</response>
@@ -754,6 +775,7 @@ namespace Espresso.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+        [ApiVersion("2.2")]
         [ApiVersion("2.1")]
         [ApiVersion("2.0")]
         [HttpGet]
@@ -763,7 +785,8 @@ namespace Espresso.WebApi.Controllers
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             [FromQuery] string? titleSearchQuery,
             [FromQuery] PaginationParameters paginationParameters,
-            CancellationToken cancellationToken
+            CancellationToken cancellationToken,
+            [FromQuery] string? keyWordsToFilterOut = null
         )
         {
             var request = new AutoCompleteArticleQuery
@@ -774,6 +797,7 @@ namespace Espresso.WebApi.Controllers
                 TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                 ConsumerVersion = basicInformationsHeaderParameters.Version,
                 DeviceType = basicInformationsHeaderParameters.DeviceType,
+                KeyWordsToFilterOut = keyWordsToFilterOut,
             };
 
             var response = await Sender.Send(request, cancellationToken);
