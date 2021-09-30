@@ -70,6 +70,12 @@ namespace Espresso.Domain.Extensions
             return filteredArticles;
         }
 
+        public static IEnumerable<Article> FilterArticlesContainingKeyWords(this IEnumerable<Article> articles, IEnumerable<string> keywords)
+        {
+            return articles
+                .Where(article => !keywords.Any(keyword => article.Title.Contains(keyword, StringComparison.InvariantCultureIgnoreCase)));
+        }
+
         public static IEnumerable<Article> FilterArticles(
             this IEnumerable<Article> articles,
             IEnumerable<int>? categoryIds,

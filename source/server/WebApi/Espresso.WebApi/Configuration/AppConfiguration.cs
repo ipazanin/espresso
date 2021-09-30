@@ -49,6 +49,7 @@ namespace Espresso.WebApi.Configuration
         public IEnumerable<ApiVersion> ApiVersions => new[]
         {
             ApiVersion,
+            new ApiVersion(2, 1),
             new ApiVersion(2, 0),
             new ApiVersion(1, 4),
             new ApiVersion(1, 3),

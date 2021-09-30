@@ -50,8 +50,13 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
                 ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
                 ?.Where(newsPortalId => newsPortalId != default);
 
+            var keyWordsToFilterOut = request.KeyWordsToFilterOut is null ?
+                Enumerable.Empty<string>() :
+                request.KeyWordsToFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
             var filteredArticles = articles
                 .OrderArticlesByPublishDate()
+                .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
                 .FilterArticles(
                     categoryId: request.CategoryId,
                     newsPortalIds: newsPortalIds,

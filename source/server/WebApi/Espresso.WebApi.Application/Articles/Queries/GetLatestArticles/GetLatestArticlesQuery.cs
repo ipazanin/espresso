@@ -30,5 +30,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
         public int FeaturedArticlesTake { get; init; }
 
         public TimeSpan MaxAgeOfFeaturedArticle { get; init; }
+
+        public string? KeyWordsToFilterOut { get; init; }
     }
 }

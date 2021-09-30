@@ -47,9 +47,14 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
                 request: request
             );
 
+            var keyWordsToFilterOut = request.KeyWordsToFilterOut is null ?
+                Enumerable.Empty<string>() :
+                request.KeyWordsToFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
             var articleDtos = GetArticles(
                 request: request,
-                newsPortalIds: newsPortalIds
+                newsPortalIds: newsPortalIds,
+                keyWordsToFilterOut: keyWordsToFilterOut
             );
 
             var response = new GetCategoryArticlesQueryResponse
@@ -96,7 +101,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
 
         private IEnumerable<IEnumerable<GetCategoryArticlesArticle>> GetArticles(
             GetCategoryArticlesQuery request,
-            IEnumerable<int>? newsPortalIds
+            IEnumerable<int>? newsPortalIds,
+            IEnumerable<string> keyWordsToFilterOut
         )
         {
             var articles = _memoryCache.Get<IEnumerable<Article>>(
@@ -115,6 +121,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
                     titleSearchTerm: request.TitleSearchQuery,
                     articleCreateDateTime: firstArticle?.CreateDateTime
                 )
+                .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
                 .Skip(request.Skip)
                 .Take(request.Take);
 

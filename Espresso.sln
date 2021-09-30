@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31521.260
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{E0CEA0B1-7AEB-49DF-BB1D-DD201751A0F0}"
 EndProject
@@ -59,6 +59,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4DD12531-3F9
 		source\client\src\react-app-env.d.ts = source\client\src\react-app-env.d.ts
 		source\client\src\serviceWorker.ts = source\client\src\serviceWorker.ts
 		source\client\src\setupTests.ts = source\client\src\setupTests.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configuration", "configuration", "{B92D2688-54A3-4376-A0F6-82B387A79001}"
+	ProjectSection(SolutionItems) = preProject
+		source\server\configuration\app-settings.development.json = source\server\configuration\app-settings.development.json
+		source\server\configuration\app-settings.json = source\server\configuration\app-settings.json
+		source\server\configuration\app-settings.local.json = source\server\configuration\app-settings.local.json
+		source\server\configuration\app-settings.production.json = source\server\configuration\app-settings.production.json
 	EndProjectSection
 EndProject
 Global
@@ -129,6 +137,7 @@ Global
 		{D464574F-70EC-4C62-A937-A21ECB2A7C1A} = {A8568778-19A6-4FEC-9BBD-B3D1E9BEFDC9}
 		{DA1BC00C-58FB-47B9-A1E6-44655AFF8BDB} = {E0CEA0B1-7AEB-49DF-BB1D-DD201751A0F0}
 		{4DD12531-3F92-44F8-AD41-253E2EAC9541} = {DA1BC00C-58FB-47B9-A1E6-44655AFF8BDB}
+		{B92D2688-54A3-4376-A0F6-82B387A79001} = {1BA59E65-D434-46B5-9A9F-B21312CD73A0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {93891699-8B6D-4226-BFB2-55D87AA50108}
