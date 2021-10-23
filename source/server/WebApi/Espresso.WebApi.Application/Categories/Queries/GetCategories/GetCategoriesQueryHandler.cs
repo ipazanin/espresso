@@ -22,8 +22,7 @@ namespace Espresso.WebApi.Application.Categories.Queries.GetCategories
         /// </summary>
         /// <param name="memoryCache"></param>
         public GetCategoriesQueryHandler(
-            IMemoryCache memoryCache
-        )
+            IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
         }

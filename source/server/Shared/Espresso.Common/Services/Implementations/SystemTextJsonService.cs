@@ -26,8 +26,7 @@ namespace Espresso.Common.Services.Implementations
         /// </summary>
         /// <param name="defaultJsonSerializerOptions">Default <see cref="JsonSerializerOptions"/>.</param>
         public SystemTextJsonService(
-            JsonSerializerOptions defaultJsonSerializerOptions
-        )
+            JsonSerializerOptions defaultJsonSerializerOptions)
         {
             _defaultJsonSerializerOptions = defaultJsonSerializerOptions;
         }
@@ -35,16 +34,14 @@ namespace Espresso.Common.Services.Implementations
         /// <inheritdoc/>
         public async Task<string> Serialize<TValue>(
             TValue value,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var stream = new MemoryStream();
             await JsonSerializer.SerializeAsync(
                 utf8Json: stream,
                 value: value,
                 options: _defaultJsonSerializerOptions,
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             stream.Position = 0;
 
@@ -61,8 +58,7 @@ namespace Espresso.Common.Services.Implementations
         {
             var jsonString = JsonSerializer.Serialize(
                 value: value,
-                options: _defaultJsonSerializerOptions
-            );
+                options: _defaultJsonSerializerOptions);
 
             return jsonString;
         }
@@ -70,8 +66,7 @@ namespace Espresso.Common.Services.Implementations
         /// <inheritdoc/>
         public async Task<TValue?> Deserialize<TValue>(
             string json,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var utf8Bytes = Encoding.UTF8.GetBytes(json);
 
@@ -80,8 +75,7 @@ namespace Espresso.Common.Services.Implementations
             var value = await JsonSerializer.DeserializeAsync<TValue?>(
                 utf8Json: stream,
                 options: _defaultJsonSerializerOptions,
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return value;
         }
@@ -89,8 +83,7 @@ namespace Espresso.Common.Services.Implementations
         /// <inheritdoc/>
         public async Task<TValue?> Deserialize<TValue>(
             byte[] utf8Bytes,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var stream = new MemoryStream(utf8Bytes)
             {
@@ -100,8 +93,7 @@ namespace Espresso.Common.Services.Implementations
             var value = await JsonSerializer.DeserializeAsync<TValue?>(
                 utf8Json: stream,
                 options: _defaultJsonSerializerOptions,
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return value;
         }
@@ -111,8 +103,7 @@ namespace Espresso.Common.Services.Implementations
         {
             var value = JsonSerializer.Deserialize<TValue?>(
                 json: json,
-                options: _defaultJsonSerializerOptions
-            );
+                options: _defaultJsonSerializerOptions);
 
             return value;
         }
@@ -120,16 +111,14 @@ namespace Espresso.Common.Services.Implementations
         /// <inheritdoc/>
         public async Task<HttpContent> GetJsonHttpContent<TValue>(
             TValue value,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var content = await Serialize(value, cancellationToken);
 
             var httpRequestMessage = new StringContent(
                 content: content,
                 encoding: Encoding.UTF8,
-                mediaType: MimeTypeConstants.Json
-            );
+                mediaType: MimeTypeConstants.Json);
 
             return httpRequestMessage;
         }

@@ -20,8 +20,7 @@ namespace Espresso.Application.Middleware.SecurityHeaders
         /// <returns>A reference to this instance after operation is complete.</returns>
         public static IApplicationBuilder UseSecurityHeadersMiddleware(
             this IApplicationBuilder app,
-            Action<SecurityHeadersBuilder> securityHeadersBuilderConfigurationAction
-        )
+            Action<SecurityHeadersBuilder> securityHeadersBuilderConfigurationAction)
         {
             var builder = new SecurityHeadersBuilder();
 

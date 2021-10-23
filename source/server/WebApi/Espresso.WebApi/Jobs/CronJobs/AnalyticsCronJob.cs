@@ -2,10 +2,12 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using Cronos;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Application.Services.Contracts;
 using Espresso.Common.Enums;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Infrastructure;
 using Espresso.Domain.Utilities;
 using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
@@ -23,23 +25,27 @@ namespace Espresso.WebApi.Jobs.CronJobs
     public class AnalyticsCronJob : CronJob<AnalyticsCronJob>
     {
         private readonly IServiceScopeFactory _scopeFactory;
+        private readonly ISettingProvider _settingProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnalyticsCronJob"/> class.
         /// </summary>
         /// <param name="serviceScopeFactory"></param>
         /// <param name="cronJobConfiguration"></param>
+        /// <param name="settingProvider"></param>
         public AnalyticsCronJob(
             IServiceScopeFactory serviceScopeFactory,
-            ICronJobConfiguration<AnalyticsCronJob> cronJobConfiguration
-        )
+            ICronJobConfiguration<AnalyticsCronJob> cronJobConfiguration,
+            ISettingProvider settingProvider)
             : base(
             cronJobConfiguration: cronJobConfiguration,
-            serviceScopeFactory: serviceScopeFactory
-        )
+            serviceScopeFactory: serviceScopeFactory)
         {
             _scopeFactory = serviceScopeFactory;
+            _settingProvider = settingProvider;
         }
+
+        protected override CronExpression CronExpression => CronExpression.Parse(_settingProvider.LatestSetting.JobsSetting.AnalyticsCronExpression);
 
         /// <summary>
         ///
@@ -66,32 +72,26 @@ namespace Espresso.WebApi.Jobs.CronJobs
                     totalIosCount: totalIosCount,
                     activeUsers: activeUsers,
                     revenue: revenue,
-                    cancellationToken: cancellationToken
-            );
+                    cancellationToken: cancellationToken);
         }
 
         private static (int todayAndroidCount, int todayIosCount, int totalAndroidCount, int totalIosCount) CalculateAppDownloadsPerDeviceType(
-            IEnumerable<ApplicationDownload> applicationDownloads
-        )
+            IEnumerable<ApplicationDownload> applicationDownloads)
         {
             var todayAndroidCount = applicationDownloads.Count(applicationDownloads =>
                 applicationDownloads.MobileDeviceType == DeviceType.Android &&
-                applicationDownloads.DownloadedTime.Date == DateTimeUtility.YesterdaysDate
-            );
+                applicationDownloads.DownloadedTime.Date == DateTimeUtility.YesterdaysDate);
 
             var todayIosCount = applicationDownloads.Count(applicationDownloads =>
                 applicationDownloads.MobileDeviceType == DeviceType.Ios &&
-                applicationDownloads.DownloadedTime.Date == DateTimeUtility.YesterdaysDate
-            );
+                applicationDownloads.DownloadedTime.Date == DateTimeUtility.YesterdaysDate);
 
             var totalIosCount = applicationDownloads.Count(applicationDownloads =>
                 applicationDownloads.MobileDeviceType == DeviceType.Ios &&
-                applicationDownloads.DownloadedTime.Date <= DateTimeUtility.YesterdaysDate
-            );
+                applicationDownloads.DownloadedTime.Date <= DateTimeUtility.YesterdaysDate);
             var totalAndroidCount = applicationDownloads.Count(applicationDownloads =>
                 applicationDownloads.MobileDeviceType == DeviceType.Android &&
-                applicationDownloads.DownloadedTime.Date <= DateTimeUtility.YesterdaysDate
-            );
+                applicationDownloads.DownloadedTime.Date <= DateTimeUtility.YesterdaysDate);
 
             return (todayAndroidCount, todayIosCount, totalAndroidCount, totalIosCount);
         }

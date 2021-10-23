@@ -35,8 +35,7 @@ namespace Espresso.Dashboard.Shared.Pagination
                     page: PagingMetadata!.CurrentPage - 1,
                     enabled: PagingMetadata.HasPrevious(),
                     text: "Previous",
-                    active: false
-                ),
+                    active: false),
             };
 
             for (var i = 1; i <= PagingMetadata.TotalPages(); i++)
@@ -48,8 +47,7 @@ namespace Espresso.Dashboard.Shared.Pagination
                             page: i,
                             enabled: true,
                             text: i.ToString(),
-                            active: PagingMetadata.CurrentPage == i
-                        ));
+                            active: PagingMetadata.CurrentPage == i));
                 }
             }
             PagingLinks
@@ -57,8 +55,7 @@ namespace Espresso.Dashboard.Shared.Pagination
                     page: PagingMetadata.CurrentPage + 1,
                     enabled: PagingMetadata.HasNext(),
                     text: "Next",
-                    active: false
-                ));
+                    active: false));
         }
 
         /// <summary>
@@ -76,8 +73,7 @@ namespace Espresso.Dashboard.Shared.Pagination
             PagingMetadata = new PagingMetadata(
                 currentPage: link.Page,
                 pageSize: PagingMetadata.PageSize,
-                totalCount: PagingMetadata.TotalCount
-            );
+                totalCount: PagingMetadata.TotalCount);
 
             await SelectedPage.InvokeAsync(link.Page);
 

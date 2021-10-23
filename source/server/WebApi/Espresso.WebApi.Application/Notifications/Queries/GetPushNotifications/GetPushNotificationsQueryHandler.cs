@@ -21,16 +21,14 @@ namespace Espresso.WebApi.Application.Notifications.Queries.GetPushNotifications
         /// </summary>
         /// <param name="espressoDatabaseContext"></param>
         public GetPushNotificationsQueryHandler(
-            IEspressoDatabaseContext espressoDatabaseContext
-        )
+            IEspressoDatabaseContext espressoDatabaseContext)
         {
             _espressoDatabaseContext = espressoDatabaseContext;
         }
 
         public async Task<GetPushNotificationsQueryResponse> Handle(
             GetPushNotificationsQuery request,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var pushNotifications = await _espressoDatabaseContext
                 .PushNotifications

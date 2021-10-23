@@ -50,8 +50,7 @@ namespace Espresso.WebApi.DataTransferObjects
             string? innerExceptionMessage,
             string? exceptionStackTrace,
             string? innerExceptionStackTrace,
-            IEnumerable<string>? errors
-        )
+            IEnumerable<string>? errors)
         {
             ExceptionMessage = exceptionMessage;
             InnerExceptionMessage = innerExceptionMessage ?? FormatConstants.EmptyValue;

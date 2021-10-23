@@ -34,8 +34,7 @@ namespace Espresso.Domain.Entities
             string sourceValue,
             string replacementValue,
             int orderIndex,
-            int rssFeedId
-        )
+            int rssFeedId)
         {
             Id = id;
             SourceValue = sourceValue;

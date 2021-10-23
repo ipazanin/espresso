@@ -116,8 +116,7 @@ namespace Espresso.Domain.Entities
             NewsPortal? newsPortal,
             RssFeed? rssFeed,
             IEnumerable<SimilarArticle>? subordinateArticles,
-            SimilarArticle? mainArticle
-        )
+            SimilarArticle? mainArticle)
         {
             Id = id;
             Url = url;
@@ -186,8 +185,7 @@ namespace Espresso.Domain.Entities
             bool isSaved,
             IEnumerable<ArticleCategory> articleCategoriesToCreate,
             IEnumerable<ArticleCategory> articleCategoriesToDelete,
-            IEnumerable<string> modifiedProperties
-        ) Update(Article other)
+            IEnumerable<string> modifiedProperties) Update(Article other)
         {
             var shouldUpdate = false;
             var modifiedProperties = new List<string>();
@@ -228,8 +226,7 @@ namespace Espresso.Domain.Entities
             foreach (var articleCategory in ArticleCategories)
             {
                 if (
-                    !other.ArticleCategories.Any(otherArticleCategory => otherArticleCategory.CategoryId.Equals(articleCategory.CategoryId))
-                )
+                    !other.ArticleCategories.Any(otherArticleCategory => otherArticleCategory.CategoryId.Equals(articleCategory.CategoryId)))
                 {
                     articleCategoriesToDelete.Add(articleCategory);
                     shouldUpdate = true;
@@ -250,8 +247,7 @@ namespace Espresso.Domain.Entities
                         articleId: Id,
                         categoryId: otherArticleCategory.CategoryId,
                         article: null,
-                        category: null
-                    );
+                        category: null);
                     articleCategoriesToCreate.Add(newArticleCategory);
                     ArticleCategories.Add(newArticleCategory);
                     shouldUpdate = true;
@@ -274,16 +270,14 @@ namespace Espresso.Domain.Entities
 
         public void UpdateNewsPortalAndArticlecategories(
             NewsPortal newsPortal,
-            IEnumerable<ArticleCategory> articleCategories
-        )
+            IEnumerable<ArticleCategory> articleCategories)
         {
             NewsPortal = newsPortal;
             ArticleCategories = articleCategories.ToList();
         }
 
         public void UpdateArticleCategories(
-            IEnumerable<ArticleCategory> articleCategories
-        )
+            IEnumerable<ArticleCategory> articleCategories)
         {
             ArticleCategories = ArticleCategories
                 .Union(articleCategories.Select(articleCategory => new ArticleCategory(
@@ -291,8 +285,7 @@ namespace Espresso.Domain.Entities
                     articleId: Id,
                     categoryId: articleCategory.CategoryId,
                     article: null,
-                    category: articleCategory.Category
-                )))
+                    category: articleCategory.Category)))
                 .ToList();
         }
 
@@ -317,8 +310,7 @@ namespace Espresso.Domain.Entities
         {
             if (
                 MainArticle is not null &&
-                MainArticle.MainArticle is not null
-            )
+                MainArticle.MainArticle is not null)
             {
                 MainArticle.MainArticle.RemoveSubordinateArticle(this);
                 MainArticle = null;

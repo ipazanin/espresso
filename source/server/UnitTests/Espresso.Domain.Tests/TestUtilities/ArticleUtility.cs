@@ -22,8 +22,7 @@ namespace Espresso.Domain.Tests.TestUtilities
             DateTime publishDateTime = default,
             DateTime createDateTime = default,
             int categoryId = default,
-            Guid id = default
-        )
+            Guid id = default)
         {
             var category = new Category(
                 id: categoryId,
@@ -33,8 +32,7 @@ namespace Espresso.Domain.Tests.TestUtilities
                 sortIndex: default,
                 position: default,
                 categoryType: default,
-                categoryUrl: string.Empty
-            );
+                categoryUrl: string.Empty);
 
             var articleCategories = new List<ArticleCategory>()
             {
@@ -43,8 +41,7 @@ namespace Espresso.Domain.Tests.TestUtilities
                     article: null,
                     articleId: default,
                     category: category,
-                    categoryId: default
-                ),
+                    categoryId: default),
             };
 
             var newsPortal = new NewsPortal(
@@ -56,8 +53,7 @@ namespace Espresso.Domain.Tests.TestUtilities
                 createdAt: default,
                 categoryId: default,
                 regionId: default,
-                isEnabled: true
-            );
+                isEnabled: true);
 
             var article = new Article(
                 id: id,
@@ -78,8 +74,7 @@ namespace Espresso.Domain.Tests.TestUtilities
                 newsPortal: newsPortal,
                 rssFeed: default,
                 subordinateArticles: default,
-                mainArticle: default
-            );
+                mainArticle: default);
 
             return article;
         }

@@ -19,14 +19,11 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetFeaturedArtic
         {
             Name = nameof(GetFeaturedArticlesCategory);
             Field<NonNullGraphType<IdGraphType>>(
-                name: nameof(GetFeaturedArticlesCategory.Id)
-            );
+                name: nameof(GetFeaturedArticlesCategory.Id));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetFeaturedArticlesCategory.Name)
-            );
+                name: nameof(GetFeaturedArticlesCategory.Name));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetFeaturedArticlesCategory.Color)
-            );
+                name: nameof(GetFeaturedArticlesCategory.Color));
         }
     }
 }

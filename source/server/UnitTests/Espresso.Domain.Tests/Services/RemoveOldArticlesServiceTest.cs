@@ -1,10 +1,13 @@
-// RemoveOldArticlesServiceTest.cs
+﻿// RemoveOldArticlesServiceTest.cs
 //
-// � 2021 Espresso News. All rights reserved.
+// © 2021 Espresso News. All rights reserved.
 
 using Espresso.Domain.Entities;
+using Espresso.Domain.Infrastructure;
 using Espresso.Domain.Services;
 using Espresso.Domain.Tests.TestUtilities;
+using Espresso.Domain.ValueObjects.SettingsValueObjects;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,22 +26,36 @@ namespace Espresso.Domain.Tests.Services
             var articles = new List<Article>
             {
                 ArticleUtility.CreateDefaultArticleWith(
-                    publishDateTime: DateTime.UtcNow
-                ),
+                    publishDateTime: DateTime.UtcNow),
             };
             var expectedArticlesCount = articles.Count;
 
-            var sortArticlesService = new RemoveOldArticlesService(
-                maxAgeOfArticle: TimeSpan.FromHours(1)
-            );
+            var articleSetting = new ArticleSetting(
+                    maxAgeOfTrendingArticleInMiliseconds: default,
+                    maxAgeOfFeaturedArticleInMiliseconds: default,
+                    maxAgeOfArticleInMiliseconds: (long)TimeSpan.FromHours(2).TotalMilliseconds,
+                    featuredArticlesTake: default);
+            var setting = new Setting(
+                    id: default,
+                    settingsRevision: default,
+                    created: default,
+                    articleSetting: articleSetting,
+                    newsPortalSetting: default!,
+                    jobsSetting: default!,
+                    similarArticleSetting: default!);
+
+            var settingProviderMock = new Mock<ISettingProvider>(MockBehavior.Strict);
+            settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
+                .Returns(setting);
+
+            var sortArticlesService = new RemoveOldArticlesService(settingProviderMock.Object);
 
             var actualArticles = sortArticlesService.RemoveOldArticles(articles: articles);
 
             var actualArticlesCount = actualArticles.Count();
             Assert.Equal(
                 expected: expectedArticlesCount,
-                actual: actualArticlesCount
-            );
+                actual: actualArticlesCount);
         }
 
         [Fact]
@@ -47,22 +64,36 @@ namespace Espresso.Domain.Tests.Services
             var articles = new List<Article>
             {
                 ArticleUtility.CreateDefaultArticleWith(
-                    publishDateTime: DateTime.UtcNow.AddHours(-2)
-                ),
+                    publishDateTime: DateTime.UtcNow.AddHours(-2)),
             };
             var expectedArticlesCount = articles.Count - 1;
 
-            var sortArticlesService = new RemoveOldArticlesService(
-                maxAgeOfArticle: TimeSpan.FromHours(1)
-            );
+            var articleSetting = new ArticleSetting(
+                    maxAgeOfTrendingArticleInMiliseconds: default,
+                    maxAgeOfFeaturedArticleInMiliseconds: default,
+                    maxAgeOfArticleInMiliseconds: (long)TimeSpan.FromHours(2).TotalMilliseconds,
+                    featuredArticlesTake: default);
+            var setting = new Setting(
+                    id: default,
+                    settingsRevision: default,
+                    created: default,
+                    articleSetting: articleSetting,
+                    newsPortalSetting: default!,
+                    jobsSetting: default!,
+                    similarArticleSetting: default!);
+
+            var settingProviderMock = new Mock<ISettingProvider>(MockBehavior.Strict);
+            settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
+                .Returns(setting);
+
+            var sortArticlesService = new RemoveOldArticlesService(settingProviderMock.Object);
 
             var actualArticles = sortArticlesService.RemoveOldArticles(articles: articles);
 
             var actualArticlesCount = actualArticles.Count();
             Assert.Equal(
                 expected: expectedArticlesCount,
-                actual: actualArticlesCount
-            );
+                actual: actualArticlesCount);
         }
     }
 }

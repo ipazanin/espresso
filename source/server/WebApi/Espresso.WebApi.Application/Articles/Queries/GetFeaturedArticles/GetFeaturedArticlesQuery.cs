@@ -12,13 +12,12 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
         public int Take { get; init; }
 
         public int Skip { get; init; }
+        
         public Guid? FirstArticleId { get; init; }
+        
         public string? NewsPortalIds { get; init; } = string.Empty;
+        
         public string? CategoryIds { get; init; } = string.Empty;
-
-        public TimeSpan MaxAgeOfFeaturedArticle { get; init; }
-
-        public TimeSpan MaxAgeOfTrendingArticle { get; init; }
 
         public string? KeyWordsToFilterOut { get; init; }
     }

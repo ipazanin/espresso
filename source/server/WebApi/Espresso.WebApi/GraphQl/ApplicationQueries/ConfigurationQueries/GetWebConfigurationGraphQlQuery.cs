@@ -13,7 +13,7 @@ using System;
 namespace Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class GetWebConfigurationGraphQlQuery : ObjectGraphType, IGraphQlQuery
     {
@@ -21,11 +21,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries
         /// Initializes a new instance of the <see cref="GetWebConfigurationGraphQlQuery"/> class.
         /// </summary>
         /// <param name="mediator"></param>
-        /// <param name="webApiConfiguration"></param>
-        public GetWebConfigurationGraphQlQuery(
-            IMediator mediator,
-            IWebApiConfiguration webApiConfiguration
-        )
+        public GetWebConfigurationGraphQlQuery(IMediator mediator)
         {
             FieldAsync<GetWebConfigurationQueryResponseType>(
                 name: "webConfiguration",
@@ -38,16 +34,13 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries
                     return await mediator.Send(
                         request: new GetWebConfigurationQuery
                         {
-                            MaxAgeOfNewNewsPortal = webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
                             TargetedApiVersion = userContext.TargetedApiVersion,
                             ConsumerVersion = userContext.ConsumerVersion,
                             DeviceType = userContext.DeviceType,
                         },
-                        cancellationToken: resolveContext.CancellationToken
-                    );
+                        cancellationToken: resolveContext.CancellationToken);
                 },
-                deprecationReason: null
-            );
+                deprecationReason: null);
         }
     }
 }

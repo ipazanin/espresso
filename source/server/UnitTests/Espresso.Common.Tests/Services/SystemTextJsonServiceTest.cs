@@ -41,19 +41,16 @@ namespace Espresso.Common.Tests.Services
                 new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                }
-            );
+                });
 
             var actualSerializedObject = await systemTextJsonService
                 .Serialize(
                     value: someObject,
-                    cancellationToken: default
-                );
+                    cancellationToken: default);
 
             Assert.Equal(
                 expected: ExpectedSerializedObject,
-                actual: actualSerializedObject
-            );
+                actual: actualSerializedObject);
         }
 
         /// <summary>
@@ -69,21 +66,18 @@ namespace Espresso.Common.Tests.Services
                 new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                }
-            );
+                });
 
             const string? ExpectedSerializedObject = "null";
 
             var actualSerializedObject = await systemTextJsonService
                 .Serialize(
                     value: someObject,
-                    cancellationToken: default
-                );
+                    cancellationToken: default);
 
             Assert.Equal(
                 expected: ExpectedSerializedObject,
-                actual: actualSerializedObject
-            );
+                actual: actualSerializedObject);
         }
 
         [Fact]
@@ -106,18 +100,15 @@ namespace Espresso.Common.Tests.Services
                 new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                }
-            );
+                });
 
             var actualSerializedObject = systemTextJsonService
                 .Serialize(
-                    value: someObject
-                );
+                    value: someObject);
 
             Assert.Equal(
                 expected: ExpectedSerializedObject,
-                actual: actualSerializedObject
-            );
+                actual: actualSerializedObject);
         }
 
         [Fact]
@@ -129,20 +120,17 @@ namespace Espresso.Common.Tests.Services
                 new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                }
-            );
+                });
 
             const string? ExpectedSerializedObject = "null";
 
             var actualSerializedObject = systemTextJsonService
                 .Serialize(
-                    value: someObject
-                );
+                    value: someObject);
 
             Assert.Equal(
                 expected: ExpectedSerializedObject,
-                actual: actualSerializedObject
-            );
+                actual: actualSerializedObject);
         }
 
         /// <summary>
@@ -169,18 +157,15 @@ namespace Espresso.Common.Tests.Services
                 new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                }
-            );
+                });
 
             var actualDeserializedObject = await systemTextJsonService.Deserialize<ExampleClassWithPublicSetters>(
                 json: SerializedObject,
-                cancellationToken: default
-            );
+                cancellationToken: default);
 
             Assert.Equal(
                 expected: expectedObject,
-                actual: actualDeserializedObject
-            );
+                actual: actualDeserializedObject);
         }
 
         /// <summary>
@@ -196,15 +181,13 @@ namespace Espresso.Common.Tests.Services
                 new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                }
-            );
+                });
 
             return Assert.ThrowsAsync<JsonException>(async () =>
              {
                  var actualDeserializedObject = await systemTextJsonService.Deserialize<ExampleClassWithPublicSetters>(
                      json: SerializedObject,
-                     cancellationToken: default
-                 );
+                     cancellationToken: default);
              });
         }
 
@@ -232,18 +215,15 @@ namespace Espresso.Common.Tests.Services
                 new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                }
-            );
+                });
 
             var actualDeserializedObject = await systemTextJsonService.Deserialize<ExampleClassWithPublicSetters>(
                 utf8Bytes: serializedByteArray,
-                cancellationToken: default
-            );
+                cancellationToken: default);
 
             Assert.Equal(
                 expected: expectedObject,
-                actual: actualDeserializedObject
-            );
+                actual: actualDeserializedObject);
         }
 
         /// <summary>
@@ -259,15 +239,13 @@ namespace Espresso.Common.Tests.Services
                 new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                }
-            );
+                });
 
             return Assert.ThrowsAsync<JsonException>(async () =>
              {
                  var actualDeserializedObject = await systemTextJsonService.Deserialize<ExampleClassWithPublicSetters>(
                      utf8Bytes: serializedByteArray,
-                     cancellationToken: default
-                 );
+                     cancellationToken: default);
              });
         }
 
@@ -291,17 +269,14 @@ namespace Espresso.Common.Tests.Services
                 new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                }
-            );
+                });
 
             var actualDeserializedObject = systemTextJsonService.Deserialize<ExampleClassWithPublicSetters>(
-                json: SerializedObject
-            );
+                json: SerializedObject);
 
             Assert.Equal(
                 expected: expectedObject,
-                actual: actualDeserializedObject
-            );
+                actual: actualDeserializedObject);
         }
 
         [Fact]
@@ -324,14 +299,12 @@ namespace Espresso.Common.Tests.Services
                 new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                }
-            );
+                });
 
             Assert.Throws<JsonException>(() =>
             {
                 var actualDeserializedObject = systemTextJsonService.Deserialize<ExampleClassWithPublicSetters>(
-                    json: SerializedObject
-                );
+                    json: SerializedObject);
             });
         }
 
@@ -357,19 +330,16 @@ namespace Espresso.Common.Tests.Services
                 new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                }
-            );
+                });
 
             var actualHttpStringContent = await systemTextJsonService.GetJsonHttpContent(
                 value: expectedObject,
-                cancellationToken: default
-            );
+                cancellationToken: default);
             var actualObject = await actualHttpStringContent.ReadFromJsonAsync<ExampleClassWithPublicSetters>();
 
             Assert.Equal(
                 expected: expectedObject,
-                actual: actualObject
-            );
+                actual: actualObject);
         }
     }
 }

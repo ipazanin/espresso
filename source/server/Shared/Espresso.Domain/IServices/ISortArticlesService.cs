@@ -17,11 +17,9 @@ namespace Espresso.Domain.IServices
             IEnumerable<Article> createdArticles,
             IEnumerable<(Article article, IEnumerable<string> modifiedProperties)> updatedArticlesWithModifiedProperties,
             IEnumerable<ArticleCategory> createArticleCategories,
-            IEnumerable<ArticleCategory> deleteArticleCategories
-        ) SortArticles(
+            IEnumerable<ArticleCategory> deleteArticleCategories) SortArticles(
             IEnumerable<Article> articles,
-            IDictionary<Guid, Article> savedArticles
-        );
+            IDictionary<Guid, Article> savedArticles);
 
         /// <summary>
         ///

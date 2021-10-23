@@ -21,7 +21,6 @@ namespace Espresso.Dashboard.Application.IServices
         public Task SendArticlesMessage(
             IEnumerable<Article> createArticles,
             IEnumerable<Article> updateArticles,
-            CancellationToken cancellationToken
-        );
+            CancellationToken cancellationToken);
     }
 }

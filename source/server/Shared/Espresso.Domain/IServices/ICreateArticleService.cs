@@ -16,14 +16,13 @@ namespace Espresso.Domain.IServices
         /// <summary>
         ///
         /// </summary>
-        /// <param name="rssFeedItems"></param>
+        /// <param name="rssFeedItemChannel"></param>
         /// <param name="categories"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public Task<Channel<Article>> CreateArticlesFromRssFeedItems(
-            Channel<RssFeedItem> rssFeedItems,
+            Channel<RssFeedItem> rssFeedItemChannel,
             IEnumerable<Category> categories,
-            CancellationToken cancellationToken
-        );
+            CancellationToken cancellationToken);
     }
 }

@@ -24,8 +24,7 @@ namespace Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplic
         /// <param name="applicationInformation"></param>
         public CreateApplicationDownloadCommanHandler(
             IEspressoDatabaseContext context,
-            ApplicationInformation applicationInformation
-        )
+            ApplicationInformation applicationInformation)
         {
             _context = context;
             _applicationInformation = applicationInformation;
@@ -37,8 +36,7 @@ namespace Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplic
                 webApiVersion: _applicationInformation.Version,
                 mobileAppVersion: request.ConsumerVersion,
                 downloadedTime: DateTime.UtcNow,
-                mobileDeviceType: request.DeviceType
-            );
+                mobileDeviceType: request.DeviceType);
 
             _context.ApplicationDownload.Add(applicationDownload);
 

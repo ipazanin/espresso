@@ -21,11 +21,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries
         /// Initializes a new instance of the <see cref="GetConfigurationGraphQlQuery"/> class.
         /// </summary>
         /// <param name="mediator"></param>
-        /// <param name="webApiConfiguration"></param>
-        public GetConfigurationGraphQlQuery(
-            IMediator mediator,
-            IWebApiConfiguration webApiConfiguration
-        )
+        public GetConfigurationGraphQlQuery(IMediator mediator)
         {
             FieldAsync<GetConfigurationQueryResponseType>(
                 name: "configuration",
@@ -38,16 +34,13 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ConfigurationQueries
                     return await mediator.Send(
                         request: new GetConfigurationQuery
                         {
-                            MaxAgeOfNewNewsPortal = webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
                             TargetedApiVersion = userContext.TargetedApiVersion,
                             ConsumerVersion = userContext.ConsumerVersion,
                             DeviceType = userContext.DeviceType,
                         },
-                        cancellationToken: resolveContext.CancellationToken
-                    );
+                        cancellationToken: resolveContext.CancellationToken);
                 },
-                deprecationReason: null
-            );
+                deprecationReason: null);
         }
     }
 }

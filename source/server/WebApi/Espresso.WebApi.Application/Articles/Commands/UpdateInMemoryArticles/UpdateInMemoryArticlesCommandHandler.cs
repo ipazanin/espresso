@@ -33,8 +33,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
         public UpdateInMemoryArticlesCommandHandler(
             IMemoryCache memoryCache,
             ITrendingScoreService trendingScoreService,
-            IRemoveOldArticlesService removeOldArticlesService
-        )
+            IRemoveOldArticlesService removeOldArticlesService)
         {
             _memoryCache = memoryCache;
             _trendingScoreService = trendingScoreService;
@@ -61,8 +60,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
                 articlesDictionary: savedArticlesDictionary,
                 newsPortalsDictionary: newsPortalsDictionary,
                 categoriesDictionary: categoriesDictionary,
-                articleDtos: articleDtos
-            );
+                articleDtos: articleDtos);
 
             var articles = _removeOldArticlesService
                 .RemoveOldArticles(savedArticlesDictionary.Values);
@@ -71,8 +69,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
 
             _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
-                value: articlesToSave.ToList()
-            );
+                value: articlesToSave.ToList());
 
             var response = new UpdateInMemoryArticlesCommandResponse
             {
@@ -87,16 +84,14 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
             IDictionary<Guid, Article> articlesDictionary,
             IDictionary<int, NewsPortal> newsPortalsDictionary,
             IDictionary<int, Category> categoriesDictionary,
-            IEnumerable<ArticleDto> articleDtos
-        )
+            IEnumerable<ArticleDto> articleDtos)
         {
             foreach (var articleDto in articleDtos)
             {
                 var article = CreateArticle(
                     articleDto: articleDto,
                     newsPortalsDictionary: newsPortalsDictionary,
-                    categoriesDictionary: categoriesDictionary
-                );
+                    categoriesDictionary: categoriesDictionary);
 
                 if (articlesDictionary.ContainsKey(article.Id))
                 {
@@ -118,8 +113,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
             {
                 if (
                     article.MainArticle is not null &&
-                    articlesDictionary.TryGetValue(article.MainArticle.MainArticleId, out var mainArticle)
-                )
+                    articlesDictionary.TryGetValue(article.MainArticle.MainArticleId, out var mainArticle))
                 {
                     var subordinateArticle = article;
 
@@ -134,8 +128,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
         private static Article CreateArticle(
             ArticleDto articleDto,
             IDictionary<int, NewsPortal> newsPortalsDictionary,
-            IDictionary<int, Category> categoriesDictionary
-        )
+            IDictionary<int, Category> categoriesDictionary)
         {
             var articleCategories = articleDto
                 .ArticleCategories
@@ -144,8 +137,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
                     articleId: articleDto.Id,
                     categoryId: articleCategory.CategoryId,
                     article: null,
-                    category: categoriesDictionary[articleCategory.CategoryId]
-                ));
+                    category: categoriesDictionary[articleCategory.CategoryId]));
 
             var mainArticle = articleDto.MainArticle == null ?
                 null :
@@ -155,8 +147,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
                     mainArticleId: articleDto.MainArticle.MainArticleId,
                     mainArticle: null,
                     subordinateArticleId: articleDto.MainArticle.SubordinateArticleId,
-                    subordinateArticle: null
-                );
+                    subordinateArticle: null);
 
             var article = new Article(
                 id: articleDto.Id,
@@ -177,8 +168,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
                 newsPortal: newsPortalsDictionary[articleDto.NewsPortalId],
                 rssFeed: null,
                 subordinateArticles: null,
-                mainArticle: mainArticle
-            );
+                mainArticle: mainArticle);
 
             return article;
         }

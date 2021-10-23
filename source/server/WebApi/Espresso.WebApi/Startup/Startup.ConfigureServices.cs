@@ -4,6 +4,7 @@
 
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
+using Espresso.Application.Infrastructure.SettingsInfrastructure;
 using Espresso.Application.Models;
 using Espresso.Application.Services.Contracts;
 using Espresso.Application.Services.Implementations;
@@ -11,6 +12,7 @@ using Espresso.Common.Constants;
 using Espresso.Common.Services.Contracts;
 using Espresso.Common.Services.Implementations;
 using Espresso.Dashboard.Application.Constants;
+using Espresso.Domain.Infrastructure;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Services;
 using Espresso.Persistence.Database;
@@ -74,16 +76,15 @@ namespace Espresso.WebApi.Startup
             services
                 .AddHttpClient(
                     name: HttpClientConstants.SlackHttpClientName,
-                    configureClient: (_, httpClient) => httpClient.Timeout = _webApiConfiguration.SlackHttpClientConfiguration.Timeout
-                )
+                    configureClient: (_, httpClient) => httpClient.Timeout = _webApiConfiguration.SlackHttpClientConfiguration.Timeout)
                 .AddPolicyHandler(retryPolicy)
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(20)));
 
             services.AddSingleton(_ => _webApiConfiguration);
             services.AddSingleton(_ => new ApplicationInformation(
                 appEnvironment: _webApiConfiguration.AppConfiguration.AppEnvironment,
-                version: _webApiConfiguration.AppConfiguration.Version
-            ));
+                version: _webApiConfiguration.AppConfiguration.Version));
+            services.AddSingleton<ISettingProvider, SettingProvider>();
         }
 
         /// <summary>
@@ -103,15 +104,13 @@ namespace Espresso.WebApi.Startup
                     _webApiConfiguration
                         .SystemTextJsonSerializerConfiguration
                         .MapJsonSerializerOptionsToDefaultOptions(
-                            jsonSerializerOptions: jsonOptions.JsonSerializerOptions
-                        );
+                            jsonSerializerOptions: jsonOptions.JsonSerializerOptions);
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Latest)
                 .AddFluentValidation(
                     fluentValidatorConfiguration =>
                         fluentValidatorConfiguration
-                            .RegisterValidatorsFromAssemblyContaining<GetNewsPortalsQueryValidator>()
-                );
+                            .RegisterValidatorsFromAssemblyContaining<GetNewsPortalsQueryValidator>());
 
             services.AddResponseCaching();
 
@@ -120,18 +119,15 @@ namespace Espresso.WebApi.Startup
                 .AddCheck<StartupHealthCheck>(
                     name: nameof(StartupHealthCheck),
                     failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
-                    tags: new[] { HealthCheckConstants.StartupTag }
-                )
+                    tags: new[] { HealthCheckConstants.StartupTag })
                 .AddCheck<ReadinessHealthCheck>(
                     name: nameof(ReadinessHealthCheck),
                     failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
-                    tags: new[] { HealthCheckConstants.ReadinessTag }
-                )
+                    tags: new[] { HealthCheckConstants.ReadinessTag })
                 .AddCheck<LivenessHealthCheck>(
                     name: nameof(LivenessHealthCheck),
                     failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
-                    tags: new[] { HealthCheckConstants.LivenessTag }
-                );
+                    tags: new[] { HealthCheckConstants.LivenessTag });
 
             services.AddSignalR();
 
@@ -149,9 +145,7 @@ namespace Espresso.WebApi.Startup
                                 corsPolicyBuilder.AllowAnyOrigin()
                                        .AllowAnyMethod()
                                        .AllowAnyHeader();
-                            }
-                        )
-                    );
+                            }));
             }
 
             services
@@ -159,8 +153,7 @@ namespace Espresso.WebApi.Startup
                 {
                     apiVersioningOptions.DefaultApiVersion = new ApiVersion(
                         majorVersion: 1,
-                        minorVersion: 2
-                    );
+                        minorVersion: 2);
                     apiVersioningOptions.AssumeDefaultVersionWhenUnspecified = true;
                     apiVersioningOptions.ReportApiVersions = true;
                     apiVersioningOptions.ApiVersionReader = new HeaderApiVersionReader(HttpHeaderConstants.ApiVersionHeaderName);
@@ -201,21 +194,14 @@ namespace Espresso.WebApi.Startup
                 loggerService: serviceProvider.GetRequiredService<ILoggerService<SlackService>>(),
                 jsonService: serviceProvider.GetRequiredService<IJsonService>(),
                 webHookUrl: _webApiConfiguration.AppConfiguration.SlackWebHook,
-                applicationInformation: serviceProvider.GetRequiredService<ApplicationInformation>()
-            ));
+                applicationInformation: serviceProvider.GetRequiredService<ApplicationInformation>()));
             services.AddTransient<ITrendingScoreService, TrendingScoreService>(_ => new TrendingScoreService(
                 halfOfMaxTrendingScoreValue: _webApiConfiguration.TrendingScoreConfiguration.HalfOfMaxTrendingScoreValue,
-                ageWeight: _webApiConfiguration.TrendingScoreConfiguration.AgeWeight
-            ));
+                ageWeight: _webApiConfiguration.TrendingScoreConfiguration.AgeWeight));
             services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
             services.AddTransient<IJsonService, SystemTextJsonService>(_ => new SystemTextJsonService(
-                defaultJsonSerializerOptions: _webApiConfiguration.SystemTextJsonSerializerConfiguration.JsonSerializerOptions
-            ));
-            services.AddScoped<IRemoveOldArticlesService, RemoveOldArticlesService>(
-                _ => new RemoveOldArticlesService(
-                    maxAgeOfArticle: _webApiConfiguration.DateTimeConfiguration.MaxAgeOfArticle
-                )
-            );
+                defaultJsonSerializerOptions: _webApiConfiguration.SystemTextJsonSerializerConfiguration.JsonSerializerOptions));
+            services.AddScoped<IRemoveOldArticlesService, RemoveOldArticlesService>();
 
             services.AddScoped<IGoogleAnalyticsService, GoogleAnalyticsService>();
         }
@@ -230,16 +216,14 @@ namespace Espresso.WebApi.Startup
             {
                 options.UseNpgsql(
                     connectionString: _webApiConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString,
-                    npgsqlOptionsAction: npgOptions => npgOptions.CommandTimeout(_webApiConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds)
-                );
+                    npgsqlOptionsAction: npgOptions => npgOptions.CommandTimeout(_webApiConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds));
                 options.UseQueryTrackingBehavior(_webApiConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
                 options.EnableDetailedErrors(_webApiConfiguration.DatabaseConfiguration.EnableDetailedErrors);
                 options.EnableSensitiveDataLogging(_webApiConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
             });
 
             services.AddScoped<IDatabaseConnectionFactory>(
-                _ => new DatabaseConnectionFactory(_webApiConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString)
-            );
+                _ => new DatabaseConnectionFactory(_webApiConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString));
         }
 
         /// <summary>
@@ -248,25 +232,27 @@ namespace Espresso.WebApi.Startup
         /// <param name="services"></param>
         private void AddJobs(IServiceCollection services)
         {
-            services.AddCronJob<AnalyticsCronJob>(cronJobConfiguration =>
-                {
-                    cronJobConfiguration.CronExpression = _webApiConfiguration
-                        .CronJobsConfiguration
-                        .AnalyticsCronExpression;
-                    cronJobConfiguration.TimeZoneInfo = TimeZoneInfo.Utc;
-                    cronJobConfiguration.Version = _webApiConfiguration.AppConfiguration.Version;
-                    cronJobConfiguration.AppEnvironment = _webApiConfiguration.AppConfiguration.AppEnvironment;
-                });
-
-            services.AddCronJob<WebApiReportCronJob>(cronJobConfiguration =>
+            services.AddSingleton<ICronJobConfiguration<AnalyticsCronJob>>(serviceProvider =>
             {
-                cronJobConfiguration.CronExpression = _webApiConfiguration
-                    .CronJobsConfiguration
-                    .WebApiReportCronExpression;
-                cronJobConfiguration.TimeZoneInfo = TimeZoneInfo.Utc;
-                cronJobConfiguration.Version = _webApiConfiguration.AppConfiguration.Version;
-                cronJobConfiguration.AppEnvironment = _webApiConfiguration.AppConfiguration.AppEnvironment;
+                return new CronJobConfiguration<AnalyticsCronJob>
+                {
+                    TimeZoneInfo = TimeZoneInfo.Utc,
+                    AppEnvironment = _webApiConfiguration.AppConfiguration.AppEnvironment,
+                    Version = _webApiConfiguration.AppConfiguration.Version,
+                };
             });
+            services.AddHostedService<AnalyticsCronJob>();
+
+            services.AddSingleton<ICronJobConfiguration<WebApiReportCronJob>>(_ =>
+            {
+                return new CronJobConfiguration<WebApiReportCronJob>
+                {
+                    TimeZoneInfo = TimeZoneInfo.Utc,
+                    AppEnvironment = _webApiConfiguration.AppConfiguration.AppEnvironment,
+                    Version = _webApiConfiguration.AppConfiguration.Version,
+                };
+            });
+            services.AddHostedService<WebApiReportCronJob>();
 
             if (_webApiConfiguration.RabbitMqConfiguration.UseRabbitMqServer)
             {
@@ -278,8 +264,7 @@ namespace Espresso.WebApi.Startup
                     queueName: _webApiConfiguration.RabbitMqConfiguration.ArticlesQueueName,
                     port: _webApiConfiguration.RabbitMqConfiguration.Port,
                     userName: _webApiConfiguration.RabbitMqConfiguration.Username,
-                    password: _webApiConfiguration.RabbitMqConfiguration.Password
-                ));
+                    password: _webApiConfiguration.RabbitMqConfiguration.Password));
             }
         }
     }

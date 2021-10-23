@@ -23,8 +23,7 @@ namespace Espresso.Dashboard.Application.DeleteOldArticles
         /// <param name="removeOldArticlesService"></param>
         public DeleteOldArticlesCommandHandler(
             IEspressoDatabaseContext espressoDatabaseContext,
-            IRemoveOldArticlesService removeOldArticlesService
-        )
+            IRemoveOldArticlesService removeOldArticlesService)
         {
             _espressoDatabaseContext = espressoDatabaseContext;
             _removeOldArticlesService = removeOldArticlesService;

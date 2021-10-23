@@ -4,7 +4,6 @@
 
 using Espresso.Common.Constants;
 using Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles;
-using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetFeaturedArticlesTypes;
 using Espresso.WebApi.GraphQl.Infrastructure;
 using GraphQL;
@@ -15,7 +14,7 @@ using System;
 namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class GetFeaturedArticlesGraphQlQuery : ObjectGraphType, IGraphQlQuery
     {
@@ -23,11 +22,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
         /// Initializes a new instance of the <see cref="GetFeaturedArticlesGraphQlQuery"/> class.
         /// </summary>
         /// <param name="mediator"></param>
-        /// <param name="webApiConfiguration"></param>
-        public GetFeaturedArticlesGraphQlQuery(
-            IMediator mediator,
-            IWebApiConfiguration webApiConfiguration
-        )
+        public GetFeaturedArticlesGraphQlQuery(IMediator mediator)
         {
             FieldAsync<GetFeaturedArticlesQueryResponseType>(
                 name: "featuredArticles",
@@ -56,8 +51,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                         {
                             Name = "categoryIds",
                         },
-                    }
-                ),
+                    }),
                 resolve: async resolveContext =>
                 {
                     var userContext = resolveContext.UserContext as GraphQlUserContext ??
@@ -82,17 +76,13 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             FirstArticleId = firstArticleId,
                             NewsPortalIds = resolveContext.GetArgument<string?>("newsPortalIds"),
                             CategoryIds = resolveContext.GetArgument<string?>("categoryIds"),
-                            MaxAgeOfFeaturedArticle = webApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,
-                            MaxAgeOfTrendingArticle = webApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
                             TargetedApiVersion = userContext.TargetedApiVersion,
                             ConsumerVersion = userContext.ConsumerVersion,
                             DeviceType = userContext.DeviceType,
                         },
-                        cancellationToken: resolveContext.CancellationToken
-                    );
+                        cancellationToken: resolveContext.CancellationToken);
                 },
-                deprecationReason: null
-            );
+                deprecationReason: null);
         }
     }
 }

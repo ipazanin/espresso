@@ -4,7 +4,6 @@
 
 using Espresso.Common.Constants;
 using Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles;
-using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetTrendingArticlesTypes;
 using Espresso.WebApi.GraphQl.Infrastructure;
 using GraphQL;
@@ -15,7 +14,7 @@ using System;
 namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class GetTrendingArticlesGraphQlQuery : ObjectGraphType, IGraphQlQuery
     {
@@ -23,8 +22,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
         /// Initializes a new instance of the <see cref="GetTrendingArticlesGraphQlQuery"/> class.
         /// </summary>
         /// <param name="mediator"></param>
-        /// <param name="webApiConfiguration"></param>
-        public GetTrendingArticlesGraphQlQuery(IMediator mediator, IWebApiConfiguration webApiConfiguration)
+        public GetTrendingArticlesGraphQlQuery(IMediator mediator)
         {
             FieldAsync<GetTrendingArticlesQueryResponseType>(
                 name: "trendingArticles",
@@ -45,8 +43,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                         {
                             Name = "firstArticleId",
                         },
-                    }
-                ),
+                    }),
                 resolve: async resolveContext =>
                 {
                     var userContext = resolveContext.UserContext as GraphQlUserContext ??
@@ -69,16 +66,13 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             Take = resolveContext.GetArgument<int>("take"),
                             Skip = resolveContext.GetArgument<int>("skip"),
                             FirstArticleId = firstArticleId,
-                            MaxAgeOfTrendingArticle = webApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
                             TargetedApiVersion = userContext.TargetedApiVersion,
                             ConsumerVersion = userContext.ConsumerVersion,
                             DeviceType = userContext.DeviceType,
                         },
-                        cancellationToken: resolveContext.CancellationToken
-                    );
+                        cancellationToken: resolveContext.CancellationToken);
                 },
-                deprecationReason: null
-            );
+                deprecationReason: null);
         }
     }
 }

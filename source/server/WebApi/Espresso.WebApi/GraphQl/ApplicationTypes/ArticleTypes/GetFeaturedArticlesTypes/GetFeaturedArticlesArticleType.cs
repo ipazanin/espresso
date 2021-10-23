@@ -19,29 +19,21 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetFeaturedArtic
         {
             Name = nameof(GetFeaturedArticlesArticle);
             Field<NonNullGraphType<IdGraphType>>(
-                name: nameof(GetFeaturedArticlesArticle.Id)
-            );
+                name: nameof(GetFeaturedArticlesArticle.Id));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetFeaturedArticlesArticle.Title)
-            );
+                name: nameof(GetFeaturedArticlesArticle.Title));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetFeaturedArticlesArticle.Url)
-            );
+                name: nameof(GetFeaturedArticlesArticle.Url));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetFeaturedArticlesArticle.WebUrl)
-            );
+                name: nameof(GetFeaturedArticlesArticle.WebUrl));
             Field<StringGraphType>(
-                name: nameof(GetFeaturedArticlesArticle.ImageUrl)
-            );
+                name: nameof(GetFeaturedArticlesArticle.ImageUrl));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetFeaturedArticlesArticle.PublishDateTime)
-            );
+                name: nameof(GetFeaturedArticlesArticle.PublishDateTime));
             Field<NonNullGraphType<GetFeaturedArticlesNewsPortalType>>(
-                name: nameof(GetFeaturedArticlesArticle.NewsPortal)
-            );
+                name: nameof(GetFeaturedArticlesArticle.NewsPortal));
             Field<NonNullGraphType<ListGraphType<NonNullGraphType<GetFeaturedArticlesCategoryType>>>>(
-                name: nameof(GetFeaturedArticlesArticle.Categories)
-            );
+                name: nameof(GetFeaturedArticlesArticle.Categories));
         }
     }
 }

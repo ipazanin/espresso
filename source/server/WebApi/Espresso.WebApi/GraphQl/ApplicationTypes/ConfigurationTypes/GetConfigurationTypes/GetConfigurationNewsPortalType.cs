@@ -19,23 +19,17 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetConfigu
         {
             Name = nameof(GetConfigurationNewsPortal);
             Field<NonNullGraphType<IdGraphType>>(
-                name: nameof(GetConfigurationNewsPortal.Id)
-            );
+                name: nameof(GetConfigurationNewsPortal.Id));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetConfigurationNewsPortal.Name)
-            );
+                name: nameof(GetConfigurationNewsPortal.Name));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetConfigurationNewsPortal.IconUrl)
-            );
+                name: nameof(GetConfigurationNewsPortal.IconUrl));
             Field<NonNullGraphType<BooleanGraphType>>(
-                name: nameof(GetConfigurationNewsPortal.IsNew)
-            );
+                name: nameof(GetConfigurationNewsPortal.IsNew));
             Field<IntGraphType>(
-                name: nameof(GetConfigurationNewsPortal.RegionId)
-            );
+                name: nameof(GetConfigurationNewsPortal.RegionId));
             Field<NonNullGraphType<IntGraphType>>(
-                name: nameof(GetConfigurationNewsPortal.CategoryId)
-            );
+                name: nameof(GetConfigurationNewsPortal.CategoryId));
         }
     }
 }

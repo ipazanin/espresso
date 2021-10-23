@@ -25,20 +25,17 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_3
         /// </summary>
         /// <param name="memoryCache"></param>
         public GetLatestArticlesQueryHandler_1_3(
-            IMemoryCache memoryCache
-        )
+            IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
         }
 
         public Task<GetLatestArticlesQueryResponse_1_3> Handle(
             GetLatestArticlesQuery_1_3 request,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var articles = _memoryCache.Get<IEnumerable<Article>>(
-                key: MemoryCacheConstants.ArticleKey
-            );
+                key: MemoryCacheConstants.ArticleKey);
 
             var newsPortalIds = request.NewsPortalIds
                 ?.Replace(" ", string.Empty)
@@ -58,12 +55,10 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_3
                     categoryIds: categoryIds,
                     newsPortalIds: newsPortalIds,
                     titleSearchTerm: request.TitleSearchQuery,
-                    articleCreateDateTime: null
-                )
+                    articleCreateDateTime: null)
                 .Where(
                     article => !article.ArticleCategories
-                        .Any(articleCategory => articleCategory.CategoryId.Equals((int)CategoryId.Local))
-                )
+                        .Any(articleCategory => articleCategory.CategoryId.Equals((int)CategoryId.Local)))
                 .Skip(request.Skip)
                 .Take(request.Take)
                 .Select(GetLatestArticlesArticle_1_3.GetProjection().Compile());

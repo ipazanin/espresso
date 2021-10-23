@@ -20,8 +20,7 @@ namespace Espresso.Application.Extensions
         /// <returns>The <paramref name="httpClient"/>.</returns>
         public static HttpClient AddHeadersToHttpClient(
             this HttpClient httpClient,
-            IEnumerable<(string headerKey, string headerValue)> httpHeaders
-        )
+            IEnumerable<(string headerKey, string headerValue)> httpHeaders)
         {
             foreach (var (headerKey, headerValue) in httpHeaders)
             {

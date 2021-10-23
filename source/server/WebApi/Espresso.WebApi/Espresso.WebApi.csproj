@@ -4,12 +4,13 @@
     <TargetFramework>net5.0</TargetFramework>
     <AnalysisLevel>preview</AnalysisLevel>
     <Nullable>enable</Nullable>
-    <CodeAnalysisRuleSet>..\..\Espresso.ruleset</CodeAnalysisRuleSet>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <!-- Libraries -->
-  
+
   <ItemGroup>
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
@@ -28,7 +29,7 @@
   <!-- Libraries -->
 
   <!-- Project References -->
-  
+
   <ItemGroup>
     <ProjectReference Include="..\Espresso.WebApi.Application\Espresso.WebApi.Application.csproj" />
     <ProjectReference Include="..\..\Shared\Espresso.Common\Espresso.Common.csproj" />
@@ -38,11 +39,11 @@
   <!-- Project References -->
 
   <!-- Analyzers -->
-  
-  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+
+  <ItemGroup >
     <AdditionalFiles Include="..\..\stylecop.json" Link="Properties\stylecop.json" />
-  </ItemGroup>  
-    
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Roslynator.Analyzers" Version="3.2.0">
       <PrivateAssets>all</PrivateAssets>
@@ -73,13 +74,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-  
+
   <!-- Analyzers -->
-  
+
   <!-- Configuration Files -->
 
   <ItemGroup>
-    
+
     <Content Update="firebase-key.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -118,7 +119,7 @@
     </ContentWithTargetPath>
 
   </ItemGroup>
-  
+
   <!-- Configuration Files -->
 
 </Project>

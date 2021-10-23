@@ -23,14 +23,12 @@ namespace Espresso.Dashboard.Startup
         public void Configure(
             IApplicationBuilder app,
             ILoggerService<Startup> loggerService,
-            IDashboardInit memoryCacheInit
-        )
+            IDashboardInit memoryCacheInit)
         {
             loggerService.Log(
                 eventName: "Dashboard Startup",
                 logLevel: Microsoft.Extensions.Logging.LogLevel.Information,
-                namedArguments: new (string, object)[] { ("version", _dashboardConfiguration.AppConfiguration.Version) }
-            );
+                namedArguments: new (string, object)[] { ("version", _dashboardConfiguration.AppConfiguration.Version) });
 
             memoryCacheInit.InitParserDeleter().GetAwaiter().GetResult();
 

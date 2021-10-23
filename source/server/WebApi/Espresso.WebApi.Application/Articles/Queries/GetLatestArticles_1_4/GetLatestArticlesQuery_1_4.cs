@@ -19,10 +19,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4
 
         public string? CategoryIds { get; init; }
 
-        public int NewNewsPortalsPosition { get; init; }
-
         public string? TitleSearchQuery { get; init; }
-
-        public TimeSpan MaxAgeOfNewNewsPortal { get; init; }
     }
 }

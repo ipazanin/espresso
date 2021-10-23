@@ -20,14 +20,11 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetLatestArticle
         {
             Name = nameof(GetLatestArticlesQueryResponse);
             Field<NonNullGraphType<ListGraphType<NonNullGraphType<GetLatestArticlesArticleType>>>>(
-                name: nameof(GetLatestArticlesQueryResponse.Articles)
-            );
+                name: nameof(GetLatestArticlesQueryResponse.Articles));
             Field<NonNullGraphType<IntGraphType>>(
-                name: nameof(GetLatestArticlesQueryResponse.NewNewsPortalsPosition)
-            );
+                name: nameof(GetLatestArticlesQueryResponse.NewNewsPortalsPosition));
             Field<NonNullGraphType<ListGraphType<NonNullGraphType<GetLatestArticlesNewsPortalType>>>>(
-                name: nameof(GetLatestArticlesQueryResponse.NewNewsPortals)
-            );
+                name: nameof(GetLatestArticlesQueryResponse.NewNewsPortals));
         }
     }
 }

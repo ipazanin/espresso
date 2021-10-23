@@ -6,6 +6,7 @@ using Espresso.Common.Constants;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Extensions;
+using Espresso.Domain.Infrastructure;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using System;
@@ -19,22 +20,22 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
     public class GetCategoryArticlesQueryHandler : IRequestHandler<GetCategoryArticlesQuery, GetCategoryArticlesQueryResponse>
     {
         private readonly IMemoryCache _memoryCache;
+        private readonly ISettingProvider _settingProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetCategoryArticlesQueryHandler"/> class.
         /// </summary>
         /// <param name="memoryCache"></param>
-        public GetCategoryArticlesQueryHandler(
-            IMemoryCache memoryCache
-        )
+        /// <param name="settingProvider"></param>
+        public GetCategoryArticlesQueryHandler(IMemoryCache memoryCache, ISettingProvider settingProvider)
         {
             _memoryCache = memoryCache;
+            _settingProvider = settingProvider;
         }
 
         public Task<GetCategoryArticlesQueryResponse> Handle(
             GetCategoryArticlesQuery request,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var newsPortalIds = request.NewsPortalIds
                 ?.Replace(" ", string.Empty)
@@ -44,8 +45,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
 
             var newsPortalDtos = GetNewNewsPortals(
                 newsPortalIds: newsPortalIds,
-                request: request
-            );
+                request: request);
 
             var keyWordsToFilterOut = request.KeyWordsToFilterOut is null ?
                 Enumerable.Empty<string>() :
@@ -54,14 +54,13 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
             var articleDtos = GetArticles(
                 request: request,
                 newsPortalIds: newsPortalIds,
-                keyWordsToFilterOut: keyWordsToFilterOut
-            );
+                keyWordsToFilterOut: keyWordsToFilterOut);
 
             var response = new GetCategoryArticlesQueryResponse
             {
                 Articles = articleDtos,
                 NewNewsPortals = newsPortalDtos,
-                NewNewsPortalsPosition = request.NewNewsPortalsPosition,
+                NewNewsPortalsPosition = _settingProvider.LatestSetting.NewsPortalSetting.NewNewsPortalsPosition,
             };
 
             return Task.FromResult(result: response);
@@ -69,8 +68,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
 
         private IEnumerable<GetCategoryArticlesNewsPortal> GetNewNewsPortals(
             IEnumerable<int>? newsPortalIds,
-            GetCategoryArticlesQuery request
-        )
+            GetCategoryArticlesQuery request)
         {
             if (request.Skip != 0)
             {
@@ -78,8 +76,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
             }
 
             var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
-                key: MemoryCacheConstants.NewsPortalKey
-            );
+                key: MemoryCacheConstants.NewsPortalKey);
 
             var random = new Random();
 
@@ -89,12 +86,10 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
                         newsPortalIds: newsPortalIds,
                         categoryId: request.CategoryId,
                         regionId: request.RegionId,
-                        maxAgeOfNewNewsPortal: request.MaxAgeOfNewNewsPortal
-                    )
-                    .Compile()
-                )
+                        maxAgeOfNewNewsPortal: _settingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal)
+                    .Compile())
                 .Select(selector: GetCategoryArticlesNewsPortal.GetProjection().Compile())
-                .OrderBy(newsPortal => random.Next());
+                .OrderBy(_ => random.Next());
 
             return newsPortalDtos;
         }
@@ -102,16 +97,13 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
         private IEnumerable<IEnumerable<GetCategoryArticlesArticle>> GetArticles(
             GetCategoryArticlesQuery request,
             IEnumerable<int>? newsPortalIds,
-            IEnumerable<string> keyWordsToFilterOut
-        )
+            IEnumerable<string> keyWordsToFilterOut)
         {
             var articles = _memoryCache.Get<IEnumerable<Article>>(
-                key: MemoryCacheConstants.ArticleKey
-            );
+                key: MemoryCacheConstants.ArticleKey);
 
             var firstArticle = articles.FirstOrDefault(
-                article => article.Id.Equals(request.FirstArticleId)
-            );
+                article => article.Id.Equals(request.FirstArticleId));
 
             var filteredArticles = articles
                 .OrderArticlesByPublishDate()
@@ -119,8 +111,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
                     categoryId: request.CategoryId,
                     newsPortalIds: newsPortalIds,
                     titleSearchTerm: request.TitleSearchQuery,
-                    articleCreateDateTime: firstArticle?.CreateDateTime
-                )
+                    articleCreateDateTime: firstArticle?.CreateDateTime)
                 .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
                 .Skip(request.Skip)
                 .Take(request.Take);
@@ -130,8 +121,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
                 .Select(article => new List<GetCategoryArticlesArticle>()
                     {
                         projection.Invoke(article),
-                    }.Union(article.SubordinateArticles.Select(similarArticle => projection.Invoke(similarArticle.SubordinateArticle!)))
-                );
+                    }.Union(article.SubordinateArticles.Select(similarArticle => projection.Invoke(similarArticle.SubordinateArticle!))));
 
             return articleDtos;
         }

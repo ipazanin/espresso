@@ -6,6 +6,7 @@ using Espresso.Common.Constants;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Extensions;
+using Espresso.Domain.Infrastructure;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using System;
@@ -20,23 +21,23 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
         IRequestHandler<GetFeaturedArticlesQuery, GetFeaturedArticlesQueryResponse>
     {
         private readonly IMemoryCache _memoryCache;
+        private readonly ISettingProvider _settingProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetFeaturedArticlesQueryHandler"/> class.
         /// </summary>
         /// <param name="memoryCache"></param>
-        public GetFeaturedArticlesQueryHandler(
-            IMemoryCache memoryCache
-        )
+        /// <param name="settingProvider"></param>
+        public GetFeaturedArticlesQueryHandler(IMemoryCache memoryCache, ISettingProvider settingProvider)
         {
             _memoryCache = memoryCache;
+            _settingProvider = settingProvider;
         }
 
         public Task<GetFeaturedArticlesQueryResponse> Handle(GetFeaturedArticlesQuery request, CancellationToken cancellationToken)
         {
             var articles = _memoryCache.Get<IEnumerable<Article>>(
-                key: MemoryCacheConstants.ArticleKey
-            );
+                key: MemoryCacheConstants.ArticleKey);
 
             var categoryIds = request.CategoryIds
                 ?.Replace(" ", string.Empty)
@@ -53,18 +54,16 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
                 .FilterFeaturedArticles(
                     categoryIds: null,
                     newsPortalIds: null,
-                    maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
-                    articleCreateDateTime: null
-                )
+                    maxAgeOfFeaturedArticle: _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfFeaturedArticle,
+                    articleCreateDateTime: null)
                 // .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
                 .OrderFeaturedArticles(categoryIds);
 
             var trendingArticles = articles
                 .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
                 .FilterTrendingArticles(
-                    maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
-                    articleCreateDateTime: null
-                )
+                    maxAgeOfTrendingArticle: _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfTrendingArticle,
+                    articleCreateDateTime: null)
                 // .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
                 .OrderArticlesByTrendingScore();
 

@@ -23,7 +23,6 @@ namespace Espresso.Dashboard.Application.IServices
             string? articleUrl,
             RequestType requestType,
             ImageUrlParseConfiguration imageUrlParseConfiguration,
-            CancellationToken cancellationToken
-        );
+            CancellationToken cancellationToken);
     }
 }

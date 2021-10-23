@@ -6,6 +6,7 @@ using Espresso.Common.Constants;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Extensions;
+using Espresso.Domain.Infrastructure;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using System;
@@ -19,30 +20,28 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
     public class GetCategoryArticlesQueryHandler_2_0 : IRequestHandler<GetCategoryArticlesQuery_2_0, GetCategoryArticlesQueryResponse_2_0>
     {
         private readonly IMemoryCache _memoryCache;
+        private readonly ISettingProvider _settingProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetCategoryArticlesQueryHandler_2_0"/> class.
         /// </summary>
         /// <param name="memoryCache"></param>
-        public GetCategoryArticlesQueryHandler_2_0(
-            IMemoryCache memoryCache
-        )
+        /// <param name="settingProvider"></param>
+        public GetCategoryArticlesQueryHandler_2_0(IMemoryCache memoryCache, ISettingProvider settingProvider)
         {
             _memoryCache = memoryCache;
+            _settingProvider = settingProvider;
         }
 
         public Task<GetCategoryArticlesQueryResponse_2_0> Handle(
             GetCategoryArticlesQuery_2_0 request,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var articles = _memoryCache.Get<IEnumerable<Article>>(
-                key: MemoryCacheConstants.ArticleKey
-            );
+                key: MemoryCacheConstants.ArticleKey);
 
             var firstArticle = articles.FirstOrDefault(
-                article => article.Id.Equals(request.FirstArticleId)
-            );
+                article => article.Id.Equals(request.FirstArticleId));
 
             var newsPortalIds = request.NewsPortalIds
                 ?.Replace(" ", string.Empty)
@@ -61,8 +60,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
                     categoryId: request.CategoryId,
                     newsPortalIds: newsPortalIds,
                     titleSearchTerm: request.TitleSearchQuery,
-                    articleCreateDateTime: firstArticle?.CreateDateTime
-                )
+                    articleCreateDateTime: firstArticle?.CreateDateTime)
                 // .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
                 .Skip(request.Skip)
                 .Take(request.Take);
@@ -71,8 +69,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
 
             var newsPortalDtos = GetNewNewsPortals(
                 newsPortalIds: newsPortalIds,
-                request: request
-            );
+                request: request);
 
             var random = new Random();
 
@@ -80,7 +77,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
             {
                 Articles = articleDtos,
                 NewNewsPortals = newsPortalDtos.OrderBy(newsPortal => random.Next()),
-                NewNewsPortalsPosition = request.NewNewsPortalsPosition,
+                NewNewsPortalsPosition = _settingProvider.LatestSetting.NewsPortalSetting.NewNewsPortalsPosition,
             };
 
             return Task.FromResult(result: response);
@@ -88,8 +85,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
 
         private IEnumerable<GetCategoryArticlesNewsPortal_2_0> GetNewNewsPortals(
             IEnumerable<int>? newsPortalIds,
-            GetCategoryArticlesQuery_2_0 request
-        )
+            GetCategoryArticlesQuery_2_0 request)
         {
             if (request.Skip != 0)
             {
@@ -97,8 +93,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
             }
 
             var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
-                key: MemoryCacheConstants.NewsPortalKey
-            );
+                key: MemoryCacheConstants.NewsPortalKey);
 
             var newsPortalDtos = newsPortals
                 .Where(
@@ -106,10 +101,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
                         newsPortalIds: newsPortalIds,
                         categoryId: request.CategoryId,
                         regionId: request.RegionId,
-                        maxAgeOfNewNewsPortal: request.MaxAgeOfNewNewsPortal
-                    )
-                    .Compile()
-                )
+                        maxAgeOfNewNewsPortal: _settingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal)
+                    .Compile())
                 .Select(selector: GetCategoryArticlesNewsPortal_2_0.GetProjection().Compile());
 
             return newsPortalDtos;

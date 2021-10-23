@@ -31,8 +31,7 @@ namespace Espresso.Application.DataTransferObjects.PagingDataTransferObjects
         [JsonConstructor]
         public PagedList(
             IEnumerable<T> items,
-            PagingMetadata pagingMetadata
-        )
+            PagingMetadata pagingMetadata)
         {
             Items = items;
             PagingMetadata = pagingMetadata;

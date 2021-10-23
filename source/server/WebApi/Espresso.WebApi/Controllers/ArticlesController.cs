@@ -48,8 +48,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="webApiConfiguration"></param>
         public ArticlesController(
             ISender sender,
-            IWebApiConfiguration webApiConfiguration
-        )
+            IWebApiConfiguration webApiConfiguration)
             : base(sender, webApiConfiguration)
         {
         }
@@ -61,15 +60,15 @@ namespace Espresso.WebApi.Controllers
         /// Sample request:
         ///     Get /api/articles.
         /// </remarks>
-        /// <param name="cancellationToken"></param>
-        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
+        /// <param name="cancellationToken"></param>
+        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
         /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
         /// <param name="titleSearchQuery">Article Title Search Query.</param>
         /// <param name="keyWordsToFilterOut"></param>
         /// <returns>Response object containing articles.</returns>
-        /// <response code="200">Response object containing articles.</response>
+        /// <response code="200"><see cref="GetLatestArticlesQueryResponse"/> object containing articles.</response>
         /// <response code="400">If validation fails.</response>
         /// <response code="401">If API Key is invalid or missing.</response>
         /// <response code="403">If API Key is forbiden from requested resource.</response>
@@ -91,8 +90,7 @@ namespace Espresso.WebApi.Controllers
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] string? categoryIds = null,
             [FromQuery] string? titleSearchQuery = null,
-            [FromQuery] string? keyWordsToFilterOut = null
-        )
+            [FromQuery] string? keyWordsToFilterOut = null)
         {
             var response = await Sender.Send(
                 request: new GetLatestArticlesQuery
@@ -102,19 +100,13 @@ namespace Espresso.WebApi.Controllers
                     FirstArticleId = articlePaginationParameters.FirstArticleId,
                     NewsPortalIds = newsPortalIds,
                     CategoryIds = categoryIds,
-                    NewNewsPortalsPosition = WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                     TitleSearchQuery = titleSearchQuery,
-                    MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                    MaxAgeOfTrendingArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
-                    MaxAgeOfFeaturedArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,
-                    FeaturedArticlesTake = WebApiConfiguration.AppConfiguration.FeaturedArticlesTake,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                     KeyWordsToFilterOut = keyWordsToFilterOut,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok(response);
         }
@@ -157,8 +149,7 @@ namespace Espresso.WebApi.Controllers
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] string? categoryIds = null,
             [FromQuery] string? titleSearchQuery = null,
-            [FromQuery] string? keyWordsToFilterOut = null
-        )
+            [FromQuery] string? keyWordsToFilterOut = null)
         {
             var response = await Sender.Send(
                 request: new GetLatestArticlesQuery_2_0
@@ -168,19 +159,13 @@ namespace Espresso.WebApi.Controllers
                     FirstArticleId = articlePaginationParameters.FirstArticleId,
                     NewsPortalIds = newsPortalIds,
                     CategoryIds = categoryIds,
-                    NewNewsPortalsPosition = WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                     TitleSearchQuery = titleSearchQuery,
-                    MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
-                    MaxAgeOfTrendingArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
-                    MaxAgeOfFeaturedArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,
-                    FeaturedArticlesTake = WebApiConfiguration.AppConfiguration.FeaturedArticlesTake,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                     KeyWordsToFilterOut = keyWordsToFilterOut,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok(response);
         }
@@ -220,8 +205,7 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken,
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] string? categoryIds = null,
-            [FromQuery] string? titleSearchQuery = null
-        )
+            [FromQuery] string? titleSearchQuery = null)
         {
             var response = await Sender.Send(
                 request: new GetLatestArticlesQuery_1_4
@@ -231,15 +215,12 @@ namespace Espresso.WebApi.Controllers
                     FirstArticleId = articlePaginationParameters.FirstArticleId,
                     NewsPortalIds = newsPortalIds,
                     CategoryIds = categoryIds,
-                    NewNewsPortalsPosition = WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                     TitleSearchQuery = titleSearchQuery,
-                    MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok(response);
         }
@@ -280,8 +261,7 @@ namespace Espresso.WebApi.Controllers
             [FromQuery] int take = DefaultValueConstants.DefaultTake,
             [FromQuery] int skip = DefaultValueConstants.DefaultSkip,
             [FromQuery] string? newsPortalIds = null,
-            [FromQuery] string? categoryIds = null
-        )
+            [FromQuery] string? categoryIds = null)
         {
             var response = await Sender.Send(
                 request: new GetLatestArticlesQuery_1_3
@@ -295,8 +275,7 @@ namespace Espresso.WebApi.Controllers
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok(response);
         }
@@ -340,8 +319,7 @@ namespace Espresso.WebApi.Controllers
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] int? regionId = null,
             [FromQuery] string? titleSearchQuery = null,
-            [FromQuery] string? keyWordsToFilterOut = null
-        )
+            [FromQuery] string? keyWordsToFilterOut = null)
         {
             var articles = await Sender.Send(
                 request: new GetCategoryArticlesQuery
@@ -352,16 +330,13 @@ namespace Espresso.WebApi.Controllers
                     CategoryId = categoryId,
                     NewsPortalIds = newsPortalIds,
                     RegionId = regionId,
-                    NewNewsPortalsPosition = WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                     TitleSearchQuery = titleSearchQuery,
-                    MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                     KeyWordsToFilterOut = keyWordsToFilterOut,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok(articles);
         }
@@ -407,8 +382,7 @@ namespace Espresso.WebApi.Controllers
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] int? regionId = null,
             [FromQuery] string? titleSearchQuery = null,
-            [FromQuery] string? keyWordsToFilterOut = null
-        )
+            [FromQuery] string? keyWordsToFilterOut = null)
         {
             var articles = await Sender.Send(
                 request: new GetCategoryArticlesQuery_2_0
@@ -419,16 +393,13 @@ namespace Espresso.WebApi.Controllers
                     CategoryId = categoryId,
                     NewsPortalIds = newsPortalIds,
                     RegionId = regionId,
-                    NewNewsPortalsPosition = WebApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                     TitleSearchQuery = titleSearchQuery,
-                    MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                     KeyWordsToFilterOut = keyWordsToFilterOut,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok(articles);
         }
@@ -440,9 +411,9 @@ namespace Espresso.WebApi.Controllers
         /// Sample request:
         ///     Get /api/articles/category?<paramref name="take"/>=1&amp;<paramref name="skip"/>=0.
         /// </remarks>
-        /// <param name="cancellationToken"></param>
         /// <param name="categoryId">Category Id.</param>
         /// <param name="basicInformationsHeaderParameters"></param>
+        /// <param name="cancellationToken"></param>
         /// <param name="take">Number of articles.</param>
         /// <param name="skip">Number of skipped articles.</param>
         /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
@@ -469,8 +440,7 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken,
             [FromQuery] int take = DefaultValueConstants.DefaultTake,
             [FromQuery] int skip = DefaultValueConstants.DefaultSkip,
-            [FromQuery] string? newsPortalIds = null
-        )
+            [FromQuery] string? newsPortalIds = null)
         {
             var articles = await Sender.Send(
                 request: new GetCategoryArticlesQuery_1_3
@@ -483,8 +453,7 @@ namespace Espresso.WebApi.Controllers
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok(articles);
         }
@@ -520,8 +489,7 @@ namespace Espresso.WebApi.Controllers
         public async Task<IActionResult> GetTrendingArticles(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             [FromQuery] ArticlePaginationParameters articlePaginationParameters,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var response = await Sender.Send(
                 request: new GetTrendingArticlesQuery
@@ -529,13 +497,11 @@ namespace Espresso.WebApi.Controllers
                     Take = articlePaginationParameters.Take,
                     Skip = articlePaginationParameters.Skip,
                     FirstArticleId = articlePaginationParameters.FirstArticleId,
-                    MaxAgeOfTrendingArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok(response);
         }
@@ -547,11 +513,12 @@ namespace Espresso.WebApi.Controllers
         /// Sample request:
         ///     Get /api/articles/featured.
         /// </remarks>
-        /// <param name="cancellationToken"></param>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
+        /// <param name="cancellationToken"></param>
         /// <param name="newsPortalIds">NewsPortal Ids comma delimited.</param>
         /// <param name="categoryIds">Category Ids comma delimited.</param>
+        /// <param name="keyWordsToFilterOut"></param>
         /// <returns>Response object containing articles.</returns>
         /// <response code="200">Response object containing articles.</response>
         /// <response code="400">If validation fails.</response>
@@ -577,8 +544,7 @@ namespace Espresso.WebApi.Controllers
             CancellationToken cancellationToken,
             [FromQuery] string? newsPortalIds = null,
             [FromQuery] string? categoryIds = null,
-            [FromQuery] string? keyWordsToFilterOut = null
-        )
+            [FromQuery] string? keyWordsToFilterOut = null)
         {
             var response = await Sender.Send(
                 request: new GetFeaturedArticlesQuery
@@ -588,15 +554,12 @@ namespace Espresso.WebApi.Controllers
                     FirstArticleId = articlePaginationParameters.FirstArticleId,
                     CategoryIds = categoryIds,
                     NewsPortalIds = newsPortalIds,
-                    MaxAgeOfFeaturedArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfFeaturedArticle,
-                    MaxAgeOfTrendingArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfTrendingArticle,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                     KeyWordsToFilterOut = keyWordsToFilterOut,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok(response);
         }
@@ -636,8 +599,7 @@ namespace Espresso.WebApi.Controllers
         public async Task<IActionResult> IncrementArticleScore(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             [Required] Guid articleId,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             await Sender.Send(
                 request: new IncrementNumberOfClicksCommand
@@ -647,8 +609,7 @@ namespace Espresso.WebApi.Controllers
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok();
         }
@@ -683,8 +644,7 @@ namespace Espresso.WebApi.Controllers
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             [FromRoute][Required] Guid articleId,
             [FromQuery][Required] bool isHidden,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             await Sender.Send(
                 request: new HideArticleCommand
@@ -695,8 +655,7 @@ namespace Espresso.WebApi.Controllers
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok();
         }
@@ -729,8 +688,7 @@ namespace Espresso.WebApi.Controllers
         public async Task<IActionResult> SetArticleFeaturedConfiguration(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             [FromBody][Required] IEnumerable<SetArticleFeaturedConfigurationRequestBody> requestBody,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             await Sender.Send(
                 request: new SetFeaturedArticleCommand
@@ -741,15 +699,12 @@ namespace Espresso.WebApi.Controllers
                             (
                                 articleId: featuredConfiguration.Id,
                                 isFeatured: featuredConfiguration.IsFeatured,
-                                featuredPosition: featuredConfiguration.FeaturedPosition
-                            )
-                        ),
+                                featuredPosition: featuredConfiguration.FeaturedPosition)),
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok();
         }
@@ -786,8 +741,7 @@ namespace Espresso.WebApi.Controllers
             [FromQuery] string? titleSearchQuery,
             [FromQuery] PaginationParameters paginationParameters,
             CancellationToken cancellationToken,
-            [FromQuery] string? keyWordsToFilterOut = null
-        )
+            [FromQuery] string? keyWordsToFilterOut = null)
         {
             var request = new AutoCompleteArticleQuery
             {

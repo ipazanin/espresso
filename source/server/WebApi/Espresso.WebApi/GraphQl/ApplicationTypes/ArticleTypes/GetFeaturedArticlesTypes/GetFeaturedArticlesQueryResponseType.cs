@@ -20,8 +20,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetFeaturedArtic
         {
             Name = nameof(GetFeaturedArticlesQueryResponse);
             Field<NonNullGraphType<ListGraphType<NonNullGraphType<GetFeaturedArticlesArticleType>>>>(
-                name: nameof(GetFeaturedArticlesQueryResponse.Articles)
-            );
+                name: nameof(GetFeaturedArticlesQueryResponse.Articles));
         }
     }
 }

@@ -19,20 +19,15 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetConfigu
         {
             Name = nameof(GetConfigurationCategory);
             Field<NonNullGraphType<IdGraphType>>(
-                name: nameof(GetConfigurationCategory.Id)
-            );
+                name: nameof(GetConfigurationCategory.Id));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetConfigurationCategory.Name)
-            );
+                name: nameof(GetConfigurationCategory.Name));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetConfigurationCategory.Color)
-            );
+                name: nameof(GetConfigurationCategory.Color));
             Field<NonNullGraphType<IntGraphType>>(
-                name: nameof(GetConfigurationCategory.CategoryType)
-            );
+                name: nameof(GetConfigurationCategory.CategoryType));
             Field<IntGraphType>(
-                name: nameof(GetConfigurationCategory.Position)
-            );
+                name: nameof(GetConfigurationCategory.Position));
         }
     }
 }

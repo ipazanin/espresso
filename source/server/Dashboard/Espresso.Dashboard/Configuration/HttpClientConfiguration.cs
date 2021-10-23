@@ -23,16 +23,14 @@ namespace Espresso.Dashboard.Configuration
         /// Gets hTTP Client Timeout.
         /// </summary>
         public TimeSpan Timeout => TimeSpan.FromSeconds(
-            _configurationSection.GetValue<int>("TimeoutInSeconds")
-        );
+            _configurationSection.GetValue<int>("TimeoutInSeconds"));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpClientConfiguration"/> class.
         /// </summary>
         /// <param name="configurationSection">Part of app configuration.</param>
         public HttpClientConfiguration(
-            IConfigurationSection configurationSection
-        )
+            IConfigurationSection configurationSection)
         {
             _configurationSection = configurationSection;
         }

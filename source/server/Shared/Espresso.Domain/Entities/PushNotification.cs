@@ -63,8 +63,7 @@ namespace Espresso.Domain.Entities
             string topic,
             string articleUrl,
             bool isSoundEnabled,
-            DateTime createdAt
-        )
+            DateTime createdAt)
         {
             Id = id;
             InternalName = internalName;

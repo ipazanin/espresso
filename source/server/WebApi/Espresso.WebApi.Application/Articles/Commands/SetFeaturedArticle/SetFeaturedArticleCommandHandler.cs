@@ -28,8 +28,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.SetFeaturedArticle
         /// <param name="context"></param>
         public SetFeaturedArticleCommandHandler(
             IMemoryCache memoryCache,
-            IEspressoDatabaseContext context
-        )
+            IEspressoDatabaseContext context)
         {
             _memoryCache = memoryCache;
             _context = context;
@@ -37,8 +36,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.SetFeaturedArticle
 
         public async Task<Unit> Handle(
             SetFeaturedArticleCommand request,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var memoryCacheArticles = _memoryCache
                 .Get<IEnumerable<Article>>(key: MemoryCacheConstants.ArticleKey)
@@ -57,8 +55,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.SetFeaturedArticle
                 {
                     throw new NotFoundException(
                         typeName: nameof(Article),
-                        id: articleId.ToString()
-                    );
+                        id: articleId.ToString());
                 }
 
                 databaseArticle.SetIsFeaturedValue(isFeatured, featuredPosition);
@@ -73,8 +70,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.SetFeaturedArticle
             await _context.SaveChangesAsync(cancellationToken: default);
             _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
-                value: memoryCacheArticles.Values.ToList()
-            );
+                value: memoryCacheArticles.Values.ToList());
 
             return Unit.Value;
         }

@@ -44,8 +44,7 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
             IMemoryCache memoryCache,
             IJsonService jsonService,
             ISlackService slackService,
-            ApplicationInformation applicationInformation
-        )
+            ApplicationInformation applicationInformation)
         {
             _espressoDatabaseContext = espressoDatabaseContext;
             _memoryCache = memoryCache;
@@ -118,8 +117,7 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
                 topic: request.Topic,
                 articleUrl: request.ArticleUrl,
                 isSoundEnabled: request.IsSoundEnabled,
-                createdAt: DateTime.UtcNow
-            );
+                createdAt: DateTime.UtcNow);
 
             _espressoDatabaseContext.PushNotifications.Add(pushNotification);
             await _espressoDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
@@ -127,8 +125,7 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
             await _slackService.LogPushNotification(
                 pushNotification: pushNotification,
                 article: pushNotificationArticle,
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Unit.Value;
         }

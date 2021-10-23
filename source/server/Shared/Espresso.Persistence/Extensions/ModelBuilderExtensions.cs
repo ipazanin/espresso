@@ -23,8 +23,7 @@ namespace Espresso.Persistence.Extensions
         /// <param name="configurationsAssembly">Assembly.</param>
         public static void ApplyAllConfigurations(
             this ModelBuilder modelBuilder,
-            Assembly configurationsAssembly
-        )
+            Assembly configurationsAssembly)
         {
             var applyConfigurationMethodInfo = modelBuilder
                 .GetType()
@@ -39,25 +38,18 @@ namespace Espresso.Persistence.Extensions
                         assemblyType,
                         iEntityTypeConfigurationInterface: Array.Find(
                             array: assemblyType.GetInterfaces(),
-                            match: i => i.Name.Equals(typeof(IEntityTypeConfiguration<>).Name, StringComparison.Ordinal)
-                        )
-                    )
-                )
+                            match: i => i.Name.Equals(typeof(IEntityTypeConfiguration<>).Name, StringComparison.Ordinal))))
                 .Where(assemblyTypeAndInterface => assemblyTypeAndInterface.iEntityTypeConfigurationInterface != null)
                 .Select(
                     assemblyTypeAndInterface =>
                     (
                         genericArgument: assemblyTypeAndInterface.iEntityTypeConfigurationInterface!.GetGenericArguments()[0],
-                        configurationObject: Activator.CreateInstance(assemblyTypeAndInterface.assemblyType)
-                    )
-                )
+                        configurationObject: Activator.CreateInstance(assemblyTypeAndInterface.assemblyType)))
                 .Select(
                     genericArgumentAndConfigurationObject =>
                         applyConfigurationMethodInfo
                             .MakeGenericMethod(genericArgumentAndConfigurationObject.genericArgument)
-                            .Invoke(modelBuilder, new[] { genericArgumentAndConfigurationObject.configurationObject }
-                        )
-                )
+                            .Invoke(modelBuilder, new[] { genericArgumentAndConfigurationObject.configurationObject }))
                 .ToList();
         }
     }

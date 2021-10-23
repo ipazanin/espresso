@@ -39,8 +39,7 @@ namespace Espresso.Dashboard.Services
             string queueName,
             int port,
             string username,
-            string password
-        )
+            string password)
         {
             _jsonService = jsonService;
             _hostName = hostName;
@@ -53,8 +52,7 @@ namespace Espresso.Dashboard.Services
         public async Task SendArticlesMessage(
             IEnumerable<Article> createArticles,
             IEnumerable<Article> updateArticles,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             if (!createArticles.Any() && !updateArticles.Any())
             {
@@ -64,8 +62,7 @@ namespace Espresso.Dashboard.Services
             var articlesBodyUtf8Bytes = await GetMessageBody(
                 createArticles: createArticles,
                 updateArticles: updateArticles,
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             var factory = new ConnectionFactory()
             {
@@ -84,22 +81,19 @@ namespace Espresso.Dashboard.Services
                 exchange: string.Empty,
                 routingKey: _queueName,
                 basicProperties: properties,
-                body: articlesBodyUtf8Bytes
-            );
+                body: articlesBodyUtf8Bytes);
         }
 
         private async Task<byte[]> GetMessageBody(
             IEnumerable<Article> createArticles,
             IEnumerable<Article> updateArticles,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var articleDtoProjection = ArticleDto.GetProjection().Compile();
 
             var data = new ArticlesBodyDto(
                 createdArticles: createArticles.Select(articleDtoProjection),
-                updatedArticles: updateArticles.Select(articleDtoProjection)
-            );
+                updatedArticles: updateArticles.Select(articleDtoProjection));
 
             var articlesBodyJson = await _jsonService.Serialize(data, cancellationToken);
             var articlesBodyUtf8Bytes = Encoding.UTF8.GetBytes(articlesBodyJson);

@@ -1,11 +1,4 @@
 ﻿{
-  "CronJobsConfiguration": {
-    "AnalyticsCronExpression": "1 1 * * *",
-    "WebApiReportCronExpression": "1 1 * * *"
-  },
-  "DateTimeConfiguration": {
-    "MaxAgeOfArticlesInDays": 1
-  },
   "SpaConfiguration": {
     "SpaProxyServerUrl": "http://docker.for.mac.localhost:3000",
     "UseSpaProxyServer": false

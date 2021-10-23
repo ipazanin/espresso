@@ -33,8 +33,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="webApiConfiguration"></param>
         public NewsPortalsController(
             ISender sender,
-            IWebApiConfiguration webApiConfiguration
-        )
+            IWebApiConfiguration webApiConfiguration)
             : base(sender, webApiConfiguration)
         {
         }
@@ -69,8 +68,7 @@ namespace Espresso.WebApi.Controllers
         [Route("api/newsportals")]
         public async Task<IActionResult> GetNewsPortals(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var getNewsPortalsQueryResponse = await Sender.Send(
                 request: new GetNewsPortalsQuery
@@ -79,8 +77,7 @@ namespace Espresso.WebApi.Controllers
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok(getNewsPortalsQueryResponse);
         }
@@ -113,8 +110,7 @@ namespace Espresso.WebApi.Controllers
         [Route("api/newsportals")]
         public async Task<IActionResult> GetNewsPortals_1_3(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var getNewsPortalsQueryResponse = await Sender.Send(
                 request: new GetNewsPortalsQuery_1_3
@@ -123,8 +119,7 @@ namespace Espresso.WebApi.Controllers
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok(getNewsPortalsQueryResponse);
         }
@@ -161,8 +156,7 @@ namespace Espresso.WebApi.Controllers
         public async Task<IActionResult> RequestNewsPortal(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             [FromBody] RequestNewsPortalRequestBody requestNewsPortalRequestObject,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var getNewsPortalsQueryResponse = await Sender.Send(
                 request: new NewsSourcesRequestCommand
@@ -174,8 +168,7 @@ namespace Espresso.WebApi.Controllers
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok(getNewsPortalsQueryResponse);
         }

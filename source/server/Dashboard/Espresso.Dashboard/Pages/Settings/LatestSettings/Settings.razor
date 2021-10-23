@@ -1,0 +1,64 @@
+@page "/settings"
+@inherits SettingsBase
+
+<div class="container">
+    <div class="row m-2 ml-0 mr-0">
+        <div class="col-md-5">
+            <div class="project-info-box">
+                <h5><strong>Current Settings</strong></h5>
+            </div>
+            <div class="project-info-box">
+                <p class="m-0 p-0"><b>Created:</b> <span class="float-right">@(SettingProvider.LatestSetting.Created.Date.ToShortDateString())</span></p>
+                <p class="m-0 p-0"><b>Revision:</b> <span class="float-right">@(SettingProvider.LatestSetting.SettingsRevision)</span></p>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row m-2 ml-0 mr-0">
+        <div class="col-md-6">
+            <div class="project-info-box">
+                <h5><strong>Simillar Articles Settings</strong></h5>
+            </div>
+            <div class="project-info-box">
+                <p class="m-0 p-0"><b>Max duration between two similar articles [hours]:</b> <span class="float-right">@(SettingProvider.LatestSetting.SimilarArticleSetting.ArticlePublishDateTimeDifferenceThreshold.TotalHours)</span></p>
+                <p class="m-0 p-0"><b>Max age for which to search similar articles [hours]:</b> <span class="float-right">@(SettingProvider.LatestSetting.SimilarArticleSetting.MaxAgeOfSimilarArticleChecking.TotalHours)</span></p>
+                <p class="m-0 p-0"><b>Minimal number of words requirement:</b> <span class="float-right">@(SettingProvider.LatestSetting.SimilarArticleSetting.MinimalNumberOfWordsForArticleToBeComparable)</span></p>
+                <p class="m-0 p-0"><b>Similarity score threshold (0-1):</b> <span class="float-right">@(SettingProvider.LatestSetting.SimilarArticleSetting.SimilarityScoreThreshold)</span></p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="project-info-box">
+                <h5><strong>Article Settings</strong></h5>
+            </div>
+            <div class="project-info-box">
+                <p class="m-0 p-0"><b>Number of featured articles:</b> <span class="float-right">@(SettingProvider.LatestSetting.ArticleSetting.FeaturedArticlesTake)</span></p>
+                <p class="m-0 p-0"><b>Max age of article [days]:</b> <span class="float-right">@(SettingProvider.LatestSetting.ArticleSetting.MaxAgeOfArticle.TotalDays)</span></p>
+                <p class="m-0 p-0"><b>May age of featured articles [hours]:</b> <span class="float-right">@(SettingProvider.LatestSetting.ArticleSetting.MaxAgeOfFeaturedArticle.TotalHours)</span></p>
+                <p class="m-0 p-0"><b>May age of trending articles [hours]:</b> <span class="float-right">@(SettingProvider.LatestSetting.ArticleSetting.MaxAgeOfTrendingArticle.TotalHours)</span></p>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row m-2 ml-0 mr-0">
+        <div class="col-md-6">
+            <div class="project-info-box">
+                <h5><strong>Jobs Settings</strong></h5>
+            </div>
+            <div class="project-info-box">
+                <p class="m-0 p-0"><b>Analytics (marketing-bot) job cron expression:</b> <span class="float-right">@(SettingProvider.LatestSetting.JobsSetting.AnalyticsCronExpression)</span></p>
+                <p class="m-0 p-0"><b>Parse articles job cron expression:</b> <span class="float-right">@(SettingProvider.LatestSetting.JobsSetting.ParseArticlesCronExpression)</span></p>
+                <p class="m-0 p-0"><b>Report (backend-statistics) job cron expression:</b> <span class="float-right">@(SettingProvider.LatestSetting.JobsSetting.WebApiReportCronExpression)</span></p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="project-info-box">
+                <h5><strong>NewsPortal (source) Settings</strong></h5>
+            </div>
+            <div class="project-info-box">
+                <p class="m-0 p-0"><b>Max age of new news portal [days]:</b> <span class="float-right">@(SettingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal.TotalDays)</span></p>
+                <p class="m-0 p-0"><b>New news portal position (in applications):</b> <span class="float-right">@(SettingProvider.LatestSetting.NewsPortalSetting.NewNewsPortalsPosition)</span></p>
+            </div>
+        </div>
+    </div>
+</div>

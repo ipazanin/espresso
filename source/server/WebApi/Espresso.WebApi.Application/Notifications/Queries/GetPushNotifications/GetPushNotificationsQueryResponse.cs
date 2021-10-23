@@ -15,8 +15,7 @@ namespace Espresso.WebApi.Application.Notifications.Queries.GetPushNotifications
         /// </summary>
         /// <param name="pushNotifications"></param>
         public GetPushNotificationsQueryResponse(
-            IEnumerable<GetPushNotificationsPushNotification> pushNotifications
-        )
+            IEnumerable<GetPushNotificationsPushNotification> pushNotifications)
         {
             PushNotifications = pushNotifications;
         }

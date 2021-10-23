@@ -28,8 +28,7 @@ namespace Espresso.Application.Services.Contracts
             string eventName,
             string message,
             Exception exception,
-            CancellationToken cancellationToken
-        );
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Send application downloads statistics to slack.
@@ -49,8 +48,7 @@ namespace Espresso.Application.Services.Contracts
             int totalIosCount,
             int activeUsers,
             decimal revenue,
-            CancellationToken cancellationToken
-        );
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Send missing categories to slack.
@@ -64,8 +62,7 @@ namespace Espresso.Application.Services.Contracts
             string rssFeedUrl,
             string articleUrl,
             string urlCategories,
-            CancellationToken cancellationToken
-        );
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Send news portal request slack.
@@ -79,8 +76,7 @@ namespace Espresso.Application.Services.Contracts
             string newsPortalName,
             string email,
             string? url,
-            CancellationToken cancellationToken
-        );
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Send yesterdays statistics to slack.
@@ -96,8 +92,7 @@ namespace Espresso.Application.Services.Contracts
             int totalNumberOfClicks,
             IEnumerable<(NewsPortal newsPortal, int numberOfClicks, IEnumerable<Article> articles)> topNewsPortals,
             IEnumerable<(Category category, int numberOfClicks, IEnumerable<Article> articles)> categoriesWithNumberOfClicks,
-            CancellationToken cancellationToken
-        );
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Send push notification to slack.
@@ -109,8 +104,7 @@ namespace Espresso.Application.Services.Contracts
         public Task LogPushNotification(
             PushNotification pushNotification,
             Article article,
-            CancellationToken cancellationToken
-        );
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Sends message to slack.
@@ -120,7 +114,6 @@ namespace Espresso.Application.Services.Contracts
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         public Task SendToSlack(
             SlackWebHookRequestBodyDto data,
-            CancellationToken cancellationToken
-        );
+            CancellationToken cancellationToken);
     }
 }

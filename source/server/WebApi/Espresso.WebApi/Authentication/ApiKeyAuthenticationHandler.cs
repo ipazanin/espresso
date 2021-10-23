@@ -46,14 +46,12 @@ namespace Espresso.WebApi.Authentication
             UrlEncoder encoder,
             ISystemClock clock,
             IApiKeyProvider apiKeyProvider,
-            IJsonService jsonService
-        )
+            IJsonService jsonService)
             : base(
             options: options,
             logger: logger,
             encoder: encoder,
-            clock: clock
-        )
+            clock: clock)
         {
             _apiKeyProvider = apiKeyProvider;
             _jsonService = jsonService;
@@ -65,8 +63,7 @@ namespace Espresso.WebApi.Authentication
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             if (!Request.Headers.TryGetValue(HttpHeaderConstants.ApiKeyHeaderName, out var apiKeyHeaderValues) &&
-                !Request.Headers.TryGetValue(ApiKeyHeaderNameVersion1_2, out apiKeyHeaderValues)
-            )
+                !Request.Headers.TryGetValue(ApiKeyHeaderNameVersion1_2, out apiKeyHeaderValues))
             {
                 return AuthenticateResult.NoResult();
             }
@@ -111,8 +108,7 @@ namespace Espresso.WebApi.Authentication
                 innerExceptionMessage: null,
                 exceptionStackTrace: null,
                 innerExceptionStackTrace: null,
-                errors: null
-            );
+                errors: null);
 
             var json = await _jsonService.Serialize(exceptionDto, default);
 
@@ -132,8 +128,7 @@ namespace Espresso.WebApi.Authentication
                 innerExceptionMessage: null,
                 exceptionStackTrace: null,
                 innerExceptionStackTrace: null,
-                errors: null
-            );
+                errors: null);
 
             var json = await _jsonService.Serialize(exceptionDto, default);
 

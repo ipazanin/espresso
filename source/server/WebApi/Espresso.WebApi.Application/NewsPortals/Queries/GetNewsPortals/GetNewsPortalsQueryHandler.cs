@@ -21,8 +21,7 @@ namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals
         /// </summary>
         /// <param name="context"></param>
         public GetNewsPortalsQueryHandler(
-            IEspressoDatabaseContext context
-        )
+            IEspressoDatabaseContext context)
         {
             _context = context;
         }

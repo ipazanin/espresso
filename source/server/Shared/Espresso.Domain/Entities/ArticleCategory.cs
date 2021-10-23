@@ -39,8 +39,7 @@ namespace Espresso.Domain.Entities
             Guid articleId,
             int categoryId,
             Article? article,
-            Category? category
-        )
+            Category? category)
         {
             Id = id;
             ArticleId = articleId;

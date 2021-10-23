@@ -37,19 +37,7 @@ namespace Espresso.WebApi.Configuration
         ///
         /// </summary>
         /// <value></value>
-        public DateTimeConfiguration DateTimeConfiguration { get; }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <value></value>
         public TrendingScoreConfiguration TrendingScoreConfiguration { get; }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <value></value>
-        public CronJobsConfiguration CronJobsConfiguration { get; }
 
         /// <summary>
         ///

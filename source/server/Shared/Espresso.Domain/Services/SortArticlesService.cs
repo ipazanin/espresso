@@ -6,7 +6,6 @@ using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -19,11 +18,9 @@ namespace Espresso.Domain.Services
             IEnumerable<Article> createdArticles,
             IEnumerable<(Article article, IEnumerable<string> modifiedProperties)> updatedArticlesWithModifiedProperties,
             IEnumerable<ArticleCategory> createArticleCategories,
-            IEnumerable<ArticleCategory> deleteArticleCategories
-        ) SortArticles(
+            IEnumerable<ArticleCategory> deleteArticleCategories) SortArticles(
             IEnumerable<Article> articles,
-            IDictionary<Guid, Article> savedArticles
-        )
+            IDictionary<Guid, Article> savedArticles)
         {
             var createArticles = new List<Article>();
             var updatedArticlesWithModifiedProperties = new List<(Article article, IEnumerable<string> modifiedProperties)>();
@@ -46,8 +43,7 @@ namespace Espresso.Domain.Services
                 if (
                     savedArticlesArticleIdDictionary.TryGetValue((article.NewsPortalId, article.Url), out var savedArticleId) ||
                     savedArticlesTitleDictionary.TryGetValue((article.NewsPortalId, article.Title), out savedArticleId) ||
-                    savedArticlesSummaryDictionary.TryGetValue((article.NewsPortalId, article.Summary), out savedArticleId)
-                )
+                    savedArticlesSummaryDictionary.TryGetValue((article.NewsPortalId, article.Summary), out savedArticleId))
                 {
                     var savedArticle = savedArticles[savedArticleId];
                     var (shouldUpdate, articleCategoriesToCreate, articleCategoriesToDelete, modifiedProperties) = savedArticle.Update(article);
@@ -84,8 +80,7 @@ namespace Espresso.Domain.Services
                 if (
                     articleIdArticleDictionary.TryGetValue((article.NewsPortalId, article.Url), out var alreadyParsedArticleId) ||
                     titleArticleDictionary.TryGetValue((article.NewsPortalId, article.Title), out alreadyParsedArticleId) ||
-                    summaryArticleDictionary.TryGetValue((article.NewsPortalId, article.Summary), out alreadyParsedArticleId)
-                )
+                    summaryArticleDictionary.TryGetValue((article.NewsPortalId, article.Summary), out alreadyParsedArticleId))
                 {
                     if (uniqueArticles.TryGetValue(alreadyParsedArticleId, out var parsedArticle))
                     {

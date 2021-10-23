@@ -21,7 +21,6 @@ namespace Espresso.Domain.IServices
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public Task<Channel<RssFeedItem>> ParseRssFeeds(
             IEnumerable<RssFeed> rssFeeds,
-            CancellationToken cancellationToken
-        );
+            CancellationToken cancellationToken);
     }
 }

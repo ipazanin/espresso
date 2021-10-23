@@ -30,13 +30,11 @@ namespace Espresso.Domain.Services
         public void Log(
             string eventName,
             LogLevel logLevel,
-            IEnumerable<(string argumentName, object argumentValue)>? namedArguments = null
-        )
+            IEnumerable<(string argumentName, object argumentValue)>? namedArguments = null)
         {
             var count = 0;
             var messageBuilder = new StringBuilder(
-                $"{AnsiUtility.EncodeEventName(count++)}\n\t"
-            );
+                $"{AnsiUtility.EncodeEventName(count++)}\n\t");
             var defaultArguments = new List<object>
             {
                 eventName,
@@ -46,8 +44,7 @@ namespace Espresso.Domain.Services
                 messageBuilder,
                 namedArguments,
                 defaultArguments,
-                count
-            );
+                count);
 
             Log(message, loggerArguments, logLevel, null);
         }
@@ -56,14 +53,12 @@ namespace Espresso.Domain.Services
             string eventName,
             string errorMessage,
             LogLevel logLevel,
-            IEnumerable<(string argumentName, object argumentValue)>? namedArguments = null
-        )
+            IEnumerable<(string argumentName, object argumentValue)>? namedArguments = null)
         {
             var count = 0;
             var messageBuilder = new StringBuilder(
                 $"{AnsiUtility.EncodeEventName(count++)}\n\t" +
-                $"{AnsiUtility.EncodeParameterName("Exception Message")}: {AnsiUtility.EncodeErrorMessage(count++)}\n\t"
-            );
+                $"{AnsiUtility.EncodeParameterName("Exception Message")}: {AnsiUtility.EncodeErrorMessage(count++)}\n\t");
             var defaultArguments = new List<object>
             {
                 eventName,
@@ -74,8 +69,7 @@ namespace Espresso.Domain.Services
                 messageBuilder,
                 namedArguments,
                 defaultArguments,
-                count
-            );
+                count);
 
             Log(message, loggerArguments, logLevel, null);
         }
@@ -84,15 +78,13 @@ namespace Espresso.Domain.Services
             string eventName,
             Exception exception,
             LogLevel logLevel,
-            IEnumerable<(string argumentName, object argumentValue)>? namedArguments = null
-        )
+            IEnumerable<(string argumentName, object argumentValue)>? namedArguments = null)
         {
             var count = 0;
             var messageBuilder = new StringBuilder(
                 $"{AnsiUtility.EncodeEventName(count++)}\n\t" +
                 $"{AnsiUtility.EncodeParameterName("Exception Message")}: {AnsiUtility.EncodeErrorMessage(count++)}\n\t" +
-                $"{AnsiUtility.EncodeParameterName("Inner Exception Message")}: {AnsiUtility.EncodeErrorMessage(count++)}\n\t"
-            );
+                $"{AnsiUtility.EncodeParameterName("Inner Exception Message")}: {AnsiUtility.EncodeErrorMessage(count++)}\n\t");
             var defaultArguments = new List<object>
             {
                 eventName,
@@ -104,8 +96,7 @@ namespace Espresso.Domain.Services
                 messageBuilder,
                 namedArguments,
                 defaultArguments,
-                count
-            );
+                count);
 
             Log(message, loggerArguments, logLevel, exception);
         }
@@ -114,8 +105,7 @@ namespace Espresso.Domain.Services
             StringBuilder messageBuilder,
             IEnumerable<(string argumentName, object argumentValue)>? arguments,
             IList<object> args,
-            int count
-        )
+            int count)
         {
             if (arguments is not null)
             {

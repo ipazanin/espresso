@@ -62,8 +62,7 @@ namespace Espresso.Dashboard.Application.Services
 
         public string? GetImageUrlFromSrcAttribute(
             HtmlNodeCollection elementTags,
-            string attributeName
-        )
+            string attributeName)
         {
             var imageUrls = elementTags.Select(imgTag => imgTag?.GetAttributeValue(attributeName, null));
             var imageUrl = imageUrls.FirstOrDefault();

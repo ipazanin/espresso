@@ -12,7 +12,6 @@ using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -38,8 +37,7 @@ namespace Espresso.Dashboard.Application.Services
         /// <param name="loggerService"></param>
         public LoadRssFeedsService(
             IHttpClientFactory httpClientFactory,
-            ILoggerService<LoadRssFeedsService> loggerService
-        )
+            ILoggerService<LoadRssFeedsService> loggerService)
         {
             _httpClient = httpClientFactory.CreateClient(HttpClientConstants.LoadRssFeedsHttpClientName);
             _loggerService = loggerService;
@@ -47,8 +45,7 @@ namespace Espresso.Dashboard.Application.Services
 
         public async Task<Channel<RssFeedItem>> ParseRssFeeds(
             IEnumerable<RssFeed> rssFeeds,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var rssFeedItemsChannel = Channel.CreateUnbounded<RssFeedItem>();
             var writer = rssFeedItemsChannel.Writer;
@@ -88,8 +85,7 @@ namespace Espresso.Dashboard.Application.Services
                                 Content = (
                                         syndicationItem.Content is TextSyndicationContent ?
                                         syndicationItem.Content as TextSyndicationContent
-                                        : null
-                                    )
+                                        : null)
                                     ?.Text,
                                 PublishDateTime = syndicationItem.PublishDate.DateTime,
                                 ElementExtensions = syndicationItem
@@ -137,8 +133,7 @@ namespace Espresso.Dashboard.Application.Services
             var modifiedFeedContent = rssFeed.ModifyContent(feedContent);
 
             var reader = XmlReader.Create(
-                input: new StringReader(modifiedFeedContent)
-            );
+                input: new StringReader(modifiedFeedContent));
             var feed = SyndicationFeed.Load(reader);
 
             return feed;

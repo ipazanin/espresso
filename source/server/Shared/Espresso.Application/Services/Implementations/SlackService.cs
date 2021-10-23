@@ -72,8 +72,7 @@ namespace Espresso.Application.Services.Implementations
             ILoggerService<SlackService> loggerService,
             IJsonService jsonService,
             string webHookUrl,
-            ApplicationInformation applicationInformation
-        )
+            ApplicationInformation applicationInformation)
         {
             _memoryCache = memoryCache;
             _httpClientFactory = httpClientFactory;
@@ -88,8 +87,7 @@ namespace Espresso.Application.Services.Implementations
             string eventName,
             string message,
             Exception exception,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var exceptionMessage = exception.Message;
             var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
@@ -105,10 +103,8 @@ namespace Espresso.Application.Services.Implementations
                     iconEmoji: ErrorsBotIconEmoji,
                     text: text,
                     channel: ErrorsChannel,
-                    blocks: Array.Empty<SlackBlock>()
-                ),
-                cancellationToken: cancellationToken
-            );
+                    blocks: Array.Empty<SlackBlock>()),
+                cancellationToken: cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -119,8 +115,7 @@ namespace Espresso.Application.Services.Implementations
             int totalIosCount,
             int activeUsers,
             decimal revenue,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var blocks = new List<SlackBlock>
             {
@@ -141,9 +136,7 @@ namespace Espresso.Application.Services.Implementations
                     },
                     accessory: new SlackImageBlock(
                         imageUrl: "https://aux.iconspalace.com/uploads/download-icon-256-361231194.png",
-                        altText: "Downloads Icon"
-                    )
-                ),
+                        altText: "Downloads Icon")),
                 new SlackDividerBlock(),
                 new SlackTextFieldsImageSectionBlock(
                     text: new SlackMarkdownTextBlock("Active Users:"),
@@ -153,9 +146,7 @@ namespace Espresso.Application.Services.Implementations
                     },
                     accessory: new SlackImageBlock(
                         imageUrl: "https://cdn1.iconfinder.com/data/icons/ui-colored-3-of-3/100/UI_3__23-512.png",
-                        altText: "Active Users Icon"
-                    )
-                ),
+                        altText: "Active Users Icon")),
                 new SlackDividerBlock(),
                 new SlackTextFieldsImageSectionBlock(
                     text: new SlackMarkdownTextBlock("Revenue:"),
@@ -165,9 +156,7 @@ namespace Espresso.Application.Services.Implementations
                     },
                     accessory: new SlackImageBlock(
                         imageUrl: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency/256/Dollar-USD-icon.png",
-                        altText: "Revenue Icon"
-                    )
-                ),
+                        altText: "Revenue Icon")),
             };
 
             return SendToSlack(
@@ -176,10 +165,8 @@ namespace Espresso.Application.Services.Implementations
                     iconEmoji: MarketingBotIconEmoji,
                     text: "Analytics Data",
                     channel: MarketingBitChannel,
-                    blocks: blocks
-                ),
-                cancellationToken: cancellationToken
-            );
+                    blocks: blocks),
+                cancellationToken: cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -187,8 +174,7 @@ namespace Espresso.Application.Services.Implementations
             string rssFeedUrl,
             string articleUrl,
             string urlCategories,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var text = ":blue_book: Request Name: Missing Categories\n" +
                 $":email: Rss Feed Url: {rssFeedUrl}\n" +
@@ -201,10 +187,8 @@ namespace Espresso.Application.Services.Implementations
                     iconEmoji: MissingCategoriesErrorsBotIconEmoji,
                     text: text,
                     channel: MissingCategoriesErrorsChannel,
-                    blocks: Array.Empty<SlackBlock>()
-                ),
-                cancellationToken: cancellationToken
-            );
+                    blocks: Array.Empty<SlackBlock>()),
+                cancellationToken: cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -212,8 +196,7 @@ namespace Espresso.Application.Services.Implementations
             string newsPortalName,
             string email,
             string? url,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var text = "There’s a request for new source\n" +
                 $"Source Name: {newsPortalName}\n" +
@@ -226,10 +209,8 @@ namespace Espresso.Application.Services.Implementations
                     iconEmoji: NewNewsPortalRequestBotIconEmoji,
                     text: text,
                     channel: NewNewsPortalRequestChannel,
-                    blocks: Array.Empty<SlackBlock>()
-                ),
-                cancellationToken: cancellationToken
-            );
+                    blocks: Array.Empty<SlackBlock>()),
+                cancellationToken: cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -238,8 +219,7 @@ namespace Espresso.Application.Services.Implementations
             int totalNumberOfClicks,
             IEnumerable<(NewsPortal newsPortal, int numberOfClicks, IEnumerable<Article> articles)> topNewsPortals,
             IEnumerable<(Category category, int numberOfClicks, IEnumerable<Article> articles)> categoriesWithNumberOfClicks,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var blocks = new List<SlackBlock>
             {
@@ -267,9 +247,7 @@ namespace Espresso.Application.Services.Implementations
                     },
                     accessory: new SlackImageBlock(
                         imageUrl: article.ImageUrl ?? article.NewsPortal?.IconUrl ?? "https://via.placeholder.com/350x150.jpg",
-                        altText: "article image"
-                    )
-                );
+                        altText: "article image"));
 
                 blocks.Add(articleBlock);
                 blocks.Add(new SlackDividerBlock());
@@ -281,18 +259,15 @@ namespace Espresso.Application.Services.Implementations
                     iconEmoji: BackendStatisticsBotIconEmoji,
                     text: "Articles",
                     channel: BackendStatisticsChannel,
-                    blocks: blocks
-                ),
-                cancellationToken: cancellationToken
-            );
+                    blocks: blocks),
+                cancellationToken: cancellationToken);
         }
 
         /// <inheritdoc/>
         public Task LogPushNotification(
             PushNotification pushNotification,
             Article article,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var blocks = new List<SlackBlock>
             {
@@ -312,9 +287,7 @@ namespace Espresso.Application.Services.Implementations
                     },
                     accessory: new SlackImageBlock(
                         imageUrl: article.ImageUrl ?? "https://via.placeholder.com/350x150.jpg",
-                        altText: "article image"
-                    )
-                ),
+                        altText: "article image")),
             };
 
             return SendToSlack(
@@ -323,16 +296,13 @@ namespace Espresso.Application.Services.Implementations
                     iconEmoji: PushNotificationBotIconEmoji,
                     text: "PushNotification",
                     channel: PushNotificationChannel,
-                    blocks: blocks
-                ),
-                cancellationToken: cancellationToken
-            );
+                    blocks: blocks),
+                cancellationToken: cancellationToken);
         }
 
         public async Task SendToSlack(
             SlackWebHookRequestBodyDto data,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             if (!_applicationInformation.AppEnvironment.Equals(AppEnvironment.Prod))
             {
@@ -352,8 +322,7 @@ namespace Espresso.Application.Services.Implementations
                     var response = await httpClient.PostAsync(
                         requestUri: _webHookUrl,
                         content: content,
-                        cancellationToken: cancellationToken
-                    );
+                        cancellationToken: cancellationToken);
 
                     response.EnsureSuccessStatusCode();
                 }

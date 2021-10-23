@@ -21,8 +21,7 @@ namespace Espresso.WebApi.Authentication
         /// </summary>
         /// <param name="configuration"></param>
         public InMemoryApiKeyProvider(
-            IWebApiConfiguration configuration
-        )
+            IWebApiConfiguration configuration)
         {
             _apiKeys = new Dictionary<string, ApiKey>
             {
@@ -31,48 +30,42 @@ namespace Espresso.WebApi.Authentication
                     new ApiKey(
                         id: 1,
                         role: ApiKey.MobileAppRole,
-                        key: configuration.ApiKeysConfiguration.AndroidApiKey
-                    )
+                        key: configuration.ApiKeysConfiguration.AndroidApiKey)
                 },
                 {
                     configuration.ApiKeysConfiguration.IosApiKey,
                     new ApiKey(
                         id: 2,
                         role: ApiKey.MobileAppRole,
-                        key: configuration.ApiKeysConfiguration.IosApiKey
-                    )
+                        key: configuration.ApiKeysConfiguration.IosApiKey)
                 },
                 {
                     configuration.ApiKeysConfiguration.WebApiKey,
                     new ApiKey(
                         id: 3,
                         role: ApiKey.WebAppRole,
-                        key: configuration.ApiKeysConfiguration.WebApiKey
-                    )
+                        key: configuration.ApiKeysConfiguration.WebApiKey)
                 },
                 {
                     configuration.ApiKeysConfiguration.ParserApiKey,
                     new ApiKey(
                         id: 4,
                         role: ApiKey.ParserRole,
-                        key: configuration.ApiKeysConfiguration.ParserApiKey
-                    )
+                        key: configuration.ApiKeysConfiguration.ParserApiKey)
                 },
                 {
                     configuration.ApiKeysConfiguration.DevAndroidApiKey,
                     new ApiKey(
                         id: 5,
                         role: ApiKey.DevMobileAppRole,
-                        key: configuration.ApiKeysConfiguration.DevAndroidApiKey
-                    )
+                        key: configuration.ApiKeysConfiguration.DevAndroidApiKey)
                 },
                 {
                     configuration.ApiKeysConfiguration.DevIosApiKey,
                     new ApiKey(
                         id: 6,
                         role: ApiKey.DevMobileAppRole,
-                        key: configuration.ApiKeysConfiguration.DevIosApiKey
-                    )
+                        key: configuration.ApiKeysConfiguration.DevIosApiKey)
                 },
             };
         }

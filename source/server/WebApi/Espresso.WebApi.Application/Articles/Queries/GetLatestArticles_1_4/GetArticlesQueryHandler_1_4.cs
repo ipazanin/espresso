@@ -6,6 +6,7 @@ using Espresso.Common.Constants;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Extensions;
+using Espresso.Domain.Infrastructure;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using System;
@@ -20,30 +21,28 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4
         IRequestHandler<GetLatestArticlesQuery_1_4, GetLatestArticlesQueryResponse_1_4>
     {
         private readonly IMemoryCache _memoryCache;
+        private readonly ISettingProvider _settingProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetArticlesQueryHandler_1_4"/> class.
         /// </summary>
         /// <param name="memoryCache"></param>
-        public GetArticlesQueryHandler_1_4(
-            IMemoryCache memoryCache
-        )
+        /// <param name="settingProvider"></param>
+        public GetArticlesQueryHandler_1_4(IMemoryCache memoryCache, ISettingProvider settingProvider)
         {
             _memoryCache = memoryCache;
+            _settingProvider = settingProvider;
         }
 
         public Task<GetLatestArticlesQueryResponse_1_4> Handle(
             GetLatestArticlesQuery_1_4 request,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var articles = _memoryCache.Get<IEnumerable<Article>>(
-                key: MemoryCacheConstants.ArticleKey
-            );
+                key: MemoryCacheConstants.ArticleKey);
 
             var firstArticle = articles.FirstOrDefault(
-                article => article.Id.Equals(request.FirstArticleId)
-            );
+                article => article.Id.Equals(request.FirstArticleId));
 
             var newsPortalIds = request.NewsPortalIds
                 ?.Replace(" ", string.Empty)
@@ -63,24 +62,21 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4
                     categoryIds: categoryIds,
                     newsPortalIds: newsPortalIds,
                     titleSearchTerm: request.TitleSearchQuery,
-                    articleCreateDateTime: firstArticle?.CreateDateTime
-                )
+                    articleCreateDateTime: firstArticle?.CreateDateTime)
                 .Skip(request.Skip)
                 .Take(request.Take)
                 .Select(GetLatestArticlesArticle_1_4.GetProjection().Compile());
 
             var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
-                key: MemoryCacheConstants.NewsPortalKey
-            );
+                key: MemoryCacheConstants.NewsPortalKey);
 
             var newsPortalDtos = newsPortals
                 .Where(
                     predicate: NewsPortal.GetLatestSugestedNewsPortalsPredicate(
                         newsPortalIds: newsPortalIds,
                         categoryIds: categoryIds,
-                        maxAgeOfNewNewsPortal: request.MaxAgeOfNewNewsPortal
-                    ).Compile()
-                )
+                        maxAgeOfNewNewsPortal: _settingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal)
+                    .Compile())
                 .Select(selector: GetLatestArticlesNewsPortal_1_4.GetProjection().Compile());
 
             var random = new Random();
@@ -88,8 +84,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4
             var response = new GetLatestArticlesQueryResponse_1_4
             {
                 Articles = articleDtos,
-                NewNewsPortals = newsPortalDtos.OrderBy(newsPortal => random.Next()),
-                NewNewsPortalsPosition = request.NewNewsPortalsPosition,
+                NewNewsPortals = newsPortalDtos.OrderBy(_ => random.Next()),
+                NewNewsPortalsPosition = _settingProvider.LatestSetting.NewsPortalSetting.NewNewsPortalsPosition,
             };
 
             return Task.FromResult(result: response);

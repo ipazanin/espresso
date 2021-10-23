@@ -12,10 +12,6 @@ namespace Espresso.Dashboard.Configuration
 
         public DatabaseConfiguration DatabaseConfiguration { get; }
 
-        public CronJobsConfiguration CronJobsConfiguration { get; }
-
-        public ArticleSimilarityConfiguration ArticleSimilarityConfiguration { get; }
-
         public RabbitMqConfiguration RabbitMqConfiguration { get; }
 
         public HttpClientConfiguration SlackHttpClientConfiguration { get; }

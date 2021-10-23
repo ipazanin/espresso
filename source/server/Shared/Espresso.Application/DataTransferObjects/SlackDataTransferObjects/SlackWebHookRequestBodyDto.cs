@@ -48,8 +48,7 @@ namespace Espresso.Application.DataTransferObjects.SlackDataTransferObjects
             string iconEmoji,
             string text,
             string channel,
-            IEnumerable<object> blocks
-        )
+            IEnumerable<object> blocks)
         {
             Username = userName;
             IconEmoji = iconEmoji;

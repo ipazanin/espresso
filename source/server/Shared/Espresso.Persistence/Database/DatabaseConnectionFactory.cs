@@ -19,8 +19,7 @@ namespace Espresso.Persistence.Database
         /// </summary>
         /// <param name="connectionString">Database connection string.</param>
         public DatabaseConnectionFactory(
-            string connectionString
-        )
+            string connectionString)
         {
             _connectionString = connectionString;
         }

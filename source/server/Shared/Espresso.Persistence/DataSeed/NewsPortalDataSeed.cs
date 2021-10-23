@@ -41,8 +41,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.DvadesetCetiriSata,
                     name: NewsPortalId.DvadesetCetiriSata.GetDisplayName(),
@@ -52,8 +51,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.SportskeNovosti,
                     name: NewsPortalId.SportskeNovosti.GetDisplayName(),
@@ -63,8 +61,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Sport,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.JutarnjiList,
                     name: NewsPortalId.JutarnjiList.GetDisplayName(),
@@ -74,8 +71,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.NetHr,
                     name: NewsPortalId.NetHr.GetDisplayName(),
@@ -85,8 +81,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.SlobodnaDalmacija,
                     name: NewsPortalId.SlobodnaDalmacija.GetDisplayName(),
@@ -96,8 +91,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.TPortal,
                     name: NewsPortalId.TPortal.GetDisplayName(),
@@ -107,8 +101,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.VecernjiList,
                     name: NewsPortalId.VecernjiList.GetDisplayName(),
@@ -118,8 +111,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Telegram,
                     name: NewsPortalId.Telegram.GetDisplayName(),
@@ -129,8 +121,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Dnevnik,
                     name: NewsPortalId.Dnevnik.GetDisplayName(),
@@ -140,8 +131,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Gol,
                     name: NewsPortalId.Gol.GetDisplayName(),
@@ -151,8 +141,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Sport,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
 
                 new NewsPortal(
                     id: (int)NewsPortalId.RtlVijesti,
@@ -163,8 +152,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.NogometPlus,
                     name: NewsPortalId.NogometPlus.GetDisplayName(),
@@ -174,8 +162,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Sport,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ), // Nemaju SLS LUL
+                    isEnabled: true), // Nemaju SLS LUL
                 new NewsPortal(
                     id: (int)NewsPortalId.Lider,
                     name: NewsPortalId.Lider.GetDisplayName(),
@@ -185,8 +172,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Biznis,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Bug,
                     name: NewsPortalId.Bug.GetDisplayName(),
@@ -196,8 +182,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.VidiHr,
                     name: NewsPortalId.VidiHr.GetDisplayName(),
@@ -207,8 +192,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Zimo,
                     name: NewsPortalId.Zimo.GetDisplayName(),
@@ -218,8 +202,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Netokracija,
                     name: NewsPortalId.Netokracija.GetDisplayName(),
@@ -229,8 +212,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.PoslovniPuls,
                     name: NewsPortalId.PoslovniPuls.GetDisplayName(),
@@ -240,8 +222,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Biznis,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.PcChip,
                     name: NewsPortalId.PcChip.GetDisplayName(),
@@ -251,8 +232,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Cosmopolitan,
                     name: NewsPortalId.Cosmopolitan.GetDisplayName(),
@@ -262,8 +242,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Lifestyle,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.WallHr,
                     name: NewsPortalId.WallHr.GetDisplayName(),
@@ -273,8 +252,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Lifestyle,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.LjepotaIZdravlje,
                     name: NewsPortalId.LjepotaIZdravlje.GetDisplayName(),
@@ -284,8 +262,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Lifestyle,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ), // Nemaju SLS LUL
+                    isEnabled: true), // Nemaju SLS LUL
                 new NewsPortal(
                     id: (int)NewsPortalId.Autonet,
                     name: NewsPortalId.Autonet.GetDisplayName(),
@@ -295,8 +272,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.AutoMoto,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.N1,
                     name: NewsPortalId.N1.GetDisplayName(),
@@ -306,8 +282,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.NarodHr,
                     name: NewsPortalId.NarodHr.GetDisplayName(),
@@ -317,8 +292,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 5, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Hrt,
                     name: NewsPortalId.Hrt.GetDisplayName(),
@@ -328,8 +302,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 6, 25, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.StoPosto,
                     name: NewsPortalId.StoPosto.GetDisplayName(),
@@ -339,8 +312,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 6, 28, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Dnevno,
                     name: NewsPortalId.Dnevno.GetDisplayName(),
@@ -350,8 +322,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 6, 28, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.General,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.DirektnoHr,
                     name: NewsPortalId.DirektnoHr.GetDisplayName(),
@@ -361,8 +332,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 7, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Scena,
                     name: NewsPortalId.Scena.GetDisplayName(),
@@ -372,8 +342,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 7, 13, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Show,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Nacional,
                     name: NewsPortalId.Nacional.GetDisplayName(),
@@ -383,8 +352,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Express,
                     name: NewsPortalId.Express.GetDisplayName(),
@@ -394,8 +362,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.OtvorenoHr,
                     name: NewsPortalId.OtvorenoHr.GetDisplayName(),
@@ -405,8 +372,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 10, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.GeoPolitika,
                     name: NewsPortalId.GeoPolitika.GetDisplayName(),
@@ -416,8 +382,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 10, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.PovijestHr,
                     name: NewsPortalId.PovijestHr.GetDisplayName(),
@@ -427,8 +392,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 10, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Dnevno7,
                     name: NewsPortalId.Dnevno7.GetDisplayName(),
@@ -438,8 +402,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 10, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.BasketballHr,
                     name: NewsPortalId.BasketballHr.GetDisplayName(),
@@ -449,8 +412,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 14, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Sport,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.JoomBoos,
                     name: NewsPortalId.JoomBoos.GetDisplayName(),
@@ -460,8 +422,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 21, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Viral,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.IctBusiness,
                     name: NewsPortalId.IctBusiness.GetDisplayName(),
@@ -471,8 +432,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 21, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Hcl,
                     name: NewsPortalId.Hcl.GetDisplayName(),
@@ -482,8 +442,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 23, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.ProfitirajHr,
                     name: NewsPortalId.ProfitirajHr.GetDisplayName(),
@@ -493,8 +452,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 23, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Biznis,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.MotoriHr,
                     name: NewsPortalId.MotoriHr.GetDisplayName(),
@@ -504,8 +462,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 24, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.AutoMoto,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.AutoportalHr,
                     name: NewsPortalId.AutoportalHr.GetDisplayName(),
@@ -515,8 +472,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 24, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.AutoMoto,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.AutopressHr,
                     name: NewsPortalId.AutopressHr.GetDisplayName(),
@@ -526,8 +482,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 24, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.AutoMoto,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.VozimHr,
                     name: NewsPortalId.VozimHr.GetDisplayName(),
@@ -537,8 +492,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 24, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.AutoMoto,
                     regionId: (int)RegionId.Global,
-                    isEnabled: false
-                ),
+                    isEnabled: false),
                 new NewsPortal(
                     id: (int)NewsPortalId.AutoMotorSport,
                     name: NewsPortalId.AutoMotorSport.GetDisplayName(),
@@ -548,8 +502,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 24, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.AutoMoto,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Hoopster,
                     name: NewsPortalId.Hoopster.GetDisplayName(),
@@ -559,8 +512,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 30, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Sport,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.PrvaHnl,
                     name: NewsPortalId.PrvaHnl.GetDisplayName(),
@@ -570,8 +522,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 10, 6, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Sport,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.AlJazeera,
                     name: NewsPortalId.AlJazeera.GetDisplayName(),
@@ -581,8 +532,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 10, 6, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global,
-                    isEnabled: false
-                ),
+                    isEnabled: false),
                 new NewsPortal(
                     id: (int)NewsPortalId.HifiMedia,
                     name: NewsPortalId.HifiMedia.GetDisplayName(),
@@ -592,8 +542,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 10, 6, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.GeekHr,
                     name: NewsPortalId.GeekHr.GetDisplayName(),
@@ -603,8 +552,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 10, 6, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.VizKultura,
                     name: NewsPortalId.VizKultura.GetDisplayName(),
@@ -614,8 +562,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 10, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Kultura,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.ZivotUmjetnosti,
                     name: NewsPortalId.ZivotUmjetnosti.GetDisplayName(),
@@ -625,8 +572,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 10, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Kultura,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.SvijetKulture,
                     name: NewsPortalId.SvijetKulture.GetDisplayName(),
@@ -636,8 +582,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 10, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Kultura,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.GamerHr,
                     name: NewsPortalId.GamerHr.GetDisplayName(),
@@ -647,8 +592,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 10, 10, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.BitnoNet,
                     name: NewsPortalId.BitnoNet.GetDisplayName(),
@@ -658,8 +602,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2021, 1, 16, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.MaxPortal,
                     name: NewsPortalId.MaxPortal.GetDisplayName(),
@@ -669,8 +612,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2021, 3, 7, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.PoslovniDnevnik,
                     name: NewsPortalId.PoslovniDnevnik.GetDisplayName(),
@@ -680,8 +622,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2021, 3, 7, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Biznis,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Gp1,
                     name: NewsPortalId.Gp1.GetDisplayName(),
@@ -691,8 +632,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2021, 3, 7, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.AutoMoto,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.F1PulsMedia,
                     name: NewsPortalId.F1PulsMedia.GetDisplayName(),
@@ -702,8 +642,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2021, 3, 7, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.AutoMoto,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Racunalo,
                     name: NewsPortalId.Racunalo.GetDisplayName(),
@@ -713,8 +652,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2021, 3, 7, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.MobHr,
                     name: NewsPortalId.MobHr.GetDisplayName(),
@@ -724,8 +662,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2021, 3, 7, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Tech,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.StartNews,
                     name: NewsPortalId.StartNews.GetDisplayName(),
@@ -735,8 +672,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2021, 3, 7, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Vijesti,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Viral,
                     name: NewsPortalId.Viral.GetDisplayName(),
@@ -746,8 +682,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2021, 4, 21, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Viral,
                     regionId: (int)RegionId.Global,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
             };
 
             builder.HasData(newsPortals);

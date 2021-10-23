@@ -19,29 +19,21 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetTrendingArtic
         {
             Name = nameof(GetTrendingArticlesArticle);
             Field<NonNullGraphType<IdGraphType>>(
-                name: nameof(GetTrendingArticlesArticle.Id)
-            );
+                name: nameof(GetTrendingArticlesArticle.Id));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetTrendingArticlesArticle.Title)
-            );
+                name: nameof(GetTrendingArticlesArticle.Title));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetTrendingArticlesArticle.Url)
-            );
+                name: nameof(GetTrendingArticlesArticle.Url));
             Field<StringGraphType>(
-                name: nameof(GetTrendingArticlesArticle.ImageUrl)
-            );
+                name: nameof(GetTrendingArticlesArticle.ImageUrl));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetTrendingArticlesArticle.PublishDateTime)
-            );
+                name: nameof(GetTrendingArticlesArticle.PublishDateTime));
             Field<NonNullGraphType<IntGraphType>>(
-                name: nameof(GetTrendingArticlesArticle.TrendingScore)
-            );
+                name: nameof(GetTrendingArticlesArticle.TrendingScore));
             Field<NonNullGraphType<GetTrendingArticlesNewsPortalType>>(
-                name: nameof(GetTrendingArticlesArticle.NewsPortal)
-            );
+                name: nameof(GetTrendingArticlesArticle.NewsPortal));
             Field<NonNullGraphType<ListGraphType<NonNullGraphType<GetTrendingArticlesCategoryType>>>>(
-                name: nameof(GetTrendingArticlesArticle.Categories)
-            );
+                name: nameof(GetTrendingArticlesArticle.Categories));
         }
     }
 }

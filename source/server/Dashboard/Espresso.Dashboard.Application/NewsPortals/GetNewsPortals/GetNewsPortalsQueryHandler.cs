@@ -45,10 +45,7 @@ namespace Espresso.Dashboard.Application.NewsPortals.GetNewsPortals
                     pagingMetadata: new PagingMetadata(
                         currentPage: request.PagingParameters.CurrentPage,
                         pageSize: request.PagingParameters.PageSize,
-                        totalCount: newsPortalsCount
-                    )
-                )
-            );
+                        totalCount: newsPortalsCount)));
 
             return response;
         }

@@ -18,24 +18,21 @@ namespace Espresso.WebApi.Application.NewsPortals.Commands.NewSourcesRequest
         /// </summary>
         /// <param name="slackService"></param>
         public NewSourcesRequestCommandHandler(
-            ISlackService slackService
-        )
+            ISlackService slackService)
         {
             _slackService = slackService;
         }
 
         public async Task<Unit> Handle(
             NewsSourcesRequestCommand request,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             await _slackService
                 .LogNewNewsPortalRequest(
                     newsPortalName: request.NewsPortalName,
                     email: request.Email,
                     url: request.Url,
-                    cancellationToken: cancellationToken
-                );
+                    cancellationToken: cancellationToken);
 
             return Unit.Value;
         }

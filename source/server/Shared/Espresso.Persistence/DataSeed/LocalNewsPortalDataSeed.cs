@@ -42,8 +42,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.DalmacijaNews,
                     name: NewsPortalId.DalmacijaNews.GetDisplayName(),
@@ -53,8 +52,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.DalmatinskiPortal,
                     name: NewsPortalId.DalmatinskiPortal.GetDisplayName(),
@@ -64,8 +62,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.DubrovackiDnevnik,
                     name: NewsPortalId.DubrovackiDnevnik.GetDisplayName(),
@@ -75,8 +72,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.SlobodnaDalmacija_Dalmacija,
                     name: NewsPortalId.SlobodnaDalmacija_Dalmacija.GetDisplayName(),
@@ -86,8 +82,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.SlobodnaDalmacija_Split,
                     name: NewsPortalId.SlobodnaDalmacija_Split.GetDisplayName(),
@@ -97,8 +92,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.DubrovnikNet,
                     name: NewsPortalId.DubrovnikNet.GetDisplayName(),
@@ -108,8 +102,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.MakarskaDanas,
                     name: NewsPortalId.MakarskaDanas.GetDisplayName(),
@@ -119,8 +112,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.MakarskaHr,
                     name: NewsPortalId.MakarskaHr.GetDisplayName(),
@@ -130,8 +122,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.PortalOko,
                     name: NewsPortalId.PortalOko.GetDisplayName(),
@@ -141,8 +132,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.AntenaZadar,
                     name: NewsPortalId.AntenaZadar.GetDisplayName(),
@@ -152,8 +142,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.RadioImotski,
                     name: NewsPortalId.RadioImotski.GetDisplayName(),
@@ -163,8 +152,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.ImotskeNovine,
                     name: NewsPortalId.ImotskeNovine.GetDisplayName(),
@@ -174,8 +162,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.PortalKastela,
                     name: NewsPortalId.PortalKastela.GetDisplayName(),
@@ -185,8 +172,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.HukNet,
                     name: NewsPortalId.HukNet.GetDisplayName(),
@@ -196,8 +182,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.ZadarskiList,
                     name: NewsPortalId.ZadarskiList.GetDisplayName(),
@@ -207,8 +192,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.PloceOnline,
                     name: NewsPortalId.PloceOnline.GetDisplayName(),
@@ -218,8 +202,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2021, 1, 23, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Dalmacija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
 
                 // new NewsPortal(
                 //     id:(int)NewsPortalId.IPazin,
@@ -241,8 +224,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Istra,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Parentium,
                     name: NewsPortalId.Parentium.GetDisplayName(),
@@ -252,8 +234,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Istra,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.IVijesti,
                     name: NewsPortalId.IVijesti.GetDisplayName(),
@@ -263,8 +244,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Istra,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.IstarskaZupanija,
                     name: NewsPortalId.IstarskaZupanija.GetDisplayName(),
@@ -274,8 +254,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Istra,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.IstraTerraMagica,
                     name: NewsPortalId.IstraTerraMagica.GetDisplayName(),
@@ -285,8 +264,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Istra,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.IPress,
                     name: NewsPortalId.IPress.GetDisplayName(),
@@ -296,8 +274,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Istra,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.RijekaDanas,
                     name: NewsPortalId.RijekaDanas.GetDisplayName(),
@@ -307,8 +284,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Istra,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Fiuman,
                     name: NewsPortalId.Fiuman.GetDisplayName(),
@@ -318,8 +294,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Istra,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Riportal,
                     name: NewsPortalId.Riportal.GetDisplayName(),
@@ -329,8 +304,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Istra,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.LikaKlub,
                     name: NewsPortalId.LikaKlub.GetDisplayName(),
@@ -340,8 +314,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Lika,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.LikaExpress,
                     name: NewsPortalId.LikaExpress.GetDisplayName(),
@@ -351,8 +324,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Lika,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.LikaOnline,
                     name: NewsPortalId.LikaOnline.GetDisplayName(),
@@ -362,8 +334,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Lika,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.LikaPlus,
                     name: NewsPortalId.LikaPlus.GetDisplayName(),
@@ -373,8 +344,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Lika,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.GsPress,
                     name: NewsPortalId.GsPress.GetDisplayName(),
@@ -384,8 +354,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Lika,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.OgPortal,
                     name: NewsPortalId.OgPortal.GetDisplayName(),
@@ -395,8 +364,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 10, 17, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Lika,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.IndexHrZagreb,
                     name: NewsPortalId.IndexHrZagreb.GetDisplayName(),
@@ -406,8 +374,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Zagreb,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.ZagrebInfo,
                     name: NewsPortalId.ZagrebInfo.GetDisplayName(),
@@ -417,8 +384,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Zagreb,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Zagrebancija,
                     name: NewsPortalId.Zagrebancija.GetDisplayName(),
@@ -428,8 +394,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Zagreb,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.ZagrebOnline,
                     name: NewsPortalId.ZagrebOnline.GetDisplayName(),
@@ -439,8 +404,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Zagreb,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.ZagrebackiList,
                     name: NewsPortalId.ZagrebackiList.GetDisplayName(),
@@ -450,8 +414,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Zagreb,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.ZgPortal,
                     name: NewsPortalId.ZgPortal.GetDisplayName(),
@@ -461,8 +424,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Zagreb,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.GradZagreb,
                     name: NewsPortalId.GradZagreb.GetDisplayName(),
@@ -472,8 +434,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Zagreb,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.KaPortalHr,
                     name: NewsPortalId.KaPortalHr.GetDisplayName(),
@@ -483,8 +444,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2021, 1, 23, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Zagreb,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.RadioMreznica,
                     name: NewsPortalId.RadioMreznica.GetDisplayName(),
@@ -494,8 +454,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2021, 1, 23, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Zagreb,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.SjeverHr,
                     name: NewsPortalId.SjeverHr.GetDisplayName(),
@@ -505,8 +464,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.SjevernaHrvatska,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.PrigorskiHr,
                     name: NewsPortalId.PrigorskiHr.GetDisplayName(),
@@ -516,8 +474,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.SjevernaHrvatska,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.PodravinaHr,
                     name: NewsPortalId.PodravinaHr.GetDisplayName(),
@@ -527,8 +484,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.SjevernaHrvatska,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.SisakInfo,
                     name: NewsPortalId.SisakInfo.GetDisplayName(),
@@ -538,8 +494,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.SjevernaHrvatska,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.PlusRegionalniTjednik,
                     name: NewsPortalId.PlusRegionalniTjednik.GetDisplayName(),
@@ -549,8 +504,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.SjevernaHrvatska,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.GlasPodravineIPrigorja,
                     name: NewsPortalId.GlasPodravineIPrigorja.GetDisplayName(),
@@ -560,8 +514,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.SjevernaHrvatska,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.MedimurjeInfo,
                     name: NewsPortalId.MedimurjeInfo.GetDisplayName(),
@@ -571,8 +524,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.SjevernaHrvatska,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.MedimurskeNovine,
                     name: NewsPortalId.MedimurskeNovine.GetDisplayName(),
@@ -582,8 +534,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.SjevernaHrvatska,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.ZagorjeCom,
                     name: NewsPortalId.ZagorjeCom.GetDisplayName(),
@@ -593,8 +544,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.SjevernaHrvatska,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.BaranjaInfo,
                     name: NewsPortalId.BaranjaInfo.GetDisplayName(),
@@ -604,8 +554,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Slavonija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.GlasSlavonije,
                     name: NewsPortalId.GlasSlavonije.GetDisplayName(),
@@ -615,8 +564,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Slavonija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.SlavonskiHr,
                     name: NewsPortalId.SlavonskiHr.GetDisplayName(),
@@ -626,8 +574,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Slavonija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.OsijekNews,
                     name: NewsPortalId.OsijekNews.GetDisplayName(),
@@ -637,8 +584,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Slavonija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.InformativniCentarVirovitica,
                     name: NewsPortalId.InformativniCentarVirovitica.GetDisplayName(),
@@ -648,8 +594,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Slavonija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.NovskaIn,
                     name: NewsPortalId.NovskaIn.GetDisplayName(),
@@ -659,8 +604,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Slavonija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.NovostiHr,
                     name: NewsPortalId.NovostiHr.GetDisplayName(),
@@ -670,8 +614,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Slavonija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Portal53,
                     name: NewsPortalId.Portal53.GetDisplayName(),
@@ -681,8 +624,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Slavonija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.SbPlusHr,
                     name: NewsPortalId.SbPlusHr.GetDisplayName(),
@@ -692,8 +634,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Slavonija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.PozeskaKronika,
                     name: NewsPortalId.PozeskaKronika.GetDisplayName(),
@@ -703,8 +644,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Slavonija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Osijek031,
                     name: NewsPortalId.Osijek031.GetDisplayName(),
@@ -714,8 +654,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 9, 1, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Slavonija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Zupanjac,
                     name: NewsPortalId.Zupanjac.GetDisplayName(),
@@ -725,8 +664,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2020, 10, 26, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Slavonija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
                 new NewsPortal(
                     id: (int)NewsPortalId.Press032,
                     name: NewsPortalId.Press032.GetDisplayName(),
@@ -736,8 +674,7 @@ namespace Espresso.Persistence.DataSeed
                     createdAt: new DateTime(2021, 1, 16, 0, 0, 0, DateTimeKind.Utc),
                     categoryId: (int)CategoryId.Local,
                     regionId: (int)RegionId.Slavonija,
-                    isEnabled: true
-                ),
+                    isEnabled: true),
             };
 #pragma warning restore S1075 // URIs should not be hardcoded
 

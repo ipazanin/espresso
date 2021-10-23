@@ -29,8 +29,7 @@ namespace Espresso.Application.Infrastructure.BackgroundJobsInfrastructure
         /// </summary>
         /// <param name="serviceScopeFactory">Service scope factory.</param>
         protected BackgroundJob(
-            IServiceScopeFactory serviceScopeFactory
-        )
+            IServiceScopeFactory serviceScopeFactory)
         {
             ServiceScopeFactory = serviceScopeFactory;
         }
@@ -45,8 +44,7 @@ namespace Espresso.Application.Infrastructure.BackgroundJobsInfrastructure
 
             loggerService.Log(
                 eventName: $"{jobName} is starting",
-                logLevel: LogLevel.Information
-            );
+                logLevel: LogLevel.Information);
 
             try
             {
@@ -58,8 +56,7 @@ namespace Espresso.Application.Infrastructure.BackgroundJobsInfrastructure
                 loggerService.Log(
                     eventName: errorEventName,
                     exception: exception,
-                    logLevel: LogLevel.Error
-                );
+                    logLevel: LogLevel.Error);
             }
         }
 

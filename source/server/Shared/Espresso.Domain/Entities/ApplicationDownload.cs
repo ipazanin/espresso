@@ -14,29 +14,6 @@ namespace Espresso.Domain.Entities
 
         public const int MobileAppVersionMaxLenght = 20;
 
-        public int Id { get; private set; }
-
-        public string WebApiVersion { get; private set; }
-
-        public string MobileAppVersion { get; private set; }
-
-        /// <summary>
-        /// Gets uTC.
-        /// </summary>
-        public DateTime DownloadedTime { get; private set; }
-
-        public DeviceType MobileDeviceType { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ApplicationDownload"/> class.
-        /// ORM Constructor.
-        /// </summary>
-        private ApplicationDownload()
-        {
-            WebApiVersion = null!;
-            MobileAppVersion = null!;
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationDownload"/> class.
         /// </summary>
@@ -48,13 +25,32 @@ namespace Espresso.Domain.Entities
             string webApiVersion,
             string mobileAppVersion,
             DateTime downloadedTime,
-            DeviceType mobileDeviceType
-        )
+            DeviceType mobileDeviceType)
         {
             WebApiVersion = webApiVersion;
             MobileAppVersion = mobileAppVersion;
             DownloadedTime = downloadedTime;
             MobileDeviceType = mobileDeviceType;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApplicationDownload"/> class.
+        /// ORM Constructor.
+        /// </summary>
+        private ApplicationDownload()
+        {
+            WebApiVersion = null!;
+            MobileAppVersion = null!;
+        }
+
+        public int Id { get; private set; }
+
+        public string WebApiVersion { get; private set; }
+
+        public string MobileAppVersion { get; private set; }
+
+        public DateTime DownloadedTime { get; private set; }
+
+        public DeviceType MobileDeviceType { get; private set; }
     }
 }

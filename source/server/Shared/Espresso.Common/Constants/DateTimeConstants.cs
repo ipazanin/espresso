@@ -24,8 +24,7 @@ namespace Espresso.Common.Constants
             hour: 0,
             minute: 0,
             second: 0,
-            kind: DateTimeKind.Utc
-        );
+            kind: DateTimeKind.Utc);
 
         /// <summary>
         /// Logger <see cref="DateTime"/> format.

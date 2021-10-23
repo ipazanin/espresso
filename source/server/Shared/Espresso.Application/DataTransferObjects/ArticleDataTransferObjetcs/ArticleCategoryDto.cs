@@ -29,8 +29,7 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
         [JsonConstructor]
         public ArticleCategoryDto(
             Guid id,
-            int categoryId
-        )
+            int categoryId)
         {
             Id = id;
             CategoryId = categoryId;

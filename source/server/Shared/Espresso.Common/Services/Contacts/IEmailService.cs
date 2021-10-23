@@ -23,7 +23,6 @@ namespace Espresso.Common.Services.Contracts
             string to,
             string subject,
             string content,
-            string htmlContent
-        );
+            string htmlContent);
     }
 }

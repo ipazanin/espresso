@@ -14,7 +14,6 @@ namespace Espresso.Dashboard.Application.IServices
 
         public string? GetImageUrlFromSrcAttribute(
             HtmlNodeCollection elementTags,
-            string attributeName
-        );
+            string attributeName);
     }
 }

@@ -32,8 +32,7 @@ namespace Espresso.Domain.Tests.Entities
                 newsPortal: default,
                 rssFeed: default,
                 subordinateArticles: default,
-                mainArticle: default
-            );
+                mainArticle: default);
 
             article.IncrementNumberOfClicks();
 

@@ -8,17 +8,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Espresso.Persistence.EspressoDatabaseMigrations
 {
-    /// <inheritdoc/>
     [DbContext(typeof(EspressoDatabaseContext))]
     partial class EspressoDatabaseContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc/>
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.4")
+                .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity("Espresso.Domain.Entities.ApplicationDownload", b =>
@@ -4342,6 +4340,36 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                         });
                 });
 
+            modelBuilder.Entity("Espresso.Domain.Entities.Setting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("SettingsRevision")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Created");
+
+                    b.ToTable("Settings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created = new DateTimeOffset(new DateTime(2021, 10, 2, 16, 43, 47, 372, DateTimeKind.Unspecified).AddTicks(324), new TimeSpan(0, 0, 0, 0, 0)),
+                            SettingsRevision = 0
+                        });
+                });
+
             modelBuilder.Entity("Espresso.Domain.Entities.SimilarArticle", b =>
                 {
                     b.Property<Guid>("Id")
@@ -5674,6 +5702,160 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                         .IsRequired();
 
                     b.Navigation("RssFeed");
+                });
+
+            modelBuilder.Entity("Espresso.Domain.Entities.Setting", b =>
+                {
+                    b.OwnsOne("Espresso.Domain.ValueObjects.SettingsValueObjects.ArticleSetting", "ArticleSetting", b1 =>
+                        {
+                            b1.Property<int>("SettingId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                            b1.Property<int>("FeaturedArticlesTake")
+                                .HasColumnType("integer");
+
+                            b1.Property<long>("MaxAgeOfArticleInMiliseconds")
+                                .HasColumnType("bigint");
+
+                            b1.Property<long>("MaxAgeOfFeaturedArticleInMiliseconds")
+                                .HasColumnType("bigint");
+
+                            b1.Property<long>("MaxAgeOfTrendingArticleInMiliseconds")
+                                .HasColumnType("bigint");
+
+                            b1.HasKey("SettingId");
+
+                            b1.ToTable("Settings");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SettingId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    SettingId = 1,
+                                    FeaturedArticlesTake = 10,
+                                    MaxAgeOfArticleInMiliseconds = 432000000L,
+                                    MaxAgeOfFeaturedArticleInMiliseconds = 21600000L,
+                                    MaxAgeOfTrendingArticleInMiliseconds = 21600000L
+                                });
+                        });
+
+                    b.OwnsOne("Espresso.Domain.ValueObjects.SettingsValueObjects.JobsSetting", "JobsSetting", b1 =>
+                        {
+                            b1.Property<int>("SettingId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                            b1.Property<string>("AnalyticsCronExpression")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<string>("ParseArticlesCronExpression")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<string>("WebApiReportCronExpression")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("SettingId");
+
+                            b1.ToTable("Settings");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SettingId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    SettingId = 1,
+                                    AnalyticsCronExpression = "0 10 * * *",
+                                    ParseArticlesCronExpression = "*/1 * * * *",
+                                    WebApiReportCronExpression = "0 9 * * *"
+                                });
+                        });
+
+                    b.OwnsOne("Espresso.Domain.ValueObjects.SettingsValueObjects.NewsPortalSetting", "NewsPortalSetting", b1 =>
+                        {
+                            b1.Property<int>("SettingId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                            b1.Property<long>("MaxAgeOfNewNewsPortalInMiliseconds")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int>("NewNewsPortalsPosition")
+                                .HasColumnType("integer");
+
+                            b1.HasKey("SettingId");
+
+                            b1.ToTable("Settings");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SettingId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    SettingId = 1,
+                                    MaxAgeOfNewNewsPortalInMiliseconds = 5184000000L,
+                                    NewNewsPortalsPosition = 3
+                                });
+                        });
+
+                    b.OwnsOne("Espresso.Domain.ValueObjects.SettingsValueObjects.SimilarArticleSetting", "SimilarArticleSetting", b1 =>
+                        {
+                            b1.Property<int>("SettingId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                            b1.Property<long>("ArticlePublishDateTimeDifferenceThresholdInMiliseconds")
+                                .HasColumnType("bigint");
+
+                            b1.Property<long>("MaxAgeOfSimilarArticleCheckingInMiliseconds")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int>("MinimalNumberOfWordsForArticleToBeComparable")
+                                .HasColumnType("integer");
+
+                            b1.Property<double>("SimilarityScoreThreshold")
+                                .HasColumnType("double precision");
+
+                            b1.HasKey("SettingId");
+
+                            b1.ToTable("Settings");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SettingId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    SettingId = 1,
+                                    ArticlePublishDateTimeDifferenceThresholdInMiliseconds = 86400000L,
+                                    MaxAgeOfSimilarArticleCheckingInMiliseconds = 93600000L,
+                                    MinimalNumberOfWordsForArticleToBeComparable = 4,
+                                    SimilarityScoreThreshold = 0.65000000000000002
+                                });
+                        });
+
+                    b.Navigation("ArticleSetting")
+                        .IsRequired();
+
+                    b.Navigation("JobsSetting")
+                        .IsRequired();
+
+                    b.Navigation("NewsPortalSetting")
+                        .IsRequired();
+
+                    b.Navigation("SimilarArticleSetting")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Espresso.Domain.Entities.SimilarArticle", b =>

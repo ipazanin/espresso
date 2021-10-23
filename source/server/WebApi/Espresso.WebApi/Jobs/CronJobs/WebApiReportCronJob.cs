@@ -2,14 +2,15 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using Cronos;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Application.Services.Contracts;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Infrastructure;
 using Espresso.Domain.Utilities;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -23,23 +24,27 @@ namespace Espresso.WebApi.Jobs.CronJobs
     public class WebApiReportCronJob : CronJob<WebApiReportCronJob>
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly ISettingProvider _settingProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WebApiReportCronJob"/> class.
         /// </summary>
         /// <param name="serviceScopeFactory"></param>
         /// <param name="cronJobConfiguration"></param>
+        /// <param name="settingProvider"></param>
         public WebApiReportCronJob(
             IServiceScopeFactory serviceScopeFactory,
-            ICronJobConfiguration<WebApiReportCronJob> cronJobConfiguration
-        )
+            ICronJobConfiguration<WebApiReportCronJob> cronJobConfiguration,
+            ISettingProvider settingProvider)
             : base(
             cronJobConfiguration: cronJobConfiguration,
-            serviceScopeFactory: serviceScopeFactory
-        )
+            serviceScopeFactory: serviceScopeFactory)
         {
             _serviceScopeFactory = serviceScopeFactory;
+            _settingProvider = settingProvider;
         }
+
+        protected override CronExpression CronExpression => CronExpression.Parse(_settingProvider.LatestSetting.JobsSetting.WebApiReportCronExpression);
 
         /// <summary>
         ///
@@ -66,8 +71,7 @@ namespace Espresso.WebApi.Jobs.CronJobs
             var totalNumberOfClicks = GetTotalClicksForYesterday(articles);
             var topNewsPortals = GetTop10NewsPortalsByNumberOfClicks(
                 articles,
-                newsPortals
-            );
+                newsPortals);
             var categoriesWithNumberOfClicks = GetCategoriesWithNumberOfClicks(articles);
 
             await slackService.LogYesterdaysStatistics(
@@ -75,13 +79,11 @@ namespace Espresso.WebApi.Jobs.CronJobs
                 totalNumberOfClicks: totalNumberOfClicks,
                 topNewsPortals: topNewsPortals,
                 categoriesWithNumberOfClicks: categoriesWithNumberOfClicks,
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
         }
 
         private static IEnumerable<Article> GetTopArticles(
-            IEnumerable<Article> articles
-        )
+            IEnumerable<Article> articles)
         {
             var topArticles = articles
                 .Where(article => article.PublishDateTime.Date == DateTimeUtility.YesterdaysDate)
@@ -93,8 +95,7 @@ namespace Espresso.WebApi.Jobs.CronJobs
         }
 
         private static int GetTotalClicksForYesterday(
-            IEnumerable<Article> articles
-        )
+            IEnumerable<Article> articles)
         {
             var totalClicks = articles
                 .Where(article => article.PublishDateTime.Date == DateTimeUtility.YesterdaysDate)
@@ -105,8 +106,7 @@ namespace Espresso.WebApi.Jobs.CronJobs
 
         private static IEnumerable<(NewsPortal newsPortal, int numberOfClicks, IEnumerable<Article> articles)> GetTop10NewsPortalsByNumberOfClicks(
             IEnumerable<Article> articles,
-            IEnumerable<NewsPortal> newsPortals
-        )
+            IEnumerable<NewsPortal> newsPortals)
         {
             var topNewsPortals = articles
                 .Where(article => article.PublishDateTime.Date == DateTimeUtility.YesterdaysDate)
@@ -115,9 +115,7 @@ namespace Espresso.WebApi.Jobs.CronJobs
                     (
                         newsPortal: newsPortals.FirstOrDefault(newsPortal => newsPortal.Id == articlesGroupedByNewsPortal.Key),
                         numberOfClicks: articlesGroupedByNewsPortal.Sum(article => article.NumberOfClicks),
-                        articles: articlesGroupedByNewsPortal.ToList().AsEnumerable()
-                    )
-                )
+                        articles: articlesGroupedByNewsPortal.ToList().AsEnumerable()))
                 .Where(articleClicksGroupedByNewsPortal => articleClicksGroupedByNewsPortal.newsPortal is not null)
                 .OrderByDescending(articleClicksGroupedByNewsPortal => articleClicksGroupedByNewsPortal.numberOfClicks)
                 .Take(10);
@@ -126,8 +124,7 @@ namespace Espresso.WebApi.Jobs.CronJobs
         }
 
         private static IEnumerable<(Category category, int numberOfClicks, IEnumerable<Article> articles)> GetCategoriesWithNumberOfClicks(
-            IEnumerable<Article> articles
-        )
+            IEnumerable<Article> articles)
         {
             var categoriesOrderedByNumberOfClicks = articles
                 .Where(article => article.PublishDateTime.Date == DateTimeUtility.YesterdaysDate)
@@ -136,9 +133,7 @@ namespace Espresso.WebApi.Jobs.CronJobs
                     (
                         category: articlesGroupedByCategory.FirstOrDefault()?.ArticleCategories.FirstOrDefault()?.Category,
                         numberOfClicks: articlesGroupedByCategory.Sum(article => article.NumberOfClicks),
-                        articles: articlesGroupedByCategory.ToList().AsEnumerable()
-                    )
-                )
+                        articles: articlesGroupedByCategory.ToList().AsEnumerable()))
                 .Where(articlesGroupedByCategory => articlesGroupedByCategory.category is not null)
                 .OrderByDescending(articleClicksGroupedByCategory => articleClicksGroupedByCategory.numberOfClicks)
                 .Take(10);

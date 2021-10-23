@@ -3,7 +3,6 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Microsoft.AspNetCore.SignalR;
-using System;
 using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Application.Hubs

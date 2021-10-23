@@ -50,8 +50,7 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
         public static IEnumerable<string> GetMatchedWords(
             AutoCompleteArticleQuery request,
             IEnumerable<Article> articles,
-            IEnumerable<string> keyWordsToFilterOut
-        )
+            IEnumerable<string> keyWordsToFilterOut)
         {
             if (request.TitleSearchQuery is null)
             {

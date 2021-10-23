@@ -35,8 +35,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="webApiConfiguration"></param>
         public NotificationsController(
             ISender sender,
-            IWebApiConfiguration webApiConfiguration
-        )
+            IWebApiConfiguration webApiConfiguration)
             : base(sender, webApiConfiguration)
         {
         }
@@ -66,21 +65,18 @@ namespace Espresso.WebApi.Controllers
         public async Task<IActionResult> SendLatestArticlesNotification(
             [FromBody] ArticlesBodyDto articlesRequest,
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             await Sender.Send(
                 request: new UpdateInMemoryArticlesCommand
                 {
                     CreatedArticles = articlesRequest.CreatedArticles,
                     UpdatedArticles = articlesRequest.UpdatedArticles,
-                    MaxAgeOfArticle = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfArticle,
                     TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             await Sender.Send(
                 request: new SendArticlesNotificationsCommand
@@ -91,8 +87,7 @@ namespace Espresso.WebApi.Controllers
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok();
         }
@@ -124,8 +119,7 @@ namespace Espresso.WebApi.Controllers
         public async Task<IActionResult> SendPushNotificition(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             [FromBody] SendPushNotificationRequestBody sendPushNotificationRequestBody,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             await Sender.Send(
                 request: new SendPushNotificationCommand
@@ -141,8 +135,7 @@ namespace Espresso.WebApi.Controllers
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok();
         }
@@ -177,8 +170,7 @@ namespace Espresso.WebApi.Controllers
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             [FromQuery] int take,
             [FromQuery] int skip,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var response = await Sender.Send(
                 request: new GetPushNotificationsQuery
@@ -189,8 +181,7 @@ namespace Espresso.WebApi.Controllers
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
             return Ok(response);
         }
     }

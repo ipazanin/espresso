@@ -42,8 +42,7 @@ namespace Espresso.WebApi.Filters
         public CustomExceptionFilterAttribute(
             IWebApiConfiguration webApiConfiguration,
             ISlackService slackService,
-            ILoggerService<CustomExceptionFilterAttribute> loggerService
-        )
+            ILoggerService<CustomExceptionFilterAttribute> loggerService)
         {
             _webApiConfiguration = webApiConfiguration;
             _slackService = slackService;
@@ -78,8 +77,7 @@ namespace Espresso.WebApi.Filters
                 exceptionStackTrace: context.Exception.StackTrace,
                 innerExceptionMessage: context.Exception.InnerException?.Message,
                 innerExceptionStackTrace: context.Exception.InnerException?.StackTrace,
-                errors: errors
-            );
+                errors: errors);
 
             var exceptionModel = _webApiConfiguration.AppConfiguration.AppEnvironment switch
             {
@@ -88,8 +86,7 @@ namespace Espresso.WebApi.Filters
                     innerExceptionMessage: null,
                     exceptionStackTrace: null,
                     innerExceptionStackTrace: null,
-                    errors: errors
-                ),
+                    errors: errors),
                 AppEnvironment.Undefined => exceptionBaseModel,
                 AppEnvironment.Local => exceptionBaseModel,
                 AppEnvironment.Dev => exceptionBaseModel,
@@ -97,8 +94,7 @@ namespace Espresso.WebApi.Filters
             };
 
             context.Result = new JsonResult(
-                value: exceptionModel
-            );
+                value: exceptionModel);
 
             var eventName = Event.CustomExceptionFilterAttribute.GetDisplayName();
             var version = _webApiConfiguration.AppConfiguration.Version;
@@ -114,8 +110,7 @@ namespace Espresso.WebApi.Filters
                     eventName: eventName,
                     message: context.Exception.Message,
                     exception: context.Exception,
-                    cancellationToken: default
-            );
+                    cancellationToken: default);
         }
     }
 }

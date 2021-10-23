@@ -20,8 +20,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetTrendingArtic
         {
             Name = nameof(GetTrendingArticlesQueryResponse);
             Field<NonNullGraphType<ListGraphType<NonNullGraphType<GetTrendingArticlesArticleType>>>>(
-                name: nameof(GetTrendingArticlesQueryResponse.Articles)
-            );
+                name: nameof(GetTrendingArticlesQueryResponse.Articles));
         }
     }
 }
