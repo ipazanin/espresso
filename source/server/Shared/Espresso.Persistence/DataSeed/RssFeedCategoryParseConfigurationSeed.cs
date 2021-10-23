@@ -26,8 +26,7 @@ namespace Espresso.Persistence.DataSeed
         }
 
         private static void SeedCategoryParseConfiguration(
-            OwnedNavigationBuilder<RssFeed, CategoryParseConfiguration> categoryParseConfigurationBuilder
-        )
+            OwnedNavigationBuilder<RssFeed, CategoryParseConfiguration> categoryParseConfigurationBuilder)
         {
             categoryParseConfigurationBuilder.HasData(new
             {

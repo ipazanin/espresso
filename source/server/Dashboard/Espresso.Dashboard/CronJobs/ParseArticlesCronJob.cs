@@ -2,8 +2,8 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using Cronos;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
-using Espresso.Application.Services.Contracts;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
@@ -12,6 +12,7 @@ using Espresso.Dashboard.Application.HealthChecks;
 using Espresso.Dashboard.Configuration;
 using Espresso.Dashboard.ParseRssFeeds;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Infrastructure;
 using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
 using MediatR;
@@ -33,7 +34,36 @@ namespace Espresso.Dashboard.CronJobs
         private readonly IMemoryCache _memoryCache;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly ReadinessHealthCheck _readinessHealthCheck;
+        private readonly ISettingProvider _settingProvider;
         private readonly IDashboardConfiguration _configuration;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParseArticlesCronJob"/> class.
+        /// </summary>
+        /// <param name="memoryCache"></param>
+        /// <param name="cronJobConfiguration"></param>
+        /// <param name="serviceScopeFactory"></param>
+        /// <param name="readinessHealthCheck"></param>
+        /// <param name="settingProvider"></param>
+        public ParseArticlesCronJob(
+            IMemoryCache memoryCache,
+            ICronJobConfiguration<ParseArticlesCronJob> cronJobConfiguration,
+            IServiceScopeFactory serviceScopeFactory,
+            ReadinessHealthCheck readinessHealthCheck,
+            ISettingProvider settingProvider)
+            : base(
+                cronJobConfiguration: cronJobConfiguration,
+                serviceScopeFactory: serviceScopeFactory)
+        {
+            _memoryCache = memoryCache;
+            _serviceScopeFactory = serviceScopeFactory;
+            _readinessHealthCheck = readinessHealthCheck;
+            _settingProvider = settingProvider;
+            using var scope = _serviceScopeFactory.CreateScope();
+            _configuration = scope.ServiceProvider.GetRequiredService<IDashboardConfiguration>();
+        }
+
+        protected override CronExpression CronExpression => CronExpression.Parse(_settingProvider.LatestSetting.JobsSetting.ParseArticlesCronExpression);
 
         private IDictionary<Guid, Article> Articles { get; set; } = new Dictionary<Guid, Article>();
 
@@ -42,29 +72,6 @@ namespace Espresso.Dashboard.CronJobs
         private IEnumerable<Category> Categories { get; set; } = Array.Empty<Category>();
 
         private ISet<Guid> SubordinateArticleIds { get; set; } = new HashSet<Guid>();
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ParseArticlesCronJob"/> class.
-        /// </summary>
-        /// <param name="cronJobConfiguration"></param>
-        /// <param name="serviceScopeFactory"></param>
-        public ParseArticlesCronJob(
-            IMemoryCache memoryCache,
-            ICronJobConfiguration<ParseArticlesCronJob> cronJobConfiguration,
-            IServiceScopeFactory serviceScopeFactory,
-            ReadinessHealthCheck readinessHealthCheck
-        )
-            : base(
-                cronJobConfiguration: cronJobConfiguration,
-                serviceScopeFactory: serviceScopeFactory
-            )
-        {
-            _memoryCache = memoryCache;
-            _serviceScopeFactory = serviceScopeFactory;
-            _readinessHealthCheck = readinessHealthCheck;
-            using var scope = _serviceScopeFactory.CreateScope();
-            _configuration = scope.ServiceProvider.GetRequiredService<IDashboardConfiguration>();
-        }
 
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
@@ -80,14 +87,10 @@ namespace Espresso.Dashboard.CronJobs
                 .AsNoTracking()
                 .ToListAsync(cancellationToken: cancellationToken);
 
-            var newsPortalsDictionary = newsPortals.ToDictionary(newsPortal => newsPortal.Id);
-
             var categories = await context
                 .Categories
                 .AsNoTracking()
                 .ToListAsync(cancellationToken: cancellationToken);
-
-            var categoriesDictionary = categories.ToDictionary(category => category.Id);
 
             var articles = await context.Articles
                 .Include(article => article.ArticleCategories)
@@ -162,20 +165,17 @@ namespace Espresso.Dashboard.CronJobs
                     Categories = Categories,
                     SubordinateArticleIds = SubordinateArticleIds,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             _ = await mediator.Send(
                 request: new DeleteOldArticlesCommand
                 {
                     Articles = Articles,
-                    MaxAgeOfOldArticles = _configuration.AppConfiguration.MaxAgeOfArticles,
                     DeviceType = DeviceType.RssFeedParser,
                     ConsumerVersion = _configuration.AppConfiguration.Version,
                     TargetedApiVersion = _configuration.AppConfiguration.Version,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
             _memoryCache.Set(MemoryCacheConstants.ArticleKey, Articles);
         }
     }

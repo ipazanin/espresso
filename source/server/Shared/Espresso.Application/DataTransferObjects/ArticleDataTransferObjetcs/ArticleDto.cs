@@ -125,8 +125,7 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
             int newsPortalId,
             int rssFeedId,
             IEnumerable<ArticleCategoryDto> articleCategories,
-            SimilarArticleDto? mainArticle
-        )
+            SimilarArticleDto? mainArticle)
         {
             Id = id;
             Url = url;

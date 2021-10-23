@@ -25,8 +25,7 @@ namespace Espresso.Application.DataTransferObjects.SlackDataTransferObjects
         /// <param name="fields">Markdown text blocks.</param>
         public SlackTextFieldsSectionBlock(
             SlackMarkdownTextBlock text,
-            IEnumerable<SlackMarkdownTextBlock> fields
-        )
+            IEnumerable<SlackMarkdownTextBlock> fields)
         {
             Text = text;
             Fields = fields;

@@ -32,8 +32,7 @@ namespace Espresso.Application.DataTransferObjects.SlackDataTransferObjects
         public SlackTextFieldsImageSectionBlock(
             SlackMarkdownTextBlock text,
             IEnumerable<SlackMarkdownTextBlock> fields,
-            SlackImageBlock accessory
-        )
+            SlackImageBlock accessory)
         {
             Text = text;
             Fields = fields;

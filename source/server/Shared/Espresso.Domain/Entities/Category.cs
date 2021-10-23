@@ -72,8 +72,7 @@ namespace Espresso.Domain.Entities
             int? sortIndex,
             int? position,
             CategoryType categoryType,
-            string categoryUrl
-        )
+            string categoryUrl)
         {
             Id = id;
             Name = name;

@@ -36,8 +36,7 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
         public ExceptionRequestPipeline(
             ILoggerService<ExceptionRequestPipeline<TRequest, TResponse>> loggerService,
             ISlackService slackService,
-            ApplicationInformation applicationInformation
-        )
+            ApplicationInformation applicationInformation)
         {
             _loggerService = loggerService;
             _slackService = slackService;
@@ -65,16 +64,14 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
                     eventName: requestName,
                     exception: exception,
                     logLevel: LogLevel.Error,
-                    namedArguments: arguments
-                );
+                    namedArguments: arguments);
 
                 await _slackService
                     .LogError(
                         eventName: requestName,
                         message: $"Error while handling {requestName}",
                         exception: exception,
-                        cancellationToken: cancellationToken
-                    );
+                        cancellationToken: cancellationToken);
 
                 throw;
             }

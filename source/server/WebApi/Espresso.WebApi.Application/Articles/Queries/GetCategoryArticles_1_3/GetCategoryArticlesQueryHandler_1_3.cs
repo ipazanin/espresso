@@ -24,8 +24,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
         /// </summary>
         /// <param name="memoryCache"></param>
         public GetCategoryArticlesQueryHandler_1_3(
-            IMemoryCache memoryCache
-        )
+            IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
         }
@@ -33,8 +32,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
         public Task<GetCategoryArticlesQueryResponse_1_3> Handle(GetCategoryArticlesQuery_1_3 request, CancellationToken cancellationToken)
         {
             var articles = _memoryCache.Get<IEnumerable<Article>>(
-                key: MemoryCacheConstants.ArticleKey
-            );
+                key: MemoryCacheConstants.ArticleKey);
 
             var newsPortalIds = request.NewsPortalIds
                 ?.Replace(" ", string.Empty)
@@ -48,8 +46,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
                     categoryId: request.CategoryId,
                     newsPortalIds: newsPortalIds,
                     titleSearchTerm: null,
-                    articleCreateDateTime: null
-                )
+                    articleCreateDateTime: null)
                 .Skip(request.Skip)
                 .Take(request.Take)
                 .Select(GetCategoryArticlesArticle_1_3.GetProjection().Compile());

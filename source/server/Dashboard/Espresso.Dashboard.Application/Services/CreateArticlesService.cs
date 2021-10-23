@@ -7,13 +7,13 @@ using Espresso.Common.Extensions;
 using Espresso.Dashboard.Application.IServices;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.RssFeedEnums;
+using Espresso.Domain.Infrastructure;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -29,7 +29,7 @@ namespace Espresso.Dashboard.Application.Services
         private readonly IParseHtmlService _htmlParsingService;
         private readonly IValidator<ArticleData> _articleDataValidator;
         private readonly ILoggerService<CreateArticleService> _loggerService;
-        private readonly TimeSpan _maxAgeOfArticle;
+        private readonly ISettingProvider _settingProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateArticleService"/> class.
@@ -38,27 +38,25 @@ namespace Espresso.Dashboard.Application.Services
         /// <param name="htmlParsingService"></param>
         /// <param name="articleDataValidator"></param>
         /// <param name="loggerService"></param>
-        /// <param name="maxAgeOfArticle"></param>
+        /// <param name="settingProvider"></param>
         public CreateArticleService(
             IScrapeWebService webScrapingService,
             IParseHtmlService htmlParsingService,
             IValidator<ArticleData> articleDataValidator,
             ILoggerService<CreateArticleService> loggerService,
-            TimeSpan maxAgeOfArticle
-        )
+            ISettingProvider settingProvider)
         {
             _webScrapingService = webScrapingService;
             _htmlParsingService = htmlParsingService;
             _articleDataValidator = articleDataValidator;
             _loggerService = loggerService;
-            _maxAgeOfArticle = maxAgeOfArticle;
+            _settingProvider = settingProvider;
         }
 
         public async Task<Channel<Article>> CreateArticlesFromRssFeedItems(
             Channel<RssFeedItem> rssFeedItemChannel,
             IEnumerable<Category> categories,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var reader = rssFeedItemChannel.Reader;
             var parsedArticlesChannel = Channel.CreateUnbounded<Article>();
@@ -70,27 +68,27 @@ namespace Espresso.Dashboard.Application.Services
 
             await foreach (var rssFeedItem in rssFeedItems)
             {
-                var task = Task.Run(async () =>
-                {
-                    try
+                var task = Task.Run(
+                    async () =>
                     {
-                        var (article, isValid) = await CreateArticleAsync(
-                            rssFeedItem: rssFeedItem,
-                            categories: categories,
-                            cancellationToken: cancellationToken
-                        );
-
-                        if (isValid && article != null)
+                        try
                         {
-                            _ = writer.TryWrite(article);
+                            var (article, isValid) = await CreateArticleAsync(
+                                rssFeedItem: rssFeedItem,
+                                categories: categories,
+                                cancellationToken: cancellationToken);
+
+                            if (isValid && article != null)
+                            {
+                                _ = writer.TryWrite(article);
+                            }
                         }
-                    }
-                    catch (Exception exception)
-                    {
-                        const string? eventName = "Create Article Unhandled Exception";
-                        _loggerService.Log(eventName, exception, LogLevel.Error);
-                    }
-                }, cancellationToken);
+                        catch (Exception exception)
+                        {
+                            const string? eventName = "Create Article Unhandled Exception";
+                            _loggerService.Log(eventName, exception, LogLevel.Error);
+                        }
+                    }, cancellationToken);
                 tasks.Add(task);
             }
 
@@ -103,8 +101,7 @@ namespace Espresso.Dashboard.Application.Services
         private async Task<(Article? article, bool isValid)> CreateArticleAsync(
             RssFeedItem rssFeedItem,
             IEnumerable<Category> categories,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var id = Guid.NewGuid();
             var utcNow = DateTime.UtcNow;
@@ -115,18 +112,15 @@ namespace Espresso.Dashboard.Application.Services
             var url = GetUrl(
                 rssFeed: rssFeedItem.RssFeed,
                 itemLinks: rssFeedItem.Links,
-                itemId: rssFeedItem.Id
-            );
+                itemId: rssFeedItem.Id);
 
             var webUrl = GetNormalUrl(
                 rssFeed: rssFeedItem.RssFeed,
-                itemLinks: rssFeedItem.Links
-            );
+                itemLinks: rssFeedItem.Links);
 
             var summary = GetSummary(
                 itemSummary: rssFeedItem.Summary,
-                itemTitle: rssFeedItem.Title
-            );
+                itemTitle: rssFeedItem.Title);
 
             var imageUrl = await GetImageUrl(
                 itemLinks: rssFeedItem.Links,
@@ -135,13 +129,11 @@ namespace Espresso.Dashboard.Application.Services
                 rssFeed: rssFeedItem.RssFeed,
                 webUrl: webUrl,
                 elementExtensions: rssFeedItem.ElementExtensions,
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             var publishDateTime = GetPublishDateTime(
                 itemPublishDateTime: rssFeedItem.PublishDateTime,
-                utcNow: utcNow
-            );
+                utcNow: utcNow);
 
             var articlecategories = GetArticleCategories(
                 categories: categories,
@@ -149,8 +141,7 @@ namespace Espresso.Dashboard.Application.Services
                 itemSummary: summary,
                 articleId: id,
                 itemUrl: rssFeedItem.Links?.FirstOrDefault(),
-                rssFeed: rssFeedItem.RssFeed
-            );
+                rssFeed: rssFeedItem.RssFeed);
 
             var articleData = new ArticleData
             {
@@ -170,8 +161,7 @@ namespace Espresso.Dashboard.Application.Services
 
             return CreateArticle(
                 articleData: articleData,
-                rssFeed: rssFeedItem.RssFeed
-            );
+                rssFeed: rssFeedItem.RssFeed);
         }
 
         private (Article? article, bool isValid) CreateArticle(ArticleData articleData, RssFeed rssFeed)
@@ -199,8 +189,7 @@ namespace Espresso.Dashboard.Application.Services
                     newsPortal: null,
                     rssFeed: null,
                     subordinateArticles: null,
-                    mainArticle: null
-                );
+                    mainArticle: null);
 
                 return (article, true);
             }
@@ -244,13 +233,12 @@ namespace Espresso.Dashboard.Application.Services
             if (
                 itemId is null ||
                 itemLinks?.FirstOrDefault() is null ||
-                string.IsNullOrEmpty(rssFeed.AmpConfiguration?.TemplateUrl)
-            )
+                string.IsNullOrEmpty(rssFeed.AmpConfiguration?.TemplateUrl))
             {
                 return null;
             }
 
-            var articleId = $"{itemId[(itemId.IndexOf("id=") + 3)..]}";
+            var articleId = $"{itemId[(itemId.IndexOf("id=") + 3) ..]}";
             var urlSegments = itemLinks.FirstOrDefault()?.Segments ?? Array.Empty<string>();
 
             var firstArticleSegment = urlSegments.Length < 2 ? string.Empty : urlSegments[1].ToLower();
@@ -264,8 +252,7 @@ namespace Espresso.Dashboard.Application.Services
                 firstArticleSegment,
                 secondArticleSegment,
                 thirdArticleSegment,
-                fourthArticleSegment
-            );
+                fourthArticleSegment);
 
             return articleUrl;
         }
@@ -283,8 +270,7 @@ namespace Espresso.Dashboard.Application.Services
             RssFeed rssFeed,
             string? webUrl,
             IEnumerable<string?>? elementExtensions,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var elementExtensionIndex = rssFeed.ImageUrlParseConfiguration.ElementExtensionIndex;
             var isSavedInHtmlElementWithSrcAttribute = rssFeed.ImageUrlParseConfiguration.IsSavedInHtmlElementWithSrcAttribute;
@@ -312,8 +298,7 @@ namespace Espresso.Dashboard.Application.Services
                     articleUrl: webUrl,
                     requestType: RequestType.Browser,
                     imageUrlParseConfiguration: rssFeed.ImageUrlParseConfiguration,
-                    cancellationToken: cancellationToken
-                );
+                    cancellationToken: cancellationToken);
 
                 var eventName = Event.ImageUrlWebScrapingData.GetDisplayName();
                 var rssFeedUrl = rssFeed.Url;
@@ -332,36 +317,20 @@ namespace Espresso.Dashboard.Application.Services
             return imageUrl;
         }
 
-        private DateTime? GetPublishDateTime(DateTimeOffset itemPublishDateTime, DateTime utcNow)
-        {
-            var invalidPublishdateTimeMinimum = utcNow - _maxAgeOfArticle;
-            var minimumPublishDateTime = utcNow.AddDays(-1);
-            var maximumPublishDateTime = utcNow;
-            var rssFeedPublishDateTime = itemPublishDateTime.UtcDateTime;
-
-            return rssFeedPublishDateTime < invalidPublishdateTimeMinimum
-                ? null
-                : rssFeedPublishDateTime > maximumPublishDateTime || rssFeedPublishDateTime < minimumPublishDateTime
-                ? (DateTime?)utcNow
-                : (DateTime?)rssFeedPublishDateTime;
-        }
-
         private static IEnumerable<ArticleCategory> GetArticleCategories(
             IEnumerable<Category> categories,
             string? itemTitle,
             string? itemSummary,
             Guid articleId,
             Uri? itemUrl,
-            RssFeed rssFeed
-        )
+            RssFeed rssFeed)
         {
             var articleCategories = new HashSet<ArticleCategory>();
             var articleCategoriesFromKeyWords = GetArticleCategoriesFromCategorysKeyWords(
                 categories: categories,
                 itemTitle: itemTitle,
                 itemSummary: itemSummary,
-                articleId: articleId
-            );
+                articleId: articleId);
             articleCategories.UnionWith(articleCategoriesFromKeyWords);
 
             switch (rssFeed.CategoryParseConfiguration.CategoryParseStrategy)
@@ -369,16 +338,14 @@ namespace Espresso.Dashboard.Application.Services
                 default:
                     var articleCategoriesFromRssFeed = GetArticleCategoriesFromRssFeed(
                         articleId: articleId,
-                        rssFeed: rssFeed
-                    );
+                        rssFeed: rssFeed);
                     articleCategories.UnionWith(articleCategoriesFromRssFeed);
                     break;
                 case CategoryParseStrategy.FromUrl:
                     var articleCategoriesFromUrl = GetArticlecategoriesFromFromUrl(
                         articleId: articleId,
                         itemUrl: itemUrl,
-                        rssFeed: rssFeed
-                    );
+                        rssFeed: rssFeed);
                     articleCategories.UnionWith(articleCategoriesFromUrl);
                     break;
             }
@@ -390,24 +357,21 @@ namespace Espresso.Dashboard.Application.Services
             IEnumerable<Category> categories,
             string? itemTitle,
             string? itemSummary,
-            Guid articleId
-        )
+            Guid articleId)
         {
             var categoryIds = new HashSet<ArticleCategory>();
             foreach (var category in categories)
             {
                 if (
                     !string.IsNullOrEmpty(category.KeyWordsRegexPattern) &&
-                    Regex.IsMatch($"{itemTitle} {itemSummary}", category.KeyWordsRegexPattern, RegexOptions.IgnoreCase)
-                )
+                    Regex.IsMatch($"{itemTitle} {itemSummary}", category.KeyWordsRegexPattern, RegexOptions.IgnoreCase))
                 {
                     categoryIds.Add(new ArticleCategory(
                         id: Guid.NewGuid(),
                         articleId: articleId,
                         categoryId: category.Id,
                         article: null,
-                        category: category
-                    ));
+                        category: category));
                 }
             }
 
@@ -417,8 +381,7 @@ namespace Espresso.Dashboard.Application.Services
         private static IEnumerable<ArticleCategory> GetArticlecategoriesFromFromUrl(
             Guid articleId,
             Uri? itemUrl,
-            RssFeed rssFeed
-        )
+            RssFeed rssFeed)
         {
             var articleCategories = new HashSet<ArticleCategory>();
 
@@ -426,8 +389,7 @@ namespace Espresso.Dashboard.Application.Services
             {
                 if (
                     itemUrl?.Segments != null &&
-                    itemUrl.Segments.Length > rssFeedCategory.UrlSegmentIndex
-                )
+                    itemUrl.Segments.Length > rssFeedCategory.UrlSegmentIndex)
                 {
                     var secondUrlSegment = itemUrl?
                         .Segments[rssFeedCategory.UrlSegmentIndex]
@@ -436,16 +398,14 @@ namespace Espresso.Dashboard.Application.Services
                     if (
                         !string.IsNullOrEmpty(rssFeedCategory.UrlRegex) &&
                         !string.IsNullOrEmpty(secondUrlSegment) &&
-                        Regex.IsMatch(secondUrlSegment, rssFeedCategory.UrlRegex, RegexOptions.IgnoreCase)
-                    )
+                        Regex.IsMatch(secondUrlSegment, rssFeedCategory.UrlRegex, RegexOptions.IgnoreCase))
                     {
                         articleCategories.Add(new ArticleCategory(
                             id: Guid.NewGuid(),
                             articleId: articleId,
                             categoryId: rssFeedCategory.CategoryId,
                             article: null,
-                            category: null
-                        ));
+                            category: null));
                     }
                 }
             }
@@ -455,24 +415,21 @@ namespace Espresso.Dashboard.Application.Services
 
         private static IEnumerable<ArticleCategory> GetArticleCategoriesFromRssFeed(
             Guid articleId,
-            RssFeed rssFeed
-        )
+            RssFeed rssFeed)
         {
             yield return new ArticleCategory(
                 id: Guid.NewGuid(),
                 articleId: articleId,
                 categoryId: rssFeed.CategoryId,
                 article: null,
-                category: null
-            );
+                category: null);
         }
 
         private static string? AddBaseUrlToUrlFragment(string? urlFragmentOrFullUrl, string? baseUrl)
         {
             if (
                 string.IsNullOrEmpty(urlFragmentOrFullUrl) ||
-                string.IsNullOrEmpty(baseUrl)
-            )
+                string.IsNullOrEmpty(baseUrl))
             {
                 return null;
             }
@@ -483,6 +440,27 @@ namespace Espresso.Dashboard.Application.Services
             else
             {
                 return $"{baseUrl}{urlFragmentOrFullUrl}";
+            }
+        }
+
+        private DateTime? GetPublishDateTime(DateTimeOffset itemPublishDateTime, DateTime utcNow)
+        {
+            var invalidPublishdateTimeMinimum = utcNow - _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfArticle;
+            var minimumPublishDateTime = utcNow.AddDays(-1);
+            var maximumPublishDateTime = utcNow;
+            var rssFeedPublishDateTime = itemPublishDateTime.UtcDateTime;
+
+            if (rssFeedPublishDateTime < invalidPublishdateTimeMinimum)
+            {
+                return null;
+            }
+            else if (rssFeedPublishDateTime > maximumPublishDateTime || rssFeedPublishDateTime < minimumPublishDateTime)
+            {
+                return (DateTime?)utcNow;
+            }
+            else
+            {
+                return (DateTime?)rssFeedPublishDateTime;
             }
         }
     }

@@ -32,8 +32,7 @@ namespace Espresso.WebApi.Extensions
         /// </summary>
         /// <param name="services"></param>
         public static IServiceCollection AddGraphQlServices(
-            this IServiceCollection services
-        )
+            this IServiceCollection services)
         {
             services.AddGraphQlInfrastructure();
             services.AddGraphQlQueries();

@@ -22,8 +22,7 @@ namespace Espresso.Domain.Services
         /// <param name="ageWeight"></param>
         public TrendingScoreService(
             int halfOfMaxTrendingScoreValue,
-            decimal ageWeight
-        )
+            decimal ageWeight)
         {
             _halfOfMaxTrendingScoreValue = halfOfMaxTrendingScoreValue;
             _ageWeight = ageWeight;
@@ -39,15 +38,13 @@ namespace Espresso.Domain.Services
             var standardClicksDeviation = CalculateStandardDeviation(
                 clicksPerArticle: clicksPerArticle,
                 numberOfArticles: numberOfArticles,
-                averageClicks: averageClicks
-            );
+                averageClicks: averageClicks);
 
             var maxTrendingScore = clicksPerArticle
                 .Select(clicks => CalculateUnNormalisedTrendingScore(
                     clicks: clicks,
                     averageClicks: averageClicks,
-                    standardClicksDeviation: standardClicksDeviation
-                )).Max();
+                    standardClicksDeviation: standardClicksDeviation)).Max();
 
             foreach (var article in articles)
             {
@@ -57,9 +54,7 @@ namespace Espresso.Domain.Services
                         averageClicks: averageClicks,
                         standardClicksDeviation: standardClicksDeviation,
                         maxTrendingScore: maxTrendingScore,
-                        publishDateTime: article.PublishDateTime
-                    )
-                );
+                        publishDateTime: article.PublishDateTime));
             }
 
             return articles;
@@ -68,16 +63,14 @@ namespace Espresso.Domain.Services
         private static decimal CalculateStandardDeviation(
             IEnumerable<int> clicksPerArticle,
             int numberOfArticles,
-            decimal averageClicks
-        )
+            decimal averageClicks)
         {
             var standardClicksDeviation = numberOfArticles == 0 ? 0M : (decimal)Math.Sqrt(
                 (double)(clicksPerArticle.Select(clicks => (decimal)clicks).Sum(clicks =>
                 {
                     var pow = (decimal)Math.Pow(decimal.ToDouble(clicks - averageClicks), 2);
                     return pow;
-                }) / (numberOfArticles == 0 ? 1M : numberOfArticles))
-            );
+                }) / (numberOfArticles == 0 ? 1M : numberOfArticles)));
 
             return standardClicksDeviation;
         }
@@ -85,8 +78,7 @@ namespace Espresso.Domain.Services
         private static decimal CalculateUnNormalisedTrendingScore(
             int clicks,
             decimal averageClicks,
-            decimal standardClicksDeviation
-        )
+            decimal standardClicksDeviation)
         {
             var trendingScore = (clicks - averageClicks) / (standardClicksDeviation == 0 ? 1M : standardClicksDeviation);
 
@@ -98,14 +90,12 @@ namespace Espresso.Domain.Services
             decimal averageClicks,
             decimal standardClicksDeviation,
             decimal maxTrendingScore,
-            DateTime publishDateTime
-        )
+            DateTime publishDateTime)
         {
             var trendingScore = CalculateUnNormalisedTrendingScore(
                     clicks: clicks,
                     averageClicks: averageClicks,
-                    standardClicksDeviation: standardClicksDeviation
-                );
+                    standardClicksDeviation: standardClicksDeviation);
 
             var articleAge = DateTime.UtcNow - publishDateTime;
             var articleAgeInDays = (decimal)articleAge.TotalDays;
@@ -115,8 +105,7 @@ namespace Espresso.Domain.Services
 
             var normalisedTrendingScore = NormaliseTrendingScore(
                 trendingScore: trendingScoreWithArticleAge,
-                maxTrendingScore: maxTrendingScore
-            );
+                maxTrendingScore: maxTrendingScore);
 
             return normalisedTrendingScore < 0 ? 0 : normalisedTrendingScore >= 1000M ? 999M : normalisedTrendingScore;
         }

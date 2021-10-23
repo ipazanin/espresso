@@ -3,7 +3,6 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Espresso.Dashboard.Application.NewsPortals.GetNewsPortals;
-using Espresso.Dashboard.Configuration;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using System;

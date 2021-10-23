@@ -17,8 +17,7 @@ namespace Espresso.Application.Extensions
         /// <param name="request">HTTP request message.</param>
         /// <returns>The <paramref name="request"/>.</returns>
         public static HttpRequestMessage AddBrowserHeadersToHttpRequestMessage(
-            this HttpRequestMessage request
-        )
+            this HttpRequestMessage request)
         {
             request.Headers.TryAddWithoutValidation("accept", "*/*");
             request.Headers.TryAddWithoutValidation("accept-encoding", "gzip, deflate");

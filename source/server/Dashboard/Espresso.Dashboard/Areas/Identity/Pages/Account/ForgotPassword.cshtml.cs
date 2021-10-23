@@ -71,8 +71,7 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
                     to: Input.Email,
                     subject: "Reset Password",
                     content: $"Please reset your password by clicking {HtmlEncoder.Default.Encode(callbackUrl)}",
-                    htmlContent: $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>."
-                );
+                    htmlContent: $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }

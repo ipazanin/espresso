@@ -32,13 +32,11 @@ namespace Espresso.Domain.Tests.Services
 
             var (actualCreatedArticles, _, _, _) = sortArticlesService.SortArticles(
                 articles: articles,
-                savedArticles: savedArticles
-            );
+                savedArticles: savedArticles);
 
             Assert.Equal(
                 expected: expectedCreatedArticles,
-                actual: actualCreatedArticles
-            );
+                actual: actualCreatedArticles);
         }
 
         [Fact]
@@ -54,15 +52,13 @@ namespace Espresso.Domain.Tests.Services
 
             var (_, actualUpdateArticlesWithModifiedProperties, _, _) = sortArticlesService.SortArticles(
                 articles: articles,
-                savedArticles: savedArticles
-            );
+                savedArticles: savedArticles);
 
             var actualUpdateArticles = actualUpdateArticlesWithModifiedProperties.Select(aricleWithProperties => aricleWithProperties.article);
 
             Assert.Equal(
                 expected: expectedUpdateArticles,
-                actual: actualUpdateArticles
-            );
+                actual: actualUpdateArticles);
         }
 
         [Fact]
@@ -78,13 +74,11 @@ namespace Espresso.Domain.Tests.Services
 
             var (_, _, actualCreatedArticleCategories, _) = sortArticlesService.SortArticles(
                 articles: articles,
-                savedArticles: savedArticles
-            );
+                savedArticles: savedArticles);
 
             Assert.Equal(
                 expected: expectedCreatedArticleCategories,
-                actual: actualCreatedArticleCategories
-            );
+                actual: actualCreatedArticleCategories);
         }
 
         [Fact]
@@ -100,13 +94,11 @@ namespace Espresso.Domain.Tests.Services
 
             var (_, _, _, actualUpdateArticleCategories) = sortArticlesService.SortArticles(
                 articles: articles,
-                savedArticles: savedArticles
-            );
+                savedArticles: savedArticles);
 
             Assert.Equal(
                 expected: expectedUpdateArticleCategories,
-                actual: actualUpdateArticleCategories
-            );
+                actual: actualUpdateArticleCategories);
         }
 
         [Fact]
@@ -125,14 +117,12 @@ namespace Espresso.Domain.Tests.Services
 
             var (actualCreatedArticles, _, _, _) = sortArticlesService.SortArticles(
                 articles: articles,
-                savedArticles: savedArticles
-            );
+                savedArticles: savedArticles);
 
             var actualCreatedArticlesCount = actualCreatedArticles.Count();
             Assert.Equal(
                 expected: ExpectedCreatedArticlesCount,
-                actual: actualCreatedArticlesCount
-            );
+                actual: actualCreatedArticlesCount);
         }
 
         [Fact]
@@ -144,8 +134,7 @@ namespace Espresso.Domain.Tests.Services
                     newsPortalId: 1,
                     url: "https://www.google.com",
                     title: "title1",
-                    summary: "summary1"
-                ),
+                    summary: "summary1"),
             };
             var savedArticles = new List<Article>
             {
@@ -153,8 +142,7 @@ namespace Espresso.Domain.Tests.Services
                     newsPortalId: 1,
                     url: "https://www.google.com",
                     title: "title2",
-                    summary: "summary2"
-                ),
+                    summary: "summary2"),
             }.ToDictionary(article => article.Id);
 
             const int ExpectedUpdatedArticlesCount = 1;
@@ -163,14 +151,12 @@ namespace Espresso.Domain.Tests.Services
 
             var (_, actualUpdatedArticles, _, _) = sortArticlesService.SortArticles(
                 articles: articles,
-                savedArticles: savedArticles
-            );
+                savedArticles: savedArticles);
 
             var actualCreatedArticlesCount = actualUpdatedArticles.Count();
             Assert.Equal(
                 expected: ExpectedUpdatedArticlesCount,
-                actual: actualCreatedArticlesCount
-            );
+                actual: actualCreatedArticlesCount);
         }
 
         [Fact]
@@ -182,8 +168,7 @@ namespace Espresso.Domain.Tests.Services
                     newsPortalId: 1,
                     url: "url1",
                     title: "title1",
-                    summary: "summary1"
-                ),
+                    summary: "summary1"),
             };
             var savedArticles = new List<Article>
             {
@@ -191,8 +176,7 @@ namespace Espresso.Domain.Tests.Services
                     newsPortalId: 1,
                     url: "url2",
                     title: "title1",
-                    summary: "summary2"
-                ),
+                    summary: "summary2"),
             }.ToDictionary(article => article.Id);
 
             const int ExpectedUpdatedArticlesCount = 1;
@@ -201,14 +185,12 @@ namespace Espresso.Domain.Tests.Services
 
             var (_, actualUpdatedArticles, _, _) = sortArticlesService.SortArticles(
                 articles: articles,
-                savedArticles: savedArticles
-            );
+                savedArticles: savedArticles);
 
             var actualCreatedArticlesCount = actualUpdatedArticles.Count();
             Assert.Equal(
                 expected: ExpectedUpdatedArticlesCount,
-                actual: actualCreatedArticlesCount
-            );
+                actual: actualCreatedArticlesCount);
         }
 
         [Fact]
@@ -220,8 +202,7 @@ namespace Espresso.Domain.Tests.Services
                     newsPortalId: 1,
                     url: "url1",
                     title: "title1",
-                    summary: "summary1"
-                ),
+                    summary: "summary1"),
             };
             var savedArticles = new List<Article>
             {
@@ -229,8 +210,7 @@ namespace Espresso.Domain.Tests.Services
                     newsPortalId: 1,
                     url: "url2",
                     title: "title2",
-                    summary: "summary1"
-                ),
+                    summary: "summary1"),
             }.ToDictionary(article => article.Id);
 
             const int ExpectedUpdatedArticlesCount = 1;
@@ -239,14 +219,12 @@ namespace Espresso.Domain.Tests.Services
 
             var (_, actualUpdatedArticles, _, _) = sortArticlesService.SortArticles(
                 articles: articles,
-                savedArticles: savedArticles
-            );
+                savedArticles: savedArticles);
 
             var actualCreatedArticlesCount = actualUpdatedArticles.Count();
             Assert.Equal(
                 expected: ExpectedUpdatedArticlesCount,
-                actual: actualCreatedArticlesCount
-            );
+                actual: actualCreatedArticlesCount);
         }
 
         /// <summary>
@@ -263,15 +241,13 @@ namespace Espresso.Domain.Tests.Services
                     url: "url1",
                     title: "title1",
                     summary: "summary1",
-                    id: Guid.NewGuid()
-                ),
+                    id: Guid.NewGuid()),
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
                     url: "url2",
                     title: "title2",
                     summary: "summary2",
-                    id: Guid.NewGuid()
-                ),
+                    id: Guid.NewGuid()),
             };
             var expectedArticlesCount = articles.Count;
 
@@ -288,8 +264,7 @@ namespace Espresso.Domain.Tests.Services
             var actualArticlesCount = actualArticles.Count();
             Assert.Equal(
                 expected: expectedArticlesCount,
-                actual: actualArticlesCount
-            );
+                actual: actualArticlesCount);
         }
 
         /// <summary>
@@ -306,29 +281,25 @@ namespace Espresso.Domain.Tests.Services
                     url: "url1",
                     title: "title1",
                     summary: "summary1",
-                    id: Guid.NewGuid()
-                ),
+                    id: Guid.NewGuid()),
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
                     url: "url2",
                     title: "title2",
                     summary: "summary2",
-                    id: Guid.NewGuid()
-                ),
+                    id: Guid.NewGuid()),
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
                     url: "url1",
                     title: "title1",
                     summary: "summary1",
-                    id: Guid.NewGuid()
-                ),
+                    id: Guid.NewGuid()),
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
                     url: "url2",
                     title: "title2",
                     summary: "summary2",
-                    id: Guid.NewGuid()
-                ),
+                    id: Guid.NewGuid()),
             };
             var expectedArticlesCount = articles.Count - 2;
             var channel = Channel.CreateUnbounded<Article>();
@@ -344,8 +315,7 @@ namespace Espresso.Domain.Tests.Services
             var actualArticlesCount = actualArticles.Count();
             Assert.Equal(
                 expected: expectedArticlesCount,
-                actual: actualArticlesCount
-            );
+                actual: actualArticlesCount);
         }
     }
 }

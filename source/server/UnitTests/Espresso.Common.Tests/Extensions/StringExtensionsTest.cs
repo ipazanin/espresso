@@ -19,8 +19,7 @@ namespace Espresso.Common.Tests.Extensions
 
             Assert.Equal(
                 expected: expectedStringValue,
-                actual: actualStringValue
-            );
+                actual: actualStringValue);
         }
 
         [Theory]
@@ -59,8 +58,7 @@ namespace Espresso.Common.Tests.Extensions
 
             Assert.Equal(
                 expected: expectedStringValue,
-                actual: actualStringValue
-            );
+                actual: actualStringValue);
         }
     }
 }

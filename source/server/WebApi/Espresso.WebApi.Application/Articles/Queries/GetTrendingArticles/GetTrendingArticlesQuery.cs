@@ -12,6 +12,5 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles
         public int Take { get; init; }
         public int Skip { get; init; }
         public Guid? FirstArticleId { get; init; }
-        public TimeSpan MaxAgeOfTrendingArticle { get; init; }
     }
 }

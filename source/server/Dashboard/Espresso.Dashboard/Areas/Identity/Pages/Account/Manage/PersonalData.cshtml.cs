@@ -18,8 +18,7 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
         /// </summary>
         /// <param name="userManager"></param>
         public PersonalDataModel(
-            UserManager<IdentityUser> userManager
-        )
+            UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
         }

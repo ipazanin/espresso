@@ -22,8 +22,7 @@ namespace Espresso.Common.Tests.Utilities
             Assert.InRange(
                 actual: actualMilliseconds,
                 low: expectedMilliseconds - MillisecondsThreshold,
-                high: expectedMilliseconds + MillisecondsThreshold
-            );
+                high: expectedMilliseconds + MillisecondsThreshold);
         }
 
         [Fact]
@@ -35,8 +34,7 @@ namespace Espresso.Common.Tests.Utilities
 
             Assert.Equal(
                 expected: expectedDate,
-                actual: actualDate
-            );
+                actual: actualDate);
         }
 
         [Fact]
@@ -79,8 +77,7 @@ namespace Espresso.Common.Tests.Utilities
             var exception = Assert.Throws<ArgumentOutOfRangeException>(TestAction);
             Assert.Equal(
                 expected: ExpectedExceptionMessage,
-                actual: exception.Message
-            );
+                actual: exception.Message);
         }
 
         [Fact]
@@ -97,8 +94,7 @@ namespace Espresso.Common.Tests.Utilities
             var exception = Assert.Throws<ArgumentOutOfRangeException>(TestAction);
             Assert.Equal(
                 expected: ExpectedExceptionMessage,
-                actual: exception.Message
-            );
+                actual: exception.Message);
         }
 
         [Fact]
@@ -110,8 +106,7 @@ namespace Espresso.Common.Tests.Utilities
 
             Assert.Equal(
                 expected: actualDateTime,
-                actual: DateTimeConstants.UnixEpochStartTime
-            );
+                actual: DateTimeConstants.UnixEpochStartTime);
         }
 
         [Fact]
@@ -123,8 +118,7 @@ namespace Espresso.Common.Tests.Utilities
 
             Assert.Equal(
                 expected: actualMilliseconds,
-                actual: ExpectedMilliseconds
-            );
+                actual: ExpectedMilliseconds);
         }
 
         [Fact]
@@ -137,8 +131,7 @@ namespace Espresso.Common.Tests.Utilities
 
             Assert.Equal(
                 expected: actualMilliseconds,
-                actual: ExpectedMilliseconds
-            );
+                actual: ExpectedMilliseconds);
         }
     }
 }

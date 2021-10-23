@@ -37,8 +37,7 @@ namespace Espresso.Application.DataTransferObjects.PagingDataTransferObjects
         public PagingMetadata(
             int currentPage,
             int pageSize,
-            int totalCount
-        )
+            int totalCount)
         {
             CurrentPage = currentPage;
             PageSize = pageSize;

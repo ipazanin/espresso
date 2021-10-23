@@ -24,8 +24,7 @@ namespace Espresso.Common.Tests.Utilities
 
             Assert.Equal(
                 expected: expectedAnsivalue,
-                actual: actualAnsivalue
-            );
+                actual: actualAnsivalue);
         }
 
         [Fact]
@@ -43,8 +42,7 @@ namespace Espresso.Common.Tests.Utilities
 
             Assert.Equal(
                 expected: expectedAnsivalue,
-                actual: actualAnsivalue
-            );
+                actual: actualAnsivalue);
         }
 
         [Fact]
@@ -62,8 +60,7 @@ namespace Espresso.Common.Tests.Utilities
 
             Assert.Equal(
                 expected: expectedAnsivalue,
-                actual: actualAnsivalue
-            );
+                actual: actualAnsivalue);
         }
 
         [Fact]
@@ -81,8 +78,7 @@ namespace Espresso.Common.Tests.Utilities
 
             Assert.Equal(
                 expected: expectedAnsivalue,
-                actual: actualAnsivalue
-            );
+                actual: actualAnsivalue);
         }
 
         [Fact]
@@ -101,8 +97,7 @@ namespace Espresso.Common.Tests.Utilities
 
             Assert.Equal(
                 expected: expectedAnsivalue,
-                actual: actualAnsivalue
-            );
+                actual: actualAnsivalue);
         }
 
         [Fact]
@@ -120,8 +115,7 @@ namespace Espresso.Common.Tests.Utilities
 
             Assert.Equal(
                 expected: expectedAnsivalue,
-                actual: actualAnsivalue
-            );
+                actual: actualAnsivalue);
         }
 
         [Fact]
@@ -139,8 +133,7 @@ namespace Espresso.Common.Tests.Utilities
 
             Assert.Equal(
                 expected: expectedAnsivalue,
-                actual: actualAnsivalue
-            );
+                actual: actualAnsivalue);
         }
 
         [Fact]
@@ -158,8 +151,7 @@ namespace Espresso.Common.Tests.Utilities
 
             Assert.Equal(
                 expected: expectedAnsivalue,
-                actual: actualAnsivalue
-            );
+                actual: actualAnsivalue);
         }
 
         [Fact]
@@ -177,8 +169,7 @@ namespace Espresso.Common.Tests.Utilities
 
             Assert.Equal(
                 expected: expectedAnsivalue,
-                actual: actualAnsivalue
-            );
+                actual: actualAnsivalue);
         }
     }
 }

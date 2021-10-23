@@ -23,16 +23,14 @@ namespace Espresso.WebApi.Configuration
         /// 
         /// </summary>
         public TimeSpan Timeout => TimeSpan.FromSeconds(
-            _configurationSection.GetValue<int>("TimeoutInSeconds")
-        );
+            _configurationSection.GetValue<int>("TimeoutInSeconds"));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpClientConfiguration"/> class.
         /// HttpClientConfiguration Constructor.
         /// </summary>
         public HttpClientConfiguration(
-            IConfigurationSection configurationSection
-        )
+            IConfigurationSection configurationSection)
         {
             _configurationSection = configurationSection;
         }

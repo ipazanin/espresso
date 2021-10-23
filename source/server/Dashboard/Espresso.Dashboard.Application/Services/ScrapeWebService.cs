@@ -43,8 +43,7 @@ namespace Espresso.Dashboard.Application.Services
             IParseHtmlService parseHtmlService,
             IHttpClientFactory httpClientFactory,
             ILoggerService<ScrapeWebService> loggerService,
-            IJsonService jsonService
-        )
+            IJsonService jsonService)
         {
             _httpClient = httpClientFactory.CreateClient(HttpClientConstants.ScrapeWebHttpClientName);
             _parseHtmlService = parseHtmlService;
@@ -56,8 +55,7 @@ namespace Espresso.Dashboard.Application.Services
             string? articleUrl,
             RequestType requestType,
             ImageUrlParseConfiguration imageUrlParseConfiguration,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             if (articleUrl is null || string.IsNullOrEmpty(imageUrlParseConfiguration.XPath))
             {
@@ -66,8 +64,7 @@ namespace Espresso.Dashboard.Application.Services
             var htmlString = await GetStringPageContent(
                 articleUrl: articleUrl,
                 requestType: requestType,
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             if (htmlString is null)
             {
@@ -88,12 +85,10 @@ namespace Espresso.Dashboard.Application.Services
                 ImageUrlWebScrapeType.JsonObjectInScriptElement => await GetImageUrlFromJsonObjectFromScriptTag(
                     elementTags: elementTags,
                     propertyNames: imageUrlParseConfiguration.GetPropertyNames(),
-                    cancellationToken: cancellationToken
-                ),
+                    cancellationToken: cancellationToken),
                 _ => _parseHtmlService.GetImageUrlFromSrcAttribute(
                     elementTags: elementTags,
-                    attributeName: imageUrlParseConfiguration.AttributeName
-                ),
+                    attributeName: imageUrlParseConfiguration.AttributeName),
             };
 
             return imageUrl;
@@ -102,8 +97,7 @@ namespace Espresso.Dashboard.Application.Services
         private async Task<string?> GetImageUrlFromJsonObjectFromScriptTag(
             HtmlNodeCollection elementTags,
             IEnumerable<string> propertyNames,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var jsonText = elementTags.FirstOrDefault()?.InnerText;
             if (jsonText is null)
@@ -142,8 +136,7 @@ namespace Espresso.Dashboard.Application.Services
                     {
                         (nameof(jsonText), jsonText),
                         (nameof(propertyNames), string.Join(", ", propertyNames)),
-                    }
-                );
+                    });
                 return null;
             }
         }
@@ -151,8 +144,7 @@ namespace Espresso.Dashboard.Application.Services
         private async Task<string?> GetStringPageContent(
             string articleUrl,
             RequestType requestType,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             try
             {
@@ -184,8 +176,7 @@ namespace Espresso.Dashboard.Application.Services
                 LogImageUrlWebScrapingRequestError(
                     exception: exception,
                     articleUrl: articleUrl,
-                    requestType: requestType
-                );
+                    requestType: requestType);
                 return null;
             }
         }

@@ -66,7 +66,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
                     .Invoke(article.NewsPortal!),
                 Categories = article.ArticleCategories
                     .Select(articleCategory => articleCategory.Category)
-                    .Select(GetCategoryArticlesCategory_1_3.GetProjection().Compile()!),
+                    .Select(GetCategoryArticlesCategory_1_3.GetProjection().Compile() !),
             };
         }
     }

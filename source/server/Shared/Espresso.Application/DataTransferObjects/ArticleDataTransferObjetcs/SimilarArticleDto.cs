@@ -43,8 +43,7 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
             Guid id,
             double similarityScore,
             Guid mainArticleId,
-            Guid subordinateArticleId
-        )
+            Guid subordinateArticleId)
         {
             Id = id;
             SimilarityScore = similarityScore;

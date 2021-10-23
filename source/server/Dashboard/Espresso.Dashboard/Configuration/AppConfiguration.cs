@@ -4,8 +4,6 @@
 
 using Espresso.Common.Enums;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Diagnostics;
 
 namespace Espresso.Dashboard.Configuration
 {
@@ -20,13 +18,6 @@ namespace Espresso.Dashboard.Configuration
         public AppEnvironment AppEnvironment => _configuration.GetValue<AppEnvironment>("Environment");
 
         public string Version => _configuration.GetValue<string>("Version");
-
-        public TimeSpan MaxAgeOfArticles =>
-            TimeSpan.FromDays(
-                value: _configuration.GetValue<int>("MaxAgeOfArticlesInDays")
-            );
-
-        public TimeSpan Uptime => DateTime.UtcNow - Process.GetCurrentProcess().StartTime.ToUniversalTime();
 
         public string SlackWebHook => _configuration.GetValue<string>("SlackWebHook");
 

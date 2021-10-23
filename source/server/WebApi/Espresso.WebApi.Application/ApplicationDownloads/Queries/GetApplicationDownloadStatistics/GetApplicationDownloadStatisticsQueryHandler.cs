@@ -21,8 +21,7 @@ namespace Espresso.WebApi.Application.ApplicationDownloads.Queries.GetApplicatio
         /// </summary>
         /// <param name="espressoDatabaseContext"></param>
         public GetApplicationDownloadStatisticsQueryHandler(
-            IEspressoDatabaseContext espressoDatabaseContext
-        )
+            IEspressoDatabaseContext espressoDatabaseContext)
         {
             _espressoDatabaseContext = espressoDatabaseContext;
         }
@@ -34,12 +33,10 @@ namespace Espresso.WebApi.Application.ApplicationDownloads.Queries.GetApplicatio
                 .ToListAsync(cancellationToken);
 
             var androidCount = applicationDownloads.Count(
-                predicate: applicationDownload => applicationDownload.MobileDeviceType == DeviceType.Android
-            );
+                predicate: applicationDownload => applicationDownload.MobileDeviceType == DeviceType.Android);
 
             var iosCount = applicationDownloads.Count(
-                predicate: applicationDownload => applicationDownload.MobileDeviceType == DeviceType.Ios
-            );
+                predicate: applicationDownload => applicationDownload.MobileDeviceType == DeviceType.Ios);
             var response = new GetApplicationDownloadStatisticsQueryResponse
             {
                 AndroidDownloadsCount = androidCount,

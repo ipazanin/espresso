@@ -2,10 +2,13 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using Espresso.Application.Infrastructure.SettingsInfrastructure;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Infrastructure;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Services;
 using Espresso.Domain.Tests.TestUtilities;
+using Espresso.Domain.ValueObjects.SettingsValueObjects;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
@@ -32,18 +35,35 @@ namespace Espresso.Domain.Tests.Services
         [Theory]
         public void GroupSimilarArticles_ReturnsSimilarArticleCollectionWithOneSimmilarArticle_WhenArticlesSimmilarityPassesGivenThreshold(
             string firstArticleTitle,
-            string secondArticleTitle
-        )
+            string secondArticleTitle)
         {
+            const int ExpectedSimilarArticlesCount = 1;
+
             var loggerServiceMock = new Mock<ILoggerService<GroupSimilarArticlesService>>(MockBehavior.Strict);
 
             loggerServiceMock.Setup(loggerService => loggerService.Log(
                 It.IsAny<string>(),
                 It.IsAny<LogLevel>(),
-                It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()
-            ));
+                It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
 
-            const int ExpectedSimilarArticlesCount = 1;
+            var similarArticleSetting = new SimilarArticleSetting(
+                similarityScoreThreshold: 0.6,
+                articlePublishDateTimeDifferenceThresholdInMiliseconds: (long)TimeSpan.FromHours(16).TotalMilliseconds,
+                maxAgeOfSimilarArticleCheckingInMiliseconds: (long)TimeSpan.FromHours(32).TotalMilliseconds,
+                minimalNumberOfWordsForArticleToBeComparable: 1);
+
+            var setting = new Setting(
+                    id: default,
+                    settingsRevision: default,
+                    created: default,
+                    articleSetting: default!,
+                    newsPortalSetting: default!,
+                    jobsSetting: default!,
+                    similarArticleSetting: similarArticleSetting);
+
+            var settingProviderMock = new Mock<ISettingProvider>(MockBehavior.Strict);
+            settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
+                .Returns(setting);
 
             var articles = new List<Article>
             {
@@ -53,77 +73,97 @@ namespace Espresso.Domain.Tests.Services
                     publishDateTime: DateTime.UtcNow,
                     createDateTime: DateTime.UtcNow,
                     categoryId: 1,
-                    id: Guid.NewGuid()
-                ),
+                    id: Guid.NewGuid()),
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 2,
                     title: secondArticleTitle,
                     publishDateTime: DateTime.UtcNow,
                     createDateTime: DateTime.UtcNow,
                     categoryId: 2,
-                    id: Guid.NewGuid()
-                ),
+                    id: Guid.NewGuid()),
             };
-            var service = new GroupSimilarArticlesService(
-                similarityScoreThreshold: 0.6,
-                articlePublishDateTimeDiferenceThreshold: TimeSpan.FromHours(16),
-                loggerService: loggerServiceMock.Object,
-                maxAgeOfSimilarArticleChecking: TimeSpan.FromHours(32),
-                minimalNumberOfWordsForArticleToBeComparable: 1
-            );
+            var service = new GroupSimilarArticlesService(settingProviderMock.Object, loggerServiceMock.Object);
 
             var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
             var actualSimilarArticlesCount = similarArticles.Count();
 
             Assert.Equal(
                 expected: ExpectedSimilarArticlesCount,
-                actual: actualSimilarArticlesCount
-            );
+                actual: actualSimilarArticlesCount);
         }
 
         [Fact]
         public void GroupSimilarArticles_ReturnsSimilarArticleCollectionWithZeroSimmilarArticles_WhenArticlesListIsEmpty()
         {
+            const int ExpectedSimilarArticlesCount = 0;
+
             var loggerServiceMock = new Mock<ILoggerService<GroupSimilarArticlesService>>(MockBehavior.Strict);
 
             loggerServiceMock.Setup(loggerService => loggerService.Log(
                 It.IsAny<string>(),
                 It.IsAny<LogLevel>(),
-                It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()
-            ));
+                It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
 
-            const int ExpectedSimilarArticlesCount = 0;
+            var similarArticleSetting = new SimilarArticleSetting(
+                similarityScoreThreshold: 0.6,
+                articlePublishDateTimeDifferenceThresholdInMiliseconds: (long)TimeSpan.FromHours(16).TotalMilliseconds,
+                maxAgeOfSimilarArticleCheckingInMiliseconds: (long)TimeSpan.FromHours(32).TotalMilliseconds,
+                minimalNumberOfWordsForArticleToBeComparable: 1);
+
+            var setting = new Setting(
+                    id: default,
+                    settingsRevision: default,
+                    created: default,
+                    articleSetting: default!,
+                    newsPortalSetting: default!,
+                    jobsSetting: default!,
+                    similarArticleSetting: similarArticleSetting);
+
+            var settingProviderMock = new Mock<ISettingProvider>(MockBehavior.Strict);
+            settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
+                .Returns(setting);
 
             var articles = new List<Article>();
-            var service = new GroupSimilarArticlesService(
-                similarityScoreThreshold: 0.6,
-                articlePublishDateTimeDiferenceThreshold: TimeSpan.FromHours(16),
-                loggerService: loggerServiceMock.Object,
-                maxAgeOfSimilarArticleChecking: TimeSpan.FromHours(32),
-                minimalNumberOfWordsForArticleToBeComparable: 1
-            );
+            var service = new GroupSimilarArticlesService(settingProviderMock.Object, loggerServiceMock.Object);
 
             var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
             var actualSimilarArticlesCount = similarArticles.Count();
 
             Assert.Equal(
                 expected: ExpectedSimilarArticlesCount,
-                actual: actualSimilarArticlesCount
-            );
+                actual: actualSimilarArticlesCount);
         }
 
         [Fact]
         public void GroupSimilarArticles_ReturnsSimilarArticleCollectionWithZeroSimmilarArticles_WhenArticlesListContainsOneArticle()
         {
+            const int ExpectedSimilarArticlesCount = 0;
+
             var loggerServiceMock = new Mock<ILoggerService<GroupSimilarArticlesService>>(MockBehavior.Strict);
 
             loggerServiceMock.Setup(loggerService => loggerService.Log(
                 It.IsAny<string>(),
                 It.IsAny<LogLevel>(),
-                It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()
-            ));
+                It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
 
-            const int ExpectedSimilarArticlesCount = 0;
+            var similarArticleSetting = new SimilarArticleSetting(
+                similarityScoreThreshold: 0.6,
+                articlePublishDateTimeDifferenceThresholdInMiliseconds: (long)TimeSpan.FromHours(16).TotalMilliseconds,
+                maxAgeOfSimilarArticleCheckingInMiliseconds: (long)TimeSpan.FromHours(32).TotalMilliseconds,
+                minimalNumberOfWordsForArticleToBeComparable: 1);
+
+            var setting = new Setting(
+                    id: default,
+                    settingsRevision: default,
+                    created: default,
+                    articleSetting: default!,
+                    newsPortalSetting: default!,
+                    jobsSetting: default!,
+                    similarArticleSetting: similarArticleSetting);
+
+            var settingProviderMock = new Mock<ISettingProvider>(MockBehavior.Strict);
+            settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
+                .Returns(setting);
 
             var articles = new List<Article>
             {
@@ -133,24 +173,16 @@ namespace Espresso.Domain.Tests.Services
                     publishDateTime: DateTime.UtcNow,
                     createDateTime: DateTime.UtcNow,
                     categoryId: 1,
-                    id: Guid.NewGuid()
-                ),
+                    id: Guid.NewGuid()),
             };
-            var service = new GroupSimilarArticlesService(
-                similarityScoreThreshold: 0.6,
-                articlePublishDateTimeDiferenceThreshold: TimeSpan.FromHours(16),
-                loggerService: loggerServiceMock.Object,
-                maxAgeOfSimilarArticleChecking: TimeSpan.FromHours(32),
-                minimalNumberOfWordsForArticleToBeComparable: 1
-            );
+            var service = new GroupSimilarArticlesService(settingProviderMock.Object, loggerServiceMock.Object);
 
             var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
             var actualSimilarArticlesCount = similarArticles.Count();
 
             Assert.Equal(
                 expected: ExpectedSimilarArticlesCount,
-                actual: actualSimilarArticlesCount
-            );
+                actual: actualSimilarArticlesCount);
         }
 
         [InlineData("Very Cool Title", "Very Different NotTitle")]
@@ -158,18 +190,35 @@ namespace Espresso.Domain.Tests.Services
         [Theory]
         public void GroupSimilarArticles_ReturnsSimilarArticleCollectionWithZeroSimmilarArticles_WhenArticlesSimmilarityDoesntPassGivenThreshold(
             string firstArticleTitle,
-            string secondArticleTitle
-        )
+            string secondArticleTitle)
         {
+            const int ExpectedSimilarArticlesCount = 0;
+
             var loggerServiceMock = new Mock<ILoggerService<GroupSimilarArticlesService>>(MockBehavior.Strict);
 
             loggerServiceMock.Setup(loggerService => loggerService.Log(
                 It.IsAny<string>(),
                 It.IsAny<LogLevel>(),
-                It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()
-            ));
+                It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
 
-            const int ExpectedSimilarArticlesCount = 0;
+            var similarArticleSetting = new SimilarArticleSetting(
+                similarityScoreThreshold: 0.6,
+                articlePublishDateTimeDifferenceThresholdInMiliseconds: (long)TimeSpan.FromHours(16).TotalMilliseconds,
+                maxAgeOfSimilarArticleCheckingInMiliseconds: (long)TimeSpan.FromHours(32).TotalMilliseconds,
+                minimalNumberOfWordsForArticleToBeComparable: 1);
+
+            var setting = new Setting(
+                    id: default,
+                    settingsRevision: default,
+                    created: default,
+                    articleSetting: default!,
+                    newsPortalSetting: default!,
+                    jobsSetting: default!,
+                    similarArticleSetting: similarArticleSetting);
+
+            var settingProviderMock = new Mock<ISettingProvider>(MockBehavior.Strict);
+            settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
+                .Returns(setting);
 
             var articles = new List<Article>
             {
@@ -179,50 +228,58 @@ namespace Espresso.Domain.Tests.Services
                     publishDateTime: DateTime.UtcNow,
                     createDateTime: DateTime.UtcNow,
                     categoryId: 1,
-                    id: Guid.NewGuid()
-                ),
+                    id: Guid.NewGuid()),
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 2,
                     title: secondArticleTitle,
                     publishDateTime: DateTime.UtcNow,
                     createDateTime: DateTime.UtcNow,
                     categoryId: 2,
-                    id: Guid.NewGuid()
-                ),
+                    id: Guid.NewGuid()),
             };
-            var service = new GroupSimilarArticlesService(
-                similarityScoreThreshold: 0.6,
-                articlePublishDateTimeDiferenceThreshold: TimeSpan.FromHours(16),
-                loggerService: loggerServiceMock.Object,
-                maxAgeOfSimilarArticleChecking: TimeSpan.FromHours(32),
-                minimalNumberOfWordsForArticleToBeComparable: 1
-            );
+            var service = new GroupSimilarArticlesService(settingProviderMock.Object, loggerServiceMock.Object);
 
             var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
             var actualSimilarArticlesCount = similarArticles.Count();
 
             Assert.Equal(
                 expected: ExpectedSimilarArticlesCount,
-                actual: actualSimilarArticlesCount
-            );
+                actual: actualSimilarArticlesCount);
         }
 
         [InlineData("Very Cool Title", "Very Cool Title")]
         [Theory]
         public void GroupSimilarArticles_ReturnsSimilarArticleCollectionWithZeroSimmilarArticles_WhenOneOfTwoArticlesIsToOldToBeCheckedForSimilarity(
             string firstArticleTitle,
-            string secondArticleTitle
-        )
+            string secondArticleTitle)
         {
+            const int ExpectedSimilarArticlesCount = 0;
+
             var loggerServiceMock = new Mock<ILoggerService<GroupSimilarArticlesService>>(MockBehavior.Strict);
 
             loggerServiceMock.Setup(loggerService => loggerService.Log(
                 It.IsAny<string>(),
                 It.IsAny<LogLevel>(),
-                It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()
-            ));
+                It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
 
-            const int ExpectedSimilarArticlesCount = 0;
+            var similarArticleSetting = new SimilarArticleSetting(
+                similarityScoreThreshold: 0.6,
+                articlePublishDateTimeDifferenceThresholdInMiliseconds: (long)TimeSpan.FromHours(16).TotalMilliseconds,
+                maxAgeOfSimilarArticleCheckingInMiliseconds: (long)TimeSpan.FromHours(32).TotalMilliseconds,
+                minimalNumberOfWordsForArticleToBeComparable: 1);
+
+            var setting = new Setting(
+                    id: default,
+                    settingsRevision: default,
+                    created: default,
+                    articleSetting: default!,
+                    newsPortalSetting: default!,
+                    jobsSetting: default!,
+                    similarArticleSetting: similarArticleSetting);
+
+            var settingProviderMock = new Mock<ISettingProvider>(MockBehavior.Strict);
+            settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
+                .Returns(setting);
 
             var articles = new List<Article>
             {
@@ -232,32 +289,23 @@ namespace Espresso.Domain.Tests.Services
                     publishDateTime: DateTime.UtcNow,
                     createDateTime: DateTime.UtcNow,
                     categoryId: 1,
-                    id: Guid.NewGuid()
-                ),
+                    id: Guid.NewGuid()),
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 2,
                     title: secondArticleTitle,
                     publishDateTime: DateTime.UtcNow.AddDays(-3),
                     createDateTime: DateTime.UtcNow.AddDays(-3),
                     categoryId: 2,
-                    id: Guid.NewGuid()
-                ),
+                    id: Guid.NewGuid()),
             };
-            var service = new GroupSimilarArticlesService(
-                similarityScoreThreshold: 0.6,
-                articlePublishDateTimeDiferenceThreshold: TimeSpan.FromHours(16),
-                loggerService: loggerServiceMock.Object,
-                maxAgeOfSimilarArticleChecking: TimeSpan.FromHours(32),
-                minimalNumberOfWordsForArticleToBeComparable: 1
-            );
+            var service = new GroupSimilarArticlesService(settingProviderMock.Object, loggerServiceMock.Object);
 
             var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
             var actualSimilarArticlesCount = similarArticles.Count();
 
             Assert.Equal(
                 expected: ExpectedSimilarArticlesCount,
-                actual: actualSimilarArticlesCount
-            );
+                actual: actualSimilarArticlesCount);
         }
     }
 }

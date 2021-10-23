@@ -67,7 +67,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_3
                 Categories = article.ArticleCategories
                     .AsQueryable()
                     .Select(articleCategory => articleCategory.Category)
-                    .Select(GetLatestArticlesCategory_1_3.GetProjection()!),
+                    .Select(GetLatestArticlesCategory_1_3.GetProjection() !),
             };
         }
     }

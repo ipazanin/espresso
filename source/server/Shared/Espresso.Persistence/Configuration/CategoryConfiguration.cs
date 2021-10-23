@@ -61,8 +61,7 @@ namespace Espresso.Persistence.Configuration
                     sortIndex: 2,
                     position: null,
                     categoryType: CategoryType.Normal,
-                    categoryUrl: "/vijesti"
-                ),
+                    categoryUrl: "/vijesti"),
                 new Category(
                     id: (int)CategoryId.Sport,
                     name: CategoryId.Sport.GetDisplayName(),
@@ -71,8 +70,7 @@ namespace Espresso.Persistence.Configuration
                     sortIndex: 3,
                     position: null,
                     categoryType: CategoryType.Normal,
-                    categoryUrl: "/sport"
-                ),
+                    categoryUrl: "/sport"),
                 new Category(
                     id: (int)CategoryId.Show,
                     name: CategoryId.Show.GetDisplayName(),
@@ -81,8 +79,7 @@ namespace Espresso.Persistence.Configuration
                     sortIndex: 4,
                     position: null,
                     categoryType: CategoryType.Normal,
-                    categoryUrl: "/show"
-                ),
+                    categoryUrl: "/show"),
                 new Category(
                     id: (int)CategoryId.Lifestyle,
                     name: CategoryId.Lifestyle.GetDisplayName(),
@@ -91,8 +88,7 @@ namespace Espresso.Persistence.Configuration
                     sortIndex: 5,
                     position: null,
                     categoryType: CategoryType.Normal,
-                    categoryUrl: "/lifestyle"
-                ),
+                    categoryUrl: "/lifestyle"),
                 new Category(
                     id: (int)CategoryId.Tech,
                     name: CategoryId.Tech.GetDisplayName(),
@@ -101,8 +97,7 @@ namespace Espresso.Persistence.Configuration
                     sortIndex: 6,
                     position: null,
                     categoryType: CategoryType.Normal,
-                    categoryUrl: "/tech"
-                ),
+                    categoryUrl: "/tech"),
                 new Category(
                     id: (int)CategoryId.Viral,
                     name: CategoryId.Viral.GetDisplayName(),
@@ -111,8 +106,7 @@ namespace Espresso.Persistence.Configuration
                     sortIndex: 7,
                     position: null,
                     categoryType: CategoryType.Normal,
-                    categoryUrl: "/viral"
-                ),
+                    categoryUrl: "/viral"),
                 new Category(
                     id: (int)CategoryId.Biznis,
                     name: CategoryId.Biznis.GetDisplayName(),
@@ -121,8 +115,7 @@ namespace Espresso.Persistence.Configuration
                     sortIndex: 8,
                     position: null,
                     categoryType: CategoryType.Normal,
-                    categoryUrl: "/biznis"
-                ),
+                    categoryUrl: "/biznis"),
                 new Category(
                     id: (int)CategoryId.AutoMoto,
                     name: CategoryId.AutoMoto.GetDisplayName(),
@@ -131,8 +124,7 @@ namespace Espresso.Persistence.Configuration
                     sortIndex: 9,
                     position: null,
                     categoryType: CategoryType.Normal,
-                    categoryUrl: "/auto-moto"
-                ),
+                    categoryUrl: "/auto-moto"),
                 new Category(
                     id: (int)CategoryId.Kultura,
                     name: CategoryId.Kultura.GetDisplayName(),
@@ -141,8 +133,7 @@ namespace Espresso.Persistence.Configuration
                     sortIndex: 10,
                     position: null,
                     categoryType: CategoryType.Normal,
-                    categoryUrl: "/kultura"
-                ),
+                    categoryUrl: "/kultura"),
                 new Category(
                     id: (int)CategoryId.General,
                     name: CategoryId.General.GetDisplayName(),
@@ -151,8 +142,7 @@ namespace Espresso.Persistence.Configuration
                     sortIndex: 1,
                     position: null,
                     categoryType: CategoryType.General,
-                    categoryUrl: "/general"
-                ),
+                    categoryUrl: "/general"),
                 new Category(
                     id: (int)CategoryId.Local,
                     name: CategoryId.Local.GetDisplayName(),
@@ -161,8 +151,7 @@ namespace Espresso.Persistence.Configuration
                     sortIndex: null,
                     position: 3,
                     categoryType: CategoryType.Local,
-                    categoryUrl: "/local"
-                ),
+                    categoryUrl: "/local"),
             };
 
             builder.HasData(categories);

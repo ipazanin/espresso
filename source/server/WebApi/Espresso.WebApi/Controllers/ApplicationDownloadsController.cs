@@ -33,8 +33,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="webApiConfiguration"></param>
         public ApplicationDownloadsController(
             ISender sender,
-            IWebApiConfiguration webApiConfiguration
-        )
+            IWebApiConfiguration webApiConfiguration)
             : base(sender, webApiConfiguration)
         {
         }
@@ -64,8 +63,7 @@ namespace Espresso.WebApi.Controllers
         [Route("api/application-downloads")]
         public async Task<IActionResult> CreateApplicationDownload(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var command = new CreateApplicationDownloadCommand
             {
@@ -76,8 +74,7 @@ namespace Espresso.WebApi.Controllers
 
             await Sender.Send(
                     request: command,
-                    cancellationToken: cancellationToken
-                );
+                    cancellationToken: cancellationToken);
 
             return Ok();
         }
@@ -104,8 +101,7 @@ namespace Espresso.WebApi.Controllers
         [Route("api/applicationDownloads/create")]
         public async Task<IActionResult> CreateApplicationDownload_1_3(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var command = new CreateApplicationDownloadCommand
             {
@@ -116,8 +112,7 @@ namespace Espresso.WebApi.Controllers
 
             await Sender.Send(
                 request: command,
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok();
         }
@@ -146,8 +141,7 @@ namespace Espresso.WebApi.Controllers
         public async Task<IActionResult> CreateApplicationDownload_1_2(
             [Required] string mobileAppVersion,
             [Required] DeviceType mobileDeviceType,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var command = new CreateApplicationDownloadCommand
             {
@@ -157,8 +151,7 @@ namespace Espresso.WebApi.Controllers
             };
             await Sender.Send(
                 request: command,
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok();
         }
@@ -189,8 +182,7 @@ namespace Espresso.WebApi.Controllers
         [Route("api/application-downloads")]
         public async Task<IActionResult> GetApplicationDownloadsStatistics(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var response = await Sender.Send(
                 request: new GetApplicationDownloadStatisticsQuery
@@ -199,8 +191,7 @@ namespace Espresso.WebApi.Controllers
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok(response);
         }
@@ -229,8 +220,7 @@ namespace Espresso.WebApi.Controllers
         [Route("api/applicationDownloads/statistics")]
         public async Task<IActionResult> GetApplicationDownloadsStatistics_1_3(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var response = await Sender.Send(
                 request: new GetApplicationDownloadStatisticsQuery
@@ -239,8 +229,7 @@ namespace Espresso.WebApi.Controllers
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok(response);
         }

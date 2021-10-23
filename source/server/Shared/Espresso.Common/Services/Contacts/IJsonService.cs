@@ -22,8 +22,7 @@ namespace Espresso.Common.Services.Contracts
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public Task<string> Serialize<TValue>(
             TValue value,
-            CancellationToken cancellationToken
-        );
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Serializes <paramref name="value"/> to JSON string.
@@ -42,8 +41,7 @@ namespace Espresso.Common.Services.Contracts
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public Task<TValue?> Deserialize<TValue>(
             string json,
-            CancellationToken cancellationToken
-        );
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Deserializes <paramref name="utf8Bytes"/> bytes into object of type <typeparamref name="TValue"/>.
@@ -54,8 +52,7 @@ namespace Espresso.Common.Services.Contracts
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public Task<TValue?> Deserialize<TValue>(
             byte[] utf8Bytes,
-            CancellationToken cancellationToken
-        );
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Deserializes <paramref name="json"/> string into object of type <typeparamref name="TValue"/>.
@@ -74,7 +71,6 @@ namespace Espresso.Common.Services.Contracts
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public Task<HttpContent> GetJsonHttpContent<TValue>(
             TValue value,
-            CancellationToken cancellationToken
-        );
+            CancellationToken cancellationToken);
     }
 }

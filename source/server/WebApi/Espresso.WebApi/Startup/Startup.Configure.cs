@@ -31,14 +31,12 @@ namespace Espresso.WebApi.Startup
             IApplicationBuilder app,
             IWebApiInit memoryCacheInit,
             ILoggerService<Startup> loggerService,
-            IWebHostEnvironment env
-        )
+            IWebHostEnvironment env)
         {
             loggerService.Log(
                 eventName: "WebApi Startup",
                 logLevel: Microsoft.Extensions.Logging.LogLevel.Information,
-                namedArguments: new (string, object)[] { ("version", _webApiConfiguration.AppConfiguration.Version) }
-            );
+                namedArguments: new (string, object)[] { ("version", _webApiConfiguration.AppConfiguration.Version) });
 
             memoryCacheInit.InitWebApi().GetAwaiter().GetResult();
 
@@ -58,8 +56,7 @@ namespace Espresso.WebApi.Startup
                 {
                     options.SwaggerEndpoint(
                         url: $"/{SwaggerDocumentDefinitionRoutePrefix}/{apiVersion}/{SwaggerDefinitionFileName}",
-                        name: $"{ApiDescriptionNamePrefix} {apiVersion}"
-                    );
+                        name: $"{ApiDescriptionNamePrefix} {apiVersion}");
                 }
 
                 options.RoutePrefix = SwaggerApiExplorerRoute;
@@ -78,8 +75,7 @@ namespace Espresso.WebApi.Startup
                     },
                     EditorReuseHeaders = true,
                 },
-                path: "/graphql-playground"
-            );
+                path: "/graphql-playground");
 
             app.UseRouting();
             app.UseAuthentication();
@@ -94,8 +90,7 @@ namespace Espresso.WebApi.Startup
 
                 if (
                     _webApiConfiguration.AppConfiguration.AppEnvironment.Equals(AppEnvironment.Local) &&
-                    _webApiConfiguration.SpaConfiguration.UseSpaProxyServer
-                )
+                    _webApiConfiguration.SpaConfiguration.UseSpaProxyServer)
                 {
                     spa.UseProxyToSpaDevelopmentServer(_webApiConfiguration.SpaConfiguration.SpaProxyServerUrl);
                 }

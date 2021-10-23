@@ -3,6 +3,7 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
+using Espresso.Domain.Infrastructure;
 using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetLatestArticlesTypes;
@@ -24,10 +25,11 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
         /// </summary>
         /// <param name="mediator"></param>
         /// <param name="webApiConfiguration"></param>
+        /// <param name="settingProvider"></param>
         public GetLatestArticlesGraphQlQuery(
             IMediator mediator,
-            IWebApiConfiguration webApiConfiguration
-        )
+            IWebApiConfiguration webApiConfiguration,
+            ISettingProvider settingProvider)
         {
             FieldAsync<GetLatestArticlesQueryResponseType>(
                 name: "latestArticles",
@@ -60,8 +62,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                         {
                             Name = "titleSearchQuery",
                         },
-                    }
-                ),
+                    }),
                 resolve: async resolveContext =>
                 {
                     var userContext = resolveContext.UserContext as GraphQlUserContext ??
@@ -86,18 +87,14 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             FirstArticleId = firstArticleId,
                             NewsPortalIds = resolveContext.GetArgument<string?>("newsPortalIds"),
                             CategoryIds = resolveContext.GetArgument<string?>("categoryIds"),
-                            NewNewsPortalsPosition = webApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
                             TitleSearchQuery = resolveContext.GetArgument<string?>("titleSearchQuery"),
-                            MaxAgeOfNewNewsPortal = webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
                             TargetedApiVersion = userContext.TargetedApiVersion,
                             ConsumerVersion = userContext.ConsumerVersion,
                             DeviceType = userContext.DeviceType,
                         },
-                        cancellationToken: resolveContext.CancellationToken
-                    );
+                        cancellationToken: resolveContext.CancellationToken);
                 },
-                deprecationReason: null
-            );
+                deprecationReason: null);
         }
     }
 }

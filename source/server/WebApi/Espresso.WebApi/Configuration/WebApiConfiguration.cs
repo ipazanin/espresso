@@ -21,8 +21,6 @@ namespace Espresso.WebApi.Configuration
             DatabaseConfiguration = new DatabaseConfiguration(configuration.GetSection("DatabaseConfiguration"));
             ApiKeysConfiguration = new ApiKeysConfiguration(configuration.GetSection("ApiKeysConfiguration"));
             SpaConfiguration = new SpaConfiguration(configuration.GetSection("SpaConfiguration"));
-            DateTimeConfiguration = new DateTimeConfiguration(configuration.GetSection("DateTimeConfiguration"));
-            CronJobsConfiguration = new CronJobsConfiguration(configuration.GetSection("CronJobsConfiguration"));
             TrendingScoreConfiguration = new TrendingScoreConfiguration(configuration.GetSection("TrendingScoreConfiguration"));
             RabbitMqConfiguration = new RabbitMqConfiguration(configuration.GetSection("RabbitMqConfiguration"));
             SlackHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:SlackHttpClientConfiguration"));
@@ -52,18 +50,6 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         /// <value></value>
         public SpaConfiguration SpaConfiguration { get; }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <value></value>
-        public DateTimeConfiguration DateTimeConfiguration { get; }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <value></value>
-        public CronJobsConfiguration CronJobsConfiguration { get; }
 
         /// <summary>
         ///

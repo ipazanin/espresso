@@ -81,8 +81,7 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
             ImageUrlWebScrapeType imageUrlWebScrapeType,
             string jsonWebScrapePropertyNames,
             int? elementExtensionIndex,
-            bool? isSavedInHtmlElementWithSrcAttribute
-        )
+            bool? isSavedInHtmlElementWithSrcAttribute)
         {
             ImageUrlParseStrategy = imageUrlParseStrategy;
             XPath = imgElementXPath;

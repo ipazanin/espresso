@@ -116,8 +116,7 @@ namespace Espresso.Domain.Entities
             DateTime createdAt,
             int categoryId,
             int regionId,
-            bool isEnabled
-        )
+            bool isEnabled)
         {
             Id = id;
             Name = name;
@@ -134,8 +133,7 @@ namespace Espresso.Domain.Entities
             IEnumerable<int>? newsPortalIds,
             int categoryId,
             int? regionId,
-            TimeSpan maxAgeOfNewNewsPortal
-        )
+            TimeSpan maxAgeOfNewNewsPortal)
         {
             var newNewsPortalMinDate = DateTime.UtcNow - maxAgeOfNewNewsPortal;
             return newsPortal =>
@@ -143,15 +141,13 @@ namespace Espresso.Domain.Entities
                 categoryId.Equals(newsPortal.CategoryId) &&
                 (regionId == null || newsPortal.RegionId == regionId) &&
                 (
-                    newsPortal.IsNewOverride ?? newsPortal.CreatedAt > newNewsPortalMinDate
-                );
+                    newsPortal.IsNewOverride ?? newsPortal.CreatedAt > newNewsPortalMinDate);
         }
 
         public static Expression<Func<NewsPortal, bool>> GetLatestSugestedNewsPortalsPredicate(
             IEnumerable<int>? newsPortalIds,
             IEnumerable<int>? categoryIds,
-            TimeSpan maxAgeOfNewNewsPortal
-        )
+            TimeSpan maxAgeOfNewNewsPortal)
         {
             var newNewsPortalMinDate = DateTime.UtcNow - maxAgeOfNewNewsPortal;
 
@@ -160,8 +156,7 @@ namespace Espresso.Domain.Entities
                 (categoryIds == null || categoryIds.Contains(newsPortal.CategoryId)) &&
                 (!newsPortal.CategoryId.Equals((int)Enums.CategoryEnums.CategoryId.Local)) &&
                 (
-                    newsPortal.IsNewOverride ?? newsPortal.CreatedAt > newNewsPortalMinDate
-                );
+                    newsPortal.IsNewOverride ?? newsPortal.CreatedAt > newNewsPortalMinDate);
         }
     }
 }

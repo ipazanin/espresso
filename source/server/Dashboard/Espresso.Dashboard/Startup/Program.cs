@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.IO;
 
 namespace Espresso.Dashboard.Startup
 {
@@ -42,8 +41,7 @@ namespace Espresso.Dashboard.Startup
                     {
                         StaticWebAssetsLoader.UseStaticWebAssets(
                             environment: ctx.HostingEnvironment,
-                            configuration: ctx.Configuration
-                        );
+                            configuration: ctx.Configuration);
                     });
                 });
     }

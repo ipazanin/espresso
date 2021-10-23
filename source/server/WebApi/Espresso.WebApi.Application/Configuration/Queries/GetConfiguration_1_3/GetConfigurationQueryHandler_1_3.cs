@@ -23,8 +23,7 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3
         /// </summary>
         /// <param name="memoryCache"></param>
         public GetConfigurationQueryHandler(
-            IMemoryCache memoryCache
-        )
+            IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
         }

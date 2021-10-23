@@ -64,6 +64,11 @@ namespace Espresso.Persistence.Database
         public DbSet<SimilarArticle> SimilarArticles { get; set; } = null!;
 
         /// <summary>
+        /// Gets or sets <see cref="Setting"/> database set.
+        /// </summary>
+        public DbSet<Setting> Settings { get; set; } = null!;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="EspressoDatabaseContext"/> class.
         /// </summary>
         /// <param name="options">Database context options.</param>
@@ -77,8 +82,7 @@ namespace Espresso.Persistence.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyAllConfigurations(
-                configurationsAssembly: typeof(EspressoDatabaseContext).Assembly
-            );
+                configurationsAssembly: typeof(EspressoDatabaseContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -19,17 +19,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
 
         public string? CategoryIds { get; init; }
 
-        public int NewNewsPortalsPosition { get; init; }
-
         public string? TitleSearchQuery { get; init; }
-
-        public TimeSpan MaxAgeOfNewNewsPortal { get; init; }
-
-        public TimeSpan MaxAgeOfTrendingArticle { get; init; }
-
-        public int FeaturedArticlesTake { get; init; }
-
-        public TimeSpan MaxAgeOfFeaturedArticle { get; init; }
 
         public string? KeyWordsToFilterOut { get; init; }
     }

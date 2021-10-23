@@ -13,6 +13,5 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
     {
         public IEnumerable<ArticleDto> CreatedArticles { get; init; } = new List<ArticleDto>();
         public IEnumerable<ArticleDto> UpdatedArticles { get; init; } = new List<ArticleDto>();
-        public TimeSpan MaxAgeOfArticle { get; init; }
     }
 }

@@ -4,6 +4,7 @@
 
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
+using Espresso.Domain.Infrastructure;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using System.Collections.Generic;
@@ -16,16 +17,17 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
     public class GetConfigurationQueryHandler : IRequestHandler<GetConfigurationQuery, GetConfigurationQueryResponse>
     {
         private readonly IMemoryCache _memoryCache;
+        private readonly ISettingProvider _settingProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetConfigurationQueryHandler"/> class.
         /// </summary>
         /// <param name="memoryCache"></param>
-        public GetConfigurationQueryHandler(
-            IMemoryCache memoryCache
-        )
+        /// <param name="settingProvider"></param>
+        public GetConfigurationQueryHandler(IMemoryCache memoryCache, ISettingProvider settingProvider)
         {
             _memoryCache = memoryCache;
+            _settingProvider = settingProvider;
         }
 
         public Task<GetConfigurationQueryResponse> Handle(GetConfigurationQuery request, CancellationToken cancellationToken)
@@ -40,10 +42,8 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
                 .Select(
                     selector: GetConfigurationNewsPortal
                         .GetProjection(
-                            maxAgeOfNewNewsPortal: request.MaxAgeOfNewNewsPortal
-                        )
-                        .Compile()
-                );
+                            maxAgeOfNewNewsPortal: _settingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal)
+                        .Compile());
 
             var categoryDtos = categories
                 .Where(predicate: Category.GetAllCategoriesExceptGeneralExpression().Compile())
@@ -54,9 +54,8 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
                 .Where(predicate: Category.GetAllCategoriesExceptLocalExpression().Compile())
                 .Select(
                     selector: GetConfigurationCategoryWithNewsPortals
-                        .GetProjection(maxAgeOfNewNewsPortal: request.MaxAgeOfNewNewsPortal)
-                        .Compile()
-                )
+                        .GetProjection(maxAgeOfNewNewsPortal: _settingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal)
+                        .Compile())
                 .Where(grouping => grouping.NewsPortals.Any());
 
             var regionGroupedNewsPortals = regions
@@ -65,10 +64,8 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
                 .Select(
                     selector: GetConfigurationRegion
                         .GetProjection(
-                            maxAgeOfNewNewsPortal: request.MaxAgeOfNewNewsPortal
-                        )
-                        .Compile()
-                );
+                            maxAgeOfNewNewsPortal: _settingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal)
+                        .Compile());
 
             var response = new GetConfigurationQueryResponse
             {

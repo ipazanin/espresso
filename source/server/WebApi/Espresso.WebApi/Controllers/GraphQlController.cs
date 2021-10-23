@@ -42,8 +42,7 @@ namespace Espresso.WebApi.Controllers
             ISender sender,
             IWebApiConfiguration webApiConfiguration,
             ISchema schema,
-            IDocumentExecuter executer
-        )
+            IDocumentExecuter executer)
             : base(sender, webApiConfiguration)
         {
             _schema = schema;
@@ -75,8 +74,7 @@ namespace Espresso.WebApi.Controllers
         public async Task<IActionResult> Post(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
             [FromBody] GraphQLBodyParameters query,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var result = await _executer.ExecuteAsync(executionOptions =>
             {
@@ -91,8 +89,7 @@ namespace Espresso.WebApi.Controllers
                     WebApiConfiguration
                         .AppConfiguration
                         .AppEnvironment
-                        .Equals(AppEnvironment.Local)
-                )
+                        .Equals(AppEnvironment.Local))
                 {
                     executionOptions.EnableMetrics = true;
                 }

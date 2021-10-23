@@ -31,8 +31,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticle
         public IncrementNumberOfClicksCommandHandler(
             IMemoryCache memoryCache,
             IEspressoDatabaseContext context,
-            ITrendingScoreService trendingScoreService
-        )
+            ITrendingScoreService trendingScoreService)
         {
             _memoryCache = memoryCache;
             _context = context;
@@ -47,8 +46,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticle
 
             var databaseArticle = await _context.Articles.FindAsync(
                 keyValues: new object?[] { request.Id },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             if (databaseArticle is null)
             {
@@ -67,8 +65,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticle
 
                 _memoryCache.Set(
                     key: MemoryCacheConstants.ArticleKey,
-                    value: articlesWithUpdatedTrendingScore.ToList()
-                );
+                    value: articlesWithUpdatedTrendingScore.ToList());
             }
 
             return Unit.Value;

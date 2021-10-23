@@ -27,8 +27,7 @@ namespace Espresso.Application.DataTransferObjects.SlackDataTransferObjects
         /// <param name="altText">Image alternative text.</param>
         public SlackImageBlock(
             string imageUrl,
-            string altText
-        )
+            string altText)
             : base(type: "image")
         {
             ImageUrl = imageUrl;

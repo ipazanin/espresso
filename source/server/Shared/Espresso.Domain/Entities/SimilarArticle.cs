@@ -39,8 +39,7 @@ namespace Espresso.Domain.Entities
             Guid mainArticleId,
             Article? mainArticle,
             Guid subordinateArticleId,
-            Article? subordinateArticle
-        )
+            Article? subordinateArticle)
         {
             Id = id;
             SimilarityScore = similarityScore;

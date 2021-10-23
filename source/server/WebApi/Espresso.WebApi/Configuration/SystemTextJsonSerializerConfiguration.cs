@@ -41,8 +41,7 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         /// <param name="jsonSerializerOptions"></param>
         public void MapJsonSerializerOptionsToDefaultOptions(
-            JsonSerializerOptions jsonSerializerOptions
-        )
+            JsonSerializerOptions jsonSerializerOptions)
         {
             jsonSerializerOptions.PropertyNameCaseInsensitive = JsonSerializerOptions.PropertyNameCaseInsensitive;
             jsonSerializerOptions.PropertyNamingPolicy = JsonSerializerOptions.PropertyNamingPolicy;

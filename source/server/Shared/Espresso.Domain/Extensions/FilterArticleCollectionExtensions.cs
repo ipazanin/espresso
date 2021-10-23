@@ -52,8 +52,7 @@ namespace Espresso.Domain.Extensions
         public static IEnumerable<Article> FilterArticlesWithCoronaVirusContentForIosRelease(
             this IEnumerable<Article> articles,
             DeviceType deviceType,
-            string targetedApiVersion
-        )
+            string targetedApiVersion)
         {
             if (!(deviceType == DeviceType.Ios && targetedApiVersion == "2.0"))
             {
@@ -63,9 +62,7 @@ namespace Espresso.Domain.Extensions
             var filteredArticles = articles.Where(
                 article => !BannedKeywords.Any(
                     bannedKeyword => article.Title.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase) ||
-                        article.Summary.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase)
-                )
-            );
+                        article.Summary.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase)));
 
             return filteredArticles;
         }
@@ -81,8 +78,7 @@ namespace Espresso.Domain.Extensions
             IEnumerable<int>? categoryIds,
             IEnumerable<int>? newsPortalIds,
             string? titleSearchTerm,
-            DateTime? articleCreateDateTime
-        )
+            DateTime? articleCreateDateTime)
         {
             var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
             var searchTerms = LanguageUtility.GetSearchTerms(titleSearchTerm);
@@ -103,10 +99,7 @@ namespace Espresso.Domain.Extensions
                                 .All(searchTerm => article
                                     .Title
                                     .ReplaceCroatianCharacters()
-                                    .Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase)
-                                )
-                        )
-                );
+                                    .Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase))));
 
             return filteredArticles;
         }
@@ -116,8 +109,7 @@ namespace Espresso.Domain.Extensions
             int categoryId,
             IEnumerable<int>? newsPortalIds,
             string? titleSearchTerm,
-            DateTime? articleCreateDateTime
-        )
+            DateTime? articleCreateDateTime)
         {
             var categoryIds = new[] { categoryId };
 
@@ -125,8 +117,7 @@ namespace Espresso.Domain.Extensions
                 categoryIds: categoryIds,
                 newsPortalIds: newsPortalIds,
                 titleSearchTerm: titleSearchTerm,
-                articleCreateDateTime: articleCreateDateTime
-            );
+                articleCreateDateTime: articleCreateDateTime);
 
             return filteredArticles;
         }
@@ -136,8 +127,7 @@ namespace Espresso.Domain.Extensions
                     IEnumerable<int>? categoryIds,
                     IEnumerable<int>? newsPortalIds,
                     string? titleSearchTerm,
-                    DateTime? articleCreateDateTime
-                )
+                    DateTime? articleCreateDateTime)
         {
             var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
             var searchTerms = LanguageUtility.GetSearchTerms(titleSearchTerm);
@@ -157,10 +147,7 @@ namespace Espresso.Domain.Extensions
                                 .All(searchTerm => article
                                     .Title
                                     .ReplaceCroatianCharacters()
-                                    .Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase)
-                                )
-                        )
-                );
+                                    .Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase))));
 
             return filteredArticles;
         }
@@ -170,8 +157,7 @@ namespace Espresso.Domain.Extensions
             int categoryId,
             IEnumerable<int>? newsPortalIds,
             string? titleSearchTerm,
-            DateTime? articleCreateDateTime
-        )
+            DateTime? articleCreateDateTime)
         {
             var categoryIds = new[] { categoryId };
 
@@ -179,8 +165,7 @@ namespace Espresso.Domain.Extensions
                 categoryIds: categoryIds,
                 newsPortalIds: newsPortalIds,
                 titleSearchTerm: titleSearchTerm,
-                articleCreateDateTime: articleCreateDateTime
-            );
+                articleCreateDateTime: articleCreateDateTime);
 
             return filteredArticles;
         }
@@ -190,8 +175,7 @@ namespace Espresso.Domain.Extensions
             IEnumerable<int>? categoryIds,
             IEnumerable<int>? newsPortalIds,
             TimeSpan maxAgeOfFeaturedArticle,
-            DateTime? articleCreateDateTime
-        )
+            DateTime? articleCreateDateTime)
         {
             var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
             var maxDateTimeOfFeaturedArticle = DateTime.UtcNow - maxAgeOfFeaturedArticle;
@@ -206,8 +190,7 @@ namespace Espresso.Domain.Extensions
                         (categoryIds == null || article
                             .ArticleCategories
                             .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
-                        (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId))
-                );
+                        (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)));
 
             return filteredArticles;
         }
@@ -215,8 +198,7 @@ namespace Espresso.Domain.Extensions
         public static IEnumerable<Article> FilterTrendingArticles(
             this IEnumerable<Article> articles,
             TimeSpan maxAgeOfTrendingArticle,
-            DateTime? articleCreateDateTime
-        )
+            DateTime? articleCreateDateTime)
         {
             var maxTrendingDateTime = DateTime.UtcNow - maxAgeOfTrendingArticle;
 
@@ -229,8 +211,7 @@ namespace Espresso.Domain.Extensions
                         article.EditorConfiguration?.IsFeatured != false &&
                         article.CreateDateTime <= articleMinimumAge &&
                         article.PublishDateTime > maxTrendingDateTime &&
-                        !article.ArticleCategories.Any(articleCategory => articleCategory.Category!.CategoryType == CategoryType.Local)
-                );
+                        !article.ArticleCategories.Any(articleCategory => articleCategory.Category!.CategoryType == CategoryType.Local));
 
             return filteredArticles;
         }

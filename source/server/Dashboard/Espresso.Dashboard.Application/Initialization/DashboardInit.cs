@@ -42,8 +42,7 @@ namespace Espresso.Dashboard.Application.Initialization
             IEspressoIdentityDatabaseContext espressoIdentityContext,
             RoleManager<IdentityRole> roleManager,
             UserManager<IdentityUser> userManager,
-            string adminUserPassword
-        )
+            string adminUserPassword)
         {
             _espressoIdentityContext = espressoIdentityContext;
             _roleManager = roleManager;
@@ -62,8 +61,7 @@ namespace Espresso.Dashboard.Application.Initialization
             if (!await _roleManager.RoleExistsAsync(roleName: RoleConstants.AdminRoleName))
             {
                 var adminRole = new IdentityRole(
-                    roleName: RoleConstants.AdminRoleName
-                );
+                    roleName: RoleConstants.AdminRoleName);
                 await _roleManager.CreateAsync(role: adminRole);
             }
 
@@ -84,8 +82,7 @@ namespace Espresso.Dashboard.Application.Initialization
 
                     var identityResult = await _userManager.CreateAsync(
                         user: adminUser,
-                        password: _adminUserPassword
-                    );
+                        password: _adminUserPassword);
                     await _userManager.AddToRoleAsync(adminUser, RoleConstants.AdminRoleName);
                 }
             }

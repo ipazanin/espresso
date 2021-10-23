@@ -26,8 +26,7 @@ namespace Espresso.Persistence.DataSeed
         }
 
         private static void SeedImageUrlParseConfiguration(
-            OwnedNavigationBuilder<RssFeed, ImageUrlParseConfiguration> imageUrlParseConfigurationBuilder
-        )
+            OwnedNavigationBuilder<RssFeed, ImageUrlParseConfiguration> imageUrlParseConfigurationBuilder)
         {
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Vijesti, XPath = "//figure[contains(@class, 'img-container')]//img", ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary });
             imageUrlParseConfigurationBuilder.HasData(new { RssFeedId = (int)RssFeedId.Index_Sport, XPath = "//figure[contains(@class, 'img-container')]//img", ImageUrlParseStrategy = ImageUrlParseStrategy.SecondLinkOrFromSummary });

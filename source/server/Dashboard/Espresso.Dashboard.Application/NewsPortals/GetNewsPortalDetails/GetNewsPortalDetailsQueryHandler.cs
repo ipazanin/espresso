@@ -41,8 +41,7 @@ namespace Espresso.Dashboard.Application.NewsPortals.GetNewsPortalDetails
                 .ThenInclude(rssFeedCategory => rssFeedCategory.Category)
                 .FirstOrDefaultAsync(
                     predicate: newsPortal => newsPortal.Id == request.NewsPortalId,
-                    cancellationToken: cancellationToken
-                );
+                    cancellationToken: cancellationToken);
 
             return new GetNewsPortalDetailsQueryResponse(newsPortal);
         }

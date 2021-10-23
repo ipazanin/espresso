@@ -26,8 +26,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
         /// <param name="webApiConfiguration"></param>
         public GetCategoryArticlesGraphQlQuery(
             IMediator mediator,
-            IWebApiConfiguration webApiConfiguration
-        )
+            IWebApiConfiguration webApiConfiguration)
         {
             FieldAsync<GetCategoryArticlesQueryResponseType>(
                 name: "categoryArticles",
@@ -64,8 +63,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                         {
                             Name = "titleSearchQuery",
                         },
-                    }
-                ),
+                    }),
                 resolve: async resolveContext =>
                 {
                     var userContext = resolveContext.UserContext as GraphQlUserContext ??
@@ -92,17 +90,13 @@ namespace Espresso.WebApi.GraphQl.ApplicationQueries.ArticlesQueries
                             CategoryId = resolveContext.GetArgument<int>("categoryId"),
                             RegionId = resolveContext.GetArgument<int?>("regionId"),
                             TitleSearchQuery = resolveContext.GetArgument<string?>("titleSearchQuery"),
-                            NewNewsPortalsPosition = webApiConfiguration.AppConfiguration.NewNewsPortalsPosition,
-                            MaxAgeOfNewNewsPortal = webApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
                             TargetedApiVersion = userContext.TargetedApiVersion,
                             ConsumerVersion = userContext.ConsumerVersion,
                             DeviceType = userContext.DeviceType,
                         },
-                        cancellationToken: resolveContext.CancellationToken
-                    );
+                        cancellationToken: resolveContext.CancellationToken);
                 },
-                deprecationReason: null
-            );
+                deprecationReason: null);
         }
     }
 }

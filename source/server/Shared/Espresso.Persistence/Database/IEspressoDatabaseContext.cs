@@ -67,6 +67,11 @@ namespace Espresso.Persistence.Database
         public DbSet<SimilarArticle> SimilarArticles { get; }
 
         /// <summary>
+        /// Gets <see cref="Setting"/> database set.
+        /// </summary>
+        public DbSet<Setting> Settings { get; }
+
+        /// <summary>
         /// Gets object that provides access to database related information and operations for this context.
         /// </summary>
         public DatabaseFacade Database { get; }

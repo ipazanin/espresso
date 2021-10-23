@@ -39,8 +39,7 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
         public LoggerRequestPipeline(
             IMemoryCache memoryCache,
             ILoggerService<LoggerRequestPipeline<TRequest, TResponse>> loggerService,
-            ApplicationInformation applicationInformation
-        )
+            ApplicationInformation applicationInformation)
         {
             _stopWatch = new Stopwatch();
             _memoryCache = memoryCache;
@@ -52,8 +51,7 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
         public async Task<TResponse> Handle(
             TRequest request,
             CancellationToken cancellationToken,
-            RequestHandlerDelegate<TResponse> next
-        )
+            RequestHandlerDelegate<TResponse> next)
         {
             var requestBase = request switch
             {
@@ -94,8 +92,7 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
 
         private TimeSpan CalculateAveragePerformance(
             TimeSpan duration,
-            string requestName
-        )
+            string requestName)
         {
             var performanceMeasurementKey = $"{requestName}PerformanceKey";
             var (total, count) = _memoryCache.GetOrCreate(
@@ -105,8 +102,7 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure
                     var total = default(TimeSpan);
                     const int Count = 0;
                     return (total, Count);
-                }
-            );
+                });
             total += duration;
             count++;
 

@@ -21,8 +21,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationMutations.ArticlesQueries
         /// </summary>
         /// <param name="mediator"></param>
         public IncrementNumberOfClicksGraphQlMutation(
-            IMediator mediator
-        )
+            IMediator mediator)
         {
             FieldAsync<StringGraphType>(
                 name: "incrementNumberOfClicks",
@@ -33,8 +32,7 @@ namespace Espresso.WebApi.GraphQl.ApplicationMutations.ArticlesQueries
                         {
                             Name = "articleId",
                         },
-                    }
-                ),
+                    }),
                 resolve: async resolveContext =>
                 {
                     var userContext = resolveContext.UserContext as GraphQlUserContext ??
@@ -49,12 +47,10 @@ namespace Espresso.WebApi.GraphQl.ApplicationMutations.ArticlesQueries
                                ConsumerVersion = userContext.ConsumerVersion,
                                DeviceType = userContext.DeviceType,
                            },
-                           cancellationToken: resolveContext.CancellationToken
-                        );
+                           cancellationToken: resolveContext.CancellationToken);
                     return articleIdString;
                 },
-                deprecationReason: null
-            );
+                deprecationReason: null);
         }
     }
 }

@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <AnalysisLevel>preview</AnalysisLevel>
     <Nullable>enable</Nullable>
-    <CodeAnalysisRuleSet>..\..\Espresso.ruleset</CodeAnalysisRuleSet>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
@@ -25,11 +25,11 @@
 
   <!-- Analyzers -->
 
-  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+  <ItemGroup >
     <AdditionalFiles Include="..\..\stylecop.json" Link="Properties\stylecop.json" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+  <ItemGroup >
     <PackageReference Include="Roslynator.Analyzers" Version="3.2.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

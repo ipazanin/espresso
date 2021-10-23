@@ -27,8 +27,7 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
         [JsonConstructor]
         public ArticlesBodyDto(
             IEnumerable<ArticleDto> createdArticles,
-            IEnumerable<ArticleDto> updatedArticles
-        )
+            IEnumerable<ArticleDto> updatedArticles)
         {
             CreatedArticles = createdArticles;
             UpdatedArticles = updatedArticles;

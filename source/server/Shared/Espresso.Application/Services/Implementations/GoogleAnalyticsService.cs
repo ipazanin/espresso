@@ -28,13 +28,11 @@ namespace Espresso.Application.Services.Implementations
         /// </summary>
         /// <param name="loggerService">Logger service.</param>
         public GoogleAnalyticsService(
-            ILoggerService<GoogleAnalyticsService> loggerService
-        )
+            ILoggerService<GoogleAnalyticsService> loggerService)
         {
             var googleAnalyticsSecretsFilePath = Path.Combine(
                 path1: AppDomain.CurrentDomain.BaseDirectory ?? string.Empty,
-                path2: GoogleAnalyticsSecretsFileName
-            );
+                path2: GoogleAnalyticsSecretsFileName);
 
             _loggerService = loggerService;
             _client = new BetaAnalyticsDataClientBuilder
@@ -104,8 +102,7 @@ namespace Espresso.Application.Services.Implementations
                 _loggerService.Log(
                     eventName: "GoogleAnalyticsRequestFailure",
                     exception: exception,
-                    logLevel: LogLevel.Warning
-                );
+                    logLevel: LogLevel.Warning);
 
                 throw;
             }

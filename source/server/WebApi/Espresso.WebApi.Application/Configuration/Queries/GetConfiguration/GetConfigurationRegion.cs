@@ -37,8 +37,7 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
                     .Select(
                         GetConfigurationNewsPortal
                             .GetProjection(maxAgeOfNewNewsPortal)
-                            .Compile()
-                    ),
+                            .Compile()),
             };
         }
     }

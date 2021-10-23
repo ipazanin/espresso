@@ -50,8 +50,7 @@ namespace Espresso.WebApi.Services
             string queueName,
             int port,
             string userName,
-            string password
-        )
+            string password)
             : base(serviceScopeFactory: serviceScopeFactory)
         {
             _webApiConfiguration = webApiConfiguration;
@@ -74,8 +73,7 @@ namespace Espresso.WebApi.Services
                 durable: false,
                 exclusive: false,
                 autoDelete: false,
-                arguments: null
-            );
+                arguments: null);
 
             _consumer = new EventingBasicConsumer(_channel);
         }
@@ -87,6 +85,7 @@ namespace Espresso.WebApi.Services
         public override Task DoWork(CancellationToken cancellationToken)
         {
 #pragma warning disable AsyncFixer03 // Fire-and-forget async-void methods or delegates
+#pragma warning disable VSTHRD101 // Avoid unsupported async delegates
             _consumer.Received += async (model, basicDeliveryArguments) =>
             {
                 var body = basicDeliveryArguments.Body.ToArray();
@@ -103,7 +102,6 @@ namespace Espresso.WebApi.Services
                         {
                             CreatedArticles = articlesBody.CreatedArticles,
                             UpdatedArticles = articlesBody.UpdatedArticles,
-                            MaxAgeOfArticle = _webApiConfiguration.DateTimeConfiguration.MaxAgeOfArticle,
                             TargetedApiVersion = _webApiConfiguration.AppConfiguration.ApiVersion.ToString(),
                             ConsumerVersion = _webApiConfiguration.AppConfiguration.Version,
                             DeviceType = DeviceType.RssFeedParser,
@@ -117,19 +115,18 @@ namespace Espresso.WebApi.Services
                         loggerService.Log(
                             eventName: "ReceiveArticlesBackgroundJob Error",
                             exception: exception,
-                            logLevel: LogLevel.Error
-                        );
+                            logLevel: LogLevel.Error);
                         _channel.BasicNack(deliveryTag: basicDeliveryArguments.DeliveryTag, multiple: false, requeue: true);
                     }
                 }
             };
+#pragma warning restore VSTHRD101 // Avoid unsupported async delegates
 #pragma warning restore AsyncFixer03 // Fire-and-forget async-void methods or delegates
 
             _channel.BasicConsume(
                 queue: _queueName,
                 autoAck: false,
-                consumer: _consumer
-            );
+                consumer: _consumer);
 
             return Task.CompletedTask;
         }

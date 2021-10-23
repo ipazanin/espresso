@@ -19,14 +19,11 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetConfigu
         {
             Name = nameof(GetConfigurationRegion);
             Field<NonNullGraphType<IdGraphType>>(
-                name: nameof(GetConfigurationRegion.Id)
-            );
+                name: nameof(GetConfigurationRegion.Id));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetConfigurationRegion.Name)
-            );
+                name: nameof(GetConfigurationRegion.Name));
             Field<NonNullGraphType<ListGraphType<NonNullGraphType<GetConfigurationNewsPortalType>>>>(
-                name: nameof(GetConfigurationRegion.NewsPortals)
-            );
+                name: nameof(GetConfigurationRegion.NewsPortals));
         }
     }
 }

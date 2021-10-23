@@ -27,8 +27,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.HideArticle
         /// <param name="memoryCache"></param>
         public HideArticleCommandHandler(
             IEspressoDatabaseContext espressoDatabaseContext,
-            IMemoryCache memoryCache
-        )
+            IMemoryCache memoryCache)
         {
             _espressoDatabaseContext = espressoDatabaseContext;
             _memoryCache = memoryCache;
@@ -36,8 +35,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.HideArticle
 
         public async Task<Unit> Handle(
             HideArticleCommand request,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var memoryCacheArticles = _memoryCache
                 .Get<IEnumerable<Article>>(key: MemoryCacheConstants.ArticleKey)
@@ -45,15 +43,13 @@ namespace Espresso.WebApi.Application.Articles.Commands.HideArticle
 
             var databaseArticle = await _espressoDatabaseContext.Articles.FindAsync(
                 keyValues: new object?[] { request.ArticleId },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             if (databaseArticle is null)
             {
                 throw new NotFoundException(
                     typeName: nameof(Article),
-                    id: request.ArticleId.ToString()
-                );
+                    id: request.ArticleId.ToString());
             }
 
             databaseArticle.SetIsHidden(request.IsHidden);
@@ -65,8 +61,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.HideArticle
                 memoryCacheArticle.SetIsHidden(request.IsHidden);
                 _memoryCache.Set(
                     key: MemoryCacheConstants.ArticleKey,
-                    value: memoryCacheArticles.Values.ToList()
-                );
+                    value: memoryCacheArticles.Values.ToList());
             }
 
             return Unit.Value;

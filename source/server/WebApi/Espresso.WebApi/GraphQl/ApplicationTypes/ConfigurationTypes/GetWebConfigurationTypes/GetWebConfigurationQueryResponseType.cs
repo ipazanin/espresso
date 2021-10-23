@@ -20,11 +20,9 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetWebCate
         {
             Name = nameof(GetWebConfigurationQueryResponse);
             Field<NonNullGraphType<ListGraphType<NonNullGraphType<GetWebConfigurationCategoryType>>>>(
-                name: nameof(GetWebConfigurationQueryResponse.Categories)
-            );
+                name: nameof(GetWebConfigurationQueryResponse.Categories));
             Field<NonNullGraphType<ListGraphType<NonNullGraphType<IntGraphType>>>>(
-                name: nameof(GetWebConfigurationQueryResponse.NewsPortalIds)
-            );
+                name: nameof(GetWebConfigurationQueryResponse.NewsPortalIds));
         }
     }
 }

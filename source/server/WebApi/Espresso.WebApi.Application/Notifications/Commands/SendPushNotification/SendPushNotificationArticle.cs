@@ -73,7 +73,7 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
                 Categories = article.ArticleCategories
                     .AsQueryable()
                     .Select(articleCategory => articleCategory.Category)
-                    .Select(SendPushNotificationCategory.GetProjection()!),
+                    .Select(SendPushNotificationCategory.GetProjection() !),
             };
         }
     }

@@ -1,14 +1,10 @@
 ﻿{
   "AppConfiguration": {
-    "ServerUrl": "http://espresso-webapi:80",
-    "MaxAgeOfArticlesInDays": 1
+    "ServerUrl": "http://espresso-webapi:80"
   },
   "ArticleSimilarityConfiguration": {
     "ArticlePublishDateTimeDiferenceThresholdInHours": 4,
     "MaxAgeOfSimilarArticleCheckingInHours": 4
-  },
-  "CronJobsConfiguration": {
-    "ParseArticlesCronExpression": "* * * * *"
   },
   "HttpClientConfiguration": {
     "LoadRssFeedsHttpClientConfiguration": {

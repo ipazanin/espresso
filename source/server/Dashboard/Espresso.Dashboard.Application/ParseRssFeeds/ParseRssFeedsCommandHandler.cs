@@ -45,8 +45,7 @@ namespace Espresso.Dashboard.ParseRssFeeds
             IGroupSimilarArticlesService groupSimilarArticlesService,
             ISendArticlesService sendArticlesService,
             IEspressoDatabaseContext espressoDatabaseContext,
-            IMemoryCache memoryCache
-        )
+            IMemoryCache memoryCache)
         {
             _parseArticlesService = parseArticlesService;
             _loadRssFeedsService = loadRssFeedsService;
@@ -61,21 +60,18 @@ namespace Espresso.Dashboard.ParseRssFeeds
         /// <inheritdoc/>
         public async Task<ParseRssFeedsCommandResponse> Handle(
             ParseRssFeedsCommand request,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _loadRssFeedsService.ParseRssFeeds");
             var rssFeedItemsChannel = await _loadRssFeedsService.ParseRssFeeds(
                 rssFeeds: request.RssFeeds,
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _parseArticlesService.CreateArticlesFromRssFeedItems");
             var articlesChannel = await _parseArticlesService.CreateArticlesFromRssFeedItems(
-                rssFeedItems: rssFeedItemsChannel,
+                rssFeedItemChannel: rssFeedItemsChannel,
                 categories: request.Categories,
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _sortArticlesService.RemoveDuplicateArticles");
             var uniqueArticles = await _sortArticlesService.RemoveDuplicateArticles(articlesChannel, cancellationToken);
@@ -84,16 +80,14 @@ namespace Espresso.Dashboard.ParseRssFeeds
             var (createArticles, updateArticlesWithModifiedProperties, createArticleCategories, deleteArticleCategories) = _sortArticlesService
                 .SortArticles(
                     articles: uniqueArticles,
-                    savedArticles: request.Articles
-                );
+                    savedArticles: request.Articles);
 
             var updateArticles = updateArticlesWithModifiedProperties.Select(updatedArticleWithModifiedproperties => updatedArticleWithModifiedproperties.article);
 
             _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before UpdateSavedArticles");
             UpdateSavedArticles(
                 savedArticles: request.Articles,
-                changedArticles: createArticles.Union(updateArticles)
-            );
+                changedArticles: createArticles.Union(updateArticles));
 
             var lastSimilarityGroupingTime = request.Articles.Values.Any() ?
                 request.Articles.Values.Max(article => article.CreateDateTime) :
@@ -103,8 +97,7 @@ namespace Espresso.Dashboard.ParseRssFeeds
             var similarArticles = _groupSimilarArticlesService.GroupSimilarArticles(
                 articles: request.Articles.Values,
                 subordinateArticleIds: request.SubordinateArticleIds,
-                lastSimilarityGroupingTime: lastSimilarityGroupingTime
-            );
+                lastSimilarityGroupingTime: lastSimilarityGroupingTime);
 
             _espressoDatabaseContext.Articles.AddRange(createArticles);
             foreach (var (article, modifiedProperties) in updateArticlesWithModifiedProperties)
@@ -125,8 +118,7 @@ namespace Espresso.Dashboard.ParseRssFeeds
             await _sendArticlesService.SendArticlesMessage(
                 createArticles: createArticles,
                 updateArticles: updateArticles,
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return new ParseRssFeedsCommandResponse
             {
@@ -137,8 +129,7 @@ namespace Espresso.Dashboard.ParseRssFeeds
 
         private static void UpdateSavedArticles(
             IDictionary<Guid, Article> savedArticles,
-            IEnumerable<Article> changedArticles
-        )
+            IEnumerable<Article> changedArticles)
         {
             foreach (var changedArticle in changedArticles)
             {

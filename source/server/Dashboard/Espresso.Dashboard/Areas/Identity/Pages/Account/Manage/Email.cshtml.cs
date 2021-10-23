@@ -114,8 +114,7 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
                     to: Input.NewEmail,
                     subject: "Confirm your email",
                     content: $"Please confirm your account by clicking {HtmlEncoder.Default.Encode(callbackUrl)}",
-                    htmlContent: $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>."
-                );
+                    htmlContent: $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                 StatusMessage = "Confirmation link to change email sent. Please check your email.";
                 return RedirectToPage();
@@ -156,8 +155,7 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
                 to: email,
                 subject: "Confirm your email",
                 content: $"Please confirm your account by clicking {HtmlEncoder.Default.Encode(callbackUrl)}",
-                htmlContent: $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>."
-            );
+                htmlContent: $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();

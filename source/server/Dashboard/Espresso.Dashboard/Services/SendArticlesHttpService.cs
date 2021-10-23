@@ -53,8 +53,7 @@ namespace Espresso.Dashboard.Services
             string parserApiKey,
             string targetedApiVersion,
             string currentVersion,
-            string serverUrl
-        )
+            string serverUrl)
         {
             _loggerService = loggerService;
             _slackService = slackService;
@@ -69,8 +68,7 @@ namespace Espresso.Dashboard.Services
         public async Task SendArticlesMessage(
             IEnumerable<Article> createArticles,
             IEnumerable<Article> updateArticles,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             if (!createArticles.Any() && !updateArticles.Any())
             {
@@ -89,13 +87,11 @@ namespace Espresso.Dashboard.Services
 
             var data = new ArticlesBodyDto(
                 createdArticles: createArticles.Select(articleDtoProjection),
-                updatedArticles: updateArticles.Select(articleDtoProjection)
-            );
+                updatedArticles: updateArticles.Select(articleDtoProjection));
 
             var httpContent = await _jsonService.GetJsonHttpContent(
                 value: data,
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             try
             {
@@ -103,8 +99,7 @@ namespace Espresso.Dashboard.Services
                 var response = await _httpClient.PostAsync(
                     requestUri: $"{_serverUrl}/api/notifications/articles",
                     content: httpContent,
-                    cancellationToken: cancellationToken
-                );
+                    cancellationToken: cancellationToken);
 
                 response.EnsureSuccessStatusCode();
             }
@@ -123,8 +118,7 @@ namespace Espresso.Dashboard.Services
                         eventName: eventName,
                         message: exception.Message,
                         exception: exception,
-                        cancellationToken: cancellationToken
-                );
+                        cancellationToken: cancellationToken);
             }
         }
     }

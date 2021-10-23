@@ -1,8 +1,9 @@
-// RemoveOldArticlesService.cs
+﻿// RemoveOldArticlesService.cs
 //
-// � 2021 Espresso News. All rights reserved.
+// © 2021 Espresso News. All rights reserved.
 
 using Espresso.Domain.Entities;
+using Espresso.Domain.Infrastructure;
 using Espresso.Domain.IServices;
 using System;
 using System.Collections.Generic;
@@ -12,17 +13,15 @@ namespace Espresso.Domain.Services
 {
     public class RemoveOldArticlesService : IRemoveOldArticlesService
     {
-        private readonly TimeSpan _maxAgeOfArticle;
+        private readonly ISettingProvider _settingProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoveOldArticlesService"/> class.
         /// </summary>
-        /// <param name="maxAgeOfArticle"></param>
-        public RemoveOldArticlesService(
-            TimeSpan maxAgeOfArticle
-        )
+        /// <param name="settingProvider"></param>
+        public RemoveOldArticlesService(ISettingProvider settingProvider)
         {
-            _maxAgeOfArticle = maxAgeOfArticle;
+            _settingProvider = settingProvider;
         }
 
         /// <summary>
@@ -32,7 +31,7 @@ namespace Espresso.Domain.Services
         /// <returns>Removed articles.</returns>
         public IEnumerable<Article> RemoveOldArticlesFromCollection(IDictionary<Guid, Article> articles)
         {
-            var maxAgeDate = DateTime.UtcNow - _maxAgeOfArticle;
+            var maxAgeDate = DateTime.UtcNow - _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfArticle;
             var articlesToRemove = new List<Article>();
 
             foreach (var (_, article) in articles)
@@ -42,6 +41,7 @@ namespace Espresso.Domain.Services
                     articlesToRemove.Add(article);
                 }
             }
+
             foreach (var article in articlesToRemove)
             {
                 articles.Remove(article.Id);
@@ -52,7 +52,7 @@ namespace Espresso.Domain.Services
 
         public IEnumerable<Article> RemoveOldArticles(IEnumerable<Article> articles)
         {
-            var maxAgeDate = DateTime.UtcNow - _maxAgeOfArticle;
+            var maxAgeDate = DateTime.UtcNow - _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfArticle;
 
             var notOldArticles = articles.Where(article => article.PublishDateTime > maxAgeDate);
 

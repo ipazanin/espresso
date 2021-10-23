@@ -19,8 +19,7 @@ namespace Espresso.Common.Tests.Utilities
 
             var isConversionSuccessfull = EnumUtility.TryParseEnum<AppEnvironment>(
                 enumValue: notDefinedEnumIntegerValue,
-                value: out _
-            );
+                value: out _);
 
             Assert.False(isConversionSuccessfull);
         }
@@ -32,8 +31,7 @@ namespace Espresso.Common.Tests.Utilities
 
             var isConversionSuccessfull = EnumUtility.TryParseEnum<AppEnvironment>(
                 enumValue: definedIntegerEnumValue,
-                value: out _
-            );
+                value: out _);
 
             Assert.True(isConversionSuccessfull);
         }
@@ -45,13 +43,11 @@ namespace Espresso.Common.Tests.Utilities
 
             _ = EnumUtility.TryParseEnum<AppEnvironment>(
                 enumValue: definedIntegerEnumValue,
-                value: out var parsedEnum
-            );
+                value: out var parsedEnum);
 
             Assert.Equal(
                 expected: AppEnvironment.Local,
-                actual: parsedEnum
-            );
+                actual: parsedEnum);
         }
 
         [Fact]
@@ -61,8 +57,7 @@ namespace Espresso.Common.Tests.Utilities
 
             var isConversionSuccessfull = EnumUtility.TryParseEnum<AppEnvironment>(
                 enumValue: undefinedIntegerStringEnumValue,
-                value: out _
-            );
+                value: out _);
 
             Assert.False(isConversionSuccessfull);
         }
@@ -74,8 +69,7 @@ namespace Espresso.Common.Tests.Utilities
 
             var isConversionSuccessfull = EnumUtility.TryParseEnum<AppEnvironment>(
                 enumValue: integerStringEnumValue,
-                value: out _
-            );
+                value: out _);
 
             Assert.True(isConversionSuccessfull);
         }
@@ -87,13 +81,11 @@ namespace Espresso.Common.Tests.Utilities
 
             _ = EnumUtility.TryParseEnum<AppEnvironment>(
                 enumValue: integerStringEnumValue,
-                value: out var parsedEnum
-            );
+                value: out var parsedEnum);
 
             Assert.Equal(
                 expected: AppEnvironment.Local,
-                actual: parsedEnum
-            );
+                actual: parsedEnum);
         }
 
         [Fact]
@@ -103,8 +95,7 @@ namespace Espresso.Common.Tests.Utilities
 
             var isConversionSuccessfull = EnumUtility.TryParseEnum<AppEnvironment>(
                 enumValue: invalidEnumStringValue,
-                value: out _
-            );
+                value: out _);
 
             Assert.False(isConversionSuccessfull);
         }
@@ -116,8 +107,7 @@ namespace Espresso.Common.Tests.Utilities
 
             var isConversionSuccessfull = EnumUtility.TryParseEnum<AppEnvironment>(
                 enumValue: enumStringValue,
-                value: out _
-            );
+                value: out _);
 
             Assert.True(isConversionSuccessfull);
         }
@@ -129,13 +119,11 @@ namespace Espresso.Common.Tests.Utilities
 
             _ = EnumUtility.TryParseEnum<AppEnvironment>(
                 enumValue: enumStringValue,
-                value: out var parsedEnum
-            );
+                value: out var parsedEnum);
 
             Assert.Equal(
                 expected: AppEnvironment.Local,
-                actual: parsedEnum
-            );
+                actual: parsedEnum);
         }
 
         [Fact]
@@ -145,8 +133,7 @@ namespace Espresso.Common.Tests.Utilities
 
             var isConversionSuccessfull = EnumUtility.TryParseEnum<AppEnvironment>(
                 enumValue: enumDisplayNameString,
-                value: out _
-            );
+                value: out _);
 
             Assert.True(isConversionSuccessfull);
         }
@@ -158,13 +145,11 @@ namespace Espresso.Common.Tests.Utilities
 
             _ = EnumUtility.TryParseEnum<AppEnvironment>(
                 enumValue: enumDisplayNameString,
-                value: out var parsedEnum
-            );
+                value: out var parsedEnum);
 
             Assert.Equal(
                 expected: AppEnvironment.Dev,
-                actual: parsedEnum
-            );
+                actual: parsedEnum);
         }
 
         [Fact]
@@ -175,13 +160,11 @@ namespace Espresso.Common.Tests.Utilities
 
             var processedEnum = EnumUtility.GetEnumOrDefault(
                 enumValue: undefinedIntegerEnumValue,
-                defaultValue: defaultEnumValue
-            );
+                defaultValue: defaultEnumValue);
 
             Assert.Equal(
                 expected: defaultEnumValue,
-                actual: processedEnum
-            );
+                actual: processedEnum);
         }
 
         [Fact]
@@ -193,13 +176,11 @@ namespace Espresso.Common.Tests.Utilities
 
             var processedEnum = EnumUtility.GetEnumOrDefault(
                 enumValue: definedIntegerEnumvalue,
-                defaultValue: defaultEnumValue
-            );
+                defaultValue: defaultEnumValue);
 
             Assert.Equal(
                 expected: expectedEnumvalue,
-                actual: processedEnum
-            );
+                actual: processedEnum);
         }
 
         [Fact]
@@ -210,13 +191,11 @@ namespace Espresso.Common.Tests.Utilities
 
             var processedEnum = EnumUtility.GetEnumOrDefault(
                 enumValue: undefinedIntegerStringEnumValue,
-                defaultValue: defaultEnumValue
-            );
+                defaultValue: defaultEnumValue);
 
             Assert.Equal(
                 expected: defaultEnumValue,
-                actual: processedEnum
-            );
+                actual: processedEnum);
         }
 
         [Fact]
@@ -228,13 +207,11 @@ namespace Espresso.Common.Tests.Utilities
 
             var processedEnum = EnumUtility.GetEnumOrDefault(
                 enumValue: definedIntegerStringEnumvalue,
-                defaultValue: defaultEnumValue
-            );
+                defaultValue: defaultEnumValue);
 
             Assert.Equal(
                 expected: expectedEnumvalue,
-                actual: processedEnum
-            );
+                actual: processedEnum);
         }
 
         [Fact]
@@ -246,13 +223,11 @@ namespace Espresso.Common.Tests.Utilities
 
             var processedEnum = EnumUtility.GetEnumOrDefault(
                 enumValue: definedStringDisplayEnumValue,
-                defaultValue: defaultEnumValue
-            );
+                defaultValue: defaultEnumValue);
 
             Assert.Equal(
                 expected: expectedEnumvalue,
-                actual: processedEnum
-            );
+                actual: processedEnum);
         }
 
         [Fact]
@@ -262,13 +237,11 @@ namespace Espresso.Common.Tests.Utilities
 
             var actualEnum = EnumUtility.GetEnumOrDefault(
                 enumValue: AppEnvironment.Dev,
-                defaultValue: AppEnvironment.Local
-            );
+                defaultValue: AppEnvironment.Local);
 
             Assert.Equal(
                 expected: expectedEnumvalue,
-                actual: actualEnum
-            );
+                actual: actualEnum);
         }
 
         [Fact]
@@ -278,13 +251,11 @@ namespace Espresso.Common.Tests.Utilities
 
             var actualEnum = EnumUtility.GetEnumOrDefault(
                 enumValue: (AppEnvironment)(-1),
-                defaultValue: AppEnvironment.Local
-            );
+                defaultValue: AppEnvironment.Local);
 
             Assert.Equal(
                 expected: expectedEnumvalue,
-                actual: actualEnum
-            );
+                actual: actualEnum);
         }
 
         [Fact]
@@ -302,8 +273,7 @@ namespace Espresso.Common.Tests.Utilities
 
             Assert.All(
                 collection: allAppEnvironmentEnumValues,
-                appEnvironment => allExpectedAppEnvironmentEnumValues.Contains(appEnvironment)
-            );
+                appEnvironment => allExpectedAppEnvironmentEnumValues.Contains(appEnvironment));
         }
 
         [Fact]
@@ -321,8 +291,7 @@ namespace Espresso.Common.Tests.Utilities
 
             Assert.All(
                 collection: appEnvironmentEnumValues,
-                appEnvironment => expectedAppEnvironmentEnumValues.Contains(appEnvironment)
-            );
+                appEnvironment => expectedAppEnvironmentEnumValues.Contains(appEnvironment));
         }
 
         [Fact]
@@ -341,8 +310,7 @@ namespace Espresso.Common.Tests.Utilities
 
             Assert.All(
                 collection: appEnvironmentEnumValues,
-                appEnvironment => expectedAppEnvironmentEnumValues.Contains(appEnvironment)
-            );
+                appEnvironment => expectedAppEnvironmentEnumValues.Contains(appEnvironment));
         }
 
         [Fact]
@@ -363,8 +331,7 @@ namespace Espresso.Common.Tests.Utilities
 
             Assert.All(
                 collection: appEnvironmentEnumValues,
-                appEnvironment => expectedAppEnvironmentEnumValues.Contains(appEnvironment)
-            );
+                appEnvironment => expectedAppEnvironmentEnumValues.Contains(appEnvironment));
         }
     }
 }

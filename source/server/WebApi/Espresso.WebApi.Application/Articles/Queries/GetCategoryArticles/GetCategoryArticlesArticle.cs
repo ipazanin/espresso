@@ -74,7 +74,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
                 Categories = article.ArticleCategories
                     .AsQueryable()
                     .Select(articleCategory => articleCategory.Category)
-                    .Select(GetCategoryArticlesCategory.GetProjection()!),
+                    .Select(GetCategoryArticlesCategory.GetProjection() !),
             };
         }
     }

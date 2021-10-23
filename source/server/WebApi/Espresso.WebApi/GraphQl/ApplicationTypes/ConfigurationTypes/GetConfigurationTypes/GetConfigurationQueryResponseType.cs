@@ -20,14 +20,11 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ConfigurationTypes.GetConfigu
         {
             Name = nameof(GetConfigurationQueryResponse);
             Field<NonNullGraphType<ListGraphType<NonNullGraphType<GetConfigurationCategoryType>>>>(
-                name: nameof(GetConfigurationQueryResponse.Categories)
-            );
+                name: nameof(GetConfigurationQueryResponse.Categories));
             Field<NonNullGraphType<ListGraphType<NonNullGraphType<GetConfigurationCategoryWithNewsPortalsType>>>>(
-                name: nameof(GetConfigurationQueryResponse.CategoriesWithNewsPortals)
-            );
+                name: nameof(GetConfigurationQueryResponse.CategoriesWithNewsPortals));
             Field<NonNullGraphType<ListGraphType<NonNullGraphType<GetConfigurationRegionType>>>>(
-                name: nameof(GetConfigurationQueryResponse.Regions)
-            );
+                name: nameof(GetConfigurationQueryResponse.Regions));
         }
     }
 }

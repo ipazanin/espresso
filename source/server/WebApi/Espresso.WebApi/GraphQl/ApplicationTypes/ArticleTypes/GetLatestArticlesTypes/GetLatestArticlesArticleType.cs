@@ -19,29 +19,21 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetLatestArticle
         {
             Name = nameof(GetLatestArticlesArticle);
             Field<NonNullGraphType<IdGraphType>>(
-                name: nameof(GetLatestArticlesArticle.Id)
-            );
+                name: nameof(GetLatestArticlesArticle.Id));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetLatestArticlesArticle.Title)
-            );
+                name: nameof(GetLatestArticlesArticle.Title));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetLatestArticlesArticle.Url)
-            );
+                name: nameof(GetLatestArticlesArticle.Url));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetLatestArticlesArticle.WebUrl)
-            );
+                name: nameof(GetLatestArticlesArticle.WebUrl));
             Field<StringGraphType>(
-                name: nameof(GetLatestArticlesArticle.ImageUrl)
-            );
+                name: nameof(GetLatestArticlesArticle.ImageUrl));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetLatestArticlesArticle.PublishDateTime)
-            );
+                name: nameof(GetLatestArticlesArticle.PublishDateTime));
             Field<NonNullGraphType<GetLatestArticlesNewsPortalType>>(
-                name: nameof(GetLatestArticlesArticle.NewsPortal)
-            );
+                name: nameof(GetLatestArticlesArticle.NewsPortal));
             Field<NonNullGraphType<ListGraphType<NonNullGraphType<GetLatestArticlesCategoryType>>>>(
-                name: nameof(GetLatestArticlesArticle.Categories)
-            );
+                name: nameof(GetLatestArticlesArticle.Categories));
         }
     }
 }

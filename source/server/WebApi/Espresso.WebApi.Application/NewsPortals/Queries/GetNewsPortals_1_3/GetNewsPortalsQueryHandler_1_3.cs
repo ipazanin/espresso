@@ -23,8 +23,7 @@ namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals_1_3
         /// </summary>
         /// <param name="memoryCache"></param>
         public GetNewsPortalsQueryHandler_1_3(
-            IMemoryCache memoryCache
-        )
+            IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
         }

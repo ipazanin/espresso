@@ -1,10 +1,6 @@
 ﻿{
   "AppConfiguration": {
-    "ServerUrl": "http://espresso-webapi:80",
-    "MaxAgeOfArticlesInDays": 3
-  },
-  "CronJobsConfiguration": {
-    "ParseArticlesCronExpression": "*/10 * * * *"
+    "ServerUrl": "http://espresso-webapi:80"
   },
   "Logging": {
     "LogLevel": {

@@ -1,13 +1,4 @@
 ﻿{
-  "AppConfiguration": {
-    "MaxAgeOfArticlesInDays": 5
-  },
-  "ArticleSimilarityConfiguration": {
-    "ArticlePublishDateTimeDiferenceThresholdInHours": 24,
-    "MaxAgeOfSimilarArticleCheckingInHours": 26,
-    "MinimalNumberOfWordsForArticleToBeComparable": 4,
-    "SimilarityScoreThreshold": 0.65
-  },
   "HttpClientConfiguration": {
     "SlackHttpClientConfiguration": {
       "MaxRetries": 1,

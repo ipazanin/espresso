@@ -74,8 +74,7 @@ namespace Espresso.Domain.Entities
             string url,
             int newsPortalId,
             int categoryId,
-            RequestType requestType
-        )
+            RequestType requestType)
         {
             Id = id;
             Url = url;

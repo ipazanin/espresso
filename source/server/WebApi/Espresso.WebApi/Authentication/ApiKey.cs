@@ -55,8 +55,7 @@ namespace Espresso.WebApi.Authentication
         public ApiKey(
             int id,
             string role,
-            string key
-        )
+            string key)
         {
             Id = id;
             Role = role ?? throw new ArgumentNullException(nameof(role));

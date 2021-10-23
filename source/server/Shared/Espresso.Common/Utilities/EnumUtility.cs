@@ -50,7 +50,7 @@ namespace Espresso.Domain.Utilities
                 {
                     if (Attribute.GetCustomAttribute(field, typeof(DisplayAttribute)) is DisplayAttribute attribute && attribute.Name == enumValue)
                     {
-                        value = (T)field.GetValue(null)!;
+                        value = (T)field.GetValue(null) !;
                         return true;
                     }
                 }

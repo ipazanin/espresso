@@ -19,26 +19,19 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.GetCategoryArtic
         {
             Name = nameof(GetCategoryArticlesArticle);
             Field<NonNullGraphType<IdGraphType>>(
-                name: nameof(GetCategoryArticlesArticle.Id)
-            );
+                name: nameof(GetCategoryArticlesArticle.Id));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetCategoryArticlesArticle.Title)
-            );
+                name: nameof(GetCategoryArticlesArticle.Title));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetCategoryArticlesArticle.Url)
-            );
+                name: nameof(GetCategoryArticlesArticle.Url));
             Field<StringGraphType>(
-                name: nameof(GetCategoryArticlesArticle.ImageUrl)
-            );
+                name: nameof(GetCategoryArticlesArticle.ImageUrl));
             Field<NonNullGraphType<StringGraphType>>(
-                name: nameof(GetCategoryArticlesArticle.PublishDateTime)
-            );
+                name: nameof(GetCategoryArticlesArticle.PublishDateTime));
             Field<NonNullGraphType<GetCategoryArticlesNewsPortalType>>(
-                name: nameof(GetCategoryArticlesArticle.NewsPortal)
-            );
+                name: nameof(GetCategoryArticlesArticle.NewsPortal));
             Field<NonNullGraphType<ListGraphType<NonNullGraphType<GetCategoryArticlesCategoryType>>>>(
-                name: nameof(GetCategoryArticlesArticle.Categories)
-            );
+                name: nameof(GetCategoryArticlesArticle.Categories));
         }
     }
 }

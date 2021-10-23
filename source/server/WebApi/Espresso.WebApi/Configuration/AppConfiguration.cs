@@ -5,9 +5,7 @@
 using Espresso.Common.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Espresso.WebApi.Configuration
 {
@@ -26,12 +24,6 @@ namespace Espresso.WebApi.Configuration
         /// <summary>
         ///
         /// </summary>
-        /// <value></value>
-        public int NewNewsPortalsPosition => _configuration.GetValue<int>("NewNewsPortalsPosition");
-
-        /// <summary>
-        ///
-        /// </summary>
         public string Version => _configuration.GetValue<string>("Version");
 
         /// <summary>
@@ -39,8 +31,7 @@ namespace Espresso.WebApi.Configuration
         /// </summary>
         public ApiVersion ApiVersion => new(
             majorVersion: _configuration.GetValue<int>("MajorVersion"),
-            minorVersion: _configuration.GetValue<int>("MinorVersion")
-        );
+            minorVersion: _configuration.GetValue<int>("MinorVersion"));
 
         /// <summary>
         /// Gets all Api Versions.
@@ -59,23 +50,7 @@ namespace Espresso.WebApi.Configuration
         /// <summary>
         ///
         /// </summary>
-        public TimeSpan Uptime => DateTime.UtcNow - Process.GetCurrentProcess().StartTime.ToUniversalTime();
-
-        /// <summary>
-        ///
-        /// </summary>
-        public int FeaturedArticlesTake => _configuration.GetValue<int>("FeaturedArticlesTake");
-
-        /// <summary>
-        ///
-        /// </summary>
         public string SlackWebHook => _configuration.GetValue<string>("SlackWebHook");
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <value></value>
-        public int MaxHttpHandlerRetries => _configuration.GetValue<int>("MaxHttpHandlerRetries");
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppConfiguration"/> class.

@@ -49,8 +49,7 @@ namespace Espresso.WebApi.Application.Initialization
             IMemoryCache memoryCache,
             IEspressoDatabaseContext context,
             ILoggerService<WebApiInit> loggerService,
-            ReadinessHealthCheck readinessHealthCheck
-        )
+            ReadinessHealthCheck readinessHealthCheck)
         {
             _memoryCache = memoryCache;
             _context = context;
@@ -74,8 +73,7 @@ namespace Espresso.WebApi.Application.Initialization
 
             _memoryCache.Set(
                 key: MemoryCacheConstants.RegionKey,
-                value: regions.ToList()
-            );
+                value: regions.ToList());
 
             var newsPortals = await _context
                 .NewsPortals
@@ -89,8 +87,7 @@ namespace Espresso.WebApi.Application.Initialization
 
             _memoryCache.Set(
                 key: MemoryCacheConstants.NewsPortalKey,
-                value: newsPortals.ToList()
-            );
+                value: newsPortals.ToList());
 
             var categories = await _context
                 .Categories
@@ -102,8 +99,7 @@ namespace Espresso.WebApi.Application.Initialization
 
             _memoryCache.Set(
                 key: MemoryCacheConstants.CategoryKey,
-                value: categories
-            );
+                value: categories);
 
             var articles = await _context.Articles
                 .Include(article => article.ArticleCategories)
@@ -134,8 +130,7 @@ namespace Espresso.WebApi.Application.Initialization
 
             _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
-                value: articles
-            );
+                value: articles);
 
             stopwatch.Stop();
 
@@ -161,8 +156,7 @@ namespace Espresso.WebApi.Application.Initialization
         {
             var firebaseKeyPath = Path.Combine(
                 path1: AppDomain.CurrentDomain.BaseDirectory ?? string.Empty,
-                path2: ConfigurationFileName
-            );
+                path2: ConfigurationFileName);
             FirebaseApp.Create(new AppOptions()
             {
                 Credential = GoogleCredential.FromFile(firebaseKeyPath),

@@ -24,8 +24,7 @@ namespace Espresso.Common.Services.Implementations
         /// </summary>
         /// <param name="sendGridKey">Send grid API key.</param>
         public SendGridEmailService(
-            string sendGridKey
-        )
+            string sendGridKey)
         {
             _sendGridKey = sendGridKey;
         }
@@ -35,8 +34,7 @@ namespace Espresso.Common.Services.Implementations
             string to,
             string subject,
             string content,
-            string htmlContent
-        )
+            string htmlContent)
         {
             var client = new SendGridClient(_sendGridKey);
             var fromEmail = new EmailAddress(SenderEmail, SenderName);
@@ -47,8 +45,7 @@ namespace Espresso.Common.Services.Implementations
                 to: toEmail,
                 subject: subject,
                 plainTextContent: content,
-                htmlContent: htmlContent
-            );
+                htmlContent: htmlContent);
 
             var response = await client.SendEmailAsync(message);
 

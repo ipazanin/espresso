@@ -34,8 +34,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="webApiConfiguration"></param>
         public ConfigurationController(
             ISender sender,
-            IWebApiConfiguration webApiConfiguration
-        )
+            IWebApiConfiguration webApiConfiguration)
             : base(sender, webApiConfiguration)
         {
         }
@@ -67,19 +66,16 @@ namespace Espresso.WebApi.Controllers
         [ApiVersion("1.4")]
         [ResponseCache(
             Duration = 12 * 60 * 60,
-            Location = ResponseCacheLocation.Any
-        )]
+            Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Authorize(Roles = ApiKey.WebAppRole)]
         [Route("api/web-configuration")]
         public async Task<IActionResult> GetWebConfiguration(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var request = new GetWebConfigurationQuery
             {
-                MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
                 TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                 ConsumerVersion = basicInformationsHeaderParameters.Version,
                 DeviceType = basicInformationsHeaderParameters.DeviceType,
@@ -87,8 +83,7 @@ namespace Espresso.WebApi.Controllers
 
             var getNewsPortalsQueryResponse = await Sender.Send(
                     request: request,
-                    cancellationToken: cancellationToken
-                );
+                    cancellationToken: cancellationToken);
 
             return Ok(getNewsPortalsQueryResponse);
         }
@@ -120,27 +115,23 @@ namespace Espresso.WebApi.Controllers
         [ApiVersion("1.4")]
         [ResponseCache(
             Duration = 12 * 60 * 60,
-            Location = ResponseCacheLocation.Any
-        )]
+            Location = ResponseCacheLocation.Any)]
         [HttpGet]
         [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
         [Route("api/configuration")]
         public async Task<IActionResult> GetConfiguration(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var request = new GetConfigurationQuery
             {
-                MaxAgeOfNewNewsPortal = WebApiConfiguration.DateTimeConfiguration.MaxAgeOfNewNewsPortal,
                 TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                 ConsumerVersion = basicInformationsHeaderParameters.Version,
                 DeviceType = basicInformationsHeaderParameters.DeviceType,
             };
             var getNewsPortalsQueryResponse = await Sender.Send(
                 request: request,
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok(getNewsPortalsQueryResponse);
         }
@@ -172,8 +163,7 @@ namespace Espresso.WebApi.Controllers
         [Route("api/configuration")]
         public async Task<IActionResult> GetConfiguration_1_3(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var request = new GetConfigurationQuery_1_3
             {
@@ -183,8 +173,7 @@ namespace Espresso.WebApi.Controllers
             };
             var getNewsPortalsQueryResponse = await Sender.Send(
                 request: request,
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok(getNewsPortalsQueryResponse);
         }
@@ -218,8 +207,7 @@ namespace Espresso.WebApi.Controllers
         public async Task<IActionResult> GetConfiguration_1_2(
             [Required] string mobileAppVersion,
             [Required] DeviceType mobileDeviceType,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var request = new GetConfigurationQuery_1_3
             {
@@ -230,8 +218,7 @@ namespace Espresso.WebApi.Controllers
 
             var getNewsPortalsQueryResponse = await Sender.Send(
                     request: request,
-                    cancellationToken: cancellationToken
-                );
+                    cancellationToken: cancellationToken);
             return Ok(getNewsPortalsQueryResponse);
         }
     }

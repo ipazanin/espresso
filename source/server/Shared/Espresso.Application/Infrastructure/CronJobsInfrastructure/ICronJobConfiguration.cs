@@ -12,25 +12,21 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
     /// </summary>
     /// <typeparam name="T"><see cref="CronJob{T}"/>.</typeparam>
     public interface ICronJobConfiguration<T>
+        where T : CronJob<T>
     {
-        /// <summary>
-        /// Gets or sets cron Expression.
-        /// </summary>
-        public string? CronExpression { get; set; }
-
         /// <summary>
         /// Gets or sets time Zone Information.
         /// </summary>
-        public TimeZoneInfo? TimeZoneInfo { get; set; }
+        public TimeZoneInfo? TimeZoneInfo { get; }
 
         /// <summary>
         /// Gets or sets application Version.
         /// </summary>
-        public string Version { get; set; }
+        public string Version { get; }
 
         /// <summary>
         /// Gets or sets application Environment.
         /// </summary>
-        public AppEnvironment AppEnvironment { get; set; }
+        public AppEnvironment AppEnvironment { get; }
     }
 }

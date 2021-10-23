@@ -3,14 +3,14 @@
   "settings": {
     "documentationRules": {
       "xmlHeader": false,
-      "documentExposedElements": true,
+      "documentExposedElements": false,
       "documentationCulture": "en-US",
       "documentInterfaces": true,
       "documentInternalElements": true,
       "documentPrivateElements": false,
       "documentPrivateFields": false,
       "fileNamingConvention": "stylecop",
-      "excludeFromPunctuationCheck": ["seealso"]
+      "excludeFromPunctuationCheck": ["seealso"]      
     },
     "orderingRules": {
       "systemUsingDirectivesFirst": false,

@@ -71,7 +71,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles
                     .Invoke(article.NewsPortal!),
                 Categories = article.ArticleCategories
                     .Select(articleCategory => articleCategory.Category)
-                    .Select(GetTrendingArticlesCategory.GetProjection().Compile()!),
+                    .Select(GetTrendingArticlesCategory.GetProjection().Compile() !),
                 TrendingScore = (int)article.TrendingScore,
             };
         }

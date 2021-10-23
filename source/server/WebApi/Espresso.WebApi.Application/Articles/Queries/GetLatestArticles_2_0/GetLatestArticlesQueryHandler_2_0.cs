@@ -6,6 +6,7 @@ using Espresso.Common.Constants;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Extensions;
+using Espresso.Domain.Infrastructure;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using System;
@@ -19,36 +20,33 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
     public class GetArticlesQueryHandler_2_0 : IRequestHandler<GetLatestArticlesQuery_2_0, GetLatestArticlesQueryResponse_2_0>
     {
         private readonly IMemoryCache _memoryCache;
+        private readonly ISettingProvider _settingProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetArticlesQueryHandler_2_0"/> class.
         /// </summary>
         /// <param name="memoryCache"></param>
-        public GetArticlesQueryHandler_2_0(
-            IMemoryCache memoryCache
-        )
+        /// <param name="settingProvider"></param>
+        public GetArticlesQueryHandler_2_0(IMemoryCache memoryCache, ISettingProvider settingProvider)
         {
             _memoryCache = memoryCache;
+            _settingProvider = settingProvider;
         }
 
         public Task<GetLatestArticlesQueryResponse_2_0> Handle(
             GetLatestArticlesQuery_2_0 request,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var (newsPortalIds, categoryIds) = ParseIds(request);
 
             var savedArticles = _memoryCache.Get<IEnumerable<Article>>(
-                key: MemoryCacheConstants.ArticleKey
-            );
+                key: MemoryCacheConstants.ArticleKey);
 
             var firstArticle = savedArticles.FirstOrDefault(
-                article => article.Id.Equals(request.FirstArticleId)
-            );
+                article => article.Id.Equals(request.FirstArticleId));
 
             var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
-                key: MemoryCacheConstants.NewsPortalKey
-            );
+                key: MemoryCacheConstants.NewsPortalKey);
             var keyWordsToFilterOut = request.KeyWordsToFilterOut is null ?
                 Enumerable.Empty<string>() :
                 request.KeyWordsToFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
@@ -59,28 +57,25 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                 request: request,
                 categoryIds: categoryIds,
                 newsPortalIds: newsPortalIds,
-                keyWordsToFilterOut: keyWordsToFilterOut
-            );
+                keyWordsToFilterOut: keyWordsToFilterOut);
 
             var newNewsPortals = GetNewNewsPortals(
                 newsPortals: newsPortals,
-                request: request
-            );
+                request: request);
 
             var featuredArticles = GetFeaturedArticles(
                 savedArticles: savedArticles,
                 firstArticleCreateDateTime: firstArticle?.CreateDateTime,
                 request: request,
                 categoryIds: categoryIds,
-                keyWordsToFilterOut: keyWordsToFilterOut
-            );
+                keyWordsToFilterOut: keyWordsToFilterOut);
 
             var response = new GetLatestArticlesQueryResponse_2_0
             {
                 Articles = articles,
                 FeaturedArticles = featuredArticles,
                 NewNewsPortals = newNewsPortals,
-                NewNewsPortalsPosition = request.NewNewsPortalsPosition,
+                NewNewsPortalsPosition = _settingProvider.LatestSetting.NewsPortalSetting.NewNewsPortalsPosition,
                 LastAddedNewsPortalDate = newsPortals
                     .OrderByDescending(newsPortal => newsPortal.CreatedAt)
                     .First()
@@ -97,8 +92,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
             GetLatestArticlesQuery_2_0 request,
             IEnumerable<int>? categoryIds,
             IEnumerable<int>? newsPortalIds,
-            IEnumerable<string> keyWordsToFilterOut
-        )
+            IEnumerable<string> keyWordsToFilterOut)
         {
             var articles = savedArticles
                 .OrderArticlesByPublishDate()
@@ -106,8 +100,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                     categoryIds: categoryIds,
                     newsPortalIds: newsPortalIds,
                     titleSearchTerm: request.TitleSearchQuery,
-                    articleCreateDateTime: firstArticleCreateDateTime
-                )
+                    articleCreateDateTime: firstArticleCreateDateTime)
                 .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
                 // .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
                 .Skip(request.Skip)
@@ -117,80 +110,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                 .Select(GetLatestArticlesArticle_2_0.GetProjection().Compile());
 
             return articleDtos;
-        }
-
-        private static IEnumerable<GetLatestArticlesArticle_2_0> GetFeaturedArticles(
-            IEnumerable<Article> savedArticles,
-            DateTime? firstArticleCreateDateTime,
-            GetLatestArticlesQuery_2_0 request,
-            IEnumerable<int>? categoryIds,
-            IEnumerable<string> keyWordsToFilterOut
-        )
-        {
-            if (request.Skip != 0)
-            {
-                return Array.Empty<GetLatestArticlesArticle_2_0>();
-            }
-
-            var featuredArticles = savedArticles
-                .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
-                .FilterFeaturedArticles(
-                    categoryIds: null,
-                    newsPortalIds: null,
-                    maxAgeOfFeaturedArticle: request.MaxAgeOfFeaturedArticle,
-                    articleCreateDateTime: firstArticleCreateDateTime
-                )
-                // .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
-                .OrderFeaturedArticles(categoryIds);
-
-            var trendingArticlesTake = request.FeaturedArticlesTake - featuredArticles.Count() <= 0 ?
-                0 :
-                request.FeaturedArticlesTake - featuredArticles.Count();
-
-            var trendingArticles = savedArticles
-                .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
-                .FilterTrendingArticles(
-                    maxAgeOfTrendingArticle: request.MaxAgeOfTrendingArticle,
-                    articleCreateDateTime: null
-                )
-                // .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
-                .OrderArticlesByTrendingScore()
-                .Take(trendingArticlesTake)
-                .OrderArticlesByCategory(categoryIds);
-
-            var articleDtos = featuredArticles
-                .Union(trendingArticles)
-                .Take(request.FeaturedArticlesTake)
-                .Select(GetLatestArticlesArticle_2_0.GetProjection().Compile());
-
-            return articleDtos;
-        }
-
-        private static IEnumerable<GetLatestArticlesNewsPortal_2_0> GetNewNewsPortals(
-            IEnumerable<NewsPortal> newsPortals,
-            GetLatestArticlesQuery_2_0 request
-        )
-        {
-            if (request.Skip != 0)
-            {
-                return Array.Empty<GetLatestArticlesNewsPortal_2_0>();
-            }
-
-            var (newsPortalIds, categoryIds) = ParseIds(request);
-
-            var newsPortalDtos = newsPortals
-                .Where(
-                    predicate: NewsPortal.GetLatestSugestedNewsPortalsPredicate(
-                        newsPortalIds: newsPortalIds,
-                        categoryIds: categoryIds,
-                        maxAgeOfNewNewsPortal: request.MaxAgeOfNewNewsPortal
-                    ).Compile()
-                )
-                .Select(selector: GetLatestArticlesNewsPortal_2_0.GetProjection().Compile());
-
-            var random = new Random();
-
-            return newsPortalDtos.OrderBy(newsPortal => random.Next());
         }
 
         private static (IEnumerable<int>? newsPortalIds, IEnumerable<int>? categoryIds) ParseIds(GetLatestArticlesQuery_2_0 request)
@@ -208,6 +127,74 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                 ?.Where(categoryId => categoryId != default);
 
             return (newsPortalIds, categoryIds);
+        }
+
+        private IEnumerable<GetLatestArticlesNewsPortal_2_0> GetNewNewsPortals(
+            IEnumerable<NewsPortal> newsPortals,
+            GetLatestArticlesQuery_2_0 request)
+        {
+            if (request.Skip != 0)
+            {
+                return Array.Empty<GetLatestArticlesNewsPortal_2_0>();
+            }
+
+            var (newsPortalIds, categoryIds) = ParseIds(request);
+
+            var newsPortalDtos = newsPortals
+                .Where(
+                    predicate: NewsPortal.GetLatestSugestedNewsPortalsPredicate(
+                        newsPortalIds: newsPortalIds,
+                        categoryIds: categoryIds,
+                        maxAgeOfNewNewsPortal: _settingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal)
+                    .Compile())
+                .Select(selector: GetLatestArticlesNewsPortal_2_0.GetProjection().Compile());
+
+            var random = new Random();
+
+            return newsPortalDtos.OrderBy(_ => random.Next());
+        }
+
+        private IEnumerable<GetLatestArticlesArticle_2_0> GetFeaturedArticles(
+            IEnumerable<Article> savedArticles,
+            DateTime? firstArticleCreateDateTime,
+            GetLatestArticlesQuery_2_0 request,
+            IEnumerable<int>? categoryIds,
+            IEnumerable<string> keyWordsToFilterOut)
+        {
+            if (request.Skip != 0)
+            {
+                return Array.Empty<GetLatestArticlesArticle_2_0>();
+            }
+
+            var featuredArticles = savedArticles
+                .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
+                .FilterFeaturedArticles(
+                    categoryIds: null,
+                    newsPortalIds: null,
+                    maxAgeOfFeaturedArticle: _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfFeaturedArticle,
+                    articleCreateDateTime: firstArticleCreateDateTime)
+                // .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
+                .OrderFeaturedArticles(categoryIds);
+
+            var featuredArticlesTake = _settingProvider.LatestSetting.ArticleSetting.FeaturedArticlesTake;
+            var trendingArticlesTake = Math.Max(featuredArticlesTake - featuredArticles.Count(), 0);
+
+            var trendingArticles = savedArticles
+                .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
+                .FilterTrendingArticles(
+                    maxAgeOfTrendingArticle: _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfTrendingArticle,
+                    articleCreateDateTime: null)
+                // .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
+                .OrderArticlesByTrendingScore()
+                .Take(trendingArticlesTake)
+                .OrderArticlesByCategory(categoryIds);
+
+            var articleDtos = featuredArticles
+                .Union(trendingArticles)
+                .Take(featuredArticlesTake)
+                .Select(GetLatestArticlesArticle_2_0.GetProjection().Compile());
+
+            return articleDtos;
         }
     }
 }

@@ -21,14 +21,11 @@ namespace Espresso.WebApi.GraphQl.ApplicationTypes.ArticleTypes.ConfigurationTyp
         {
             Name = nameof(GetCategoryArticlesQueryResponse);
             Field<NonNullGraphType<ListGraphType<NonNullGraphType<GetCategoryArticlesArticleType>>>>(
-                name: nameof(GetCategoryArticlesQueryResponse.Articles)
-            );
+                name: nameof(GetCategoryArticlesQueryResponse.Articles));
             Field<NonNullGraphType<IntGraphType>>(
-                name: nameof(GetCategoryArticlesQueryResponse.NewNewsPortalsPosition)
-            );
+                name: nameof(GetCategoryArticlesQueryResponse.NewNewsPortalsPosition));
             Field<NonNullGraphType<ListGraphType<NonNullGraphType<GetCategoryArticlesNewsPortalType>>>>(
-                name: nameof(GetCategoryArticlesQueryResponse.NewNewsPortals)
-            );
+                name: nameof(GetCategoryArticlesQueryResponse.NewNewsPortals));
         }
     }
 }

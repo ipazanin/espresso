@@ -30,8 +30,7 @@ namespace Espresso.WebApi.Controllers
         /// <param name="webApiConfiguration"></param>
         public CategoriesController(
             ISender sender,
-            IWebApiConfiguration webApiConfiguration
-        )
+            IWebApiConfiguration webApiConfiguration)
             : base(sender, webApiConfiguration)
         {
         }
@@ -64,8 +63,7 @@ namespace Espresso.WebApi.Controllers
         [Route("api/categories")]
         public async Task<IActionResult> GetCategories(
             [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-            CancellationToken cancellationToken
-        )
+            CancellationToken cancellationToken)
         {
             var categories = await Sender.Send(
                 request: new GetCategoriesQuery
@@ -74,8 +72,7 @@ namespace Espresso.WebApi.Controllers
                     ConsumerVersion = basicInformationsHeaderParameters.Version,
                     DeviceType = basicInformationsHeaderParameters.DeviceType,
                 },
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Ok(categories);
         }

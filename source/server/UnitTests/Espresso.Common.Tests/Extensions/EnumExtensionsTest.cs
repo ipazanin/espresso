@@ -21,8 +21,7 @@ namespace Espresso.Common.Tests.Extensions
 
             Assert.Equal(
                 expected: expectedDisplayName,
-                actual: actualDisplayName
-            );
+                actual: actualDisplayName);
         }
 
         [Fact]
@@ -35,8 +34,7 @@ namespace Espresso.Common.Tests.Extensions
 
             Assert.Equal(
                 expected: expectedDisplayName,
-                actual: actualDisplayName
-            );
+                actual: actualDisplayName);
         }
 
         [Fact]
@@ -49,8 +47,7 @@ namespace Espresso.Common.Tests.Extensions
 
             Assert.Equal(
                 expected: expectedDisplayName,
-                actual: actualDisplayName
-            );
+                actual: actualDisplayName);
         }
 
         [Fact]
@@ -63,8 +60,7 @@ namespace Espresso.Common.Tests.Extensions
 
             Assert.Equal(
                 expected: expectedValue,
-                actual: actualValue
-            );
+                actual: actualValue);
         }
 
         [Fact]
@@ -77,8 +73,7 @@ namespace Espresso.Common.Tests.Extensions
 
             Assert.Equal(
                 expected: expectedValue,
-                actual: actualValue
-            );
+                actual: actualValue);
         }
     }
 }

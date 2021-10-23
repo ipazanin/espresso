@@ -21,8 +21,7 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendArticlesNotific
         /// </summary>
         /// <param name="hubContext"></param>
         public SendArticlesNotificationsCommandHandler(
-            IHubContext<ArticlesNotificationHub> hubContext
-        )
+            IHubContext<ArticlesNotificationHub> hubContext)
         {
             _hubContext = hubContext;
         }
@@ -38,16 +37,14 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendArticlesNotific
                 .CreatedArticles
                 .Select(article => new NewArticleDto(
                     article.NewsPortalId,
-                    article.ArticleCategories.Select(articleCategory => articleCategory.CategoryId)
-                ));
+                    article.ArticleCategories.Select(articleCategory => articleCategory.CategoryId)));
 
             var newArticlesNotificationDto = new NewArticlesNotificationDto(newArticles);
 
             await _hubContext.Clients.All.SendAsync(
                 method: LatestArticlesClientMethodName,
                 arg1: newArticlesNotificationDto,
-                cancellationToken: cancellationToken
-            );
+                cancellationToken: cancellationToken);
 
             return Unit.Value;
         }

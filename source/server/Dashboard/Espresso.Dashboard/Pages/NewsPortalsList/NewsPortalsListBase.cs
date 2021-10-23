@@ -5,7 +5,6 @@
 using Espresso.Application.DataTransferObjects.PagingDataTransferObjects;
 using Espresso.Common.Constants;
 using Espresso.Dashboard.Application.NewsPortals.GetNewsPortals;
-using Espresso.Dashboard.Configuration;
 using Espresso.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -56,9 +55,7 @@ namespace Espresso.Dashboard.Pages.NewsPortalsList
         {
             Response = await Sender.Send(
                 request: new GetNewsPortalsQuery(
-                    pagingParameters: PagingParameters
-                )
-            );
+                    pagingParameters: PagingParameters));
         }
 
         /// <summary>
