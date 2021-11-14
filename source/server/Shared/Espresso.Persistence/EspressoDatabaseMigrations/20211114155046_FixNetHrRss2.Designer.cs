@@ -3,15 +3,17 @@ using System;
 using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Espresso.Persistence.EspressoDatabaseMigrations
 {
     [DbContext(typeof(EspressoDatabaseContext))]
-    partial class EspressoDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20211114155046_FixNetHrRss2")]
+    partial class FixNetHrRss2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1031,28 +1033,6 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             IconUrl = "Icons/Viral.png",
                             IsEnabled = true,
                             Name = "Viral.hr",
-                            RegionId = 1
-                        },
-                        new
-                        {
-                            Id = 136,
-                            BaseUrl = "https://sportklub.hr",
-                            CategoryId = 2,
-                            CreatedAt = new DateTime(2021, 11, 14, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/SportKlub.png",
-                            IsEnabled = true,
-                            Name = "Sportklub",
-                            RegionId = 1
-                        },
-                        new
-                        {
-                            Id = 137,
-                            BaseUrl = "https://doktorehitno.hr",
-                            CategoryId = 4,
-                            CreatedAt = new DateTime(2021, 11, 14, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/DoktoreHitno.png",
-                            IsEnabled = true,
-                            Name = "Doktore, hitno!",
                             RegionId = 1
                         },
                         new
@@ -2743,22 +2723,6 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             NewsPortalId = 135,
                             RequestType = 1,
                             Url = "https://viral.hr/feed"
-                        },
-                        new
-                        {
-                            Id = 182,
-                            CategoryId = 2,
-                            NewsPortalId = 136,
-                            RequestType = 1,
-                            Url = "https://sportklub.hr/feed"
-                        },
-                        new
-                        {
-                            Id = 183,
-                            CategoryId = 4,
-                            NewsPortalId = 137,
-                            RequestType = 1,
-                            Url = "https://doktorehitno.hr/rss"
                         },
                         new
                         {

@@ -683,6 +683,26 @@ namespace Espresso.Persistence.DataSeed
                     categoryId: (int)CategoryId.Viral,
                     regionId: (int)RegionId.Global,
                     isEnabled: true),
+                new NewsPortal(
+                    id: (int)NewsPortalId.SportKlub,
+                    name: NewsPortalId.SportKlub.GetDisplayName(),
+                    baseUrl: "https://sportklub.hr",
+                    iconUrl: $"Icons/{NewsPortalId.SportKlub}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2021, 11, 14, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Sport,
+                    regionId: (int)RegionId.Global,
+                    isEnabled: true),
+                new NewsPortal(
+                    id: (int)NewsPortalId.DoktoreHitno,
+                    name: NewsPortalId.DoktoreHitno.GetDisplayName(),
+                    baseUrl: "https://doktorehitno.hr",
+                    iconUrl: $"Icons/{NewsPortalId.DoktoreHitno}{FileExtensionConstants.Png}",
+                    isNewOverride: null,
+                    createdAt: new DateTime(2021, 11, 14, 0, 0, 0, DateTimeKind.Utc),
+                    categoryId: (int)CategoryId.Lifestyle,
+                    regionId: (int)RegionId.Global,
+                    isEnabled: true),
             };
 
             builder.HasData(newsPortals);

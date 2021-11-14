@@ -89,6 +89,8 @@ namespace Espresso.Domain.Entities
 
         public bool ShouldParse()
         {
+            AmpConfiguration = new AmpConfiguration(false, string.Empty);
+
             return NewsPortal?.IsEnabled == true && SkipParseConfiguration?.ShouldParse() != false;
         }
 
