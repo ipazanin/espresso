@@ -1,4 +1,4 @@
-﻿// SearchTypeEnum.cs
+﻿// SearchType.cs
 //
 // © 2021 Espresso News. All rights reserved.
 

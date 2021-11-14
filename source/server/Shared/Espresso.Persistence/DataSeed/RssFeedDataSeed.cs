@@ -51,7 +51,7 @@ namespace Espresso.Persistence.DataSeed
 
                 new RssFeed((int)RssFeedId.JutarnjiList, "https://www.jutarnji.hr/feed", (int)NewsPortalId.JutarnjiList, (int)CategoryId.Vijesti, requestType: RequestType.Browser),
 
-                new RssFeed((int)RssFeedId.NetHr, "https://net.hr/feed/", (int)NewsPortalId.NetHr, (int)CategoryId.Vijesti, requestType: RequestType.Normal),
+                new RssFeed((int)RssFeedId.NetHr, "https://net.hr/feed", (int)NewsPortalId.NetHr, (int)CategoryId.Vijesti, requestType: RequestType.Normal),
 
                 new RssFeed((int)RssFeedId.SlobodnaDalmacija_Novosti, "https://www.slobodnadalmacija.hr/feed/category/119", (int)NewsPortalId.SlobodnaDalmacija, (int)CategoryId.Vijesti, requestType: RequestType.Browser),
                 new RssFeed((int)RssFeedId.SlobodnaDalmacija_Sport, "https://www.slobodnadalmacija.hr/feed/category/255", (int)NewsPortalId.SlobodnaDalmacija, (int)CategoryId.Sport, requestType: RequestType.Browser),
@@ -445,6 +445,18 @@ namespace Espresso.Persistence.DataSeed
                     url: "https://viral.hr/feed",
                     newsPortalId: (int)NewsPortalId.Viral,
                     categoryId: (int)CategoryId.Viral,
+                    requestType: RequestType.Normal),
+                new RssFeed(
+                    id: (int)RssFeedId.SportKlub,
+                    url: "https://sportklub.hr/feed",
+                    newsPortalId: (int)NewsPortalId.SportKlub,
+                    categoryId: (int)CategoryId.Sport,
+                    requestType: RequestType.Normal),
+                new RssFeed(
+                    id: (int)RssFeedId.DoktoreHitno,
+                    url: "https://doktorehitno.hr/rss",
+                    newsPortalId: (int)NewsPortalId.DoktoreHitno,
+                    categoryId: (int)CategoryId.Lifestyle,
                     requestType: RequestType.Normal),
             };
 

@@ -188,6 +188,8 @@ namespace Espresso.Domain.Enums.RssFeedEnums
         MobHr = 179,
         StartNews = 180,
         Viral = 181,
+        SportKlub = 182,
+        DoktoreHitno = 183,
 #pragma warning restore SA1602 // Enumeration items should be documented
     }
 }

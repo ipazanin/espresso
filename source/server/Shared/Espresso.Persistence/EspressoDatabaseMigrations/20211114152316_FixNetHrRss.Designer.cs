@@ -3,15 +3,17 @@ using System;
 using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Espresso.Persistence.EspressoDatabaseMigrations
 {
     [DbContext(typeof(EspressoDatabaseContext))]
-    partial class EspressoDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20211114152316_FixNetHrRss")]
+    partial class FixNetHrRss
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1031,28 +1033,6 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             IconUrl = "Icons/Viral.png",
                             IsEnabled = true,
                             Name = "Viral.hr",
-                            RegionId = 1
-                        },
-                        new
-                        {
-                            Id = 136,
-                            BaseUrl = "https://sportklub.hr",
-                            CategoryId = 2,
-                            CreatedAt = new DateTime(2021, 11, 14, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/SportKlub.png",
-                            IsEnabled = true,
-                            Name = "Sportklub",
-                            RegionId = 1
-                        },
-                        new
-                        {
-                            Id = 137,
-                            BaseUrl = "https://doktorehitno.hr",
-                            CategoryId = 4,
-                            CreatedAt = new DateTime(2021, 11, 14, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IconUrl = "Icons/DoktoreHitno.png",
-                            IsEnabled = true,
-                            Name = "Doktore, hitno!",
                             RegionId = 1
                         },
                         new
@@ -2743,22 +2723,6 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             NewsPortalId = 135,
                             RequestType = 1,
                             Url = "https://viral.hr/feed"
-                        },
-                        new
-                        {
-                            Id = 182,
-                            CategoryId = 2,
-                            NewsPortalId = 136,
-                            RequestType = 1,
-                            Url = "https://sportklub.hr/feed"
-                        },
-                        new
-                        {
-                            Id = 183,
-                            CategoryId = 4,
-                            NewsPortalId = 137,
-                            RequestType = 1,
-                            Url = "https://doktorehitno.hr/rss"
                         },
                         new
                         {
@@ -4608,7 +4572,8 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                                 new
                                 {
                                     RssFeedId = 14,
-                                    HasAmpArticles = false
+                                    HasAmpArticles = true,
+                                    TemplateUrl = "https://net.hr/{1}{2}{3}amp"
                                 },
                                 new
                                 {
@@ -5760,6 +5725,16 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                             b1.WithOwner()
                                 .HasForeignKey("SettingId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    SettingId = 1,
+                                    FeaturedArticlesTake = 10,
+                                    MaxAgeOfArticleInMiliseconds = 432000000L,
+                                    MaxAgeOfFeaturedArticleInMiliseconds = 21600000L,
+                                    MaxAgeOfTrendingArticleInMiliseconds = 21600000L
+                                });
                         });
 
                     b.OwnsOne("Espresso.Domain.ValueObjects.SettingsValueObjects.JobsSetting", "JobsSetting", b1 =>
@@ -5787,6 +5762,15 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                             b1.WithOwner()
                                 .HasForeignKey("SettingId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    SettingId = 1,
+                                    AnalyticsCronExpression = "0 10 * * *",
+                                    ParseArticlesCronExpression = "*/1 * * * *",
+                                    WebApiReportCronExpression = "0 9 * * *"
+                                });
                         });
 
                     b.OwnsOne("Espresso.Domain.ValueObjects.SettingsValueObjects.NewsPortalSetting", "NewsPortalSetting", b1 =>
@@ -5808,6 +5792,14 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                             b1.WithOwner()
                                 .HasForeignKey("SettingId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    SettingId = 1,
+                                    MaxAgeOfNewNewsPortalInMiliseconds = 5184000000L,
+                                    NewNewsPortalsPosition = 3
+                                });
                         });
 
                     b.OwnsOne("Espresso.Domain.ValueObjects.SettingsValueObjects.SimilarArticleSetting", "SimilarArticleSetting", b1 =>
@@ -5835,6 +5827,16 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                             b1.WithOwner()
                                 .HasForeignKey("SettingId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    SettingId = 1,
+                                    ArticlePublishDateTimeDifferenceThresholdInMiliseconds = 86400000L,
+                                    MaxAgeOfSimilarArticleCheckingInMiliseconds = 93600000L,
+                                    MinimalNumberOfWordsForArticleToBeComparable = 4,
+                                    SimilarityScoreThreshold = 0.65000000000000002
+                                });
                         });
 
                     b.Navigation("ArticleSetting")

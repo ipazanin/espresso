@@ -24,7 +24,7 @@ namespace Espresso.Persistence.Configuration
 
             builder.HasIndex(setting => setting.Created);
 
-            builder.HasData(new[] { new Setting(SettingId) });
+            // builder.HasData(new[] { new Setting(SettingId) });
 
             ConfigureArticleSetting(builder);
             ConfigureNewsPortalSetting(builder);
@@ -36,69 +36,69 @@ namespace Espresso.Persistence.Configuration
         {
             var articleSettingBuilder = builder.OwnsOne(setting => setting.ArticleSetting);
 
-            articleSettingBuilder
-                .HasData(new[]
-                {
-                    new
-                    {
-                        SettingId,
-                        MaxAgeOfTrendingArticleInMiliseconds = (long)TimeSpan.FromHours(6).TotalMilliseconds,
-                        MaxAgeOfFeaturedArticleInMiliseconds = (long)TimeSpan.FromHours(6).TotalMilliseconds,
-                        MaxAgeOfArticleInMiliseconds = (long)TimeSpan.FromDays(5).TotalMilliseconds,
-                        FeaturedArticlesTake = 10,
-                    },
-                });
+            //articleSettingBuilder
+            //    .HasData(new[]
+            //    {
+            //        new
+            //        {
+            //            SettingId,
+            //            MaxAgeOfTrendingArticleInMiliseconds = (long)TimeSpan.FromHours(6).TotalMilliseconds,
+            //            MaxAgeOfFeaturedArticleInMiliseconds = (long)TimeSpan.FromHours(6).TotalMilliseconds,
+            //            MaxAgeOfArticleInMiliseconds = (long)TimeSpan.FromDays(5).TotalMilliseconds,
+            //            FeaturedArticlesTake = 10,
+            //        },
+            //    });
         }
 
         private static void ConfigureNewsPortalSetting(EntityTypeBuilder<Setting> builder)
         {
             var newsPortalSettingBuilder = builder.OwnsOne(setting => setting.NewsPortalSetting);
 
-            newsPortalSettingBuilder
-                .HasData(new[]
-                {
-                    new
-                    {
-                        SettingId,
-                        MaxAgeOfNewNewsPortalInMiliseconds = (long)TimeSpan.FromDays(60).TotalMilliseconds,
-                        NewNewsPortalsPosition = 3,
-                    },
-                });
+            //newsPortalSettingBuilder
+            //    .HasData(new[]
+            //    {
+            //        new
+            //        {
+            //            SettingId,
+            //            MaxAgeOfNewNewsPortalInMiliseconds = (long)TimeSpan.FromDays(60).TotalMilliseconds,
+            //            NewNewsPortalsPosition = 3,
+            //        },
+            //    });
         }
 
         private static void ConfigureJobsSetting(EntityTypeBuilder<Setting> builder)
         {
             var jobsSettingBuilder = builder.OwnsOne(setting => setting.JobsSetting);
 
-            jobsSettingBuilder
-                .HasData(new[]
-                {
-                    new
-                    {
-                        SettingId,
-                        AnalyticsCronExpression = "0 10 * * *",
-                        WebApiReportCronExpression = "0 9 * * *",
-                        ParseArticlesCronExpression = "*/1 * * * *",
-                    },
-                });
+            //jobsSettingBuilder
+            //    .HasData(new[]
+            //    {
+            //        new
+            //        {
+            //            SettingId,
+            //            AnalyticsCronExpression = "0 10 * * *",
+            //            WebApiReportCronExpression = "0 9 * * *",
+            //            ParseArticlesCronExpression = "*/1 * * * *",
+            //        },
+            //    });
         }
 
         private static void ConfigureSimilarArticleSetting(EntityTypeBuilder<Setting> builder)
         {
             var similarArticleSettingBuilder = builder.OwnsOne(setting => setting.SimilarArticleSetting);
 
-            similarArticleSettingBuilder
-                .HasData(new[]
-                {
-                    new
-                    {
-                        SettingId,
-                        SimilarityScoreThreshold = 0.65d,
-                        ArticlePublishDateTimeDifferenceThresholdInMiliseconds = (long)TimeSpan.FromHours(24).TotalMilliseconds,
-                        MaxAgeOfSimilarArticleCheckingInMiliseconds = (long)TimeSpan.FromHours(26).TotalMilliseconds,
-                        MinimalNumberOfWordsForArticleToBeComparable = 4,
-                    },
-                });
+            //similarArticleSettingBuilder
+            //    .HasData(new[]
+            //    {
+            //        new
+            //        {
+            //            SettingId,
+            //            SimilarityScoreThreshold = 0.65d,
+            //            ArticlePublishDateTimeDifferenceThresholdInMiliseconds = (long)TimeSpan.FromHours(24).TotalMilliseconds,
+            //            MaxAgeOfSimilarArticleCheckingInMiliseconds = (long)TimeSpan.FromHours(26).TotalMilliseconds,
+            //            MinimalNumberOfWordsForArticleToBeComparable = 4,
+            //        },
+            //    });
         }
     }
 }

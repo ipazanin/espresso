@@ -278,6 +278,10 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         StartNews = 134,
         [Display(Name = "Viral.hr")]
         Viral = 135,
+        [Display(Name = "Sportklub")]
+        SportKlub = 136,
+        [Display(Name = "Doktore, hitno!")]
+        DoktoreHitno = 137,
 #pragma warning restore SA1602 // Enumeration items should be documented
     }
 }

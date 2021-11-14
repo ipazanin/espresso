@@ -59,54 +59,8 @@ namespace Espresso.Dashboard.Application.Services
                     continue;
                 }
 
-                getRssFeedRequestTasks.Add(Task.Run(
-                    async () =>
-                    {
-                        try
-                        {
-                            var feed = await LoadFeed(rssFeed, cancellationToken);
-
-                            foreach (var syndicationItem in feed.Items)
-                            {
-                                if (syndicationItem is null)
-                                {
-                                    continue;
-                                }
-
-                                var rssFeedItem = new RssFeedItem
-                                {
-                                    RssFeed = rssFeed,
-                                    Id = syndicationItem.Id,
-                                    Links = syndicationItem.Links?.Select(syndicationLink => syndicationLink.Uri),
-                                    Title = syndicationItem.Title?.Text,
-                                    Summary = syndicationItem.Summary?.Text,
-                                    Content = (
-                                            syndicationItem.Content is TextSyndicationContent ?
-                                            syndicationItem.Content as TextSyndicationContent
-                                            : null)
-                                        ?.Text,
-                                    PublishDateTime = syndicationItem.PublishDate.DateTime,
-                                    ElementExtensions = syndicationItem
-                                        .ElementExtensions
-                                        ?.Select(elementExtension => elementExtension?.GetObject<string?>()),
-                                };
-
-                                _ = writer.TryWrite(rssFeedItem);
-                            }
-                        }
-                        catch (Exception exception)
-                        {
-                            var rssFeedUrl = rssFeed.Url;
-                            var eventName = Event.RssFeedLoading.GetDisplayName();
-                            var arguments = new (string, object)[]
-                            {
-                                (nameof(rssFeedUrl), rssFeedUrl),
-                                ("IsEnabled", rssFeed.NewsPortal?.IsEnabled.ToString() ?? "Empty"),
-                            };
-
-                            _loggerService.Log(eventName, exception, LogLevel.Error, arguments);
-                        }
-                    }, cancellationToken));
+                var task = Task.Run(async () => await ParseRssFeed(rssFeed, writer, cancellationToken), cancellationToken);
+                getRssFeedRequestTasks.Add(task);
             }
 
             await Task.WhenAll(getRssFeedRequestTasks);
@@ -114,6 +68,54 @@ namespace Espresso.Dashboard.Application.Services
             writer.Complete();
 
             return rssFeedItemsChannel;
+        }
+
+        private async Task ParseRssFeed(RssFeed rssFeed, ChannelWriter<RssFeedItem> writer, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var feed = await LoadFeed(rssFeed, cancellationToken);
+
+                foreach (var syndicationItem in feed.Items)
+                {
+                    if (syndicationItem is null)
+                    {
+                        continue;
+                    }
+
+                    var rssFeedItem = new RssFeedItem
+                    {
+                        RssFeed = rssFeed,
+                        Id = syndicationItem.Id,
+                        Links = syndicationItem.Links?.Select(syndicationLink => syndicationLink.Uri),
+                        Title = syndicationItem.Title?.Text,
+                        Summary = syndicationItem.Summary?.Text,
+                        Content = (
+                                syndicationItem.Content is TextSyndicationContent ?
+                                syndicationItem.Content as TextSyndicationContent
+                                : null)
+                            ?.Text,
+                        PublishDateTime = syndicationItem.PublishDate.DateTime,
+                        ElementExtensions = syndicationItem
+                            .ElementExtensions
+                            ?.Select(elementExtension => elementExtension?.GetObject<string?>()),
+                    };
+
+                    _ = writer.TryWrite(rssFeedItem);
+                }
+            }
+            catch (Exception exception)
+            {
+                var rssFeedUrl = rssFeed.Url;
+                var eventName = Event.RssFeedLoading.GetDisplayName();
+                var arguments = new (string, object)[]
+                {
+                    (nameof(rssFeedUrl), rssFeedUrl),
+                    ("IsEnabled", rssFeed.NewsPortal?.IsEnabled.ToString() ?? "Empty"),
+                };
+
+                _loggerService.Log(eventName, exception, LogLevel.Error, arguments);
+            }
         }
 
         private async Task<SyndicationFeed> LoadFeed(RssFeed rssFeed, CancellationToken cancellationToken)

@@ -98,8 +98,8 @@ namespace Espresso.Persistence.DataSeed
             ampConfigurationBuilder.HasData(new
             {
                 RssFeedId = (int)RssFeedId.NetHr,
-                HasAmpArticles = true,
-                TemplateUrl = "https://net.hr/{1}{2}{3}amp",
+                HasAmpArticles = false,
+                TemplateUrl = null as string,
             });
 
             ampConfigurationBuilder.HasData(new
