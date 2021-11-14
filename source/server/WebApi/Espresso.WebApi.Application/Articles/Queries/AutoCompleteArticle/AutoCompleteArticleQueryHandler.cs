@@ -47,7 +47,7 @@ namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
             return Task.FromResult(result);
         }
 
-        public static IEnumerable<string> GetMatchedWords(
+        private static IEnumerable<string> GetMatchedWords(
             AutoCompleteArticleQuery request,
             IEnumerable<Article> articles,
             IEnumerable<string> keyWordsToFilterOut)

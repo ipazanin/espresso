@@ -28,7 +28,9 @@ namespace Espresso.Application.Infrastructure.BackgroundJobsInfrastructure
         /// Initializes a new instance of the <see cref="BackgroundJob{T}"/> class.
         /// </summary>
         /// <param name="serviceScopeFactory">Service scope factory.</param>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         protected BackgroundJob(
+#pragma warning restore SA1201 // Elements should appear in the correct order
             IServiceScopeFactory serviceScopeFactory)
         {
             ServiceScopeFactory = serviceScopeFactory;

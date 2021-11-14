@@ -21,10 +21,11 @@ namespace Espresso.Dashboard.Application.NewsPortals.GetNewsPortalDetails
         /// Initializes a new instance of the <see cref="GetNewsPortalDetailsQuery"/> class.
         /// </summary>
         /// <param name="newsPortalId"><see cref="NewsPortal"/> id.</param>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public GetNewsPortalDetailsQuery(int newsPortalId)
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             NewsPortalId = newsPortalId;
         }
-
     }
 }

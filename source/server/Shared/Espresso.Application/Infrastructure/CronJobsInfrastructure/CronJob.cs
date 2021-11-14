@@ -129,7 +129,6 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
             loggerService.Log(eventName, LogLevel.Information, arguments);
         }
 
-
         /// <summary>
         /// Performs application defined tasks associated with freeing,
         /// releasing, or reseting unmanaged resources.

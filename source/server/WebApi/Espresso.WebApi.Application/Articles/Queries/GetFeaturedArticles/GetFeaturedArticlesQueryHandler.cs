@@ -56,7 +56,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
                     newsPortalIds: null,
                     maxAgeOfFeaturedArticle: _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfFeaturedArticle,
                     articleCreateDateTime: null)
-                // .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
                 .OrderFeaturedArticles(categoryIds);
 
             var trendingArticles = articles
@@ -64,7 +63,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
                 .FilterTrendingArticles(
                     maxAgeOfTrendingArticle: _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfTrendingArticle,
                     articleCreateDateTime: null)
-                // .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
                 .OrderArticlesByTrendingScore();
 
             var articleDtos = featuredArticles

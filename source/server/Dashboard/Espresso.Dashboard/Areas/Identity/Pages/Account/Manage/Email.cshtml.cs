@@ -52,7 +52,9 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
             public string NewEmail { get; set; } = null!;
         }
 
+#pragma warning disable SA1201 // Elements should appear in the correct order
         private async Task LoadAsync(IdentityUser user)
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             var email = await _userManager.GetEmailAsync(user);
             Email = email;

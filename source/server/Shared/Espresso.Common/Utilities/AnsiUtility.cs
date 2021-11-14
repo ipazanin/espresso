@@ -35,11 +35,6 @@ namespace Espresso.Common.Utilities
         // private const string BackgroundWhiteColor = "47";
 #pragma warning restore S125 // Sections of code should not be commented out
 
-        private static string Encode(string value, params object?[] parameters)
-        {
-            return $"\u001b[{string.Join(";", parameters)}m{value}\u001b[0m";
-        }
-
         /// <summary>
         /// Encodes <paramref name="value"/> as parameter name.
         /// </summary>
@@ -128,6 +123,11 @@ namespace Espresso.Common.Utilities
         public static string EncodeObject(int parameterNumber)
         {
             return Encode($"{{{parameterNumber}}}", MagentaColor);
+        }
+
+        private static string Encode(string value, params object?[] parameters)
+        {
+            return $"\u001b[{string.Join(";", parameters)}m{value}\u001b[0m";
         }
     }
 }

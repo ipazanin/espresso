@@ -8,7 +8,9 @@ using System.Linq.Expressions;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4
 {
+#pragma warning disable S101 // Types should be named in PascalCase
     public record GetLatestArticlesNewsPortal_1_4
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         /// <summary>
         /// Gets news Portal ID.

@@ -13,6 +13,28 @@ namespace Espresso.WebApi.DataTransferObjects
     public class ExceptionDto
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ExceptionDto"/> class.
+        /// </summary>
+        /// <param name="exceptionMessage">Exception message.</param>
+        /// <param name="innerExceptionMessage">Inner exception message.</param>
+        /// <param name="exceptionStackTrace">Exception stack trace.</param>
+        /// <param name="innerExceptionStackTrace">Inner exception stack trace.</param>
+        /// <param name="errors">Errors.</param>
+        public ExceptionDto(
+            string exceptionMessage,
+            string? innerExceptionMessage,
+            string? exceptionStackTrace,
+            string? innerExceptionStackTrace,
+            IEnumerable<string>? errors)
+        {
+            ExceptionMessage = exceptionMessage;
+            InnerExceptionMessage = innerExceptionMessage ?? FormatConstants.EmptyValue;
+            ExceptionStackTrace = exceptionStackTrace ?? FormatConstants.EmptyValue;
+            InnerExceptionStackTrace = innerExceptionStackTrace ?? FormatConstants.EmptyValue;
+            Errors = errors;
+        }
+
+        /// <summary>
         /// Gets exception message.
         /// </summary>
         public string ExceptionMessage { get; }
@@ -36,27 +58,5 @@ namespace Espresso.WebApi.DataTransferObjects
         /// gets errors.
         /// </summary>
         public IEnumerable<string>? Errors { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ExceptionDto"/> class.
-        /// </summary>
-        /// <param name="exceptionMessage">Exception message.</param>
-        /// <param name="innerExceptionMessage">Inner exception message.</param>
-        /// <param name="exceptionStackTrace">Exception stack trace.</param>
-        /// <param name="innerExceptionStackTrace">Inner exception stack trace.</param>
-        /// <param name="errors">Errors.</param>
-        public ExceptionDto(
-            string exceptionMessage,
-            string? innerExceptionMessage,
-            string? exceptionStackTrace,
-            string? innerExceptionStackTrace,
-            IEnumerable<string>? errors)
-        {
-            ExceptionMessage = exceptionMessage;
-            InnerExceptionMessage = innerExceptionMessage ?? FormatConstants.EmptyValue;
-            ExceptionStackTrace = exceptionStackTrace ?? FormatConstants.EmptyValue;
-            InnerExceptionStackTrace = innerExceptionStackTrace ?? FormatConstants.EmptyValue;
-            Errors = errors;
-        }
     }
 }

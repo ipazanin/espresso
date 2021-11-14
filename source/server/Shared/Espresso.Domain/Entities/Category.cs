@@ -46,7 +46,9 @@ namespace Espresso.Domain.Entities
         /// Initializes a new instance of the <see cref="Category"/> class.
         /// ORM Constructor.
         /// </summary>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         private Category()
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             Name = null!;
             Color = null!;

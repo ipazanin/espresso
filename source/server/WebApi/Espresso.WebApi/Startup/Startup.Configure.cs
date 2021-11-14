@@ -38,7 +38,9 @@ namespace Espresso.WebApi.Startup
                 logLevel: Microsoft.Extensions.Logging.LogLevel.Information,
                 namedArguments: new (string, object)[] { ("version", _webApiConfiguration.AppConfiguration.Version) });
 
+#pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
             memoryCacheInit.InitWebApi().GetAwaiter().GetResult();
+#pragma warning restore VSTHRD002 // Avoid problematic synchronous waits
 
             app.UseSecurityHeadersMiddleware(securityHeadersBuilder => securityHeadersBuilder.AddDefaultSecurePolicy());
 

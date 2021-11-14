@@ -13,7 +13,9 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     [IgnoreAntiforgeryToken]
+#pragma warning disable SA1649 // File name should match first type name
     public class LogoutModel : PageModel
+#pragma warning restore SA1649 // File name should match first type name
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
@@ -31,6 +33,7 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
 
         public void OnGet()
         {
+            // Method intentionally left empty.
         }
 
         /// <summary>

@@ -23,7 +23,9 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         /// Initializes a new instance of the <see cref="AmpConfiguration"/> class.
         /// ORM Constructor.
         /// </summary>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         private AmpConfiguration()
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
         }
 

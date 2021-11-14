@@ -11,7 +11,11 @@ using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
 {
+#pragma warning disable S101 // Types should be named in PascalCase
+#pragma warning disable SA1649 // File name should match first type name
     public class Disable2faModel : PageModel
+#pragma warning restore SA1649 // File name should match first type name
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<Disable2faModel> _logger;

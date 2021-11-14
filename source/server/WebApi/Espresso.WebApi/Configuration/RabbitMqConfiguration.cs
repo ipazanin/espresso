@@ -47,7 +47,9 @@ namespace Espresso.WebApi.Configuration
         /// Initializes a new instance of the <see cref="RabbitMqConfiguration"/> class.
         /// </summary>
         /// <param name="configuration">Application configuration.</param>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public RabbitMqConfiguration(IConfigurationSection configuration)
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             _configuration = configuration;
         }

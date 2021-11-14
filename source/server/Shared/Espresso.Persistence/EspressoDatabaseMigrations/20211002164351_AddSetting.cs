@@ -33,7 +33,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     SimilarArticleSetting_SimilarityScoreThreshold = table.Column<double>(type: "double precision", nullable: false),
                     SimilarArticleSetting_ArticlePublishDateTimeDifferenceThreshol = table.Column<long>(name: "SimilarArticleSetting_ArticlePublishDateTimeDifferenceThreshol~", type: "bigint", nullable: false),
                     SimilarArticleSetting_MaxAgeOfSimilarArticleCheckingInMiliseco = table.Column<long>(name: "SimilarArticleSetting_MaxAgeOfSimilarArticleCheckingInMiliseco~", type: "bigint", nullable: false),
-                    SimilarArticleSetting_MinimalNumberOfWordsForArticleToBeCompar = table.Column<int>(name: "SimilarArticleSetting_MinimalNumberOfWordsForArticleToBeCompar~", type: "integer", nullable: false)
+                    SimilarArticleSetting_MinimalNumberOfWordsForArticleToBeCompar = table.Column<int>(name: "SimilarArticleSetting_MinimalNumberOfWordsForArticleToBeCompar~", type: "integer", nullable: false),
                 },
                 constraints: table =>
                 {

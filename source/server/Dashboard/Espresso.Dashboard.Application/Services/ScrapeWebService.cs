@@ -61,6 +61,7 @@ namespace Espresso.Dashboard.Application.Services
             {
                 return null;
             }
+
             var htmlString = await GetStringPageContent(
                 articleUrl: articleUrl,
                 requestType: requestType,
@@ -117,6 +118,7 @@ namespace Espresso.Dashboard.Application.Services
                         data.GetProperty(propertyName) :
                         property.GetProperty(propertyName);
                 }
+
                 if (property.Equals(default))
                 {
                     return null;
@@ -158,6 +160,7 @@ namespace Espresso.Dashboard.Application.Services
                             var pageContent = await response.Content.ReadAsStringAsync(cancellationToken);
                             return pageContent;
                         }
+
                     case RequestType.Browser:
                         {
                             request.AddBrowserHeadersToHttpRequestMessage();

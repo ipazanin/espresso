@@ -29,7 +29,9 @@ namespace Espresso.Domain.Entities
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="subtitle"></param>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public Region(int id, string name, string subtitle)
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             Id = id;
             Name = name;

@@ -26,7 +26,9 @@ namespace Espresso.Application.Models
         /// </summary>
         /// <param name="appEnvironment">Application environment.</param>
         /// <param name="version">Application version.</param>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public ApplicationInformation(AppEnvironment appEnvironment, string version)
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             AppEnvironment = appEnvironment;
             Version = version;

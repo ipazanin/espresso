@@ -102,7 +102,7 @@ namespace Espresso.WebApi.Controllers
                 };
             });
 
-            var data = ((ExecutionNode)result.Data).ToValue();
+            var data = ((ExecutionNode?)result.Data)?.ToValue();
 
             return Ok(new { data });
         }

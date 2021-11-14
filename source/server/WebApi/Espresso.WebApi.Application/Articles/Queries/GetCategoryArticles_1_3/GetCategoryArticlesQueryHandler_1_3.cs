@@ -15,7 +15,9 @@ using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
 {
+#pragma warning disable S101 // Types should be named in PascalCase
     public class GetCategoryArticlesQueryHandler_1_3 : IRequestHandler<GetCategoryArticlesQuery_1_3, GetCategoryArticlesQueryResponse_1_3>
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         private readonly IMemoryCache _memoryCache;
 

@@ -7,7 +7,7 @@ using Espresso.Domain.Infrastructure;
 namespace Espresso.Domain.Entities
 {
     /// <summary>
-    /// Represents way to convert <see cref="RssFeed"/> articles ur
+    /// Represents way to convert <see cref="RssFeed"/> articles url to category.
     /// </summary>
     public class RssFeedCategory : IEntity<int, RssFeedCategory>
     {
@@ -40,7 +40,9 @@ namespace Espresso.Domain.Entities
         /// Initializes a new instance of the <see cref="RssFeedCategory"/> class.
         /// ORM Constructor.
         /// </summary>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public RssFeedCategory()
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             UrlRegex = null!;
         }

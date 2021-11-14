@@ -30,7 +30,9 @@ namespace Espresso.Dashboard.Configuration
         /// Initializes a new instance of the <see cref="DashboardConfiguration"/> class.
         /// </summary>
         /// <param name="configuration"></param>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public DashboardConfiguration(IConfiguration configuration)
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             ApiKeysConfiguration = new ApiKeysConfiguration(configuration.GetSection("ApiKeysConfiguration"));
             AppConfiguration = new AppConfiguration(configuration.GetSection("AppConfiguration"));

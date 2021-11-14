@@ -11,7 +11,9 @@ using System.Linq.Expressions;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
 {
+#pragma warning disable S101 // Types should be named in PascalCase
     public record GetCategoryArticlesArticle_1_3
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         /// <summary>
         /// Gets iD created by app.
@@ -29,7 +31,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
         public string Title { get; private set; } = string.Empty;
 
         /// <summary>
-        /// Gets image URL parsed from src attribute of first img element or second rss feed link, first is. 
+        /// Gets image URL parsed from src attribute of first img element or second rss feed link, first is.
         /// </summary>
         public string? ImageUrl { get; private set; }
 
@@ -66,7 +68,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
                     .Invoke(article.NewsPortal!),
                 Categories = article.ArticleCategories
                     .Select(articleCategory => articleCategory.Category)
-                    .Select(GetCategoryArticlesCategory_1_3.GetProjection().Compile() !),
+                    .Select(GetCategoryArticlesCategory_1_3.GetProjection().Compile()!),
             };
         }
     }

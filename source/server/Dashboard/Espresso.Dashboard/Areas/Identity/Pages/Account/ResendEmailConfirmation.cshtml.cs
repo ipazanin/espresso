@@ -16,7 +16,9 @@ using System.Threading.Tasks;
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
+#pragma warning disable SA1649 // File name should match first type name
     public class ResendEmailConfirmationModel : PageModel
+#pragma warning restore SA1649 // File name should match first type name
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailService _emailService;
@@ -42,8 +44,11 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
             public string Email { get; set; } = null!;
         }
 
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public void OnGet()
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
+            // Method intentionally left empty.
         }
 
         /// <summary>

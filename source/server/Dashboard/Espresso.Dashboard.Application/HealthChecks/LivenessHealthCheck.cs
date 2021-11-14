@@ -28,6 +28,7 @@ namespace Espresso.Dashboard.Application.HealthChecks
         /// Initializes a new instance of the <see cref="LivenessHealthCheck"/> class.
         /// </summary>
         /// <param name="memoryCache">Memory cache.</param>
+        /// <param name="slackService"></param>
         public LivenessHealthCheck(
             IMemoryCache memoryCache,
             ISlackService slackService)

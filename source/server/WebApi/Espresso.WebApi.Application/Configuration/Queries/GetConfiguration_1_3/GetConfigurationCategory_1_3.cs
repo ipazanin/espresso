@@ -8,7 +8,9 @@ using System.Linq.Expressions;
 
 namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3
 {
+#pragma warning disable S101 // Types should be named in PascalCase
     public record GetConfigurationCategory_1_3
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         /// <summary>
         /// Gets category ID.

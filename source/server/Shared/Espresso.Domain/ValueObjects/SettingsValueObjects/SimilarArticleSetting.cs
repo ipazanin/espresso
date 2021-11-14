@@ -55,7 +55,9 @@ namespace Espresso.Domain.ValueObjects.SettingsValueObjects
         /// <param name="articlePublishDateTimeDifferenceThresholdInMiliseconds">Article Publish DateTime Difference Threshold.</param>
         /// <param name="maxAgeOfSimilarArticleCheckingInMiliseconds">Max Age Of Similar Article Checking.</param>
         /// <param name="minimalNumberOfWordsForArticleToBeComparable">Minimal Number Of Words For Article To Be Comparable.</param>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public SimilarArticleSetting(
+#pragma warning restore SA1201 // Elements should appear in the correct order
             double similarityScoreThreshold,
             long articlePublishDateTimeDifferenceThresholdInMiliseconds,
             long maxAgeOfSimilarArticleCheckingInMiliseconds,

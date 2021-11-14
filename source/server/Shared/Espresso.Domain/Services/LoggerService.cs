@@ -1,6 +1,6 @@
-// LoggerService.cs
+﻿// LoggerService.cs
 //
-// � 2021 Espresso News. All rights reserved.
+// © 2021 Espresso News. All rights reserved.
 
 using Espresso.Common.Utilities;
 using Espresso.Domain.IServices;
@@ -120,6 +120,28 @@ namespace Espresso.Domain.Services
             return (messageBuilder.ToString(), args.ToArray());
         }
 
+        private static string GetArgumentEncoding(string argumentName, object argumentValue, ref int count)
+        {
+            return argumentValue switch
+            {
+                int or
+                uint or
+                long or
+                ulong or
+                float or
+                double or
+                decimal => $"{AnsiUtility.EncodeParameterName(argumentName)}: {AnsiUtility.EncodeNumber(count++)}\n\t",
+                Enum => $"{AnsiUtility.EncodeParameterName(argumentName)}: {AnsiUtility.EncodeEnum(count++)}\n\t",
+                TimeSpan => $"{AnsiUtility.EncodeParameterName(argumentName)}: {AnsiUtility.EncodeTimespan(count++)}\n\t",
+                DateTime or
+                DateTimeOffset => $"{AnsiUtility.EncodeParameterName(argumentName)}: {AnsiUtility.EncodeDateTime(count++)}\n\t",
+                string or
+                StringBuilder or
+                StringValues => $"{AnsiUtility.EncodeParameterName(argumentName)}: {AnsiUtility.EncodeString(count++)}\n\t",
+                _ => $"{AnsiUtility.EncodeParameterName(argumentName)}: {AnsiUtility.EncodeObject(count++)}\n\t",
+            };
+        }
+
         private void Log(string message, object[] args, LogLevel logLevel, Exception? exception)
         {
             switch (logLevel)
@@ -145,28 +167,6 @@ namespace Espresso.Domain.Services
                 default:
                     break;
             }
-        }
-
-        private static string GetArgumentEncoding(string argumentName, object argumentValue, ref int count)
-        {
-            return argumentValue switch
-            {
-                int or
-                uint or
-                long or
-                ulong or
-                float or
-                double or
-                decimal => $"{AnsiUtility.EncodeParameterName(argumentName)}: {AnsiUtility.EncodeNumber(count++)}\n\t",
-                Enum => $"{AnsiUtility.EncodeParameterName(argumentName)}: {AnsiUtility.EncodeEnum(count++)}\n\t",
-                TimeSpan => $"{AnsiUtility.EncodeParameterName(argumentName)}: {AnsiUtility.EncodeTimespan(count++)}\n\t",
-                DateTime or
-                DateTimeOffset => $"{AnsiUtility.EncodeParameterName(argumentName)}: {AnsiUtility.EncodeDateTime(count++)}\n\t",
-                string or
-                StringBuilder or
-                StringValues => $"{AnsiUtility.EncodeParameterName(argumentName)}: {AnsiUtility.EncodeString(count++)}\n\t",
-                _ => $"{AnsiUtility.EncodeParameterName(argumentName)}: {AnsiUtility.EncodeObject(count++)}\n\t",
-            };
         }
     }
 }

@@ -20,6 +20,5 @@ namespace Espresso.Domain.Infrastructure
         /// Updates latest <see cref="Setting"/>.
         /// </summary>
         public void UpdateLatestSetting();
-
     }
 }

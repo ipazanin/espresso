@@ -14,7 +14,11 @@ using System.Threading.Tasks;
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
+#pragma warning disable S101 // Types should be named in PascalCase
+#pragma warning disable SA1649 // File name should match first type name
     public class LoginWith2faModel : PageModel
+#pragma warning restore SA1649 // File name should match first type name
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginWith2faModel> _logger;
@@ -55,7 +59,9 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
         /// <param name="rememberMe"></param>
         /// <param name="returnUrl"></param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public async Task<IActionResult> OnGetAsync(bool rememberMe, string? returnUrl = null)
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             // Ensure the user has gone through the username & password screen first
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();

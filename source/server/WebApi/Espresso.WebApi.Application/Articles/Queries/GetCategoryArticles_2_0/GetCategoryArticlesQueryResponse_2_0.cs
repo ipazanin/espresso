@@ -6,7 +6,9 @@ using System.Collections.Generic;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
 {
+#pragma warning disable S101 // Types should be named in PascalCase
     public record GetCategoryArticlesQueryResponse_2_0
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         public IEnumerable<GetCategoryArticlesArticle_2_0> Articles { get; init; } = new List<GetCategoryArticlesArticle_2_0>();
 

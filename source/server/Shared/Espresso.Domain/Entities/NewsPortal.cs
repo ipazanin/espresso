@@ -67,7 +67,6 @@ namespace Espresso.Domain.Entities
         /// </summary>
         public int RegionId { get; private set; }
 
-
         /// <summary>
         /// Gets <see cref="NewsPortal"/> <see cref="Entities.Region"/>.
         /// </summary>
@@ -88,7 +87,9 @@ namespace Espresso.Domain.Entities
         /// <remarks>
         /// ORM Constructor.
         /// </remarks>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         private NewsPortal()
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             Name = null!;
             BaseUrl = null!;

@@ -29,7 +29,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles
         public string Title { get; private set; } = string.Empty;
 
         /// <summary>
-        /// Gets image URL parsed from src attribute of first img element or second rss feed link, first is. 
+        /// Gets image URL parsed from src attribute of first img element or second rss feed link, first is.
         /// </summary>
         public string? ImageUrl { get; private set; }
 
@@ -71,7 +71,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles
                     .Invoke(article.NewsPortal!),
                 Categories = article.ArticleCategories
                     .Select(articleCategory => articleCategory.Category)
-                    .Select(GetTrendingArticlesCategory.GetProjection().Compile() !),
+                    .Select(GetTrendingArticlesCategory.GetProjection().Compile()!),
                 TrendingScore = (int)article.TrendingScore,
             };
         }

@@ -49,11 +49,8 @@ namespace Espresso.Dashboard.Application.Services
         {
             var rssFeedItemsChannel = Channel.CreateUnbounded<RssFeedItem>();
             var writer = rssFeedItemsChannel.Writer;
-            //var parsedArticles = new ConcurrentQueue<RssFeedItem>();
 
             var getRssFeedRequestTasks = new List<Task>();
-
-            // rssFeeds = rssFeeds.Where(f => f.NewsPortalId is (int)NewsPortalId.Index or (int)NewsPortalId.IndexHrZagreb);
 
             foreach (var rssFeed in rssFeeds)
             {
@@ -62,56 +59,54 @@ namespace Espresso.Dashboard.Application.Services
                     continue;
                 }
 
-                getRssFeedRequestTasks.Add(Task.Run(async () =>
-                {
-                    try
+                getRssFeedRequestTasks.Add(Task.Run(
+                    async () =>
                     {
-                        var feed = await LoadFeed(rssFeed, cancellationToken);
-
-                        foreach (var syndicationItem in feed.Items)
+                        try
                         {
-                            if (syndicationItem is null)
-                            {
-                                continue;
-                            }
+                            var feed = await LoadFeed(rssFeed, cancellationToken);
 
-                            var rssFeedItem = new RssFeedItem
+                            foreach (var syndicationItem in feed.Items)
                             {
-                                RssFeed = rssFeed,
-                                Id = syndicationItem.Id,
-                                Links = syndicationItem.Links?.Select(syndicationLink => syndicationLink.Uri),
-                                Title = syndicationItem.Title?.Text,
-                                Summary = syndicationItem.Summary?.Text,
-                                Content = (
-                                        syndicationItem.Content is TextSyndicationContent ?
-                                        syndicationItem.Content as TextSyndicationContent
-                                        : null)
-                                    ?.Text,
-                                PublishDateTime = syndicationItem.PublishDate.DateTime,
-                                ElementExtensions = syndicationItem
-                                    .ElementExtensions
-                                    ?.Select(elementExtension => elementExtension?.GetObject<string?>()),
+                                if (syndicationItem is null)
+                                {
+                                    continue;
+                                }
+
+                                var rssFeedItem = new RssFeedItem
+                                {
+                                    RssFeed = rssFeed,
+                                    Id = syndicationItem.Id,
+                                    Links = syndicationItem.Links?.Select(syndicationLink => syndicationLink.Uri),
+                                    Title = syndicationItem.Title?.Text,
+                                    Summary = syndicationItem.Summary?.Text,
+                                    Content = (
+                                            syndicationItem.Content is TextSyndicationContent ?
+                                            syndicationItem.Content as TextSyndicationContent
+                                            : null)
+                                        ?.Text,
+                                    PublishDateTime = syndicationItem.PublishDate.DateTime,
+                                    ElementExtensions = syndicationItem
+                                        .ElementExtensions
+                                        ?.Select(elementExtension => elementExtension?.GetObject<string?>()),
+                                };
+
+                                _ = writer.TryWrite(rssFeedItem);
+                            }
+                        }
+                        catch (Exception exception)
+                        {
+                            var rssFeedUrl = rssFeed.Url;
+                            var eventName = Event.RssFeedLoading.GetDisplayName();
+                            var arguments = new (string, object)[]
+                            {
+                                (nameof(rssFeedUrl), rssFeedUrl),
+                                ("IsEnabled", rssFeed.NewsPortal?.IsEnabled.ToString() ?? "Empty"),
                             };
 
-                            _ = writer.TryWrite(rssFeedItem);
-                            //parsedArticles.Enqueue(rssFeedItem);
+                            _loggerService.Log(eventName, exception, LogLevel.Error, arguments);
                         }
-                    }
-                    catch (Exception exception)
-                    {
-                        var rssFeedUrl = rssFeed.Url;
-                        var exceptionMessage = exception.Message;
-                        var eventName = Event.RssFeedLoading.GetDisplayName();
-                        var innerExceptionMessage = exception.InnerException?.Message ?? string.Empty;
-                        var arguments = new (string, object)[]
-                        {
-                            (nameof(rssFeedUrl), rssFeedUrl),
-                            ("IsEnabled", rssFeed.NewsPortal?.IsEnabled.ToString() ?? "Empty"),
-                        };
-
-                        _loggerService.Log(eventName, exception, LogLevel.Error, arguments);
-                    }
-                }, cancellationToken));
+                    }, cancellationToken));
             }
 
             await Task.WhenAll(getRssFeedRequestTasks);

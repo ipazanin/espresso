@@ -16,7 +16,9 @@ namespace Espresso.Application.NewsPortals
 
         public int UrlSegmentIndex { get; private set; }
 
+#pragma warning disable SA1201 // Elements should appear in the correct order
         private GetNewsPortalsRssFeedCategory()
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
         }
 

@@ -118,10 +118,10 @@ namespace Espresso.WebApi.Controllers
         /// Sample request:
         ///     Get /api/articles.
         /// </remarks>
-        /// <param name="cancellationToken"></param>
-        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
+        /// <param name="cancellationToken"></param>
+        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
         /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
         /// <param name="titleSearchQuery">Article Title Search Query.</param>
         /// <param name="keyWordsToFilterOut"></param>
@@ -177,10 +177,10 @@ namespace Espresso.WebApi.Controllers
         /// Sample request:
         ///     Get /api/articles.
         /// </remarks>
-        /// <param name="cancellationToken"></param>
-        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
         /// <param name="basicInformationsHeaderParameters"></param>
         /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
+        /// <param name="cancellationToken"></param>
+        /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
         /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
         /// <param name="titleSearchQuery">Article Title Search Query.</param>
         /// <returns>Response object containing articles.</returns>

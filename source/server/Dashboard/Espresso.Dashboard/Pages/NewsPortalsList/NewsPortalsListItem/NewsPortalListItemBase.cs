@@ -12,7 +12,7 @@ namespace Espresso.Dashboard.Pages.NewsPortalsList.NewsPortalsListItem
 {
     public class NewsPortalListItemBase : ComponentBase
     {
-            [Parameter]
+        [Parameter]
         public GetNewsPortalsNewsPortal NewsPortal { get; set; } = null!;
 
         [Parameter]

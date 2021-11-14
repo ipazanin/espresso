@@ -7,7 +7,9 @@ using System;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
 {
+#pragma warning disable S101 // Types should be named in PascalCase
     public record GetCategoryArticlesQuery_2_0 : Request<GetCategoryArticlesQueryResponse_2_0>
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         public int Take { get; init; }
 

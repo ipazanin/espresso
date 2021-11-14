@@ -16,7 +16,9 @@ using System.Threading.Tasks;
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
+#pragma warning disable SA1649 // File name should match first type name
     public class LoginModel : PageModel
+#pragma warning restore SA1649 // File name should match first type name
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
@@ -26,7 +28,8 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
         /// </summary>
         /// <param name="signInManager"></param>
         /// <param name="logger"></param>
-        public LoginModel(SignInManager<IdentityUser> signInManager,
+        public LoginModel(
+            SignInManager<IdentityUser> signInManager,
             ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
@@ -62,7 +65,9 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
         /// </summary>
         /// <param name="returnUrl"></param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public async Task OnGetAsync(string? returnUrl = null)
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
@@ -100,10 +105,12 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
+
                 if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, Input.RememberMe });
                 }
+
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning("User account locked out.");

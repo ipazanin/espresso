@@ -50,6 +50,7 @@ namespace Espresso.Dashboard.Shared.Pagination
                             active: PagingMetadata.CurrentPage == i));
                 }
             }
+
             PagingLinks
                 .Add(new PaginationLink(
                     page: PagingMetadata.CurrentPage + 1,

@@ -6,7 +6,9 @@ using FluentValidation;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
 {
+#pragma warning disable S101 // Types should be named in PascalCase
     public class GetLatestArticlesQueryValidator_2_0 : AbstractValidator<GetLatestArticlesQuery_2_0>
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetLatestArticlesQueryValidator_2_0"/> class.

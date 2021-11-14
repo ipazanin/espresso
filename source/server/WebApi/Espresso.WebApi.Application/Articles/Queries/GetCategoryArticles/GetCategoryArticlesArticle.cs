@@ -29,7 +29,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
         public string Title { get; private set; } = string.Empty;
 
         /// <summary>
-        /// Gets image URL parsed from src attribute of first img element or second rss feed link, first is. 
+        /// Gets image URL parsed from src attribute of first img element or second rss feed link, first is.
         /// </summary>
         public string? ImageUrl { get; private set; }
 
@@ -39,9 +39,8 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
         public string PublishDateTime { get; private set; } = string.Empty;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <value></value>
         public int NumberOfClicks { get; private set; }
 
         /// <summary>
@@ -74,7 +73,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
                 Categories = article.ArticleCategories
                     .AsQueryable()
                     .Select(articleCategory => articleCategory.Category)
-                    .Select(GetCategoryArticlesCategory.GetProjection() !),
+                    .Select(GetCategoryArticlesCategory.GetProjection()!),
             };
         }
     }

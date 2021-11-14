@@ -17,8 +17,8 @@ namespace Espresso.Domain.ValueObjects.SettingsValueObjects
         /// <summary>
         /// Initializes a new instance of the <see cref="NewsPortalSetting"/> class.
         /// </summary>
-        /// <param name="maxAgeOfNewNewsPortalInMiliseconds">Max age of <see cref="NewsPortal"/> that can be considered new in miliseconds</param>
-        /// <param name="newNewsPortalsPosition">Position of new <see cref="NewsPortal"/> widget in applications</param>
+        /// <param name="maxAgeOfNewNewsPortalInMiliseconds">Max age of <see cref="NewsPortal"/> that can be considered new in miliseconds.</param>
+        /// <param name="newNewsPortalsPosition">Position of new <see cref="NewsPortal"/> widget in applications.</param>
         public NewsPortalSetting(long maxAgeOfNewNewsPortalInMiliseconds, int newNewsPortalsPosition)
         {
             MaxAgeOfNewNewsPortalInMiliseconds = maxAgeOfNewNewsPortalInMiliseconds;

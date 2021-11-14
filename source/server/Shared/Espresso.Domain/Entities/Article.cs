@@ -35,7 +35,7 @@ namespace Espresso.Domain.Entities
 
         /// <summary>
         /// Gets date Time when article was created in Espresso App.
-        /// </summary> 
+        /// </summary>
         public DateTime CreateDateTime { get; private set; }
 
         public DateTime UpdateDateTime { get; private set; }
@@ -66,7 +66,9 @@ namespace Espresso.Domain.Entities
         /// Initializes a new instance of the <see cref="Article"/> class.
         /// ORM Constructor.
         /// </summary>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         private Article()
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             Url = null!;
             Summary = null!;
@@ -140,7 +142,7 @@ namespace Espresso.Domain.Entities
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public void IncrementNumberOfClicks()
         {
@@ -148,7 +150,7 @@ namespace Espresso.Domain.Entities
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public void SetIsFeaturedValue(bool? isFeatured, int? featuredPosition)
         {
@@ -160,7 +162,7 @@ namespace Espresso.Domain.Entities
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="trendingScore"></param>
         public void UpdateTrendingScore(decimal trendingScore)
@@ -169,7 +171,7 @@ namespace Espresso.Domain.Entities
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public void SetIsHidden(bool isHidden)
         {
@@ -195,24 +197,28 @@ namespace Espresso.Domain.Entities
                 shouldUpdate = true;
                 modifiedProperties.Add(nameof(Url));
             }
+
             if (!WebUrl.Equals(other.WebUrl))
             {
                 WebUrl = other.WebUrl;
                 shouldUpdate = true;
                 modifiedProperties.Add(nameof(WebUrl));
             }
+
             if (!Summary.Equals(other.Summary))
             {
                 Summary = other.Summary;
                 shouldUpdate = true;
                 modifiedProperties.Add(nameof(Summary));
             }
+
             if (!Title.Equals(other.Title))
             {
                 Title = other.Title;
                 shouldUpdate = true;
                 modifiedProperties.Add(nameof(Title));
             }
+
             if (!(ImageUrl is null ? other.ImageUrl is null : ImageUrl.Equals(other.ImageUrl)))
             {
                 ImageUrl = other.ImageUrl;
@@ -315,10 +321,12 @@ namespace Espresso.Domain.Entities
                 MainArticle.MainArticle.RemoveSubordinateArticle(this);
                 MainArticle = null;
             }
+
             foreach (var subordinateArticle in SubordinateArticles)
             {
                 subordinateArticle.SubordinateArticle?.RemoveMainArticle();
             }
+
             SubordinateArticles.Clear();
         }
 

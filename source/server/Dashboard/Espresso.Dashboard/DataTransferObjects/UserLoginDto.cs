@@ -18,7 +18,9 @@ namespace Espresso.Dashboard.DataTransferObjects
         /// <param name="username"></param>
         /// <param name="password"></param>
         [JsonConstructor]
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public UserLoginDto(string username, string password)
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             Username = username;
             Password = password;

@@ -14,7 +14,9 @@ using System.Threading.Tasks;
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
+#pragma warning disable SA1649 // File name should match first type name
     public class LoginWithRecoveryCodeModel : PageModel
+#pragma warning restore SA1649 // File name should match first type name
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginWithRecoveryCodeModel> _logger;
@@ -49,7 +51,9 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
         /// </summary>
         /// <param name="returnUrl"></param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public async Task<IActionResult> OnGetAsync(string? returnUrl = null)
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             // Ensure the user has gone through the username & password screen first
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
@@ -90,6 +94,7 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
                 _logger.LogInformation("User with ID '{UserId}' logged in with a recovery code.", user.Id);
                 return LocalRedirect(returnUrl ?? Url.Content("~/"));
             }
+
             if (result.IsLockedOut)
             {
                 _logger.LogWarning("User with ID '{UserId}' account locked out.", user.Id);

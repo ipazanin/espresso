@@ -12,6 +12,5 @@ namespace Espresso.Dashboard.Pages.NewsPortalDetails.RssFeedsList
     /// </summary>
     public class NewsPortalDetailsRssFeedItemBase : ComponentBase
     {
-
     }
 }

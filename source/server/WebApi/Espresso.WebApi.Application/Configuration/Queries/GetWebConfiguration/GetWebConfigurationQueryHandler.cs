@@ -33,7 +33,6 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetWebConfiguration
         {
             var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
             var categories = _memoryCache.Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey);
-            var regions = _memoryCache.Get<IEnumerable<Region>>(key: MemoryCacheConstants.RegionKey);
 
             var categoryDtos = categories
                 .Where(predicate: Category.GetAllCategoriesExceptGeneralExpression().Compile())

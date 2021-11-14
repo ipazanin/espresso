@@ -1,6 +1,6 @@
-// ArticleUtility.cs
+﻿// ArticleUtility.cs
 //
-// � 2021 Espresso News. All rights reserved.
+// © 2021 Espresso News. All rights reserved.
 
 using Espresso.Domain.Entities;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
@@ -16,7 +16,7 @@ namespace Espresso.Domain.Tests.TestUtilities
     {
         public static Article CreateDefaultArticleWith(
             int newsPortalId = default,
-            string url = "",
+            string articleUrl = "",
             string title = "",
             string summary = "",
             DateTime publishDateTime = default,
@@ -57,7 +57,7 @@ namespace Espresso.Domain.Tests.TestUtilities
 
             var article = new Article(
                 id: id,
-                url: url,
+                url: articleUrl,
                 webUrl: string.Empty,
                 summary: summary,
                 title: title,
