@@ -6,7 +6,9 @@ using FluentValidation;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
 {
+#pragma warning disable S101 // Types should be named in PascalCase
     public class GetcategoryArticlesQueryValidator_2_0 : AbstractValidator<GetCategoryArticlesQuery_2_0>
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetcategoryArticlesQueryValidator_2_0"/> class.

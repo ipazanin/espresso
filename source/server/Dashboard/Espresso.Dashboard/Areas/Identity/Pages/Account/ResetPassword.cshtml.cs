@@ -14,7 +14,9 @@ using System.Threading.Tasks;
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
+#pragma warning disable SA1649 // File name should match first type name
     public class ResetPasswordModel : PageModel
+#pragma warning restore SA1649 // File name should match first type name
     {
         private readonly UserManager<IdentityUser> _userManager;
 
@@ -49,7 +51,9 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
             public string Code { get; set; } = null!;
         }
 
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public IActionResult OnGet(string? code = null)
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             if (code == null)
             {
@@ -93,6 +97,7 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
+
             return Page();
         }
     }

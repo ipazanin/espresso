@@ -9,33 +9,29 @@ using System.Text.Json.Serialization;
 namespace Espresso.WebApi.RequestData.Body
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class GraphQLBodyParameters
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <value></value>
         public string? OperationName { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <value></value>
         public string? NamedQuery { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <value></value>
         public string? Query { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <value></value>
-        [JsonConverter(typeof(ObjectDictionaryConverter))]
+        [JsonConverter(typeof(InputsConverter))]
         public Dictionary<string, object>? Variables { get; set; }
     }
 }

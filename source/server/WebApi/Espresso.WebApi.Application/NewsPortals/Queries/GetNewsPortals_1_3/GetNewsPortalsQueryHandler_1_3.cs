@@ -14,7 +14,9 @@ using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals_1_3
 {
+#pragma warning disable S101 // Types should be named in PascalCase
     public class GetNewsPortalsQueryHandler_1_3 : IRequestHandler<GetNewsPortalsQuery_1_3, GetNewsPortalsQueryResponse_1_3>
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         private readonly IMemoryCache _memoryCache;
 

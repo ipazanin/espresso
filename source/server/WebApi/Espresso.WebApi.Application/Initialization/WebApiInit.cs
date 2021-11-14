@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 namespace Espresso.WebApi.Application.Initialization
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class WebApiInit : IWebApiInit
     {
@@ -38,13 +38,11 @@ namespace Espresso.WebApi.Application.Initialization
         /// </summary>
         /// <param name="context"></param>
         /// <param name="loggerService"></param>
+        /// <param name="readinessHealthCheck"></param>
         /// <param name="memoryCache"></param>
         /// <summary>
         /// Initializes a new instance of the <see cref="WebApiInit"/> class.
         /// </summary>
-        /// <param name="memoryCache"></param>
-        /// <param name="context"></param>
-        /// <param name="loggerService"></param>
         public WebApiInit(
             IMemoryCache memoryCache,
             IEspressoDatabaseContext context,
@@ -120,6 +118,7 @@ namespace Espresso.WebApi.Application.Initialization
                     var category = categoriesDictionary[articleCategory.CategoryId];
                     articleCategory.SetCategory(category);
                 }
+
                 if (article.MainArticle is not null)
                 {
                     var mainArticle = articlesDictionary[article.MainArticle.MainArticleId];
@@ -140,11 +139,12 @@ namespace Espresso.WebApi.Application.Initialization
             var newsPortalsCount = newsPortals.Count;
             var allArticlesCount = articles.Count;
 
-            var arguments = new (string, object)[]{
-                (nameof(duration),duration),
-                (nameof(categoriesCount),categoriesCount),
-                (nameof(newsPortalsCount),newsPortalsCount),
-                (nameof(allArticlesCount),allArticlesCount),
+            var arguments = new (string, object)[]
+            {
+                (nameof(duration), duration),
+                (nameof(categoriesCount), categoriesCount),
+                (nameof(newsPortalsCount), newsPortalsCount),
+                (nameof(allArticlesCount), allArticlesCount),
             };
 
             _loggerService.Log(eventName, LogLevel.Information, arguments);

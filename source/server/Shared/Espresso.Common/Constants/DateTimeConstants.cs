@@ -29,7 +29,9 @@ namespace Espresso.Common.Constants
         /// <summary>
         /// Logger <see cref="DateTime"/> format.
         /// </summary>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public const string LoggerDateTimeFormat = "HH:mm:ss.ff";
+#pragma warning restore SA1201 // Elements should appear in the correct order
 
         /// <summary>
         /// Mobile app <see cref="DateTime"/> format.

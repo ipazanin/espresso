@@ -20,7 +20,9 @@ namespace Espresso.Application.NewsPortals
 
         public IEnumerable<GetNewsPortalsRssFeedCategory> RssFeedCategories { get; private set; } = new List<GetNewsPortalsRssFeedCategory>();
 
+#pragma warning disable SA1201 // Elements should appear in the correct order
         private GetNewsPortalsRssFeed()
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
         }
 

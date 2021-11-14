@@ -14,7 +14,9 @@ namespace Espresso.Dashboard.Application.NewsPortals.GetNewsPortals
         /// Initializes a new instance of the <see cref="GetNewsPortalsQueryResponse"/> class.
         /// </summary>
         /// <param name="newsPortals"></param>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public GetNewsPortalsQueryResponse(PagedList<GetNewsPortalsNewsPortal> newsPortals)
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             NewsPortals = newsPortals;
         }

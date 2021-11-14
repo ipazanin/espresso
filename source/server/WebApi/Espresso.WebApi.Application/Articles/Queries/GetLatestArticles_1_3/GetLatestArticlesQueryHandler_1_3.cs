@@ -16,7 +16,9 @@ using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_3
 {
+#pragma warning disable S101 // Types should be named in PascalCase
     public class GetLatestArticlesQueryHandler_1_3 : IRequestHandler<GetLatestArticlesQuery_1_3, GetLatestArticlesQueryResponse_1_3>
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         private readonly IMemoryCache _memoryCache;
 

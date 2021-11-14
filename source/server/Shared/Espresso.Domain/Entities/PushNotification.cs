@@ -35,7 +35,9 @@ namespace Espresso.Domain.Entities
         /// Initializes a new instance of the <see cref="PushNotification"/> class.
         /// ORM Materialisation Constructor.
         /// </summary>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         private PushNotification()
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             InternalName = null!;
             Title = null!;

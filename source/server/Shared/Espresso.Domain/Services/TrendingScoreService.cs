@@ -1,6 +1,6 @@
-// TrendingScoreService.cs
+﻿// TrendingScoreService.cs
 //
-// � 2021 Espresso News. All rights reserved.
+// © 2021 Espresso News. All rights reserved.
 
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
@@ -60,31 +60,6 @@ namespace Espresso.Domain.Services
             return articles;
         }
 
-        private static decimal CalculateStandardDeviation(
-            IEnumerable<int> clicksPerArticle,
-            int numberOfArticles,
-            decimal averageClicks)
-        {
-            var standardClicksDeviation = numberOfArticles == 0 ? 0M : (decimal)Math.Sqrt(
-                (double)(clicksPerArticle.Select(clicks => (decimal)clicks).Sum(clicks =>
-                {
-                    var pow = (decimal)Math.Pow(decimal.ToDouble(clicks - averageClicks), 2);
-                    return pow;
-                }) / (numberOfArticles == 0 ? 1M : numberOfArticles)));
-
-            return standardClicksDeviation;
-        }
-
-        private static decimal CalculateUnNormalisedTrendingScore(
-            int clicks,
-            decimal averageClicks,
-            decimal standardClicksDeviation)
-        {
-            var trendingScore = (clicks - averageClicks) / (standardClicksDeviation == 0 ? 1M : standardClicksDeviation);
-
-            return trendingScore;
-        }
-
         public decimal CalculateTrendingScore(
             int clicks,
             decimal averageClicks,
@@ -108,6 +83,31 @@ namespace Espresso.Domain.Services
                 maxTrendingScore: maxTrendingScore);
 
             return normalisedTrendingScore < 0 ? 0 : normalisedTrendingScore >= 1000M ? 999M : normalisedTrendingScore;
+        }
+
+        private static decimal CalculateStandardDeviation(
+            IEnumerable<int> clicksPerArticle,
+            int numberOfArticles,
+            decimal averageClicks)
+        {
+            var standardClicksDeviation = numberOfArticles == 0 ? 0M : (decimal)Math.Sqrt(
+                (double)(clicksPerArticle.Select(clicks => (decimal)clicks).Sum(clicks =>
+                {
+                    var pow = (decimal)Math.Pow(decimal.ToDouble(clicks - averageClicks), 2);
+                    return pow;
+                }) / (numberOfArticles == 0 ? 1M : numberOfArticles)));
+
+            return standardClicksDeviation;
+        }
+
+        private static decimal CalculateUnNormalisedTrendingScore(
+            int clicks,
+            decimal averageClicks,
+            decimal standardClicksDeviation)
+        {
+            var trendingScore = (clicks - averageClicks) / (standardClicksDeviation == 0 ? 1M : standardClicksDeviation);
+
+            return trendingScore;
         }
 
         private decimal NormaliseTrendingScore(decimal trendingScore, decimal maxTrendingScore)

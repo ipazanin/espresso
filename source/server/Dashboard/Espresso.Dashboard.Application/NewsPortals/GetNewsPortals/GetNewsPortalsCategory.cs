@@ -16,7 +16,9 @@ namespace Espresso.Dashboard.Application.NewsPortals.GetNewsPortals
 
         public string Color { get; private set; }
 
+#pragma warning disable SA1201 // Elements should appear in the correct order
         private GetNewsPortalsCategory()
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             Name = null!;
             Color = null!;

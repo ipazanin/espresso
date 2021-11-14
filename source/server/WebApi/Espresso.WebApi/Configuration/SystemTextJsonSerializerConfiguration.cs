@@ -8,16 +8,15 @@ using System.Text.Json;
 namespace Espresso.WebApi.Configuration
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class SystemTextJsonSerializerConfiguration
     {
         private readonly IConfigurationSection _configuration;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <value></value>
         public JsonSerializerOptions JsonSerializerOptions => new()
         {
             AllowTrailingCommas = _configuration.GetValue<bool>("AllowTrailingCommas"),
@@ -31,13 +30,15 @@ namespace Espresso.WebApi.Configuration
         /// Initializes a new instance of the <see cref="SystemTextJsonSerializerConfiguration"/> class.
         /// </summary>
         /// <param name="configuration"></param>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public SystemTextJsonSerializerConfiguration(IConfigurationSection configuration)
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             _configuration = configuration;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="jsonSerializerOptions"></param>
         public void MapJsonSerializerOptionsToDefaultOptions(

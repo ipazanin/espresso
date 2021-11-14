@@ -7,7 +7,9 @@ using System;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
 {
+#pragma warning disable S101 // Types should be named in PascalCase
     public record GetLatestArticlesQuery_2_0 : Request<GetLatestArticlesQueryResponse_2_0>
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         public int Take { get; init; }
 

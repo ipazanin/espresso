@@ -1,10 +1,11 @@
-// EnumExtensionsTest.cs
+﻿// EnumExtensionsTest.cs
 //
-// � 2021 Espresso News. All rights reserved.
+// © 2021 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
+using System.Globalization;
 using Xunit;
 
 namespace Espresso.Common.Tests.Extensions
@@ -54,7 +55,7 @@ namespace Espresso.Common.Tests.Extensions
         public void GetIntegerValueAsString_WithUndefinedEnum_ReturnsIntegerValueAsString()
         {
             const AppEnvironment undefinedEnum = (AppEnvironment)(-1);
-            var expectedValue = ((int)undefinedEnum).ToString();
+            var expectedValue = ((int)undefinedEnum).ToString(CultureInfo.InvariantCulture);
 
             var actualValue = undefinedEnum.GetIntegerValueAsString();
 
@@ -67,7 +68,7 @@ namespace Espresso.Common.Tests.Extensions
         public void GetIntegerValueAsString_WithDefinedEnum_ReturnsIntegerValueAsString()
         {
             const AppEnvironment definedEnum = AppEnvironment.Local;
-            var expectedValue = ((int)definedEnum).ToString();
+            var expectedValue = ((int)definedEnum).ToString(CultureInfo.InvariantCulture);
 
             var actualValue = definedEnum.GetIntegerValueAsString();
 

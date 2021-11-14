@@ -26,7 +26,7 @@ namespace Espresso.WebApi.Authentication
         private const string ProblemDetailsContentType = "application/problem+json";
         private const string UnAuthenticatedApiKeyMessage = "Given API Key is Invalid";
         private const string ForbiddenMessage = "Given API Key is Forbidden from requested resource";
-        private const string ApiKeyHeaderNameVersion1_2 = "Espresso-Api-Key";
+        private const string ApiKeyHeaderNameVersion1Point2 = "Espresso-Api-Key";
 
         private readonly IApiKeyProvider _apiKeyProvider;
         private readonly IJsonService _jsonService;
@@ -63,7 +63,7 @@ namespace Espresso.WebApi.Authentication
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             if (!Request.Headers.TryGetValue(HttpHeaderConstants.ApiKeyHeaderName, out var apiKeyHeaderValues) &&
-                !Request.Headers.TryGetValue(ApiKeyHeaderNameVersion1_2, out apiKeyHeaderValues))
+                !Request.Headers.TryGetValue(ApiKeyHeaderNameVersion1Point2, out apiKeyHeaderValues))
             {
                 return AuthenticateResult.NoResult();
             }

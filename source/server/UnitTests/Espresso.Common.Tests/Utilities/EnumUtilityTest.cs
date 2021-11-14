@@ -1,11 +1,12 @@
-// EnumUtilityTest.cs
+﻿// EnumUtilityTest.cs
 //
-// � 2021 Espresso News. All rights reserved.
+// © 2021 Espresso News. All rights reserved.
 
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Utilities;
 using System.Collections.Generic;
+using System.Globalization;
 using Xunit;
 
 namespace Espresso.Common.Tests.Utilities
@@ -65,7 +66,7 @@ namespace Espresso.Common.Tests.Utilities
         [Fact]
         public void TryParseEnum_WithStringIntegerValueDefinedBySelectedEnum_ReturnsTrue()
         {
-            var integerStringEnumValue = ((int)AppEnvironment.Local).ToString();
+            var integerStringEnumValue = ((int)AppEnvironment.Local).ToString(CultureInfo.InvariantCulture);
 
             var isConversionSuccessfull = EnumUtility.TryParseEnum<AppEnvironment>(
                 enumValue: integerStringEnumValue,
@@ -77,7 +78,7 @@ namespace Espresso.Common.Tests.Utilities
         [Fact]
         public void TryParseEnum_WithStringIntegerValueDefinedBySelectedEnum_OutputsRightEnumValue()
         {
-            var integerStringEnumValue = ((int)AppEnvironment.Local).ToString();
+            var integerStringEnumValue = ((int)AppEnvironment.Local).ToString(CultureInfo.InvariantCulture);
 
             _ = EnumUtility.TryParseEnum<AppEnvironment>(
                 enumValue: integerStringEnumValue,
@@ -202,7 +203,7 @@ namespace Espresso.Common.Tests.Utilities
         public void GetEnumOrDefault_WithDefinedIntegerStringEnumValue_ReturnsDefinedEnumValue()
         {
             const AppEnvironment expectedEnumvalue = AppEnvironment.Dev;
-            var definedIntegerStringEnumvalue = ((int)expectedEnumvalue).ToString();
+            var definedIntegerStringEnumvalue = ((int)expectedEnumvalue).ToString(CultureInfo.InvariantCulture);
             const AppEnvironment defaultEnumValue = AppEnvironment.Undefined;
 
             var processedEnum = EnumUtility.GetEnumOrDefault(

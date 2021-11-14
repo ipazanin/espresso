@@ -10,7 +10,9 @@ using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
 {
+#pragma warning disable SA1649 // File name should match first type name
     public class ResetAuthenticatorModel : PageModel
+#pragma warning restore SA1649 // File name should match first type name
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;

@@ -21,7 +21,9 @@ namespace Espresso.Dashboard.Shared.Pagination
         /// <param name="enabled"></param>
         /// <param name="text"></param>
         /// <param name="active"></param>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public PaginationLink(int page, bool enabled, string text, bool active)
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             Page = page;
             Enabled = enabled;

@@ -25,7 +25,9 @@ namespace Espresso.WebApi.Application.Notifications.Queries.GetPushNotifications
 
         public string CreatedAt { get; private set; }
 
+#pragma warning disable SA1201 // Elements should appear in the correct order
         private GetPushNotificationsPushNotification()
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             InternalName = null!;
             Title = null!;

@@ -37,7 +37,9 @@ namespace Espresso.Domain.ValueObjects.SettingsValueObjects
         /// <param name="analyticsCronExpression">google analytics cron expression.</param>
         /// <param name="webApiReportCronExpression">web api report cron expression.</param>
         /// <param name="parseArticlesCronExpression">article parsing cron expression.</param>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public JobsSetting(
+#pragma warning restore SA1201 // Elements should appear in the correct order
             string analyticsCronExpression,
             string webApiReportCronExpression,
             string parseArticlesCronExpression)

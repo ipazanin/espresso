@@ -7,7 +7,6 @@ namespace Espresso.Application.DataTransferObjects.SlackDataTransferObjects
     /// <summary>
     /// Abstract record representing block
     /// </summary>
-    /// <value></value>
     public abstract record SlackBlock
     {
         /// <summary>

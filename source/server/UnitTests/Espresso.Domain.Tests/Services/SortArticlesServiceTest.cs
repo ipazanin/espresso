@@ -132,7 +132,7 @@ namespace Espresso.Domain.Tests.Services
             {
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
-                    url: "https://www.google.com",
+                    articleUrl: "https://www.google.com",
                     title: "title1",
                     summary: "summary1"),
             };
@@ -140,7 +140,7 @@ namespace Espresso.Domain.Tests.Services
             {
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
-                    url: "https://www.google.com",
+                    articleUrl: "https://www.google.com",
                     title: "title2",
                     summary: "summary2"),
             }.ToDictionary(article => article.Id);
@@ -166,7 +166,7 @@ namespace Espresso.Domain.Tests.Services
             {
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
-                    url: "url1",
+                    articleUrl: "url1",
                     title: "title1",
                     summary: "summary1"),
             };
@@ -174,7 +174,7 @@ namespace Espresso.Domain.Tests.Services
             {
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
-                    url: "url2",
+                    articleUrl: "url2",
                     title: "title1",
                     summary: "summary2"),
             }.ToDictionary(article => article.Id);
@@ -200,7 +200,7 @@ namespace Espresso.Domain.Tests.Services
             {
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
-                    url: "url1",
+                    articleUrl: "url1",
                     title: "title1",
                     summary: "summary1"),
             };
@@ -208,7 +208,7 @@ namespace Espresso.Domain.Tests.Services
             {
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
-                    url: "url2",
+                    articleUrl: "url2",
                     title: "title2",
                     summary: "summary1"),
             }.ToDictionary(article => article.Id);
@@ -238,13 +238,13 @@ namespace Espresso.Domain.Tests.Services
             {
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
-                    url: "url1",
+                    articleUrl: "url1",
                     title: "title1",
                     summary: "summary1",
                     id: Guid.NewGuid()),
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
-                    url: "url2",
+                    articleUrl: "url2",
                     title: "title2",
                     summary: "summary2",
                     id: Guid.NewGuid()),
@@ -278,25 +278,25 @@ namespace Espresso.Domain.Tests.Services
             {
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
-                    url: "url1",
+                    articleUrl: "url1",
                     title: "title1",
                     summary: "summary1",
                     id: Guid.NewGuid()),
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
-                    url: "url2",
+                    articleUrl: "url2",
                     title: "title2",
                     summary: "summary2",
                     id: Guid.NewGuid()),
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
-                    url: "url1",
+                    articleUrl: "url1",
                     title: "title1",
                     summary: "summary1",
                     id: Guid.NewGuid()),
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
-                    url: "url2",
+                    articleUrl: "url2",
                     title: "title2",
                     summary: "summary2",
                     id: Guid.NewGuid()),

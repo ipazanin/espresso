@@ -34,7 +34,9 @@ namespace Espresso.Application.DataTransferObjects.PagingDataTransferObjects
         /// <param name="pageSize">Page size.</param>
         /// <param name="totalCount">Total items count.</param>
         [JsonConstructor]
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public PagingMetadata(
+#pragma warning restore SA1201 // Elements should appear in the correct order
             int currentPage,
             int pageSize,
             int totalCount)

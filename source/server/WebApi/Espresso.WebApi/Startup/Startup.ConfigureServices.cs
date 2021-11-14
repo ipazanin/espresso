@@ -60,6 +60,18 @@ namespace Espresso.WebApi.Startup
         }
 
         /// <summary>
+        /// Mediator Services.
+        /// </summary>
+        /// <param name="services"></param>
+        private static void AddMediatRServices(IServiceCollection services)
+        {
+            services.AddMediatR(typeof(GetNewsPortalsQuery).GetTypeInfo(), typeof(LoggerRequestPipeline<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionRequestPipeline<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggerRequestPipeline<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
+        }
+
+        /// <summary>
         /// Essential Services: MemoryCache, Initialization, HttpClient, Configuration ...
         /// </summary>
         /// <param name="services"></param>
@@ -168,18 +180,6 @@ namespace Espresso.WebApi.Startup
                 .AddApiKeySupport(options => { });
 
             services.AddTransient<IApiKeyProvider, InMemoryApiKeyProvider>();
-        }
-
-        /// <summary>
-        /// Mediator Services.
-        /// </summary>
-        /// <param name="services"></param>
-        private static void AddMediatRServices(IServiceCollection services)
-        {
-            services.AddMediatR(typeof(GetNewsPortalsQuery).GetTypeInfo(), typeof(LoggerRequestPipeline<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionRequestPipeline<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggerRequestPipeline<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
         }
 
         /// <summary>

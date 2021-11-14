@@ -17,7 +17,9 @@ using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
 {
+#pragma warning disable S101 // Types should be named in PascalCase
     public class GetCategoryArticlesQueryHandler_2_0 : IRequestHandler<GetCategoryArticlesQuery_2_0, GetCategoryArticlesQueryResponse_2_0>
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         private readonly IMemoryCache _memoryCache;
         private readonly ISettingProvider _settingProvider;
@@ -61,7 +63,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0
                     newsPortalIds: newsPortalIds,
                     titleSearchTerm: request.TitleSearchQuery,
                     articleCreateDateTime: firstArticle?.CreateDateTime)
-                // .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
                 .Skip(request.Skip)
                 .Take(request.Take);
 

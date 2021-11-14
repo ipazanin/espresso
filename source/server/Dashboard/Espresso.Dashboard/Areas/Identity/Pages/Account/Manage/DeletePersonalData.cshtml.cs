@@ -12,7 +12,9 @@ using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
 {
+#pragma warning disable SA1649 // File name should match first type name
     public class DeletePersonalDataModel : PageModel
+#pragma warning restore SA1649 // File name should match first type name
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -44,7 +46,9 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
             public string Password { get; set; } = null!;
         }
 
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public bool RequirePassword { get; set; }
+#pragma warning restore SA1201 // Elements should appear in the correct order
 
         /// <summary>
         ///
@@ -75,13 +79,10 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
             }
 
             RequirePassword = await _userManager.HasPasswordAsync(user);
-            if (RequirePassword)
+            if (RequirePassword && !await _userManager.CheckPasswordAsync(user, Input.Password))
             {
-                if (!await _userManager.CheckPasswordAsync(user, Input.Password))
-                {
-                    ModelState.AddModelError(string.Empty, "Incorrect password.");
-                    return Page();
-                }
+                ModelState.AddModelError(string.Empty, "Incorrect password.");
+                return Page();
             }
 
             var result = await _userManager.DeleteAsync(user);

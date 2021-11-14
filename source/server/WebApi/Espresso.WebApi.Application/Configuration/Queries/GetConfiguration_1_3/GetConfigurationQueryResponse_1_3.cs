@@ -6,7 +6,9 @@ using System.Collections.Generic;
 
 namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3
 {
+#pragma warning disable S101 // Types should be named in PascalCase
     public record GetConfigurationQueryResponse_1_3
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         public IEnumerable<GetConfigurationCategory_1_3> Categories { get; init; } = new List<GetConfigurationCategory_1_3>();
 

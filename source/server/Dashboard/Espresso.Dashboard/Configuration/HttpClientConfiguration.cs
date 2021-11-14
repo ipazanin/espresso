@@ -29,7 +29,9 @@ namespace Espresso.Dashboard.Configuration
         /// Initializes a new instance of the <see cref="HttpClientConfiguration"/> class.
         /// </summary>
         /// <param name="configurationSection">Part of app configuration.</param>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public HttpClientConfiguration(
+#pragma warning restore SA1201 // Elements should appear in the correct order
             IConfigurationSection configurationSection)
         {
             _configurationSection = configurationSection;

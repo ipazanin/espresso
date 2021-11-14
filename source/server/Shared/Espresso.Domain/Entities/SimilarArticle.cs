@@ -20,7 +20,9 @@ namespace Espresso.Domain.Entities
 
         public Article? SubordinateArticle { get; private set; }
 
+#pragma warning disable SA1201 // Elements should appear in the correct order
         private SimilarArticle()
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
         }
 

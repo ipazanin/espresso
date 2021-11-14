@@ -30,7 +30,9 @@ namespace Espresso.Dashboard.Startup
                 logLevel: Microsoft.Extensions.Logging.LogLevel.Information,
                 namedArguments: new (string, object)[] { ("version", _dashboardConfiguration.AppConfiguration.Version) });
 
+#pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
             memoryCacheInit.InitParserDeleter().GetAwaiter().GetResult();
+#pragma warning restore VSTHRD002 // Avoid problematic synchronous waits
 
             if (_dashboardConfiguration.AppConfiguration.AppEnvironment == AppEnvironment.Local)
             {

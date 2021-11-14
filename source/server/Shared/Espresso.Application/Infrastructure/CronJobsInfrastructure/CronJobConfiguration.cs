@@ -11,7 +11,7 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
     /// Represents <see cref="CronJob{T}"/> configuration.
     /// </summary>
     /// <remarks>
-    /// TODO: refactor cron job configuration
+    /// TODO: refactor cron job configuration.
     /// </remarks>
     /// <typeparam name="T">Cron job.</typeparam>
     public class CronJobConfiguration<T> : ICronJobConfiguration<T>

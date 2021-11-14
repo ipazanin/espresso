@@ -6,7 +6,9 @@ using System.Collections.Generic;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
 {
+#pragma warning disable S101 // Types should be named in PascalCase
     public record GetLatestArticlesQueryResponse_2_0
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         public IEnumerable<GetLatestArticlesArticle_2_0> Articles { get; init; } = new List<GetLatestArticlesArticle_2_0>();
 

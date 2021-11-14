@@ -80,7 +80,7 @@ namespace Espresso.Dashboard.Application.Initialization
 
                     adminUser.SecurityStamp = await _userManager.GetSecurityStampAsync(adminUser);
 
-                    var identityResult = await _userManager.CreateAsync(
+                    _ = await _userManager.CreateAsync(
                         user: adminUser,
                         password: _adminUserPassword);
                     await _userManager.AddToRoleAsync(adminUser, RoleConstants.AdminRoleName);

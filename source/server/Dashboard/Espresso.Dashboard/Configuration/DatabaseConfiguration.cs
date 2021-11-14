@@ -27,7 +27,9 @@ namespace Espresso.Dashboard.Configuration
         /// Initializes a new instance of the <see cref="DatabaseConfiguration"/> class.
         /// </summary>
         /// <param name="configuration"></param>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public DatabaseConfiguration(IConfigurationSection configuration)
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             _configuration = configuration;
         }

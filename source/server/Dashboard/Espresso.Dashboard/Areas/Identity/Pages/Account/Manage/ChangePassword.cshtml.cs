@@ -11,7 +11,9 @@ using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
 {
+#pragma warning disable SA1649 // File name should match first type name
     public class ChangePasswordModel : PageModel
+#pragma warning restore SA1649 // File name should match first type name
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -62,7 +64,9 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
         ///
         /// </summary>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public async Task<IActionResult> OnGetAsync()
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -103,6 +107,7 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
+
                 return Page();
             }
 

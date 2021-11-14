@@ -11,7 +11,7 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
     ///
     /// </summary>
 #pragma warning disable S3925 // "ISerializable" should be implemented correctly
-    public class GraphQlUserContext : Dictionary<string, object>
+    public class GraphQlUserContext : Dictionary<string, object?>
 #pragma warning restore S3925 // "ISerializable" should be implemented correctly
     {
         private const string TargetedApiVersionKey = nameof(TargetedApiVersionKey);
@@ -21,7 +21,6 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
         /// <summary>
         ///
         /// </summary>
-        /// <value></value>
         public string TargetedApiVersion
         {
             get
@@ -31,7 +30,7 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
                     return string.Empty;
                 }
 
-                return (string)value;
+                return value?.ToString() ?? string.Empty;
             }
 
             set
@@ -43,7 +42,6 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
         /// <summary>
         ///
         /// </summary>
-        /// <value></value>
         public string ConsumerVersion
         {
             get
@@ -53,7 +51,7 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
                     return string.Empty;
                 }
 
-                return (string)value;
+                return value?.ToString() ?? string.Empty;
             }
 
             set
@@ -65,7 +63,6 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
         /// <summary>
         ///
         /// </summary>
-        /// <value></value>
         public DeviceType DeviceType
         {
             get
@@ -75,7 +72,7 @@ namespace Espresso.WebApi.GraphQl.Infrastructure
                     return DeviceType.Undefined;
                 }
 
-                return (DeviceType)value;
+                return value is null ? DeviceType.Undefined : (DeviceType)value;
             }
 
             set

@@ -14,15 +14,17 @@ using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration_1_3
 {
-    public class GetConfigurationQueryHandler : IRequestHandler<GetConfigurationQuery_1_3, GetConfigurationQueryResponse_1_3>
+#pragma warning disable S101 // Types should be named in PascalCase
+    public class GetConfigurationQueryHandler_1_3 : IRequestHandler<GetConfigurationQuery_1_3, GetConfigurationQueryResponse_1_3>
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         private readonly IMemoryCache _memoryCache;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetConfigurationQueryHandler"/> class.
+        /// Initializes a new instance of the <see cref="GetConfigurationQueryHandler_1_3"/> class.
         /// </summary>
         /// <param name="memoryCache"></param>
-        public GetConfigurationQueryHandler(
+        public GetConfigurationQueryHandler_1_3(
             IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;

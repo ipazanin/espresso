@@ -17,7 +17,11 @@ using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
 {
+#pragma warning disable S101 // Types should be named in PascalCase
+#pragma warning disable SA1649 // File name should match first type name
     public class GetArticlesQueryHandler_2_0 : IRequestHandler<GetLatestArticlesQuery_2_0, GetLatestArticlesQueryResponse_2_0>
+#pragma warning restore SA1649 // File name should match first type name
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         private readonly IMemoryCache _memoryCache;
         private readonly ISettingProvider _settingProvider;
@@ -102,7 +106,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                     titleSearchTerm: request.TitleSearchQuery,
                     articleCreateDateTime: firstArticleCreateDateTime)
                 .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
-                // .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
                 .Skip(request.Skip)
                 .Take(request.Take);
 
@@ -173,7 +176,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                     newsPortalIds: null,
                     maxAgeOfFeaturedArticle: _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfFeaturedArticle,
                     articleCreateDateTime: firstArticleCreateDateTime)
-                // .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
                 .OrderFeaturedArticles(categoryIds);
 
             var featuredArticlesTake = _settingProvider.LatestSetting.ArticleSetting.FeaturedArticlesTake;
@@ -184,7 +186,6 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
                 .FilterTrendingArticles(
                     maxAgeOfTrendingArticle: _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfTrendingArticle,
                     articleCreateDateTime: null)
-                // .FilterArticlesWithCoronaVirusContentForIosRelease(request.DeviceType, request.TargetedApiVersion)
                 .OrderArticlesByTrendingScore()
                 .Take(trendingArticlesTake)
                 .OrderArticlesByCategory(categoryIds);

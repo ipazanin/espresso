@@ -8,7 +8,9 @@ using System.Linq.Expressions;
 
 namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals_1_3
 {
+#pragma warning disable S101 // Types should be named in PascalCase
     public class GetNewsPortalsNewsPortal_1_3
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         /// <summary>
         /// Gets news Portal ID.
@@ -22,7 +24,9 @@ namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals_1_3
 
         public string IconUrl { get; private set; } = string.Empty;
 
+#pragma warning disable SA1201 // Elements should appear in the correct order
         private GetNewsPortalsNewsPortal_1_3()
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
         }
 

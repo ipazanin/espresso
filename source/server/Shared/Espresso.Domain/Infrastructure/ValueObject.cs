@@ -12,25 +12,6 @@ namespace Espresso.Domain.Infrastructure
     /// </summary>
     public abstract class ValueObject
     {
-        protected static bool EqualOperator(ValueObject left, ValueObject right)
-        {
-            // Bitwise XOR
-            return !(left is null ^ right is null) &&
-                right != null &&
-                left?.Equals(right) != false;
-        }
-
-        protected static bool NotEqualOperator(ValueObject left, ValueObject right)
-        {
-            return !EqualOperator(left, right);
-        }
-
-        /// <summary>
-        /// Returns value objects properties.
-        /// </summary>
-        /// <returns>Value objects properties</returns>
-        protected abstract IEnumerable<object?> GetAtomicValues();
-
         public override bool Equals(object? obj)
         {
             if (obj == null || obj.GetType() != GetType())
@@ -65,5 +46,24 @@ namespace Espresso.Domain.Infrastructure
                 .Select(x => x != null ? x.GetHashCode() : 0)
                 .Aggregate((x, y) => x ^ y);
         }
+
+        protected static bool EqualOperator(ValueObject left, ValueObject right)
+        {
+            // Bitwise XOR
+            return !(left is null ^ right is null) &&
+                right != null &&
+                left?.Equals(right) != false;
+        }
+
+        protected static bool NotEqualOperator(ValueObject left, ValueObject right)
+        {
+            return !EqualOperator(left, right);
+        }
+
+        /// <summary>
+        /// Returns value objects properties.
+        /// </summary>
+        /// <returns>Value objects properties.</returns>
+        protected abstract IEnumerable<object?> GetAtomicValues();
     }
 }

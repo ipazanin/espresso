@@ -72,7 +72,9 @@ namespace Espresso.Persistence.Database
         /// Initializes a new instance of the <see cref="EspressoDatabaseContext"/> class.
         /// </summary>
         /// <param name="options">Database context options.</param>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public EspressoDatabaseContext(DbContextOptions<EspressoDatabaseContext> options)
+#pragma warning restore SA1201 // Elements should appear in the correct order
             : base(options)
         {
             ChangeTracker.LazyLoadingEnabled = false;

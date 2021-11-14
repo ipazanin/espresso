@@ -1,4 +1,4 @@
-﻿// NotificationHub.cs
+﻿// ArticlesNotificationHub.cs
 //
 // © 2021 Espresso News. All rights reserved.
 

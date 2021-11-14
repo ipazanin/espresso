@@ -107,6 +107,7 @@ namespace Espresso.Dashboard.ParseRssFeeds
                     _espressoDatabaseContext.Entry(article).Property(modifiedProperty).IsModified = true;
                 }
             }
+
             _espressoDatabaseContext.ArticleCategories.AddRange(createArticleCategories);
             _espressoDatabaseContext.ArticleCategories.RemoveRange(deleteArticleCategories);
             _espressoDatabaseContext.SimilarArticles.AddRange(similarArticles);

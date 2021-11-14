@@ -17,7 +17,11 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         /// Initializes a new instance of the <see cref="SkipParseConfiguration"/> class.
         /// ORM COnstructor.
         /// </summary>
+#pragma warning disable SA1502 // Element should not be on a single line
+#pragma warning disable SA1201 // Elements should appear in the correct order
         private SkipParseConfiguration() { }
+#pragma warning restore SA1201 // Elements should appear in the correct order
+#pragma warning restore SA1502 // Element should not be on a single line
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SkipParseConfiguration"/> class.

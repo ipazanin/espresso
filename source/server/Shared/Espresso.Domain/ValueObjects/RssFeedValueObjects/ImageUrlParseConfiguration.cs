@@ -23,7 +23,9 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
 
         public static bool? ShouldImageUrlBeWebScrapedDefaultValue => null;
 
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public const ImageUrlWebScrapeType ImageUrlWebScrapeTypeDefaultValue = ImageUrlWebScrapeType.Attribute;
+#pragma warning restore SA1201 // Elements should appear in the correct order
 
         public const string? JsonWebScrapePropertyNamesDefaultValue = null;
 
@@ -56,7 +58,9 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         /// Initializes a new instance of the <see cref="ImageUrlParseConfiguration"/> class.
         /// ORM COnstructor.
         /// </summary>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         private ImageUrlParseConfiguration()
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             XPath = null!;
             AttributeName = null!;

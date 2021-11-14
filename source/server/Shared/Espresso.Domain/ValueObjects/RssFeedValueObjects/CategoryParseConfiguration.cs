@@ -28,7 +28,9 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
         /// Initializes a new instance of the <see cref="CategoryParseConfiguration"/> class.
         /// ORM Constructor.
         /// </summary>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         private CategoryParseConfiguration()
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
         }
 

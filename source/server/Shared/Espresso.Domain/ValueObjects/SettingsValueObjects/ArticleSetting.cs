@@ -56,11 +56,13 @@ namespace Espresso.Domain.ValueObjects.SettingsValueObjects
         /// <summary>
         /// Initializes a new instance of the <see cref="ArticleSetting"/> class.
         /// </summary>
-        /// <param name="maxAgeOfTrendingArticleInMiliseconds">Gets max age of <see cref="Article"/> that can be considered trending in miliseconds</param>
+        /// <param name="maxAgeOfTrendingArticleInMiliseconds">Gets max age of <see cref="Article"/> that can be considered trending in miliseconds.</param>
         /// <param name="maxAgeOfFeaturedArticleInMiliseconds">Gets max age of <see cref="Article"/> that can be considered featured in miliseconds.</param>
         /// <param name="maxAgeOfArticleInMiliseconds">Gets max age of <see cref="Article"/> that can be saved in application.</param>
         /// <param name="featuredArticlesTake">Number of featured articles to fetch on request.</param>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public ArticleSetting(
+#pragma warning restore SA1201 // Elements should appear in the correct order
             long maxAgeOfTrendingArticleInMiliseconds,
             long maxAgeOfFeaturedArticleInMiliseconds,
             long maxAgeOfArticleInMiliseconds,

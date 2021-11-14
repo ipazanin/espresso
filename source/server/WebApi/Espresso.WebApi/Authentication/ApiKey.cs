@@ -32,21 +32,6 @@ namespace Espresso.WebApi.Authentication
         public const string DevMobileAppRole = nameof(DevMobileAppRole);
 
         /// <summary>
-        /// 
-        /// </summary>
-        public int Id { get; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Role { get; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Key { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ApiKey"/> class.
         /// </summary>
         /// <param name="id"></param>
@@ -61,5 +46,20 @@ namespace Espresso.WebApi.Authentication
             Role = role ?? throw new ArgumentNullException(nameof(role));
             Key = key ?? throw new ArgumentNullException(nameof(key));
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Id { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Role { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Key { get; }
     }
 }

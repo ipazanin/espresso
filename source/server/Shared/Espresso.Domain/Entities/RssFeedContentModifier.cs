@@ -29,7 +29,9 @@ namespace Espresso.Domain.Entities
         /// <param name="replacementValue"></param>
         /// <param name="orderIndex"></param>
         /// <param name="rssFeedId"></param>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         public RssFeedContentModifier(
+#pragma warning restore SA1201 // Elements should appear in the correct order
             int id,
             string sourceValue,
             string replacementValue,

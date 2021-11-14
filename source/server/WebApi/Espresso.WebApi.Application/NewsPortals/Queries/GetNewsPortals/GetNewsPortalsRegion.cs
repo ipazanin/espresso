@@ -16,7 +16,9 @@ namespace Espresso.Application.NewsPortals
 
         public string Subtitle { get; private set; } = string.Empty;
 
+#pragma warning disable SA1201 // Elements should appear in the correct order
         private GetNewsPortalsRegion()
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
         }
 

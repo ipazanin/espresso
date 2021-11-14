@@ -54,7 +54,9 @@ namespace Espresso.Domain.Entities
         /// Initializes a new instance of the <see cref="RssFeed"/> class.
         /// ORM Constructor.
         /// </summary>
+#pragma warning disable SA1201 // Elements should appear in the correct order
         private RssFeed()
+#pragma warning restore SA1201 // Elements should appear in the correct order
         {
             Url = null!;
             CategoryParseConfiguration = null!;

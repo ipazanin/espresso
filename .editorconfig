@@ -3,14 +3,14 @@
 # top-most EditorConfig file
 root = true
 
-# Don't use tabs for indentation.
-[*]
-indent_style = space
-# (Please don't specify an indent_size here; that has too many unintended consequences.)
-
 # Tab indentation (no size specified)
 [{Makefile,*.make}]
 indent_style = tab
+
+# (Please don't specify an indent_size here; that has too many unintended consequences.)
+# Don't use tabs for indentation.
+[*]
+indent_style = space
 
 # Unix-style newlines with a newline ending every file
 [*]
@@ -319,7 +319,6 @@ dotnet_diagnostic.CA1822.severity = suggestion
 #           Custom Analysers
 ######################################################
 
-
 # RCS1124: Inline local variable.
 dotnet_diagnostic.RCS1124.severity = none
 
@@ -347,7 +346,37 @@ dotnet_diagnostic.S1075.severity = none
 # SA1008: Opening parenthesis should be spaced correctly
 dotnet_diagnostic.SA1008.severity = none
 
-############ Documentation #################
+# SA1118: Parameter should not span multiple lines
+dotnet_diagnostic.SA1118.severity = none
+
+# SA1000: Keywords should be spaced correctly
+dotnet_diagnostic.SA1000.severity = none
+
+# SA1011: Closing square brackets should be spaced correctly
+dotnet_diagnostic.SA1011.severity = none
+
+# SA1009: Closing parenthesis should be spaced correctly
+dotnet_diagnostic.SA1009.severity = none
+
+# SA1028: Code should not contain trailing whitespace
+dotnet_diagnostic.SA1028.severity = none
+
+# SA1313: Parameter names should begin with lower-case letter
+dotnet_diagnostic.SA1313.severity = none
+
+# CA2007: Consider calling ConfigureAwait on the awaited task
+dotnet_diagnostic.CA2007.severity = none
+
+# SA1308: Variable names should not be prefixed
+dotnet_diagnostic.SA1308.severity = none
+
+######################################################
+#           Custom Analysers End
+######################################################
+
+######################################################
+#           Code Documentation
+######################################################
 
 # SA1614: Element parameter documentation should have text
 dotnet_diagnostic.SA1614.severity = none
@@ -379,10 +408,6 @@ dotnet_diagnostic.SA1600.severity = none
 # SA1601: Partial elements should be documented
 dotnet_diagnostic.SA1601.severity = none
 
-############ Documentation END #############
-
-
-
 ######################################################
-#           Custom Analysers END
+#           Code Documentation End
 ######################################################

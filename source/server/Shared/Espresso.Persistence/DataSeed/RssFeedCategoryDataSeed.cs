@@ -113,7 +113,7 @@ namespace Espresso.Persistence.DataSeed
                 new RssFeedCategory(currentId++, "sport", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.Dnevno7),
                 new RssFeedCategory(currentId++, "domovina", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.Dnevno7),
                 new RssFeedCategory(currentId++, "kultura", urlSegmentIndex: 2, (int)CategoryId.Vijesti, (int)RssFeedId.Dnevno7),
-                new RssFeedCategory(currentId++, "zdravlje", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.Dnevno7),
+                new RssFeedCategory(currentId, "zdravlje", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.Dnevno7),
             };
 
             builder.HasData(rssFeedCategories);

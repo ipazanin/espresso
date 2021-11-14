@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
 {
+#pragma warning disable SA1649 // File name should match first type name
     public class ShowRecoveryCodesModel : PageModel
+#pragma warning restore SA1649 // File name should match first type name
     {
         [TempData]
         public string[]? RecoveryCodes { get; set; }

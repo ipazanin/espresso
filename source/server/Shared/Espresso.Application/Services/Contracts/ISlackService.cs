@@ -109,7 +109,7 @@ namespace Espresso.Application.Services.Contracts
         /// <summary>
         /// Sends message to slack.
         /// </summary>
-        /// <param name="data">Message data</param>
+        /// <param name="data">Message data.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         public Task SendToSlack(
