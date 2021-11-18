@@ -11,7 +11,6 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
     /// </summary>
     public enum NewsPortalId
     {
-#pragma warning disable SA1602 // Enumeration items should be documented
         [Display(Name = "Undefined")]
         Undefined = 0,
         [Display(Name = "Index.hr")]
@@ -282,6 +281,5 @@ namespace Espresso.Domain.Enums.NewsPortalEnums
         SportKlub = 136,
         [Display(Name = "Doktore, hitno!")]
         DoktoreHitno = 137,
-#pragma warning restore SA1602 // Enumeration items should be documented
     }
 }

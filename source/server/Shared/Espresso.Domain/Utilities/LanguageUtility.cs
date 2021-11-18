@@ -1,4 +1,4 @@
-// LanguageUtility.cs
+﻿// LanguageUtility.cs
 //
 // © 2021 Espresso News. All rights reserved.
 
@@ -47,7 +47,7 @@ namespace Espresso.Domain.Utilities
         public static IEnumerable<string> MatchWordsThatBeginWithTerm(string term, string sentence)
         {
             var termWithCroatianCharacters = term.ReplaceCroatianCharactersRegex();
-            var searchRegexPattern = $"{StartOfWordCharactersRegex}{term}{AllowedCharactersRegex}*{DelimiterCharactersRegex}";
+            var searchRegexPattern = $"{StartOfWordCharactersRegex}{termWithCroatianCharacters}{AllowedCharactersRegex}*{DelimiterCharactersRegex}";
 
             var matchedWords = Regex.Matches(sentence, searchRegexPattern, RegexOptions.IgnoreCase)
                 .Select(match => Regex.Replace(match.Value, DelimiterCharactersRegex, string.Empty));
