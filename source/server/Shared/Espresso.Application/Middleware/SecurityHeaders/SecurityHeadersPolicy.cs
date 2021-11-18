@@ -2,8 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Collections.Generic;
-
 namespace Espresso.Application.Middleware.SecurityHeaders
 {
     /// <summary>

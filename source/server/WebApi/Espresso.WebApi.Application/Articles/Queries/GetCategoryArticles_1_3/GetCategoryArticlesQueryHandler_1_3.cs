@@ -8,10 +8,6 @@ using Espresso.Domain.Entities;
 using Espresso.Domain.Extensions;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
 {

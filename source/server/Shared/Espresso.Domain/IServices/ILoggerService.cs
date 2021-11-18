@@ -3,8 +3,6 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 
 namespace Espresso.Domain.IServices
 {

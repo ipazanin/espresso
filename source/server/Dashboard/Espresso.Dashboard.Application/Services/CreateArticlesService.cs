@@ -13,13 +13,6 @@ using Espresso.Domain.Records;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Channels;
-using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Application.Services
 {

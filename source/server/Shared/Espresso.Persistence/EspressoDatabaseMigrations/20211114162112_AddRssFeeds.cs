@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
 
 namespace Espresso.Persistence.EspressoDatabaseMigrations
 {
@@ -13,7 +12,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                 values: new object[,]
                 {
                     { 136, "https://sportklub.hr", 2, new DateTime(2021, 11, 14, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/SportKlub.png", true, null, "Sportklub", 1 },
-                    { 137, "https://doktorehitno.hr", 4, new DateTime(2021, 11, 14, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/DoktoreHitno.png", true, null, "Doktore, hitno!", 1 }
+                    { 137, "https://doktorehitno.hr", 4, new DateTime(2021, 11, 14, 0, 0, 0, 0, DateTimeKind.Utc), "Icons/DoktoreHitno.png", true, null, "Doktore, hitno!", 1 },
                 });
 
             migrationBuilder.InsertData(
@@ -22,7 +21,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                 values: new object[,]
                 {
                     { 182, 2, 136, 1, "https://sportklub.hr/feed" },
-                    { 183, 4, 137, 1, "https://doktorehitno.hr/rss" }
+                    { 183, 4, 137, 1, "https://doktorehitno.hr/rss" },
                 });
         }
 

@@ -3,8 +3,6 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Espresso.Domain.Utilities;
-using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace Espresso.Domain.Tests.Utilities

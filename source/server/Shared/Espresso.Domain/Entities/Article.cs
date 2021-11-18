@@ -4,9 +4,6 @@
 
 using Espresso.Domain.Infrastructure;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Espresso.Domain.Entities
 {

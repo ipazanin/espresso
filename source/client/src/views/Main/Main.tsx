@@ -46,7 +46,7 @@ const Main: React.FC<MainProps> = ({ category, newsPortalIds }) => {
   const [runFaQuery, faResult] = useLazyQuery<
     { featuredArticles: GetFeaturedArticlesQueryResponse },
     GetFeaturedArticlesQueryArgs
-  >(GET_FEATURED_ARTICLES.gql, {});
+  >(GET_FEATURED_ARTICLES.rest, {});
   const [runLaQuery, laResult] = useLazyQuery<
     { latestArticles: GetLatestArticlesQueryResponse },
     GetLatestArticlesQueryArgs

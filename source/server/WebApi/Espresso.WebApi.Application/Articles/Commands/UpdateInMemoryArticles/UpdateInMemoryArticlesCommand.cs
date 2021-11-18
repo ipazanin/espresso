@@ -4,8 +4,6 @@
 
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
-using System;
-using System.Collections.Generic;
 
 namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
 {

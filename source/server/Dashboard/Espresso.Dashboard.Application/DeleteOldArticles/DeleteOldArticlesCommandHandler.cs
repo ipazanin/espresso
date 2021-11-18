@@ -5,9 +5,6 @@
 using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
 using MediatR;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Application.DeleteOldArticles
 {

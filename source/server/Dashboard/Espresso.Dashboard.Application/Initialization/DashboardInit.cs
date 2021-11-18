@@ -6,8 +6,6 @@ using Espresso.Common.Constants;
 using Espresso.Persistence.Database;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Application.Initialization
 {

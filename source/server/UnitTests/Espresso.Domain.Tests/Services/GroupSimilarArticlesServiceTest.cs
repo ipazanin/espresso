@@ -2,7 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using Espresso.Application.Infrastructure.SettingsInfrastructure;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Infrastructure;
 using Espresso.Domain.IServices;
@@ -11,9 +10,6 @@ using Espresso.Domain.Tests.TestUtilities;
 using Espresso.Domain.ValueObjects.SettingsValueObjects;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace Espresso.Domain.Tests.Services

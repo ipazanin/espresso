@@ -5,7 +5,6 @@
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using MediatR;
-using System.Collections.Generic;
 
 namespace Espresso.WebApi.Application.Notifications.Commands.SendArticlesNotifications
 {

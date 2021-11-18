@@ -4,8 +4,6 @@
 
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.ValueObjects.RssFeedValueObjects;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Application.IServices
 {

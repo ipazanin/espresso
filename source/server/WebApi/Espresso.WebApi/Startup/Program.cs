@@ -6,7 +6,7 @@ using Espresso.Common.Constants;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using System;
+using Microsoft.Extensions.Logging;
 
 namespace Espresso.WebApi.Startup
 {
@@ -34,7 +34,7 @@ namespace Espresso.WebApi.Startup
                 {
                     var environmentName = Environment.GetEnvironmentVariable(EnvironmentVariableNamesConstants.AspNetCoreEnvironment) ?? string.Empty;
 
-                    var parentDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
+                    var parentDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
                     _ = configureOptions
                         .AddJsonFile(path: $"{parentDirectory}/configuration/app-settings.json", optional: false)
@@ -44,6 +44,14 @@ namespace Espresso.WebApi.Startup
                         .AddEnvironmentVariables()
                         .Build();
                 })
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureLogging(loggingBuilder =>
+                {
+                    loggingBuilder.ClearProviders();
+                    loggingBuilder.AddConsole();
+                });
     }
 }

@@ -6,9 +6,6 @@ using Espresso.Application.Services.Contracts;
 using Espresso.Domain.IServices;
 using Google.Analytics.Data.V1Beta;
 using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace Espresso.Application.Services.Implementations
 {
@@ -42,7 +39,7 @@ namespace Espresso.Application.Services.Implementations
         }
 
         /// <inheritdoc/>
-        public async Task<int> GetNumberOfActiveUsersFromYesterday()
+        public async Task<(int androidUsers, int iosUsers)> GetNumberOfActiveUsersFromYesterday()
         {
             var request = new RunReportRequest
             {
@@ -56,17 +53,30 @@ namespace Espresso.Application.Services.Implementations
                         EndDate = "today",
                     },
                 },
+                Dimensions = { new Dimension { Name = "operatingSystem" } },
             };
 
             var response = await RunReport(request);
-            var numberOfActiveUsersString = response.Rows[0].MetricValues[0].Value;
-            var numberOfActiveUsers = int.Parse(numberOfActiveUsersString);
 
-            return numberOfActiveUsers;
+            var numberOfActiveUsersOnAndroidString = response
+                .Rows
+                .First(row => row.DimensionValues.Any(dimension => dimension.Value == "Android"))
+                .MetricValues[0]
+                .Value;
+            var numberOfActiveUsersOnAndroid = int.Parse(numberOfActiveUsersOnAndroidString);
+
+            var numberOfActiveUsersOnIosString = response
+                .Rows
+                .First(row => row.DimensionValues.Any(dimension => dimension.Value == "iOS"))
+                .MetricValues[0]
+                .Value;
+            var numberOfActiveUsersOnIos = int.Parse(numberOfActiveUsersOnIosString);
+
+            return (numberOfActiveUsersOnAndroid, numberOfActiveUsersOnIos);
         }
 
         /// <inheritdoc/>
-        public async Task<decimal> GetTotalRevenueFromYesterday()
+        public async Task<(decimal androidRevenue, decimal iosRevenue)> GetTotalRevenueFromYesterday()
         {
             var request = new RunReportRequest
             {
@@ -80,13 +90,26 @@ namespace Espresso.Application.Services.Implementations
                         EndDate = "today",
                     },
                 },
+                Dimensions = { new Dimension { Name = "operatingSystem" } },
             };
 
             var response = await RunReport(request);
-            var revenueString = response.Rows[0].MetricValues[0].Value;
-            var revenue = decimal.Parse(revenueString);
 
-            return revenue;
+            var androidRevenueString = response
+                .Rows
+                .First(row => row.DimensionValues.Any(dimension => dimension.Value == "Android"))
+                .MetricValues[0]
+                .Value;
+            var androidRevenue = decimal.Parse(androidRevenueString);
+
+            var iosRevenueString = response
+                                .Rows
+                                .First(row => row.DimensionValues.Any(dimension => dimension.Value == "iOS"))
+                                .MetricValues[0]
+                                .Value;
+            var iosRevenue = decimal.Parse(iosRevenueString);
+
+            return (androidRevenue, iosRevenue);
         }
 
         private async Task<RunReportResponse> RunReport(RunReportRequest request)

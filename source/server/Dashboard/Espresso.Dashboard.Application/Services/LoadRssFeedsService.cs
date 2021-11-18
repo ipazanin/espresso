@@ -11,17 +11,6 @@ using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Net.Http;
-using System.ServiceModel.Syndication;
-using System.Threading;
-using System.Threading.Channels;
-using System.Threading.Tasks;
-using System.Xml;
 
 namespace Espresso.Dashboard.Application.Services
 {

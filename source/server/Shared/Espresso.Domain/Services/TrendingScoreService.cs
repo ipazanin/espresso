@@ -4,9 +4,6 @@
 
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Espresso.Domain.Services
 {

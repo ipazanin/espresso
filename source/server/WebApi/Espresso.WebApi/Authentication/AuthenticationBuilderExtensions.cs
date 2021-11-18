@@ -3,7 +3,6 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Microsoft.AspNetCore.Authentication;
-using System;
 
 namespace Espresso.WebApi.Authentication
 {

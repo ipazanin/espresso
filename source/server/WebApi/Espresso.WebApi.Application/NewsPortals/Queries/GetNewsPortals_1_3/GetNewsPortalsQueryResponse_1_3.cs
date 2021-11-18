@@ -2,9 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Collections.Generic;
-using System.Linq;
-
 namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals_1_3
 {
 #pragma warning disable S101 // Types should be named in PascalCase

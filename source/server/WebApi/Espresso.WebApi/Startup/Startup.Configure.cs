@@ -8,13 +8,10 @@ using Espresso.Common.Enums;
 using Espresso.Domain.IServices;
 using Espresso.WebApi.Application.Hubs;
 using Espresso.WebApi.Application.Initialization;
-using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
-using System.IO;
 
 namespace Espresso.WebApi.Startup
 {
@@ -63,21 +60,6 @@ namespace Espresso.WebApi.Startup
 
                 options.RoutePrefix = SwaggerApiExplorerRoute;
             });
-
-            app.UseGraphQLPlayground(
-                options: new PlaygroundOptions
-                {
-                    GraphQLEndPoint = "/graphql",
-                    Headers = new Dictionary<string, object>
-                    {
-                      { HttpHeaderConstants.ApiKeyHeaderName, string.Empty },
-                      { HttpHeaderConstants.ApiVersionHeaderName, "1.4" },
-                      { HttpHeaderConstants.DeviceTypeHeaderName, DeviceType.WebApp },
-                      { HttpHeaderConstants.VersionHeaderName, "1.0.0" },
-                    },
-                    EditorReuseHeaders = true,
-                },
-                path: "/graphql-playground");
 
             app.UseRouting();
             app.UseAuthentication();

@@ -2,10 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace Espresso.Common.Services.Contracts
 {
     /// <summary>

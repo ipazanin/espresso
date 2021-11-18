@@ -1,45 +1,44 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <!--Basic Project Configuration-->
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <AnalysisLevel>preview</AnalysisLevel>
-    <Nullable>enable</Nullable>
-    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
-    <Features>$(Features);flow-analysis</Features> 
+    <TargetFramework>net6.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+  <!--Basic Project Configuration-->
 
-  <!-- Libraries -->
+  <!--Static Code Analysis-->
+  <PropertyGroup>
+    <AnalysisLevel>preview</AnalysisLevel>
+    <Nullable>enable</Nullable>
+    <Features>$(Features);flow-analysis</Features>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+  </PropertyGroup>
+  <!--Static Code Analysis-->
 
-  <ItemGroup>
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.11" />
-    <PackageReference Include="GraphQL" Version="4.6.1" />
-    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="5.0.2" />
-    <PackageReference Include="GraphQL.SystemTextJson" Version="4.6.1" />
-    <PackageReference Include="RabbitMQ.Client" Version="6.2.2" />
-    <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="5.0.1" />
-    <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
-    <PackageReference Include="Polly" Version="7.2.2" />
-  </ItemGroup>
-
-  <!-- Libraries -->
-
-  <!-- Project References -->
-
+  <!--Project References-->
   <ItemGroup>
     <ProjectReference Include="..\Espresso.WebApi.Application\Espresso.WebApi.Application.csproj" />
     <ProjectReference Include="..\..\Shared\Espresso.Common\Espresso.Common.csproj" />
     <ProjectReference Include="..\..\Shared\Espresso.Persistence\Espresso.Persistence.csproj" />
   </ItemGroup>
+  <!--Project References-->
 
-  <!-- Project References -->
+  <!--Packages-->
+  <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.0" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.2.2" />
+    <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="6.0.0" />
+    <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
+    <PackageReference Include="Polly" Version="7.2.2" />
+  </ItemGroup>
+  <!--Packages-->
 
-  <!-- Analyzers -->
-
+  <!--Analyzer Packages-->
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" Link="Properties\stylecop.json" />
   </ItemGroup>
@@ -57,7 +56,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.30.0.37606">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.32.0.39516">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -65,7 +64,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.63">
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.64">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -74,20 +73,16 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+  <!--Analyzer Packages-->
 
-  <!-- Analyzers -->
-
-  <!-- Configuration Files -->
-
+  <!--Configuration Files-->
   <ItemGroup>
-
     <Content Update="firebase-key.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="google-analytics-key.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-
     <Content Update="AppSettings/app-settings.development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -100,7 +95,6 @@
     <Content Update="AppSettings/app-settings.production.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-
     <ContentWithTargetPath Include="../../configuration/app-settings.development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>/configuration/app-settings.development.json</TargetPath>
@@ -117,9 +111,13 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>/configuration/app-settings.production.json</TargetPath>
     </ContentWithTargetPath>
-
   </ItemGroup>
+  <!--Configuration Files-->
 
-  <!-- Configuration Files -->
-
+  <!--Global Using-->
+  <ItemGroup>
+    <Compile Include="..\..\GlobalUsings.cs" Link="GlobalUsings.cs" />
+  </ItemGroup>
+  <!--Global Using-->
+  
 </Project>

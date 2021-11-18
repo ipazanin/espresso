@@ -8,11 +8,6 @@ using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Application.HealthChecks
 {

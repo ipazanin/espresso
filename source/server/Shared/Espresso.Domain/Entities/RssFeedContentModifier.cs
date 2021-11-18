@@ -1,6 +1,6 @@
-// RssFeedContentModifier.cs
+﻿// RssFeedContentModifier.cs
 //
-// � 2021 Espresso News. All rights reserved.
+// © 2021 Espresso News. All rights reserved.
 
 namespace Espresso.Domain.Entities
 {
@@ -8,18 +8,6 @@ namespace Espresso.Domain.Entities
     {
         public const int SourceValueMaxLength = 1000;
         public const int ReplacementValueMaxLength = 1000;
-
-        public int Id { get; private set; }
-
-        public string SourceValue { get; private set; }
-
-        public string ReplacementValue { get; private set; }
-
-        public int OrderIndex { get; private set; }
-
-        public int RssFeedId { get; private set; }
-
-        public RssFeed? RssFeed { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RssFeedContentModifier"/> class.
@@ -29,9 +17,7 @@ namespace Espresso.Domain.Entities
         /// <param name="replacementValue"></param>
         /// <param name="orderIndex"></param>
         /// <param name="rssFeedId"></param>
-#pragma warning disable SA1201 // Elements should appear in the correct order
         public RssFeedContentModifier(
-#pragma warning restore SA1201 // Elements should appear in the correct order
             int id,
             string sourceValue,
             string replacementValue,
@@ -44,5 +30,17 @@ namespace Espresso.Domain.Entities
             OrderIndex = orderIndex;
             RssFeedId = rssFeedId;
         }
+
+        public int Id { get; private set; }
+
+        public string SourceValue { get; private set; }
+
+        public string ReplacementValue { get; private set; }
+
+        public int OrderIndex { get; private set; }
+
+        public int RssFeedId { get; private set; }
+
+        public RssFeed? RssFeed { get; private set; }
     }
 }

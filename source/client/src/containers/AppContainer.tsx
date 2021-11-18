@@ -38,7 +38,7 @@ const AppContainer: React.FC = () => {
   const { path = '' } = useParams<{ path?: string }>();
   const { loading: loadingConfiguration, data: config } = useQuery<{
     webConfiguration: GetWebConfigurationQueryResponse;
-  }>(GET_CONFIGURATION.gql);
+  }>(GET_CONFIGURATION.rest);
 
   const {
     allCategories,

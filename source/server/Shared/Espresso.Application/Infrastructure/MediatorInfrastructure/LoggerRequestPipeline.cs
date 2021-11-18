@@ -8,11 +8,7 @@ using Espresso.Domain.IServices;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.Application.Infrastructure.MediatorInfrastructure
 {

@@ -6,7 +6,6 @@ using Espresso.Domain.Entities;
 using Espresso.Domain.Infrastructure;
 using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace Espresso.Application.Infrastructure.SettingsInfrastructure
 {

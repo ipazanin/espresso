@@ -8,11 +8,7 @@ using Espresso.Domain.IServices;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 using Timer = System.Timers.Timer;
 
 namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
@@ -24,7 +20,6 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
     public abstract class CronJob<T> : IHostedService, IDisposable
         where T : CronJob<T>
     {
-        protected readonly ICronJobConfiguration<T> _cronJobConfiguration;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private Timer? _timer;
         private bool _disposedValue;
@@ -38,9 +33,11 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
             ICronJobConfiguration<T> cronJobConfiguration,
             IServiceScopeFactory serviceScopeFactory)
         {
-            _cronJobConfiguration = cronJobConfiguration;
+            CronJobConfiguration = cronJobConfiguration;
             _serviceScopeFactory = serviceScopeFactory;
         }
+
+        protected ICronJobConfiguration<T> CronJobConfiguration { get; }
 
         protected abstract CronExpression CronExpression { get; }
 
@@ -89,7 +86,7 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
         {
             var occurrence = CronExpression.GetNextOccurrence(
                 from: DateTimeOffset.Now,
-                zone: _cronJobConfiguration.TimeZoneInfo);
+                zone: CronJobConfiguration.TimeZoneInfo);
 
             if (!occurrence.HasValue)
             {
@@ -168,7 +165,7 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
                 await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
 
                 var eventName = $"{typeof(T).Name} work ended";
-                var nextOccurrence = CronExpression.GetNextOccurrence(DateTimeOffset.Now, _cronJobConfiguration.TimeZoneInfo) ?? occurrence;
+                var nextOccurrence = CronExpression.GetNextOccurrence(DateTimeOffset.Now, CronJobConfiguration.TimeZoneInfo) ?? occurrence;
 
                 var arguments = new (string argumentName, object argumentValue)[]
                 {

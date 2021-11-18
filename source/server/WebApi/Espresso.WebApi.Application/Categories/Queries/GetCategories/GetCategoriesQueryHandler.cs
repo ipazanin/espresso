@@ -6,10 +6,6 @@ using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Application.Categories.Queries.GetCategories
 {

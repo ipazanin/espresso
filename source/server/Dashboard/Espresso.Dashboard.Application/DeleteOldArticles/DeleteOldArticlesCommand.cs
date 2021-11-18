@@ -4,8 +4,6 @@
 
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using Espresso.Domain.Entities;
-using System;
-using System.Collections.Generic;
 
 namespace Espresso.Dashboard.Application.DeleteOldArticles
 {

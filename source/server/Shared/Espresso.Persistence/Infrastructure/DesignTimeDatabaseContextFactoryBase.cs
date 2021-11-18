@@ -4,7 +4,6 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using System;
 
 namespace Espresso.Persistence.Infrastructure
 {

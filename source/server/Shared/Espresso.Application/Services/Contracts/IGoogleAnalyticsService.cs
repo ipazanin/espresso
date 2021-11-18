@@ -2,8 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Threading.Tasks;
-
 namespace Espresso.Application.Services.Contracts
 {
     /// <summary>
@@ -15,12 +13,12 @@ namespace Espresso.Application.Services.Contracts
         /// Gets yesterdays active users.
         /// </summary>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public Task<int> GetNumberOfActiveUsersFromYesterday();
+        public Task<(int androidUsers, int iosUsers)> GetNumberOfActiveUsersFromYesterday();
 
         /// <summary>
         /// Gets yesterdays revenue.
         /// </summary>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public Task<decimal> GetTotalRevenueFromYesterday();
+        public Task<(decimal androidRevenue, decimal iosRevenue)> GetTotalRevenueFromYesterday();
     }
 }

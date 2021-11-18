@@ -6,10 +6,6 @@ using Espresso.Common.Utilities;
 using Espresso.Domain.IServices;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Espresso.Domain.Services
 {

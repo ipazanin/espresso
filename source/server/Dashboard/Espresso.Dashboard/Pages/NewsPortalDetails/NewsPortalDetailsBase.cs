@@ -6,7 +6,6 @@ using Espresso.Dashboard.Application.NewsPortals.GetNewsPortalDetails;
 using Espresso.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Components;
-using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Pages.NewsPortalDetails
 {

@@ -3,7 +3,6 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Espresso.Domain.ValueObjects.SettingsValueObjects;
-using System;
 
 namespace Espresso.Domain.Entities
 {

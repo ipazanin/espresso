@@ -9,8 +9,6 @@ using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RegionEnums;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
 
 namespace Espresso.Persistence.DataSeed
 {

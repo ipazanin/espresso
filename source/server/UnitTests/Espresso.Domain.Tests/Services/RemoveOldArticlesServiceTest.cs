@@ -8,9 +8,6 @@ using Espresso.Domain.Services;
 using Espresso.Domain.Tests.TestUtilities;
 using Espresso.Domain.ValueObjects.SettingsValueObjects;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace Espresso.Domain.Tests.Services

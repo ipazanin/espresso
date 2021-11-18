@@ -6,8 +6,6 @@ using Espresso.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.Persistence.Database
 {
@@ -42,12 +40,12 @@ namespace Espresso.Persistence.Database
         public DbSet<ArticleCategory> ArticleCategories { get; }
 
         /// <summary>
-        /// Gets <see cref="Espresso.Domain.Entities.ApplicationDownload"/> database set.
+        /// Gets <see cref="Domain.Entities.ApplicationDownload"/> database set.
         /// </summary>
         public DbSet<ApplicationDownload> ApplicationDownload { get; }
 
         /// <summary>
-        /// Gets <see cref="Espresso.Domain.Entities.RssFeedCategory"/> database set.
+        /// Gets <see cref="Domain.Entities.RssFeedCategory"/> database set.
         /// </summary>
         public DbSet<RssFeedCategory> RssFeedCategory { get; }
 
