@@ -2,7 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
 using System.Runtime.Serialization;
 
 namespace Espresso.WebApi.Application.Exceptions

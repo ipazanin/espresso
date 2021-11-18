@@ -39,12 +39,12 @@ namespace Espresso.Persistence.Database
         public DbSet<ArticleCategory> ArticleCategories { get; set; } = null!;
 
         /// <summary>
-        /// Gets or sets <see cref="Espresso.Domain.Entities.ApplicationDownload"/> database set.
+        /// Gets or sets <see cref="Domain.Entities.ApplicationDownload"/> database set.
         /// </summary>
         public DbSet<ApplicationDownload> ApplicationDownload { get; set; } = null!;
 
         /// <summary>
-        /// Gets or sets <see cref="Espresso.Domain.Entities.RssFeedCategory"/> database set.
+        /// Gets or sets <see cref="Domain.Entities.RssFeedCategory"/> database set.
         /// </summary>
         public DbSet<RssFeedCategory> RssFeedCategory { get; set; } = null!;
 

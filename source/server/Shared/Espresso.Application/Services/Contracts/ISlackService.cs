@@ -4,10 +4,6 @@
 
 using Espresso.Application.DataTransferObjects.SlackDataTransferObjects;
 using Espresso.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.Application.Services.Contracts
 {
@@ -46,8 +42,8 @@ namespace Espresso.Application.Services.Contracts
             int yesterdayIosCount,
             int totalAndroidCount,
             int totalIosCount,
-            int activeUsers,
-            decimal revenue,
+            (int activeUsersOnAndroid, int activeUsersOnIos) activeUsers,
+            (decimal androidRevenue, decimal iosRevenue) revenue,
             CancellationToken cancellationToken);
 
         /// <summary>

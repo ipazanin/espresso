@@ -3,9 +3,6 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Espresso.WebApi.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Authentication
 {

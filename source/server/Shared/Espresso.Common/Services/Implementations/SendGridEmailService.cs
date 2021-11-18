@@ -5,7 +5,6 @@
 using Espresso.Common.Services.Contracts;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System.Threading.Tasks;
 
 namespace Espresso.Common.Services.Implementations
 {

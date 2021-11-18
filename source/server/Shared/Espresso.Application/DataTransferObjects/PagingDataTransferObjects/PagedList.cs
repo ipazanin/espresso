@@ -2,7 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Espresso.Application.DataTransferObjects.PagingDataTransferObjects

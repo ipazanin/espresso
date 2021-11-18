@@ -2,8 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System;
-
 namespace Espresso.Domain.Entities
 {
     public class SimilarArticle

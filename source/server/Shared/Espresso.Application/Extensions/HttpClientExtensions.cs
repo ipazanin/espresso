@@ -2,9 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Collections.Generic;
-using System.Net.Http;
-
 namespace Espresso.Application.Extensions
 {
     /// <summary>

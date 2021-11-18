@@ -4,9 +4,6 @@
 
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles

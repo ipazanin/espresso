@@ -6,9 +6,6 @@ using Espresso.Common.Extensions;
 using Espresso.Dashboard.Application.IServices;
 using Espresso.Domain.Entities;
 using HtmlAgilityPack;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Espresso.Dashboard.Application.Services
 {

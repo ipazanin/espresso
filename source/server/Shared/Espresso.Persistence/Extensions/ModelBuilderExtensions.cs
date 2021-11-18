@@ -3,8 +3,6 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 using System.Reflection;
 
 namespace Espresso.Persistence.Extensions

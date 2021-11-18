@@ -4,9 +4,6 @@
 
 using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace Espresso.Dashboard.Application.NewsPortals.GetNewsPortalDetails

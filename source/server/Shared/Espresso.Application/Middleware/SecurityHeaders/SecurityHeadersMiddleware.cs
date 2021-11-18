@@ -3,7 +3,6 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 
 namespace Espresso.Application.Middleware.SecurityHeaders
 {

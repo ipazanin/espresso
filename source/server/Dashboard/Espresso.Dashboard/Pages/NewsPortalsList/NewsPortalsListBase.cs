@@ -9,7 +9,6 @@ using Espresso.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
-using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Pages.NewsPortalsList
 {

@@ -6,9 +6,6 @@ using Espresso.Common.Enums;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Espresso.Domain.Extensions
 {

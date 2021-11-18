@@ -8,7 +8,6 @@ using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.ValueObjects.RssFeedValueObjects;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Collections.Generic;
 
 namespace Espresso.Persistence.DataSeed
 {

@@ -1,26 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <!--Basic Project Configuration-->
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <AnalysisLevel>preview</AnalysisLevel>
-    <Nullable>enable</Nullable>
-    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
-    <Features>$(Features);flow-analysis</Features> 
+    <TargetFramework>net6.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+  <!--Basic Project Configuration-->
 
-  <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.37" />
-    <PackageReference Include="System.ServiceModel.Syndication" Version="5.0.0" />
-  </ItemGroup>
+  <!--Static Code Analysis-->
+  <PropertyGroup>
+    <AnalysisLevel>preview</AnalysisLevel>
+    <Nullable>enable</Nullable>
+    <Features>$(Features);flow-analysis</Features>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+  </PropertyGroup>
+  <!--Static Code Analysis-->
 
+  <!--Project References-->
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Espresso.Application\Espresso.Application.csproj" />
   </ItemGroup>
+  <!--Project References-->
 
+  <!--Packages-->
+  <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.38" />
+    <PackageReference Include="System.ServiceModel.Syndication" Version="6.0.0" />
+  </ItemGroup>
+  <!--Packages-->
 
-  <!-- Analyzers -->
-
+  <!--Analyzer Packages-->
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" Link="Properties\stylecop.json" />
   </ItemGroup>
@@ -38,7 +47,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.30.0.37606">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.32.0.39516">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -46,7 +55,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.63">
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.64">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -55,8 +64,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+  <!--Analyzer Packages-->
 
-  <!-- Analyzers -->
-
-
+  <!--Global Using-->
+  <ItemGroup>
+    <Compile Include="..\..\GlobalUsings.cs" Link="GlobalUsings.cs" />
+  </ItemGroup>
+  <!--Global Using-->
+  
 </Project>

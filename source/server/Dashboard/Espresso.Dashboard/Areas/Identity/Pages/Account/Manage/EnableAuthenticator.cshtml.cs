@@ -6,12 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
 {
@@ -19,11 +15,11 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
     public class EnableAuthenticatorModel : PageModel
 #pragma warning restore SA1649 // File name should match first type name
     {
+        private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
+
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<EnableAuthenticatorModel> _logger;
         private readonly UrlEncoder _urlEncoder;
-
-        private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EnableAuthenticatorModel"/> class.

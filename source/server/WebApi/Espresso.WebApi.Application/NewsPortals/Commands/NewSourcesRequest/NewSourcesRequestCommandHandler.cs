@@ -4,8 +4,6 @@
 
 using Espresso.Application.Services.Contracts;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Application.NewsPortals.Commands.NewSourcesRequest
 {

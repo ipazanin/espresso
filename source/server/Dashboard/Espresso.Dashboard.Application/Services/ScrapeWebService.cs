@@ -13,15 +13,6 @@ using Espresso.Domain.IServices;
 using Espresso.Domain.ValueObjects.RssFeedValueObjects;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Application.Services
 {

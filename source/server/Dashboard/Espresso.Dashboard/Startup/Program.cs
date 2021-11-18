@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using System;
+using Microsoft.Extensions.Logging;
 
 namespace Espresso.Dashboard.Startup
 {
@@ -24,7 +24,7 @@ namespace Espresso.Dashboard.Startup
                 {
                     var environmentName = Environment.GetEnvironmentVariable(EnvironmentVariableNamesConstants.AspNetCoreEnvironment) ?? string.Empty;
 
-                    var parentDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
+                    var parentDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
                     _ = configureOptions
                         .AddJsonFile(path: $"{parentDirectory}/configuration/app-settings.json", optional: false)
@@ -43,6 +43,11 @@ namespace Espresso.Dashboard.Startup
                             environment: ctx.HostingEnvironment,
                             configuration: ctx.Configuration);
                     });
+                })
+                .ConfigureLogging(loggingBuilder =>
+                {
+                    loggingBuilder.ClearProviders();
+                    loggingBuilder.AddConsole();
                 });
     }
 }

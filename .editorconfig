@@ -370,12 +370,17 @@ dotnet_diagnostic.CA2007.severity = none
 # SA1308: Variable names should not be prefixed
 dotnet_diagnostic.SA1308.severity = none
 
+# SA1311: Static readonly fields should begin with upper-case letter
+dotnet_diagnostic.SA1311.severity = none
+
+dotnet_diagnostic.AD0001.severity = none
+
 ######################################################
 #           Custom Analysers End
 ######################################################
 
 ######################################################
-#           Code Documentation
+#           Code Documentation Analysers
 ######################################################
 
 # SA1614: Element parameter documentation should have text
@@ -408,6 +413,9 @@ dotnet_diagnostic.SA1600.severity = none
 # SA1601: Partial elements should be documented
 dotnet_diagnostic.SA1601.severity = none
 
+# SA1615: Element return value should be documented
+dotnet_diagnostic.SA1615.severity = none
+
 ######################################################
-#           Code Documentation End
+#           Code Documentation Analysers End
 ######################################################

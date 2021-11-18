@@ -11,10 +11,6 @@ using Espresso.Domain.Infrastructure;
 using Espresso.Domain.Utilities;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Jobs.CronJobs
 {

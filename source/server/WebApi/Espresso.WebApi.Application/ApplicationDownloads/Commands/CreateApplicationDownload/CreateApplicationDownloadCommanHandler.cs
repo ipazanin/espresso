@@ -6,9 +6,6 @@ using Espresso.Application.Models;
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
 using MediatR;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplicationDownload
 {

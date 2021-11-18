@@ -3,7 +3,6 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
 
 namespace Espresso.Persistence.EspressoDatabaseMigrations
 {

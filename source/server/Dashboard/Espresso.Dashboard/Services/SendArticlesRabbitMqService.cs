@@ -7,11 +7,6 @@ using Espresso.Common.Services.Contracts;
 using Espresso.Dashboard.Application.IServices;
 using Espresso.Domain.Entities;
 using RabbitMQ.Client;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Services
 {

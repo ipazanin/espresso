@@ -66,7 +66,7 @@ namespace Espresso.Common.Utilities
         }
 
         /// <summary>
-        /// Encodes <paramref name="parameterNumber"/> as <see cref="System.TimeSpan"/>.
+        /// Encodes <paramref name="parameterNumber"/> as <see cref="TimeSpan"/>.
         /// </summary>
         /// <param name="parameterNumber">Value to encode.</param>
         /// <returns>Encoded <paramref name="parameterNumber"/>.</returns>
@@ -76,7 +76,7 @@ namespace Espresso.Common.Utilities
         }
 
         /// <summary>
-        /// Encodes <paramref name="parameterNumber"/> as <see cref="System.DateTime"/>.
+        /// Encodes <paramref name="parameterNumber"/> as <see cref="DateTime"/>.
         /// </summary>
         /// <param name="parameterNumber">Value to encode.</param>
         /// <returns>Encoded <paramref name="parameterNumber"/>.</returns>
@@ -96,7 +96,7 @@ namespace Espresso.Common.Utilities
         }
 
         /// <summary>
-        /// Encodes <paramref name="parameterNumber"/> as <see cref="System.Enum"/>.
+        /// Encodes <paramref name="parameterNumber"/> as <see cref="Enum"/>.
         /// </summary>
         /// <param name="parameterNumber">Value to encode.</param>
         /// <returns>Encoded <paramref name="parameterNumber"/>.</returns>

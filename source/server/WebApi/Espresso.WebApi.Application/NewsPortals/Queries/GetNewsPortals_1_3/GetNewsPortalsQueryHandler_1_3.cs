@@ -7,10 +7,6 @@ using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals_1_3
 {

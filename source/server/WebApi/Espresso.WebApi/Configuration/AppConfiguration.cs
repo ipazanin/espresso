@@ -5,7 +5,6 @@
 using Espresso.Common.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 
 namespace Espresso.WebApi.Configuration
 {

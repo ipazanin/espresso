@@ -5,9 +5,6 @@
 using Espresso.WebApi.Application.Hubs;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Application.Notifications.Commands.SendArticlesNotifications
 {

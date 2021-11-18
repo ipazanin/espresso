@@ -4,7 +4,6 @@
 
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using MediatR;
-using System;
 
 namespace Espresso.WebApi.Application.Articles.Commands.HideArticle
 {

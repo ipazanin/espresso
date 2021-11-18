@@ -2,8 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using System.Collections.Generic;
-
 namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3
 {
 #pragma warning disable S101 // Types should be named in PascalCase

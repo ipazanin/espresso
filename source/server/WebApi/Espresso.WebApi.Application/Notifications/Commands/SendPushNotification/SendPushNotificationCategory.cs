@@ -4,7 +4,6 @@
 
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
-using System;
 using System.Linq.Expressions;
 
 namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotification

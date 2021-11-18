@@ -5,8 +5,6 @@
 using Espresso.Dashboard.Application.NewsPortals.GetNewsPortals;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using System;
-using System.Threading.Tasks;
 
 namespace Espresso.Dashboard.Pages.NewsPortalsList.NewsPortalsListItem
 {

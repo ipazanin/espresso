@@ -3,8 +3,6 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Application.HealthChecks
 {

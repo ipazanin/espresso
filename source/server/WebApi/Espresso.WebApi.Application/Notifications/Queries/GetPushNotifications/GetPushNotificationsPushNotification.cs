@@ -4,7 +4,6 @@
 
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
-using System;
 using System.Linq.Expressions;
 
 namespace Espresso.WebApi.Application.Notifications.Queries.GetPushNotifications

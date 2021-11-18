@@ -12,11 +12,6 @@ using Espresso.WebApi.Application.Exceptions;
 using FirebaseAdmin.Messaging;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotification
 {

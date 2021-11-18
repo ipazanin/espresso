@@ -4,7 +4,6 @@
 
 using Espresso.Common.Enums;
 using Espresso.Domain.Infrastructure;
-using System;
 
 namespace Espresso.Domain.Entities
 {

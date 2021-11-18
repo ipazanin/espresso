@@ -5,7 +5,6 @@
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Utilities;
-using System.Collections.Generic;
 using System.Globalization;
 using Xunit;
 

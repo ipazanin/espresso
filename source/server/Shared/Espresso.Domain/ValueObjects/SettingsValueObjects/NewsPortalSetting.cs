@@ -4,8 +4,6 @@
 
 using Espresso.Domain.Entities;
 using Espresso.Domain.Infrastructure;
-using System;
-using System.Collections.Generic;
 
 namespace Espresso.Domain.ValueObjects.SettingsValueObjects
 {

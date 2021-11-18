@@ -13,13 +13,6 @@ using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Espresso.Application.Services.Implementations
 {
@@ -113,8 +106,8 @@ namespace Espresso.Application.Services.Implementations
             int yesterdayIosCount,
             int totalAndroidCount,
             int totalIosCount,
-            int activeUsers,
-            decimal revenue,
+            (int activeUsersOnAndroid, int activeUsersOnIos) activeUsers,
+            (decimal androidRevenue, decimal iosRevenue) revenue,
             CancellationToken cancellationToken)
         {
             var blocks = new List<SlackBlock>
@@ -123,16 +116,16 @@ namespace Espresso.Application.Services.Implementations
                     text: new SlackMarkdownTextBlock("Downloads:"),
                     fields: new List<SlackMarkdownTextBlock>()
                     {
-                            new SlackMarkdownTextBlock("Android"),
-                            new SlackMarkdownTextBlock(yesterdayAndroidCount.ToString()),
-                            new SlackMarkdownTextBlock("iOS"),
-                            new SlackMarkdownTextBlock(yesterdayIosCount.ToString()),
-                            new SlackMarkdownTextBlock("Total Android"),
-                            new SlackMarkdownTextBlock(totalAndroidCount.ToString()),
-                            new SlackMarkdownTextBlock("Total iOS"),
-                            new SlackMarkdownTextBlock(totalIosCount.ToString()),
-                            new SlackMarkdownTextBlock("Total"),
-                            new SlackMarkdownTextBlock((totalIosCount + totalAndroidCount).ToString()),
+                        new SlackMarkdownTextBlock("Android"),
+                        new SlackMarkdownTextBlock(yesterdayAndroidCount.ToString()),
+                        new SlackMarkdownTextBlock("iOS"),
+                        new SlackMarkdownTextBlock(yesterdayIosCount.ToString()),
+                        new SlackMarkdownTextBlock("Total Android"),
+                        new SlackMarkdownTextBlock(totalAndroidCount.ToString()),
+                        new SlackMarkdownTextBlock("Total iOS"),
+                        new SlackMarkdownTextBlock(totalIosCount.ToString()),
+                        new SlackMarkdownTextBlock("Total"),
+                        new SlackMarkdownTextBlock((totalIosCount + totalAndroidCount).ToString()),
                     },
                     accessory: new SlackImageBlock(
                         imageUrl: "https://aux.iconspalace.com/uploads/download-icon-256-361231194.png",
@@ -142,7 +135,12 @@ namespace Espresso.Application.Services.Implementations
                     text: new SlackMarkdownTextBlock("Active Users:"),
                     fields: new List<SlackMarkdownTextBlock>()
                     {
-                            new SlackMarkdownTextBlock(activeUsers.ToString()),
+                        new SlackMarkdownTextBlock("Android"),
+                        new SlackMarkdownTextBlock(activeUsers.activeUsersOnAndroid.ToString()),
+                        new SlackMarkdownTextBlock("iOS"),
+                        new SlackMarkdownTextBlock(activeUsers.activeUsersOnIos.ToString()),
+                        new SlackMarkdownTextBlock("Total"),
+                        new SlackMarkdownTextBlock($"{activeUsers.activeUsersOnAndroid + activeUsers.activeUsersOnIos}"),
                     },
                     accessory: new SlackImageBlock(
                         imageUrl: "https://cdn1.iconfinder.com/data/icons/ui-colored-3-of-3/100/UI_3__23-512.png",
@@ -152,7 +150,12 @@ namespace Espresso.Application.Services.Implementations
                     text: new SlackMarkdownTextBlock("Revenue:"),
                     fields: new List<SlackMarkdownTextBlock>()
                     {
-                            new SlackMarkdownTextBlock($"{revenue:0.##}$"),
+                        new SlackMarkdownTextBlock("Android"),
+                        new SlackMarkdownTextBlock($"{revenue.androidRevenue:0.##}$"),
+                        new SlackMarkdownTextBlock("iOS"),
+                        new SlackMarkdownTextBlock($"{revenue.iosRevenue:0.##}$"),
+                        new SlackMarkdownTextBlock("Total"),
+                        new SlackMarkdownTextBlock($"{revenue.androidRevenue+revenue.iosRevenue:0.##}$"),
                     },
                     accessory: new SlackImageBlock(
                         imageUrl: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency/256/Dollar-USD-icon.png",

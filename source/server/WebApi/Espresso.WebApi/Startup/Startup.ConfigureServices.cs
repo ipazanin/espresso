@@ -34,8 +34,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Extensions.Http;
 using Polly.Timeout;
-using System;
-using System.Net.Http;
 using System.Reflection;
 
 namespace Espresso.WebApi.Startup
@@ -55,7 +53,6 @@ namespace Espresso.WebApi.Startup
             AddPersistence(services);
             AddJobs(services);
 
-            services.AddGraphQlServices();
             services.AddSwaggerServices(_webApiConfiguration);
         }
 
@@ -118,7 +115,6 @@ namespace Espresso.WebApi.Startup
                         .MapJsonSerializerOptionsToDefaultOptions(
                             jsonSerializerOptions: jsonOptions.JsonSerializerOptions);
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Latest)
                 .AddFluentValidation(
                     fluentValidatorConfiguration =>
                         fluentValidatorConfiguration
