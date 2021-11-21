@@ -42,9 +42,9 @@ namespace Espresso.WebApi.Extensions
             {
                 options.SwaggerDoc(apiVersion.ToString(), new OpenApiInfo
                 {
-                    Title = $"Espresso API",
+                    Title = "Espresso API",
                     Version = apiVersion.ToString(),
-                    Description = "Espresso APP Web Api",
+                    Description = $"Espresso APP Web Api {configuration.AppConfiguration.Version}",
                 });
             }
 

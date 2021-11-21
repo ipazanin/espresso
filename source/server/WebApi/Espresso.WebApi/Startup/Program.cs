@@ -47,11 +47,11 @@ namespace Espresso.WebApi.Startup
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                })
-                .ConfigureLogging(loggingBuilder =>
-                {
-                    loggingBuilder.ClearProviders();
-                    loggingBuilder.AddConsole();
+                    webBuilder.ConfigureLogging(loggingBuilder =>
+                    {
+                        loggingBuilder.ClearProviders();
+                        loggingBuilder.AddConsole();
+                    });
                 });
     }
 }

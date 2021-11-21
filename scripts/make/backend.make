@@ -28,7 +28,8 @@ EspressoIdentityDatabaseContextName="EspressoIdentityDatabaseContext"
 EspressoDatabaseMigrationsFolder="EspressoDatabaseMigrations"
 EspressoIdentityDatabaseMigrationsFolder="IdentityDatabaseMigrations"
 
-LocalLaunchProfile='local'
+DashboardLocalLaunchProfile='dashboard-local'
+WebApiLocalLaunchProfile='webapi-local'
 
 list::
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | \
@@ -164,7 +165,7 @@ infer-csharp::
 
 start-dashboard::
 ifeq ($(strip $(arg)),)
-	dotnet run --project $(ParserProjectPath) --configuration $(ReleaseConfiguration) --launch-profile $(LocalLaunchProfile)
+	dotnet run --project $(ParserProjectPath) --configuration $(ReleaseConfiguration) --launch-profile $(DashboardLocalLaunchProfile)
 else
 	dotnet watch --project $(ParserProjectPath) run --configuration $(DebugConfiguration)
 endif
