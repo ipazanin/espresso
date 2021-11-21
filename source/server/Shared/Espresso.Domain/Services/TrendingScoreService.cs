@@ -38,10 +38,10 @@ namespace Espresso.Domain.Services
                 averageClicks: averageClicks);
 
             var maxTrendingScore = clicksPerArticle
-                .Select(clicks => CalculateUnNormalisedTrendingScore(
+                .Max(clicks => CalculateUnNormalisedTrendingScore(
                     clicks: clicks,
                     averageClicks: averageClicks,
-                    standardClicksDeviation: standardClicksDeviation)).Max();
+                    standardClicksDeviation: standardClicksDeviation));
 
             foreach (var article in articles)
             {
@@ -62,14 +62,14 @@ namespace Espresso.Domain.Services
             decimal averageClicks,
             decimal standardClicksDeviation,
             decimal maxTrendingScore,
-            DateTime publishDateTime)
+            DateTimeOffset publishDateTime)
         {
             var trendingScore = CalculateUnNormalisedTrendingScore(
                     clicks: clicks,
                     averageClicks: averageClicks,
                     standardClicksDeviation: standardClicksDeviation);
 
-            var articleAge = DateTime.UtcNow - publishDateTime;
+            var articleAge = DateTimeOffset.UtcNow - publishDateTime;
             var articleAgeInDays = (decimal)articleAge.TotalDays;
             var dayAgeWeight = maxTrendingScore * _ageWeight;
 
@@ -79,7 +79,18 @@ namespace Espresso.Domain.Services
                 trendingScore: trendingScoreWithArticleAge,
                 maxTrendingScore: maxTrendingScore);
 
-            return normalisedTrendingScore < 0 ? 0 : normalisedTrendingScore >= 1000M ? 999M : normalisedTrendingScore;
+            if (normalisedTrendingScore < 0)
+            {
+                return 0;
+            }
+            else if (normalisedTrendingScore >= 1000M)
+            {
+                return 999M;
+            }
+            else
+            {
+                return normalisedTrendingScore;
+            }
         }
 
         private static decimal CalculateStandardDeviation(

@@ -23,7 +23,7 @@ namespace Espresso.Domain.Entities
         public ApplicationDownload(
             string webApiVersion,
             string mobileAppVersion,
-            DateTime downloadedTime,
+            DateTimeOffset downloadedTime,
             DeviceType mobileDeviceType)
         {
             WebApiVersion = webApiVersion;
@@ -48,7 +48,7 @@ namespace Espresso.Domain.Entities
 
         public string MobileAppVersion { get; private set; }
 
-        public DateTime DownloadedTime { get; private set; }
+        public DateTimeOffset DownloadedTime { get; private set; }
 
         public DeviceType MobileDeviceType { get; private set; }
     }

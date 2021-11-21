@@ -267,7 +267,7 @@ namespace Espresso.Dashboard.Application.Services
             }
         }
 
-        private DateTime? GetPublishDateTime(DateTimeOffset itemPublishDateTime, DateTime utcNow)
+        private DateTimeOffset? GetPublishDateTime(DateTimeOffset itemPublishDateTime, DateTimeOffset utcNow)
         {
             var invalidPublishdateTimeMinimum = utcNow - _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfArticle;
             var minimumPublishDateTime = utcNow.AddDays(-1);
@@ -280,11 +280,11 @@ namespace Espresso.Dashboard.Application.Services
             }
             else if (rssFeedPublishDateTime > maximumPublishDateTime || rssFeedPublishDateTime < minimumPublishDateTime)
             {
-                return (DateTime?)utcNow;
+                return utcNow;
             }
             else
             {
-                return (DateTime?)rssFeedPublishDateTime;
+                return rssFeedPublishDateTime;
             }
         }
 
@@ -294,7 +294,7 @@ namespace Espresso.Dashboard.Application.Services
             CancellationToken cancellationToken)
         {
             var id = Guid.NewGuid();
-            var utcNow = DateTime.UtcNow;
+            var utcNow = DateTimeOffset.UtcNow;
             const int initialNumberOfClicks = 0;
 
             var title = rssFeedItem.Title;

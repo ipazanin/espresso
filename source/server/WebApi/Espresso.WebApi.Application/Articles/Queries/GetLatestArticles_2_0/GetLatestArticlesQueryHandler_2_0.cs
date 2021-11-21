@@ -87,7 +87,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
 
         private static IEnumerable<GetLatestArticlesArticle_2_0> GetLatestArticles(
             IEnumerable<Article> savedArticles,
-            DateTime? firstArticleCreateDateTime,
+            DateTimeOffset? firstArticleCreateDateTime,
             GetLatestArticlesQuery_2_0 request,
             IEnumerable<int>? categoryIds,
             IEnumerable<int>? newsPortalIds,
@@ -154,7 +154,7 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
 
         private IEnumerable<GetLatestArticlesArticle_2_0> GetFeaturedArticles(
             IEnumerable<Article> savedArticles,
-            DateTime? firstArticleCreateDateTime,
+            DateTimeOffset? firstArticleCreateDateTime,
             GetLatestArticlesQuery_2_0 request,
             IEnumerable<int>? categoryIds,
             IEnumerable<string> keyWordsToFilterOut)

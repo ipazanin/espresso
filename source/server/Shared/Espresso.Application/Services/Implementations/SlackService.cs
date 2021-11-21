@@ -242,7 +242,7 @@ namespace Espresso.Application.Services.Implementations
                         new SlackMarkdownTextBlock("*Category*"),
                         new SlackMarkdownTextBlock(article.ArticleCategories.First().Category!.Name),
                         new SlackMarkdownTextBlock("*Publish Time*"),
-                        new SlackMarkdownTextBlock(article.PublishDateTime.ToShortTimeString()),
+                        new SlackMarkdownTextBlock(article.PublishDateTime.DateTime.ToShortTimeString()),
                         new SlackMarkdownTextBlock("*Number Of Clicks*"),
                         new SlackMarkdownTextBlock(article.NumberOfClicks.ToString()),
                         new SlackMarkdownTextBlock("*Clicks ‰*"),

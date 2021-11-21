@@ -3,6 +3,7 @@ using System;
 using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Espresso.Persistence.EspressoDatabaseMigrations
 {
     [DbContext(typeof(EspressoDatabaseContext))]
-    partial class EspressoDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20211121160628_ChangeDateTimesToDateTimeOffsets")]
+    partial class ChangeDateTimesToDateTimeOffsets
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

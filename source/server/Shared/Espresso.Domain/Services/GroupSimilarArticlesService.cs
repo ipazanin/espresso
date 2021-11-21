@@ -34,9 +34,9 @@ namespace Espresso.Domain.Services
         public IEnumerable<SimilarArticle> GroupSimilarArticles(
             IEnumerable<Article> articles,
             ISet<Guid> subordinateArticleIds,
-            DateTime lastSimilarityGroupingTime)
+            DateTimeOffset lastSimilarityGroupingTime)
         {
-            var maxAgeOfSimilarArticleCheckingDateTime = DateTime.UtcNow - _settingProvider
+            var maxAgeOfSimilarArticleCheckingDateTime = DateTimeOffset.UtcNow - _settingProvider
                 .LatestSetting
                 .SimilarArticleSetting
                 .MaxAgeOfSimilarArticleChecking;
@@ -67,7 +67,7 @@ namespace Espresso.Domain.Services
                     lastSimilarityGroupingTime: lastSimilarityGroupingTime);
 
                 similarArticles.AddRange(articlesSimilarArticles);
-                notMatchedArticles.Remove(article);
+                _ = notMatchedArticles.Remove(article);
 
                 var namedArguments = new (string argumentName, object argumentValue)[]
                 {
@@ -89,7 +89,7 @@ namespace Espresso.Domain.Services
             Article possibleMainArticle,
             IList<Article> notMatchedArticles,
             ISet<Guid> subordinateArticleIds,
-            DateTime lastSimilarityGroupingTime)
+            DateTimeOffset lastSimilarityGroupingTime)
         {
             var similarArticles = new List<SimilarArticle>();
             var possibleSimilarArticles = notMatchedArticles
@@ -119,8 +119,8 @@ namespace Espresso.Domain.Services
                         subordinateArticleId: possibleSimilarArticle.Id,
                         subordinateArticle: null);
                     similarArticles.Add(similarArticle);
-                    subordinateArticleIds.Add(similarArticle.SubordinateArticleId);
-                    notMatchedArticles.Remove(possibleSimilarArticle);
+                    _ = subordinateArticleIds.Add(similarArticle.SubordinateArticleId);
+                    _ = notMatchedArticles.Remove(possibleSimilarArticle);
 
                     var namedArguments = new (string argumentName, object argumentValue)[]
                     {

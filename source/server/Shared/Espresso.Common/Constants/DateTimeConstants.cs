@@ -9,20 +9,16 @@ namespace Espresso.Common.Constants
     /// </summary>
     public static class DateTimeConstants
     {
+
         /// <summary>
         /// Gets unix epoch start time.
         /// </summary>
         /// <remarks>
         /// https://en.wikipedia.org/wiki/Unix_time.
         /// </remarks>
-        public static DateTime UnixEpochStartTime => new(
-            year: 1970,
-            month: 1,
-            day: 1,
-            hour: 0,
-            minute: 0,
-            second: 0,
-            kind: DateTimeKind.Utc);
+        public static DateTimeOffset UnixEpochStart => new(
+            dateTime: UnixEpochStartDateTime,
+            offset: TimeSpan.Zero);
 
         /// <summary>
         /// Logger <see cref="DateTime"/> format.
@@ -45,5 +41,14 @@ namespace Espresso.Common.Constants
         /// One year in seconds.
         /// </summary>
         public const int OneYearInSeconds = 60 * 60 * 24 * 365;
+
+        public static DateTime UnixEpochStartDateTime => new(
+            year: 1970,
+            month: 1,
+            day: 1,
+            hour: 0,
+            minute: 0,
+            second: 0,
+            kind: DateTimeKind.Utc);
     }
 }

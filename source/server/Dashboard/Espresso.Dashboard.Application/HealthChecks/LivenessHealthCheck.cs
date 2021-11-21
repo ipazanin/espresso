@@ -38,7 +38,7 @@ namespace Espresso.Dashboard.Application.HealthChecks
             var healthyResult = HealthCheckResult.Healthy("Application is live");
             var unhealthyResult = HealthCheckResult.Unhealthy("Application is unhealthy");
 
-            var hourInDay = DateTime.UtcNow.Hour;
+            var hourInDay = DateTimeOffset.UtcNow.Hour;
 
             if (hourInDay is (>= 21 and <= 24) or (>= 0 and <= 5))
             {
@@ -54,7 +54,7 @@ namespace Espresso.Dashboard.Application.HealthChecks
 
             var greatesCreatedArticleDateTime = articles.Values.Max(article => article.CreateDateTime);
 
-            var timespan = DateTime.UtcNow - greatesCreatedArticleDateTime;
+            var timespan = DateTimeOffset.UtcNow - greatesCreatedArticleDateTime;
             if (timespan.TotalMinutes > 20)
             {
                 var deadLockMessage = _memoryCache.Get<string>(MemoryCacheConstants.DeadLockLogKey);

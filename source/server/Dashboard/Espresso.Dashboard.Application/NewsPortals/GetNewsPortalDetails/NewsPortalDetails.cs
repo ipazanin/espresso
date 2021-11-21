@@ -69,7 +69,7 @@ namespace Espresso.Dashboard.Application.NewsPortals.GetNewsPortalDetails
         /// <summary>
         /// Gets <see cref="NewsPortal"/> created at.
         /// </summary>
-        public DateTime CreatedAt { get; }
+        public DateTimeOffset CreatedAt { get; }
 
         /// <summary>
         /// Gets a value indicating whether <see cref="NewsPortal"/> is used in application for parsing <see cref="RssFeed"/>.

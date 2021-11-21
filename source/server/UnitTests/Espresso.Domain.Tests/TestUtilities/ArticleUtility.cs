@@ -17,8 +17,8 @@ namespace Espresso.Domain.Tests.TestUtilities
             string articleUrl = "",
             string title = "",
             string summary = "",
-            DateTime publishDateTime = default,
-            DateTime createDateTime = default,
+            DateTimeOffset publishDateTime = default,
+            DateTimeOffset createDateTime = default,
             int categoryId = default,
             Guid id = default)
         {

@@ -1,6 +1,6 @@
-// ArticleData.cs
+﻿// ArticleData.cs
 //
-// � 2021 Espresso News. All rights reserved.
+// © 2021 Espresso News. All rights reserved.
 
 using Espresso.Domain.Entities;
 
@@ -20,11 +20,11 @@ namespace Espresso.Domain.Records
 
         public string? ImageUrl { get; set; }
 
-        public DateTime CreateDateTime { get; set; }
+        public DateTimeOffset CreateDateTime { get; set; }
 
-        public DateTime UpdateDateTime { get; set; }
+        public DateTimeOffset UpdateDateTime { get; set; }
 
-        public DateTime? PublishDateTime { get; set; }
+        public DateTimeOffset? PublishDateTime { get; set; }
 
         public int NumberOfClicks { get; set; }
 

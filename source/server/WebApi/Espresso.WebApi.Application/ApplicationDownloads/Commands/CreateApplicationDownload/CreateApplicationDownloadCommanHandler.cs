@@ -32,12 +32,12 @@ namespace Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplic
             var applicationDownload = new ApplicationDownload(
                 webApiVersion: _applicationInformation.Version,
                 mobileAppVersion: request.ConsumerVersion,
-                downloadedTime: DateTime.UtcNow,
+                downloadedTime: DateTimeOffset.UtcNow,
                 mobileDeviceType: request.DeviceType);
 
-            _context.ApplicationDownload.Add(applicationDownload);
+            _ = _context.ApplicationDownload.Add(applicationDownload);
 
-            await _context
+            _ = await _context
                 .SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
