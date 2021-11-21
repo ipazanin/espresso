@@ -22,13 +22,13 @@ namespace Espresso.Domain.Services
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="articles"></param>
         /// <returns>Removed articles.</returns>
         public IEnumerable<Article> RemoveOldArticlesFromCollection(IDictionary<Guid, Article> articles)
         {
-            var maxAgeDate = DateTime.UtcNow - _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfArticle;
+            var maxAgeDate = DateTimeOffset.UtcNow - _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfArticle;
             var articlesToRemove = new List<Article>();
 
             foreach (var (_, article) in articles)
@@ -41,7 +41,7 @@ namespace Espresso.Domain.Services
 
             foreach (var article in articlesToRemove)
             {
-                articles.Remove(article.Id);
+                _ = articles.Remove(article.Id);
             }
 
             return articlesToRemove;
@@ -49,7 +49,7 @@ namespace Espresso.Domain.Services
 
         public IEnumerable<Article> RemoveOldArticles(IEnumerable<Article> articles)
         {
-            var maxAgeDate = DateTime.UtcNow - _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfArticle;
+            var maxAgeDate = DateTimeOffset.UtcNow - _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfArticle;
 
             var notOldArticles = articles.Where(article => article.PublishDateTime > maxAgeDate);
 

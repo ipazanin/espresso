@@ -28,7 +28,7 @@ namespace Espresso.Domain.Entities
 
         public bool IsSoundEnabled { get; private set; }
 
-        public DateTime CreatedAt { get; private set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PushNotification"/> class.
@@ -64,7 +64,7 @@ namespace Espresso.Domain.Entities
             string topic,
             string articleUrl,
             bool isSoundEnabled,
-            DateTime createdAt)
+            DateTimeOffset createdAt)
         {
             Id = id;
             InternalName = internalName;

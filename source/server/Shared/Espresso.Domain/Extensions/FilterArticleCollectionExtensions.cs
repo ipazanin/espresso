@@ -75,9 +75,9 @@ namespace Espresso.Domain.Extensions
             IEnumerable<int>? categoryIds,
             IEnumerable<int>? newsPortalIds,
             string? titleSearchTerm,
-            DateTime? articleCreateDateTime)
+            DateTimeOffset? articleCreateDateTime)
         {
-            var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
+            var articleMinimumAge = articleCreateDateTime ?? DateTimeOffset.UtcNow;
             var searchTerms = LanguageUtility.GetSearchTerms(titleSearchTerm);
 
             var filteredArticles = articles
@@ -89,14 +89,13 @@ namespace Espresso.Domain.Extensions
                         (categoryIds == null || article
                             .ArticleCategories
                             .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
-                        (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)) &&
+                        (newsPortalIds?.Contains(article.NewsPortalId) != false) &&
                         (
-                            searchTerms == null ||
-                            searchTerms
+                            searchTerms?
                                 .All(searchTerm => article
                                     .Title
                                     .ReplaceCroatianCharacters()
-                                    .Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase))));
+                                    .Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase)) != false));
 
             return filteredArticles;
         }
@@ -106,7 +105,7 @@ namespace Espresso.Domain.Extensions
             int categoryId,
             IEnumerable<int>? newsPortalIds,
             string? titleSearchTerm,
-            DateTime? articleCreateDateTime)
+            DateTimeOffset? articleCreateDateTime)
         {
             var categoryIds = new[] { categoryId };
 
@@ -124,9 +123,9 @@ namespace Espresso.Domain.Extensions
                     IEnumerable<int>? categoryIds,
                     IEnumerable<int>? newsPortalIds,
                     string? titleSearchTerm,
-                    DateTime? articleCreateDateTime)
+                    DateTimeOffset? articleCreateDateTime)
         {
-            var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
+            var articleMinimumAge = articleCreateDateTime ?? DateTimeOffset.UtcNow;
             var searchTerms = LanguageUtility.GetSearchTerms(titleSearchTerm);
 
             var filteredArticles = articles
@@ -137,14 +136,13 @@ namespace Espresso.Domain.Extensions
                         (categoryIds == null || article
                             .ArticleCategories
                             .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
-                        (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)) &&
+                        (newsPortalIds?.Contains(article.NewsPortalId) != false) &&
                         (
-                            searchTerms == null ||
-                            searchTerms
+                            searchTerms?
                                 .All(searchTerm => article
                                     .Title
                                     .ReplaceCroatianCharacters()
-                                    .Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase))));
+                                    .Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase)) != false));
 
             return filteredArticles;
         }
@@ -154,7 +152,7 @@ namespace Espresso.Domain.Extensions
             int categoryId,
             IEnumerable<int>? newsPortalIds,
             string? titleSearchTerm,
-            DateTime? articleCreateDateTime)
+            DateTimeOffset? articleCreateDateTime)
         {
             var categoryIds = new[] { categoryId };
 
@@ -172,22 +170,22 @@ namespace Espresso.Domain.Extensions
             IEnumerable<int>? categoryIds,
             IEnumerable<int>? newsPortalIds,
             TimeSpan maxAgeOfFeaturedArticle,
-            DateTime? articleCreateDateTime)
+            DateTimeOffset? articleCreateDateTime)
         {
-            var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
-            var maxDateTimeOfFeaturedArticle = DateTime.UtcNow - maxAgeOfFeaturedArticle;
+            var articleMinimumAge = articleCreateDateTime ?? DateTimeOffset.UtcNow;
+            var maxDateTimeOfFeaturedArticle = DateTimeOffset.UtcNow - maxAgeOfFeaturedArticle;
 
             var filteredArticles = articles
                 .Where(
                     article =>
-                        !article.EditorConfiguration?.IsHidden == true &&
+                        article.EditorConfiguration?.IsHidden == false &&
                         article.EditorConfiguration?.IsFeatured == true &&
                         article.CreateDateTime <= articleMinimumAge &&
                         article.PublishDateTime > maxDateTimeOfFeaturedArticle &&
                         (categoryIds == null || article
                             .ArticleCategories
                             .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
-                        (newsPortalIds == null || newsPortalIds.Contains(article.NewsPortalId)));
+                        (newsPortalIds?.Contains(article.NewsPortalId) != false));
 
             return filteredArticles;
         }
@@ -195,16 +193,16 @@ namespace Espresso.Domain.Extensions
         public static IEnumerable<Article> FilterTrendingArticles(
             this IEnumerable<Article> articles,
             TimeSpan maxAgeOfTrendingArticle,
-            DateTime? articleCreateDateTime)
+            DateTimeOffset? articleCreateDateTime)
         {
-            var maxTrendingDateTime = DateTime.UtcNow - maxAgeOfTrendingArticle;
+            var maxTrendingDateTime = DateTimeOffset.UtcNow - maxAgeOfTrendingArticle;
 
-            var articleMinimumAge = articleCreateDateTime ?? DateTime.UtcNow;
+            var articleMinimumAge = articleCreateDateTime ?? DateTimeOffset.UtcNow;
 
             var filteredArticles = articles
                 .Where(
                     article =>
-                        !article.EditorConfiguration?.IsHidden == true &&
+                        article.EditorConfiguration?.IsHidden == false &&
                         article.EditorConfiguration?.IsFeatured != false &&
                         article.CreateDateTime <= articleMinimumAge &&
                         article.PublishDateTime > maxTrendingDateTime &&

@@ -33,15 +33,13 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
 
         public static Expression<Func<NewsPortal, GetConfigurationNewsPortal>> GetProjection(TimeSpan maxAgeOfNewNewsPortal)
         {
-            var newNewsPortalMinDate = DateTime.UtcNow - maxAgeOfNewNewsPortal;
+            var newNewsPortalMinDate = DateTimeOffset.UtcNow - maxAgeOfNewNewsPortal;
             return newsPortal => new GetConfigurationNewsPortal
             {
                 Id = newsPortal.Id,
                 Name = newsPortal.Name,
                 IconUrl = newsPortal.IconUrl,
-                IsNew = newsPortal.IsNewOverride != null ?
-                    newsPortal.IsNewOverride.Value :
-                    newsPortal.CreatedAt > newNewsPortalMinDate,
+                IsNew = newsPortal.IsNewOverride ?? newsPortal.CreatedAt > newNewsPortalMinDate,
                 CategoryId = newsPortal.CategoryId,
                 RegionId = newsPortal.RegionId,
             };

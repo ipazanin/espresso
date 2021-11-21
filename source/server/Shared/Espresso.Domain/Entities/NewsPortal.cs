@@ -52,7 +52,7 @@ namespace Espresso.Domain.Entities
         /// <summary>
         /// Gets <see cref="NewsPortal"/> created at.
         /// </summary>
-        public DateTime CreatedAt { get; private set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether <see cref="NewsPortal"/> is used in application for parsing <see cref="RssFeeds"/>.
@@ -111,7 +111,7 @@ namespace Espresso.Domain.Entities
             string baseUrl,
             string iconUrl,
             bool? isNewOverride,
-            DateTime createdAt,
+            DateTimeOffset createdAt,
             int categoryId,
             int regionId,
             bool isEnabled)
@@ -133,7 +133,7 @@ namespace Espresso.Domain.Entities
             int? regionId,
             TimeSpan maxAgeOfNewNewsPortal)
         {
-            var newNewsPortalMinDate = DateTime.UtcNow - maxAgeOfNewNewsPortal;
+            var newNewsPortalMinDate = DateTimeOffset.UtcNow - maxAgeOfNewNewsPortal;
             return newsPortal =>
                 newsPortalIds != null && !newsPortalIds.Contains(newsPortal.Id) &&
                 categoryId.Equals(newsPortal.CategoryId) &&
@@ -147,7 +147,7 @@ namespace Espresso.Domain.Entities
             IEnumerable<int>? categoryIds,
             TimeSpan maxAgeOfNewNewsPortal)
         {
-            var newNewsPortalMinDate = DateTime.UtcNow - maxAgeOfNewNewsPortal;
+            var newNewsPortalMinDate = DateTimeOffset.UtcNow - maxAgeOfNewNewsPortal;
 
             return newsPortal =>
                 newsPortalIds != null && !newsPortalIds.Contains(newsPortal.Id) &&

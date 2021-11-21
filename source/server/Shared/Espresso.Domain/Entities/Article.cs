@@ -33,11 +33,11 @@ namespace Espresso.Domain.Entities
         /// <summary>
         /// Gets date Time when article was created in Espresso App.
         /// </summary>
-        public DateTime CreateDateTime { get; private set; }
+        public DateTimeOffset CreateDateTime { get; private set; }
 
-        public DateTime UpdateDateTime { get; private set; }
+        public DateTimeOffset UpdateDateTime { get; private set; }
 
-        public DateTime PublishDateTime { get; private set; }
+        public DateTimeOffset PublishDateTime { get; private set; }
 
         public int NumberOfClicks { get; private set; }
 
@@ -103,9 +103,9 @@ namespace Espresso.Domain.Entities
             string summary,
             string title,
             string? imageUrl,
-            DateTime createDateTime,
-            DateTime updateDateTime,
-            DateTime publishDateTime,
+            DateTimeOffset createDateTime,
+            DateTimeOffset updateDateTime,
+            DateTimeOffset publishDateTime,
             int numberOfClicks,
             decimal trendingScore,
             EditorConfiguration editorConfiguration,
@@ -259,7 +259,7 @@ namespace Espresso.Domain.Entities
 
             if (shouldUpdate)
             {
-                UpdateDateTime = DateTime.UtcNow;
+                UpdateDateTime = DateTimeOffset.UtcNow;
             }
 
             var numberOfArticleCategoriesAfterUpdate = ArticleCategories.Count + articleCategoriesToCreate.Count - articleCategoriesToDelete.Count;

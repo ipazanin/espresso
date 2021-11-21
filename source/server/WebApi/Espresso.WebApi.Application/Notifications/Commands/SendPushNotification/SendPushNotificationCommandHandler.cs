@@ -103,7 +103,7 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
 
             var messaging = FirebaseMessaging.DefaultInstance;
 
-            await messaging.SendAsync(message, cancellationToken);
+            _ = await messaging.SendAsync(message, cancellationToken);
             var pushNotification = new PushNotification(
                 id: Guid.NewGuid(),
                 internalName: internalName,
@@ -112,10 +112,10 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
                 topic: request.Topic,
                 articleUrl: request.ArticleUrl,
                 isSoundEnabled: request.IsSoundEnabled,
-                createdAt: DateTime.UtcNow);
+                createdAt: DateTimeOffset.UtcNow);
 
-            _espressoDatabaseContext.PushNotifications.Add(pushNotification);
-            await _espressoDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
+            _ = _espressoDatabaseContext.PushNotifications.Add(pushNotification);
+            _ = await _espressoDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
 
             await _slackService.LogPushNotification(
                 pushNotification: pushNotification,
@@ -128,7 +128,7 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendPushNotificatio
         private static string GetInternalName(string? internalName)
         {
             return string.IsNullOrWhiteSpace(internalName) ?
-                $"ESPR-{DateTime.UtcNow.ToString(DateTimeConstants.PushNotificationInternalNameFormat)}" :
+                $"ESPR-{DateTimeOffset.UtcNow.ToString(DateTimeConstants.PushNotificationInternalNameFormat)}" :
                 internalName;
         }
     }

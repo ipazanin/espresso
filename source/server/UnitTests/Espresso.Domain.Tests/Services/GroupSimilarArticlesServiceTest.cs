@@ -37,10 +37,10 @@ namespace Espresso.Domain.Tests.Services
 
             var loggerServiceMock = new Mock<ILoggerService<GroupSimilarArticlesService>>(MockBehavior.Strict);
 
-            loggerServiceMock.Setup(loggerService => loggerService.Log(
-                It.IsAny<string>(),
-                It.IsAny<LogLevel>(),
-                It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
+            _ = loggerServiceMock.Setup(loggerService => loggerService.Log(
+                  It.IsAny<string>(),
+                  It.IsAny<LogLevel>(),
+                  It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
 
             var similarArticleSetting = new SimilarArticleSetting(
                 similarityScoreThreshold: 0.6,
@@ -58,7 +58,7 @@ namespace Espresso.Domain.Tests.Services
                     similarArticleSetting: similarArticleSetting);
 
             var settingProviderMock = new Mock<ISettingProvider>(MockBehavior.Strict);
-            settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
+            _ = settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
                 .Returns(setting);
 
             var articles = new List<Article>
@@ -66,15 +66,15 @@ namespace Espresso.Domain.Tests.Services
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
                     title: firstArticleTitle,
-                    publishDateTime: DateTime.UtcNow,
-                    createDateTime: DateTime.UtcNow,
+                    publishDateTime: DateTimeOffset.UtcNow,
+                    createDateTime: DateTimeOffset.UtcNow,
                     categoryId: 1,
                     id: Guid.NewGuid()),
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 2,
                     title: secondArticleTitle,
-                    publishDateTime: DateTime.UtcNow,
-                    createDateTime: DateTime.UtcNow,
+                    publishDateTime: DateTimeOffset.UtcNow,
+                    createDateTime: DateTimeOffset.UtcNow,
                     categoryId: 2,
                     id: Guid.NewGuid()),
             };
@@ -95,10 +95,10 @@ namespace Espresso.Domain.Tests.Services
 
             var loggerServiceMock = new Mock<ILoggerService<GroupSimilarArticlesService>>(MockBehavior.Strict);
 
-            loggerServiceMock.Setup(loggerService => loggerService.Log(
-                It.IsAny<string>(),
-                It.IsAny<LogLevel>(),
-                It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
+            _ = loggerServiceMock.Setup(loggerService => loggerService.Log(
+                  It.IsAny<string>(),
+                  It.IsAny<LogLevel>(),
+                  It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
 
             var similarArticleSetting = new SimilarArticleSetting(
                 similarityScoreThreshold: 0.6,
@@ -116,7 +116,7 @@ namespace Espresso.Domain.Tests.Services
                     similarArticleSetting: similarArticleSetting);
 
             var settingProviderMock = new Mock<ISettingProvider>(MockBehavior.Strict);
-            settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
+            _ = settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
                 .Returns(setting);
 
             var articles = new List<Article>();
@@ -137,10 +137,10 @@ namespace Espresso.Domain.Tests.Services
 
             var loggerServiceMock = new Mock<ILoggerService<GroupSimilarArticlesService>>(MockBehavior.Strict);
 
-            loggerServiceMock.Setup(loggerService => loggerService.Log(
-                It.IsAny<string>(),
-                It.IsAny<LogLevel>(),
-                It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
+            _ = loggerServiceMock.Setup(loggerService => loggerService.Log(
+                  It.IsAny<string>(),
+                  It.IsAny<LogLevel>(),
+                  It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
 
             var similarArticleSetting = new SimilarArticleSetting(
                 similarityScoreThreshold: 0.6,
@@ -158,7 +158,7 @@ namespace Espresso.Domain.Tests.Services
                     similarArticleSetting: similarArticleSetting);
 
             var settingProviderMock = new Mock<ISettingProvider>(MockBehavior.Strict);
-            settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
+            _ = settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
                 .Returns(setting);
 
             var articles = new List<Article>
@@ -166,8 +166,8 @@ namespace Espresso.Domain.Tests.Services
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
                     title: "Very Cool Title One",
-                    publishDateTime: DateTime.UtcNow,
-                    createDateTime: DateTime.UtcNow,
+                    publishDateTime: DateTimeOffset.UtcNow,
+                    createDateTime: DateTimeOffset.UtcNow,
                     categoryId: 1,
                     id: Guid.NewGuid()),
             };
@@ -192,10 +192,10 @@ namespace Espresso.Domain.Tests.Services
 
             var loggerServiceMock = new Mock<ILoggerService<GroupSimilarArticlesService>>(MockBehavior.Strict);
 
-            loggerServiceMock.Setup(loggerService => loggerService.Log(
-                It.IsAny<string>(),
-                It.IsAny<LogLevel>(),
-                It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
+            _ = loggerServiceMock.Setup(loggerService => loggerService.Log(
+                  It.IsAny<string>(),
+                  It.IsAny<LogLevel>(),
+                  It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
 
             var similarArticleSetting = new SimilarArticleSetting(
                 similarityScoreThreshold: 0.6,
@@ -213,7 +213,7 @@ namespace Espresso.Domain.Tests.Services
                     similarArticleSetting: similarArticleSetting);
 
             var settingProviderMock = new Mock<ISettingProvider>(MockBehavior.Strict);
-            settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
+            _ = settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
                 .Returns(setting);
 
             var articles = new List<Article>
@@ -221,15 +221,15 @@ namespace Espresso.Domain.Tests.Services
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
                     title: firstArticleTitle,
-                    publishDateTime: DateTime.UtcNow,
-                    createDateTime: DateTime.UtcNow,
+                    publishDateTime: DateTimeOffset.UtcNow,
+                    createDateTime: DateTimeOffset.UtcNow,
                     categoryId: 1,
                     id: Guid.NewGuid()),
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 2,
                     title: secondArticleTitle,
-                    publishDateTime: DateTime.UtcNow,
-                    createDateTime: DateTime.UtcNow,
+                    publishDateTime: DateTimeOffset.UtcNow,
+                    createDateTime: DateTimeOffset.UtcNow,
                     categoryId: 2,
                     id: Guid.NewGuid()),
             };
@@ -253,10 +253,10 @@ namespace Espresso.Domain.Tests.Services
 
             var loggerServiceMock = new Mock<ILoggerService<GroupSimilarArticlesService>>(MockBehavior.Strict);
 
-            loggerServiceMock.Setup(loggerService => loggerService.Log(
-                It.IsAny<string>(),
-                It.IsAny<LogLevel>(),
-                It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
+            _ = loggerServiceMock.Setup(loggerService => loggerService.Log(
+                  It.IsAny<string>(),
+                  It.IsAny<LogLevel>(),
+                  It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
 
             var similarArticleSetting = new SimilarArticleSetting(
                 similarityScoreThreshold: 0.6,
@@ -274,7 +274,7 @@ namespace Espresso.Domain.Tests.Services
                     similarArticleSetting: similarArticleSetting);
 
             var settingProviderMock = new Mock<ISettingProvider>(MockBehavior.Strict);
-            settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
+            _ = settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
                 .Returns(setting);
 
             var articles = new List<Article>
@@ -282,15 +282,15 @@ namespace Espresso.Domain.Tests.Services
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 1,
                     title: firstArticleTitle,
-                    publishDateTime: DateTime.UtcNow,
-                    createDateTime: DateTime.UtcNow,
+                    publishDateTime: DateTimeOffset.UtcNow,
+                    createDateTime: DateTimeOffset.UtcNow,
                     categoryId: 1,
                     id: Guid.NewGuid()),
                 ArticleUtility.CreateDefaultArticleWith(
                     newsPortalId: 2,
                     title: secondArticleTitle,
-                    publishDateTime: DateTime.UtcNow.AddDays(-3),
-                    createDateTime: DateTime.UtcNow.AddDays(-3),
+                    publishDateTime: DateTimeOffset.UtcNow.AddDays(-3),
+                    createDateTime: DateTimeOffset.UtcNow.AddDays(-3),
                     categoryId: 2,
                     id: Guid.NewGuid()),
             };

@@ -46,17 +46,17 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
         /// <summary>
         /// Gets date time when article was created in aplication.
         /// </summary>
-        public DateTime CreateDateTime { get; private set; }
+        public DateTimeOffset CreateDateTime { get; private set; }
 
         /// <summary>
         /// Gets date time when article was updated in application.
         /// </summary>
-        public DateTime UpdateDateTime { get; private set; }
+        public DateTimeOffset UpdateDateTime { get; private set; }
 
         /// <summary>
         /// Gets date time when article was published.
         /// </summary>
-        public DateTime PublishDateTime { get; private set; }
+        public DateTimeOffset PublishDateTime { get; private set; }
 
         /// <summary>
         /// Gets number of clicks on this article in application.
@@ -114,9 +114,9 @@ namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
             string summary,
             string title,
             string? imageUrl,
-            DateTime createDateTime,
-            DateTime updateDateTime,
-            DateTime publishDateTime,
+            DateTimeOffset createDateTime,
+            DateTimeOffset updateDateTime,
+            DateTimeOffset publishDateTime,
             int numberOfClicks,
             decimal trendingScore,
             int newsPortalId,

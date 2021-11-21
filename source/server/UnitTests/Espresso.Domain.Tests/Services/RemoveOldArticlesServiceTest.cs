@@ -23,7 +23,7 @@ namespace Espresso.Domain.Tests.Services
             var articles = new List<Article>
             {
                 ArticleUtility.CreateDefaultArticleWith(
-                    publishDateTime: DateTime.UtcNow),
+                    publishDateTime: DateTimeOffset.UtcNow),
             };
             var expectedArticlesCount = articles.Count;
 
@@ -42,7 +42,7 @@ namespace Espresso.Domain.Tests.Services
                     similarArticleSetting: default!);
 
             var settingProviderMock = new Mock<ISettingProvider>(MockBehavior.Strict);
-            settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
+            _ = settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
                 .Returns(setting);
 
             var sortArticlesService = new RemoveOldArticlesService(settingProviderMock.Object);
@@ -61,7 +61,7 @@ namespace Espresso.Domain.Tests.Services
             var articles = new List<Article>
             {
                 ArticleUtility.CreateDefaultArticleWith(
-                    publishDateTime: DateTime.UtcNow.AddHours(-2)),
+                    publishDateTime: DateTimeOffset.UtcNow.AddHours(-2)),
             };
             var expectedArticlesCount = articles.Count - 1;
 
@@ -80,7 +80,7 @@ namespace Espresso.Domain.Tests.Services
                     similarArticleSetting: default!);
 
             var settingProviderMock = new Mock<ISettingProvider>(MockBehavior.Strict);
-            settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
+            _ = settingProviderMock.SetupGet(settingProvider => settingProvider.LatestSetting)
                 .Returns(setting);
 
             var sortArticlesService = new RemoveOldArticlesService(settingProviderMock.Object);
