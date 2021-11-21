@@ -43,11 +43,12 @@ namespace Espresso.Dashboard.Startup
                             environment: ctx.HostingEnvironment,
                             configuration: ctx.Configuration);
                     });
-                })
-                .ConfigureLogging(loggingBuilder =>
-                {
-                    loggingBuilder.ClearProviders();
-                    loggingBuilder.AddConsole();
+                    webBuilder.ConfigureLogging(loggingBuilder =>
+                    {
+                        loggingBuilder.ClearProviders();
+                        loggingBuilder.AddConsole();
+                    });
                 });
+
     }
 }

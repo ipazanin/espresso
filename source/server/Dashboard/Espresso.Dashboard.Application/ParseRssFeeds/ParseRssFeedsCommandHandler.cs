@@ -57,6 +57,11 @@ namespace Espresso.Dashboard.ParseRssFeeds
             ParseRssFeedsCommand request,
             CancellationToken cancellationToken)
         {
+            // Needs to be before articles are added to request.Articles
+            var lastSimilarityGroupingTime = request.Articles.Values.Any() ?
+                request.Articles.Values.Max(article => article.CreateDateTime) :
+                new DateTimeOffset(default);
+
             _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _loadRssFeedsService.ParseRssFeeds");
             var rssFeedItemsChannel = await _loadRssFeedsService.ParseRssFeeds(
                 rssFeeds: request.RssFeeds,
@@ -83,10 +88,6 @@ namespace Espresso.Dashboard.ParseRssFeeds
             UpdateSavedArticles(
                 savedArticles: request.Articles,
                 changedArticles: createArticles.Union(updateArticles));
-
-            var lastSimilarityGroupingTime = request.Articles.Values.Any() ?
-                request.Articles.Values.Max(article => article.CreateDateTime) :
-                new DateTime();
 
             _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _groupSimilarArticlesService.GroupSimilarArticles");
             var similarArticles = _groupSimilarArticlesService.GroupSimilarArticles(
