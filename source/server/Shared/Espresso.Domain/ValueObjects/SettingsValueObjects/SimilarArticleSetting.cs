@@ -5,6 +5,8 @@
 using Espresso.Domain.Entities;
 using Espresso.Domain.Infrastructure;
 
+#pragma warning disable RCS1170 // Use read-only auto-implemented property.
+
 namespace Espresso.Domain.ValueObjects.SettingsValueObjects
 {
     /// <summary>
@@ -12,7 +14,24 @@ namespace Espresso.Domain.ValueObjects.SettingsValueObjects
     /// </summary>
     public class SimilarArticleSetting : ValueObject
     {
-#pragma warning disable RCS1170 // Use read-only auto-implemented property.
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SimilarArticleSetting"/> class.
+        /// </summary>
+        /// <param name="similarityScoreThreshold">Similarity Score Threshold.</param>
+        /// <param name="articlePublishDateTimeDifferenceThresholdInMiliseconds">Article Publish DateTime Difference Threshold.</param>
+        /// <param name="maxAgeOfSimilarArticleCheckingInMiliseconds">Max Age Of Similar Article Checking.</param>
+        /// <param name="minimalNumberOfWordsForArticleToBeComparable">Minimal Number Of Words For Article To Be Comparable.</param>
+        public SimilarArticleSetting(
+            double similarityScoreThreshold,
+            long articlePublishDateTimeDifferenceThresholdInMiliseconds,
+            long maxAgeOfSimilarArticleCheckingInMiliseconds,
+            int minimalNumberOfWordsForArticleToBeComparable)
+        {
+            SimilarityScoreThreshold = similarityScoreThreshold;
+            ArticlePublishDateTimeDifferenceThresholdInMiliseconds = articlePublishDateTimeDifferenceThresholdInMiliseconds;
+            MaxAgeOfSimilarArticleCheckingInMiliseconds = maxAgeOfSimilarArticleCheckingInMiliseconds;
+            MinimalNumberOfWordsForArticleToBeComparable = minimalNumberOfWordsForArticleToBeComparable;
+        }
 
         /// <summary>
         /// Gets similarity Score Threshold.
@@ -34,8 +53,6 @@ namespace Espresso.Domain.ValueObjects.SettingsValueObjects
         /// </summary>
         public int MinimalNumberOfWordsForArticleToBeComparable { get; private set; }
 
-#pragma warning restore RCS1170 // Use read-only auto-implemented property.
-
         /// <summary>
         /// Gets article Publish DateTime Difference Threshold.
         /// </summary>
@@ -45,27 +62,6 @@ namespace Espresso.Domain.ValueObjects.SettingsValueObjects
         /// Gets minimal Number Of Words For Article To Be Comparable.
         /// </summary>
         public TimeSpan MaxAgeOfSimilarArticleChecking => TimeSpan.FromMilliseconds(MaxAgeOfSimilarArticleCheckingInMiliseconds);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SimilarArticleSetting"/> class.
-        /// </summary>
-        /// <param name="similarityScoreThreshold">Similarity Score Threshold.</param>
-        /// <param name="articlePublishDateTimeDifferenceThresholdInMiliseconds">Article Publish DateTime Difference Threshold.</param>
-        /// <param name="maxAgeOfSimilarArticleCheckingInMiliseconds">Max Age Of Similar Article Checking.</param>
-        /// <param name="minimalNumberOfWordsForArticleToBeComparable">Minimal Number Of Words For Article To Be Comparable.</param>
-#pragma warning disable SA1201 // Elements should appear in the correct order
-        public SimilarArticleSetting(
-#pragma warning restore SA1201 // Elements should appear in the correct order
-            double similarityScoreThreshold,
-            long articlePublishDateTimeDifferenceThresholdInMiliseconds,
-            long maxAgeOfSimilarArticleCheckingInMiliseconds,
-            int minimalNumberOfWordsForArticleToBeComparable)
-        {
-            SimilarityScoreThreshold = similarityScoreThreshold;
-            ArticlePublishDateTimeDifferenceThresholdInMiliseconds = articlePublishDateTimeDifferenceThresholdInMiliseconds;
-            MaxAgeOfSimilarArticleCheckingInMiliseconds = maxAgeOfSimilarArticleCheckingInMiliseconds;
-            MinimalNumberOfWordsForArticleToBeComparable = minimalNumberOfWordsForArticleToBeComparable;
-        }
 
         /// <inheritdoc/>
         protected override IEnumerable<object?> GetAtomicValues()

@@ -9,7 +9,6 @@ namespace Espresso.Common.Constants
     /// </summary>
     public static class DateTimeConstants
     {
-
         /// <summary>
         /// Gets unix epoch start time.
         /// </summary>

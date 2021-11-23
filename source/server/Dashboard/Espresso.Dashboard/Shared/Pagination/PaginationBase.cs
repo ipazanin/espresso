@@ -1,6 +1,6 @@
-// PaginationBase.cs
+﻿// PaginationBase.cs
 //
-// � 2021 Espresso News. All rights reserved.
+// © 2021 Espresso News. All rights reserved.
 
 using Espresso.Application.DataTransferObjects.PagingDataTransferObjects;
 using Microsoft.AspNetCore.Components;
@@ -23,6 +23,36 @@ namespace Espresso.Dashboard.Shared.Pagination
         protected override void OnInitialized()
         {
             CreatePaginationLinks();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="link"></param>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        protected async Task OnSelectedPage(PaginationLink link)
+        {
+            if (link.Page == PagingMetadata!.CurrentPage || !link.Enabled)
+            {
+                return;
+            }
+
+            PagingMetadata = new PagingMetadata(
+                currentPage: link.Page,
+                pageSize: PagingMetadata.PageSize,
+                totalCount: PagingMetadata.TotalCount);
+
+            await SelectedPage.InvokeAsync(link.Page);
+
+            // It Seems that Blazor server does not re render component on PagingMetadata state change
+            // So we manually update links to force UI change 
+            CreatePaginationLinks();
+        }
+
+        protected string GetClass(PaginationLink link)
+        {
+            var cssClass = "page-item " + (link.Enabled ? " " : "disabled ") + (link.Active ? "active" : string.Empty);
+            return cssClass;
         }
 
         private void CreatePaginationLinks()
@@ -55,36 +85,6 @@ namespace Espresso.Dashboard.Shared.Pagination
                     enabled: PagingMetadata.HasNext(),
                     text: "Next",
                     active: false));
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="link"></param>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        protected async Task OnSelectedPage(PaginationLink link)
-        {
-            if (link.Page == PagingMetadata!.CurrentPage || !link.Enabled)
-            {
-                return;
-            }
-
-            PagingMetadata = new PagingMetadata(
-                currentPage: link.Page,
-                pageSize: PagingMetadata.PageSize,
-                totalCount: PagingMetadata.TotalCount);
-
-            await SelectedPage.InvokeAsync(link.Page);
-
-            // It Seems that Blazor server does not re render component on PagingMetadata state change
-            // So we manually update links to force UI change 
-            CreatePaginationLinks();
-        }
-
-        protected string GetClass(PaginationLink link)
-        {
-            var cssClass = "page-item " + (link.Enabled ? " " : "disabled ") + (link.Active ? "active" : string.Empty);
-            return cssClass;
         }
     }
 }

@@ -14,37 +14,6 @@ namespace Espresso.Domain.Entities
         public const int TopicMaxLength = 1000;
         public const int ArticleUrlMaxLength = 5000;
 
-        public Guid Id { get; private set; }
-
-        public string InternalName { get; private set; }
-
-        public string Title { get; private set; }
-
-        public string Message { get; private set; }
-
-        public string Topic { get; private set; }
-
-        public string ArticleUrl { get; private set; }
-
-        public bool IsSoundEnabled { get; private set; }
-
-        public DateTimeOffset CreatedAt { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PushNotification"/> class.
-        /// ORM Materialisation Constructor.
-        /// </summary>
-#pragma warning disable SA1201 // Elements should appear in the correct order
-        private PushNotification()
-#pragma warning restore SA1201 // Elements should appear in the correct order
-        {
-            InternalName = null!;
-            Title = null!;
-            Message = null!;
-            Topic = null!;
-            ArticleUrl = null!;
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PushNotification"/> class.
         /// </summary>
@@ -75,6 +44,35 @@ namespace Espresso.Domain.Entities
             IsSoundEnabled = isSoundEnabled;
             CreatedAt = createdAt;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PushNotification"/> class.
+        /// ORM Materialisation Constructor.
+        /// </summary>
+        private PushNotification()
+        {
+            InternalName = null!;
+            Title = null!;
+            Message = null!;
+            Topic = null!;
+            ArticleUrl = null!;
+        }
+
+        public Guid Id { get; private set; }
+
+        public string InternalName { get; private set; }
+
+        public string Title { get; private set; }
+
+        public string Message { get; private set; }
+
+        public string Topic { get; private set; }
+
+        public string ArticleUrl { get; private set; }
+
+        public bool IsSoundEnabled { get; private set; }
+
+        public DateTimeOffset CreatedAt { get; private set; }
 
         public static Expression<Func<PushNotification, object>> GetOrderByDescendingExpression()
         {

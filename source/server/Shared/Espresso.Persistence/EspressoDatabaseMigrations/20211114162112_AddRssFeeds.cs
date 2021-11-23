@@ -4,6 +4,8 @@
 
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace Espresso.Persistence.EspressoDatabaseMigrations
 {
     public partial class AddRssFeeds : Migration

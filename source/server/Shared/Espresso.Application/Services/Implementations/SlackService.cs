@@ -155,7 +155,7 @@ namespace Espresso.Application.Services.Implementations
                         new SlackMarkdownTextBlock("iOS"),
                         new SlackMarkdownTextBlock($"{revenue.iosRevenue:0.##}$"),
                         new SlackMarkdownTextBlock("Total"),
-                        new SlackMarkdownTextBlock($"{revenue.androidRevenue+revenue.iosRevenue:0.##}$"),
+                        new SlackMarkdownTextBlock($"{revenue.androidRevenue + revenue.iosRevenue:0.##}$"),
                     },
                     accessory: new SlackImageBlock(
                         imageUrl: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency/256/Dollar-USD-icon.png",

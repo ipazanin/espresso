@@ -2,77 +2,18 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using Espresso.Domain.Infrastructure;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
 
 namespace Espresso.Domain.Entities
 {
-    public class Article :
-        IEntity<Guid, Article>
+    public class Article
     {
         public const int SummaryMaxLength = 2000;
         public const int TitleMaxLength = 500;
         public const int UrlMaxLength = 500;
         public const int WebUrlMaxLength = 500;
         public const int ImageUrlMaxLength = 500;
-
         public const decimal TrendingScoreDefaultValue = 0m;
-
-        public Guid Id { get; private set; }
-
-        public string Url { get; private set; }
-
-        public string WebUrl { get; private set; }
-
-        public string Summary { get; private set; }
-
-        public string Title { get; private set; }
-
-        public string? ImageUrl { get; private set; }
-
-        /// <summary>
-        /// Gets date Time when article was created in Espresso App.
-        /// </summary>
-        public DateTimeOffset CreateDateTime { get; private set; }
-
-        public DateTimeOffset UpdateDateTime { get; private set; }
-
-        public DateTimeOffset PublishDateTime { get; private set; }
-
-        public int NumberOfClicks { get; private set; }
-
-        public decimal TrendingScore { get; private set; }
-
-        public EditorConfiguration EditorConfiguration { get; private set; }
-
-        public int NewsPortalId { get; private set; }
-
-        public NewsPortal? NewsPortal { get; private set; }
-
-        public int RssFeedId { get; private set; }
-
-        public RssFeed? RssFeed { get; private set; }
-
-        public ICollection<ArticleCategory> ArticleCategories { get; private set; } = new List<ArticleCategory>();
-
-        public ICollection<SimilarArticle> SubordinateArticles { get; private set; } = new List<SimilarArticle>();
-
-        public SimilarArticle? MainArticle { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Article"/> class.
-        /// ORM Constructor.
-        /// </summary>
-#pragma warning disable SA1201 // Elements should appear in the correct order
-        private Article()
-#pragma warning restore SA1201 // Elements should appear in the correct order
-        {
-            Url = null!;
-            Summary = null!;
-            Title = null!;
-            WebUrl = null!;
-            EditorConfiguration = null!;
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Article"/> class.
@@ -137,6 +78,60 @@ namespace Espresso.Domain.Entities
             SubordinateArticles = subordinateArticles?.ToList() ?? SubordinateArticles;
             MainArticle = mainArticle;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Article"/> class.
+        /// ORM Constructor.
+        /// </summary>
+        private Article()
+        {
+            Url = null!;
+            Summary = null!;
+            Title = null!;
+            WebUrl = null!;
+            EditorConfiguration = null!;
+        }
+
+        public Guid Id { get; private set; }
+
+        public string Url { get; private set; }
+
+        public string WebUrl { get; private set; }
+
+        public string Summary { get; private set; }
+
+        public string Title { get; private set; }
+
+        public string? ImageUrl { get; private set; }
+
+        /// <summary>
+        /// Gets date Time when article was created in Espresso App.
+        /// </summary>
+        public DateTimeOffset CreateDateTime { get; private set; }
+
+        public DateTimeOffset UpdateDateTime { get; private set; }
+
+        public DateTimeOffset PublishDateTime { get; private set; }
+
+        public int NumberOfClicks { get; private set; }
+
+        public decimal TrendingScore { get; private set; }
+
+        public EditorConfiguration EditorConfiguration { get; private set; }
+
+        public int NewsPortalId { get; private set; }
+
+        public NewsPortal? NewsPortal { get; private set; }
+
+        public int RssFeedId { get; private set; }
+
+        public RssFeed? RssFeed { get; private set; }
+
+        public ICollection<ArticleCategory> ArticleCategories { get; private set; } = new List<ArticleCategory>();
+
+        public ICollection<SimilarArticle> SubordinateArticles { get; private set; } = new List<SimilarArticle>();
+
+        public SimilarArticle? MainArticle { get; private set; }
 
         /// <summary>
         ///

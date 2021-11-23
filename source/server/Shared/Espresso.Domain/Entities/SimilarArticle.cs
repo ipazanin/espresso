@@ -6,24 +6,6 @@ namespace Espresso.Domain.Entities
 {
     public class SimilarArticle
     {
-        public Guid Id { get; private set; }
-
-        public double SimilarityScore { get; private set; }
-
-        public Guid MainArticleId { get; private set; }
-
-        public Article? MainArticle { get; private set; }
-
-        public Guid SubordinateArticleId { get; private set; }
-
-        public Article? SubordinateArticle { get; private set; }
-
-#pragma warning disable SA1201 // Elements should appear in the correct order
-        private SimilarArticle()
-#pragma warning restore SA1201 // Elements should appear in the correct order
-        {
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SimilarArticle"/> class.
         /// </summary>
@@ -48,6 +30,22 @@ namespace Espresso.Domain.Entities
             SubordinateArticleId = subordinateArticleId;
             SubordinateArticle = subordinateArticle;
         }
+
+        private SimilarArticle()
+        {
+        }
+
+        public Guid Id { get; private set; }
+
+        public double SimilarityScore { get; private set; }
+
+        public Guid MainArticleId { get; private set; }
+
+        public Article? MainArticle { get; private set; }
+
+        public Guid SubordinateArticleId { get; private set; }
+
+        public Article? SubordinateArticle { get; private set; }
 
         public void SetMainArticle(Article mainArticle)
         {

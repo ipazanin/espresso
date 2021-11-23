@@ -2,14 +2,12 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using Espresso.Domain.Infrastructure;
-
 namespace Espresso.Domain.Entities
 {
     /// <summary>
     /// Represents way to convert <see cref="RssFeed"/> articles url to category.
     /// </summary>
-    public class RssFeedCategory : IEntity<int, RssFeedCategory>
+    public class RssFeedCategory
     {
         public const int UrlRegexMaxLength = 100;
 

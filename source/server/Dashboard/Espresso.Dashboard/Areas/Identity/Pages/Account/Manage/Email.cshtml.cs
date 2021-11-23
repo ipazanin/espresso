@@ -42,29 +42,6 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
         [BindProperty]
         public InputModel Input { get; set; } = null!;
 
-        public class InputModel
-        {
-            [Required]
-            [EmailAddress]
-            [Display(Name = "New email")]
-            public string NewEmail { get; set; } = null!;
-        }
-
-#pragma warning disable SA1201 // Elements should appear in the correct order
-        private async Task LoadAsync(IdentityUser user)
-#pragma warning restore SA1201 // Elements should appear in the correct order
-        {
-            var email = await _userManager.GetEmailAsync(user);
-            Email = email;
-
-            Input = new InputModel
-            {
-                NewEmail = email,
-            };
-
-            IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
-        }
-
         /// <summary>
         ///
         /// </summary>
@@ -109,7 +86,7 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
                     "/Account/ConfirmEmailChange",
                     pageHandler: null,
                     values: new { userId, email = Input.NewEmail, code },
-                    protocol: Request.Scheme);
+                    protocol: Request.Scheme)!;
                 await _emailService.SendMail(
                     to: Input.NewEmail,
                     subject: "Confirm your email",
@@ -150,7 +127,7 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
                 "/Account/ConfirmEmail",
                 pageHandler: null,
                 values: new { area = "Identity", userId, code },
-                protocol: Request.Scheme);
+                protocol: Request.Scheme)!;
             await _emailService.SendMail(
                 to: email,
                 subject: "Confirm your email",
@@ -159,6 +136,27 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();
+        }
+
+        private async Task LoadAsync(IdentityUser user)
+        {
+            var email = await _userManager.GetEmailAsync(user);
+            Email = email;
+
+            Input = new InputModel
+            {
+                NewEmail = email,
+            };
+
+            IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
+        }
+
+        public class InputModel
+        {
+            [Required]
+            [EmailAddress]
+            [Display(Name = "New email")]
+            public string NewEmail { get; set; } = null!;
         }
     }
 }

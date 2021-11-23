@@ -3,16 +3,50 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Espresso.Domain.Enums.RssFeedEnums;
-using Espresso.Domain.Infrastructure;
 using Espresso.Domain.ValueObjects.RssFeedValueObjects;
 
 namespace Espresso.Domain.Entities
 {
-    public class RssFeed : IEntity<int, RssFeed>
+    public class RssFeed
     {
         public const int UrlMaxLength = 300;
 
         public const int AmpConfigurationTemplateUrlMaxLength = 300;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RssFeed"/> class.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="url"></param>
+        /// <param name="newsPortalId"></param>
+        /// <param name="categoryId"></param>
+        /// <param name="requestType"></param>
+        public RssFeed(
+            int id,
+            string url,
+            int newsPortalId,
+            int categoryId,
+            RequestType requestType)
+        {
+            Id = id;
+            Url = url;
+            NewsPortalId = newsPortalId;
+            CategoryId = categoryId;
+            RequestType = requestType;
+            CategoryParseConfiguration = null!;
+            ImageUrlParseConfiguration = null!;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RssFeed"/> class.
+        /// ORM Constructor.
+        /// </summary>
+        private RssFeed()
+        {
+            Url = null!;
+            CategoryParseConfiguration = null!;
+            ImageUrlParseConfiguration = null!;
+        }
 
         /// <summary>
         /// Gets <see cref="RssFeed"/> id.
@@ -47,43 +81,6 @@ namespace Espresso.Domain.Entities
         public Category? Category { get; private set; }
 
         public ICollection<Article> Articles { get; private set; } = new List<Article>();
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RssFeed"/> class.
-        /// ORM Constructor.
-        /// </summary>
-#pragma warning disable SA1201 // Elements should appear in the correct order
-        private RssFeed()
-#pragma warning restore SA1201 // Elements should appear in the correct order
-        {
-            Url = null!;
-            CategoryParseConfiguration = null!;
-            ImageUrlParseConfiguration = null!;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RssFeed"/> class.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="url"></param>
-        /// <param name="newsPortalId"></param>
-        /// <param name="categoryId"></param>
-        /// <param name="requestType"></param>
-        public RssFeed(
-            int id,
-            string url,
-            int newsPortalId,
-            int categoryId,
-            RequestType requestType)
-        {
-            Id = id;
-            Url = url;
-            NewsPortalId = newsPortalId;
-            CategoryId = categoryId;
-            RequestType = requestType;
-            CategoryParseConfiguration = null!;
-            ImageUrlParseConfiguration = null!;
-        }
 
         public bool ShouldParse()
         {

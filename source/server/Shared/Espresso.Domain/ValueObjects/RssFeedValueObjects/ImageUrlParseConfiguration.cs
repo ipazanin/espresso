@@ -5,6 +5,8 @@
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.Infrastructure;
 
+#pragma warning disable RCS1170 // Use read-only auto-implemented property.
+
 namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
 {
     public class ImageUrlParseConfiguration : ValueObject
@@ -19,50 +21,11 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
 
         public const int AttributeNameMaxLength = 100;
 
-        public static bool? ShouldImageUrlBeWebScrapedDefaultValue => null;
-
-#pragma warning disable SA1201 // Elements should appear in the correct order
         public const ImageUrlWebScrapeType ImageUrlWebScrapeTypeDefaultValue = ImageUrlWebScrapeType.Attribute;
-#pragma warning restore SA1201 // Elements should appear in the correct order
 
         public const string? JsonWebScrapePropertyNamesDefaultValue = null;
 
         public const int JsonWebScrapePropertyNamesHasMaxLength = 300;
-
-        public static int? ElementExtensionIndexDefaultValue => null;
-
-        public static bool? IsSavedInHtmlElementWithSrcAttributeDefaultValue => null;
-
-        public ImageUrlParseStrategy ImageUrlParseStrategy { get; private set; }
-
-        public string XPath { get; private set; }
-
-        public string AttributeName { get; private set; }
-
-        public bool? ShouldImageUrlBeWebScraped { get; private set; }
-
-        public ImageUrlWebScrapeType ImageUrlWebScrapeType { get; private set; }
-
-        public string? JsonWebScrapePropertyNames { get; private set; }
-
-        /// <summary>
-        /// Gets index of element extension containing Image Url.
-        /// </summary>
-        public int? ElementExtensionIndex { get; private set; }
-
-        public bool? IsSavedInHtmlElementWithSrcAttribute { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ImageUrlParseConfiguration"/> class.
-        /// ORM COnstructor.
-        /// </summary>
-#pragma warning disable SA1201 // Elements should appear in the correct order
-        private ImageUrlParseConfiguration()
-#pragma warning restore SA1201 // Elements should appear in the correct order
-        {
-            XPath = null!;
-            AttributeName = null!;
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageUrlParseConfiguration"/> class.
@@ -94,6 +57,41 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
             ElementExtensionIndex = elementExtensionIndex;
             IsSavedInHtmlElementWithSrcAttribute = isSavedInHtmlElementWithSrcAttribute;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageUrlParseConfiguration"/> class.
+        /// ORM COnstructor.
+        /// </summary>
+        private ImageUrlParseConfiguration()
+        {
+            XPath = null!;
+            AttributeName = null!;
+        }
+
+        public static int? ElementExtensionIndexDefaultValue => null;
+
+        public static bool? IsSavedInHtmlElementWithSrcAttributeDefaultValue => null;
+
+        public static bool? ShouldImageUrlBeWebScrapedDefaultValue => null;
+
+        public ImageUrlParseStrategy ImageUrlParseStrategy { get; private set; }
+
+        public string XPath { get; private set; }
+
+        public string AttributeName { get; private set; }
+
+        public bool? ShouldImageUrlBeWebScraped { get; private set; }
+
+        public ImageUrlWebScrapeType ImageUrlWebScrapeType { get; private set; }
+
+        public string? JsonWebScrapePropertyNames { get; private set; }
+
+        /// <summary>
+        /// Gets index of element extension containing Image Url.
+        /// </summary>
+        public int? ElementExtensionIndex { get; private set; }
+
+        public bool? IsSavedInHtmlElementWithSrcAttribute { get; private set; }
 
         public IEnumerable<string> GetPropertyNames()
         {

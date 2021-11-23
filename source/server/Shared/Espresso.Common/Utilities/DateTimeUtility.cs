@@ -16,7 +16,6 @@ namespace Espresso.Domain.Utilities
         /// </summary>
         public static DateTimeOffset YesterdaysDate => DateTimeOffset.UtcNow.AddDays(-1).Date;
 
-
         /// <summary>
         /// Gets milliseconds truncated to last day.
         /// </summary>

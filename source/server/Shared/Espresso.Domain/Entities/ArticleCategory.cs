@@ -2,33 +2,12 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using Espresso.Domain.Infrastructure;
+#pragma warning disable RCS1170 // Use read-only auto-implemented property.
 
 namespace Espresso.Domain.Entities
 {
-    public class ArticleCategory :
-        IEntity<Guid, ArticleCategory>
+    public class ArticleCategory
     {
-        public Guid Id { get; private set; }
-
-        public Guid ArticleId { get; private set; }
-
-        public Article? Article { get; private set; }
-
-        public int CategoryId { get; private set; }
-
-        public Category? Category { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArticleCategory"/> class.
-        /// ORM Constructor.
-        /// </summary>
-#pragma warning disable SA1502 // Element should not be on a single line
-#pragma warning disable SA1201 // Elements should appear in the correct order
-        private ArticleCategory() { }
-#pragma warning restore SA1201 // Elements should appear in the correct order
-#pragma warning restore SA1502 // Element should not be on a single line
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ArticleCategory"/> class.
         /// </summary>
@@ -50,6 +29,24 @@ namespace Espresso.Domain.Entities
             Article = article;
             Category = category;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArticleCategory"/> class.
+        /// ORM Constructor.
+        /// </summary>
+        private ArticleCategory()
+        {
+        }
+
+        public Guid Id { get; private set; }
+
+        public Guid ArticleId { get; private set; }
+
+        public Article? Article { get; private set; }
+
+        public int CategoryId { get; private set; }
+
+        public Category? Category { get; private set; }
 
         public void SetCategory(Category category)
         {

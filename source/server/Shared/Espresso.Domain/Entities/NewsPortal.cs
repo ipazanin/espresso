@@ -2,15 +2,16 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using Espresso.Domain.Infrastructure;
 using System.Linq.Expressions;
+
+#pragma warning disable RCS1170 // Use read-only auto-implemented property.
 
 namespace Espresso.Domain.Entities
 {
     /// <summary>
     /// Represents news source, for example www.index.hr.
     /// </summary>
-    public class NewsPortal : IEntity<int, NewsPortal>
+    public class NewsPortal
     {
         public const bool IsEnabledDefaultValue = true;
 
@@ -20,7 +21,53 @@ namespace Espresso.Domain.Entities
 
         public const int IconUrlMaxlength = 100;
 
-#pragma warning disable RCS1170 // Use read-only auto-implemented property.
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NewsPortal"/> class.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="baseUrl"></param>
+        /// <param name="iconUrl"></param>
+        /// <param name="isNewOverride"></param>
+        /// <param name="createdAt"></param>
+        /// <param name="categoryId"></param>
+        /// <param name="regionId"></param>
+        /// <param name="isEnabled"></param>
+        public NewsPortal(
+            int id,
+            string name,
+            string baseUrl,
+            string iconUrl,
+            bool? isNewOverride,
+            DateTimeOffset createdAt,
+            int categoryId,
+            int regionId,
+            bool isEnabled)
+        {
+            Id = id;
+            Name = name;
+            BaseUrl = baseUrl;
+            IconUrl = iconUrl;
+            IsNewOverride = isNewOverride;
+            CreatedAt = createdAt;
+            CategoryId = categoryId;
+            RegionId = regionId;
+            IsEnabled = isEnabled;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NewsPortal"/> class.
+        /// </summary>
+        /// <remarks>
+        /// ORM Constructor.
+        /// </remarks>
+        private NewsPortal()
+        {
+            Name = null!;
+            BaseUrl = null!;
+            IconUrl = null!;
+        }
+
         /// <summary>
         /// Gets <see cref="NewsPortal"/> id.
         /// </summary>
@@ -76,56 +123,6 @@ namespace Espresso.Domain.Entities
         public ICollection<RssFeed> RssFeeds { get; private set; } = new List<RssFeed>();
 
         public ICollection<Article> Articles { get; private set; } = new List<Article>();
-#pragma warning restore RCS1170 // Use read-only auto-implemented property.
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NewsPortal"/> class.
-        /// </summary>
-        /// <remarks>
-        /// ORM Constructor.
-        /// </remarks>
-#pragma warning disable SA1201 // Elements should appear in the correct order
-        private NewsPortal()
-#pragma warning restore SA1201 // Elements should appear in the correct order
-        {
-            Name = null!;
-            BaseUrl = null!;
-            IconUrl = null!;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NewsPortal"/> class.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="baseUrl"></param>
-        /// <param name="iconUrl"></param>
-        /// <param name="isNewOverride"></param>
-        /// <param name="createdAt"></param>
-        /// <param name="categoryId"></param>
-        /// <param name="regionId"></param>
-        /// <param name="isEnabled"></param>
-        public NewsPortal(
-            int id,
-            string name,
-            string baseUrl,
-            string iconUrl,
-            bool? isNewOverride,
-            DateTimeOffset createdAt,
-            int categoryId,
-            int regionId,
-            bool isEnabled)
-        {
-            Id = id;
-            Name = name;
-            BaseUrl = baseUrl;
-            IconUrl = iconUrl;
-            IsNewOverride = isNewOverride;
-            CreatedAt = createdAt;
-            CategoryId = categoryId;
-            RegionId = regionId;
-            IsEnabled = isEnabled;
-        }
 
         public static Expression<Func<NewsPortal, bool>> GetCategorySugestedNewsPortalsPredicate(
             IEnumerable<int>? newsPortalIds,

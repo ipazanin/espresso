@@ -22,9 +22,8 @@ namespace Espresso.Dashboard.Pages.NewsPortalsList.NewsPortalsListItem
         /// <summary>
         ///
         /// </summary>
-        /// <param name="_"></param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        public async Task DeleteButtonClickHandler(MouseEventArgs _)
+        public async Task DeleteButtonClickHandler()
         {
             var task = DeleteNewsPortalHandler?.Invoke(NewsPortal.Id);
             if (task is not null)
@@ -33,7 +32,7 @@ namespace Espresso.Dashboard.Pages.NewsPortalsList.NewsPortalsListItem
             }
         }
 
-        public void DetailsButtonClickHandler(MouseEventArgs _)
+        public void DetailsButtonClickHandler()
         {
             OpenNewsPortalDetailsHandler?.Invoke(NewsPortal.Id);
         }

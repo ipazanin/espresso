@@ -3,12 +3,11 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Espresso.Domain.Enums.RegionEnums;
-using Espresso.Domain.Infrastructure;
 using System.Linq.Expressions;
 
 namespace Espresso.Domain.Entities
 {
-    public class Region : IEntity<int, Region>
+    public class Region
     {
         public const int RegionNameHasMaxLength = 100;
         public const int RegionSubtitleHasMaxLength = 100;

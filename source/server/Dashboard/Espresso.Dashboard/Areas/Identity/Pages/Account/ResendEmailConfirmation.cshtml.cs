@@ -74,7 +74,7 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
                 "/Account/ConfirmEmail",
                 pageHandler: null,
                 values: new { userId, code },
-                protocol: Request.Scheme);
+                protocol: Request.Scheme)!;
             await _emailService.SendMail(
                 to: Input.Email,
                 subject: "Confirm your email",

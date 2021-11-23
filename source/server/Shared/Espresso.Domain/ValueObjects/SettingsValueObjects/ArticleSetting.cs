@@ -5,6 +5,8 @@
 using Espresso.Domain.Entities;
 using Espresso.Domain.Infrastructure;
 
+#pragma warning disable RCS1170 // Use read-only auto-implemented property.
+
 namespace Espresso.Domain.ValueObjects.SettingsValueObjects
 {
     /// <summary>
@@ -12,7 +14,24 @@ namespace Espresso.Domain.ValueObjects.SettingsValueObjects
     /// </summary>
     public class ArticleSetting : ValueObject
     {
-#pragma warning disable RCS1170 // Use read-only auto-implemented property.
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArticleSetting"/> class.
+        /// </summary>
+        /// <param name="maxAgeOfTrendingArticleInMiliseconds">Gets max age of <see cref="Article"/> that can be considered trending in miliseconds.</param>
+        /// <param name="maxAgeOfFeaturedArticleInMiliseconds">Gets max age of <see cref="Article"/> that can be considered featured in miliseconds.</param>
+        /// <param name="maxAgeOfArticleInMiliseconds">Gets max age of <see cref="Article"/> that can be saved in application.</param>
+        /// <param name="featuredArticlesTake">Number of featured articles to fetch on request.</param>
+        public ArticleSetting(
+            long maxAgeOfTrendingArticleInMiliseconds,
+            long maxAgeOfFeaturedArticleInMiliseconds,
+            long maxAgeOfArticleInMiliseconds,
+            int featuredArticlesTake)
+        {
+            MaxAgeOfTrendingArticleInMiliseconds = maxAgeOfTrendingArticleInMiliseconds;
+            MaxAgeOfFeaturedArticleInMiliseconds = maxAgeOfFeaturedArticleInMiliseconds;
+            MaxAgeOfArticleInMiliseconds = maxAgeOfArticleInMiliseconds;
+            FeaturedArticlesTake = featuredArticlesTake;
+        }
 
         /// <summary>
         /// Gets max age of <see cref="Article"/> that can be considered trending in miliseconds.
@@ -34,8 +53,6 @@ namespace Espresso.Domain.ValueObjects.SettingsValueObjects
         /// </summary>
         public int FeaturedArticlesTake { get; private set; }
 
-#pragma warning restore RCS1170 // Use read-only auto-implemented property.
-
         /// <summary>
         ///  Gets max age of <see cref="Article"/> that can be saved in application.
         /// </summary>
@@ -50,27 +67,6 @@ namespace Espresso.Domain.ValueObjects.SettingsValueObjects
         /// Gets max age of <see cref="Article"/> that can be considered featured in miliseconds.
         /// </summary>
         public TimeSpan MaxAgeOfFeaturedArticle => TimeSpan.FromMilliseconds(MaxAgeOfFeaturedArticleInMiliseconds);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArticleSetting"/> class.
-        /// </summary>
-        /// <param name="maxAgeOfTrendingArticleInMiliseconds">Gets max age of <see cref="Article"/> that can be considered trending in miliseconds.</param>
-        /// <param name="maxAgeOfFeaturedArticleInMiliseconds">Gets max age of <see cref="Article"/> that can be considered featured in miliseconds.</param>
-        /// <param name="maxAgeOfArticleInMiliseconds">Gets max age of <see cref="Article"/> that can be saved in application.</param>
-        /// <param name="featuredArticlesTake">Number of featured articles to fetch on request.</param>
-#pragma warning disable SA1201 // Elements should appear in the correct order
-        public ArticleSetting(
-#pragma warning restore SA1201 // Elements should appear in the correct order
-            long maxAgeOfTrendingArticleInMiliseconds,
-            long maxAgeOfFeaturedArticleInMiliseconds,
-            long maxAgeOfArticleInMiliseconds,
-            int featuredArticlesTake)
-        {
-            MaxAgeOfTrendingArticleInMiliseconds = maxAgeOfTrendingArticleInMiliseconds;
-            MaxAgeOfFeaturedArticleInMiliseconds = maxAgeOfFeaturedArticleInMiliseconds;
-            MaxAgeOfArticleInMiliseconds = maxAgeOfArticleInMiliseconds;
-            FeaturedArticlesTake = featuredArticlesTake;
-        }
 
         /// <inheritdoc/>
         protected override IEnumerable<object?> GetAtomicValues()
