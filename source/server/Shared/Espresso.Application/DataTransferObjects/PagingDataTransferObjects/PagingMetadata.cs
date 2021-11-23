@@ -12,6 +12,23 @@ namespace Espresso.Application.DataTransferObjects.PagingDataTransferObjects
     public class PagingMetadata
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="PagingMetadata"/> class.
+        /// </summary>
+        /// <param name="currentPage">Current page.</param>
+        /// <param name="pageSize">Page size.</param>
+        /// <param name="totalCount">Total items count.</param>
+        [JsonConstructor]
+        public PagingMetadata(
+            int currentPage,
+            int pageSize,
+            int totalCount)
+        {
+            CurrentPage = currentPage;
+            PageSize = pageSize;
+            TotalCount = totalCount;
+        }
+
+        /// <summary>
         /// Gets current page.
         /// </summary>
         public int CurrentPage { get; }
@@ -25,25 +42,6 @@ namespace Espresso.Application.DataTransferObjects.PagingDataTransferObjects
         /// Gets total items count.
         /// </summary>
         public int TotalCount { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PagingMetadata"/> class.
-        /// </summary>
-        /// <param name="currentPage">Current page.</param>
-        /// <param name="pageSize">Page size.</param>
-        /// <param name="totalCount">Total items count.</param>
-        [JsonConstructor]
-#pragma warning disable SA1201 // Elements should appear in the correct order
-        public PagingMetadata(
-#pragma warning restore SA1201 // Elements should appear in the correct order
-            int currentPage,
-            int pageSize,
-            int totalCount)
-        {
-            CurrentPage = currentPage;
-            PageSize = pageSize;
-            TotalCount = totalCount;
-        }
 
         /// <summary>
         /// Returns value indicating wheather previous page exists.

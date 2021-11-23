@@ -28,18 +28,8 @@ namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
 
         public Task<GetConfigurationQueryResponse> Handle(GetConfigurationQuery request, CancellationToken cancellationToken)
         {
-            var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
             var categories = _memoryCache.Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey);
             var regions = _memoryCache.Get<IEnumerable<Region>>(key: MemoryCacheConstants.RegionKey);
-
-            var newsPortalDtos = newsPortals
-                .Where(newsPortal => newsPortal.IsEnabled)
-                .OrderBy(newsPortal => newsPortal.Name)
-                .Select(
-                    selector: GetConfigurationNewsPortal
-                        .GetProjection(
-                            maxAgeOfNewNewsPortal: _settingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal)
-                        .Compile());
 
             var categoryDtos = categories
                 .Where(predicate: Category.GetAllCategoriesExceptGeneralExpression().Compile())

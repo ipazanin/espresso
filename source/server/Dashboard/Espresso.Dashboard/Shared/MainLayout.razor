@@ -18,15 +18,15 @@
 
 @code {
 
-    [CascadingParameter] private Task<AuthenticationState> AuthState { get; init; }
-    
-    [Inject] private NavigationManager NavigationManager { get; init; }
+    [CascadingParameter] private Task<AuthenticationState> AuthState { get; init; } = null!;
+
+    [Inject] private NavigationManager NavigationManager { get; init; } = null!;
 
     protected async override Task OnInitializedAsync()
     {
         base.OnInitialized();
         var user = (await AuthState).User;
-        if (!user.Identity.IsAuthenticated)
+        if (user.Identity?.IsAuthenticated == false)
         {
             NavigationManager.NavigateTo("Identity/Account/Login");
         }

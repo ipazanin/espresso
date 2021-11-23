@@ -3,11 +3,10 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Espresso.Common.Enums;
-using Espresso.Domain.Infrastructure;
 
 namespace Espresso.Domain.Entities
 {
-    public class ApplicationDownload : IEntity<int, ApplicationDownload>
+    public class ApplicationDownload
     {
         public const int WebApiVersionMaxLenght = 10;
 

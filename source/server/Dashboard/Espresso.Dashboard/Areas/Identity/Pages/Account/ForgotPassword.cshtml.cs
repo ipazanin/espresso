@@ -67,7 +67,7 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account
                     "/Account/ResetPassword",
                     pageHandler: null,
                     values: new { area = "Identity", code },
-                    protocol: Request.Scheme);
+                    protocol: Request.Scheme)!;
 
                 await _emailService.SendMail(
                     to: Input.Email,

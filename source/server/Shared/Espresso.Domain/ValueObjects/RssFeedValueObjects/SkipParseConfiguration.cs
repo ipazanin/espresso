@@ -8,20 +8,6 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
 {
     public class SkipParseConfiguration : ValueObject
     {
-        public int? NumberOfSkips { get; private set; }
-
-        public int? CurrentSkip { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SkipParseConfiguration"/> class.
-        /// ORM COnstructor.
-        /// </summary>
-#pragma warning disable SA1502 // Element should not be on a single line
-#pragma warning disable SA1201 // Elements should appear in the correct order
-        private SkipParseConfiguration() { }
-#pragma warning restore SA1201 // Elements should appear in the correct order
-#pragma warning restore SA1502 // Element should not be on a single line
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SkipParseConfiguration"/> class.
         /// </summary>
@@ -32,6 +18,18 @@ namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
             NumberOfSkips = numberOfSkips;
             CurrentSkip = currentSkip;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SkipParseConfiguration"/> class.
+        /// ORM COnstructor.
+        /// </summary>
+        private SkipParseConfiguration()
+        {
+        }
+
+        public int? NumberOfSkips { get; private set; }
+
+        public int? CurrentSkip { get; private set; }
 
         public bool ShouldParse()
         {

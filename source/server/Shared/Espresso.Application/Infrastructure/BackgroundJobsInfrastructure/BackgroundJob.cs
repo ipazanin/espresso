@@ -17,21 +17,18 @@ namespace Espresso.Application.Infrastructure.BackgroundJobsInfrastructure
         where T : BackgroundJob<T>
     {
         /// <summary>
-        /// Gets service scope factory.
-        /// </summary>
-        protected IServiceScopeFactory ServiceScopeFactory { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="BackgroundJob{T}"/> class.
         /// </summary>
         /// <param name="serviceScopeFactory">Service scope factory.</param>
-#pragma warning disable SA1201 // Elements should appear in the correct order
-        protected BackgroundJob(
-#pragma warning restore SA1201 // Elements should appear in the correct order
-            IServiceScopeFactory serviceScopeFactory)
+        protected BackgroundJob(IServiceScopeFactory serviceScopeFactory)
         {
             ServiceScopeFactory = serviceScopeFactory;
         }
+
+        /// <summary>
+        /// Gets service scope factory.
+        /// </summary>
+        protected IServiceScopeFactory ServiceScopeFactory { get; }
 
         /// <inheritdoc />
         public virtual async Task StartAsync(CancellationToken cancellationToken)
@@ -67,9 +64,7 @@ namespace Espresso.Application.Infrastructure.BackgroundJobsInfrastructure
         public abstract Task DoWork(CancellationToken cancellationToken);
 
         /// <inheritdoc/>
-#pragma warning disable RCS1229 // Use async/await when necessary
         public virtual Task StopAsync(CancellationToken cancellationToken)
-#pragma warning restore RCS1229
         {
             using var scope = ServiceScopeFactory.CreateScope();
             var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService<BackgroundJob<T>>>();

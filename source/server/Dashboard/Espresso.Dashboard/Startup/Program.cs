@@ -49,6 +49,5 @@ namespace Espresso.Dashboard.Startup
                         loggingBuilder.AddConsole();
                     });
                 });
-
     }
 }

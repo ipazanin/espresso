@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿// 20211121160628_ChangeDateTimesToDateTimeOffsets.cs
+//
+// © 2021 Espresso News. All rights reserved.
+
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 

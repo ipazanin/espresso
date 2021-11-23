@@ -98,12 +98,21 @@ namespace Espresso.Domain.Services
             int numberOfArticles,
             decimal averageClicks)
         {
-            var standardClicksDeviation = numberOfArticles == 0 ? 0M : (decimal)Math.Sqrt(
-                (double)(clicksPerArticle.Select(clicks => (decimal)clicks).Sum(clicks =>
+            if (numberOfArticles == 0)
+            {
+                return 0M;
+            }
+
+            var totalClicksSum = clicksPerArticle
+                .Select(clicks => (decimal)clicks)
+                .Sum(clicks =>
                 {
                     var pow = (decimal)Math.Pow(decimal.ToDouble(clicks - averageClicks), 2);
                     return pow;
-                }) / (numberOfArticles == 0 ? 1M : numberOfArticles)));
+                });
+
+            var squareRootOfClicksSum = (decimal)Math.Sqrt((double)totalClicksSum);
+            var standardClicksDeviation = squareRootOfClicksSum / numberOfArticles;
 
             return standardClicksDeviation;
         }

@@ -80,8 +80,8 @@ namespace Espresso.Dashboard.Application.Services
                         }
                         catch (Exception exception)
                         {
-                            const string? eventName = "Create Article Unhandled Exception";
-                            _loggerService.Log(eventName, exception, LogLevel.Error);
+                            const string? EventName = "Create Article Unhandled Exception";
+                            _loggerService.Log(EventName, exception, LogLevel.Error);
                         }
                     }, cancellationToken);
                 tasks.Add(task);
@@ -295,7 +295,7 @@ namespace Espresso.Dashboard.Application.Services
         {
             var id = Guid.NewGuid();
             var utcNow = DateTimeOffset.UtcNow;
-            const int initialNumberOfClicks = 0;
+            const int InitialNumberOfClicks = 0;
 
             var title = rssFeedItem.Title;
 
@@ -341,7 +341,7 @@ namespace Espresso.Dashboard.Application.Services
                 Title = title,
                 CreateDateTime = utcNow,
                 ImageUrl = imageUrl,
-                NumberOfClicks = initialNumberOfClicks,
+                NumberOfClicks = InitialNumberOfClicks,
                 TrendingScore = Article.TrendingScoreDefaultValue,
                 UpdateDateTime = utcNow,
                 Url = url,
@@ -416,23 +416,51 @@ namespace Espresso.Dashboard.Application.Services
         {
             var elementExtensionIndex = rssFeed.ImageUrlParseConfiguration.ElementExtensionIndex;
             var isSavedInHtmlElementWithSrcAttribute = rssFeed.ImageUrlParseConfiguration.IsSavedInHtmlElementWithSrcAttribute;
-            var imageUrl = rssFeed.ImageUrlParseConfiguration.ImageUrlParseStrategy switch
-            {
-                ImageUrlParseStrategy.FromContent => _htmlParsingService.GetSrcAttributeFromFirstImgElement(itemContent),
-                ImageUrlParseStrategy.FromElementExtension => elementExtensionIndex is null || elementExtensions is null ?
-                    null :
-                    elementExtensions.Count() <= elementExtensionIndex.Value ?
-                        null :
-                        isSavedInHtmlElementWithSrcAttribute == true ?
-                            _htmlParsingService.GetSrcAttributeFromFirstImgElement(elementExtensions.ElementAt(elementExtensionIndex.Value)) :
-                            elementExtensions.ElementAt(elementExtensionIndex.Value),
-                ImageUrlParseStrategy.SecondLinkOrFromSummary or _ => itemLinks?.Count() > 1 ?
-                    itemLinks.ElementAt(1)?.ToString() :
-                    _htmlParsingService.GetSrcAttributeFromFirstImgElement(itemSummary)
-            };
 
-            var shouldImageBeWebScraped = rssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped is null ?
-                string.IsNullOrEmpty(imageUrl) : rssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped.Value;
+            string? imageUrl;
+            switch (rssFeed.ImageUrlParseConfiguration.ImageUrlParseStrategy)
+            {
+                case ImageUrlParseStrategy.FromContent:
+                    imageUrl = _htmlParsingService.GetSrcAttributeFromFirstImgElement(itemContent);
+                    break;
+                case ImageUrlParseStrategy.FromElementExtension:
+                    if (elementExtensionIndex is null || elementExtensions is null)
+                    {
+                        imageUrl = null;
+                        break;
+                    }
+
+                    if (elementExtensions.Count() <= elementExtensionIndex.Value)
+                    {
+                        imageUrl = null;
+                        break;
+                    }
+
+                    if (isSavedInHtmlElementWithSrcAttribute == true)
+                    {
+                        imageUrl = _htmlParsingService.GetSrcAttributeFromFirstImgElement(elementExtensions.ElementAt(elementExtensionIndex.Value));
+                    }
+                    else
+                    {
+                        imageUrl = elementExtensions.ElementAt(elementExtensionIndex.Value);
+                    }
+
+                    break;
+                default:
+                    if (itemLinks?.Count() > 1)
+                    {
+                        imageUrl = itemLinks.ElementAt(1)?.ToString();
+                    }
+                    else
+                    {
+                        imageUrl = _htmlParsingService.GetSrcAttributeFromFirstImgElement(itemSummary);
+                    }
+
+                    break;
+            }
+
+            var shouldImageBeWebScraped = rssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped
+                ?? string.IsNullOrEmpty(imageUrl);
 
             if (shouldImageBeWebScraped)
             {
@@ -455,9 +483,7 @@ namespace Espresso.Dashboard.Application.Services
                 _loggerService.Log(eventName, LogLevel.Information, arguments);
             }
 
-            imageUrl = AddBaseUrlToUrlFragment(imageUrl, rssFeed.NewsPortal?.BaseUrl);
-
-            return imageUrl;
+            return AddBaseUrlToUrlFragment(imageUrl, rssFeed.NewsPortal?.BaseUrl);
         }
     }
 }

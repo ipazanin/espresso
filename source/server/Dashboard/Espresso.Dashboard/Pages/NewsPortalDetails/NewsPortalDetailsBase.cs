@@ -21,15 +21,15 @@ namespace Espresso.Dashboard.Pages.NewsPortalDetails
         public int Id { get; init; }
 
         /// <summary>
+        /// Gets or sets <see cref="NewsPortal"/> details.
+        /// </summary>
+        protected Application.NewsPortals.GetNewsPortalDetails.NewsPortalDetails? NewsPortalDetails { get; set; }
+
+        /// <summary>
         /// Gets <see cref="Mediator"/> request sender.
         /// </summary>
         [Inject]
         private ISender Sender { get; init; } = null!;
-
-        /// <summary>
-        /// Gets or sets <see cref="NewsPortal"/> details.
-        /// </summary>
-        protected Application.NewsPortals.GetNewsPortalDetails.NewsPortalDetails? NewsPortalDetails { get; set; }
 
         /// <inheritdoc/>
         protected override async Task OnInitializedAsync()

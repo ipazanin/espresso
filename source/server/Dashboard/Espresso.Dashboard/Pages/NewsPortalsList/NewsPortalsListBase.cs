@@ -19,15 +19,6 @@ namespace Espresso.Dashboard.Pages.NewsPortalsList
     public class NewsPortalsListBase : ComponentBase
     {
         /// <summary>
-        /// Gets <see cref="Mediator"/> request sender.
-        /// </summary>
-        [Inject]
-        private ISender Sender { get; init; } = null!;
-
-        [Inject]
-        private NavigationManager NavigationManager { get; init; } = null!;
-
-        /// <summary>
         /// Gets <see cref="NewsPortal"/> request response.
         /// </summary>
         protected GetNewsPortalsQueryResponse? Response { get; private set; }
@@ -41,20 +32,19 @@ namespace Espresso.Dashboard.Pages.NewsPortalsList
             PageSize = 10,
         };
 
+        /// <summary>
+        /// Gets <see cref="Mediator"/> request sender.
+        /// </summary>
+        [Inject]
+        private ISender Sender { get; init; } = null!;
+
+        [Inject]
+        private NavigationManager NavigationManager { get; init; } = null!;
+
         /// <inheritdoc/>
         protected override Task OnInitializedAsync()
         {
             return FetchNewsPortals();
-        }
-
-        /// <summary>
-        /// Fetches news portals.
-        /// </summary>
-        private async Task FetchNewsPortals()
-        {
-            Response = await Sender.Send(
-                request: new GetNewsPortalsQuery(
-                    pagingParameters: PagingParameters));
         }
 
         /// <summary>
@@ -89,6 +79,16 @@ namespace Espresso.Dashboard.Pages.NewsPortalsList
         protected void OpenNewsPortalDetails(int newsPortalId)
         {
             NavigationManager.NavigateTo(uri: $"/news-portals/{newsPortalId}");
+        }
+
+        /// <summary>
+        /// Fetches news portals.
+        /// </summary>
+        private async Task FetchNewsPortals()
+        {
+            Response = await Sender.Send(
+                request: new GetNewsPortalsQuery(
+                    pagingParameters: PagingParameters));
         }
     }
 }

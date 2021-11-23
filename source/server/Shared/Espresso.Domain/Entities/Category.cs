@@ -3,12 +3,11 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Espresso.Domain.Enums.CategoryEnums;
-using Espresso.Domain.Infrastructure;
 using System.Linq.Expressions;
 
 namespace Espresso.Domain.Entities
 {
-    public class Category : IEntity<int, Category>
+    public class Category
     {
         public const int NameHasMaxLenght = 20;
 
@@ -17,41 +16,6 @@ namespace Espresso.Domain.Entities
         public const int KeyWordsRegexPatterHasMaxLenght = 1000;
 
         public const int UrlHasMaxLength = 20;
-
-        public int Id { get; private set; }
-
-        public string Name { get; private set; }
-
-        public string Color { get; private set; }
-
-        public string? KeyWordsRegexPattern { get; private set; }
-
-        public int? SortIndex { get; private set; }
-
-        public int? Position { get; private set; }
-
-        public CategoryType CategoryType { get; private set; }
-
-        public string Url { get; private set; }
-
-        public ICollection<ArticleCategory> ArticleCategories { get; private set; } = new List<ArticleCategory>();
-
-        public ICollection<RssFeed> RssFeeds { get; private set; } = new List<RssFeed>();
-
-        public ICollection<NewsPortal> NewsPortals { get; private set; } = new List<NewsPortal>();
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Category"/> class.
-        /// ORM Constructor.
-        /// </summary>
-#pragma warning disable SA1201 // Elements should appear in the correct order
-        private Category()
-#pragma warning restore SA1201 // Elements should appear in the correct order
-        {
-            Name = null!;
-            Color = null!;
-            Url = null!;
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Category"/> class.
@@ -83,6 +47,39 @@ namespace Espresso.Domain.Entities
             CategoryType = categoryType;
             Url = categoryUrl;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Category"/> class.
+        /// ORM Constructor.
+        /// </summary>
+        private Category()
+        {
+            Name = null!;
+            Color = null!;
+            Url = null!;
+        }
+
+        public int Id { get; private set; }
+
+        public string Name { get; private set; }
+
+        public string Color { get; private set; }
+
+        public string? KeyWordsRegexPattern { get; private set; }
+
+        public int? SortIndex { get; private set; }
+
+        public int? Position { get; private set; }
+
+        public CategoryType CategoryType { get; private set; }
+
+        public string Url { get; private set; }
+
+        public ICollection<ArticleCategory> ArticleCategories { get; private set; } = new List<ArticleCategory>();
+
+        public ICollection<RssFeed> RssFeeds { get; private set; } = new List<RssFeed>();
+
+        public ICollection<NewsPortal> NewsPortals { get; private set; } = new List<NewsPortal>();
 
         public static Expression<Func<Category, bool>> GetAllCategoriesExceptGeneralExpression()
         {

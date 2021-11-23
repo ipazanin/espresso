@@ -14,6 +14,16 @@ namespace Espresso.Dashboard.Configuration
         private readonly IConfigurationSection _configurationSection;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="HttpClientConfiguration"/> class.
+        /// </summary>
+        /// <param name="configurationSection">Part of app configuration.</param>
+        public HttpClientConfiguration(
+            IConfigurationSection configurationSection)
+        {
+            _configurationSection = configurationSection;
+        }
+
+        /// <summary>
         /// Gets maximum Number Of Retries.
         /// </summary>
         public int MaxRetries => _configurationSection.GetValue<int>("MaxRetries");
@@ -23,17 +33,5 @@ namespace Espresso.Dashboard.Configuration
         /// </summary>
         public TimeSpan Timeout => TimeSpan.FromSeconds(
             _configurationSection.GetValue<int>("TimeoutInSeconds"));
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="HttpClientConfiguration"/> class.
-        /// </summary>
-        /// <param name="configurationSection">Part of app configuration.</param>
-#pragma warning disable SA1201 // Elements should appear in the correct order
-        public HttpClientConfiguration(
-#pragma warning restore SA1201 // Elements should appear in the correct order
-            IConfigurationSection configurationSection)
-        {
-            _configurationSection = configurationSection;
-        }
     }
 }

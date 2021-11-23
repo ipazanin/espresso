@@ -22,12 +22,26 @@ namespace Espresso.Common.Extensions
 
             var orderedArticles = articles
                 .OrderBy(
-                    article => article.EditorConfiguration.FeaturedPosition ?? (categoriesWithOrderIndex == null ?
-                                HalfOfMaxValue :
-                                (
-                                    categoriesWithOrderIndex.ContainsKey(article.ArticleCategories.First().CategoryId) ?
-                                        HalfOfMaxValue + categoriesWithOrderIndex[article.ArticleCategories.First().CategoryId] :
-                                        int.MaxValue)))
+                    article =>
+                    {
+                        if (article.EditorConfiguration.FeaturedPosition is not null)
+                        {
+                            return article.EditorConfiguration.FeaturedPosition.Value;
+                        }
+
+                        if (categoriesWithOrderIndex is null)
+                        {
+                            return HalfOfMaxValue;
+                        }
+
+                        var categoryId = article.ArticleCategories.First().CategoryId;
+                        if (categoriesWithOrderIndex.TryGetValue(categoryId, out var orderIndex))
+                        {
+                            return HalfOfMaxValue + orderIndex;
+                        }
+
+                        return int.MaxValue;
+                    })
                 .OrderArticlesByTrendingScore();
 
             return orderedArticles;
@@ -52,12 +66,21 @@ namespace Espresso.Common.Extensions
 
             var orderedArticles = articles
                 .OrderBy(
-                    article => categoriesWithOrderIndex == null ?
-                        HalfOfMaxValue :
-                        (
-                            categoriesWithOrderIndex.ContainsKey(article.ArticleCategories.FirstOrDefault()?.CategoryId ?? 0) ?
-                                HalfOfMaxValue + categoriesWithOrderIndex[article.ArticleCategories.First().CategoryId] :
-                                int.MaxValue))
+                    article =>
+                    {
+                        if (categoriesWithOrderIndex is null)
+                        {
+                            return HalfOfMaxValue;
+                        }
+
+                        var categoryId = article.ArticleCategories.First().CategoryId;
+                        if (categoriesWithOrderIndex.TryGetValue(categoryId, out var orderIndex))
+                        {
+                            return HalfOfMaxValue + orderIndex;
+                        }
+
+                        return int.MaxValue;
+                    })
                 .OrderArticlesByTrendingScore();
 
             return orderedArticles;

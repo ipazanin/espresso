@@ -8,7 +8,7 @@ namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals_1_3
     public class GetNewsPortalsQueryResponse_1_3
 #pragma warning restore S101 // Types should be named in PascalCase
     {
-        public IEnumerable<GetNewsPortalsNewsPortal_1_3> NewsPortals { get; } = new List<GetNewsPortalsNewsPortal_1_3>();
+        public IEnumerable<GetNewsPortalsNewsPortal_1_3> NewsPortals { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetNewsPortalsQueryResponse_1_3"/> class.
