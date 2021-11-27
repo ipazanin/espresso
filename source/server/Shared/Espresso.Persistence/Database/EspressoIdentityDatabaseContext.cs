@@ -5,27 +5,26 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Espresso.Persistence.Database
+namespace Espresso.Persistence.Database;
+
+/// <summary>
+/// Espresso identity database.
+/// </summary>
+public class EspressoIdentityDatabaseContext : IdentityDbContext, IEspressoIdentityDatabaseContext
 {
     /// <summary>
-    /// Espresso identity database.
+    /// Initializes a new instance of the <see cref="EspressoIdentityDatabaseContext"/> class.
     /// </summary>
-    public class EspressoIdentityDatabaseContext : IdentityDbContext, IEspressoIdentityDatabaseContext
+    /// <param name="options">Database context options.</param>
+    public EspressoIdentityDatabaseContext(DbContextOptions<EspressoIdentityDatabaseContext> options)
+        : base(options)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EspressoIdentityDatabaseContext"/> class.
-        /// </summary>
-        /// <param name="options">Database context options.</param>
-        public EspressoIdentityDatabaseContext(DbContextOptions<EspressoIdentityDatabaseContext> options)
-            : base(options)
-        {
-            ChangeTracker.LazyLoadingEnabled = false;
-        }
+        ChangeTracker.LazyLoadingEnabled = false;
+    }
 
-        /// <inheritdoc/>
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-        }
+    /// <inheritdoc/>
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
     }
 }

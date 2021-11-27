@@ -2,10 +2,9 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-namespace Espresso.WebApi.Application.Categories.Queries.GetCategories
+namespace Espresso.WebApi.Application.Categories.Queries.GetCategories;
+
+public record GetCategoriesQueryResponse
 {
-    public record GetCategoriesQueryResponse
-    {
-        public IEnumerable<GetCategoriesCategory> Categories { get; init; } = new List<GetCategoriesCategory>();
-    }
+    public IEnumerable<GetCategoriesCategory> Categories { get; init; } = new List<GetCategoriesCategory>();
 }

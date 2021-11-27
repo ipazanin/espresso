@@ -4,24 +4,23 @@
 
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 
-namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles
+namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles;
+
+public record GetCategoryArticlesQuery : Request<GetCategoryArticlesQueryResponse>
 {
-    public record GetCategoryArticlesQuery : Request<GetCategoryArticlesQueryResponse>
-    {
-        public int Take { get; init; }
+    public int Take { get; init; }
 
-        public int Skip { get; init; }
+    public int Skip { get; init; }
 
-        public Guid? FirstArticleId { get; init; }
+    public Guid? FirstArticleId { get; init; }
 
-        public int CategoryId { get; init; }
+    public int CategoryId { get; init; }
 
-        public int? RegionId { get; init; }
+    public int? RegionId { get; init; }
 
-        public string? NewsPortalIds { get; init; }
+    public string? NewsPortalIds { get; init; }
 
-        public string? TitleSearchQuery { get; init; }
+    public string? TitleSearchQuery { get; init; }
 
-        public string? KeyWordsToFilterOut { get; init; }
-    }
+    public string? KeyWordsToFilterOut { get; init; }
 }

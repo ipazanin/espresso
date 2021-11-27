@@ -5,59 +5,59 @@
 using Espresso.Application.DataTransferObjects.PagingDataTransferObjects;
 using Microsoft.AspNetCore.Components;
 
-namespace Espresso.Dashboard.Shared.Pagination
+namespace Espresso.Dashboard.Shared.Pagination;
+
+public class PaginationBase : ComponentBase
 {
-    public class PaginationBase : ComponentBase
+    [Parameter]
+    public PagingMetadata? PagingMetadata { get; set; }
+
+    [Parameter]
+    public int Spread { get; set; }
+
+    [Parameter]
+    public EventCallback<int> SelectedPage { get; set; }
+
+    protected List<PaginationLink> PagingLinks { get; set; } = new List<PaginationLink>();
+
+    protected override void OnInitialized()
     {
-        [Parameter]
-        public PagingMetadata? PagingMetadata { get; set; }
+        CreatePaginationLinks();
+    }
 
-        [Parameter]
-        public int Spread { get; set; }
-
-        [Parameter]
-        public EventCallback<int> SelectedPage { get; set; }
-
-        protected List<PaginationLink> PagingLinks { get; set; } = new List<PaginationLink>();
-
-        protected override void OnInitialized()
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="link"></param>
+    /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+    protected async Task OnSelectedPage(PaginationLink link)
+    {
+        if (link.Page == PagingMetadata!.CurrentPage || !link.Enabled)
         {
-            CreatePaginationLinks();
+            return;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="link"></param>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        protected async Task OnSelectedPage(PaginationLink link)
-        {
-            if (link.Page == PagingMetadata!.CurrentPage || !link.Enabled)
-            {
-                return;
-            }
+        PagingMetadata = new PagingMetadata(
+            currentPage: link.Page,
+            pageSize: PagingMetadata.PageSize,
+            totalCount: PagingMetadata.TotalCount);
 
-            PagingMetadata = new PagingMetadata(
-                currentPage: link.Page,
-                pageSize: PagingMetadata.PageSize,
-                totalCount: PagingMetadata.TotalCount);
+        await SelectedPage.InvokeAsync(link.Page);
 
-            await SelectedPage.InvokeAsync(link.Page);
+        // It Seems that Blazor server does not re render component on PagingMetadata state change
+        // So we manually update links to force UI change 
+        CreatePaginationLinks();
+    }
 
-            // It Seems that Blazor server does not re render component on PagingMetadata state change
-            // So we manually update links to force UI change 
-            CreatePaginationLinks();
-        }
+    protected string GetClass(PaginationLink link)
+    {
+        var cssClass = "page-item " + (link.Enabled ? " " : "disabled ") + (link.Active ? "active" : string.Empty);
+        return cssClass;
+    }
 
-        protected string GetClass(PaginationLink link)
-        {
-            var cssClass = "page-item " + (link.Enabled ? " " : "disabled ") + (link.Active ? "active" : string.Empty);
-            return cssClass;
-        }
-
-        private void CreatePaginationLinks()
-        {
-            PagingLinks = new List<PaginationLink>
+    private void CreatePaginationLinks()
+    {
+        PagingLinks = new List<PaginationLink>
             {
                 new PaginationLink(
                     page: PagingMetadata!.CurrentPage - 1,
@@ -66,25 +66,24 @@ namespace Espresso.Dashboard.Shared.Pagination
                     active: false),
             };
 
-            for (var i = 1; i <= PagingMetadata.TotalPages(); i++)
+        for (var i = 1; i <= PagingMetadata.TotalPages(); i++)
+        {
+            if (i >= PagingMetadata.CurrentPage - Spread && i <= PagingMetadata.CurrentPage + Spread)
             {
-                if (i >= PagingMetadata.CurrentPage - Spread && i <= PagingMetadata.CurrentPage + Spread)
-                {
-                    PagingLinks
-                        .Add(new PaginationLink(
-                            page: i,
-                            enabled: true,
-                            text: i.ToString(),
-                            active: PagingMetadata.CurrentPage == i));
-                }
+                PagingLinks
+                    .Add(new PaginationLink(
+                        page: i,
+                        enabled: true,
+                        text: i.ToString(),
+                        active: PagingMetadata.CurrentPage == i));
             }
-
-            PagingLinks
-                .Add(new PaginationLink(
-                    page: PagingMetadata.CurrentPage + 1,
-                    enabled: PagingMetadata.HasNext(),
-                    text: "Next",
-                    active: false));
         }
+
+        PagingLinks
+            .Add(new PaginationLink(
+                page: PagingMetadata.CurrentPage + 1,
+                enabled: PagingMetadata.HasNext(),
+                text: "Next",
+                active: false));
     }
 }

@@ -8,69 +8,68 @@ using Espresso.Domain.IServices;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Espresso.Application.Infrastructure.MediatorInfrastructure
+namespace Espresso.Application.Infrastructure.MediatorInfrastructure;
+
+/// <summary>
+/// <see cref="Mediator"/> pipeline to catch and handle uncaught exceptions.
+/// </summary>
+/// <typeparam name="TRequest">Mediator request.</typeparam>
+/// <typeparam name="TResponse">Mediator response.</typeparam>
+public class ExceptionRequestPipeline<TRequest, TResponse>
+    : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : notnull
 {
+    private readonly ILoggerService<ExceptionRequestPipeline<TRequest, TResponse>> _loggerService;
+    private readonly ISlackService _slackService;
+    private readonly ApplicationInformation _applicationInformation;
+
     /// <summary>
-    /// <see cref="Mediator"/> pipeline to catch and handle uncaught exceptions.
+    /// Initializes a new instance of the <see cref="ExceptionRequestPipeline{TRequest, TResponse}"/> class.
     /// </summary>
-    /// <typeparam name="TRequest">Mediator request.</typeparam>
-    /// <typeparam name="TResponse">Mediator response.</typeparam>
-    public class ExceptionRequestPipeline<TRequest, TResponse>
-        : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : notnull
+    /// <param name="loggerService">Logger service.</param>
+    /// <param name="slackService">Slack service.</param>
+    /// <param name="applicationInformation">Application information.</param>
+    public ExceptionRequestPipeline(
+        ILoggerService<ExceptionRequestPipeline<TRequest, TResponse>> loggerService,
+        ISlackService slackService,
+        ApplicationInformation applicationInformation)
     {
-        private readonly ILoggerService<ExceptionRequestPipeline<TRequest, TResponse>> _loggerService;
-        private readonly ISlackService _slackService;
-        private readonly ApplicationInformation _applicationInformation;
+        _loggerService = loggerService;
+        _slackService = slackService;
+        _applicationInformation = applicationInformation;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ExceptionRequestPipeline{TRequest, TResponse}"/> class.
-        /// </summary>
-        /// <param name="loggerService">Logger service.</param>
-        /// <param name="slackService">Slack service.</param>
-        /// <param name="applicationInformation">Application information.</param>
-        public ExceptionRequestPipeline(
-            ILoggerService<ExceptionRequestPipeline<TRequest, TResponse>> loggerService,
-            ISlackService slackService,
-            ApplicationInformation applicationInformation)
+    /// <inheritdoc/>
+    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+    {
+        try
         {
-            _loggerService = loggerService;
-            _slackService = slackService;
-            _applicationInformation = applicationInformation;
+            return await next();
         }
-
-        /// <inheritdoc/>
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        catch (Exception exception)
         {
-            try
-            {
-                return await next();
-            }
-            catch (Exception exception)
-            {
-                var requestName = typeof(TRequest).Name;
-                var arguments = new List<(string argumentName, object argumentValue)>
+            var requestName = typeof(TRequest).Name;
+            var arguments = new List<(string argumentName, object argumentValue)>
                 {
                     ("Version", _applicationInformation.Version),
                     ("App Environment", _applicationInformation.AppEnvironment),
                     ("Request Parameters", request.ToString() ?? string.Empty),
                 };
 
-                _loggerService.Log(
+            _loggerService.Log(
+                eventName: requestName,
+                exception: exception,
+                logLevel: LogLevel.Error,
+                namedArguments: arguments);
+
+            await _slackService
+                .LogError(
                     eventName: requestName,
+                    message: $"Error while handling {requestName}",
                     exception: exception,
-                    logLevel: LogLevel.Error,
-                    namedArguments: arguments);
+                    cancellationToken: cancellationToken);
 
-                await _slackService
-                    .LogError(
-                        eventName: requestName,
-                        message: $"Error while handling {requestName}",
-                        exception: exception,
-                        cancellationToken: cancellationToken);
-
-                throw;
-            }
+            throw;
         }
     }
 }

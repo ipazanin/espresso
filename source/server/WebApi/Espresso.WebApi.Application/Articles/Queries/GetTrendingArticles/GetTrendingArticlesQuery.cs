@@ -4,12 +4,11 @@
 
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 
-namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles
+namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles;
+
+public record GetTrendingArticlesQuery : Request<GetTrendingArticlesQueryResponse>
 {
-    public record GetTrendingArticlesQuery : Request<GetTrendingArticlesQueryResponse>
-    {
-        public int Take { get; init; }
-        public int Skip { get; init; }
-        public Guid? FirstArticleId { get; init; }
-    }
+    public int Take { get; init; }
+    public int Skip { get; init; }
+    public Guid? FirstArticleId { get; init; }
 }

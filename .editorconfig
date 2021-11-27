@@ -175,6 +175,13 @@ dotnet_diagnostic.IDE0044.severity = warning
 
 # RS0016: Only enable if API files are present
 dotnet_public_api_analyzer.require_api_files = true
+dotnet_style_prefer_auto_properties=true:suggestion
+dotnet_style_prefer_simplified_boolean_expressions=true:warning
+dotnet_style_prefer_conditional_expression_over_assignment=true:suggestion
+dotnet_style_prefer_conditional_expression_over_return=true:suggestion
+dotnet_style_prefer_inferred_tuple_names=true:warning
+dotnet_style_prefer_inferred_anonymous_type_member_names=true:warning
+dotnet_style_namespace_match_folder=true:warning
 
 # CSharp code style settings:
 [*.cs]
@@ -314,6 +321,11 @@ dotnet_diagnostic.IDE2004.severity = warning
 # Not enforced as a build 'warning' for 'VisualStudio' layer due to large number of false positives from https://github.com/dotnet/roslyn-analyzers/issues/3857 and https://github.com/dotnet/roslyn-analyzers/issues/3858
 # Additionally, there is a risk of accidentally breaking an internal API that partners rely on though IVT.
 dotnet_diagnostic.CA1822.severity = suggestion
+
+# IDE0160: Convert to file-scoped namespace
+csharp_style_namespace_declarations = file_scoped:warning
+
+csharp_prefer_simple_using_statement=true:warning
 
 ######################################################
 #           Custom Analysers

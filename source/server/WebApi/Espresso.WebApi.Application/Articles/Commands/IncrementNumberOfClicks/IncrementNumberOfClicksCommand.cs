@@ -5,10 +5,9 @@
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using MediatR;
 
-namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticleScore
+namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticleScore;
+
+public record IncrementNumberOfClicksCommand : Request<Unit>
 {
-    public record IncrementNumberOfClicksCommand : Request<Unit>
-    {
-        public Guid Id { get; init; }
-    }
+    public Guid Id { get; init; }
 }

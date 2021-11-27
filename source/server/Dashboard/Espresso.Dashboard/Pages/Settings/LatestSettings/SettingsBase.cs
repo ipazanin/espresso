@@ -5,11 +5,10 @@
 using Espresso.Domain.Infrastructure;
 using Microsoft.AspNetCore.Components;
 
-namespace Espresso.Dashboard.Pages.Settings
+namespace Espresso.Dashboard.Pages.Settings;
+
+public class SettingsBase : ComponentBase
 {
-    public class SettingsBase : ComponentBase
-    {
-        [Inject]
-        protected ISettingProvider SettingProvider { get; init; } = null!;
-    }
+    [Inject]
+    protected ISettingProvider SettingProvider { get; init; } = null!;
 }

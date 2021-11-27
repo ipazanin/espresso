@@ -4,9 +4,8 @@
 
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 
-namespace Espresso.WebApi.Application.Categories.Queries.GetCategories
+namespace Espresso.WebApi.Application.Categories.Queries.GetCategories;
+
+public record GetCategoriesQuery : Request<GetCategoriesQueryResponse>
 {
-    public record GetCategoriesQuery : Request<GetCategoriesQueryResponse>
-    {
-    }
 }

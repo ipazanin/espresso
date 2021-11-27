@@ -7,40 +7,39 @@ using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
 using MediatR;
 
-namespace Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplicationDownload
+namespace Espresso.WebApi.Application.ApplicationDownloads.Commands.CreateApplicationDownload;
+
+public class CreateApplicationDownloadCommanHandler : IRequestHandler<CreateApplicationDownloadCommand>
 {
-    public class CreateApplicationDownloadCommanHandler : IRequestHandler<CreateApplicationDownloadCommand>
+    private readonly IEspressoDatabaseContext _context;
+    private readonly ApplicationInformation _applicationInformation;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CreateApplicationDownloadCommanHandler"/> class.
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="applicationInformation"></param>
+    public CreateApplicationDownloadCommanHandler(
+        IEspressoDatabaseContext context,
+        ApplicationInformation applicationInformation)
     {
-        private readonly IEspressoDatabaseContext _context;
-        private readonly ApplicationInformation _applicationInformation;
+        _context = context;
+        _applicationInformation = applicationInformation;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CreateApplicationDownloadCommanHandler"/> class.
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="applicationInformation"></param>
-        public CreateApplicationDownloadCommanHandler(
-            IEspressoDatabaseContext context,
-            ApplicationInformation applicationInformation)
-        {
-            _context = context;
-            _applicationInformation = applicationInformation;
-        }
+    public async Task<Unit> Handle(CreateApplicationDownloadCommand request, CancellationToken cancellationToken)
+    {
+        var applicationDownload = new ApplicationDownload(
+            webApiVersion: _applicationInformation.Version,
+            mobileAppVersion: request.ConsumerVersion,
+            downloadedTime: DateTimeOffset.UtcNow,
+            mobileDeviceType: request.DeviceType);
 
-        public async Task<Unit> Handle(CreateApplicationDownloadCommand request, CancellationToken cancellationToken)
-        {
-            var applicationDownload = new ApplicationDownload(
-                webApiVersion: _applicationInformation.Version,
-                mobileAppVersion: request.ConsumerVersion,
-                downloadedTime: DateTimeOffset.UtcNow,
-                mobileDeviceType: request.DeviceType);
+        _ = _context.ApplicationDownload.Add(applicationDownload);
 
-            _ = _context.ApplicationDownload.Add(applicationDownload);
+        _ = await _context
+            .SaveChangesAsync(cancellationToken);
 
-            _ = await _context
-                .SaveChangesAsync(cancellationToken);
-
-            return Unit.Value;
-        }
+        return Unit.Value;
     }
 }

@@ -4,9 +4,8 @@
 
 using FluentValidation;
 
-namespace Espresso.Dashboard.ParseRssFeeds.Validators
+namespace Espresso.Dashboard.ParseRssFeeds.Validators;
+
+public class ParseRssFeedsCommandValidator : AbstractValidator<ParseRssFeedsCommand>
 {
-    public class ParseRssFeedsCommandValidator : AbstractValidator<ParseRssFeedsCommand>
-    {
-    }
 }

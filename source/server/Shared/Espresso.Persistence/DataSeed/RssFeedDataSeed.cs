@@ -8,25 +8,25 @@ using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Espresso.Persistence.DataSeed
+namespace Espresso.Persistence.DataSeed;
+
+/// <summary>
+/// <see cref="RssFeed"/> data seed.
+/// </summary>
+internal static class RssFeedDataSeed
 {
     /// <summary>
-    /// <see cref="RssFeed"/> data seed.
+    /// Seeds entity data.
     /// </summary>
-    internal static class RssFeedDataSeed
+    /// <param name="builder">Entity builder.</param>
+    public static void Seed(EntityTypeBuilder<RssFeed> builder)
     {
-        /// <summary>
-        /// Seeds entity data.
-        /// </summary>
-        /// <param name="builder">Entity builder.</param>
-        public static void Seed(EntityTypeBuilder<RssFeed> builder)
-        {
-            SeedRssFeeds(builder);
-        }
+        SeedRssFeeds(builder);
+    }
 
-        private static void SeedRssFeeds(EntityTypeBuilder<RssFeed> builder)
-        {
-            var rssFeeds = new List<RssFeed>
+    private static void SeedRssFeeds(EntityTypeBuilder<RssFeed> builder)
+    {
+        var rssFeeds = new List<RssFeed>
             {
                 new RssFeed(
                     id: (int)RssFeedId.Index_Vijesti,
@@ -459,7 +459,6 @@ namespace Espresso.Persistence.DataSeed
                     requestType: RequestType.Normal),
             };
 
-            builder.HasData(rssFeeds);
-        }
+        builder.HasData(rssFeeds);
     }
 }

@@ -7,41 +7,40 @@ using Espresso.Persistence.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Espresso.WebApi.Application.ApplicationDownloads.Queries.GetApplicationDownloadStatistics
+namespace Espresso.WebApi.Application.ApplicationDownloads.Queries.GetApplicationDownloadStatistics;
+
+public class GetApplicationDownloadStatisticsQueryHandler : IRequestHandler<GetApplicationDownloadStatisticsQuery, GetApplicationDownloadStatisticsQueryResponse>
 {
-    public class GetApplicationDownloadStatisticsQueryHandler : IRequestHandler<GetApplicationDownloadStatisticsQuery, GetApplicationDownloadStatisticsQueryResponse>
+    private readonly IEspressoDatabaseContext _espressoDatabaseContext;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetApplicationDownloadStatisticsQueryHandler"/> class.
+    /// </summary>
+    /// <param name="espressoDatabaseContext"></param>
+    public GetApplicationDownloadStatisticsQueryHandler(
+        IEspressoDatabaseContext espressoDatabaseContext)
     {
-        private readonly IEspressoDatabaseContext _espressoDatabaseContext;
+        _espressoDatabaseContext = espressoDatabaseContext;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetApplicationDownloadStatisticsQueryHandler"/> class.
-        /// </summary>
-        /// <param name="espressoDatabaseContext"></param>
-        public GetApplicationDownloadStatisticsQueryHandler(
-            IEspressoDatabaseContext espressoDatabaseContext)
+    public async Task<GetApplicationDownloadStatisticsQueryResponse> Handle(GetApplicationDownloadStatisticsQuery request, CancellationToken cancellationToken)
+    {
+        var applicationDownloads = await _espressoDatabaseContext
+            .ApplicationDownload
+            .ToListAsync(cancellationToken);
+
+        var androidCount = applicationDownloads.Count(
+            predicate: applicationDownload => applicationDownload.MobileDeviceType == DeviceType.Android);
+
+        var iosCount = applicationDownloads.Count(
+            predicate: applicationDownload => applicationDownload.MobileDeviceType == DeviceType.Ios);
+        var response = new GetApplicationDownloadStatisticsQueryResponse
         {
-            _espressoDatabaseContext = espressoDatabaseContext;
-        }
+            AndroidDownloadsCount = androidCount,
+            IosDownloadsCount = iosCount,
+            TotalDownloadCount = androidCount + iosCount,
+        };
 
-        public async Task<GetApplicationDownloadStatisticsQueryResponse> Handle(GetApplicationDownloadStatisticsQuery request, CancellationToken cancellationToken)
-        {
-            var applicationDownloads = await _espressoDatabaseContext
-                .ApplicationDownload
-                .ToListAsync(cancellationToken);
-
-            var androidCount = applicationDownloads.Count(
-                predicate: applicationDownload => applicationDownload.MobileDeviceType == DeviceType.Android);
-
-            var iosCount = applicationDownloads.Count(
-                predicate: applicationDownload => applicationDownload.MobileDeviceType == DeviceType.Ios);
-            var response = new GetApplicationDownloadStatisticsQueryResponse
-            {
-                AndroidDownloadsCount = androidCount,
-                IosDownloadsCount = iosCount,
-                TotalDownloadCount = androidCount + iosCount,
-            };
-
-            return response;
-        }
+        return response;
     }
 }

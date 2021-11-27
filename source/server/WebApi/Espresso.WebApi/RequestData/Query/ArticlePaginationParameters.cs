@@ -4,17 +4,16 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace Espresso.WebApi.RequestData.Query
+namespace Espresso.WebApi.RequestData.Query;
+
+/// <summary>
+///
+/// </summary>
+public class ArticlePaginationParameters : PaginationParameters
 {
     /// <summary>
     ///
     /// </summary>
-    public class ArticlePaginationParameters : PaginationParameters
-    {
-        /// <summary>
-        ///
-        /// </summary>
-        [FromQuery(Name = "firstArticleId")]
-        public Guid? FirstArticleId { get; set; } = null;
-    }
+    [FromQuery(Name = "firstArticleId")]
+    public Guid? FirstArticleId { get; set; } = null;
 }

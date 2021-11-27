@@ -8,33 +8,33 @@ using Espresso.Domain.Enums.RegionEnums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Espresso.Persistence.Configuration
+namespace Espresso.Persistence.Configuration;
+
+/// <summary>
+/// <see cref="Region"/> entity configuration.
+/// </summary>
+public class RegionConfiguration : IEntityTypeConfiguration<Region>
 {
-    /// <summary>
-    /// <see cref="Region"/> entity configuration.
-    /// </summary>
-    public class RegionConfiguration : IEntityTypeConfiguration<Region>
+    /// <inheritdoc/>
+    public void Configure(EntityTypeBuilder<Region> builder)
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Region> builder)
-        {
-            builder.Property(region => region.Name)
-                .HasMaxLength(Region.RegionNameHasMaxLength);
+        builder.Property(region => region.Name)
+            .HasMaxLength(Region.RegionNameHasMaxLength);
 
-            builder.Property(region => region.Subtitle)
-                .HasMaxLength(Region.RegionSubtitleHasMaxLength);
+        builder.Property(region => region.Subtitle)
+            .HasMaxLength(Region.RegionSubtitleHasMaxLength);
 
-            builder.HasMany(region => region.NewsPortals)
-                .WithOne(newsPortal => newsPortal.Region!)
-                .HasForeignKey(newsPortal => newsPortal.RegionId)
-                .OnDelete(DeleteBehavior.Cascade);
+        builder.HasMany(region => region.NewsPortals)
+            .WithOne(newsPortal => newsPortal.Region!)
+            .HasForeignKey(newsPortal => newsPortal.RegionId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-            Seed(builder);
-        }
+        Seed(builder);
+    }
 
-        private static void Seed(EntityTypeBuilder<Region> builder)
-        {
-            var regions = new List<Region>
+    private static void Seed(EntityTypeBuilder<Region> builder)
+    {
+        var regions = new List<Region>
             {
                 new Region(
                     id: (int)RegionId.Global,
@@ -66,7 +66,6 @@ namespace Espresso.Persistence.Configuration
                     subtitle: "Lokalne vijesti iz grada Zagreba i okolice"),
             };
 
-            builder.HasData(regions);
-        }
+        builder.HasData(regions);
     }
 }

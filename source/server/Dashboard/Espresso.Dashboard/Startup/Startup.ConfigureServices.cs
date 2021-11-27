@@ -37,266 +37,265 @@ using Polly;
 using Polly.Extensions.Http;
 using Polly.Timeout;
 
-namespace Espresso.Dashboard.Startup
+namespace Espresso.Dashboard.Startup;
+
+internal sealed partial class Startup
 {
-    internal sealed partial class Startup
+    public void ConfigureServices(IServiceCollection services)
     {
-        public void ConfigureServices(IServiceCollection services)
+        AddEssentials(services);
+        AddWebApi(services);
+        AddMediatRServices(services);
+        AddApplicationServices(services);
+        AddPersistence(services);
+        AddJobs(services);
+        AddAuth(services);
+    }
+
+    private static void AddAuth(IServiceCollection services)
+    {
+        services.AddOptions();
+        services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+        services.AddIdentity<IdentityUser, IdentityRole>(identityOptions =>
         {
-            AddEssentials(services);
-            AddWebApi(services);
-            AddMediatRServices(services);
-            AddApplicationServices(services);
-            AddPersistence(services);
-            AddJobs(services);
-            AddAuth(services);
-        }
+            identityOptions.Password.RequireDigit = true;
+            identityOptions.Password.RequiredLength = 8;
+            identityOptions.Password.RequireLowercase = true;
+            identityOptions.Password.RequireNonAlphanumeric = false;
+            identityOptions.Password.RequireUppercase = true;
 
-        private static void AddAuth(IServiceCollection services)
-        {
-            services.AddOptions();
-            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-            services.AddIdentity<IdentityUser, IdentityRole>(identityOptions =>
-            {
-                identityOptions.Password.RequireDigit = true;
-                identityOptions.Password.RequiredLength = 8;
-                identityOptions.Password.RequireLowercase = true;
-                identityOptions.Password.RequireNonAlphanumeric = false;
-                identityOptions.Password.RequireUppercase = true;
+            identityOptions.SignIn.RequireConfirmedEmail = false;
 
-                identityOptions.SignIn.RequireConfirmedEmail = false;
+            identityOptions.User.RequireUniqueEmail = true;
+        })
+            .AddEntityFrameworkStores<EspressoIdentityDatabaseContext>()
+            .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>(TokenOptions.DefaultProvider);
 
-                identityOptions.User.RequireUniqueEmail = true;
-            })
-                .AddEntityFrameworkStores<EspressoIdentityDatabaseContext>()
-                .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>(TokenOptions.DefaultProvider);
+        services.AddAuthentication();
 
-            services.AddAuthentication();
+        services.AddAuthorization();
+    }
 
-            services.AddAuthorization();
-        }
+    /// <summary>
+    /// Mediator Services.
+    /// </summary>
+    /// <param name="services">Services.</param>
+    private static void AddMediatRServices(IServiceCollection services)
+    {
+        services.AddMediatR(typeof(ParseRssFeedsCommandHandler), typeof(LoggerRequestPipeline<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionRequestPipeline<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggerRequestPipeline<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
+    }
 
-        /// <summary>
-        /// Mediator Services.
-        /// </summary>
-        /// <param name="services">Services.</param>
-        private static void AddMediatRServices(IServiceCollection services)
-        {
-            services.AddMediatR(typeof(ParseRssFeedsCommandHandler), typeof(LoggerRequestPipeline<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionRequestPipeline<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggerRequestPipeline<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
-        }
+    /// <summary>
+    /// Essential Services: MemoryCache, Initialization, HttpClient, Configuration ...
+    /// </summary>
+    /// <param name="services"></param>
+    private void AddEssentials(IServiceCollection services)
+    {
+        var retryPolicy = HttpPolicyExtensions
+            .HandleTransientHttpError()
+            .Or<TimeoutRejectedException>() // thrown by Polly's TimeoutPolicy if the inner execution times out
+            .RetryAsync(3);
 
-        /// <summary>
-        /// Essential Services: MemoryCache, Initialization, HttpClient, Configuration ...
-        /// </summary>
-        /// <param name="services"></param>
-        private void AddEssentials(IServiceCollection services)
-        {
-            var retryPolicy = HttpPolicyExtensions
-                .HandleTransientHttpError()
-                .Or<TimeoutRejectedException>() // thrown by Polly's TimeoutPolicy if the inner execution times out
-                .RetryAsync(3);
+        services.AddMemoryCache();
+        services.AddTransient<IDashboardInit, DashboardInit>(serviceProvider => new DashboardInit(
+            espressoIdentityContext: serviceProvider.GetRequiredService<IEspressoIdentityDatabaseContext>(),
+            roleManager: serviceProvider.GetRequiredService<RoleManager<IdentityRole>>(),
+            userManager: serviceProvider.GetRequiredService<UserManager<IdentityUser>>(),
+            adminUserPassword: _dashboardConfiguration.AppConfiguration.AdminUserPassword));
+        services.AddSingleton(_ => _dashboardConfiguration);
 
-            services.AddMemoryCache();
-            services.AddTransient<IDashboardInit, DashboardInit>(serviceProvider => new DashboardInit(
-                espressoIdentityContext: serviceProvider.GetRequiredService<IEspressoIdentityDatabaseContext>(),
-                roleManager: serviceProvider.GetRequiredService<RoleManager<IdentityRole>>(),
-                userManager: serviceProvider.GetRequiredService<UserManager<IdentityUser>>(),
-                adminUserPassword: _dashboardConfiguration.AppConfiguration.AdminUserPassword));
-            services.AddSingleton(_ => _dashboardConfiguration);
+        services
+            .AddHttpClient(
+                name: HttpClientConstants.SlackHttpClientName,
+                configureClient: (_, httpClient) => httpClient.Timeout = _dashboardConfiguration.SlackHttpClientConfiguration.Timeout)
+            .AddPolicyHandler(retryPolicy)
+            .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(20)));
 
-            services
-                .AddHttpClient(
-                    name: HttpClientConstants.SlackHttpClientName,
-                    configureClient: (_, httpClient) => httpClient.Timeout = _dashboardConfiguration.SlackHttpClientConfiguration.Timeout)
-                .AddPolicyHandler(retryPolicy)
-                .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(20)));
-
-            services
-                .AddHttpClient(
-                    name: HttpClientConstants.SendArticlesHttpClientName,
-                    configureClient: (_, httpClient) =>
-                    {
-                        httpClient.Timeout = _dashboardConfiguration.SendArticlesHttpClientConfiguration.Timeout;
-                    })
-                .AddPolicyHandler(retryPolicy)
-                .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(90)));
-
-            services
-                .AddHttpClient(
-                    name: HttpClientConstants.LoadRssFeedsHttpClientName,
-                    configureClient: (_, httpClient) =>
-                    {
-                        httpClient.Timeout = _dashboardConfiguration.LoadRssFeedsHttpClientConfiguration.Timeout;
-                    })
-                .AddPolicyHandler(retryPolicy)
-                .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(10)));
-
-            services
-                .AddHttpClient(
-                    name: HttpClientConstants.ScrapeWebHttpClientName,
-                    configureClient: (_, httpClient) =>
-                    {
-                        httpClient.Timeout = _dashboardConfiguration.ScrapeWebHttpClientConfiguration.Timeout;
-                    })
-                .AddPolicyHandler(retryPolicy)
-                .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(10)));
-
-            services.AddSingleton<IDashboardConfiguration, DashboardConfiguration>();
-            services.AddValidatorsFromAssembly(typeof(ArticleDataValidator).Assembly);
-            services.AddSingleton(_ => new ApplicationInformation(
-                appEnvironment: _dashboardConfiguration.AppConfiguration.AppEnvironment,
-                version: _dashboardConfiguration.AppConfiguration.Version));
-
-            services.AddScoped<IEmailService, SendGridEmailService>(_ => new SendGridEmailService(
-                sendGridKey: _dashboardConfiguration.AppConfiguration.SendGridApiKey));
-            services.AddSingleton<ISettingProvider, SettingProvider>();
-        }
-
-        /// <summary>
-        /// Web Api Services.
-        /// </summary>
-        /// <param name="services">Services.</param>
-        private void AddWebApi(IServiceCollection services)
-        {
-            services.AddServerSideBlazor();
-            services.AddRazorPages()
-                .AddJsonOptions(jsonOptions =>
+        services
+            .AddHttpClient(
+                name: HttpClientConstants.SendArticlesHttpClientName,
+                configureClient: (_, httpClient) =>
                 {
-                    _dashboardConfiguration
-                        .SystemTextJsonSerializerConfiguration
-                        .MapJsonSerializerOptionsToDefaultOptions(
-                            jsonSerializerOptions: jsonOptions.JsonSerializerOptions);
+                    httpClient.Timeout = _dashboardConfiguration.SendArticlesHttpClientConfiguration.Timeout;
+                })
+            .AddPolicyHandler(retryPolicy)
+            .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(90)));
+
+        services
+            .AddHttpClient(
+                name: HttpClientConstants.LoadRssFeedsHttpClientName,
+                configureClient: (_, httpClient) =>
+                {
+                    httpClient.Timeout = _dashboardConfiguration.LoadRssFeedsHttpClientConfiguration.Timeout;
+                })
+            .AddPolicyHandler(retryPolicy)
+            .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(10)));
+
+        services
+            .AddHttpClient(
+                name: HttpClientConstants.ScrapeWebHttpClientName,
+                configureClient: (_, httpClient) =>
+                {
+                    httpClient.Timeout = _dashboardConfiguration.ScrapeWebHttpClientConfiguration.Timeout;
+                })
+            .AddPolicyHandler(retryPolicy)
+            .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(10)));
+
+        services.AddSingleton<IDashboardConfiguration, DashboardConfiguration>();
+        services.AddValidatorsFromAssembly(typeof(ArticleDataValidator).Assembly);
+        services.AddSingleton(_ => new ApplicationInformation(
+            appEnvironment: _dashboardConfiguration.AppConfiguration.AppEnvironment,
+            version: _dashboardConfiguration.AppConfiguration.Version));
+
+        services.AddScoped<IEmailService, SendGridEmailService>(_ => new SendGridEmailService(
+            sendGridKey: _dashboardConfiguration.AppConfiguration.SendGridApiKey));
+        services.AddSingleton<ISettingProvider, SettingProvider>();
+    }
+
+    /// <summary>
+    /// Web Api Services.
+    /// </summary>
+    /// <param name="services">Services.</param>
+    private void AddWebApi(IServiceCollection services)
+    {
+        services.AddServerSideBlazor();
+        services.AddRazorPages()
+            .AddJsonOptions(jsonOptions =>
+            {
+                _dashboardConfiguration
+                    .SystemTextJsonSerializerConfiguration
+                    .MapJsonSerializerOptionsToDefaultOptions(
+                        jsonSerializerOptions: jsonOptions.JsonSerializerOptions);
+            });
+
+        services.AddSingleton<ReadinessHealthCheck>();
+        services.AddHealthChecks()
+            .AddCheck<StartupHealthCheck>(
+                name: nameof(StartupHealthCheck),
+                failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
+                tags: new[] { HealthCheckConstants.StartupTag })
+            .AddCheck<ReadinessHealthCheck>(
+                name: nameof(ReadinessHealthCheck),
+                failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
+                tags: new[] { HealthCheckConstants.ReadinessTag })
+            .AddCheck<LivenessHealthCheck>(
+                name: nameof(LivenessHealthCheck),
+                failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
+                tags: new[] { HealthCheckConstants.LivenessTag });
+    }
+
+    /// <summary>
+    /// Application Services: SlackService, TrendingScoreService, LoggerService.
+    /// </summary>
+    /// <param name="services"></param>
+    private void AddApplicationServices(IServiceCollection services)
+    {
+        services.AddScoped<ISlackService, SlackService>(serviceProvider => new SlackService(
+           memoryCache: serviceProvider.GetRequiredService<IMemoryCache>(),
+           httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
+           loggerService: serviceProvider.GetRequiredService<ILoggerService<SlackService>>(),
+           jsonService: serviceProvider.GetRequiredService<IJsonService>(),
+           webHookUrl: _dashboardConfiguration.AppConfiguration.SlackWebHook,
+           applicationInformation: serviceProvider.GetRequiredService<ApplicationInformation>()));
+        services.AddScoped<ILoadRssFeedsService, LoadRssFeedsService>();
+        services.AddScoped<ICreateArticleService, CreateArticleService>();
+        services.AddScoped<IScrapeWebService, ScrapeWebService>();
+        services.AddScoped<IParseHtmlService, ParseHtmlService>();
+        services.AddScoped<ISortArticlesService, SortArticlesService>();
+        services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
+        services.AddScoped<IGroupSimilarArticlesService, GroupSimilarArticlesService>();
+        services.AddScoped<ISendArticlesService>(
+            serviceProvider =>
+            {
+                return _dashboardConfiguration.RabbitMqConfiguration.UseRabbitMqServer ?
+                    new SendArticlesRabbitMqService(
+                        jsonService: serviceProvider.GetRequiredService<IJsonService>(),
+                        hostName: _dashboardConfiguration.RabbitMqConfiguration.HostName,
+                        queueName: _dashboardConfiguration.RabbitMqConfiguration.ArticlesQueueName,
+                        port: _dashboardConfiguration.RabbitMqConfiguration.Port,
+                        username: _dashboardConfiguration.RabbitMqConfiguration.Username,
+                        password: _dashboardConfiguration.RabbitMqConfiguration.Password) :
+                    new SendArticlesHttpService(
+                       httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
+                       loggerService: serviceProvider.GetRequiredService<ILoggerService<SendArticlesHttpService>>(),
+                       slackService: serviceProvider.GetRequiredService<ISlackService>(),
+                       jsonService: serviceProvider.GetRequiredService<IJsonService>(),
+                       parserApiKey: _dashboardConfiguration.ApiKeysConfiguration.ParserApiKey,
+                       targetedApiVersion: _dashboardConfiguration.AppConfiguration.RssFeedParserMajorMinorVersion,
+                       currentVersion: _dashboardConfiguration.AppConfiguration.Version,
+                       serverUrl: _dashboardConfiguration.AppConfiguration.ServerUrl);
+            });
+        services.AddTransient<IJsonService, SystemTextJsonService>(_ => new SystemTextJsonService(_dashboardConfiguration.SystemTextJsonSerializerConfiguration.JsonSerializerOptions));
+        services.AddScoped<IRemoveOldArticlesService, RemoveOldArticlesService>();
+    }
+
+    /// <summary>
+    /// Persistence Services.
+    /// </summary>
+    /// <param name="services"></param>
+    private void AddPersistence(IServiceCollection services)
+    {
+        services.AddDbContext<IEspressoDatabaseContext, EspressoDatabaseContext>(options =>
+         {
+             options.UseNpgsql(
+                 connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString,
+                 npgsqlOptionsAction: npgOptions =>
+                 {
+                     npgOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
+                 });
+             options.UseQueryTrackingBehavior(_dashboardConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
+             options.EnableDetailedErrors(_dashboardConfiguration.DatabaseConfiguration.EnableDetailedErrors);
+             options.EnableSensitiveDataLogging(_dashboardConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
+         });
+
+        services.AddDbContext<IEspressoIdentityDatabaseContext, EspressoIdentityDatabaseContext>(options =>
+        {
+            options.UseNpgsql(
+                connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoIdentityDatabaseConnectionString,
+                npgsqlOptionsAction: npgOptions =>
+                {
+                    npgOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
                 });
+            options.UseQueryTrackingBehavior(_dashboardConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
+            options.EnableDetailedErrors(_dashboardConfiguration.DatabaseConfiguration.EnableDetailedErrors);
+            options.EnableSensitiveDataLogging(_dashboardConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
+        });
 
-            services.AddSingleton<ReadinessHealthCheck>();
-            services.AddHealthChecks()
-                .AddCheck<StartupHealthCheck>(
-                    name: nameof(StartupHealthCheck),
-                    failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
-                    tags: new[] { HealthCheckConstants.StartupTag })
-                .AddCheck<ReadinessHealthCheck>(
-                    name: nameof(ReadinessHealthCheck),
-                    failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
-                    tags: new[] { HealthCheckConstants.ReadinessTag })
-                .AddCheck<LivenessHealthCheck>(
-                    name: nameof(LivenessHealthCheck),
-                    failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
-                    tags: new[] { HealthCheckConstants.LivenessTag });
-        }
-
-        /// <summary>
-        /// Application Services: SlackService, TrendingScoreService, LoggerService.
-        /// </summary>
-        /// <param name="services"></param>
-        private void AddApplicationServices(IServiceCollection services)
+        services.AddDbContext<EspressoIdentityDatabaseContext>(options =>
         {
-            services.AddScoped<ISlackService, SlackService>(serviceProvider => new SlackService(
-               memoryCache: serviceProvider.GetRequiredService<IMemoryCache>(),
-               httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
-               loggerService: serviceProvider.GetRequiredService<ILoggerService<SlackService>>(),
-               jsonService: serviceProvider.GetRequiredService<IJsonService>(),
-               webHookUrl: _dashboardConfiguration.AppConfiguration.SlackWebHook,
-               applicationInformation: serviceProvider.GetRequiredService<ApplicationInformation>()));
-            services.AddScoped<ILoadRssFeedsService, LoadRssFeedsService>();
-            services.AddScoped<ICreateArticleService, CreateArticleService>();
-            services.AddScoped<IScrapeWebService, ScrapeWebService>();
-            services.AddScoped<IParseHtmlService, ParseHtmlService>();
-            services.AddScoped<ISortArticlesService, SortArticlesService>();
-            services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
-            services.AddScoped<IGroupSimilarArticlesService, GroupSimilarArticlesService>();
-            services.AddScoped<ISendArticlesService>(
-                serviceProvider =>
+            options.UseNpgsql(
+                connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoIdentityDatabaseConnectionString,
+                npgsqlOptionsAction: npgOptions =>
                 {
-                    return _dashboardConfiguration.RabbitMqConfiguration.UseRabbitMqServer ?
-                        new SendArticlesRabbitMqService(
-                            jsonService: serviceProvider.GetRequiredService<IJsonService>(),
-                            hostName: _dashboardConfiguration.RabbitMqConfiguration.HostName,
-                            queueName: _dashboardConfiguration.RabbitMqConfiguration.ArticlesQueueName,
-                            port: _dashboardConfiguration.RabbitMqConfiguration.Port,
-                            username: _dashboardConfiguration.RabbitMqConfiguration.Username,
-                            password: _dashboardConfiguration.RabbitMqConfiguration.Password) :
-                        new SendArticlesHttpService(
-                           httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
-                           loggerService: serviceProvider.GetRequiredService<ILoggerService<SendArticlesHttpService>>(),
-                           slackService: serviceProvider.GetRequiredService<ISlackService>(),
-                           jsonService: serviceProvider.GetRequiredService<IJsonService>(),
-                           parserApiKey: _dashboardConfiguration.ApiKeysConfiguration.ParserApiKey,
-                           targetedApiVersion: _dashboardConfiguration.AppConfiguration.RssFeedParserMajorMinorVersion,
-                           currentVersion: _dashboardConfiguration.AppConfiguration.Version,
-                           serverUrl: _dashboardConfiguration.AppConfiguration.ServerUrl);
+                    npgOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
                 });
-            services.AddTransient<IJsonService, SystemTextJsonService>(_ => new SystemTextJsonService(_dashboardConfiguration.SystemTextJsonSerializerConfiguration.JsonSerializerOptions));
-            services.AddScoped<IRemoveOldArticlesService, RemoveOldArticlesService>();
-        }
+            options.UseQueryTrackingBehavior(_dashboardConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
+            options.EnableDetailedErrors(_dashboardConfiguration.DatabaseConfiguration.EnableDetailedErrors);
+            options.EnableSensitiveDataLogging(_dashboardConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
+        });
 
-        /// <summary>
-        /// Persistence Services.
-        /// </summary>
-        /// <param name="services"></param>
-        private void AddPersistence(IServiceCollection services)
+        services.AddScoped<IDatabaseConnectionFactory, DatabaseConnectionFactory>(serviceProvider => new DatabaseConnectionFactory(
+            connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString));
+    }
+
+    /// <summary>
+    /// Adds Jobs.
+    /// </summary>
+    /// <param name="services"></param>
+    private void AddJobs(IServiceCollection services)
+    {
+        services.AddSingleton<ICronJobConfiguration<ParseArticlesCronJob>>(_ =>
         {
-            services.AddDbContext<IEspressoDatabaseContext, EspressoDatabaseContext>(options =>
-             {
-                 options.UseNpgsql(
-                     connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString,
-                     npgsqlOptionsAction: npgOptions =>
-                     {
-                         npgOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
-                     });
-                 options.UseQueryTrackingBehavior(_dashboardConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
-                 options.EnableDetailedErrors(_dashboardConfiguration.DatabaseConfiguration.EnableDetailedErrors);
-                 options.EnableSensitiveDataLogging(_dashboardConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
-             });
-
-            services.AddDbContext<IEspressoIdentityDatabaseContext, EspressoIdentityDatabaseContext>(options =>
+            return new CronJobConfiguration<ParseArticlesCronJob>
             {
-                options.UseNpgsql(
-                    connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoIdentityDatabaseConnectionString,
-                    npgsqlOptionsAction: npgOptions =>
-                    {
-                        npgOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
-                    });
-                options.UseQueryTrackingBehavior(_dashboardConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
-                options.EnableDetailedErrors(_dashboardConfiguration.DatabaseConfiguration.EnableDetailedErrors);
-                options.EnableSensitiveDataLogging(_dashboardConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
-            });
-
-            services.AddDbContext<EspressoIdentityDatabaseContext>(options =>
-            {
-                options.UseNpgsql(
-                    connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoIdentityDatabaseConnectionString,
-                    npgsqlOptionsAction: npgOptions =>
-                    {
-                        npgOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
-                    });
-                options.UseQueryTrackingBehavior(_dashboardConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
-                options.EnableDetailedErrors(_dashboardConfiguration.DatabaseConfiguration.EnableDetailedErrors);
-                options.EnableSensitiveDataLogging(_dashboardConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
-            });
-
-            services.AddScoped<IDatabaseConnectionFactory, DatabaseConnectionFactory>(serviceProvider => new DatabaseConnectionFactory(
-                connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString));
-        }
-
-        /// <summary>
-        /// Adds Jobs.
-        /// </summary>
-        /// <param name="services"></param>
-        private void AddJobs(IServiceCollection services)
-        {
-            services.AddSingleton<ICronJobConfiguration<ParseArticlesCronJob>>(_ =>
-            {
-                return new CronJobConfiguration<ParseArticlesCronJob>
-                {
-                    TimeZoneInfo = TimeZoneInfo.Utc,
-                    AppEnvironment = _dashboardConfiguration.AppConfiguration.AppEnvironment,
-                    Version = _dashboardConfiguration.AppConfiguration.Version,
-                };
-            });
-            services.AddHostedService<ParseArticlesCronJob>();
-        }
+                TimeZoneInfo = TimeZoneInfo.Utc,
+                AppEnvironment = _dashboardConfiguration.AppConfiguration.AppEnvironment,
+                Version = _dashboardConfiguration.AppConfiguration.Version,
+            };
+        });
+        services.AddHostedService<ParseArticlesCronJob>();
     }
 }

@@ -4,25 +4,24 @@
 
 using Espresso.Domain.Entities;
 
-namespace Espresso.Dashboard.Application.NewsPortals.GetNewsPortalDetails
+namespace Espresso.Dashboard.Application.NewsPortals.GetNewsPortalDetails;
+
+/// <summary>
+/// Get news portal details query response.
+/// </summary>
+public class GetNewsPortalDetailsQueryResponse
 {
     /// <summary>
-    /// Get news portal details query response.
+    /// Initializes a new instance of the <see cref="GetNewsPortalDetailsQueryResponse"/> class.
     /// </summary>
-    public class GetNewsPortalDetailsQueryResponse
+    /// <param name="newsPortal">News portal.</param>
+    public GetNewsPortalDetailsQueryResponse(NewsPortal? newsPortal)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetNewsPortalDetailsQueryResponse"/> class.
-        /// </summary>
-        /// <param name="newsPortal">News portal.</param>
-        public GetNewsPortalDetailsQueryResponse(NewsPortal? newsPortal)
-        {
-            NewsPortalDetails = newsPortal is null ? null : new NewsPortalDetails(newsPortal);
-        }
-
-        /// <summary>
-        /// Gets <see cref="NewsPortal"/> details.
-        /// </summary>
-        public NewsPortalDetails? NewsPortalDetails { get; }
+        NewsPortalDetails = newsPortal is null ? null : new NewsPortalDetails(newsPortal);
     }
+
+    /// <summary>
+    /// Gets <see cref="NewsPortal"/> details.
+    /// </summary>
+    public NewsPortalDetails? NewsPortalDetails { get; }
 }

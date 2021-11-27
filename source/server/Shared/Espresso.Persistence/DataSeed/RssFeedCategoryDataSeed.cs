@@ -7,21 +7,21 @@ using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Espresso.Persistence.DataSeed
+namespace Espresso.Persistence.DataSeed;
+
+/// <summary>
+/// <see cref="RssFeedCategory"/> data seed.
+/// </summary>
+internal static class RssFeedCategoryDataSeed
 {
     /// <summary>
-    /// <see cref="RssFeedCategory"/> data seed.
+    /// Seeds entity data.
     /// </summary>
-    internal static class RssFeedCategoryDataSeed
+    /// <param name="builder">Entity builder.</param>
+    public static void Seed(EntityTypeBuilder<RssFeedCategory> builder)
     {
-        /// <summary>
-        /// Seeds entity data.
-        /// </summary>
-        /// <param name="builder">Entity builder.</param>
-        public static void Seed(EntityTypeBuilder<RssFeedCategory> builder)
-        {
-            var currentId = 1;
-            var rssFeedCategories = new List<RssFeedCategory>
+        var currentId = 1;
+        var rssFeedCategories = new List<RssFeedCategory>
             {
                 new RssFeedCategory(currentId++, "vijesti", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.JutarnjiList),
                 new RssFeedCategory(currentId++, "autoklub", urlSegmentIndex: 1, (int)CategoryId.AutoMoto, (int)RssFeedId.JutarnjiList),
@@ -115,7 +115,6 @@ namespace Espresso.Persistence.DataSeed
                 new RssFeedCategory(currentId, "zdravlje", urlSegmentIndex: 1, (int)CategoryId.Vijesti, (int)RssFeedId.Dnevno7),
             };
 
-            builder.HasData(rssFeedCategories);
-        }
+        builder.HasData(rssFeedCategories);
     }
 }

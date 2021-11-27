@@ -5,29 +5,28 @@
 using Npgsql;
 using System.Data;
 
-namespace Espresso.Persistence.Database
+namespace Espresso.Persistence.Database;
+
+/// <summary>
+/// Dataase connection factory.
+/// </summary>
+public class DatabaseConnectionFactory : IDatabaseConnectionFactory
 {
+    private readonly string _connectionString;
+
     /// <summary>
-    /// Dataase connection factory.
+    /// Initializes a new instance of the <see cref="DatabaseConnectionFactory"/> class.
     /// </summary>
-    public class DatabaseConnectionFactory : IDatabaseConnectionFactory
+    /// <param name="connectionString">Database connection string.</param>
+    public DatabaseConnectionFactory(
+        string connectionString)
     {
-        private readonly string _connectionString;
+        _connectionString = connectionString;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DatabaseConnectionFactory"/> class.
-        /// </summary>
-        /// <param name="connectionString">Database connection string.</param>
-        public DatabaseConnectionFactory(
-            string connectionString)
-        {
-            _connectionString = connectionString;
-        }
-
-        /// <inheritdoc/>
-        public IDbConnection CreateDatabaseConnection()
-        {
-            return new NpgsqlConnection(_connectionString);
-        }
+    /// <inheritdoc/>
+    public IDbConnection CreateDatabaseConnection()
+    {
+        return new NpgsqlConnection(_connectionString);
     }
 }

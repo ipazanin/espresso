@@ -6,34 +6,33 @@ using Espresso.Common.Constants;
 using Espresso.Domain.Utilities;
 using Xunit;
 
-namespace Espresso.Common.Tests.Utilities
+namespace Espresso.Common.Tests.Utilities;
+
+public class DateTimeUtilityTest
 {
-    public class DateTimeUtilityTest
+
+    [Fact]
+    public void YesterdaysDate_ReturnsYesterdaysDate()
     {
+        var expectedDate = DateTimeOffset.UtcNow.AddDays(-1).Date;
 
-        [Fact]
-        public void YesterdaysDate_ReturnsYesterdaysDate()
-        {
-            var expectedDate = DateTimeOffset.UtcNow.AddDays(-1).Date;
+        var actualDate = DateTimeUtility.YesterdaysDate;
 
-            var actualDate = DateTimeUtility.YesterdaysDate;
+        Assert.Equal(
+            expected: expectedDate,
+            actual: actualDate);
+    }
 
-            Assert.Equal(
-                expected: expectedDate,
-                actual: actualDate);
-        }
+    [Fact]
+    public void TruncateMilliseconds_WithUnixEpochStartTime_ReturnsZeroMilliseconds()
+    {
+        const long ExpectedMilliseconds = 0L;
+        const long MillisecondsToTruncate = 1000L;
 
-        [Fact]
-        public void TruncateMilliseconds_WithUnixEpochStartTime_ReturnsZeroMilliseconds()
-        {
-            const long ExpectedMilliseconds = 0L;
-            const long MillisecondsToTruncate = 1000L;
+        var actualMilliseconds = DateTimeUtility.TruncateMillisecondsToDate(MillisecondsToTruncate);
 
-            var actualMilliseconds = DateTimeUtility.TruncateMillisecondsToDate(MillisecondsToTruncate);
-
-            Assert.Equal(
-                expected: actualMilliseconds,
-                actual: ExpectedMilliseconds);
-        }
+        Assert.Equal(
+            expected: actualMilliseconds,
+            actual: ExpectedMilliseconds);
     }
 }

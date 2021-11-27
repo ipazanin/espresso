@@ -7,108 +7,107 @@ using Espresso.Domain.Infrastructure;
 
 #pragma warning disable RCS1170 // Use read-only auto-implemented property.
 
-namespace Espresso.Domain.ValueObjects.RssFeedValueObjects
+namespace Espresso.Domain.ValueObjects.RssFeedValueObjects;
+
+public class ImageUrlParseConfiguration : ValueObject
 {
-    public class ImageUrlParseConfiguration : ValueObject
+    public const ImageUrlParseStrategy ImageUrlParseStrategyDefaultValue = ImageUrlParseStrategy.SecondLinkOrFromSummary;
+
+    public const string ImgElementXPathDefaultValue = "";
+
+    public const int ImgElementXPathHasMaxLength = 300;
+
+    public const string AttributeNameDefaultValue = "src";
+
+    public const int AttributeNameMaxLength = 100;
+
+    public const ImageUrlWebScrapeType ImageUrlWebScrapeTypeDefaultValue = ImageUrlWebScrapeType.Attribute;
+
+    public const string? JsonWebScrapePropertyNamesDefaultValue = null;
+
+    public const int JsonWebScrapePropertyNamesHasMaxLength = 300;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ImageUrlParseConfiguration"/> class.
+    /// </summary>
+    /// <param name="imageUrlParseStrategy"></param>
+    /// <param name="imgElementXPath"></param>
+    /// <param name="attributeName"></param>
+    /// <param name="shouldImageUrlBeWebScraped"></param>
+    /// <param name="imageUrlWebScrapeType"></param>
+    /// <param name="jsonWebScrapePropertyNames"></param>
+    /// <param name="elementExtensionIndex"></param>
+    /// <param name="isSavedInHtmlElementWithSrcAttribute"></param>
+    public ImageUrlParseConfiguration(
+        ImageUrlParseStrategy imageUrlParseStrategy,
+        string imgElementXPath,
+        string attributeName,
+        bool shouldImageUrlBeWebScraped,
+        ImageUrlWebScrapeType imageUrlWebScrapeType,
+        string jsonWebScrapePropertyNames,
+        int? elementExtensionIndex,
+        bool? isSavedInHtmlElementWithSrcAttribute)
     {
-        public const ImageUrlParseStrategy ImageUrlParseStrategyDefaultValue = ImageUrlParseStrategy.SecondLinkOrFromSummary;
+        ImageUrlParseStrategy = imageUrlParseStrategy;
+        XPath = imgElementXPath;
+        AttributeName = attributeName;
+        ShouldImageUrlBeWebScraped = shouldImageUrlBeWebScraped;
+        ImageUrlWebScrapeType = imageUrlWebScrapeType;
+        JsonWebScrapePropertyNames = jsonWebScrapePropertyNames;
+        ElementExtensionIndex = elementExtensionIndex;
+        IsSavedInHtmlElementWithSrcAttribute = isSavedInHtmlElementWithSrcAttribute;
+    }
 
-        public const string ImgElementXPathDefaultValue = "";
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ImageUrlParseConfiguration"/> class.
+    /// ORM COnstructor.
+    /// </summary>
+    private ImageUrlParseConfiguration()
+    {
+        XPath = null!;
+        AttributeName = null!;
+    }
 
-        public const int ImgElementXPathHasMaxLength = 300;
+    public static int? ElementExtensionIndexDefaultValue => null;
 
-        public const string AttributeNameDefaultValue = "src";
+    public static bool? IsSavedInHtmlElementWithSrcAttributeDefaultValue => null;
 
-        public const int AttributeNameMaxLength = 100;
+    public static bool? ShouldImageUrlBeWebScrapedDefaultValue => null;
 
-        public const ImageUrlWebScrapeType ImageUrlWebScrapeTypeDefaultValue = ImageUrlWebScrapeType.Attribute;
+    public ImageUrlParseStrategy ImageUrlParseStrategy { get; private set; }
 
-        public const string? JsonWebScrapePropertyNamesDefaultValue = null;
+    public string XPath { get; private set; }
 
-        public const int JsonWebScrapePropertyNamesHasMaxLength = 300;
+    public string AttributeName { get; private set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ImageUrlParseConfiguration"/> class.
-        /// </summary>
-        /// <param name="imageUrlParseStrategy"></param>
-        /// <param name="imgElementXPath"></param>
-        /// <param name="attributeName"></param>
-        /// <param name="shouldImageUrlBeWebScraped"></param>
-        /// <param name="imageUrlWebScrapeType"></param>
-        /// <param name="jsonWebScrapePropertyNames"></param>
-        /// <param name="elementExtensionIndex"></param>
-        /// <param name="isSavedInHtmlElementWithSrcAttribute"></param>
-        public ImageUrlParseConfiguration(
-            ImageUrlParseStrategy imageUrlParseStrategy,
-            string imgElementXPath,
-            string attributeName,
-            bool shouldImageUrlBeWebScraped,
-            ImageUrlWebScrapeType imageUrlWebScrapeType,
-            string jsonWebScrapePropertyNames,
-            int? elementExtensionIndex,
-            bool? isSavedInHtmlElementWithSrcAttribute)
-        {
-            ImageUrlParseStrategy = imageUrlParseStrategy;
-            XPath = imgElementXPath;
-            AttributeName = attributeName;
-            ShouldImageUrlBeWebScraped = shouldImageUrlBeWebScraped;
-            ImageUrlWebScrapeType = imageUrlWebScrapeType;
-            JsonWebScrapePropertyNames = jsonWebScrapePropertyNames;
-            ElementExtensionIndex = elementExtensionIndex;
-            IsSavedInHtmlElementWithSrcAttribute = isSavedInHtmlElementWithSrcAttribute;
-        }
+    public bool? ShouldImageUrlBeWebScraped { get; private set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ImageUrlParseConfiguration"/> class.
-        /// ORM COnstructor.
-        /// </summary>
-        private ImageUrlParseConfiguration()
-        {
-            XPath = null!;
-            AttributeName = null!;
-        }
+    public ImageUrlWebScrapeType ImageUrlWebScrapeType { get; private set; }
 
-        public static int? ElementExtensionIndexDefaultValue => null;
+    public string? JsonWebScrapePropertyNames { get; private set; }
 
-        public static bool? IsSavedInHtmlElementWithSrcAttributeDefaultValue => null;
+    /// <summary>
+    /// Gets index of element extension containing Image Url.
+    /// </summary>
+    public int? ElementExtensionIndex { get; private set; }
 
-        public static bool? ShouldImageUrlBeWebScrapedDefaultValue => null;
+    public bool? IsSavedInHtmlElementWithSrcAttribute { get; private set; }
 
-        public ImageUrlParseStrategy ImageUrlParseStrategy { get; private set; }
+    public IEnumerable<string> GetPropertyNames()
+    {
+        var propertyNames = JsonWebScrapePropertyNames?.Split(",", StringSplitOptions.RemoveEmptyEntries) ??
+            Array.Empty<string>();
 
-        public string XPath { get; private set; }
+        return propertyNames;
+    }
 
-        public string AttributeName { get; private set; }
-
-        public bool? ShouldImageUrlBeWebScraped { get; private set; }
-
-        public ImageUrlWebScrapeType ImageUrlWebScrapeType { get; private set; }
-
-        public string? JsonWebScrapePropertyNames { get; private set; }
-
-        /// <summary>
-        /// Gets index of element extension containing Image Url.
-        /// </summary>
-        public int? ElementExtensionIndex { get; private set; }
-
-        public bool? IsSavedInHtmlElementWithSrcAttribute { get; private set; }
-
-        public IEnumerable<string> GetPropertyNames()
-        {
-            var propertyNames = JsonWebScrapePropertyNames?.Split(",", StringSplitOptions.RemoveEmptyEntries) ??
-                Array.Empty<string>();
-
-            return propertyNames;
-        }
-
-        protected override IEnumerable<object?> GetAtomicValues()
-        {
-            yield return ImageUrlParseStrategy;
-            yield return XPath;
-            yield return AttributeName;
-            yield return ShouldImageUrlBeWebScraped;
-            yield return ImageUrlWebScrapeType;
-            yield return JsonWebScrapePropertyNames;
-        }
+    protected override IEnumerable<object?> GetAtomicValues()
+    {
+        yield return ImageUrlParseStrategy;
+        yield return XPath;
+        yield return AttributeName;
+        yield return ShouldImageUrlBeWebScraped;
+        yield return ImageUrlWebScrapeType;
+        yield return JsonWebScrapePropertyNames;
     }
 }

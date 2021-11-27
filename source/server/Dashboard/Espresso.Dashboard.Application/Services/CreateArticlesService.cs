@@ -14,476 +14,474 @@ using Espresso.Domain.ValueObjects.ArticleValueObjects;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 
-namespace Espresso.Dashboard.Application.Services
-{
+namespace Espresso.Dashboard.Application.Services;
 #pragma warning disable SA1649 // File name should match first type name
-    public class CreateArticleService : ICreateArticleService
+public class CreateArticleService : ICreateArticleService
 #pragma warning restore SA1649 // File name should match first type name
+{
+    private readonly IScrapeWebService _webScrapingService;
+    private readonly IParseHtmlService _htmlParsingService;
+    private readonly IValidator<ArticleData> _articleDataValidator;
+    private readonly ILoggerService<CreateArticleService> _loggerService;
+    private readonly ISettingProvider _settingProvider;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CreateArticleService"/> class.
+    /// </summary>
+    /// <param name="webScrapingService"></param>
+    /// <param name="htmlParsingService"></param>
+    /// <param name="articleDataValidator"></param>
+    /// <param name="loggerService"></param>
+    /// <param name="settingProvider"></param>
+    public CreateArticleService(
+        IScrapeWebService webScrapingService,
+        IParseHtmlService htmlParsingService,
+        IValidator<ArticleData> articleDataValidator,
+        ILoggerService<CreateArticleService> loggerService,
+        ISettingProvider settingProvider)
     {
-        private readonly IScrapeWebService _webScrapingService;
-        private readonly IParseHtmlService _htmlParsingService;
-        private readonly IValidator<ArticleData> _articleDataValidator;
-        private readonly ILoggerService<CreateArticleService> _loggerService;
-        private readonly ISettingProvider _settingProvider;
+        _webScrapingService = webScrapingService;
+        _htmlParsingService = htmlParsingService;
+        _articleDataValidator = articleDataValidator;
+        _loggerService = loggerService;
+        _settingProvider = settingProvider;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CreateArticleService"/> class.
-        /// </summary>
-        /// <param name="webScrapingService"></param>
-        /// <param name="htmlParsingService"></param>
-        /// <param name="articleDataValidator"></param>
-        /// <param name="loggerService"></param>
-        /// <param name="settingProvider"></param>
-        public CreateArticleService(
-            IScrapeWebService webScrapingService,
-            IParseHtmlService htmlParsingService,
-            IValidator<ArticleData> articleDataValidator,
-            ILoggerService<CreateArticleService> loggerService,
-            ISettingProvider settingProvider)
+    public async Task<Channel<Article>> CreateArticlesFromRssFeedItems(
+        Channel<RssFeedItem> rssFeedItemChannel,
+        IEnumerable<Category> categories,
+        CancellationToken cancellationToken)
+    {
+        var reader = rssFeedItemChannel.Reader;
+        var parsedArticlesChannel = Channel.CreateUnbounded<Article>();
+        var writer = parsedArticlesChannel.Writer;
+
+        var tasks = new List<Task>();
+
+        var rssFeedItems = reader.ReadAllAsync(cancellationToken);
+
+        await foreach (var rssFeedItem in rssFeedItems)
         {
-            _webScrapingService = webScrapingService;
-            _htmlParsingService = htmlParsingService;
-            _articleDataValidator = articleDataValidator;
-            _loggerService = loggerService;
-            _settingProvider = settingProvider;
-        }
-
-        public async Task<Channel<Article>> CreateArticlesFromRssFeedItems(
-            Channel<RssFeedItem> rssFeedItemChannel,
-            IEnumerable<Category> categories,
-            CancellationToken cancellationToken)
-        {
-            var reader = rssFeedItemChannel.Reader;
-            var parsedArticlesChannel = Channel.CreateUnbounded<Article>();
-            var writer = parsedArticlesChannel.Writer;
-
-            var tasks = new List<Task>();
-
-            var rssFeedItems = reader.ReadAllAsync(cancellationToken);
-
-            await foreach (var rssFeedItem in rssFeedItems)
-            {
-                var task = Task.Run(
-                    async () =>
+            var task = Task.Run(
+                async () =>
+                {
+                    try
                     {
-                        try
+                        var (article, isValid) = await CreateArticleAsync(
+                            rssFeedItem: rssFeedItem,
+                            categories: categories,
+                            cancellationToken: cancellationToken);
+
+                        if (isValid && article != null)
                         {
-                            var (article, isValid) = await CreateArticleAsync(
-                                rssFeedItem: rssFeedItem,
-                                categories: categories,
-                                cancellationToken: cancellationToken);
-
-                            if (isValid && article != null)
-                            {
-                                _ = writer.TryWrite(article);
-                            }
+                            _ = writer.TryWrite(article);
                         }
-                        catch (Exception exception)
-                        {
-                            const string? EventName = "Create Article Unhandled Exception";
-                            _loggerService.Log(EventName, exception, LogLevel.Error);
-                        }
-                    }, cancellationToken);
-                tasks.Add(task);
-            }
-
-            await Task.WhenAll(tasks);
-            writer.Complete();
-
-            return parsedArticlesChannel;
+                    }
+                    catch (Exception exception)
+                    {
+                        const string? EventName = "Create Article Unhandled Exception";
+                        _loggerService.Log(EventName, exception, LogLevel.Error);
+                    }
+                }, cancellationToken);
+            tasks.Add(task);
         }
 
-        private static string? GetUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks, string? itemId)
+        await Task.WhenAll(tasks);
+        writer.Complete();
+
+        return parsedArticlesChannel;
+    }
+
+    private static string? GetUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks, string? itemId)
+    {
+        if (rssFeed.AmpConfiguration?.HasAmpArticles == true)
         {
-            if (rssFeed.AmpConfiguration?.HasAmpArticles == true)
-            {
-                return GetAmpUrl(rssFeed, itemLinks, itemId);
-            }
-
-            return GetNormalUrl(rssFeed, itemLinks);
+            return GetAmpUrl(rssFeed, itemLinks, itemId);
         }
 
-        private static string? GetNormalUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks)
+        return GetNormalUrl(rssFeed, itemLinks);
+    }
+
+    private static string? GetNormalUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks)
+    {
+        var url = itemLinks?.FirstOrDefault()?.ToString();
+
+        var articleUrl = AddBaseUrlToUrlFragment(url, rssFeed.NewsPortal?.BaseUrl);
+
+        return articleUrl;
+    }
+
+    private static string? GetAmpUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks, string? itemId)
+    {
+        if (
+            itemId is null ||
+            itemLinks?.FirstOrDefault() is null ||
+            string.IsNullOrEmpty(rssFeed.AmpConfiguration?.TemplateUrl))
         {
-            var url = itemLinks?.FirstOrDefault()?.ToString();
-
-            var articleUrl = AddBaseUrlToUrlFragment(url, rssFeed.NewsPortal?.BaseUrl);
-
-            return articleUrl;
+            return null;
         }
 
-        private static string? GetAmpUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks, string? itemId)
+        var articleId = $"{itemId[(itemId.IndexOf("id=") + 3)..]}";
+        var urlSegments = itemLinks.FirstOrDefault()?.Segments ?? Array.Empty<string>();
+
+        var firstArticleSegment = urlSegments.Length < 2 ? string.Empty : urlSegments[1].ToLower();
+        var secondArticleSegment = urlSegments.Length < 3 ? string.Empty : urlSegments[2].ToLower();
+        var thirdArticleSegment = urlSegments.Length < 4 ? string.Empty : urlSegments[3].ToLower();
+        var fourthArticleSegment = urlSegments.Length < 5 ? string.Empty : urlSegments[4].ToLower();
+
+        var articleUrl = string.Format(
+            rssFeed.AmpConfiguration.TemplateUrl,
+            articleId,
+            firstArticleSegment,
+            secondArticleSegment,
+            thirdArticleSegment,
+            fourthArticleSegment);
+
+        return articleUrl;
+    }
+
+    private static IEnumerable<ArticleCategory> GetArticleCategories(
+        IEnumerable<Category> categories,
+        string? itemTitle,
+        string? itemSummary,
+        Guid articleId,
+        Uri? itemUrl,
+        RssFeed rssFeed)
+    {
+        var articleCategories = new HashSet<ArticleCategory>();
+        var articleCategoriesFromKeyWords = GetArticleCategoriesFromCategorysKeyWords(
+            categories: categories,
+            itemTitle: itemTitle,
+            itemSummary: itemSummary,
+            articleId: articleId);
+        articleCategories.UnionWith(articleCategoriesFromKeyWords);
+
+        switch (rssFeed.CategoryParseConfiguration.CategoryParseStrategy)
+        {
+            default:
+                var articleCategoriesFromRssFeed = GetArticleCategoriesFromRssFeed(
+                    articleId: articleId,
+                    rssFeed: rssFeed);
+                articleCategories.UnionWith(articleCategoriesFromRssFeed);
+                break;
+            case CategoryParseStrategy.FromUrl:
+                var articleCategoriesFromUrl = GetArticlecategoriesFromFromUrl(
+                    articleId: articleId,
+                    itemUrl: itemUrl,
+                    rssFeed: rssFeed);
+                articleCategories.UnionWith(articleCategoriesFromUrl);
+                break;
+        }
+
+        return articleCategories;
+    }
+
+    private static IEnumerable<ArticleCategory> GetArticleCategoriesFromCategorysKeyWords(
+        IEnumerable<Category> categories,
+        string? itemTitle,
+        string? itemSummary,
+        Guid articleId)
+    {
+        var categoryIds = new HashSet<ArticleCategory>();
+        foreach (var category in categories)
         {
             if (
-                itemId is null ||
-                itemLinks?.FirstOrDefault() is null ||
-                string.IsNullOrEmpty(rssFeed.AmpConfiguration?.TemplateUrl))
+                !string.IsNullOrEmpty(category.KeyWordsRegexPattern) &&
+                Regex.IsMatch($"{itemTitle} {itemSummary}", category.KeyWordsRegexPattern, RegexOptions.IgnoreCase))
             {
-                return null;
+                categoryIds.Add(new ArticleCategory(
+                    id: Guid.NewGuid(),
+                    articleId: articleId,
+                    categoryId: category.Id,
+                    article: null,
+                    category: category));
             }
-
-            var articleId = $"{itemId[(itemId.IndexOf("id=") + 3)..]}";
-            var urlSegments = itemLinks.FirstOrDefault()?.Segments ?? Array.Empty<string>();
-
-            var firstArticleSegment = urlSegments.Length < 2 ? string.Empty : urlSegments[1].ToLower();
-            var secondArticleSegment = urlSegments.Length < 3 ? string.Empty : urlSegments[2].ToLower();
-            var thirdArticleSegment = urlSegments.Length < 4 ? string.Empty : urlSegments[3].ToLower();
-            var fourthArticleSegment = urlSegments.Length < 5 ? string.Empty : urlSegments[4].ToLower();
-
-            var articleUrl = string.Format(
-                rssFeed.AmpConfiguration.TemplateUrl,
-                articleId,
-                firstArticleSegment,
-                secondArticleSegment,
-                thirdArticleSegment,
-                fourthArticleSegment);
-
-            return articleUrl;
         }
 
-        private static IEnumerable<ArticleCategory> GetArticleCategories(
-            IEnumerable<Category> categories,
-            string? itemTitle,
-            string? itemSummary,
-            Guid articleId,
-            Uri? itemUrl,
-            RssFeed rssFeed)
+        return categoryIds;
+    }
+
+    private static IEnumerable<ArticleCategory> GetArticlecategoriesFromFromUrl(
+        Guid articleId,
+        Uri? itemUrl,
+        RssFeed rssFeed)
+    {
+        var articleCategories = new HashSet<ArticleCategory>();
+
+        foreach (var rssFeedCategory in rssFeed.RssFeedCategories)
         {
-            var articleCategories = new HashSet<ArticleCategory>();
-            var articleCategoriesFromKeyWords = GetArticleCategoriesFromCategorysKeyWords(
-                categories: categories,
-                itemTitle: itemTitle,
-                itemSummary: itemSummary,
-                articleId: articleId);
-            articleCategories.UnionWith(articleCategoriesFromKeyWords);
-
-            switch (rssFeed.CategoryParseConfiguration.CategoryParseStrategy)
+            if (
+                itemUrl?.Segments != null &&
+                itemUrl.Segments.Length > rssFeedCategory.UrlSegmentIndex)
             {
-                default:
-                    var articleCategoriesFromRssFeed = GetArticleCategoriesFromRssFeed(
-                        articleId: articleId,
-                        rssFeed: rssFeed);
-                    articleCategories.UnionWith(articleCategoriesFromRssFeed);
-                    break;
-                case CategoryParseStrategy.FromUrl:
-                    var articleCategoriesFromUrl = GetArticlecategoriesFromFromUrl(
-                        articleId: articleId,
-                        itemUrl: itemUrl,
-                        rssFeed: rssFeed);
-                    articleCategories.UnionWith(articleCategoriesFromUrl);
-                    break;
-            }
+                var secondUrlSegment = itemUrl?
+                    .Segments[rssFeedCategory.UrlSegmentIndex]
+                    .Replace("/", string.Empty).ToLower();
 
-            return articleCategories;
-        }
-
-        private static IEnumerable<ArticleCategory> GetArticleCategoriesFromCategorysKeyWords(
-            IEnumerable<Category> categories,
-            string? itemTitle,
-            string? itemSummary,
-            Guid articleId)
-        {
-            var categoryIds = new HashSet<ArticleCategory>();
-            foreach (var category in categories)
-            {
                 if (
-                    !string.IsNullOrEmpty(category.KeyWordsRegexPattern) &&
-                    Regex.IsMatch($"{itemTitle} {itemSummary}", category.KeyWordsRegexPattern, RegexOptions.IgnoreCase))
+                    !string.IsNullOrEmpty(rssFeedCategory.UrlRegex) &&
+                    !string.IsNullOrEmpty(secondUrlSegment) &&
+                    Regex.IsMatch(secondUrlSegment, rssFeedCategory.UrlRegex, RegexOptions.IgnoreCase))
                 {
-                    categoryIds.Add(new ArticleCategory(
+                    articleCategories.Add(new ArticleCategory(
                         id: Guid.NewGuid(),
                         articleId: articleId,
-                        categoryId: category.Id,
+                        categoryId: rssFeedCategory.CategoryId,
                         article: null,
-                        category: category));
+                        category: null));
                 }
             }
-
-            return categoryIds;
         }
 
-        private static IEnumerable<ArticleCategory> GetArticlecategoriesFromFromUrl(
-            Guid articleId,
-            Uri? itemUrl,
-            RssFeed rssFeed)
+        return articleCategories;
+    }
+
+    private static IEnumerable<ArticleCategory> GetArticleCategoriesFromRssFeed(
+        Guid articleId,
+        RssFeed rssFeed)
+    {
+        yield return new ArticleCategory(
+            id: Guid.NewGuid(),
+            articleId: articleId,
+            categoryId: rssFeed.CategoryId,
+            article: null,
+            category: null);
+    }
+
+    private static string? AddBaseUrlToUrlFragment(string? urlFragmentOrFullUrl, string? baseUrl)
+    {
+        if (
+            string.IsNullOrEmpty(urlFragmentOrFullUrl) ||
+            string.IsNullOrEmpty(baseUrl))
         {
-            var articleCategories = new HashSet<ArticleCategory>();
-
-            foreach (var rssFeedCategory in rssFeed.RssFeedCategories)
-            {
-                if (
-                    itemUrl?.Segments != null &&
-                    itemUrl.Segments.Length > rssFeedCategory.UrlSegmentIndex)
-                {
-                    var secondUrlSegment = itemUrl?
-                        .Segments[rssFeedCategory.UrlSegmentIndex]
-                        .Replace("/", string.Empty).ToLower();
-
-                    if (
-                        !string.IsNullOrEmpty(rssFeedCategory.UrlRegex) &&
-                        !string.IsNullOrEmpty(secondUrlSegment) &&
-                        Regex.IsMatch(secondUrlSegment, rssFeedCategory.UrlRegex, RegexOptions.IgnoreCase))
-                    {
-                        articleCategories.Add(new ArticleCategory(
-                            id: Guid.NewGuid(),
-                            articleId: articleId,
-                            categoryId: rssFeedCategory.CategoryId,
-                            article: null,
-                            category: null));
-                    }
-                }
-            }
-
-            return articleCategories;
+            return null;
         }
-
-        private static IEnumerable<ArticleCategory> GetArticleCategoriesFromRssFeed(
-            Guid articleId,
-            RssFeed rssFeed)
+        else if (urlFragmentOrFullUrl.StartsWith("http"))
         {
-            yield return new ArticleCategory(
-                id: Guid.NewGuid(),
-                articleId: articleId,
-                categoryId: rssFeed.CategoryId,
-                article: null,
-                category: null);
+            return urlFragmentOrFullUrl;
         }
-
-        private static string? AddBaseUrlToUrlFragment(string? urlFragmentOrFullUrl, string? baseUrl)
+        else
         {
-            if (
-                string.IsNullOrEmpty(urlFragmentOrFullUrl) ||
-                string.IsNullOrEmpty(baseUrl))
-            {
-                return null;
-            }
-            else if (urlFragmentOrFullUrl.StartsWith("http"))
-            {
-                return urlFragmentOrFullUrl;
-            }
-            else
-            {
-                return $"{baseUrl}{urlFragmentOrFullUrl}";
-            }
+            return $"{baseUrl}{urlFragmentOrFullUrl}";
         }
+    }
 
-        private DateTimeOffset? GetPublishDateTime(DateTimeOffset itemPublishDateTime, DateTimeOffset utcNow)
+    private DateTimeOffset? GetPublishDateTime(DateTimeOffset itemPublishDateTime, DateTimeOffset utcNow)
+    {
+        var invalidPublishdateTimeMinimum = utcNow - _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfArticle;
+        var minimumPublishDateTime = utcNow.AddDays(-1);
+        var maximumPublishDateTime = utcNow;
+        var rssFeedPublishDateTime = itemPublishDateTime.UtcDateTime;
+
+        if (rssFeedPublishDateTime < invalidPublishdateTimeMinimum)
         {
-            var invalidPublishdateTimeMinimum = utcNow - _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfArticle;
-            var minimumPublishDateTime = utcNow.AddDays(-1);
-            var maximumPublishDateTime = utcNow;
-            var rssFeedPublishDateTime = itemPublishDateTime.UtcDateTime;
-
-            if (rssFeedPublishDateTime < invalidPublishdateTimeMinimum)
-            {
-                return null;
-            }
-            else if (rssFeedPublishDateTime > maximumPublishDateTime || rssFeedPublishDateTime < minimumPublishDateTime)
-            {
-                return utcNow;
-            }
-            else
-            {
-                return rssFeedPublishDateTime;
-            }
+            return null;
         }
-
-        private async Task<(Article? article, bool isValid)> CreateArticleAsync(
-            RssFeedItem rssFeedItem,
-            IEnumerable<Category> categories,
-            CancellationToken cancellationToken)
+        else if (rssFeedPublishDateTime > maximumPublishDateTime || rssFeedPublishDateTime < minimumPublishDateTime)
         {
-            var id = Guid.NewGuid();
-            var utcNow = DateTimeOffset.UtcNow;
-            const int InitialNumberOfClicks = 0;
+            return utcNow;
+        }
+        else
+        {
+            return rssFeedPublishDateTime;
+        }
+    }
 
-            var title = rssFeedItem.Title;
+    private async Task<(Article? article, bool isValid)> CreateArticleAsync(
+        RssFeedItem rssFeedItem,
+        IEnumerable<Category> categories,
+        CancellationToken cancellationToken)
+    {
+        var id = Guid.NewGuid();
+        var utcNow = DateTimeOffset.UtcNow;
+        const int InitialNumberOfClicks = 0;
 
-            var url = GetUrl(
-                rssFeed: rssFeedItem.RssFeed,
-                itemLinks: rssFeedItem.Links,
-                itemId: rssFeedItem.Id);
+        var title = rssFeedItem.Title;
 
-            var webUrl = GetNormalUrl(
-                rssFeed: rssFeedItem.RssFeed,
-                itemLinks: rssFeedItem.Links);
+        var url = GetUrl(
+            rssFeed: rssFeedItem.RssFeed,
+            itemLinks: rssFeedItem.Links,
+            itemId: rssFeedItem.Id);
 
-            var summary = GetSummary(
-                itemSummary: rssFeedItem.Summary,
-                itemTitle: rssFeedItem.Title);
+        var webUrl = GetNormalUrl(
+            rssFeed: rssFeedItem.RssFeed,
+            itemLinks: rssFeedItem.Links);
 
-            var imageUrl = await GetImageUrl(
-                itemLinks: rssFeedItem.Links,
-                itemSummary: rssFeedItem.Summary,
-                itemContent: rssFeedItem.Content,
-                rssFeed: rssFeedItem.RssFeed,
-                webUrl: webUrl,
-                elementExtensions: rssFeedItem.ElementExtensions,
-                cancellationToken: cancellationToken);
+        var summary = GetSummary(
+            itemSummary: rssFeedItem.Summary,
+            itemTitle: rssFeedItem.Title);
 
-            var publishDateTime = GetPublishDateTime(
-                itemPublishDateTime: rssFeedItem.PublishDateTime,
-                utcNow: utcNow);
+        var imageUrl = await GetImageUrl(
+            itemLinks: rssFeedItem.Links,
+            itemSummary: rssFeedItem.Summary,
+            itemContent: rssFeedItem.Content,
+            rssFeed: rssFeedItem.RssFeed,
+            webUrl: webUrl,
+            elementExtensions: rssFeedItem.ElementExtensions,
+            cancellationToken: cancellationToken);
 
-            var articlecategories = GetArticleCategories(
-                categories: categories,
-                itemTitle: rssFeedItem.Title,
-                itemSummary: summary,
-                articleId: id,
-                itemUrl: rssFeedItem.Links?.FirstOrDefault(),
-                rssFeed: rssFeedItem.RssFeed);
+        var publishDateTime = GetPublishDateTime(
+            itemPublishDateTime: rssFeedItem.PublishDateTime,
+            utcNow: utcNow);
 
-            var articleData = new ArticleData
+        var articlecategories = GetArticleCategories(
+            categories: categories,
+            itemTitle: rssFeedItem.Title,
+            itemSummary: summary,
+            articleId: id,
+            itemUrl: rssFeedItem.Links?.FirstOrDefault(),
+            rssFeed: rssFeedItem.RssFeed);
+
+        var articleData = new ArticleData
+        {
+            Id = id,
+            PublishDateTime = publishDateTime,
+            Summary = summary,
+            Title = title,
+            CreateDateTime = utcNow,
+            ImageUrl = imageUrl,
+            NumberOfClicks = InitialNumberOfClicks,
+            TrendingScore = Article.TrendingScoreDefaultValue,
+            UpdateDateTime = utcNow,
+            Url = url,
+            WebUrl = webUrl,
+            ArticleCategories = articlecategories,
+        };
+
+        return CreateArticle(
+            articleData: articleData,
+            rssFeed: rssFeedItem.RssFeed);
+    }
+
+    private (Article? article, bool isValid) CreateArticle(ArticleData articleData, RssFeed rssFeed)
+    {
+        var validationResult = _articleDataValidator.Validate(articleData);
+
+        if (validationResult.IsValid)
+        {
+            var article = new Article(
+                id: articleData.Id,
+                url: articleData.Url!,
+                webUrl: articleData.WebUrl!,
+                summary: articleData.Summary!,
+                title: articleData.Title!,
+                imageUrl: articleData.ImageUrl,
+                createDateTime: articleData.CreateDateTime,
+                updateDateTime: articleData.UpdateDateTime,
+                publishDateTime: articleData.PublishDateTime!.Value,
+                numberOfClicks: articleData.NumberOfClicks,
+                trendingScore: articleData.TrendingScore,
+                editorConfiguration: new EditorConfiguration(),
+                newsPortalId: rssFeed.NewsPortalId,
+                rssFeedId: rssFeed.Id,
+                articleCategories: articleData.ArticleCategories,
+                newsPortal: null,
+                rssFeed: null,
+                subordinateArticles: null,
+                mainArticle: null);
+
+            return (article, true);
+        }
+        else
+        {
+            var rssFeedUrl = rssFeed.Url;
+            var exceptionMessage = validationResult.ToString();
+            var eventName = Event.CreateArticle.GetDisplayName();
+            var parameters = new (string, object)[]
             {
-                Id = id,
-                PublishDateTime = publishDateTime,
-                Summary = summary,
-                Title = title,
-                CreateDateTime = utcNow,
-                ImageUrl = imageUrl,
-                NumberOfClicks = InitialNumberOfClicks,
-                TrendingScore = Article.TrendingScoreDefaultValue,
-                UpdateDateTime = utcNow,
-                Url = url,
-                WebUrl = webUrl,
-                ArticleCategories = articlecategories,
+                    (nameof(rssFeedUrl), rssFeedUrl),
             };
 
-            return CreateArticle(
-                articleData: articleData,
-                rssFeed: rssFeedItem.RssFeed);
+            _loggerService.Log(eventName, exceptionMessage, LogLevel.Error, parameters);
+
+            return (null, false);
         }
+    }
 
-        private (Article? article, bool isValid) CreateArticle(ArticleData articleData, RssFeed rssFeed)
+    private string? GetSummary(string? itemSummary, string? itemTitle)
+    {
+        var summary = _htmlParsingService.GetText(html: itemSummary);
+        return string.IsNullOrEmpty(summary) ? itemTitle : summary;
+    }
+
+    private async Task<string?> GetImageUrl(
+        IEnumerable<Uri?>? itemLinks,
+        string? itemSummary,
+        string? itemContent,
+        RssFeed rssFeed,
+        string? webUrl,
+        IEnumerable<string?>? elementExtensions,
+        CancellationToken cancellationToken)
+    {
+        var elementExtensionIndex = rssFeed.ImageUrlParseConfiguration.ElementExtensionIndex;
+        var isSavedInHtmlElementWithSrcAttribute = rssFeed.ImageUrlParseConfiguration.IsSavedInHtmlElementWithSrcAttribute;
+
+        string? imageUrl;
+        switch (rssFeed.ImageUrlParseConfiguration.ImageUrlParseStrategy)
         {
-            var validationResult = _articleDataValidator.Validate(articleData);
-
-            if (validationResult.IsValid)
-            {
-                var article = new Article(
-                    id: articleData.Id,
-                    url: articleData.Url!,
-                    webUrl: articleData.WebUrl!,
-                    summary: articleData.Summary!,
-                    title: articleData.Title!,
-                    imageUrl: articleData.ImageUrl,
-                    createDateTime: articleData.CreateDateTime,
-                    updateDateTime: articleData.UpdateDateTime,
-                    publishDateTime: articleData.PublishDateTime!.Value,
-                    numberOfClicks: articleData.NumberOfClicks,
-                    trendingScore: articleData.TrendingScore,
-                    editorConfiguration: new EditorConfiguration(),
-                    newsPortalId: rssFeed.NewsPortalId,
-                    rssFeedId: rssFeed.Id,
-                    articleCategories: articleData.ArticleCategories,
-                    newsPortal: null,
-                    rssFeed: null,
-                    subordinateArticles: null,
-                    mainArticle: null);
-
-                return (article, true);
-            }
-            else
-            {
-                var rssFeedUrl = rssFeed.Url;
-                var exceptionMessage = validationResult.ToString();
-                var eventName = Event.CreateArticle.GetDisplayName();
-                var parameters = new (string, object)[]
+            case ImageUrlParseStrategy.FromContent:
+                imageUrl = _htmlParsingService.GetSrcAttributeFromFirstImgElement(itemContent);
+                break;
+            case ImageUrlParseStrategy.FromElementExtension:
+                if (elementExtensionIndex is null || elementExtensions is null)
                 {
-                    (nameof(rssFeedUrl), rssFeedUrl),
-                };
-
-                _loggerService.Log(eventName, exceptionMessage, LogLevel.Error, parameters);
-
-                return (null, false);
-            }
-        }
-
-        private string? GetSummary(string? itemSummary, string? itemTitle)
-        {
-            var summary = _htmlParsingService.GetText(html: itemSummary);
-            return string.IsNullOrEmpty(summary) ? itemTitle : summary;
-        }
-
-        private async Task<string?> GetImageUrl(
-            IEnumerable<Uri?>? itemLinks,
-            string? itemSummary,
-            string? itemContent,
-            RssFeed rssFeed,
-            string? webUrl,
-            IEnumerable<string?>? elementExtensions,
-            CancellationToken cancellationToken)
-        {
-            var elementExtensionIndex = rssFeed.ImageUrlParseConfiguration.ElementExtensionIndex;
-            var isSavedInHtmlElementWithSrcAttribute = rssFeed.ImageUrlParseConfiguration.IsSavedInHtmlElementWithSrcAttribute;
-
-            string? imageUrl;
-            switch (rssFeed.ImageUrlParseConfiguration.ImageUrlParseStrategy)
-            {
-                case ImageUrlParseStrategy.FromContent:
-                    imageUrl = _htmlParsingService.GetSrcAttributeFromFirstImgElement(itemContent);
+                    imageUrl = null;
                     break;
-                case ImageUrlParseStrategy.FromElementExtension:
-                    if (elementExtensionIndex is null || elementExtensions is null)
-                    {
-                        imageUrl = null;
-                        break;
-                    }
+                }
 
-                    if (elementExtensions.Count() <= elementExtensionIndex.Value)
-                    {
-                        imageUrl = null;
-                        break;
-                    }
-
-                    if (isSavedInHtmlElementWithSrcAttribute == true)
-                    {
-                        imageUrl = _htmlParsingService.GetSrcAttributeFromFirstImgElement(elementExtensions.ElementAt(elementExtensionIndex.Value));
-                    }
-                    else
-                    {
-                        imageUrl = elementExtensions.ElementAt(elementExtensionIndex.Value);
-                    }
-
-                    break;
-                default:
-                    if (itemLinks?.Count() > 1)
-                    {
-                        imageUrl = itemLinks.ElementAt(1)?.ToString();
-                    }
-                    else
-                    {
-                        imageUrl = _htmlParsingService.GetSrcAttributeFromFirstImgElement(itemSummary);
-                    }
-
-                    break;
-            }
-
-            var shouldImageBeWebScraped = rssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped
-                ?? string.IsNullOrEmpty(imageUrl);
-
-            if (shouldImageBeWebScraped)
-            {
-                imageUrl = await _webScrapingService.GetSrcAttributeFromElementDefinedByXPath(
-                    articleUrl: webUrl,
-                    requestType: RequestType.Browser,
-                    imageUrlParseConfiguration: rssFeed.ImageUrlParseConfiguration,
-                    cancellationToken: cancellationToken);
-
-                var eventName = Event.ImageUrlWebScrapingData.GetDisplayName();
-                var rssFeedUrl = rssFeed.Url;
-                var newsPortalName = rssFeed.NewsPortal?.Name ?? string.Empty;
-                var arguments = new (string, object)[]
+                if (elementExtensions.Count() <= elementExtensionIndex.Value)
                 {
+                    imageUrl = null;
+                    break;
+                }
+
+                if (isSavedInHtmlElementWithSrcAttribute == true)
+                {
+                    imageUrl = _htmlParsingService.GetSrcAttributeFromFirstImgElement(elementExtensions.ElementAt(elementExtensionIndex.Value));
+                }
+                else
+                {
+                    imageUrl = elementExtensions.ElementAt(elementExtensionIndex.Value);
+                }
+
+                break;
+            default:
+                if (itemLinks?.Count() > 1)
+                {
+                    imageUrl = itemLinks.ElementAt(1)?.ToString();
+                }
+                else
+                {
+                    imageUrl = _htmlParsingService.GetSrcAttributeFromFirstImgElement(itemSummary);
+                }
+
+                break;
+        }
+
+        var shouldImageBeWebScraped = rssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped
+            ?? string.IsNullOrEmpty(imageUrl);
+
+        if (shouldImageBeWebScraped)
+        {
+            imageUrl = await _webScrapingService.GetSrcAttributeFromElementDefinedByXPath(
+                articleUrl: webUrl,
+                requestType: RequestType.Browser,
+                imageUrlParseConfiguration: rssFeed.ImageUrlParseConfiguration,
+                cancellationToken: cancellationToken);
+
+            var eventName = Event.ImageUrlWebScrapingData.GetDisplayName();
+            var rssFeedUrl = rssFeed.Url;
+            var newsPortalName = rssFeed.NewsPortal?.Name ?? string.Empty;
+            var arguments = new (string, object)[]
+            {
                     (nameof(rssFeedUrl), rssFeedUrl),
                     (nameof(newsPortalName), newsPortalName),
                     (nameof(imageUrl), imageUrl ?? string.Empty),
-                };
+            };
 
-                _loggerService.Log(eventName, LogLevel.Information, arguments);
-            }
-
-            return AddBaseUrlToUrlFragment(imageUrl, rssFeed.NewsPortal?.BaseUrl);
+            _loggerService.Log(eventName, LogLevel.Information, arguments);
         }
+
+        return AddBaseUrlToUrlFragment(imageUrl, rssFeed.NewsPortal?.BaseUrl);
     }
 }

@@ -2,61 +2,60 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-namespace Espresso.Domain.Entities
+namespace Espresso.Domain.Entities;
+
+public class SimilarArticle
 {
-    public class SimilarArticle
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SimilarArticle"/> class.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="similarityScore"></param>
+    /// <param name="mainArticleId"></param>
+    /// <param name="mainArticle"></param>
+    /// <param name="subordinateArticleId"></param>
+    /// <param name="subordinateArticle"></param>
+    public SimilarArticle(
+        Guid id,
+        double similarityScore,
+        Guid mainArticleId,
+        Article? mainArticle,
+        Guid subordinateArticleId,
+        Article? subordinateArticle)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SimilarArticle"/> class.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="similarityScore"></param>
-        /// <param name="mainArticleId"></param>
-        /// <param name="mainArticle"></param>
-        /// <param name="subordinateArticleId"></param>
-        /// <param name="subordinateArticle"></param>
-        public SimilarArticle(
-            Guid id,
-            double similarityScore,
-            Guid mainArticleId,
-            Article? mainArticle,
-            Guid subordinateArticleId,
-            Article? subordinateArticle)
-        {
-            Id = id;
-            SimilarityScore = similarityScore;
-            MainArticleId = mainArticleId;
-            MainArticle = mainArticle;
-            SubordinateArticleId = subordinateArticleId;
-            SubordinateArticle = subordinateArticle;
-        }
+        Id = id;
+        SimilarityScore = similarityScore;
+        MainArticleId = mainArticleId;
+        MainArticle = mainArticle;
+        SubordinateArticleId = subordinateArticleId;
+        SubordinateArticle = subordinateArticle;
+    }
 
-        private SimilarArticle()
-        {
-        }
+    private SimilarArticle()
+    {
+    }
 
-        public Guid Id { get; private set; }
+    public Guid Id { get; private set; }
 
-        public double SimilarityScore { get; private set; }
+    public double SimilarityScore { get; private set; }
 
-        public Guid MainArticleId { get; private set; }
+    public Guid MainArticleId { get; private set; }
 
-        public Article? MainArticle { get; private set; }
+    public Article? MainArticle { get; private set; }
 
-        public Guid SubordinateArticleId { get; private set; }
+    public Guid SubordinateArticleId { get; private set; }
 
-        public Article? SubordinateArticle { get; private set; }
+    public Article? SubordinateArticle { get; private set; }
 
-        public void SetMainArticle(Article mainArticle)
-        {
-            MainArticle = mainArticle;
-            MainArticleId = mainArticle.Id;
-        }
+    public void SetMainArticle(Article mainArticle)
+    {
+        MainArticle = mainArticle;
+        MainArticleId = mainArticle.Id;
+    }
 
-        public void SetSubordinateArticle(Article subordinateArticle)
-        {
-            SubordinateArticle = subordinateArticle;
-            SubordinateArticleId = subordinateArticle.Id;
-        }
+    public void SetSubordinateArticle(Article subordinateArticle)
+    {
+        SubordinateArticle = subordinateArticle;
+        SubordinateArticleId = subordinateArticle.Id;
     }
 }

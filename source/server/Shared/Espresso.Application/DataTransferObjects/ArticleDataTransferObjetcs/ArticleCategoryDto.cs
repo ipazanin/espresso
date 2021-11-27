@@ -6,49 +6,48 @@ using Espresso.Domain.Entities;
 using System.Linq.Expressions;
 using System.Text.Json.Serialization;
 
-namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
+namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
+
+public record ArticleCategoryDto
 {
-    public record ArticleCategoryDto
+    /// <summary>
+    /// Gets id.
+    /// </summary>
+    public Guid Id { get; private set; }
+
+    /// <summary>
+    /// Gets category id.
+    /// </summary>
+    public int CategoryId { get; private set; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ArticleCategoryDto"/> class.
+    /// </summary>
+    /// <param name="id">Article id.</param>
+    /// <param name="categoryId">Category id.</param>
+    [JsonConstructor]
+    public ArticleCategoryDto(
+        Guid id,
+        int categoryId)
     {
-        /// <summary>
-        /// Gets id.
-        /// </summary>
-        public Guid Id { get; private set; }
+        Id = id;
+        CategoryId = categoryId;
+    }
 
-        /// <summary>
-        /// Gets category id.
-        /// </summary>
-        public int CategoryId { get; private set; }
+    private ArticleCategoryDto()
+    {
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArticleCategoryDto"/> class.
-        /// </summary>
-        /// <param name="id">Article id.</param>
-        /// <param name="categoryId">Category id.</param>
-        [JsonConstructor]
-        public ArticleCategoryDto(
-            Guid id,
-            int categoryId)
+    /// <summary>
+    /// Creates <see cref="ArticleCategory"/> to <see cref="ArticleCategoryDto"/> projection.
+    /// </summary>
+    /// <returns><see cref="ArticleCategory"/> to <see cref="ArticleCategoryDto"/> projection.</returns>
+    public static Expression<Func<ArticleCategory, ArticleCategoryDto>> GetProjection()
+    {
+        return articleCategory => new ArticleCategoryDto
         {
-            Id = id;
-            CategoryId = categoryId;
-        }
-
-        private ArticleCategoryDto()
-        {
-        }
-
-        /// <summary>
-        /// Creates <see cref="ArticleCategory"/> to <see cref="ArticleCategoryDto"/> projection.
-        /// </summary>
-        /// <returns><see cref="ArticleCategory"/> to <see cref="ArticleCategoryDto"/> projection.</returns>
-        public static Expression<Func<ArticleCategory, ArticleCategoryDto>> GetProjection()
-        {
-            return articleCategory => new ArticleCategoryDto
-            {
-                Id = articleCategory.Id,
-                CategoryId = articleCategory.CategoryId,
-            };
-        }
+            Id = articleCategory.Id,
+            CategoryId = articleCategory.CategoryId,
+        };
     }
 }

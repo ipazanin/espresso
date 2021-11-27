@@ -2,11 +2,10 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles
+namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles;
+
+public record UpdateInMemoryArticlesCommandResponse
 {
-    public record UpdateInMemoryArticlesCommandResponse
-    {
-        public int NumberOfUpdatedArticles { get; init; }
-        public int NumberOfCreatedArticles { get; init; }
-    }
+    public int NumberOfUpdatedArticles { get; init; }
+    public int NumberOfCreatedArticles { get; init; }
 }

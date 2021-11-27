@@ -5,49 +5,48 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace Espresso.WebApi.Configuration
+namespace Espresso.WebApi.Configuration;
+
+/// <summary>
+///
+/// </summary>
+public class DatabaseConfiguration
 {
+    private readonly IConfigurationSection _configuration;
+
     /// <summary>
     ///
     /// </summary>
-    public class DatabaseConfiguration
-    {
-        private readonly IConfigurationSection _configuration;
+    public string EspressoDatabaseConnectionString => _configuration.GetValue<string>("EspressoDatabaseConnectionString");
 
-        /// <summary>
-        ///
-        /// </summary>
-        public string EspressoDatabaseConnectionString => _configuration.GetValue<string>("EspressoDatabaseConnectionString");
+    /// <summary>
+    ///
+    /// </summary>
+    public int CommandTimeoutInSeconds => _configuration.GetValue<int>("CommandTimeoutInSeconds");
 
-        /// <summary>
-        ///
-        /// </summary>
-        public int CommandTimeoutInSeconds => _configuration.GetValue<int>("CommandTimeoutInSeconds");
+    /// <summary>
+    ///
+    /// </summary>
+    public QueryTrackingBehavior QueryTrackingBehavior => _configuration.GetValue<QueryTrackingBehavior>("QueryTrackingBehavior");
 
-        /// <summary>
-        ///
-        /// </summary>
-        public QueryTrackingBehavior QueryTrackingBehavior => _configuration.GetValue<QueryTrackingBehavior>("QueryTrackingBehavior");
+    /// <summary>
+    ///
+    /// </summary>
+    public bool EnableDetailedErrors => _configuration.GetValue<bool>("EnableDetailedErrors");
 
-        /// <summary>
-        ///
-        /// </summary>
-        public bool EnableDetailedErrors => _configuration.GetValue<bool>("EnableDetailedErrors");
+    /// <summary>
+    ///
+    /// </summary>
+    public bool EnableSensitiveDataLogging => _configuration.GetValue<bool>("EnableSensitiveDataLogging");
 
-        /// <summary>
-        ///
-        /// </summary>
-        public bool EnableSensitiveDataLogging => _configuration.GetValue<bool>("EnableSensitiveDataLogging");
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DatabaseConfiguration"/> class.
-        /// </summary>
-        /// <param name="configuration"></param>
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DatabaseConfiguration"/> class.
+    /// </summary>
+    /// <param name="configuration"></param>
 #pragma warning disable SA1201 // Elements should appear in the correct order
-        public DatabaseConfiguration(IConfigurationSection configuration)
+    public DatabaseConfiguration(IConfigurationSection configuration)
 #pragma warning restore SA1201 // Elements should appear in the correct order
-        {
-            _configuration = configuration;
-        }
+    {
+        _configuration = configuration;
     }
 }

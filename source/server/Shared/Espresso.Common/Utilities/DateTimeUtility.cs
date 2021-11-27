@@ -4,26 +4,25 @@
 
 using Espresso.Common.Constants;
 
-namespace Espresso.Domain.Utilities
+namespace Espresso.Domain.Utilities;
+
+/// <summary>
+/// <see cref="DateTime"/> utility.
+/// </summary>
+public static class DateTimeUtility
 {
     /// <summary>
-    /// <see cref="DateTime"/> utility.
+    /// Gets yesterdays Date.
     /// </summary>
-    public static class DateTimeUtility
-    {
-        /// <summary>
-        /// Gets yesterdays Date.
-        /// </summary>
-        public static DateTimeOffset YesterdaysDate => DateTimeOffset.UtcNow.AddDays(-1).Date;
+    public static DateTimeOffset YesterdaysDate => DateTimeOffset.UtcNow.AddDays(-1).Date;
 
-        /// <summary>
-        /// Gets milliseconds truncated to last day.
-        /// </summary>
-        /// <param name="milliseconds">Miliseconds.</param>
-        /// <returns>Milliseconds truncated to last day.</returns>
-        public static long TruncateMillisecondsToDate(long milliseconds)
-        {
-            return milliseconds - (milliseconds % (long)TimeSpan.FromDays(1).TotalMilliseconds);
-        }
+    /// <summary>
+    /// Gets milliseconds truncated to last day.
+    /// </summary>
+    /// <param name="milliseconds">Miliseconds.</param>
+    /// <returns>Milliseconds truncated to last day.</returns>
+    public static long TruncateMillisecondsToDate(long milliseconds)
+    {
+        return milliseconds - (milliseconds % (long)TimeSpan.FromDays(1).TotalMilliseconds);
     }
 }

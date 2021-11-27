@@ -4,16 +4,15 @@
 
 using FluentValidation;
 
-namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticleScore
+namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticleScore;
+
+public class IncrementNumberOfClicksCommandValidator : AbstractValidator<IncrementNumberOfClicksCommand>
 {
-    public class IncrementNumberOfClicksCommandValidator : AbstractValidator<IncrementNumberOfClicksCommand>
+    /// <summary>
+    /// Initializes a new instance of the <see cref="IncrementNumberOfClicksCommandValidator"/> class.
+    /// </summary>
+    public IncrementNumberOfClicksCommandValidator()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IncrementNumberOfClicksCommandValidator"/> class.
-        /// </summary>
-        public IncrementNumberOfClicksCommandValidator()
-        {
-            RuleFor(incrementArticleTrendingScoreCommand => incrementArticleTrendingScoreCommand.Id).NotEmpty();
-        }
+        RuleFor(incrementArticleTrendingScoreCommand => incrementArticleTrendingScoreCommand.Id).NotEmpty();
     }
 }

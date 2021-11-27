@@ -4,21 +4,20 @@
 
 using Espresso.Domain.Entities;
 
-namespace Espresso.Domain.Infrastructure
+namespace Espresso.Domain.Infrastructure;
+
+/// <summary>
+/// <see cref="Setting"/> provider.
+/// </summary>
+public interface ISettingProvider
 {
     /// <summary>
-    /// <see cref="Setting"/> provider.
+    /// Gets latest <see cref="Setting"/>.
     /// </summary>
-    public interface ISettingProvider
-    {
-        /// <summary>
-        /// Gets latest <see cref="Setting"/>.
-        /// </summary>
-        public Setting LatestSetting { get; }
+    public Setting LatestSetting { get; }
 
-        /// <summary>
-        /// Updates latest <see cref="Setting"/>.
-        /// </summary>
-        public void UpdateLatestSetting();
-    }
+    /// <summary>
+    /// Updates latest <see cref="Setting"/>.
+    /// </summary>
+    public void UpdateLatestSetting();
 }

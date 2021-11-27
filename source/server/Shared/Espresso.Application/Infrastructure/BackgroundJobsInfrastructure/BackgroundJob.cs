@@ -7,72 +7,71 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Espresso.Application.Infrastructure.BackgroundJobsInfrastructure
+namespace Espresso.Application.Infrastructure.BackgroundJobsInfrastructure;
+
+/// <summary>
+/// Long running background job.
+/// </summary>
+/// <typeparam name="T">Background job, implementing <see cref="BackgroundJob{T}"/>.</typeparam>
+public abstract class BackgroundJob<T> : IHostedService
+    where T : BackgroundJob<T>
 {
     /// <summary>
-    /// Long running background job.
+    /// Initializes a new instance of the <see cref="BackgroundJob{T}"/> class.
     /// </summary>
-    /// <typeparam name="T">Background job, implementing <see cref="BackgroundJob{T}"/>.</typeparam>
-    public abstract class BackgroundJob<T> : IHostedService
-        where T : BackgroundJob<T>
+    /// <param name="serviceScopeFactory">Service scope factory.</param>
+    protected BackgroundJob(IServiceScopeFactory serviceScopeFactory)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BackgroundJob{T}"/> class.
-        /// </summary>
-        /// <param name="serviceScopeFactory">Service scope factory.</param>
-        protected BackgroundJob(IServiceScopeFactory serviceScopeFactory)
+        ServiceScopeFactory = serviceScopeFactory;
+    }
+
+    /// <summary>
+    /// Gets service scope factory.
+    /// </summary>
+    protected IServiceScopeFactory ServiceScopeFactory { get; }
+
+    /// <inheritdoc />
+    public virtual async Task StartAsync(CancellationToken cancellationToken)
+    {
+        using var scope = ServiceScopeFactory.CreateScope();
+        var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService<BackgroundJob<T>>>();
+
+        var jobName = typeof(T).Name;
+
+        loggerService.Log(
+            eventName: $"{jobName} is starting",
+            logLevel: LogLevel.Information);
+
+        try
         {
-            ServiceScopeFactory = serviceScopeFactory;
+            await DoWork(cancellationToken);
         }
-
-        /// <summary>
-        /// Gets service scope factory.
-        /// </summary>
-        protected IServiceScopeFactory ServiceScopeFactory { get; }
-
-        /// <inheritdoc />
-        public virtual async Task StartAsync(CancellationToken cancellationToken)
+        catch (Exception exception)
         {
-            using var scope = ServiceScopeFactory.CreateScope();
-            var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService<BackgroundJob<T>>>();
-
-            var jobName = typeof(T).Name;
-
+            var errorEventName = $"Error while working {jobName}";
             loggerService.Log(
-                eventName: $"{jobName} is starting",
-                logLevel: LogLevel.Information);
-
-            try
-            {
-                await DoWork(cancellationToken);
-            }
-            catch (Exception exception)
-            {
-                var errorEventName = $"Error while working {jobName}";
-                loggerService.Log(
-                    eventName: errorEventName,
-                    exception: exception,
-                    logLevel: LogLevel.Error);
-            }
+                eventName: errorEventName,
+                exception: exception,
+                logLevel: LogLevel.Error);
         }
+    }
 
-        /// <summary>
-        /// Background job work.
-        /// </summary>
-        /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns>A <see cref="Task"/>Representing the result of the asynchronous operation.</returns>
-        public abstract Task DoWork(CancellationToken cancellationToken);
+    /// <summary>
+    /// Background job work.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>A <see cref="Task"/>Representing the result of the asynchronous operation.</returns>
+    public abstract Task DoWork(CancellationToken cancellationToken);
 
-        /// <inheritdoc/>
-        public virtual Task StopAsync(CancellationToken cancellationToken)
-        {
-            using var scope = ServiceScopeFactory.CreateScope();
-            var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService<BackgroundJob<T>>>();
+    /// <inheritdoc/>
+    public virtual Task StopAsync(CancellationToken cancellationToken)
+    {
+        using var scope = ServiceScopeFactory.CreateScope();
+        var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService<BackgroundJob<T>>>();
 
-            var eventName = $"{typeof(T).Name} stopped";
-            loggerService.Log(eventName, LogLevel.Information);
+        var eventName = $"{typeof(T).Name} stopped";
+        loggerService.Log(eventName, LogLevel.Information);
 
-            return Task.CompletedTask;
-        }
+        return Task.CompletedTask;
     }
 }

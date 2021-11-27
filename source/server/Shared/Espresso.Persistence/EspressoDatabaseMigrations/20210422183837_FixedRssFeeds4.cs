@@ -4,45 +4,44 @@
 
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Espresso.Persistence.EspressoDatabaseMigrations
+namespace Espresso.Persistence.EspressoDatabaseMigrations;
+
+/// <inheritdoc/>
+public partial class FixedRssFeeds4 : Migration
 {
     /// <inheritdoc/>
-    public partial class FixedRssFeeds4 : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc/>
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.UpdateData(
-                table: "NewsPortals",
-                keyColumn: "Id",
-                keyValue: 111,
-                column: "IsEnabled",
-                value: false);
+        migrationBuilder.UpdateData(
+            table: "NewsPortals",
+            keyColumn: "Id",
+            keyValue: 111,
+            column: "IsEnabled",
+            value: false);
 
-            migrationBuilder.UpdateData(
-                table: "RssFeeds",
-                keyColumn: "Id",
-                keyValue: 113,
-                column: "RequestType",
-                value: 2);
-        }
+        migrationBuilder.UpdateData(
+            table: "RssFeeds",
+            keyColumn: "Id",
+            keyValue: 113,
+            column: "RequestType",
+            value: 2);
+    }
 
-        /// <inheritdoc/>
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.UpdateData(
-                table: "NewsPortals",
-                keyColumn: "Id",
-                keyValue: 111,
-                column: "IsEnabled",
-                value: true);
+    /// <inheritdoc/>
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.UpdateData(
+            table: "NewsPortals",
+            keyColumn: "Id",
+            keyValue: 111,
+            column: "IsEnabled",
+            value: true);
 
-            migrationBuilder.UpdateData(
-                table: "RssFeeds",
-                keyColumn: "Id",
-                keyValue: 113,
-                column: "RequestType",
-                value: 1);
-        }
+        migrationBuilder.UpdateData(
+            table: "RssFeeds",
+            keyColumn: "Id",
+            keyValue: 113,
+            column: "RequestType",
+            value: 1);
     }
 }

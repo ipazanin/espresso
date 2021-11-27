@@ -6,15 +6,14 @@ using Microsoft.AspNetCore.Hosting;
 
 [assembly: HostingStartup(typeof(Espresso.Dashboard.Areas.Identity.IdentityHostingStartup))]
 
-namespace Espresso.Dashboard.Areas.Identity
+namespace Espresso.Dashboard.Areas.Identity;
+
+public class IdentityHostingStartup : IHostingStartup
 {
-    public class IdentityHostingStartup : IHostingStartup
+    public void Configure(IWebHostBuilder builder)
     {
-        public void Configure(IWebHostBuilder builder)
+        builder.ConfigureServices((context, services) =>
         {
-            builder.ConfigureServices((context, services) =>
-            {
-            });
-        }
+        });
     }
 }

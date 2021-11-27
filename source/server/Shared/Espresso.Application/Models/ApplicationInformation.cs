@@ -4,34 +4,33 @@
 
 using Espresso.Common.Enums;
 
-namespace Espresso.Application.Models
+namespace Espresso.Application.Models;
+
+/// <summary>
+/// Application information.
+/// </summary>
+public class ApplicationInformation
 {
     /// <summary>
-    /// Application information.
+    /// Gets application environment.
     /// </summary>
-    public class ApplicationInformation
-    {
-        /// <summary>
-        /// Gets application environment.
-        /// </summary>
-        public AppEnvironment AppEnvironment { get; }
+    public AppEnvironment AppEnvironment { get; }
 
-        /// <summary>
-        /// Gets application (server) version.
-        /// </summary>
-        public string Version { get; }
+    /// <summary>
+    /// Gets application (server) version.
+    /// </summary>
+    public string Version { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ApplicationInformation"/> class.
-        /// </summary>
-        /// <param name="appEnvironment">Application environment.</param>
-        /// <param name="version">Application version.</param>
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ApplicationInformation"/> class.
+    /// </summary>
+    /// <param name="appEnvironment">Application environment.</param>
+    /// <param name="version">Application version.</param>
 #pragma warning disable SA1201 // Elements should appear in the correct order
-        public ApplicationInformation(AppEnvironment appEnvironment, string version)
+    public ApplicationInformation(AppEnvironment appEnvironment, string version)
 #pragma warning restore SA1201 // Elements should appear in the correct order
-        {
-            AppEnvironment = appEnvironment;
-            Version = version;
-        }
+    {
+        AppEnvironment = appEnvironment;
+        Version = version;
     }
 }

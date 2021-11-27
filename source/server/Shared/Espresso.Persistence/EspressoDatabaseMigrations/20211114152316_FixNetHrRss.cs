@@ -4,28 +4,27 @@
 
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Espresso.Persistence.EspressoDatabaseMigrations
-{
-    public partial class FixNetHrRss : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.UpdateData(
-                table: "RssFeeds",
-                keyColumn: "Id",
-                keyValue: 14,
-                column: "Url",
-                value: "https://net.hr/feed");
-        }
+namespace Espresso.Persistence.EspressoDatabaseMigrations;
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.UpdateData(
-                table: "RssFeeds",
-                keyColumn: "Id",
-                keyValue: 14,
-                column: "Url",
-                value: "https://net.hr/feed/");
-        }
+public partial class FixNetHrRss : Migration
+{
+    protected override void Up(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.UpdateData(
+            table: "RssFeeds",
+            keyColumn: "Id",
+            keyValue: 14,
+            column: "Url",
+            value: "https://net.hr/feed");
+    }
+
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.UpdateData(
+            table: "RssFeeds",
+            keyColumn: "Id",
+            keyValue: 14,
+            column: "Url",
+            value: "https://net.hr/feed/");
     }
 }
