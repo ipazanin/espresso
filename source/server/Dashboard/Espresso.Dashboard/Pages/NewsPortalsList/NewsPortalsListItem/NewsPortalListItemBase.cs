@@ -6,35 +6,34 @@ using Espresso.Dashboard.Application.NewsPortals.GetNewsPortals;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace Espresso.Dashboard.Pages.NewsPortalsList.NewsPortalsListItem
+namespace Espresso.Dashboard.Pages.NewsPortalsList.NewsPortalsListItem;
+
+public class NewsPortalListItemBase : ComponentBase
 {
-    public class NewsPortalListItemBase : ComponentBase
+    [Parameter]
+    public GetNewsPortalsNewsPortal NewsPortal { get; set; } = null!;
+
+    [Parameter]
+    public Func<int, Task>? DeleteNewsPortalHandler { get; set; }
+
+    [Parameter]
+    public Action<int>? OpenNewsPortalDetailsHandler { get; set; }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+    public async Task DeleteButtonClickHandler()
     {
-        [Parameter]
-        public GetNewsPortalsNewsPortal NewsPortal { get; set; } = null!;
-
-        [Parameter]
-        public Func<int, Task>? DeleteNewsPortalHandler { get; set; }
-
-        [Parameter]
-        public Action<int>? OpenNewsPortalDetailsHandler { get; set; }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        public async Task DeleteButtonClickHandler()
+        var task = DeleteNewsPortalHandler?.Invoke(NewsPortal.Id);
+        if (task is not null)
         {
-            var task = DeleteNewsPortalHandler?.Invoke(NewsPortal.Id);
-            if (task is not null)
-            {
-                await task;
-            }
+            await task;
         }
+    }
 
-        public void DetailsButtonClickHandler()
-        {
-            OpenNewsPortalDetailsHandler?.Invoke(NewsPortal.Id);
-        }
+    public void DetailsButtonClickHandler()
+    {
+        OpenNewsPortalDetailsHandler?.Invoke(NewsPortal.Id);
     }
 }

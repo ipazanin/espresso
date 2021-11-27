@@ -1,17 +1,23 @@
+-- ovo ti dohvati grupirane clanke sa najvise grupacija
 SELECT * FROM (
     SELECT "SimilarArticles"."MainArticleId", COUNT(*)+1 AS "Count" FROM "SimilarArticles"
     GROUP BY "SimilarArticles"."MainArticleId"
 ) AS "InnerQuery"
 ORDER BY "InnerQuery"."Count" DESC
 
+-- ovo ti dohvati sve grupacije od clanka sa id-em,uzmi id iz prvog upita koji te zanima i zalipi na dnu
 SELECT
-    "MainArticles"."Title", 
+    "MainArticleNewsPortals"."Name", 
+    "MainArticles"."Title",
+    "SubordinateArticleNewsPortals"."Name", 
     "SubordinateArticles"."Title", 
     "SimilarArticles"."SimilarityScore"
 FROM "SimilarArticles"
     INNER JOIN "Articles" AS "MainArticles" ON "SimilarArticles"."MainArticleId" = "MainArticles"."Id"
     INNER JOIN "Articles" AS "SubordinateArticles" ON "SimilarArticles"."SubordinateArticleId" = "SubordinateArticles"."Id"
-WHERE "MainArticles"."Id" = '41ee6386-8ce2-44ef-bdf5-a3257c675cb4' 
+    INNER JOIN "NewsPortals" AS "MainArticleNewsPortals" ON "MainArticleNewsPortals"."Id" = "MainArticles"."NewsPortalId"
+    INNER JOIN "NewsPortals" AS "SubordinateArticleNewsPortals" ON "SubordinateArticleNewsPortals"."Id" = "SubordinateArticles"."NewsPortalId"
+WHERE "MainArticles"."Id" = 'e3e97c86-7f9d-4817-8a5d-7c64fd3a4895' 
 
 -- d87b8893-b55d-47e0-a48a-505b392b3709	66
 -- ea833452-45ef-48b0-ae9f-246043deff5d	25

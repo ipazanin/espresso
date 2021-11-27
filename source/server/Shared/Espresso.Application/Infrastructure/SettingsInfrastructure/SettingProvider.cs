@@ -7,44 +7,43 @@ using Espresso.Domain.Infrastructure;
 using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Espresso.Application.Infrastructure.SettingsInfrastructure
+namespace Espresso.Application.Infrastructure.SettingsInfrastructure;
+
+/// <summary>
+/// <see cref="Setting"/> provider.
+/// </summary>
+public sealed class SettingProvider : ISettingProvider
 {
+    private readonly IEspressoDatabaseContext _espressoDatabaseContext;
+
     /// <summary>
-    /// <see cref="Setting"/> provider.
+    /// Initializes a new instance of the <see cref="SettingProvider"/> class.
     /// </summary>
-    public sealed class SettingProvider : ISettingProvider
+    /// <param name="espressoDatabaseContext">Espresso database context.</param>
+    public SettingProvider(IEspressoDatabaseContext espressoDatabaseContext)
     {
-        private readonly IEspressoDatabaseContext _espressoDatabaseContext;
+        _espressoDatabaseContext = espressoDatabaseContext;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SettingProvider"/> class.
-        /// </summary>
-        /// <param name="espressoDatabaseContext">Espresso database context.</param>
-        public SettingProvider(IEspressoDatabaseContext espressoDatabaseContext)
-        {
-            _espressoDatabaseContext = espressoDatabaseContext;
+        // This is necessary evil to apply migrations before settings are used in configuring application
+        espressoDatabaseContext.Database.Migrate();
 
-            // This is necessary evil to apply migrations before settings are used in configuring application
-            espressoDatabaseContext.Database.Migrate();
+        LatestSetting = GetLatestSettingFromStore();
+    }
 
-            LatestSetting = GetLatestSettingFromStore();
-        }
+    /// <inheritdoc/>
+    public Setting LatestSetting { get; private set; }
 
-        /// <inheritdoc/>
-        public Setting LatestSetting { get; private set; }
+    /// <inheritdoc/>
+    public void UpdateLatestSetting()
+    {
+        LatestSetting = GetLatestSettingFromStore();
+    }
 
-        /// <inheritdoc/>
-        public void UpdateLatestSetting()
-        {
-            LatestSetting = GetLatestSettingFromStore();
-        }
-
-        private Setting GetLatestSettingFromStore()
-        {
-            return _espressoDatabaseContext
-                .Settings
-                .OrderByDescending(setting => setting.Created)
-                .First();
-        }
+    private Setting GetLatestSettingFromStore()
+    {
+        return _espressoDatabaseContext
+            .Settings
+            .OrderByDescending(setting => setting.Created)
+            .First();
     }
 }

@@ -4,110 +4,109 @@
 
 using Espresso.Domain.Entities;
 
-namespace Espresso.Common.Extensions
+namespace Espresso.Common.Extensions;
+
+public static class OrderArticleCollectionExtensions
 {
-    public static class OrderArticleCollectionExtensions
+    public static IOrderedEnumerable<Article> OrderFeaturedArticles(
+        this IEnumerable<Article> articles,
+        IEnumerable<int>? categoryIds)
     {
-        public static IOrderedEnumerable<Article> OrderFeaturedArticles(
-            this IEnumerable<Article> articles,
-            IEnumerable<int>? categoryIds)
-        {
-            var categoriesWithOrderIndex = categoryIds
-                ?.Select((category, index) => (category, index))
-                .ToDictionary(
-                    categoryWithOrderIndex => categoryWithOrderIndex.category,
-                    categoryWithOrderIndex => categoryWithOrderIndex.index);
+        var categoriesWithOrderIndex = categoryIds
+            ?.Select((category, index) => (category, index))
+            .ToDictionary(
+                categoryWithOrderIndex => categoryWithOrderIndex.category,
+                categoryWithOrderIndex => categoryWithOrderIndex.index);
 
-            const int HalfOfMaxValue = int.MaxValue / 2;
+        const int HalfOfMaxValue = int.MaxValue / 2;
 
-            var orderedArticles = articles
-                .OrderBy(
-                    article =>
+        var orderedArticles = articles
+            .OrderBy(
+                article =>
+                {
+                    if (article.EditorConfiguration.FeaturedPosition is not null)
                     {
-                        if (article.EditorConfiguration.FeaturedPosition is not null)
-                        {
-                            return article.EditorConfiguration.FeaturedPosition.Value;
-                        }
+                        return article.EditorConfiguration.FeaturedPosition.Value;
+                    }
 
-                        if (categoriesWithOrderIndex is null)
-                        {
-                            return HalfOfMaxValue;
-                        }
-
-                        var categoryId = article.ArticleCategories.First().CategoryId;
-                        if (categoriesWithOrderIndex.TryGetValue(categoryId, out var orderIndex))
-                        {
-                            return HalfOfMaxValue + orderIndex;
-                        }
-
-                        return int.MaxValue;
-                    })
-                .OrderArticlesByTrendingScore();
-
-            return orderedArticles;
-        }
-
-        public static IEnumerable<Article> OrderArticlesByCategory(
-            this IEnumerable<Article> articles,
-            IEnumerable<int>? categoryIds)
-        {
-            if (categoryIds is null)
-            {
-                return articles;
-            }
-
-            var categoriesWithOrderIndex = categoryIds
-                .Select((category, index) => (category, index))
-                .ToDictionary(
-                    categoryWithOrderIndex => categoryWithOrderIndex.category,
-                    categoryWithOrderIndex => categoryWithOrderIndex.index);
-
-            const int HalfOfMaxValue = int.MaxValue / 2;
-
-            var orderedArticles = articles
-                .OrderBy(
-                    article =>
+                    if (categoriesWithOrderIndex is null)
                     {
-                        if (categoriesWithOrderIndex is null)
-                        {
-                            return HalfOfMaxValue;
-                        }
+                        return HalfOfMaxValue;
+                    }
 
-                        var categoryId = article.ArticleCategories.First().CategoryId;
-                        if (categoriesWithOrderIndex.TryGetValue(categoryId, out var orderIndex))
-                        {
-                            return HalfOfMaxValue + orderIndex;
-                        }
+                    var categoryId = article.ArticleCategories.First().CategoryId;
+                    if (categoriesWithOrderIndex.TryGetValue(categoryId, out var orderIndex))
+                    {
+                        return HalfOfMaxValue + orderIndex;
+                    }
 
-                        return int.MaxValue;
-                    })
-                .OrderArticlesByTrendingScore();
+                    return int.MaxValue;
+                })
+            .OrderArticlesByTrendingScore();
 
-            return orderedArticles;
-        }
+        return orderedArticles;
+    }
 
-        public static IOrderedEnumerable<Article> OrderArticlesByPublishDate(
-            this IEnumerable<Article> articles)
+    public static IEnumerable<Article> OrderArticlesByCategory(
+        this IEnumerable<Article> articles,
+        IEnumerable<int>? categoryIds)
+    {
+        if (categoryIds is null)
         {
-            var orderedArticles = articles.OrderByDescending(article => article.PublishDateTime);
-
-            return orderedArticles;
+            return articles;
         }
 
-        public static IOrderedEnumerable<Article> OrderArticlesByTrendingScore(
-            this IEnumerable<Article> articles)
-        {
-            var orderedArticles = articles.OrderByDescending(article => article.TrendingScore);
+        var categoriesWithOrderIndex = categoryIds
+            .Select((category, index) => (category, index))
+            .ToDictionary(
+                categoryWithOrderIndex => categoryWithOrderIndex.category,
+                categoryWithOrderIndex => categoryWithOrderIndex.index);
 
-            return orderedArticles;
-        }
+        const int HalfOfMaxValue = int.MaxValue / 2;
 
-        public static IOrderedEnumerable<Article> OrderArticlesByTrendingScore(
-            this IOrderedEnumerable<Article> articles)
-        {
-            var orderedArticles = articles.ThenByDescending(article => article.TrendingScore);
+        var orderedArticles = articles
+            .OrderBy(
+                article =>
+                {
+                    if (categoriesWithOrderIndex is null)
+                    {
+                        return HalfOfMaxValue;
+                    }
 
-            return orderedArticles;
-        }
+                    var categoryId = article.ArticleCategories.First().CategoryId;
+                    if (categoriesWithOrderIndex.TryGetValue(categoryId, out var orderIndex))
+                    {
+                        return HalfOfMaxValue + orderIndex;
+                    }
+
+                    return int.MaxValue;
+                })
+            .OrderArticlesByTrendingScore();
+
+        return orderedArticles;
+    }
+
+    public static IOrderedEnumerable<Article> OrderArticlesByPublishDate(
+        this IEnumerable<Article> articles)
+    {
+        var orderedArticles = articles.OrderByDescending(article => article.PublishDateTime);
+
+        return orderedArticles;
+    }
+
+    public static IOrderedEnumerable<Article> OrderArticlesByTrendingScore(
+        this IEnumerable<Article> articles)
+    {
+        var orderedArticles = articles.OrderByDescending(article => article.TrendingScore);
+
+        return orderedArticles;
+    }
+
+    public static IOrderedEnumerable<Article> OrderArticlesByTrendingScore(
+        this IOrderedEnumerable<Article> articles)
+    {
+        var orderedArticles = articles.ThenByDescending(article => article.TrendingScore);
+
+        return orderedArticles;
     }
 }

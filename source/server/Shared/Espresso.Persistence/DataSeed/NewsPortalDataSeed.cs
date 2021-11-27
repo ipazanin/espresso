@@ -10,25 +10,25 @@ using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RegionEnums;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Espresso.Persistence.DataSeed
+namespace Espresso.Persistence.DataSeed;
+
+/// <summary>
+/// <see cref="NewsPortal"/> data seed.
+/// </summary>
+internal static class NewsPortalDataSeed
 {
     /// <summary>
-    /// <see cref="NewsPortal"/> data seed.
+    /// Seeds entity data.
     /// </summary>
-    internal static class NewsPortalDataSeed
+    /// <param name="builder">Entity builder.</param>
+    public static void SeedData(EntityTypeBuilder<NewsPortal> builder)
     {
-        /// <summary>
-        /// Seeds entity data.
-        /// </summary>
-        /// <param name="builder">Entity builder.</param>
-        public static void SeedData(EntityTypeBuilder<NewsPortal> builder)
-        {
-            SeedNewsPortals(builder);
-        }
+        SeedNewsPortals(builder);
+    }
 
-        private static void SeedNewsPortals(EntityTypeBuilder<NewsPortal> builder)
-        {
-            var newsPortals = new List<NewsPortal>
+    private static void SeedNewsPortals(EntityTypeBuilder<NewsPortal> builder)
+    {
+        var newsPortals = new List<NewsPortal>
             {
                 new NewsPortal(
                     id: (int)NewsPortalId.Index,
@@ -703,7 +703,6 @@ namespace Espresso.Persistence.DataSeed
                     isEnabled: true),
             };
 
-            builder.HasData(newsPortals);
-        }
+        builder.HasData(newsPortals);
     }
 }

@@ -5,19 +5,18 @@
 using Espresso.Dashboard.Configuration;
 using Microsoft.Extensions.Configuration;
 
-namespace Espresso.Dashboard.Startup
-{
-    internal sealed partial class Startup
-    {
-        private readonly IDashboardConfiguration _dashboardConfiguration;
+namespace Espresso.Dashboard.Startup;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Startup"/> class.
-        /// </summary>
-        /// <param name="configuration"></param>
-        public Startup(IConfiguration configuration)
-        {
-            _dashboardConfiguration = new DashboardConfiguration(configuration);
-        }
+internal sealed partial class Startup
+{
+    private readonly IDashboardConfiguration _dashboardConfiguration;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Startup"/> class.
+    /// </summary>
+    /// <param name="configuration"></param>
+    public Startup(IConfiguration configuration)
+    {
+        _dashboardConfiguration = new DashboardConfiguration(configuration);
     }
 }

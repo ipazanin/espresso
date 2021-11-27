@@ -2,10 +2,9 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle
+namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle;
+
+public record AutoCompleteArticleQueryResponse
 {
-    public record AutoCompleteArticleQueryResponse
-    {
-        public IEnumerable<string> MatchedWords { get; init; } = new List<string>();
-    }
+    public IEnumerable<string> MatchedWords { get; init; } = new List<string>();
 }

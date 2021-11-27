@@ -14,103 +14,103 @@ using Espresso.Domain.IServices;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
-namespace Espresso.Application.Services.Implementations
+namespace Espresso.Application.Services.Implementations;
+
+/// <inheritdoc/>
+public class SlackService : ISlackService
 {
-    /// <inheritdoc/>
-    public class SlackService : ISlackService
+    private const string ErrorsBotIconEmoji = ":no_entry:";
+    private const string ErrorBotUsername = "error-bot";
+    private const string ErrorsChannel = "#errors-backend-bot";
+    private const string MissingCategoriesErrorsBotIconEmoji = ":warning:";
+    private const string MissingCategoriesErrorsBotUsername = "warning-bot";
+    private const string MissingCategoriesErrorsChannel = "#missing-categories-errors-bot";
+
+    private const string MarketingBotIconEmoji = ":bar_chart:";
+    private const string MarketingBotUsername = "marketing-bot";
+    private const string MarketingBitChannel = "#marketing-bot";
+
+    private const string NewNewsPortalRequestBotIconEmoji = ":email:";
+    private const string NewNewsPortalRequestBotUsername = "new-source-bot";
+    private const string NewNewsPortalRequestChannel = "#new-source-requests-bot";
+
+    private const string BackendStatisticsBotIconEmoji = ":bar_chart:";
+    private const string BackendStatisticsBotUsername = "backend-bot";
+    private const string BackendStatisticsChannel = "#backend-statistics";
+
+    private const string PushNotificationBotIconEmoji = ":bell:";
+    private const string PushNotificationBotUsername = "push-bot";
+    private const string PushNotificationChannel = "#general";
+    private static readonly TimeSpan s_exceptionMessageCooldownInterval = TimeSpan.FromHours(4);
+
+    private readonly IMemoryCache _memoryCache;
+    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly ILoggerService<SlackService> _loggerService;
+    private readonly IJsonService _jsonService;
+    private readonly string _webHookUrl;
+    private readonly ApplicationInformation _applicationInformation;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SlackService"/> class.
+    /// </summary>
+    /// <param name="memoryCache">Memory cache.</param>
+    /// <param name="httpClientFactory">HTTP client factory.</param>
+    /// <param name="loggerService">Logger service.</param>
+    /// <param name="jsonService">JSON service.</param>
+    /// <param name="webHookUrl">Slack web hook url.</param>
+    /// <param name="applicationInformation">Application information.</param>
+    public SlackService(
+        IMemoryCache memoryCache,
+        IHttpClientFactory httpClientFactory,
+        ILoggerService<SlackService> loggerService,
+        IJsonService jsonService,
+        string webHookUrl,
+        ApplicationInformation applicationInformation)
     {
-        private const string ErrorsBotIconEmoji = ":no_entry:";
-        private const string ErrorBotUsername = "error-bot";
-        private const string ErrorsChannel = "#errors-backend-bot";
-        private const string MissingCategoriesErrorsBotIconEmoji = ":warning:";
-        private const string MissingCategoriesErrorsBotUsername = "warning-bot";
-        private const string MissingCategoriesErrorsChannel = "#missing-categories-errors-bot";
+        _memoryCache = memoryCache;
+        _httpClientFactory = httpClientFactory;
+        _loggerService = loggerService;
+        _jsonService = jsonService;
+        _webHookUrl = webHookUrl;
+        _applicationInformation = applicationInformation;
+    }
 
-        private const string MarketingBotIconEmoji = ":bar_chart:";
-        private const string MarketingBotUsername = "marketing-bot";
-        private const string MarketingBitChannel = "#marketing-bot";
+    /// <inheritdoc/>
+    public Task LogError(
+        string eventName,
+        string message,
+        Exception exception,
+        CancellationToken cancellationToken)
+    {
+        var exceptionMessage = exception.Message;
+        var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
+        var text = $":blue_book: Event Name: {eventName}\n" +
+            $":label: Version: {_applicationInformation.Version}\n" +
+            $":email: Message: {message}\n" +
+            $":exclamation: Exception Message: {exceptionMessage}\n" +
+            $":exclamation: Inner Exception Message: {innerExceptionMessage}\n";
 
-        private const string NewNewsPortalRequestBotIconEmoji = ":email:";
-        private const string NewNewsPortalRequestBotUsername = "new-source-bot";
-        private const string NewNewsPortalRequestChannel = "#new-source-requests-bot";
+        return SendToSlack(
+            data: new SlackWebHookRequestBodyDto(
+                userName: ErrorBotUsername,
+                iconEmoji: ErrorsBotIconEmoji,
+                text: text,
+                channel: ErrorsChannel,
+                blocks: Array.Empty<SlackBlock>()),
+            cancellationToken: cancellationToken);
+    }
 
-        private const string BackendStatisticsBotIconEmoji = ":bar_chart:";
-        private const string BackendStatisticsBotUsername = "backend-bot";
-        private const string BackendStatisticsChannel = "#backend-statistics";
-
-        private const string PushNotificationBotIconEmoji = ":bell:";
-        private const string PushNotificationBotUsername = "push-bot";
-        private const string PushNotificationChannel = "#general";
-        private static readonly TimeSpan s_exceptionMessageCooldownInterval = TimeSpan.FromHours(4);
-
-        private readonly IMemoryCache _memoryCache;
-        private readonly IHttpClientFactory _httpClientFactory;
-        private readonly ILoggerService<SlackService> _loggerService;
-        private readonly IJsonService _jsonService;
-        private readonly string _webHookUrl;
-        private readonly ApplicationInformation _applicationInformation;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SlackService"/> class.
-        /// </summary>
-        /// <param name="memoryCache">Memory cache.</param>
-        /// <param name="httpClientFactory">HTTP client factory.</param>
-        /// <param name="loggerService">Logger service.</param>
-        /// <param name="jsonService">JSON service.</param>
-        /// <param name="webHookUrl">Slack web hook url.</param>
-        /// <param name="applicationInformation">Application information.</param>
-        public SlackService(
-            IMemoryCache memoryCache,
-            IHttpClientFactory httpClientFactory,
-            ILoggerService<SlackService> loggerService,
-            IJsonService jsonService,
-            string webHookUrl,
-            ApplicationInformation applicationInformation)
-        {
-            _memoryCache = memoryCache;
-            _httpClientFactory = httpClientFactory;
-            _loggerService = loggerService;
-            _jsonService = jsonService;
-            _webHookUrl = webHookUrl;
-            _applicationInformation = applicationInformation;
-        }
-
-        /// <inheritdoc/>
-        public Task LogError(
-            string eventName,
-            string message,
-            Exception exception,
-            CancellationToken cancellationToken)
-        {
-            var exceptionMessage = exception.Message;
-            var innerExceptionMessage = exception.InnerException?.Message ?? FormatConstants.EmptyValue;
-            var text = $":blue_book: Event Name: {eventName}\n" +
-                $":label: Version: {_applicationInformation.Version}\n" +
-                $":email: Message: {message}\n" +
-                $":exclamation: Exception Message: {exceptionMessage}\n" +
-                $":exclamation: Inner Exception Message: {innerExceptionMessage}\n";
-
-            return SendToSlack(
-                data: new SlackWebHookRequestBodyDto(
-                    userName: ErrorBotUsername,
-                    iconEmoji: ErrorsBotIconEmoji,
-                    text: text,
-                    channel: ErrorsChannel,
-                    blocks: Array.Empty<SlackBlock>()),
-                cancellationToken: cancellationToken);
-        }
-
-        /// <inheritdoc/>
-        public Task LogAppDownloadStatistics(
-            int yesterdayAndroidCount,
-            int yesterdayIosCount,
-            int totalAndroidCount,
-            int totalIosCount,
-            (int activeUsersOnAndroid, int activeUsersOnIos) activeUsers,
-            (decimal androidRevenue, decimal iosRevenue) revenue,
-            CancellationToken cancellationToken)
-        {
-            var blocks = new List<SlackBlock>
+    /// <inheritdoc/>
+    public Task LogAppDownloadStatistics(
+        int yesterdayAndroidCount,
+        int yesterdayIosCount,
+        int totalAndroidCount,
+        int totalIosCount,
+        (int activeUsersOnAndroid, int activeUsersOnIos) activeUsers,
+        (decimal androidRevenue, decimal iosRevenue) revenue,
+        CancellationToken cancellationToken)
+    {
+        var blocks = new List<SlackBlock>
             {
                 new SlackTextFieldsImageSectionBlock(
                     text: new SlackMarkdownTextBlock("Downloads:"),
@@ -162,81 +162,81 @@ namespace Espresso.Application.Services.Implementations
                         altText: "Revenue Icon")),
             };
 
-            return SendToSlack(
-                data: new SlackWebHookRequestBodyDto(
-                    userName: MarketingBotUsername,
-                    iconEmoji: MarketingBotIconEmoji,
-                    text: "Analytics Data",
-                    channel: MarketingBitChannel,
-                    blocks: blocks),
-                cancellationToken: cancellationToken);
-        }
+        return SendToSlack(
+            data: new SlackWebHookRequestBodyDto(
+                userName: MarketingBotUsername,
+                iconEmoji: MarketingBotIconEmoji,
+                text: "Analytics Data",
+                channel: MarketingBitChannel,
+                blocks: blocks),
+            cancellationToken: cancellationToken);
+    }
 
-        /// <inheritdoc/>
-        public Task LogMissingCategoriesError(
-            string rssFeedUrl,
-            string articleUrl,
-            string urlCategories,
-            CancellationToken cancellationToken)
-        {
-            var text = ":blue_book: Request Name: Missing Categories\n" +
-                $":email: Rss Feed Url: {rssFeedUrl}\n" +
-                $":email: Article Url: {articleUrl}\n" +
-                $":email: Url-SegmentIndex:Category Map: {urlCategories}\n";
+    /// <inheritdoc/>
+    public Task LogMissingCategoriesError(
+        string rssFeedUrl,
+        string articleUrl,
+        string urlCategories,
+        CancellationToken cancellationToken)
+    {
+        var text = ":blue_book: Request Name: Missing Categories\n" +
+            $":email: Rss Feed Url: {rssFeedUrl}\n" +
+            $":email: Article Url: {articleUrl}\n" +
+            $":email: Url-SegmentIndex:Category Map: {urlCategories}\n";
 
-            return SendToSlack(
-                data: new SlackWebHookRequestBodyDto(
-                    userName: MissingCategoriesErrorsBotUsername,
-                    iconEmoji: MissingCategoriesErrorsBotIconEmoji,
-                    text: text,
-                    channel: MissingCategoriesErrorsChannel,
-                    blocks: Array.Empty<SlackBlock>()),
-                cancellationToken: cancellationToken);
-        }
+        return SendToSlack(
+            data: new SlackWebHookRequestBodyDto(
+                userName: MissingCategoriesErrorsBotUsername,
+                iconEmoji: MissingCategoriesErrorsBotIconEmoji,
+                text: text,
+                channel: MissingCategoriesErrorsChannel,
+                blocks: Array.Empty<SlackBlock>()),
+            cancellationToken: cancellationToken);
+    }
 
-        /// <inheritdoc/>
-        public Task LogNewNewsPortalRequest(
-            string newsPortalName,
-            string email,
-            string? url,
-            CancellationToken cancellationToken)
-        {
-            var text = "There’s a request for new source\n" +
-                $"Source Name: {newsPortalName}\n" +
-                $"Email: {email}\n" +
-                $"Url: {url}";
+    /// <inheritdoc/>
+    public Task LogNewNewsPortalRequest(
+        string newsPortalName,
+        string email,
+        string? url,
+        CancellationToken cancellationToken)
+    {
+        var text = "There’s a request for new source\n" +
+            $"Source Name: {newsPortalName}\n" +
+            $"Email: {email}\n" +
+            $"Url: {url}";
 
-            return SendToSlack(
-                data: new SlackWebHookRequestBodyDto(
-                    userName: NewNewsPortalRequestBotUsername,
-                    iconEmoji: NewNewsPortalRequestBotIconEmoji,
-                    text: text,
-                    channel: NewNewsPortalRequestChannel,
-                    blocks: Array.Empty<SlackBlock>()),
-                cancellationToken: cancellationToken);
-        }
+        return SendToSlack(
+            data: new SlackWebHookRequestBodyDto(
+                userName: NewNewsPortalRequestBotUsername,
+                iconEmoji: NewNewsPortalRequestBotIconEmoji,
+                text: text,
+                channel: NewNewsPortalRequestChannel,
+                blocks: Array.Empty<SlackBlock>()),
+            cancellationToken: cancellationToken);
+    }
 
-        /// <inheritdoc/>
-        public Task LogYesterdaysStatistics(
-            IEnumerable<Article> topArticles,
-            int totalNumberOfClicks,
-            IEnumerable<(NewsPortal newsPortal, int numberOfClicks, IEnumerable<Article> articles)> topNewsPortals,
-            IEnumerable<(Category category, int numberOfClicks, IEnumerable<Article> articles)> categoriesWithNumberOfClicks,
-            CancellationToken cancellationToken)
-        {
-            var blocks = new List<SlackBlock>
+    /// <inheritdoc/>
+    public Task LogYesterdaysStatistics(
+        IEnumerable<Article> topArticles,
+        int totalNumberOfClicks,
+        IEnumerable<(NewsPortal newsPortal, int numberOfClicks, IEnumerable<Article> articles)> topNewsPortals,
+        IEnumerable<(Category category, int numberOfClicks, IEnumerable<Article> articles)> categoriesWithNumberOfClicks,
+        CancellationToken cancellationToken)
+    {
+        var blocks = new List<SlackBlock>
             {
                 new SlackHeaderBlock(new SlackPlainTextBlock("Total clicks yesterday:")),
                 new SlackTextSectionBlock(new SlackMarkdownTextBlock(totalNumberOfClicks.ToString())),
                 new SlackHeaderBlock(new SlackPlainTextBlock("Top Articles")),
             };
 
-            foreach (var article in topArticles)
-            {
-                var articleBlock = new SlackTextFieldsImageSectionBlock(
-                    text: new SlackMarkdownTextBlock($"<{article.Url}|{article.Title}>"),
-                    fields: new List<SlackMarkdownTextBlock>()
-                    {
+        foreach (var article in topArticles)
+        {
+            var articleBlock = new SlackTextFieldsImageSectionBlock(
+                text: new SlackMarkdownTextBlock($"<{article.Url}|{article.Title}>"),
+                fields: new List<SlackMarkdownTextBlock>()
+                {
                         new SlackMarkdownTextBlock("*Source*"),
                         new SlackMarkdownTextBlock($"<{article.NewsPortal!.BaseUrl}|{article.NewsPortal!.Name}>"),
                         new SlackMarkdownTextBlock("*Category*"),
@@ -247,32 +247,32 @@ namespace Espresso.Application.Services.Implementations
                         new SlackMarkdownTextBlock(article.NumberOfClicks.ToString()),
                         new SlackMarkdownTextBlock("*Clicks ‰*"),
                         new SlackMarkdownTextBlock($"{Math.Round(totalNumberOfClicks == 0 ? 0 : 100 * article.NumberOfClicks / (double)totalNumberOfClicks, 2)}‰"),
-                    },
-                    accessory: new SlackImageBlock(
-                        imageUrl: article.ImageUrl ?? article.NewsPortal?.IconUrl ?? "https://via.placeholder.com/350x150.jpg",
-                        altText: "article image"));
+                },
+                accessory: new SlackImageBlock(
+                    imageUrl: article.ImageUrl ?? article.NewsPortal?.IconUrl ?? "https://via.placeholder.com/350x150.jpg",
+                    altText: "article image"));
 
-                blocks.Add(articleBlock);
-                blocks.Add(new SlackDividerBlock());
-            }
-
-            return SendToSlack(
-                data: new SlackWebHookRequestBodyDto(
-                    userName: BackendStatisticsBotUsername,
-                    iconEmoji: BackendStatisticsBotIconEmoji,
-                    text: "Articles",
-                    channel: BackendStatisticsChannel,
-                    blocks: blocks),
-                cancellationToken: cancellationToken);
+            blocks.Add(articleBlock);
+            blocks.Add(new SlackDividerBlock());
         }
 
-        /// <inheritdoc/>
-        public Task LogPushNotification(
-            PushNotification pushNotification,
-            Article article,
-            CancellationToken cancellationToken)
-        {
-            var blocks = new List<SlackBlock>
+        return SendToSlack(
+            data: new SlackWebHookRequestBodyDto(
+                userName: BackendStatisticsBotUsername,
+                iconEmoji: BackendStatisticsBotIconEmoji,
+                text: "Articles",
+                channel: BackendStatisticsChannel,
+                blocks: blocks),
+            cancellationToken: cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task LogPushNotification(
+        PushNotification pushNotification,
+        Article article,
+        CancellationToken cancellationToken)
+    {
+        var blocks = new List<SlackBlock>
             {
                 new SlackHeaderBlock(new SlackPlainTextBlock(pushNotification.InternalName)),
                 new SlackTextFieldsImageSectionBlock(
@@ -293,59 +293,58 @@ namespace Espresso.Application.Services.Implementations
                         altText: "article image")),
             };
 
-            return SendToSlack(
-                data: new SlackWebHookRequestBodyDto(
-                    userName: PushNotificationBotUsername,
-                    iconEmoji: PushNotificationBotIconEmoji,
-                    text: "PushNotification",
-                    channel: PushNotificationChannel,
-                    blocks: blocks),
-                cancellationToken: cancellationToken);
+        return SendToSlack(
+            data: new SlackWebHookRequestBodyDto(
+                userName: PushNotificationBotUsername,
+                iconEmoji: PushNotificationBotIconEmoji,
+                text: "PushNotification",
+                channel: PushNotificationChannel,
+                blocks: blocks),
+            cancellationToken: cancellationToken);
+    }
+
+    public async Task SendToSlack(
+        SlackWebHookRequestBodyDto data,
+        CancellationToken cancellationToken)
+    {
+        if (!_applicationInformation.AppEnvironment.Equals(AppEnvironment.Prod))
+        {
+            return;
         }
 
-        public async Task SendToSlack(
-            SlackWebHookRequestBodyDto data,
-            CancellationToken cancellationToken)
+        await _memoryCache.GetOrCreateAsync(data.Text, async entry =>
         {
-            if (!_applicationInformation.AppEnvironment.Equals(AppEnvironment.Prod))
+            var httpClient = _httpClientFactory.CreateClient(HttpClientConstants.SlackHttpClientName);
+
+            entry.AbsoluteExpirationRelativeToNow = s_exceptionMessageCooldownInterval;
+            try
             {
-                return;
+                var jsonString = await _jsonService.Serialize(data, cancellationToken);
+
+                var content = new StringContent(jsonString, Encoding.UTF8, MimeTypeConstants.Json);
+                var response = await httpClient.PostAsync(
+                    requestUri: _webHookUrl,
+                    content: content,
+                    cancellationToken: cancellationToken);
+
+                response.EnsureSuccessStatusCode();
             }
-
-            await _memoryCache.GetOrCreateAsync(data.Text, async entry =>
+            catch (Exception exception)
             {
-                var httpClient = _httpClientFactory.CreateClient(HttpClientConstants.SlackHttpClientName);
+                const string EventName = nameof(Event.SlackServiceException);
+                var exceptionMessage = exception.Message;
+                var innerExceptionMessage = exception.InnerException?.Message ?? string.Empty;
 
-                entry.AbsoluteExpirationRelativeToNow = s_exceptionMessageCooldownInterval;
-                try
-                {
-                    var jsonString = await _jsonService.Serialize(data, cancellationToken);
-
-                    var content = new StringContent(jsonString, Encoding.UTF8, MimeTypeConstants.Json);
-                    var response = await httpClient.PostAsync(
-                        requestUri: _webHookUrl,
-                        content: content,
-                        cancellationToken: cancellationToken);
-
-                    response.EnsureSuccessStatusCode();
-                }
-                catch (Exception exception)
-                {
-                    const string EventName = nameof(Event.SlackServiceException);
-                    var exceptionMessage = exception.Message;
-                    var innerExceptionMessage = exception.InnerException?.Message ?? string.Empty;
-
-                    var arguments = new List<(string parameterName, object parameterValue)>
-                      {
+                var arguments = new List<(string parameterName, object parameterValue)>
+                  {
                           (nameof(exceptionMessage), exceptionMessage),
                           (nameof(innerExceptionMessage), innerExceptionMessage),
-                      };
+                  };
 
-                    _loggerService.Log(EventName, exception, LogLevel.Error, arguments);
-                }
+                _loggerService.Log(EventName, exception, LogLevel.Error, arguments);
+            }
 
-                return string.Empty;
-            });
-        }
+            return string.Empty;
+        });
     }
 }

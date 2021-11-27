@@ -2,10 +2,9 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
+namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles;
+
+public record GetFeaturedArticlesQueryResponse
 {
-    public record GetFeaturedArticlesQueryResponse
-    {
-        public IEnumerable<GetFeaturedArticlesArticle> Articles { get; init; } = new List<GetFeaturedArticlesArticle>();
-    }
+    public IEnumerable<GetFeaturedArticlesArticle> Articles { get; init; } = new List<GetFeaturedArticlesArticle>();
 }

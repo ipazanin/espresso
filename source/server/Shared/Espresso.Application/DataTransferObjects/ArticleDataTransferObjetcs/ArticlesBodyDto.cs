@@ -4,32 +4,31 @@
 
 using System.Text.Json.Serialization;
 
-namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects
+namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
+
+public record ArticlesBodyDto
 {
-    public record ArticlesBodyDto
+    /// <summary>
+    /// Gets created articles.
+    /// </summary>
+    public IEnumerable<ArticleDto> CreatedArticles { get; private set; } = new List<ArticleDto>();
+
+    /// <summary>
+    /// Gets updated articles.
+    /// </summary>
+    public IEnumerable<ArticleDto> UpdatedArticles { get; private set; } = new List<ArticleDto>();
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ArticlesBodyDto"/> class.
+    /// </summary>
+    /// <param name="createdArticles">Created articles.</param>
+    /// <param name="updatedArticles">Updated articles.</param>
+    [JsonConstructor]
+    public ArticlesBodyDto(
+        IEnumerable<ArticleDto> createdArticles,
+        IEnumerable<ArticleDto> updatedArticles)
     {
-        /// <summary>
-        /// Gets created articles.
-        /// </summary>
-        public IEnumerable<ArticleDto> CreatedArticles { get; private set; } = new List<ArticleDto>();
-
-        /// <summary>
-        /// Gets updated articles.
-        /// </summary>
-        public IEnumerable<ArticleDto> UpdatedArticles { get; private set; } = new List<ArticleDto>();
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArticlesBodyDto"/> class.
-        /// </summary>
-        /// <param name="createdArticles">Created articles.</param>
-        /// <param name="updatedArticles">Updated articles.</param>
-        [JsonConstructor]
-        public ArticlesBodyDto(
-            IEnumerable<ArticleDto> createdArticles,
-            IEnumerable<ArticleDto> updatedArticles)
-        {
-            CreatedArticles = createdArticles;
-            UpdatedArticles = updatedArticles;
-        }
+        CreatedArticles = createdArticles;
+        UpdatedArticles = updatedArticles;
     }
 }

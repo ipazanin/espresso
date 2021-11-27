@@ -4,9 +4,8 @@
 
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 
-namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
+namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration;
+
+public record GetConfigurationQuery : Request<GetConfigurationQueryResponse>
 {
-    public record GetConfigurationQuery : Request<GetConfigurationQueryResponse>
-    {
-    }
 }

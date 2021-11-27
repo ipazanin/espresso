@@ -4,9 +4,8 @@
 
 using FluentValidation;
 
-namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals
+namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals;
+
+public class GetNewsPortalsQueryValidator : AbstractValidator<GetNewsPortalsQuery>
 {
-    public class GetNewsPortalsQueryValidator : AbstractValidator<GetNewsPortalsQuery>
-    {
-    }
 }

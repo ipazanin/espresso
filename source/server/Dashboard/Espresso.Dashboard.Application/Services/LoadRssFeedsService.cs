@@ -12,147 +12,146 @@ using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
 using Microsoft.Extensions.Logging;
 
-namespace Espresso.Dashboard.Application.Services
-{
-    public class LoadRssFeedsService : ILoadRssFeedsService
-    {
-        private readonly ILoggerService<LoadRssFeedsService> _loggerService;
-        private readonly HttpClient _httpClient;
+namespace Espresso.Dashboard.Application.Services;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LoadRssFeedsService"/> class.
-        /// </summary>
-        /// <param name="httpClientFactory"></param>
-        /// <param name="loggerService"></param>
-        public LoadRssFeedsService(
-            IHttpClientFactory httpClientFactory,
-            ILoggerService<LoadRssFeedsService> loggerService)
+public class LoadRssFeedsService : ILoadRssFeedsService
+{
+    private readonly ILoggerService<LoadRssFeedsService> _loggerService;
+    private readonly HttpClient _httpClient;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LoadRssFeedsService"/> class.
+    /// </summary>
+    /// <param name="httpClientFactory"></param>
+    /// <param name="loggerService"></param>
+    public LoadRssFeedsService(
+        IHttpClientFactory httpClientFactory,
+        ILoggerService<LoadRssFeedsService> loggerService)
+    {
+        _httpClient = httpClientFactory.CreateClient(HttpClientConstants.LoadRssFeedsHttpClientName);
+        _loggerService = loggerService;
+    }
+
+    public async Task<Channel<RssFeedItem>> ParseRssFeeds(
+        IEnumerable<RssFeed> rssFeeds,
+        CancellationToken cancellationToken)
+    {
+        var rssFeedItemsChannel = Channel.CreateUnbounded<RssFeedItem>();
+        var writer = rssFeedItemsChannel.Writer;
+
+        var getRssFeedRequestTasks = new List<Task>();
+
+        foreach (var rssFeed in rssFeeds)
         {
-            _httpClient = httpClientFactory.CreateClient(HttpClientConstants.LoadRssFeedsHttpClientName);
-            _loggerService = loggerService;
+            if (!rssFeed.ShouldParse())
+            {
+                continue;
+            }
+
+            var task = Task.Run(async () => await ParseRssFeed(rssFeed, writer, cancellationToken), cancellationToken);
+            getRssFeedRequestTasks.Add(task);
         }
 
-        public async Task<Channel<RssFeedItem>> ParseRssFeeds(
-            IEnumerable<RssFeed> rssFeeds,
-            CancellationToken cancellationToken)
+        await Task.WhenAll(getRssFeedRequestTasks);
+
+        writer.Complete();
+
+        return rssFeedItemsChannel;
+    }
+
+    private async Task ParseRssFeed(RssFeed rssFeed, ChannelWriter<RssFeedItem> writer, CancellationToken cancellationToken)
+    {
+        try
         {
-            var rssFeedItemsChannel = Channel.CreateUnbounded<RssFeedItem>();
-            var writer = rssFeedItemsChannel.Writer;
+            var feed = await LoadFeed(rssFeed, cancellationToken);
 
-            var getRssFeedRequestTasks = new List<Task>();
-
-            foreach (var rssFeed in rssFeeds)
+            foreach (var syndicationItem in feed.Items)
             {
-                if (!rssFeed.ShouldParse())
+                if (syndicationItem is null)
                 {
                     continue;
                 }
 
-                var task = Task.Run(async () => await ParseRssFeed(rssFeed, writer, cancellationToken), cancellationToken);
-                getRssFeedRequestTasks.Add(task);
-            }
-
-            await Task.WhenAll(getRssFeedRequestTasks);
-
-            writer.Complete();
-
-            return rssFeedItemsChannel;
-        }
-
-        private async Task ParseRssFeed(RssFeed rssFeed, ChannelWriter<RssFeedItem> writer, CancellationToken cancellationToken)
-        {
-            try
-            {
-                var feed = await LoadFeed(rssFeed, cancellationToken);
-
-                foreach (var syndicationItem in feed.Items)
+                var rssFeedItem = new RssFeedItem
                 {
-                    if (syndicationItem is null)
-                    {
-                        continue;
-                    }
-
-                    var rssFeedItem = new RssFeedItem
-                    {
-                        RssFeed = rssFeed,
-                        Id = syndicationItem.Id,
-                        Links = syndicationItem.Links?.Select(syndicationLink => syndicationLink.Uri),
-                        Title = syndicationItem.Title?.Text,
-                        Summary = syndicationItem.Summary?.Text,
-                        Content = (
-                                syndicationItem.Content is TextSyndicationContent ?
-                                syndicationItem.Content as TextSyndicationContent
-                                : null)
-                            ?.Text,
-                        PublishDateTime = syndicationItem.PublishDate.DateTime,
-                        ElementExtensions = syndicationItem
-                            .ElementExtensions
-                            ?.Select(elementExtension => elementExtension?.GetObject<string?>()),
-                    };
-
-                    _ = writer.TryWrite(rssFeedItem);
-                }
-            }
-            catch (Exception exception)
-            {
-                var rssFeedUrl = rssFeed.Url;
-                var eventName = Event.RssFeedLoading.GetDisplayName();
-                var arguments = new (string, object)[]
-                {
-                    (nameof(rssFeedUrl), rssFeedUrl),
-                    ("IsEnabled", rssFeed.NewsPortal?.IsEnabled.ToString() ?? "Empty"),
+                    RssFeed = rssFeed,
+                    Id = syndicationItem.Id,
+                    Links = syndicationItem.Links?.Select(syndicationLink => syndicationLink.Uri),
+                    Title = syndicationItem.Title?.Text,
+                    Summary = syndicationItem.Summary?.Text,
+                    Content = (
+                            syndicationItem.Content is TextSyndicationContent ?
+                            syndicationItem.Content as TextSyndicationContent
+                            : null)
+                        ?.Text,
+                    PublishDateTime = syndicationItem.PublishDate.DateTime,
+                    ElementExtensions = syndicationItem
+                        .ElementExtensions
+                        ?.Select(elementExtension => elementExtension?.GetObject<string?>()),
                 };
 
-                _loggerService.Log(eventName, exception, LogLevel.Error, arguments);
+                _ = writer.TryWrite(rssFeedItem);
             }
         }
-
-        private async Task<SyndicationFeed> LoadFeed(RssFeed rssFeed, CancellationToken cancellationToken)
+        catch (Exception exception)
         {
-            var feedContent = rssFeed.RequestType switch
+            var rssFeedUrl = rssFeed.Url;
+            var eventName = Event.RssFeedLoading.GetDisplayName();
+            var arguments = new (string, object)[]
             {
-                RequestType.Browser => await LoadCompressedFeedContent(rssFeed, cancellationToken),
-                RequestType.Normal => await LoadFeedContent(rssFeed, cancellationToken),
-                _ => await LoadFeedContent(rssFeed, cancellationToken)
+                    (nameof(rssFeedUrl), rssFeedUrl),
+                    ("IsEnabled", rssFeed.NewsPortal?.IsEnabled.ToString() ?? "Empty"),
             };
 
-            var modifiedFeedContent = rssFeed.ModifyContent(feedContent);
-
-            var reader = XmlReader.Create(
-                input: new StringReader(modifiedFeedContent));
-            var feed = SyndicationFeed.Load(reader);
-
-            return feed;
+            _loggerService.Log(eventName, exception, LogLevel.Error, arguments);
         }
+    }
 
-        private async Task<string> LoadCompressedFeedContent(RssFeed rssFeed, CancellationToken cancellationToken)
+    private async Task<SyndicationFeed> LoadFeed(RssFeed rssFeed, CancellationToken cancellationToken)
+    {
+        var feedContent = rssFeed.RequestType switch
         {
-            using var request = new HttpRequestMessage(HttpMethod.Get, rssFeed.Url);
-            request.AddBrowserHeadersToHttpRequestMessage();
+            RequestType.Browser => await LoadCompressedFeedContent(rssFeed, cancellationToken),
+            RequestType.Normal => await LoadFeedContent(rssFeed, cancellationToken),
+            _ => await LoadFeedContent(rssFeed, cancellationToken)
+        };
 
-            using var response = await _httpClient.SendAsync(request, cancellationToken);
+        var modifiedFeedContent = rssFeed.ModifyContent(feedContent);
 
-            response.EnsureSuccessStatusCode();
+        var reader = XmlReader.Create(
+            input: new StringReader(modifiedFeedContent));
+        var feed = SyndicationFeed.Load(reader);
 
-            using var responseStream = await response.Content.ReadAsStreamAsync(cancellationToken);
-            using var decompressedStream = new GZipStream(responseStream, CompressionMode.Decompress);
-            using var streamReader = new StreamReader(decompressedStream);
-            var feedContent = await streamReader.ReadToEndAsync();
+        return feed;
+    }
 
-            return feedContent;
-        }
+    private async Task<string> LoadCompressedFeedContent(RssFeed rssFeed, CancellationToken cancellationToken)
+    {
+        using var request = new HttpRequestMessage(HttpMethod.Get, rssFeed.Url);
+        request.AddBrowserHeadersToHttpRequestMessage();
 
-        private async Task<string> LoadFeedContent(RssFeed rssFeed, CancellationToken cancellationToken)
-        {
-            using var request = new HttpRequestMessage(HttpMethod.Get, rssFeed.Url);
+        using var response = await _httpClient.SendAsync(request, cancellationToken);
 
-            using var response = await _httpClient.SendAsync(request, cancellationToken);
+        response.EnsureSuccessStatusCode();
 
-            response.EnsureSuccessStatusCode();
+        using var responseStream = await response.Content.ReadAsStreamAsync(cancellationToken);
+        using var decompressedStream = new GZipStream(responseStream, CompressionMode.Decompress);
+        using var streamReader = new StreamReader(decompressedStream);
+        var feedContent = await streamReader.ReadToEndAsync();
 
-            var feedContent = await response.Content.ReadAsStringAsync(cancellationToken);
+        return feedContent;
+    }
 
-            return feedContent;
-        }
+    private async Task<string> LoadFeedContent(RssFeed rssFeed, CancellationToken cancellationToken)
+    {
+        using var request = new HttpRequestMessage(HttpMethod.Get, rssFeed.Url);
+
+        using var response = await _httpClient.SendAsync(request, cancellationToken);
+
+        response.EnsureSuccessStatusCode();
+
+        var feedContent = await response.Content.ReadAsStringAsync(cancellationToken);
+
+        return feedContent;
     }
 }

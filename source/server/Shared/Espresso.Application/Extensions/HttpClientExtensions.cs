@@ -2,29 +2,28 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-namespace Espresso.Application.Extensions
+namespace Espresso.Application.Extensions;
+
+/// <summary>
+/// Http client extensions.
+/// </summary>
+public static class HttpClientExtensions
 {
     /// <summary>
-    /// Http client extensions.
+    /// Adds <paramref name="httpHeaders"/> to <paramref name="httpClient"/>.
     /// </summary>
-    public static class HttpClientExtensions
+    /// <param name="httpClient">HTTP client.</param>
+    /// <param name="httpHeaders">HTTP headers.</param>
+    /// <returns>The <paramref name="httpClient"/>.</returns>
+    public static HttpClient AddHeadersToHttpClient(
+        this HttpClient httpClient,
+        IEnumerable<(string headerKey, string headerValue)> httpHeaders)
     {
-        /// <summary>
-        /// Adds <paramref name="httpHeaders"/> to <paramref name="httpClient"/>.
-        /// </summary>
-        /// <param name="httpClient">HTTP client.</param>
-        /// <param name="httpHeaders">HTTP headers.</param>
-        /// <returns>The <paramref name="httpClient"/>.</returns>
-        public static HttpClient AddHeadersToHttpClient(
-            this HttpClient httpClient,
-            IEnumerable<(string headerKey, string headerValue)> httpHeaders)
+        foreach (var (headerKey, headerValue) in httpHeaders)
         {
-            foreach (var (headerKey, headerValue) in httpHeaders)
-            {
-                httpClient.DefaultRequestHeaders.Add(headerKey, headerValue);
-            }
-
-            return httpClient;
+            httpClient.DefaultRequestHeaders.Add(headerKey, headerValue);
         }
+
+        return httpClient;
     }
 }

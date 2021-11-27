@@ -13,91 +13,90 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Espresso.WebApi.Startup
+namespace Espresso.WebApi.Startup;
+
+internal sealed partial class Startup
 {
-    internal sealed partial class Startup
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="app"></param>
+    /// <param name="memoryCacheInit"></param>
+    /// <param name="loggerService"></param>
+    /// <param name="env"></param>
+    public void Configure(
+        IApplicationBuilder app,
+        IWebApiInit memoryCacheInit,
+        ILoggerService<Startup> loggerService,
+        IWebHostEnvironment env)
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="app"></param>
-        /// <param name="memoryCacheInit"></param>
-        /// <param name="loggerService"></param>
-        /// <param name="env"></param>
-        public void Configure(
-            IApplicationBuilder app,
-            IWebApiInit memoryCacheInit,
-            ILoggerService<Startup> loggerService,
-            IWebHostEnvironment env)
-        {
-            loggerService.Log(
-                eventName: "WebApi Startup",
-                logLevel: Microsoft.Extensions.Logging.LogLevel.Information,
-                namedArguments: new (string, object)[] { ("version", _webApiConfiguration.AppConfiguration.Version) });
+        loggerService.Log(
+            eventName: "WebApi Startup",
+            logLevel: Microsoft.Extensions.Logging.LogLevel.Information,
+            namedArguments: new (string, object)[] { ("version", _webApiConfiguration.AppConfiguration.Version) });
 
 #pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
-            memoryCacheInit.InitWebApi().GetAwaiter().GetResult();
+        memoryCacheInit.InitWebApi().GetAwaiter().GetResult();
 #pragma warning restore VSTHRD002 // Avoid problematic synchronous waits
 
-            app.UseSecurityHeadersMiddleware(securityHeadersBuilder => securityHeadersBuilder.AddDefaultSecurePolicy());
+        app.UseSecurityHeadersMiddleware(securityHeadersBuilder => securityHeadersBuilder.AddDefaultSecurePolicy());
 
-            if (_webApiConfiguration.SpaConfiguration.EnableCors)
+        if (_webApiConfiguration.SpaConfiguration.EnableCors)
+        {
+            app.UseCors(CustomCorsPolicyName);
+        }
+
+        app.UseHsts();
+
+        app.UseSwagger();
+        app.UseSwaggerUI(options =>
+        {
+            foreach (var apiVersion in _webApiConfiguration.AppConfiguration.ApiVersions)
             {
-                app.UseCors(CustomCorsPolicyName);
+                options.SwaggerEndpoint(
+                    url: $"/{SwaggerDocumentDefinitionRoutePrefix}/{apiVersion}/{SwaggerDefinitionFileName}",
+                    name: $"{ApiDescriptionNamePrefix} {apiVersion}");
             }
 
-            app.UseHsts();
+            options.RoutePrefix = SwaggerApiExplorerRoute;
+        });
 
-            app.UseSwagger();
-            app.UseSwaggerUI(options =>
+        app.UseRouting();
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.UseStaticFiles();
+        app.UseSpaStaticFiles();
+
+        app.UseSpa(spa =>
+        {
+            spa.Options.SourcePath = Path.Join(env.ContentRootPath, ClientAppDirectory);
+
+            if (
+                _webApiConfiguration.AppConfiguration.AppEnvironment.Equals(AppEnvironment.Local) &&
+                _webApiConfiguration.SpaConfiguration.UseSpaProxyServer)
             {
-                foreach (var apiVersion in _webApiConfiguration.AppConfiguration.ApiVersions)
-                {
-                    options.SwaggerEndpoint(
-                        url: $"/{SwaggerDocumentDefinitionRoutePrefix}/{apiVersion}/{SwaggerDefinitionFileName}",
-                        name: $"{ApiDescriptionNamePrefix} {apiVersion}");
-                }
+                spa.UseProxyToSpaDevelopmentServer(_webApiConfiguration.SpaConfiguration.SpaProxyServerUrl);
+            }
+        });
 
-                options.RoutePrefix = SwaggerApiExplorerRoute;
-            });
-
-            app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseStaticFiles();
-            app.UseSpaStaticFiles();
-
-            app.UseSpa(spa =>
+        app.UseResponseCaching();
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+            endpoints.MapHealthChecks("/health/startup", new HealthCheckOptions
             {
-                spa.Options.SourcePath = Path.Join(env.ContentRootPath, ClientAppDirectory);
-
-                if (
-                    _webApiConfiguration.AppConfiguration.AppEnvironment.Equals(AppEnvironment.Local) &&
-                    _webApiConfiguration.SpaConfiguration.UseSpaProxyServer)
-                {
-                    spa.UseProxyToSpaDevelopmentServer(_webApiConfiguration.SpaConfiguration.SpaProxyServerUrl);
-                }
+                Predicate = check => check.Tags.Contains(HealthCheckConstants.StartupTag),
             });
-
-            app.UseResponseCaching();
-            app.UseEndpoints(endpoints =>
+            endpoints.MapHealthChecks("/health/readiness", new HealthCheckOptions
             {
-                endpoints.MapControllers();
-                endpoints.MapHealthChecks("/health/startup", new HealthCheckOptions
-                {
-                    Predicate = check => check.Tags.Contains(HealthCheckConstants.StartupTag),
-                });
-                endpoints.MapHealthChecks("/health/readiness", new HealthCheckOptions
-                {
-                    Predicate = check => check.Tags.Contains(HealthCheckConstants.ReadinessTag),
-                });
-                endpoints.MapHealthChecks("/health/liveness", new HealthCheckOptions
-                {
-                    Predicate = check => check.Tags.Contains(HealthCheckConstants.LivenessTag),
-                });
-                endpoints.MapHub<ArticlesNotificationHub>("/notifications/articles");
+                Predicate = check => check.Tags.Contains(HealthCheckConstants.ReadinessTag),
             });
-        }
+            endpoints.MapHealthChecks("/health/liveness", new HealthCheckOptions
+            {
+                Predicate = check => check.Tags.Contains(HealthCheckConstants.LivenessTag),
+            });
+            endpoints.MapHub<ArticlesNotificationHub>("/notifications/articles");
+        });
     }
 }

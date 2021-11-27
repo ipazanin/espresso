@@ -2,18 +2,17 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
+namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles;
+
+public record GetLatestArticlesQueryResponse
 {
-    public record GetLatestArticlesQueryResponse
-    {
-        public IEnumerable<IEnumerable<GetLatestArticlesArticle>> Articles { get; init; } = new List<IEnumerable<GetLatestArticlesArticle>>();
+    public IEnumerable<IEnumerable<GetLatestArticlesArticle>> Articles { get; init; } = new List<IEnumerable<GetLatestArticlesArticle>>();
 
-        public IEnumerable<GetLatestArticlesArticle> FeaturedArticles { get; init; } = new List<GetLatestArticlesArticle>();
+    public IEnumerable<GetLatestArticlesArticle> FeaturedArticles { get; init; } = new List<GetLatestArticlesArticle>();
 
-        public IEnumerable<GetLatestArticlesNewsPortal> NewNewsPortals { get; init; } = new List<GetLatestArticlesNewsPortal>();
+    public IEnumerable<GetLatestArticlesNewsPortal> NewNewsPortals { get; init; } = new List<GetLatestArticlesNewsPortal>();
 
-        public int NewNewsPortalsPosition { get; init; }
+    public int NewNewsPortalsPosition { get; init; }
 
-        public string LastAddedNewsPortalDate { get; init; } = string.Empty;
-    }
+    public string LastAddedNewsPortalDate { get; init; } = string.Empty;
 }

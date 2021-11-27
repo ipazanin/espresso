@@ -5,34 +5,34 @@
 using Espresso.Domain.Entities;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
 
-namespace Espresso.Domain.Tests.TestUtilities
-{
-    /// <summary>
-    /// ArticleUtility.
-    /// </summary>
-    public static class ArticleUtility
-    {
-        public static Article CreateDefaultArticleWith(
-            int newsPortalId = default,
-            string articleUrl = "",
-            string title = "",
-            string summary = "",
-            DateTimeOffset publishDateTime = default,
-            DateTimeOffset createDateTime = default,
-            int categoryId = default,
-            Guid id = default)
-        {
-            var category = new Category(
-                id: categoryId,
-                name: string.Empty,
-                color: string.Empty,
-                keyWordsRegexPattern: default,
-                sortIndex: default,
-                position: default,
-                categoryType: default,
-                categoryUrl: string.Empty);
+namespace Espresso.Domain.Tests.TestUtilities;
 
-            var articleCategories = new List<ArticleCategory>()
+/// <summary>
+/// ArticleUtility.
+/// </summary>
+public static class ArticleUtility
+{
+    public static Article CreateDefaultArticleWith(
+        int newsPortalId = default,
+        string articleUrl = "",
+        string title = "",
+        string summary = "",
+        DateTimeOffset publishDateTime = default,
+        DateTimeOffset createDateTime = default,
+        int categoryId = default,
+        Guid id = default)
+    {
+        var category = new Category(
+            id: categoryId,
+            name: string.Empty,
+            color: string.Empty,
+            keyWordsRegexPattern: default,
+            sortIndex: default,
+            position: default,
+            categoryType: default,
+            categoryUrl: string.Empty);
+
+        var articleCategories = new List<ArticleCategory>()
             {
                 new ArticleCategory(
                     id: default,
@@ -42,39 +42,38 @@ namespace Espresso.Domain.Tests.TestUtilities
                     categoryId: default),
             };
 
-            var newsPortal = new NewsPortal(
-                id: newsPortalId,
-                name: string.Empty,
-                baseUrl: string.Empty,
-                iconUrl: string.Empty,
-                isNewOverride: null,
-                createdAt: default,
-                categoryId: default,
-                regionId: default,
-                isEnabled: true);
+        var newsPortal = new NewsPortal(
+            id: newsPortalId,
+            name: string.Empty,
+            baseUrl: string.Empty,
+            iconUrl: string.Empty,
+            isNewOverride: null,
+            createdAt: default,
+            categoryId: default,
+            regionId: default,
+            isEnabled: true);
 
-            var article = new Article(
-                id: id,
-                url: articleUrl,
-                webUrl: string.Empty,
-                summary: summary,
-                title: title,
-                imageUrl: default,
-                createDateTime: createDateTime,
-                updateDateTime: default,
-                publishDateTime: publishDateTime,
-                numberOfClicks: default,
-                trendingScore: default,
-                editorConfiguration: new EditorConfiguration(),
-                newsPortalId: newsPortal.Id,
-                rssFeedId: default,
-                articleCategories: articleCategories,
-                newsPortal: newsPortal,
-                rssFeed: default,
-                subordinateArticles: default,
-                mainArticle: default);
+        var article = new Article(
+            id: id,
+            url: articleUrl,
+            webUrl: string.Empty,
+            summary: summary,
+            title: title,
+            imageUrl: default,
+            createDateTime: createDateTime,
+            updateDateTime: default,
+            publishDateTime: publishDateTime,
+            numberOfClicks: default,
+            trendingScore: default,
+            editorConfiguration: new EditorConfiguration(),
+            newsPortalId: newsPortal.Id,
+            rssFeedId: default,
+            articleCategories: articleCategories,
+            newsPortal: newsPortal,
+            rssFeed: default,
+            subordinateArticles: default,
+            mainArticle: default);
 
-            return article;
-        }
+        return article;
     }
 }

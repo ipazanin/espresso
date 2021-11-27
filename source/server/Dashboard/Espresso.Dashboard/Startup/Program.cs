@@ -9,45 +9,44 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Espresso.Dashboard.Startup
+namespace Espresso.Dashboard.Startup;
+
+internal static class Program
 {
-    internal static class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration(configureOptions =>
-                {
-                    var environmentName = Environment.GetEnvironmentVariable(EnvironmentVariableNamesConstants.AspNetCoreEnvironment) ?? string.Empty;
-
-                    var parentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-
-                    _ = configureOptions
-                        .AddJsonFile(path: $"{parentDirectory}/configuration/app-settings.json", optional: false)
-                        .AddJsonFile(path: $"{parentDirectory}/configuration/app-settings.{environmentName}.json", optional: false)
-                        .AddJsonFile(path: $"AppSettings/app-settings.json", optional: false)
-                        .AddJsonFile(path: $"AppSettings/app-settings.{environmentName}.json", optional: false)
-                        .AddEnvironmentVariables()
-                        .Build();
-                })
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                    webBuilder.ConfigureAppConfiguration((ctx, _) =>
-                    {
-                        StaticWebAssetsLoader.UseStaticWebAssets(
-                            environment: ctx.HostingEnvironment,
-                            configuration: ctx.Configuration);
-                    });
-                    webBuilder.ConfigureLogging(loggingBuilder =>
-                    {
-                        loggingBuilder.ClearProviders();
-                        loggingBuilder.AddConsole();
-                    });
-                });
+        CreateHostBuilder(args).Build().Run();
     }
+
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration(configureOptions =>
+            {
+                var environmentName = Environment.GetEnvironmentVariable(EnvironmentVariableNamesConstants.AspNetCoreEnvironment) ?? string.Empty;
+
+                var parentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+                _ = configureOptions
+                    .AddJsonFile(path: $"{parentDirectory}/configuration/app-settings.json", optional: false)
+                    .AddJsonFile(path: $"{parentDirectory}/configuration/app-settings.{environmentName}.json", optional: false)
+                    .AddJsonFile(path: $"AppSettings/app-settings.json", optional: false)
+                    .AddJsonFile(path: $"AppSettings/app-settings.{environmentName}.json", optional: false)
+                    .AddEnvironmentVariables()
+                    .Build();
+            })
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+                webBuilder.ConfigureAppConfiguration((ctx, _) =>
+                {
+                    StaticWebAssetsLoader.UseStaticWebAssets(
+                        environment: ctx.HostingEnvironment,
+                        configuration: ctx.Configuration);
+                });
+                webBuilder.ConfigureLogging(loggingBuilder =>
+                {
+                    loggingBuilder.ClearProviders();
+                    loggingBuilder.AddConsole();
+                });
+            });
 }

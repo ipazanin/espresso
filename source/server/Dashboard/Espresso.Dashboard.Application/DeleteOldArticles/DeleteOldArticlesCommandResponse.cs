@@ -2,10 +2,9 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-namespace Espresso.Dashboard.Application.DeleteOldArticles
+namespace Espresso.Dashboard.Application.DeleteOldArticles;
+
+public record DeleteOldArticlesCommandResponse
 {
-    public record DeleteOldArticlesCommandResponse
-    {
-        public int NumberOfDeletedDatabaseArticles { get; init; }
-    }
+    public int NumberOfDeletedDatabaseArticles { get; init; }
 }

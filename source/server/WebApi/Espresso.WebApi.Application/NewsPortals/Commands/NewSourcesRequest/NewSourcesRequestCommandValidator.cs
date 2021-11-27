@@ -4,17 +4,16 @@
 
 using FluentValidation;
 
-namespace Espresso.WebApi.Application.NewsPortals.Commands.NewSourcesRequest
+namespace Espresso.WebApi.Application.NewsPortals.Commands.NewSourcesRequest;
+
+public class NewSourcesRequestCommandValidator : AbstractValidator<NewsSourcesRequestCommand>
 {
-    public class NewSourcesRequestCommandValidator : AbstractValidator<NewsSourcesRequestCommand>
+    /// <summary>
+    /// Initializes a new instance of the <see cref="NewSourcesRequestCommandValidator"/> class.
+    /// </summary>
+    public NewSourcesRequestCommandValidator()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NewSourcesRequestCommandValidator"/> class.
-        /// </summary>
-        public NewSourcesRequestCommandValidator()
-        {
-            RuleFor(request => request.NewsPortalName).NotEmpty();
-            RuleFor(request => request.Email).NotEmpty().EmailAddress();
-        }
+        RuleFor(request => request.NewsPortalName).NotEmpty();
+        RuleFor(request => request.Email).NotEmpty().EmailAddress();
     }
 }

@@ -13,83 +13,82 @@ using Espresso.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Espresso.WebApi.Jobs.CronJobs
+namespace Espresso.WebApi.Jobs.CronJobs;
+
+/// <summary>
+///
+/// </summary>
+public class AnalyticsCronJob : CronJob<AnalyticsCronJob>
 {
+    private readonly IServiceScopeFactory _scopeFactory;
+    private readonly ISettingProvider _settingProvider;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AnalyticsCronJob"/> class.
+    /// </summary>
+    /// <param name="serviceScopeFactory"></param>
+    /// <param name="cronJobConfiguration"></param>
+    /// <param name="settingProvider"></param>
+    public AnalyticsCronJob(
+        IServiceScopeFactory serviceScopeFactory,
+        ICronJobConfiguration<AnalyticsCronJob> cronJobConfiguration,
+        ISettingProvider settingProvider)
+        : base(
+        cronJobConfiguration: cronJobConfiguration,
+        serviceScopeFactory: serviceScopeFactory)
+    {
+        _scopeFactory = serviceScopeFactory;
+        _settingProvider = settingProvider;
+    }
+
+    protected override CronExpression CronExpression => CronExpression.Parse(_settingProvider.LatestSetting.JobsSetting.AnalyticsCronExpression);
+
     /// <summary>
     ///
     /// </summary>
-    public class AnalyticsCronJob : CronJob<AnalyticsCronJob>
+    /// <param name="cancellationToken"></param>
+    public override async Task DoWork(CancellationToken cancellationToken)
     {
-        private readonly IServiceScopeFactory _scopeFactory;
-        private readonly ISettingProvider _settingProvider;
+        using var scope = _scopeFactory.CreateScope();
+        var serviceProvider = scope.ServiceProvider;
+        var espressoDatabaseContext = serviceProvider.GetRequiredService<IEspressoDatabaseContext>();
+        var slackService = serviceProvider.GetRequiredService<ISlackService>();
+        var googleAnalyticsService = serviceProvider.GetRequiredService<IGoogleAnalyticsService>();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AnalyticsCronJob"/> class.
-        /// </summary>
-        /// <param name="serviceScopeFactory"></param>
-        /// <param name="cronJobConfiguration"></param>
-        /// <param name="settingProvider"></param>
-        public AnalyticsCronJob(
-            IServiceScopeFactory serviceScopeFactory,
-            ICronJobConfiguration<AnalyticsCronJob> cronJobConfiguration,
-            ISettingProvider settingProvider)
-            : base(
-            cronJobConfiguration: cronJobConfiguration,
-            serviceScopeFactory: serviceScopeFactory)
-        {
-            _scopeFactory = serviceScopeFactory;
-            _settingProvider = settingProvider;
-        }
+        var applicationDownloads = await espressoDatabaseContext.ApplicationDownload.ToListAsync(cancellationToken);
+        var (todayAndroidCount, todayIosCount, totalAndroidCount, totalIosCount) = CalculateAppDownloadsPerDeviceType(applicationDownloads);
 
-        protected override CronExpression CronExpression => CronExpression.Parse(_settingProvider.LatestSetting.JobsSetting.AnalyticsCronExpression);
+        var activeUsers = await googleAnalyticsService.GetNumberOfActiveUsersFromYesterday();
+        var revenue = await googleAnalyticsService.GetTotalRevenueFromYesterday();
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        public override async Task DoWork(CancellationToken cancellationToken)
-        {
-            using var scope = _scopeFactory.CreateScope();
-            var serviceProvider = scope.ServiceProvider;
-            var espressoDatabaseContext = serviceProvider.GetRequiredService<IEspressoDatabaseContext>();
-            var slackService = serviceProvider.GetRequiredService<ISlackService>();
-            var googleAnalyticsService = serviceProvider.GetRequiredService<IGoogleAnalyticsService>();
+        await slackService.LogAppDownloadStatistics(
+                yesterdayAndroidCount: todayAndroidCount,
+                yesterdayIosCount: todayIosCount,
+                totalAndroidCount: totalAndroidCount,
+                totalIosCount: totalIosCount,
+                activeUsers: activeUsers,
+                revenue: revenue,
+                cancellationToken: cancellationToken);
+    }
 
-            var applicationDownloads = await espressoDatabaseContext.ApplicationDownload.ToListAsync(cancellationToken);
-            var (todayAndroidCount, todayIosCount, totalAndroidCount, totalIosCount) = CalculateAppDownloadsPerDeviceType(applicationDownloads);
+    private static (int todayAndroidCount, int todayIosCount, int totalAndroidCount, int totalIosCount) CalculateAppDownloadsPerDeviceType(
+        IEnumerable<ApplicationDownload> applicationDownloads)
+    {
+        var todayAndroidCount = applicationDownloads.Count(applicationDownloads =>
+            applicationDownloads.MobileDeviceType == DeviceType.Android &&
+            applicationDownloads.DownloadedTime.Date == DateTimeUtility.YesterdaysDate);
 
-            var activeUsers = await googleAnalyticsService.GetNumberOfActiveUsersFromYesterday();
-            var revenue = await googleAnalyticsService.GetTotalRevenueFromYesterday();
+        var todayIosCount = applicationDownloads.Count(applicationDownloads =>
+            applicationDownloads.MobileDeviceType == DeviceType.Ios &&
+            applicationDownloads.DownloadedTime.Date == DateTimeUtility.YesterdaysDate);
 
-            await slackService.LogAppDownloadStatistics(
-                    yesterdayAndroidCount: todayAndroidCount,
-                    yesterdayIosCount: todayIosCount,
-                    totalAndroidCount: totalAndroidCount,
-                    totalIosCount: totalIosCount,
-                    activeUsers: activeUsers,
-                    revenue: revenue,
-                    cancellationToken: cancellationToken);
-        }
+        var totalIosCount = applicationDownloads.Count(applicationDownloads =>
+            applicationDownloads.MobileDeviceType == DeviceType.Ios &&
+            applicationDownloads.DownloadedTime.Date <= DateTimeUtility.YesterdaysDate);
+        var totalAndroidCount = applicationDownloads.Count(applicationDownloads =>
+            applicationDownloads.MobileDeviceType == DeviceType.Android &&
+            applicationDownloads.DownloadedTime.Date <= DateTimeUtility.YesterdaysDate);
 
-        private static (int todayAndroidCount, int todayIosCount, int totalAndroidCount, int totalIosCount) CalculateAppDownloadsPerDeviceType(
-            IEnumerable<ApplicationDownload> applicationDownloads)
-        {
-            var todayAndroidCount = applicationDownloads.Count(applicationDownloads =>
-                applicationDownloads.MobileDeviceType == DeviceType.Android &&
-                applicationDownloads.DownloadedTime.Date == DateTimeUtility.YesterdaysDate);
-
-            var todayIosCount = applicationDownloads.Count(applicationDownloads =>
-                applicationDownloads.MobileDeviceType == DeviceType.Ios &&
-                applicationDownloads.DownloadedTime.Date == DateTimeUtility.YesterdaysDate);
-
-            var totalIosCount = applicationDownloads.Count(applicationDownloads =>
-                applicationDownloads.MobileDeviceType == DeviceType.Ios &&
-                applicationDownloads.DownloadedTime.Date <= DateTimeUtility.YesterdaysDate);
-            var totalAndroidCount = applicationDownloads.Count(applicationDownloads =>
-                applicationDownloads.MobileDeviceType == DeviceType.Android &&
-                applicationDownloads.DownloadedTime.Date <= DateTimeUtility.YesterdaysDate);
-
-            return (todayAndroidCount, todayIosCount, totalAndroidCount, totalIosCount);
-        }
+        return (todayAndroidCount, todayIosCount, totalAndroidCount, totalIosCount);
     }
 }

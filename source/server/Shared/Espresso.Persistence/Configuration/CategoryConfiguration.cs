@@ -8,49 +8,49 @@ using Espresso.Domain.Enums.CategoryEnums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Espresso.Persistence.Configuration
+namespace Espresso.Persistence.Configuration;
+
+/// <summary>
+/// <see cref="Category"/> entity configuration.
+/// </summary>
+public class CategoryConfiguration : IEntityTypeConfiguration<Category>
 {
-    /// <summary>
-    /// <see cref="Category"/> entity configuration.
-    /// </summary>
-    public class CategoryConfiguration : IEntityTypeConfiguration<Category>
+    /// <inheritdoc/>
+    public void Configure(EntityTypeBuilder<Category> builder)
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Category> builder)
-        {
-            builder.Property(category => category.Name)
-                .HasMaxLength(Category.NameHasMaxLenght);
+        builder.Property(category => category.Name)
+            .HasMaxLength(Category.NameHasMaxLenght);
 
-            builder.Property(category => category.Color)
-                .HasMaxLength(Category.ColorHasMaxLenght);
+        builder.Property(category => category.Color)
+            .HasMaxLength(Category.ColorHasMaxLenght);
 
-            builder.Property(category => category.KeyWordsRegexPattern)
-                .HasMaxLength(Category.KeyWordsRegexPatterHasMaxLenght);
+        builder.Property(category => category.KeyWordsRegexPattern)
+            .HasMaxLength(Category.KeyWordsRegexPatterHasMaxLenght);
 
-            builder.Property(category => category.Url)
-                .HasMaxLength(Category.UrlHasMaxLength);
+        builder.Property(category => category.Url)
+            .HasMaxLength(Category.UrlHasMaxLength);
 
-            builder.HasMany(category => category.ArticleCategories)
-                .WithOne(articleCategory => articleCategory.Category!)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasForeignKey(articleCategory => articleCategory.CategoryId);
+        builder.HasMany(category => category.ArticleCategories)
+            .WithOne(articleCategory => articleCategory.Category!)
+            .OnDelete(DeleteBehavior.Cascade)
+            .HasForeignKey(articleCategory => articleCategory.CategoryId);
 
-            builder.HasMany(category => category.RssFeeds)
-                .WithOne(rssFeed => rssFeed.Category!)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasForeignKey(articleCategory => articleCategory.CategoryId);
+        builder.HasMany(category => category.RssFeeds)
+            .WithOne(rssFeed => rssFeed.Category!)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasForeignKey(articleCategory => articleCategory.CategoryId);
 
-            builder.HasMany(category => category.NewsPortals)
-                .WithOne(newsPortal => newsPortal.Category!)
-                .HasForeignKey(newsPortal => newsPortal.CategoryId)
-                .OnDelete(DeleteBehavior.Cascade);
+        builder.HasMany(category => category.NewsPortals)
+            .WithOne(newsPortal => newsPortal.Category!)
+            .HasForeignKey(newsPortal => newsPortal.CategoryId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-            Seed(builder);
-        }
+        Seed(builder);
+    }
 
-        private static void Seed(EntityTypeBuilder<Category> builder)
-        {
-            var categories = new List<Category>
+    private static void Seed(EntityTypeBuilder<Category> builder)
+    {
+        var categories = new List<Category>
             {
                 new Category(
                     id: (int)CategoryId.Vijesti,
@@ -153,7 +153,6 @@ namespace Espresso.Persistence.Configuration
                     categoryUrl: "/local"),
             };
 
-            builder.HasData(categories);
-        }
+        builder.HasData(categories);
     }
 }

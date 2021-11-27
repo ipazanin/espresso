@@ -2,20 +2,18 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0
-{
+namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0;
 #pragma warning disable S101 // Types should be named in PascalCase
-    public record GetLatestArticlesQueryResponse_2_0
+public record GetLatestArticlesQueryResponse_2_0
 #pragma warning restore S101 // Types should be named in PascalCase
-    {
-        public IEnumerable<GetLatestArticlesArticle_2_0> Articles { get; init; } = new List<GetLatestArticlesArticle_2_0>();
+{
+    public IEnumerable<GetLatestArticlesArticle_2_0> Articles { get; init; } = new List<GetLatestArticlesArticle_2_0>();
 
-        public IEnumerable<GetLatestArticlesArticle_2_0> FeaturedArticles { get; init; } = new List<GetLatestArticlesArticle_2_0>();
+    public IEnumerable<GetLatestArticlesArticle_2_0> FeaturedArticles { get; init; } = new List<GetLatestArticlesArticle_2_0>();
 
-        public IEnumerable<GetLatestArticlesNewsPortal_2_0> NewNewsPortals { get; init; } = new List<GetLatestArticlesNewsPortal_2_0>();
+    public IEnumerable<GetLatestArticlesNewsPortal_2_0> NewNewsPortals { get; init; } = new List<GetLatestArticlesNewsPortal_2_0>();
 
-        public int NewNewsPortalsPosition { get; init; }
+    public int NewNewsPortalsPosition { get; init; }
 
-        public string LastAddedNewsPortalDate { get; init; } = string.Empty;
-    }
+    public string LastAddedNewsPortalDate { get; init; } = string.Empty;
 }

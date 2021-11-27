@@ -4,23 +4,23 @@
 
 using Espresso.WebApi.Configuration;
 
-namespace Espresso.WebApi.Authentication
-{
-    /// <summary>
-    /// 
-    /// </summary>
-    public class InMemoryApiKeyProvider : IApiKeyProvider
-    {
-        private readonly IDictionary<string, ApiKey> _apiKeys;
+namespace Espresso.WebApi.Authentication;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InMemoryApiKeyProvider"/> class.
-        /// </summary>
-        /// <param name="configuration"></param>
-        public InMemoryApiKeyProvider(
-            IWebApiConfiguration configuration)
-        {
-            _apiKeys = new Dictionary<string, ApiKey>
+/// <summary>
+/// 
+/// </summary>
+public class InMemoryApiKeyProvider : IApiKeyProvider
+{
+    private readonly IDictionary<string, ApiKey> _apiKeys;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="InMemoryApiKeyProvider"/> class.
+    /// </summary>
+    /// <param name="configuration"></param>
+    public InMemoryApiKeyProvider(
+        IWebApiConfiguration configuration)
+    {
+        _apiKeys = new Dictionary<string, ApiKey>
             {
                 {
                     configuration.ApiKeysConfiguration.AndroidApiKey,
@@ -65,17 +65,16 @@ namespace Espresso.WebApi.Authentication
                         key: configuration.ApiKeysConfiguration.DevIosApiKey)
                 },
             };
-        }
+    }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="providedApiKey"></param>
-        public Task<ApiKey> GetApiKey(string providedApiKey)
-        {
-            _apiKeys.TryGetValue(providedApiKey, out var key);
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="providedApiKey"></param>
+    public Task<ApiKey> GetApiKey(string providedApiKey)
+    {
+        _apiKeys.TryGetValue(providedApiKey, out var key);
 
-            return key is null ? throw new ArgumentNullException(paramName: nameof(providedApiKey)) : Task.FromResult(key);
-        }
+        return key is null ? throw new ArgumentNullException(paramName: nameof(providedApiKey)) : Task.FromResult(key);
     }
 }

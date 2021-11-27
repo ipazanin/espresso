@@ -10,26 +10,26 @@ using Espresso.Domain.Enums.NewsPortalEnums;
 using Espresso.Domain.Enums.RegionEnums;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Espresso.Persistence.DataSeed
+namespace Espresso.Persistence.DataSeed;
+
+/// <summary>
+/// Local <see cref="NewsPortal"/> data seed.
+/// </summary>
+internal static class LocalNewsPortalDataSeed
 {
     /// <summary>
-    /// Local <see cref="NewsPortal"/> data seed.
+    /// Seeds entity data.
     /// </summary>
-    internal static class LocalNewsPortalDataSeed
+    /// <param name="builder">Entity builder.</param>
+    public static void SeedData(EntityTypeBuilder<NewsPortal> builder)
     {
-        /// <summary>
-        /// Seeds entity data.
-        /// </summary>
-        /// <param name="builder">Entity builder.</param>
-        public static void SeedData(EntityTypeBuilder<NewsPortal> builder)
-        {
-            SeedLocalNewsPortals(builder);
-        }
+        SeedLocalNewsPortals(builder);
+    }
 
-        private static void SeedLocalNewsPortals(EntityTypeBuilder<NewsPortal> builder)
-        {
+    private static void SeedLocalNewsPortals(EntityTypeBuilder<NewsPortal> builder)
+    {
 #pragma warning disable S1075 // URIs should not be hardcoded
-            var localNewsPortals = new List<NewsPortal>
+        var localNewsPortals = new List<NewsPortal>
             {
                 new NewsPortal(
                     id: (int)NewsPortalId.DalmacijaDanas,
@@ -676,7 +676,6 @@ namespace Espresso.Persistence.DataSeed
             };
 #pragma warning restore S1075 // URIs should not be hardcoded
 
-            builder.HasData(localNewsPortals);
-        }
+        builder.HasData(localNewsPortals);
     }
 }

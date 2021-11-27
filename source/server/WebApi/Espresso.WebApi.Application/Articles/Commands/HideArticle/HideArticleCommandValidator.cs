@@ -4,16 +4,15 @@
 
 using FluentValidation;
 
-namespace Espresso.WebApi.Application.Articles.Commands.HideArticle
+namespace Espresso.WebApi.Application.Articles.Commands.HideArticle;
+
+public class HideArticleCommandValidator : AbstractValidator<HideArticleCommand>
 {
-    public class HideArticleCommandValidator : AbstractValidator<HideArticleCommand>
+    /// <summary>
+    /// Initializes a new instance of the <see cref="HideArticleCommandValidator"/> class.
+    /// </summary>
+    public HideArticleCommandValidator()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="HideArticleCommandValidator"/> class.
-        /// </summary>
-        public HideArticleCommandValidator()
-        {
-            RuleFor(request => request.ArticleId).NotEmpty();
-        }
+        RuleFor(request => request.ArticleId).NotEmpty();
     }
 }

@@ -5,14 +5,13 @@
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using MediatR;
 
-namespace Espresso.WebApi.Application.NewsPortals.Commands.NewSourcesRequest
+namespace Espresso.WebApi.Application.NewsPortals.Commands.NewSourcesRequest;
+
+public record NewsSourcesRequestCommand : Request<Unit>
 {
-    public record NewsSourcesRequestCommand : Request<Unit>
-    {
-        public string NewsPortalName { get; init; } = string.Empty;
+    public string NewsPortalName { get; init; } = string.Empty;
 
-        public string Email { get; init; } = string.Empty;
+    public string Email { get; init; } = string.Empty;
 
-        public string? Url { get; init; }
-    }
+    public string? Url { get; init; }
 }

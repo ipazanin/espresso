@@ -10,65 +10,64 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Espresso.WebApi.Application.Articles.Commands.SetFeaturedArticle
+namespace Espresso.WebApi.Application.Articles.Commands.SetFeaturedArticle;
+
+public class SetFeaturedArticleCommandHandler : IRequestHandler<SetFeaturedArticleCommand>
 {
-    public class SetFeaturedArticleCommandHandler : IRequestHandler<SetFeaturedArticleCommand>
+    private readonly IMemoryCache _memoryCache;
+    private readonly IEspressoDatabaseContext _context;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SetFeaturedArticleCommandHandler"/> class.
+    /// </summary>
+    /// <param name="memoryCache"></param>
+    /// <param name="context"></param>
+    public SetFeaturedArticleCommandHandler(
+        IMemoryCache memoryCache,
+        IEspressoDatabaseContext context)
     {
-        private readonly IMemoryCache _memoryCache;
-        private readonly IEspressoDatabaseContext _context;
+        _memoryCache = memoryCache;
+        _context = context;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SetFeaturedArticleCommandHandler"/> class.
-        /// </summary>
-        /// <param name="memoryCache"></param>
-        /// <param name="context"></param>
-        public SetFeaturedArticleCommandHandler(
-            IMemoryCache memoryCache,
-            IEspressoDatabaseContext context)
+    public async Task<Unit> Handle(
+        SetFeaturedArticleCommand request,
+        CancellationToken cancellationToken)
+    {
+        var memoryCacheArticles = _memoryCache
+            .Get<IEnumerable<Article>>(key: MemoryCacheConstants.ArticleKey)
+            .ToDictionary(article => article.Id);
+
+        var articleIds = request.FeaturedArticleConfigurations.Select(featuredArticleConfiguration => featuredArticleConfiguration.articleId);
+
+        var databaseArticles = await _context
+            .Articles
+            .Where(article => articleIds.Contains(article.Id))
+            .ToDictionaryAsync(article => article.Id, cancellationToken);
+
+        foreach (var (articleId, isFeatured, featuredPosition) in request.FeaturedArticleConfigurations)
         {
-            _memoryCache = memoryCache;
-            _context = context;
-        }
-
-        public async Task<Unit> Handle(
-            SetFeaturedArticleCommand request,
-            CancellationToken cancellationToken)
-        {
-            var memoryCacheArticles = _memoryCache
-                .Get<IEnumerable<Article>>(key: MemoryCacheConstants.ArticleKey)
-                .ToDictionary(article => article.Id);
-
-            var articleIds = request.FeaturedArticleConfigurations.Select(featuredArticleConfiguration => featuredArticleConfiguration.articleId);
-
-            var databaseArticles = await _context
-                .Articles
-                .Where(article => articleIds.Contains(article.Id))
-                .ToDictionaryAsync(article => article.Id, cancellationToken);
-
-            foreach (var (articleId, isFeatured, featuredPosition) in request.FeaturedArticleConfigurations)
+            if (!databaseArticles.TryGetValue(articleId, out var databaseArticle))
             {
-                if (!databaseArticles.TryGetValue(articleId, out var databaseArticle))
-                {
-                    throw new NotFoundException(
-                        typeName: nameof(Article),
-                        id: articleId.ToString());
-                }
-
-                databaseArticle.SetIsFeaturedValue(isFeatured, featuredPosition);
-                _context.Articles.Update(databaseArticle);
-
-                if (memoryCacheArticles.TryGetValue(articleId, out var memoryCacheArticle))
-                {
-                    memoryCacheArticle.SetIsFeaturedValue(isFeatured, featuredPosition);
-                }
+                throw new NotFoundException(
+                    typeName: nameof(Article),
+                    id: articleId.ToString());
             }
 
-            await _context.SaveChangesAsync(cancellationToken: default);
-            _memoryCache.Set(
-                key: MemoryCacheConstants.ArticleKey,
-                value: memoryCacheArticles.Values.ToList());
+            databaseArticle.SetIsFeaturedValue(isFeatured, featuredPosition);
+            _context.Articles.Update(databaseArticle);
 
-            return Unit.Value;
+            if (memoryCacheArticles.TryGetValue(articleId, out var memoryCacheArticle))
+            {
+                memoryCacheArticle.SetIsFeaturedValue(isFeatured, featuredPosition);
+            }
         }
+
+        await _context.SaveChangesAsync(cancellationToken: default);
+        _memoryCache.Set(
+            key: MemoryCacheConstants.ArticleKey,
+            value: memoryCacheArticles.Values.ToList());
+
+        return Unit.Value;
     }
 }

@@ -4,26 +4,25 @@
 
 using Microsoft.AspNetCore.Authentication;
 
-namespace Espresso.WebApi.Authentication
+namespace Espresso.WebApi.Authentication;
+
+/// <summary>
+/// 
+/// </summary>
+public static class AuthenticationBuilderExtensions
 {
     /// <summary>
     /// 
     /// </summary>
-    public static class AuthenticationBuilderExtensions
+    /// <param name="authenticationBuilder"></param>
+    /// <param name="options"></param>
+    public static AuthenticationBuilder AddApiKeySupport(
+        this AuthenticationBuilder authenticationBuilder,
+        Action<ApiKeyAuthenticationOptions> options)
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="authenticationBuilder"></param>
-        /// <param name="options"></param>
-        public static AuthenticationBuilder AddApiKeySupport(
-            this AuthenticationBuilder authenticationBuilder,
-            Action<ApiKeyAuthenticationOptions> options)
-        {
-            return authenticationBuilder
-                .AddScheme<ApiKeyAuthenticationOptions, ApiKeyAuthenticationHandler>(
-                    authenticationScheme: ApiKeyAuthenticationOptions.DefaultScheme,
-                    configureOptions: options);
-        }
+        return authenticationBuilder
+            .AddScheme<ApiKeyAuthenticationOptions, ApiKeyAuthenticationHandler>(
+                authenticationScheme: ApiKeyAuthenticationOptions.DefaultScheme,
+                configureOptions: options);
     }
 }

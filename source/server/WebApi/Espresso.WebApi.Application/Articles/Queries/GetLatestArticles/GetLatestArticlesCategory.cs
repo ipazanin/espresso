@@ -6,40 +6,39 @@ using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
 using System.Linq.Expressions;
 
-namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles
+namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles;
+
+public record GetLatestArticlesCategory
 {
-    public record GetLatestArticlesCategory
+    /// <summary>
+    /// Gets category ID.
+    /// </summary>
+    public int Id { get; private set; }
+
+    /// <summary>
+    /// Gets category Name.
+    /// </summary>
+    public string Name { get; private set; } = string.Empty;
+
+    public string Color { get; private set; } = string.Empty;
+
+    public int? Position { get; private set; }
+
+    public CategoryType CategoryType { get; private set; }
+
+    private GetLatestArticlesCategory()
     {
-        /// <summary>
-        /// Gets category ID.
-        /// </summary>
-        public int Id { get; private set; }
+    }
 
-        /// <summary>
-        /// Gets category Name.
-        /// </summary>
-        public string Name { get; private set; } = string.Empty;
-
-        public string Color { get; private set; } = string.Empty;
-
-        public int? Position { get; private set; }
-
-        public CategoryType CategoryType { get; private set; }
-
-        private GetLatestArticlesCategory()
+    public static Expression<Func<Category, GetLatestArticlesCategory>> GetProjection()
+    {
+        return category => new GetLatestArticlesCategory
         {
-        }
-
-        public static Expression<Func<Category, GetLatestArticlesCategory>> GetProjection()
-        {
-            return category => new GetLatestArticlesCategory
-            {
-                Id = category.Id,
-                Name = category.Name,
-                Color = category.Color,
-                Position = category.Position,
-                CategoryType = category.CategoryType,
-            };
-        }
+            Id = category.Id,
+            Name = category.Name,
+            Color = category.Color,
+            Position = category.Position,
+            CategoryType = category.CategoryType,
+        };
     }
 }

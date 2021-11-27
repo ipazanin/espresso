@@ -4,9 +4,8 @@
 
 using FluentValidation;
 
-namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles
+namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles;
+
+public class GetFeaturedArticlesQueryValidator : AbstractValidator<GetFeaturedArticlesQuery>
 {
-    public class GetFeaturedArticlesQueryValidator : AbstractValidator<GetFeaturedArticlesQuery>
-    {
-    }
 }

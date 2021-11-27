@@ -4,28 +4,27 @@
 
 using Espresso.Common.Enums;
 
-namespace Espresso.Application.Infrastructure.CronJobsInfrastructure
+namespace Espresso.Application.Infrastructure.CronJobsInfrastructure;
+
+/// <summary>
+/// Cron Job Configuration Contract.
+/// </summary>
+/// <typeparam name="T"><see cref="CronJob{T}"/>.</typeparam>
+public interface ICronJobConfiguration<T>
+    where T : CronJob<T>
 {
     /// <summary>
-    /// Cron Job Configuration Contract.
+    /// Gets or sets time Zone Information.
     /// </summary>
-    /// <typeparam name="T"><see cref="CronJob{T}"/>.</typeparam>
-    public interface ICronJobConfiguration<T>
-        where T : CronJob<T>
-    {
-        /// <summary>
-        /// Gets or sets time Zone Information.
-        /// </summary>
-        public TimeZoneInfo? TimeZoneInfo { get; }
+    public TimeZoneInfo? TimeZoneInfo { get; }
 
-        /// <summary>
-        /// Gets or sets application Version.
-        /// </summary>
-        public string Version { get; }
+    /// <summary>
+    /// Gets or sets application Version.
+    /// </summary>
+    public string Version { get; }
 
-        /// <summary>
-        /// Gets or sets application Environment.
-        /// </summary>
-        public AppEnvironment AppEnvironment { get; }
-    }
+    /// <summary>
+    /// Gets or sets application Environment.
+    /// </summary>
+    public AppEnvironment AppEnvironment { get; }
 }

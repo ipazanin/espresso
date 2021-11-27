@@ -2,14 +2,13 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration
+namespace Espresso.WebApi.Application.Configuration.Queries.GetConfiguration;
+
+public record GetConfigurationQueryResponse
 {
-    public record GetConfigurationQueryResponse
-    {
-        public IEnumerable<GetConfigurationCategoryWithNewsPortals> CategoriesWithNewsPortals { get; init; } = new List<GetConfigurationCategoryWithNewsPortals>();
+    public IEnumerable<GetConfigurationCategoryWithNewsPortals> CategoriesWithNewsPortals { get; init; } = new List<GetConfigurationCategoryWithNewsPortals>();
 
-        public IEnumerable<GetConfigurationCategory> Categories { get; init; } = new List<GetConfigurationCategory>();
+    public IEnumerable<GetConfigurationCategory> Categories { get; init; } = new List<GetConfigurationCategory>();
 
-        public IEnumerable<GetConfigurationRegion> Regions { get; init; } = new List<GetConfigurationRegion>();
-    }
+    public IEnumerable<GetConfigurationRegion> Regions { get; init; } = new List<GetConfigurationRegion>();
 }

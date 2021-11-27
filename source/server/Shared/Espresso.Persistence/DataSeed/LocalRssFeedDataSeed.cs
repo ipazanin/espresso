@@ -9,32 +9,32 @@ using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.ValueObjects.RssFeedValueObjects;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Espresso.Persistence.DataSeed
+namespace Espresso.Persistence.DataSeed;
+
+/// <summary>
+/// Local <see cref="RssFeed"/> data seed.
+/// </summary>
+public static class LocalRssFeedDataSeed
 {
     /// <summary>
-    /// Local <see cref="RssFeed"/> data seed.
+    /// Seeds entity data.
     /// </summary>
-    public static class LocalRssFeedDataSeed
+    /// <param name="builder">Entity builder.</param>
+    public static void Seed(EntityTypeBuilder<RssFeed> builder)
     {
-        /// <summary>
-        /// Seeds entity data.
-        /// </summary>
-        /// <param name="builder">Entity builder.</param>
-        public static void Seed(EntityTypeBuilder<RssFeed> builder)
-        {
-            _ = builder.OwnsOne(rssFeed => rssFeed.AmpConfiguration);
-            var skipParseConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.SkipParseConfiguration);
-            _ = builder.OwnsOne(rssFeed => rssFeed.CategoryParseConfiguration);
-            var imageUrlParseConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.ImageUrlParseConfiguration);
+        _ = builder.OwnsOne(rssFeed => rssFeed.AmpConfiguration);
+        var skipParseConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.SkipParseConfiguration);
+        _ = builder.OwnsOne(rssFeed => rssFeed.CategoryParseConfiguration);
+        var imageUrlParseConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.ImageUrlParseConfiguration);
 
-            SeedLocalRssFeeds(builder);
-            SeedSkipParseConfiguration(skipParseConfigurationBuilder!);
-            SeedLocalImageUrlParseConfiguration(imageUrlParseConfigurationBuilder);
-        }
+        SeedLocalRssFeeds(builder);
+        SeedSkipParseConfiguration(skipParseConfigurationBuilder!);
+        SeedLocalImageUrlParseConfiguration(imageUrlParseConfigurationBuilder);
+    }
 
-        private static void SeedLocalRssFeeds(EntityTypeBuilder<RssFeed> builder)
-        {
-            var localRssFeeds = new List<RssFeed>
+    private static void SeedLocalRssFeeds(EntityTypeBuilder<RssFeed> builder)
+    {
+        var localRssFeeds = new List<RssFeed>
             {
                 new RssFeed(
                     id: (int)RssFeedId.DalmacijaDanas,
@@ -421,81 +421,80 @@ namespace Espresso.Persistence.DataSeed
                     requestType: RequestType.Normal),
             };
 
-            builder.HasData(localRssFeeds);
-        }
+        builder.HasData(localRssFeeds);
+    }
 
-        private static void SeedSkipParseConfiguration(
-            OwnedNavigationBuilder<RssFeed, SkipParseConfiguration> skipParseConfigurationBuilder)
+    private static void SeedSkipParseConfiguration(
+        OwnedNavigationBuilder<RssFeed, SkipParseConfiguration> skipParseConfigurationBuilder)
+    {
+        skipParseConfigurationBuilder.HasData(new
         {
-            skipParseConfigurationBuilder.HasData(new
-            {
-                RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Dalmacija,
-                NumberOfSkips = 5,
-                CurrentSkip = 0,
-            });
-            skipParseConfigurationBuilder.HasData(new
-            {
-                RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Split,
-                NumberOfSkips = 5,
-                CurrentSkip = 0,
-            });
-
-            skipParseConfigurationBuilder.HasData(new
-            {
-                RssFeedId = (int)RssFeedId.OgPortal,
-                NumberOfSkips = 5,
-                CurrentSkip = 0,
-            });
-
-            skipParseConfigurationBuilder.HasData(new
-            {
-                RssFeedId = (int)RssFeedId.Zupanjac,
-                NumberOfSkips = 4,
-                CurrentSkip = 0,
-            });
-
-            skipParseConfigurationBuilder.HasData(new
-            {
-                RssFeedId = (int)RssFeedId.Press032,
-                NumberOfSkips = 7,
-                CurrentSkip = 0,
-            });
-
-            skipParseConfigurationBuilder.HasData(new
-            {
-                RssFeedId = (int)RssFeedId.PloceOnline,
-                NumberOfSkips = 3,
-                CurrentSkip = 0,
-            });
-        }
-
-        private static void SeedLocalImageUrlParseConfiguration(
-            OwnedNavigationBuilder<RssFeed, ImageUrlParseConfiguration> imageUrlParseConfigurationBuilder)
+            RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Dalmacija,
+            NumberOfSkips = 5,
+            CurrentSkip = 0,
+        });
+        skipParseConfigurationBuilder.HasData(new
         {
-            imageUrlParseConfigurationBuilder.HasData(new
-            {
-                RssFeedId = (int)RssFeedId.DalmacijaDanas,
-                XPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img",
-            });
+            RssFeedId = (int)RssFeedId.SlobodnaDalmacija_Split,
+            NumberOfSkips = 5,
+            CurrentSkip = 0,
+        });
 
-            imageUrlParseConfigurationBuilder.HasData(new
-            {
-                RssFeedId = (int)RssFeedId.IndexHrZagreb,
-                XPath = "//figure[contains(@class, 'img-container')]//img",
-                ImageUrlParseStrategy = ImageUrlParseStrategy.FromContent,
-            });
+        skipParseConfigurationBuilder.HasData(new
+        {
+            RssFeedId = (int)RssFeedId.OgPortal,
+            NumberOfSkips = 5,
+            CurrentSkip = 0,
+        });
 
-            imageUrlParseConfigurationBuilder.HasData(new
-            {
-                RssFeedId = (int)RssFeedId.Zupanjac,
-                XPath = "//div[contains(@class, 'feature-img')]//img",
-            });
+        skipParseConfigurationBuilder.HasData(new
+        {
+            RssFeedId = (int)RssFeedId.Zupanjac,
+            NumberOfSkips = 4,
+            CurrentSkip = 0,
+        });
 
-            imageUrlParseConfigurationBuilder.HasData(new
-            {
-                RssFeedId = (int)RssFeedId.KaPortalHr,
-                ImageUrlParseStrategy = ImageUrlParseStrategy.FromElementExtension,
-            });
-        }
+        skipParseConfigurationBuilder.HasData(new
+        {
+            RssFeedId = (int)RssFeedId.Press032,
+            NumberOfSkips = 7,
+            CurrentSkip = 0,
+        });
+
+        skipParseConfigurationBuilder.HasData(new
+        {
+            RssFeedId = (int)RssFeedId.PloceOnline,
+            NumberOfSkips = 3,
+            CurrentSkip = 0,
+        });
+    }
+
+    private static void SeedLocalImageUrlParseConfiguration(
+        OwnedNavigationBuilder<RssFeed, ImageUrlParseConfiguration> imageUrlParseConfigurationBuilder)
+    {
+        imageUrlParseConfigurationBuilder.HasData(new
+        {
+            RssFeedId = (int)RssFeedId.DalmacijaDanas,
+            XPath = "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img",
+        });
+
+        imageUrlParseConfigurationBuilder.HasData(new
+        {
+            RssFeedId = (int)RssFeedId.IndexHrZagreb,
+            XPath = "//figure[contains(@class, 'img-container')]//img",
+            ImageUrlParseStrategy = ImageUrlParseStrategy.FromContent,
+        });
+
+        imageUrlParseConfigurationBuilder.HasData(new
+        {
+            RssFeedId = (int)RssFeedId.Zupanjac,
+            XPath = "//div[contains(@class, 'feature-img')]//img",
+        });
+
+        imageUrlParseConfigurationBuilder.HasData(new
+        {
+            RssFeedId = (int)RssFeedId.KaPortalHr,
+            ImageUrlParseStrategy = ImageUrlParseStrategy.FromElementExtension,
+        });
     }
 }
