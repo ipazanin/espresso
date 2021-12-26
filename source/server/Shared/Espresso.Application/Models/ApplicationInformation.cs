@@ -12,6 +12,17 @@ namespace Espresso.Application.Models;
 public class ApplicationInformation
 {
     /// <summary>
+    /// Initializes a new instance of the <see cref="ApplicationInformation"/> class.
+    /// </summary>
+    /// <param name="appEnvironment">Application environment.</param>
+    /// <param name="version">Application version.</param>
+    public ApplicationInformation(AppEnvironment appEnvironment, string version)
+    {
+        AppEnvironment = appEnvironment;
+        Version = version;
+    }
+
+    /// <summary>
     /// Gets application environment.
     /// </summary>
     public AppEnvironment AppEnvironment { get; }
@@ -20,17 +31,4 @@ public class ApplicationInformation
     /// Gets application (server) version.
     /// </summary>
     public string Version { get; }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ApplicationInformation"/> class.
-    /// </summary>
-    /// <param name="appEnvironment">Application environment.</param>
-    /// <param name="version">Application version.</param>
-#pragma warning disable SA1201 // Elements should appear in the correct order
-    public ApplicationInformation(AppEnvironment appEnvironment, string version)
-#pragma warning restore SA1201 // Elements should appear in the correct order
-    {
-        AppEnvironment = appEnvironment;
-        Version = version;
-    }
 }

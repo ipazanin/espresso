@@ -10,6 +10,16 @@ namespace Espresso.WebApi.Application.Notifications.Queries.GetPushNotifications
 
 public class GetPushNotificationsPushNotification
 {
+    private GetPushNotificationsPushNotification()
+    {
+        InternalName = null!;
+        Title = null!;
+        Message = null!;
+        Topic = null!;
+        ArticleUrl = null!;
+        CreatedAt = null!;
+    }
+
     public string InternalName { get; private set; }
 
     public string Title { get; private set; }
@@ -23,18 +33,6 @@ public class GetPushNotificationsPushNotification
     public bool IsSoundEnabled { get; private set; }
 
     public string CreatedAt { get; private set; }
-
-#pragma warning disable SA1201 // Elements should appear in the correct order
-    private GetPushNotificationsPushNotification()
-#pragma warning restore SA1201 // Elements should appear in the correct order
-    {
-        InternalName = null!;
-        Title = null!;
-        Message = null!;
-        Topic = null!;
-        ArticleUrl = null!;
-        CreatedAt = null!;
-    }
 
     public static Expression<Func<PushNotification, GetPushNotificationsPushNotification>> GetProjection()
     {

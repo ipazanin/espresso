@@ -16,6 +16,15 @@ public class AppConfiguration
     private readonly IConfigurationSection _configuration;
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="AppConfiguration"/> class.
+    /// </summary>
+    /// <param name="configuration"></param>
+    public AppConfiguration(IConfigurationSection configuration)
+    {
+        _configuration = configuration;
+    }
+
+    /// <summary>
     ///
     /// </summary>
     public AppEnvironment AppEnvironment => _configuration.GetValue<AppEnvironment>("Environment");
@@ -38,6 +47,7 @@ public class AppConfiguration
     public IEnumerable<ApiVersion> ApiVersions => new[]
     {
             ApiVersion,
+            new ApiVersion(2, 2),
             new ApiVersion(2, 1),
             new ApiVersion(2, 0),
             new ApiVersion(1, 4),
@@ -49,15 +59,4 @@ public class AppConfiguration
     ///
     /// </summary>
     public string SlackWebHook => _configuration.GetValue<string>("SlackWebHook");
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="AppConfiguration"/> class.
-    /// </summary>
-    /// <param name="configuration"></param>
-#pragma warning disable SA1201 // Elements should appear in the correct order
-    public AppConfiguration(IConfigurationSection configuration)
-#pragma warning restore SA1201 // Elements should appear in the correct order
-    {
-        _configuration = configuration;
-    }
 }

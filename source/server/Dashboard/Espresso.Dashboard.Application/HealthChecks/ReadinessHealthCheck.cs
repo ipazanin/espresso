@@ -18,6 +18,14 @@ public class ReadinessHealthCheck : IHealthCheck
     {
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether readiness task is completed.
+    /// </summary>
+    /// <remarks>
+    /// TODO: Can this be done without property mutation?.
+    /// </remarks>
+    public bool ReadinessTaskCompleted { get; set; }
+
     /// <inheritdoc/>
     public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
     {
@@ -28,11 +36,4 @@ public class ReadinessHealthCheck : IHealthCheck
 
         return Task.FromResult(HealthCheckResult.Unhealthy("Application is not ready to accept requests."));
     }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether readiness task is completed.
-    /// </summary>
-#pragma warning disable SA1201 // Elements should appear in the correct order
-    public bool ReadinessTaskCompleted { get; set; } = false;
-#pragma warning restore SA1201 // Elements should appear in the correct order
 }

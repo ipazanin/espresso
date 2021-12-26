@@ -14,6 +14,15 @@ public class SystemTextJsonSerializerConfiguration
     private readonly IConfigurationSection _configuration;
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="SystemTextJsonSerializerConfiguration"/> class.
+    /// </summary>
+    /// <param name="configuration"></param>
+    public SystemTextJsonSerializerConfiguration(IConfigurationSection configuration)
+    {
+        _configuration = configuration;
+    }
+
+    /// <summary>
     ///
     /// </summary>
     public JsonSerializerOptions JsonSerializerOptions => new()
@@ -24,17 +33,6 @@ public class SystemTextJsonSerializerConfiguration
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         ReadCommentHandling = _configuration.GetValue<JsonCommentHandling>("ReadCommentHandling"),
     };
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="SystemTextJsonSerializerConfiguration"/> class.
-    /// </summary>
-    /// <param name="configuration"></param>
-#pragma warning disable SA1201 // Elements should appear in the correct order
-    public SystemTextJsonSerializerConfiguration(IConfigurationSection configuration)
-#pragma warning restore SA1201 // Elements should appear in the correct order
-    {
-        _configuration = configuration;
-    }
 
     /// <summary>
     ///

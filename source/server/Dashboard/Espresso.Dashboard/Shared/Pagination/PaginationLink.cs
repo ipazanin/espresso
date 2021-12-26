@@ -1,19 +1,11 @@
-// PaginationLink.cs
+﻿// PaginationLink.cs
 //
-// � 2021 Espresso News. All rights reserved.
+// © 2021 Espresso News. All rights reserved.
 
 namespace Espresso.Dashboard.Shared.Pagination;
 
 public class PaginationLink
 {
-    public string Text { get; }
-
-    public int Page { get; }
-
-    public bool Enabled { get; }
-
-    public bool Active { get; set; }
-
     /// <summary>
     /// Initializes a new instance of the <see cref="PaginationLink"/> class.
     /// </summary>
@@ -21,13 +13,19 @@ public class PaginationLink
     /// <param name="enabled"></param>
     /// <param name="text"></param>
     /// <param name="active"></param>
-#pragma warning disable SA1201 // Elements should appear in the correct order
     public PaginationLink(int page, bool enabled, string text, bool active)
-#pragma warning restore SA1201 // Elements should appear in the correct order
     {
         Page = page;
         Enabled = enabled;
         Text = text;
         Active = active;
     }
+
+    public string Text { get; }
+
+    public int Page { get; }
+
+    public bool Enabled { get; }
+
+    public bool Active { get; set; }
 }

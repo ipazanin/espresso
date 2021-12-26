@@ -14,6 +14,16 @@ namespace Espresso.Persistence.Database;
 public class EspressoDatabaseContext : DbContext, IEspressoDatabaseContext
 {
     /// <summary>
+    /// Initializes a new instance of the <see cref="EspressoDatabaseContext"/> class.
+    /// </summary>
+    /// <param name="options">Database context options.</param>
+    public EspressoDatabaseContext(DbContextOptions<EspressoDatabaseContext> options)
+            : base(options)
+    {
+        ChangeTracker.LazyLoadingEnabled = false;
+    }
+
+    /// <summary>
     /// Gets or sets <see cref="NewsPortal"/> database set.
     /// </summary>
     public DbSet<NewsPortal> NewsPortals { get; set; } = null!;
@@ -67,18 +77,6 @@ public class EspressoDatabaseContext : DbContext, IEspressoDatabaseContext
     /// Gets or sets <see cref="Setting"/> database set.
     /// </summary>
     public DbSet<Setting> Settings { get; set; } = null!;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="EspressoDatabaseContext"/> class.
-    /// </summary>
-    /// <param name="options">Database context options.</param>
-#pragma warning disable SA1201 // Elements should appear in the correct order
-    public EspressoDatabaseContext(DbContextOptions<EspressoDatabaseContext> options)
-#pragma warning restore SA1201 // Elements should appear in the correct order
-            : base(options)
-    {
-        ChangeTracker.LazyLoadingEnabled = false;
-    }
 
     /// <inheritdoc/>
     protected override void OnModelCreating(ModelBuilder modelBuilder)

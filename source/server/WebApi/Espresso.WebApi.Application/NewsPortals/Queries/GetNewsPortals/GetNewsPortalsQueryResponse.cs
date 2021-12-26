@@ -6,18 +6,16 @@ namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals;
 
 public class GetNewsPortalsQueryResponse
 {
-    public IEnumerable<GetNewsPortalsNewsPortal> NewsPortals { get; }
-
     /// <summary>
     /// Initializes a new instance of the <see cref="GetNewsPortalsQueryResponse"/> class.
     /// </summary>
     /// <param name="newsPortals"></param>
-#pragma warning disable SA1201 // Elements should appear in the correct order
     public GetNewsPortalsQueryResponse(IEnumerable<GetNewsPortalsNewsPortal> newsPortals)
-#pragma warning restore SA1201 // Elements should appear in the correct order
     {
         NewsPortals = newsPortals;
     }
+
+    public IEnumerable<GetNewsPortalsNewsPortal> NewsPortals { get; }
 
     public override string ToString()
     {

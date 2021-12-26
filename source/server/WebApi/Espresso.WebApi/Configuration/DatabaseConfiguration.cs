@@ -15,6 +15,15 @@ public class DatabaseConfiguration
     private readonly IConfigurationSection _configuration;
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="DatabaseConfiguration"/> class.
+    /// </summary>
+    /// <param name="configuration"></param>
+    public DatabaseConfiguration(IConfigurationSection configuration)
+    {
+        _configuration = configuration;
+    }
+
+    /// <summary>
     ///
     /// </summary>
     public string EspressoDatabaseConnectionString => _configuration.GetValue<string>("EspressoDatabaseConnectionString");
@@ -38,15 +47,4 @@ public class DatabaseConfiguration
     ///
     /// </summary>
     public bool EnableSensitiveDataLogging => _configuration.GetValue<bool>("EnableSensitiveDataLogging");
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="DatabaseConfiguration"/> class.
-    /// </summary>
-    /// <param name="configuration"></param>
-#pragma warning disable SA1201 // Elements should appear in the correct order
-    public DatabaseConfiguration(IConfigurationSection configuration)
-#pragma warning restore SA1201 // Elements should appear in the correct order
-    {
-        _configuration = configuration;
-    }
 }

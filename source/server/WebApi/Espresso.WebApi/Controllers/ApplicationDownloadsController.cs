@@ -80,46 +80,6 @@ public class ApplicationDownloadsController : ApiController
     /// <summary>
     /// Creates New Application Download.
     /// </summary>
-    /// <param name="basicInformationsHeaderParameters"></param>
-    /// <param name="cancellationToken"></param>
-    /// <response code="200">Response object containing articles from provided category.</response>
-    /// <response code="400">If validation failed.</response>
-    /// <response code="401">If API Key is invalid or missing.</response>
-    /// <response code="403">If API Key is forbiden from requested resource.</response>
-    /// <response code="500">If unhandled exception occurred.</response>
-    [Produces(MimeTypeConstants.Json)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
-    [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
-    [ApiVersion("1.3")]
-    [HttpPost]
-    [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
-    [Route("api/applicationDownloads/create")]
-#pragma warning disable S4144 // Methods should not have identical implementations
-    public async Task<IActionResult> CreateApplicationDownload_1_3(
-        [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-        CancellationToken cancellationToken)
-#pragma warning restore S4144 // Methods should not have identical implementations
-    {
-        var command = new CreateApplicationDownloadCommand
-        {
-            TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
-            ConsumerVersion = basicInformationsHeaderParameters.Version,
-            DeviceType = basicInformationsHeaderParameters.DeviceType,
-        };
-
-        await Sender.Send(
-            request: command,
-            cancellationToken: cancellationToken);
-
-        return Ok();
-    }
-
-    /// <summary>
-    /// Creates New Application Download.
-    /// </summary>
     /// <param name="mobileAppVersion">Mobile App Version.</param>
     /// <param name="mobileDeviceType">Mobile Device Type (1 = Android, 2 = Ios).</param>
     /// <param name="cancellationToken"></param>

@@ -201,7 +201,7 @@ internal sealed partial class Startup
            webHookUrl: _dashboardConfiguration.AppConfiguration.SlackWebHook,
            applicationInformation: serviceProvider.GetRequiredService<ApplicationInformation>()));
         services.AddScoped<ILoadRssFeedsService, LoadRssFeedsService>();
-        services.AddScoped<ICreateArticleService, CreateArticleService>();
+        services.AddScoped<ICreateArticlesService, CreateArticlesService>();
         services.AddScoped<IScrapeWebService, ScrapeWebService>();
         services.AddScoped<IParseHtmlService, ParseHtmlService>();
         services.AddScoped<ISortArticlesService, SortArticlesService>();

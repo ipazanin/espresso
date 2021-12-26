@@ -11,7 +11,6 @@ namespace Espresso.Common.Enums;
 /// </summary>
 public enum DeviceType
 {
-#pragma warning disable SA1602 // Enumeration items should be documented
     [Display(Name = "Undefined")]
     Undefined = 0,
     [Display(Name = "Android")]
@@ -30,5 +29,4 @@ public enum DeviceType
     WebApp = 7,
     [Display(Name = "Web Api")]
     WebApi = 8,
-#pragma warning restore SA1602 // Enumeration items should be documented
 }

@@ -9,7 +9,6 @@ namespace Espresso.Common.Enums;
 /// </summary>
 public enum Event
 {
-#pragma warning disable SA1602 // Enumeration items should be documented
     Undefined = 0,
     CustomExceptionFilterAttribute = 1,
     DashboardEspressoDatabaseInit = 17,
@@ -23,5 +22,4 @@ public enum Event
     ImageUrlWebScrapingRequest = 33,
     ImageUrlWebScrapingData = 34,
     MediatorRequest = 36,
-#pragma warning restore SA1602 // Enumeration items should be documented
 }

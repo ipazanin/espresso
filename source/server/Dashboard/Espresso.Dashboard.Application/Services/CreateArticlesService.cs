@@ -15,29 +15,28 @@ using FluentValidation;
 using Microsoft.Extensions.Logging;
 
 namespace Espresso.Dashboard.Application.Services;
-#pragma warning disable SA1649 // File name should match first type name
-public class CreateArticleService : ICreateArticleService
-#pragma warning restore SA1649 // File name should match first type name
+
+public class CreateArticlesService : ICreateArticlesService
 {
     private readonly IScrapeWebService _webScrapingService;
     private readonly IParseHtmlService _htmlParsingService;
     private readonly IValidator<ArticleData> _articleDataValidator;
-    private readonly ILoggerService<CreateArticleService> _loggerService;
+    private readonly ILoggerService<CreateArticlesService> _loggerService;
     private readonly ISettingProvider _settingProvider;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CreateArticleService"/> class.
+    /// Initializes a new instance of the <see cref="CreateArticlesService"/> class.
     /// </summary>
     /// <param name="webScrapingService"></param>
     /// <param name="htmlParsingService"></param>
     /// <param name="articleDataValidator"></param>
     /// <param name="loggerService"></param>
     /// <param name="settingProvider"></param>
-    public CreateArticleService(
+    public CreateArticlesService(
         IScrapeWebService webScrapingService,
         IParseHtmlService htmlParsingService,
         IValidator<ArticleData> articleDataValidator,
-        ILoggerService<CreateArticleService> loggerService,
+        ILoggerService<CreateArticlesService> loggerService,
         ISettingProvider settingProvider)
     {
         _webScrapingService = webScrapingService;

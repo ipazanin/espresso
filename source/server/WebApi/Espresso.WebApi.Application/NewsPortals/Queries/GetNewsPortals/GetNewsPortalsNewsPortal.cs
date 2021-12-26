@@ -11,6 +11,10 @@ namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals;
 
 public class GetNewsPortalsNewsPortal
 {
+    private GetNewsPortalsNewsPortal()
+    {
+    }
+
     /// <summary>
     /// Gets news Portal ID.
     /// </summary>
@@ -28,12 +32,6 @@ public class GetNewsPortalsNewsPortal
     public GetNewsPortalsRegion Region { get; private set; } = null!;
 
     public IEnumerable<GetNewsPortalsRssFeed> RssFeeds { get; private set; } = new List<GetNewsPortalsRssFeed>();
-
-#pragma warning disable SA1201 // Elements should appear in the correct order
-    private GetNewsPortalsNewsPortal()
-#pragma warning restore SA1201 // Elements should appear in the correct order
-    {
-    }
 
     public static Expression<Func<NewsPortal, GetNewsPortalsNewsPortal>> GetProjection()
     {

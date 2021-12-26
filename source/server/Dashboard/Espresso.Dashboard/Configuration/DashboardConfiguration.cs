@@ -8,6 +8,23 @@ namespace Espresso.Dashboard.Configuration;
 
 public class DashboardConfiguration : IDashboardConfiguration
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DashboardConfiguration"/> class.
+    /// </summary>
+    /// <param name="configuration"></param>
+    public DashboardConfiguration(IConfiguration configuration)
+    {
+        ApiKeysConfiguration = new ApiKeysConfiguration(configuration.GetSection("ApiKeysConfiguration"));
+        AppConfiguration = new AppConfiguration(configuration.GetSection("AppConfiguration"));
+        DatabaseConfiguration = new DatabaseConfiguration(configuration.GetSection("DatabaseConfiguration"));
+        RabbitMqConfiguration = new RabbitMqConfiguration(configuration.GetSection("RabbitMqConfiguration"));
+        SlackHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:SlackHttpClientConfiguration"));
+        SendArticlesHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:SendArticlesHttpClientConfiguration"));
+        LoadRssFeedsHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:LoadRssFeedsHttpClientConfiguration"));
+        ScrapeWebHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:ScrapeWebHttpClientConfiguration"));
+        SystemTextJsonSerializerConfiguration = new SystemTextJsonSerializerConfiguration(configuration.GetSection("SystemTextJsonSerializerConfiguration"));
+    }
+
     public ApiKeysConfiguration ApiKeysConfiguration { get; }
 
     public AppConfiguration AppConfiguration { get; }
@@ -25,23 +42,4 @@ public class DashboardConfiguration : IDashboardConfiguration
     public HttpClientConfiguration ScrapeWebHttpClientConfiguration { get; }
 
     public SystemTextJsonSerializerConfiguration SystemTextJsonSerializerConfiguration { get; }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="DashboardConfiguration"/> class.
-    /// </summary>
-    /// <param name="configuration"></param>
-#pragma warning disable SA1201 // Elements should appear in the correct order
-    public DashboardConfiguration(IConfiguration configuration)
-#pragma warning restore SA1201 // Elements should appear in the correct order
-    {
-        ApiKeysConfiguration = new ApiKeysConfiguration(configuration.GetSection("ApiKeysConfiguration"));
-        AppConfiguration = new AppConfiguration(configuration.GetSection("AppConfiguration"));
-        DatabaseConfiguration = new DatabaseConfiguration(configuration.GetSection("DatabaseConfiguration"));
-        RabbitMqConfiguration = new RabbitMqConfiguration(configuration.GetSection("RabbitMqConfiguration"));
-        SlackHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:SlackHttpClientConfiguration"));
-        SendArticlesHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:SendArticlesHttpClientConfiguration"));
-        LoadRssFeedsHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:LoadRssFeedsHttpClientConfiguration"));
-        ScrapeWebHttpClientConfiguration = new HttpClientConfiguration(configuration.GetSection("HttpClientConfiguration:ScrapeWebHttpClientConfiguration"));
-        SystemTextJsonSerializerConfiguration = new SystemTextJsonSerializerConfiguration(configuration.GetSection("SystemTextJsonSerializerConfiguration"));
-    }
 }

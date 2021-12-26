@@ -11,6 +11,15 @@ public class AppConfiguration
 {
     private readonly IConfigurationSection _configuration;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AppConfiguration"/> class.
+    /// </summary>
+    /// <param name="configuration"></param>
+    public AppConfiguration(IConfigurationSection configuration)
+    {
+        _configuration = configuration;
+    }
+
     public string RssFeedParserMajorMinorVersion => $"{_configuration.GetValue<int>("MajorVersion")}.{_configuration.GetValue<int>("MinorVersion")}";
 
     public string ServerUrl => _configuration.GetValue<string>("ServerUrl");
@@ -24,15 +33,4 @@ public class AppConfiguration
     public string AdminUserPassword => _configuration.GetValue<string>("AdminUserPassword");
 
     public string SendGridApiKey => _configuration.GetValue<string>(nameof(SendGridApiKey));
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="AppConfiguration"/> class.
-    /// </summary>
-    /// <param name="configuration"></param>
-#pragma warning disable SA1201 // Elements should appear in the correct order
-    public AppConfiguration(IConfigurationSection configuration)
-#pragma warning restore SA1201 // Elements should appear in the correct order
-    {
-        _configuration = configuration;
-    }
 }
