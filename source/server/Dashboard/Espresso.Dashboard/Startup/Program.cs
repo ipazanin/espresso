@@ -46,7 +46,7 @@ internal static class Program
                 webBuilder.ConfigureLogging(loggingBuilder =>
                 {
                     loggingBuilder.ClearProviders();
-                    loggingBuilder.AddConsole();
+                    loggingBuilder.AddSimpleConsole();
                 });
             });
 }
