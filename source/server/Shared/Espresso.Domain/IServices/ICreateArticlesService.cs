@@ -1,4 +1,4 @@
-﻿// ICreateArticleService.cs
+﻿// ICreateArticlesService.cs
 //
 // © 2021 Espresso News. All rights reserved.
 
@@ -7,7 +7,7 @@ using Espresso.Domain.Records;
 
 namespace Espresso.Domain.IServices;
 
-public interface ICreateArticleService
+public interface ICreateArticlesService
 {
     /// <summary>
     ///

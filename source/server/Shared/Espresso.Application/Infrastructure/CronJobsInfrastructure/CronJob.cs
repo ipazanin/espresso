@@ -55,9 +55,7 @@ public abstract class CronJob<T> : IHostedService, IDisposable
     public abstract Task DoWork(CancellationToken cancellationToken);
 
     /// <inheritdoc />
-#pragma warning disable RCS1229 // Use async/await when necessary
     public virtual Task StopAsync(CancellationToken cancellationToken)
-#pragma warning restore RCS1229
     {
         using var scope = _serviceScopeFactory.CreateScope();
         var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService<CronJob<T>>>();

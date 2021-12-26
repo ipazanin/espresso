@@ -15,7 +15,7 @@ namespace Espresso.Dashboard.ParseRssFeeds;
 
 public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand, ParseRssFeedsCommandResponse>
 {
-    private readonly ICreateArticleService _parseArticlesService;
+    private readonly ICreateArticlesService _parseArticlesService;
     private readonly ILoadRssFeedsService _loadRssFeedsService;
     private readonly ISortArticlesService _sortArticlesService;
     private readonly IGroupSimilarArticlesService _groupSimilarArticlesService;
@@ -34,7 +34,7 @@ public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand,
     /// <param name="espressoDatabaseContext"></param>
     /// <param name="memoryCache"></param>
     public ParseRssFeedsCommandHandler(
-        ICreateArticleService parseArticlesService,
+        ICreateArticlesService parseArticlesService,
         ILoadRssFeedsService loadRssFeedsService,
         ISortArticlesService sortArticlesService,
         IGroupSimilarArticlesService groupSimilarArticlesService,
