@@ -79,6 +79,54 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{57AAB70A-6583-45A4-94EE-1F02D3DBEF2F}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\update.sh = scripts\update.sh
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "compose", "compose", "{B41C55AD-B815-4E3B-BFA4-423FAA3DABB4}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\compose\dashboard-environment-postgres.yml = scripts\compose\dashboard-environment-postgres.yml
+		scripts\compose\dashboard-environment.yml = scripts\compose\dashboard-environment.yml
+		scripts\compose\dashboard.yml = scripts\compose\dashboard.yml
+		scripts\compose\database-environment-postgres.yml = scripts\compose\database-environment-postgres.yml
+		scripts\compose\database-environment.yml = scripts\compose\database-environment.yml
+		scripts\compose\database.yml = scripts\compose\database.yml
+		scripts\compose\rabbitmq-environment.yml = scripts\compose\rabbitmq-environment.yml
+		scripts\compose\rabbitmq.yml = scripts\compose\rabbitmq.yml
+		scripts\compose\webapi-environment-postgres.yml = scripts\compose\webapi-environment-postgres.yml
+		scripts\compose\webapi-environment.yml = scripts\compose\webapi-environment.yml
+		scripts\compose\webapi.yml = scripts\compose\webapi.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "make", "make", "{4897BB07-EFD5-47AA-A470-37044F6F4913}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\make\backend.make = scripts\make\backend.make
+		scripts\make\docker.make = scripts\make\docker.make
+		scripts\make\frontend.make = scripts\make\frontend.make
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql-scripts", "sql-scripts", "{1E22E20F-6D88-4D65-AD51-E6A00101C921}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\sql-scripts\application-downloads-by-week-day.sql = scripts\sql-scripts\application-downloads-by-week-day.sql
+		scripts\sql-scripts\application-downloads-daily-aggregates.sql = scripts\sql-scripts\application-downloads-daily-aggregates.sql
+		scripts\sql-scripts\articles-without-categories.sql = scripts\sql-scripts\articles-without-categories.sql
+		scripts\sql-scripts\average-number-of-grouped-similar-articles.sql = scripts\sql-scripts\average-number-of-grouped-similar-articles.sql
+		scripts\sql-scripts\most-grouped-similar-articles-titles.sql = scripts\sql-scripts\most-grouped-similar-articles-titles.sql
+		scripts\sql-scripts\news-portals-with-articles-without-image-urls.sql = scripts\sql-scripts\news-portals-with-articles-without-image-urls.sql
+		scripts\sql-scripts\similar-articles-distribution.sql = scripts\sql-scripts\similar-articles-distribution.sql
+		scripts\sql-scripts\similar-articles.sql = scripts\sql-scripts\similar-articles.sql
+		scripts\sql-scripts\top-articles-by-number-of-clicks.sql = scripts\sql-scripts\top-articles-by-number-of-clicks.sql
+		scripts\sql-scripts\top-categories-by-number-of-clicks.sql = scripts\sql-scripts\top-categories-by-number-of-clicks.sql
+		scripts\sql-scripts\top-news-portals-by-number-of-clicks.sql = scripts\sql-scripts\top-news-portals-by-number-of-clicks.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "analysis", "analysis", "{B1D8A7F8-334D-46FD-A916-F753332C5FF4}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\analysis\Dockerfile.txt = scripts\analysis\Dockerfile.txt
+		scripts\analysis\infer-csharp.yml = scripts\analysis\infer-csharp.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -148,6 +196,10 @@ Global
 		{DA1BC00C-58FB-47B9-A1E6-44655AFF8BDB} = {E0CEA0B1-7AEB-49DF-BB1D-DD201751A0F0}
 		{4DD12531-3F92-44F8-AD41-253E2EAC9541} = {DA1BC00C-58FB-47B9-A1E6-44655AFF8BDB}
 		{B92D2688-54A3-4376-A0F6-82B387A79001} = {1BA59E65-D434-46B5-9A9F-B21312CD73A0}
+		{B41C55AD-B815-4E3B-BFA4-423FAA3DABB4} = {57AAB70A-6583-45A4-94EE-1F02D3DBEF2F}
+		{4897BB07-EFD5-47AA-A470-37044F6F4913} = {57AAB70A-6583-45A4-94EE-1F02D3DBEF2F}
+		{1E22E20F-6D88-4D65-AD51-E6A00101C921} = {57AAB70A-6583-45A4-94EE-1F02D3DBEF2F}
+		{B1D8A7F8-334D-46FD-A916-F753332C5FF4} = {57AAB70A-6583-45A4-94EE-1F02D3DBEF2F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {93891699-8B6D-4226-BFB2-55D87AA50108}
