@@ -2,8 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using Espresso.Common.Constants;
-
 namespace Espresso.Domain.Utilities;
 
 /// <summary>

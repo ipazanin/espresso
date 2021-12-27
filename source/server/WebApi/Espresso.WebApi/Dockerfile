@@ -15,7 +15,7 @@ RUN dotnet restore "WebApi/Espresso.WebApi/Espresso.WebApi.csproj"
 
 # Build .NET App
 COPY server/ .
-RUN dotnet build "WebApi/Espresso.WebApi/Espresso.WebApi.csproj" -c Release -o /app/server/build
+RUN dotnet build "WebApi/Espresso.WebApi/Espresso.WebApi.csproj" -c Release -o /app/server/build --no-restore
 
 # Publish .NET App
 FROM dotnet-builder AS dotnet-publisher
