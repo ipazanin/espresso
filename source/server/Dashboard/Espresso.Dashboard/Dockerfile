@@ -15,7 +15,7 @@ RUN dotnet restore "Dashboard/Espresso.Dashboard/Espresso.Dashboard.csproj"
 
 # Build .NET App
 COPY server/ .
-RUN dotnet build "Dashboard/Espresso.Dashboard/Espresso.Dashboard.csproj" -c Release -o /app/server/build
+RUN dotnet build "Dashboard/Espresso.Dashboard/Espresso.Dashboard.csproj" -c Release -o /app/server/build --no-restore
 
 # Publish .NET App
 FROM dotnet-builder AS dotnet-publisher

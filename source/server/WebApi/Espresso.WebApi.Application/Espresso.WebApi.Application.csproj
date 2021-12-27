@@ -65,10 +65,6 @@
   </ItemGroup>
   <!--Analyzer Packages-->
 
-  <!--Global Using-->
-  <ItemGroup>
-    <Compile Include="..\..\GlobalUsings.cs" Link="GlobalUsings.cs" />
-  </ItemGroup>
-  <!--Global Using-->
+
   
 </Project>
