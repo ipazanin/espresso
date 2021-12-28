@@ -2,8 +2,8 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 
 namespace Espresso.Persistence.Extensions;
 

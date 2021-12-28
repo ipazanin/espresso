@@ -2,9 +2,9 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Diagnostics;
 
 namespace Espresso.Dashboard.Pages;
 

@@ -2,6 +2,7 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using System.Diagnostics;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
@@ -13,7 +14,6 @@ using Google.Apis.Auth.OAuth2;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 
 namespace Espresso.WebApi.Application.Initialization;
 

@@ -2,8 +2,8 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using Espresso.Domain.Enums.CategoryEnums;
 using System.Linq.Expressions;
+using Espresso.Domain.Enums.CategoryEnums;
 
 namespace Espresso.Domain.Entities;
 

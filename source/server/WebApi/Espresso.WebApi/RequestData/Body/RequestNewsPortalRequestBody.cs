@@ -23,5 +23,4 @@ public record RequestNewsPortalRequestBody
     ///
     /// </summary>
     public string? Url { get; init; }
-
 }

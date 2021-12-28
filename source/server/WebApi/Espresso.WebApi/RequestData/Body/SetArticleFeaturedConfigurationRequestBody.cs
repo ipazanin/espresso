@@ -1,6 +1,6 @@
-// SetArticleFeaturedConfigurationRequestBody.cs
+﻿// SetArticleFeaturedConfigurationRequestBody.cs
 //
-// � 2021 Espresso News. All rights reserved.
+// © 2021 Espresso News. All rights reserved.
 
 namespace Espresso.WebApi.RequestData.Body;
 

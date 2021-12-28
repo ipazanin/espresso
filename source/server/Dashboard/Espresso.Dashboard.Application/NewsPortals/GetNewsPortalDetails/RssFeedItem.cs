@@ -2,9 +2,9 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using System.Linq.Expressions;
 using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
-using System.Linq.Expressions;
 
 namespace Espresso.Dashboard.Application.NewsPortals.GetNewsPortalDetails;
 

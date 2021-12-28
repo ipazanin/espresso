@@ -2,13 +2,13 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using System.Diagnostics;
 using Cronos;
 using Espresso.Application.Services.Contracts;
 using Espresso.Domain.IServices;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 using Timer = System.Timers.Timer;
 
 namespace Espresso.Application.Infrastructure.CronJobsInfrastructure;

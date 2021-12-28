@@ -2,8 +2,8 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using Npgsql;
 using System.Data;
+using Npgsql;
 
 namespace Espresso.Persistence.Database;
 

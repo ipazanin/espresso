@@ -1,6 +1,6 @@
-// TrendingScoreConfiguration.cs
+﻿// TrendingScoreConfiguration.cs
 //
-// � 2021 Espresso News. All rights reserved.
+// © 2021 Espresso News. All rights reserved.
 
 using Microsoft.Extensions.Configuration;
 

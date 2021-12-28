@@ -2,8 +2,8 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using Espresso.Common.Constants;
 using System.ComponentModel.DataAnnotations;
+using Espresso.Common.Constants;
 
 namespace Espresso.Common.Extensions;
 

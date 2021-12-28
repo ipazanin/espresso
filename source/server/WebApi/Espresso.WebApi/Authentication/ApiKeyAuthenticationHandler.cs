@@ -2,6 +2,9 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using System.Net;
+using System.Security.Claims;
+using System.Text.Encodings.Web;
 using Espresso.Common.Constants;
 using Espresso.Common.Services.Contracts;
 using Espresso.WebApi.DataTransferObjects;
@@ -9,9 +12,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Net;
-using System.Security.Claims;
-using System.Text.Encodings.Web;
 
 namespace Espresso.WebApi.Authentication;
 
