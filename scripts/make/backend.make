@@ -1,5 +1,5 @@
 SolutionPath="Espresso.sln"
-NugetConfigPath="source/server/nuget.config"
+NugetConfigPath="nuget.config"
 PersistenceProjectPath="source/server/Shared/Espresso.Persistence/Espresso.Persistence.csproj"
 DefaultVerbosity="minimal" # verbosity levels: quiet, minimal, normal, detailed, diagnostic
 LocalEnvironmentName="local"
