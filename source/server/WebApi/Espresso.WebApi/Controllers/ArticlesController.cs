@@ -2,6 +2,7 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using System.ComponentModel.DataAnnotations;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Application.Articles.AutoCompleteArticle;
 using Espresso.WebApi.Application.Articles.Commands.HideArticle;
@@ -27,7 +28,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace Espresso.WebApi.Controllers;
 

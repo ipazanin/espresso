@@ -2,9 +2,9 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using Espresso.Domain.Entities;
 using System.Linq.Expressions;
 using System.Text.Json.Serialization;
+using Espresso.Domain.Entities;
 
 namespace Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 

@@ -2,6 +2,7 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using System.Net;
 using Espresso.Application.Services.Contracts;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
@@ -14,7 +15,6 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using System.Net;
 
 namespace Espresso.WebApi.Filters;
 

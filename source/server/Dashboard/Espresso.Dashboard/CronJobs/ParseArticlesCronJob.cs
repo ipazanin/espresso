@@ -2,6 +2,7 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using System.Diagnostics;
 using Cronos;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Common.Constants;
@@ -20,7 +21,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 
 namespace Espresso.Dashboard.CronJobs;
 

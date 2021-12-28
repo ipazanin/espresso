@@ -2,13 +2,13 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using System.Reflection;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Configuration;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Reflection;
 
 namespace Espresso.WebApi.Extensions;
 

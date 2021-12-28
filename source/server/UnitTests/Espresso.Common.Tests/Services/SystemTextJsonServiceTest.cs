@@ -2,9 +2,9 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using System.Net.Http.Json;
 using Espresso.Common.Services.Implementations;
 using Espresso.Common.Tests.TestUtilities.Models;
-using System.Net.Http.Json;
 using Xunit;
 
 namespace Espresso.Common.Tests.Services;

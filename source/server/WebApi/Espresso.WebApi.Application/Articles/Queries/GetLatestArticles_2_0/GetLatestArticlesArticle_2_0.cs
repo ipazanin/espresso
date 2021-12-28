@@ -2,9 +2,9 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using System.Linq.Expressions;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
-using System.Linq.Expressions;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0;
 #pragma warning disable S101 // Types should be named in PascalCase

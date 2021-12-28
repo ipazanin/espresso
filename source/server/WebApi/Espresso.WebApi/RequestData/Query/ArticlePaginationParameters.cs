@@ -1,6 +1,6 @@
-// ArticlePaginationParameters.cs
+﻿// ArticlePaginationParameters.cs
 //
-// � 2021 Espresso News. All rights reserved.
+// © 2021 Espresso News. All rights reserved.
 
 using Microsoft.AspNetCore.Mvc;
 
