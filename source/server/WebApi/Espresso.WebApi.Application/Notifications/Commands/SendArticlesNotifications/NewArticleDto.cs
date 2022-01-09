@@ -2,22 +2,33 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using System.Linq.Expressions;
+using Espresso.Domain.Entities;
+
 namespace Espresso.WebApi.Application.Notifications.Commands.SendArticlesNotifications;
 
 public class NewArticleDto
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="NewArticleDto"/> class.
-    /// </summary>
-    /// <param name="newsPortal"></param>
-    /// <param name="categoryIds"></param>
-    public NewArticleDto(int newsPortal, IEnumerable<int> categoryIds)
+    private NewArticleDto()
     {
-        NewsPortal = newsPortal;
-        CategoryIds = categoryIds;
     }
 
-    public int NewsPortal { get; }
+    public static Expression<Func<Article, NewArticleDto>> Projection
+    {
+        get
+        {
+            return article => new NewArticleDto
+            {
+                NewsPortal = article.NewsPortalId,
+                CategoryIds = article
+                    .ArticleCategories
+                    .Select(articleCategory => articleCategory.CategoryId)
+                    .ToArray(),
+            };
+        }
+    }
 
-    public IEnumerable<int> CategoryIds { get; }
+    public int NewsPortal { get; private set; }
+
+    public IEnumerable<int> CategoryIds { get; private set; } = Enumerable.Empty<int>();
 }

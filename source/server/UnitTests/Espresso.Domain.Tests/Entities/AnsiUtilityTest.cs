@@ -31,8 +31,8 @@ public class AnsiUtilityTest
             articleCategories: default,
             newsPortal: default,
             rssFeed: default,
-            subordinateArticles: default,
-            mainArticle: default);
+            firstSimilarArticles: null,
+            secondSimilarArticles: null);
 
         article.IncrementNumberOfClicks();
 

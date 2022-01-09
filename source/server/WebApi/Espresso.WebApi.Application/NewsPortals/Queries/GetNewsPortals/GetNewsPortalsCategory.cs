@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
 
-namespace Espresso.Application.NewsPortals;
+namespace Espresso.WebApi.Application.NewsPortals.Queries.GetNewsPortals;
 
 public record GetNewsPortalsCategory
 {

@@ -3,6 +3,7 @@
 // © 2021 Espresso News. All rights reserved.
 
 using System.Diagnostics;
+using Espresso.Application.Services.Contracts;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
@@ -26,6 +27,7 @@ public class WebApiInit : IWebApiInit
 
     private readonly IMemoryCache _memoryCache;
     private readonly IEspressoDatabaseContext _context;
+    private readonly IArticleLoaderService _articleLoaderService;
     private readonly ILoggerService<WebApiInit> _loggerService;
     private readonly ReadinessHealthCheck _readinessHealthCheck;
 
@@ -33,6 +35,7 @@ public class WebApiInit : IWebApiInit
     /// Initializes a new instance of the <see cref="WebApiInit"/> class.
     /// </summary>
     /// <param name="context"></param>
+    /// <param name="articleLoaderService"></param>
     /// <param name="loggerService"></param>
     /// <param name="readinessHealthCheck"></param>
     /// <param name="memoryCache"></param>
@@ -42,11 +45,13 @@ public class WebApiInit : IWebApiInit
     public WebApiInit(
         IMemoryCache memoryCache,
         IEspressoDatabaseContext context,
+        IArticleLoaderService articleLoaderService,
         ILoggerService<WebApiInit> loggerService,
         ReadinessHealthCheck readinessHealthCheck)
     {
         _memoryCache = memoryCache;
         _context = context;
+        _articleLoaderService = articleLoaderService;
         _loggerService = loggerService;
         _readinessHealthCheck = readinessHealthCheck;
     }
@@ -76,9 +81,6 @@ public class WebApiInit : IWebApiInit
             .AsNoTracking()
             .ToListAsync();
 
-        var newsPortalsDictionary = newsPortals
-            .ToDictionary(newsPortal => newsPortal.Id);
-
         _memoryCache.Set(
             key: MemoryCacheConstants.NewsPortalKey,
             value: newsPortals.ToList());
@@ -89,43 +91,18 @@ public class WebApiInit : IWebApiInit
             .AsNoTracking()
             .ToListAsync();
 
-        var categoriesDictionary = categories.ToDictionary(category => category.Id);
-
         _memoryCache.Set(
             key: MemoryCacheConstants.CategoryKey,
             value: categories);
 
-        var articles = await _context.Articles
-            .Include(article => article.ArticleCategories)
-            .Include(article => article.MainArticle)
-            .AsSplitQuery()
-            .AsNoTracking()
-            .ToListAsync();
-
-        var articlesDictionary = articles.ToDictionary(article => article.Id);
-
-        foreach (var article in articles)
-        {
-            var newsPortal = newsPortalsDictionary[article.NewsPortalId];
-            article.SetNewsPortal(newsPortal);
-
-            foreach (var articleCategory in article.ArticleCategories)
-            {
-                var category = categoriesDictionary[articleCategory.CategoryId];
-                articleCategory.SetCategory(category);
-            }
-
-            if (article.MainArticle is not null)
-            {
-                var mainArticle = articlesDictionary[article.MainArticle.MainArticleId];
-                mainArticle.SubordinateArticles.Add(article.MainArticle);
-                article.MainArticle.SetMainArticle(mainArticle);
-            }
-        }
+        var articles = await _articleLoaderService.LoadArticlesForWebApi(
+            newsPortals: newsPortals,
+            categories: categories,
+            cancellationToken: default);
 
         _memoryCache.Set(
-            key: MemoryCacheConstants.ArticleKey,
-            value: articles);
+           key: MemoryCacheConstants.ArticleKey,
+           value: articles.ToList());
 
         stopwatch.Stop();
 
@@ -133,14 +110,14 @@ public class WebApiInit : IWebApiInit
         var duration = stopwatch.Elapsed;
         var categoriesCount = categories.Count;
         var newsPortalsCount = newsPortals.Count;
-        var allArticlesCount = articles.Count;
+        var allArticlesCount = articles.Count();
 
         var arguments = new (string, object)[]
         {
-                (nameof(duration), duration),
-                (nameof(categoriesCount), categoriesCount),
-                (nameof(newsPortalsCount), newsPortalsCount),
-                (nameof(allArticlesCount), allArticlesCount),
+            (nameof(duration), duration),
+            (nameof(categoriesCount), categoriesCount),
+            (nameof(newsPortalsCount), newsPortalsCount),
+            (nameof(allArticlesCount), allArticlesCount),
         };
 
         _loggerService.Log(eventName, LogLevel.Information, arguments);

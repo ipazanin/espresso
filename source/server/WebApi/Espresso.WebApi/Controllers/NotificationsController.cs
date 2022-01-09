@@ -68,8 +68,8 @@ public class NotificationsController : ApiController
         await Sender.Send(
             request: new UpdateInMemoryArticlesCommand
             {
-                CreatedArticles = articlesRequest.CreatedArticles,
-                UpdatedArticles = articlesRequest.UpdatedArticles,
+                CreatedArticleIds = articlesRequest.CreatedArticleIds,
+                UpdatedArticleIds = articlesRequest.UpdatedArticleIds,
                 TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                 ConsumerVersion = basicInformationsHeaderParameters.Version,
                 DeviceType = basicInformationsHeaderParameters.DeviceType,
@@ -79,8 +79,8 @@ public class NotificationsController : ApiController
         await Sender.Send(
             request: new SendArticlesNotificationsCommand
             {
-                CreatedArticles = articlesRequest.CreatedArticles,
-                UpdatedArticles = articlesRequest.UpdatedArticles,
+                CreatedArticleIds = articlesRequest.CreatedArticleIds,
+                UpdatedArticleIds = articlesRequest.UpdatedArticleIds,
                 TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                 ConsumerVersion = basicInformationsHeaderParameters.Version,
                 DeviceType = basicInformationsHeaderParameters.DeviceType,

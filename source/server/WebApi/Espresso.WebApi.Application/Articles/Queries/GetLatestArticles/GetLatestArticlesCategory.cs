@@ -7,7 +7,6 @@ using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles;
-
 public record GetLatestArticlesCategory
 {
     /// <summary>

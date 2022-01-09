@@ -25,10 +25,10 @@ public class SimilarArticle
     {
         Id = id;
         SimilarityScore = similarityScore;
-        MainArticleId = mainArticleId;
-        MainArticle = mainArticle;
-        SubordinateArticleId = subordinateArticleId;
-        SubordinateArticle = subordinateArticle;
+        FirstArticleId = mainArticleId;
+        FirstArticle = mainArticle;
+        SecondArticleId = subordinateArticleId;
+        SecondArticle = subordinateArticle;
     }
 
     private SimilarArticle()
@@ -39,23 +39,23 @@ public class SimilarArticle
 
     public double SimilarityScore { get; private set; }
 
-    public Guid MainArticleId { get; private set; }
+    public Guid FirstArticleId { get; private set; }
 
-    public Article? MainArticle { get; private set; }
+    public Article? FirstArticle { get; private set; }
 
-    public Guid SubordinateArticleId { get; private set; }
+    public Guid SecondArticleId { get; private set; }
 
-    public Article? SubordinateArticle { get; private set; }
+    public Article? SecondArticle { get; private set; }
 
-    public void SetMainArticle(Article mainArticle)
+    public void SetFirstArticle(Article firstArticle)
     {
-        MainArticle = mainArticle;
-        MainArticleId = mainArticle.Id;
+        FirstArticle = firstArticle;
+        FirstArticleId = firstArticle.Id;
     }
 
-    public void SetSubordinateArticle(Article subordinateArticle)
+    public void SetSecondArticle(Article secondArticle)
     {
-        SubordinateArticle = subordinateArticle;
-        SubordinateArticleId = subordinateArticle.Id;
+        SecondArticle = secondArticle;
+        SecondArticleId = secondArticle.Id;
     }
 }

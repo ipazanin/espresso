@@ -4,7 +4,7 @@
 
 using Espresso.Domain.Entities;
 
-namespace Espresso.Common.Extensions;
+namespace Espresso.Domain.Extensions;
 
 public static class OrderArticleCollectionExtensions
 {

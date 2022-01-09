@@ -33,46 +33,62 @@ public class GroupSimilarArticlesService : IGroupSimilarArticlesService
     /// <inheritdoc/>
     public IEnumerable<SimilarArticle> GroupSimilarArticles(
         IEnumerable<Article> articles,
-        ISet<Guid> subordinateArticleIds,
         DateTimeOffset lastSimilarityGroupingTime)
     {
+        var similarArticles = new List<SimilarArticle>();
+
         var maxAgeOfSimilarArticleCheckingDateTime = DateTimeOffset.UtcNow - _settingProvider
             .LatestSetting
             .SimilarArticleSetting
             .MaxAgeOfSimilarArticleChecking;
 
-        var orderedArticles = articles
-            .Where(
-                article => article.PublishDateTime > maxAgeOfSimilarArticleCheckingDateTime &&
-                    !subordinateArticleIds.Contains(article.Id) &&
-                    LanguageUtility
-                        .SeparateWords(article.Title)
-                        .RemoveUnImpactfulCroatianWords()
-                        .Count() >= _settingProvider.LatestSetting.SimilarArticleSetting.MinimalNumberOfWordsForArticleToBeComparable)
-            .OrderBy(article => article.PublishDateTime);
+        var articlesWithFittingCriteria = articles
+            .Where(article =>
+            {
+                if (article.PublishDateTime < maxAgeOfSimilarArticleCheckingDateTime)
+                {
+                    return false;
+                }
 
-        var notMatchedArticles = orderedArticles.ToList();
+                var numberOfComparableArticleTitleWords = LanguageUtility
+                    .SeparateWords(article.Title)
+                    .RemoveUnImpactfulCroatianWords()
+                    .Count();
 
-        var similarArticles = new List<SimilarArticle>();
+                var minimalNumberOfWordsForArticleToBeComparable = _settingProvider
+                    .LatestSetting
+                    .SimilarArticleSetting
+                    .MinimalNumberOfWordsForArticleToBeComparable;
 
-        var totalCount = orderedArticles.Count();
+                return numberOfComparableArticleTitleWords >= minimalNumberOfWordsForArticleToBeComparable;
+            })
+            .OrderBy(article => article.PublishDateTime)
+            .ToArray();
+
+        var newArticles = articlesWithFittingCriteria
+            .Where(article => article.CreateDateTime > lastSimilarityGroupingTime)
+            .ToArray();
+
         var count = 0;
+        var groupedArticleIds = new HashSet<(Guid firstArticleId, Guid secondArticleId)>();
 
-        foreach (var article in orderedArticles)
+        foreach (var article in newArticles)
         {
             var articlesSimilarArticles = GetSimilarArticlesForArticle(
-                possibleMainArticle: article,
-                notMatchedArticles: notMatchedArticles,
-                subordinateArticleIds: subordinateArticleIds,
-                lastSimilarityGroupingTime: lastSimilarityGroupingTime);
+                newArticle: article,
+                articlesWithFittingCriteria: articlesWithFittingCriteria,
+                groupedArticleIds: groupedArticleIds);
 
             similarArticles.AddRange(articlesSimilarArticles);
-            _ = notMatchedArticles.Remove(article);
+            foreach (var similarArticle in articlesSimilarArticles)
+            {
+                groupedArticleIds.Add((similarArticle.FirstArticleId, similarArticle.SecondArticleId));
+            }
 
             var namedArguments = new (string argumentName, object argumentValue)[]
             {
-                    ("Total Number Of Articles", totalCount),
-                    ("Not Matched Articles Count", notMatchedArticles.Count),
+                    ("Total Number Of Articles", articlesWithFittingCriteria.Length),
+                    ("New Articles Count", newArticles.Length),
                     ("Current Batch", count++),
             };
 
@@ -86,22 +102,22 @@ public class GroupSimilarArticlesService : IGroupSimilarArticlesService
     }
 
     private static double CalculateSimilarityScore(
-        Article possibleMainArticle,
-        Article possibleSubordinateArticle)
+        string firstArticleTitle,
+        string secondArticleTitle)
     {
-        var possibleMainArticleWords = LanguageUtility
-            .SeparateWords(possibleMainArticle.Title)
+        var firstArticleWords = LanguageUtility
+            .SeparateWords(firstArticleTitle)
             .RemoveUnImpactfulCroatianWords()
             .RemoveWordsWithLessThanThreeLetters();
 
-        var possibleSubordinateArticleWords = LanguageUtility
-            .SeparateWords(possibleSubordinateArticle.Title)
+        var secondArticleWords = LanguageUtility
+            .SeparateWords(secondArticleTitle)
             .RemoveUnImpactfulCroatianWords()
             .RemoveWordsWithLessThanThreeLetters();
 
         var similarityScore = CalculateSimilarityScoreBetweenWords(
-            possibleMainArticleWords,
-            possibleSubordinateArticleWords);
+            firstArticleWords,
+            secondArticleWords);
 
         return similarityScore;
     }
@@ -160,58 +176,85 @@ public class GroupSimilarArticlesService : IGroupSimilarArticlesService
     }
 
     private IEnumerable<SimilarArticle> GetSimilarArticlesForArticle(
-        Article possibleMainArticle,
-        IList<Article> notMatchedArticles,
-        ISet<Guid> subordinateArticleIds,
-        DateTimeOffset lastSimilarityGroupingTime)
+        Article newArticle,
+        IEnumerable<Article> articlesWithFittingCriteria,
+        ISet<(Guid firstArticleId, Guid secondArticleId)> groupedArticleIds)
     {
-        var similarArticles = new List<SimilarArticle>();
-        var possibleSimilarArticles = notMatchedArticles
-            .Where(
-                notMatchedArticle =>
-                    possibleMainArticle.Id != notMatchedArticle.Id &&
-                    possibleMainArticle.NewsPortalId != notMatchedArticle.NewsPortalId &&
-                    (possibleMainArticle.PublishDateTime > notMatchedArticle.PublishDateTime ?
-                            (possibleMainArticle.PublishDateTime - notMatchedArticle.PublishDateTime < _settingProvider.LatestSetting.SimilarArticleSetting.ArticlePublishDateTimeDifferenceThreshold) :
-                            (notMatchedArticle.PublishDateTime - possibleMainArticle.PublishDateTime < _settingProvider.LatestSetting.SimilarArticleSetting.ArticlePublishDateTimeDifferenceThreshold)) &&
-                    (possibleMainArticle.CreateDateTime > lastSimilarityGroupingTime || notMatchedArticle.CreateDateTime > lastSimilarityGroupingTime))
-            .ToList();
+        var possibleSimilarArticles = GetPossibleArticleMatches(
+            newArticle: newArticle,
+            articlesWithFittingCriteria: articlesWithFittingCriteria,
+            groupedArticleIds: groupedArticleIds);
 
         foreach (var possibleSimilarArticle in possibleSimilarArticles)
         {
             var similarityScore = CalculateSimilarityScore(
-                possibleMainArticle: possibleMainArticle,
-                possibleSubordinateArticle: possibleSimilarArticle);
+                firstArticleTitle: newArticle.Title,
+                secondArticleTitle: possibleSimilarArticle.Title);
 
-            if (similarityScore > _settingProvider.LatestSetting.SimilarArticleSetting.SimilarityScoreThreshold)
+            if (similarityScore < _settingProvider.LatestSetting.SimilarArticleSetting.SimilarityScoreThreshold)
             {
-                var similarArticle = new SimilarArticle(
-                    id: Guid.NewGuid(),
-                    similarityScore: similarityScore,
-                    mainArticleId: possibleMainArticle.Id,
-                    mainArticle: null,
-                    subordinateArticleId: possibleSimilarArticle.Id,
-                    subordinateArticle: null);
-                similarArticles.Add(similarArticle);
-                _ = subordinateArticleIds.Add(similarArticle.SubordinateArticleId);
-                _ = notMatchedArticles.Remove(possibleSimilarArticle);
-
-                var namedArguments = new (string argumentName, object argumentValue)[]
-                {
-                        ("Similarity Score", similarityScore),
-                        ("Main Article Title", possibleMainArticle.Title),
-                        ("Subordinate Article Title", possibleSimilarArticle.Title),
-                        ("Main Article Source", possibleMainArticle.NewsPortal?.Name ?? possibleMainArticle.NewsPortalId.ToString()),
-                        ("Subordinate Article Source", possibleSimilarArticle.NewsPortal?.Name ?? possibleSimilarArticle.NewsPortalId.ToString()),
-                };
-
-                _loggerService.Log(
-                    eventName: "Similar Articles Found",
-                    logLevel: LogLevel.Information,
-                    namedArguments: namedArguments);
+                continue;
             }
-        }
 
-        return similarArticles;
+            var similarArticle = new SimilarArticle(
+                id: Guid.NewGuid(),
+                similarityScore: similarityScore,
+                mainArticleId: newArticle.Id,
+                mainArticle: null,
+                subordinateArticleId: possibleSimilarArticle.Id,
+                subordinateArticle: null);
+
+            var namedArguments = new (string argumentName, object argumentValue)[]
+            {
+                        ("Similarity Score", similarityScore),
+                        ("Main Article Title", newArticle.Title),
+                        ("Subordinate Article Title", possibleSimilarArticle.Title),
+                        ("Main Article Source", newArticle.NewsPortal?.Name ?? newArticle.NewsPortalId.ToString()),
+                        ("Subordinate Article Source", possibleSimilarArticle.NewsPortal?.Name ?? possibleSimilarArticle.NewsPortalId.ToString()),
+            };
+
+            _loggerService.Log(
+                eventName: "Similar Articles Found",
+                logLevel: LogLevel.Information,
+                namedArguments: namedArguments);
+
+            yield return similarArticle;
+        }
+    }
+
+    private IEnumerable<Article> GetPossibleArticleMatches(
+        Article newArticle,
+        IEnumerable<Article> articlesWithFittingCriteria,
+        ISet<(Guid firstArticleId, Guid secondArticleId)> groupedArticleIds)
+    {
+        foreach (var articleWithFittingCriteria in articlesWithFittingCriteria)
+        {
+            if (newArticle.Id == articleWithFittingCriteria.Id)
+            {
+                continue;
+            }
+
+            if (newArticle.NewsPortalId == articleWithFittingCriteria.NewsPortalId)
+            {
+                continue;
+            }
+
+            if (groupedArticleIds.Contains((newArticle.Id, articleWithFittingCriteria.Id)) ||
+                groupedArticleIds.Contains((articleWithFittingCriteria.Id, newArticle.Id)))
+            {
+                continue;
+            }
+
+            var timeDifference = newArticle.PublishDateTime > articleWithFittingCriteria.PublishDateTime ?
+                newArticle.PublishDateTime - articleWithFittingCriteria.PublishDateTime :
+                articleWithFittingCriteria.PublishDateTime - newArticle.PublishDateTime;
+
+            if (timeDifference > _settingProvider.LatestSetting.SimilarArticleSetting.ArticlePublishDateTimeDifferenceThreshold)
+            {
+                continue;
+            }
+
+            yield return articleWithFittingCriteria;
+        }
     }
 }

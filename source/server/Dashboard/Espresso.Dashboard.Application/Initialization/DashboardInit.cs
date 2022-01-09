@@ -21,11 +21,11 @@ public class DashboardInit : IDashboardInit
 
     private readonly IEnumerable<string> _adminUserEmails = new[]
     {
-            "ivan.pazanin1996@gmail.com",
-            "miro@espressonews.co",
-            "nikola.dadic@gmail.com",
-            "iferencak@profico.hr",
-            "pero.pavlovicit@gmail.com",
+        "ivan.pazanin1996@gmail.com",
+        "miro@espressonews.co",
+        "nikola.dadic@gmail.com",
+        "iferencak@profico.hr",
+        "pero.pavlovicit@gmail.com",
     };
 
     /// <summary>

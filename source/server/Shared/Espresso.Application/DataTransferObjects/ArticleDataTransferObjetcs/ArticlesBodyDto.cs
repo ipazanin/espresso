@@ -11,24 +11,24 @@ public record ArticlesBodyDto
     /// <summary>
     /// Gets created articles.
     /// </summary>
-    public IEnumerable<ArticleDto> CreatedArticles { get; private set; } = new List<ArticleDto>();
+    public IEnumerable<Guid> CreatedArticleIds { get; private set; }
 
     /// <summary>
     /// Gets updated articles.
     /// </summary>
-    public IEnumerable<ArticleDto> UpdatedArticles { get; private set; } = new List<ArticleDto>();
+    public IEnumerable<Guid> UpdatedArticleIds { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ArticlesBodyDto"/> class.
     /// </summary>
-    /// <param name="createdArticles">Created articles.</param>
-    /// <param name="updatedArticles">Updated articles.</param>
+    /// <param name="createdArticleIds">Created articles.</param>
+    /// <param name="updatedArticleIds">Updated articles.</param>
     [JsonConstructor]
     public ArticlesBodyDto(
-        IEnumerable<ArticleDto> createdArticles,
-        IEnumerable<ArticleDto> updatedArticles)
+        IEnumerable<Guid> createdArticleIds,
+        IEnumerable<Guid> updatedArticleIds)
     {
-        CreatedArticles = createdArticles;
-        UpdatedArticles = updatedArticles;
+        CreatedArticleIds = createdArticleIds;
+        UpdatedArticleIds = updatedArticleIds;
     }
 }

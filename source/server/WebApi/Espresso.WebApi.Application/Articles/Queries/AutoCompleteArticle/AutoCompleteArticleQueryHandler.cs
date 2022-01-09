@@ -9,7 +9,7 @@ using Espresso.Domain.Utilities;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle;
+namespace Espresso.WebApi.Application.Articles.Queries.AutoCompleteArticle;
 
 public class AutoCompleteArticleQueryHandler : IRequestHandler<AutoCompleteArticleQuery, AutoCompleteArticleQueryResponse>
 {

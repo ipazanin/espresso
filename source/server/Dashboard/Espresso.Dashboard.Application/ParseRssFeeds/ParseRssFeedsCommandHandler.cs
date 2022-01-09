@@ -82,7 +82,8 @@ public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand,
                 articles: uniqueArticles,
                 savedArticles: request.Articles);
 
-        var updateArticles = updateArticlesWithModifiedProperties.Select(updatedArticleWithModifiedproperties => updatedArticleWithModifiedproperties.article);
+        var updateArticles = updateArticlesWithModifiedProperties
+            .Select(updatedArticleWithModifiedproperties => updatedArticleWithModifiedproperties.article);
 
         _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before UpdateSavedArticles");
         UpdateSavedArticles(
@@ -90,12 +91,14 @@ public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand,
             changedArticles: createArticles.Union(updateArticles));
 
         _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _groupSimilarArticlesService.GroupSimilarArticles");
-        var similarArticles = _groupSimilarArticlesService.GroupSimilarArticles(
-            articles: request.Articles.Values,
-            subordinateArticleIds: request.SubordinateArticleIds,
-            lastSimilarityGroupingTime: lastSimilarityGroupingTime);
+        var similarArticles = _groupSimilarArticlesService
+            .GroupSimilarArticles(
+                articles: request.Articles.Values,
+                lastSimilarityGroupingTime: lastSimilarityGroupingTime);
 
         _espressoDatabaseContext.Articles.AddRange(createArticles);
+        await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
+
         foreach (var (article, modifiedProperties) in updateArticlesWithModifiedProperties)
         {
             foreach (var modifiedProperty in modifiedProperties)
@@ -104,17 +107,21 @@ public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand,
             }
         }
 
+        await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
+
         _espressoDatabaseContext.ArticleCategories.AddRange(createArticleCategories);
         _espressoDatabaseContext.ArticleCategories.RemoveRange(deleteArticleCategories);
-        _espressoDatabaseContext.SimilarArticles.AddRange(similarArticles);
+        await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
+
+        _espressoDatabaseContext.SimilarArticles.AddRange(similarArticles.ToArray());
 
         _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _espressoDatabaseContext.SaveChangesAsync");
         await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
 
         _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _sendArticlesService.SendArticlesMessage");
         await _sendArticlesService.SendArticlesMessage(
-            createArticles: createArticles,
-            updateArticles: updateArticles,
+            createArticleIds: createArticles.Select(article => article.Id),
+            updateArticleIds: updateArticles.Select(article => article.Id),
             cancellationToken: cancellationToken);
 
         return new ParseRssFeedsCommandResponse

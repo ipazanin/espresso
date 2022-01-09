@@ -3,7 +3,6 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
-using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Extensions;
 using Espresso.Domain.Infrastructure;
@@ -54,7 +53,7 @@ public class GetArticlesQueryHandler_1_4 :
 
         var articleDtos = articles
             .OrderArticlesByPublishDate()
-            .FilterArticles_2_0(
+            .FilterArticles(
                 categoryIds: categoryIds,
                 newsPortalIds: newsPortalIds,
                 titleSearchTerm: request.TitleSearchQuery,

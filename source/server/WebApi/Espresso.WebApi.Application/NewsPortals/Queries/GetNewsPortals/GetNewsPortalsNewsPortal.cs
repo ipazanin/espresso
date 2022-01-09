@@ -3,7 +3,6 @@
 // © 2021 Espresso News. All rights reserved.
 
 using System.Linq.Expressions;
-using Espresso.Application.NewsPortals;
 using Espresso.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 

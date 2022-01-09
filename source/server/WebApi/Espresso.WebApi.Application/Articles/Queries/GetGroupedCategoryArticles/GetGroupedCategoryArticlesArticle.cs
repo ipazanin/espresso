@@ -1,4 +1,4 @@
-﻿// GetCategoryArticlesArticle_2_0.cs
+﻿// GetGroupedCategoryArticlesArticle.cs
 //
 // © 2021 Espresso News. All rights reserved.
 
@@ -6,10 +6,9 @@ using System.Linq.Expressions;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 
-namespace Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0;
-#pragma warning disable S101 // Types should be named in PascalCase
-public record GetCategoryArticlesArticle_2_0
-#pragma warning restore S101 // Types should be named in PascalCase
+namespace Espresso.WebApi.Application.Articles.Queries.GetGroupedCategoryArticles;
+
+public record GetGroupedCategoryArticlesArticle
 {
     /// <summary>
     /// Gets iD created by app.
@@ -44,20 +43,20 @@ public record GetCategoryArticlesArticle_2_0
     /// <summary>
     /// Gets news Portal ID.
     /// </summary>
-    public GetCategoryArticlesNewsPortal_2_0? NewsPortal { get; private set; }
+    public GetGroupedCategoryArticlesNewsPortal? NewsPortal { get; private set; }
 
     /// <summary>
     /// Gets list Of Categories article belongs to.
     /// </summary>
-    public IEnumerable<GetCategoryArticlesCategory_2_0> Categories { get; private set; } = new List<GetCategoryArticlesCategory_2_0>();
+    public IEnumerable<GetGroupedCategoryArticlesCategory> Categories { get; private set; } = new List<GetGroupedCategoryArticlesCategory>();
 
-    private GetCategoryArticlesArticle_2_0()
+    private GetGroupedCategoryArticlesArticle()
     {
     }
 
-    public static Expression<Func<Article, GetCategoryArticlesArticle_2_0>> GetProjection()
+    public static Expression<Func<Article, GetGroupedCategoryArticlesArticle>> GetProjection()
     {
-        return article => new GetCategoryArticlesArticle_2_0
+        return article => new GetGroupedCategoryArticlesArticle
         {
             Id = article.Id,
             Title = article.Title,
@@ -65,12 +64,13 @@ public record GetCategoryArticlesArticle_2_0
             Url = article.Url,
             PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.MobileAppDateTimeFormat),
             NumberOfClicks = article.NumberOfClicks,
-            NewsPortal = GetCategoryArticlesNewsPortal_2_0.GetProjection()
+            NewsPortal = GetGroupedCategoryArticlesNewsPortal.GetProjection()
                 .Compile()
                 .Invoke(article.NewsPortal!),
             Categories = article.ArticleCategories
+                .AsQueryable()
                 .Select(articleCategory => articleCategory.Category)
-                .Select(GetCategoryArticlesCategory_2_0.GetProjection().Compile()!),
+                .Select(GetGroupedCategoryArticlesCategory.GetProjection()!),
         };
     }
 }

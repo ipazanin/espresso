@@ -16,14 +16,14 @@ public class SimilarArticleConfiguration : IEntityTypeConfiguration<SimilarArtic
     /// <inheritdoc/>
     public void Configure(EntityTypeBuilder<SimilarArticle> builder)
     {
-        builder.HasOne(similarArticle => similarArticle.MainArticle)
-            .WithMany(article => article!.SubordinateArticles)
-            .HasForeignKey(similarArticle => similarArticle.MainArticleId)
-            .OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(similarArticle => similarArticle.FirstArticle)
+            .WithMany(article => article!.FirstSimilarArticles)
+            .HasForeignKey(similarArticle => similarArticle.FirstArticleId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(similarArticle => similarArticle.SubordinateArticle)
-            .WithOne(article => article!.MainArticle!)
-            .HasForeignKey<SimilarArticle>(similarArticle => similarArticle.SubordinateArticleId)
-            .OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(similarArticle => similarArticle.SecondArticle)
+            .WithMany(article => article!.SecondSimilarArticles)
+            .HasForeignKey(similarArticle => similarArticle.SecondArticleId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

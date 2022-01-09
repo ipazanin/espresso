@@ -1,38 +1,34 @@
-﻿// GetLatestArticlesQueryHandler_2_0.cs
+﻿// GetGroupedLatestArticlesQueryHandler.cs
 //
 // © 2021 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
-using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Extensions;
 using Espresso.Domain.Infrastructure;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0;
-#pragma warning disable S101 // Types should be named in PascalCase
-#pragma warning disable SA1649 // File name should match first type name
-public class GetArticlesQueryHandler_2_0 : IRequestHandler<GetLatestArticlesQuery_2_0, GetLatestArticlesQueryResponse_2_0>
-#pragma warning restore SA1649 // File name should match first type name
-#pragma warning restore S101 // Types should be named in PascalCase
+namespace Espresso.WebApi.Application.Articles.Queries.GetGroupedLatestArticles;
+
+public class GetGroupedLatestArticlesQueryHandler : IRequestHandler<GetGroupedLatestArticlesQuery, GetGroupedLatestArticlesQueryResponse>
 {
     private readonly IMemoryCache _memoryCache;
     private readonly ISettingProvider _settingProvider;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GetArticlesQueryHandler_2_0"/> class.
+    /// Initializes a new instance of the <see cref="GetGroupedLatestArticlesQueryHandler"/> class.
     /// </summary>
     /// <param name="memoryCache"></param>
     /// <param name="settingProvider"></param>
-    public GetArticlesQueryHandler_2_0(IMemoryCache memoryCache, ISettingProvider settingProvider)
+    public GetGroupedLatestArticlesQueryHandler(IMemoryCache memoryCache, ISettingProvider settingProvider)
     {
         _memoryCache = memoryCache;
         _settingProvider = settingProvider;
     }
 
-    public Task<GetLatestArticlesQueryResponse_2_0> Handle(
-        GetLatestArticlesQuery_2_0 request,
+    public Task<GetGroupedLatestArticlesQueryResponse> Handle(
+        GetGroupedLatestArticlesQuery request,
         CancellationToken cancellationToken)
     {
         var (newsPortalIds, categoryIds) = ParseIds(request);
@@ -45,6 +41,7 @@ public class GetArticlesQueryHandler_2_0 : IRequestHandler<GetLatestArticlesQuer
 
         var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
             key: MemoryCacheConstants.NewsPortalKey);
+
         var keyWordsToFilterOut = request.KeyWordsToFilterOut is null ?
             Enumerable.Empty<string>() :
             request.KeyWordsToFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
@@ -52,13 +49,15 @@ public class GetArticlesQueryHandler_2_0 : IRequestHandler<GetLatestArticlesQuer
         var articles = GetLatestArticles(
             savedArticles: savedArticles,
             firstArticleCreateDateTime: firstArticle?.CreateDateTime,
-            request: request,
+            titleSearchTerm: request.TitleSearchQuery,
             categoryIds: categoryIds,
             newsPortalIds: newsPortalIds,
             keyWordsToFilterOut: keyWordsToFilterOut);
 
         var newNewsPortals = GetNewNewsPortals(
             newsPortals: newsPortals,
+            newsPortalIds: newsPortalIds,
+            categoryIds: categoryIds,
             request: request);
 
         var featuredArticles = GetFeaturedArticles(
@@ -68,7 +67,7 @@ public class GetArticlesQueryHandler_2_0 : IRequestHandler<GetLatestArticlesQuer
             categoryIds: categoryIds,
             keyWordsToFilterOut: keyWordsToFilterOut);
 
-        var response = new GetLatestArticlesQueryResponse_2_0
+        var response = new GetGroupedLatestArticlesQueryResponse
         {
             Articles = articles,
             FeaturedArticles = featuredArticles,
@@ -84,32 +83,26 @@ public class GetArticlesQueryHandler_2_0 : IRequestHandler<GetLatestArticlesQuer
         return Task.FromResult(result: response);
     }
 
-    private static IEnumerable<GetLatestArticlesArticle_2_0> GetLatestArticles(
+    private static IEnumerable<IEnumerable<GetGroupedLatestArticlesArticle>> GetLatestArticles(
         IEnumerable<Article> savedArticles,
         DateTimeOffset? firstArticleCreateDateTime,
-        GetLatestArticlesQuery_2_0 request,
+        string? titleSearchTerm,
         IEnumerable<int>? categoryIds,
         IEnumerable<int>? newsPortalIds,
         IEnumerable<string> keyWordsToFilterOut)
     {
-        var articles = savedArticles
-            .OrderArticlesByPublishDate()
-            .FilterArticles_2_0(
-                categoryIds: categoryIds,
-                newsPortalIds: newsPortalIds,
-                titleSearchTerm: request.TitleSearchQuery,
-                articleCreateDateTime: firstArticleCreateDateTime)
-            .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
-            .Skip(request.Skip)
-            .Take(request.Take);
+        var groupedArticles = savedArticles.GetGroupedArticlesBySimilarity(
+            firstArticleCreateDateTime: firstArticleCreateDateTime,
+            categoryIds: categoryIds,
+            newsPortalIds: newsPortalIds,
+            keyWordsToFilterOut: keyWordsToFilterOut,
+            titleSearchTerm: titleSearchTerm);
 
-        var articleDtos = articles
-            .Select(GetLatestArticlesArticle_2_0.GetProjection().Compile());
-
-        return articleDtos;
+        return groupedArticles
+            .Select(articles => articles.Select(GetGroupedLatestArticlesArticle.GetProjection().Compile()));
     }
 
-    private static (IEnumerable<int>? newsPortalIds, IEnumerable<int>? categoryIds) ParseIds(GetLatestArticlesQuery_2_0 request)
+    private static (IEnumerable<int>? newsPortalIds, IEnumerable<int>? categoryIds) ParseIds(GetGroupedLatestArticlesQuery request)
     {
         var newsPortalIds = request.NewsPortalIds
             ?.Replace(" ", string.Empty)
@@ -126,41 +119,16 @@ public class GetArticlesQueryHandler_2_0 : IRequestHandler<GetLatestArticlesQuer
         return (newsPortalIds, categoryIds);
     }
 
-    private IEnumerable<GetLatestArticlesNewsPortal_2_0> GetNewNewsPortals(
-        IEnumerable<NewsPortal> newsPortals,
-        GetLatestArticlesQuery_2_0 request)
-    {
-        if (request.Skip != 0)
-        {
-            return Array.Empty<GetLatestArticlesNewsPortal_2_0>();
-        }
-
-        var (newsPortalIds, categoryIds) = ParseIds(request);
-
-        var newsPortalDtos = newsPortals
-            .Where(
-                predicate: NewsPortal.GetLatestSugestedNewsPortalsPredicate(
-                    newsPortalIds: newsPortalIds,
-                    categoryIds: categoryIds,
-                    maxAgeOfNewNewsPortal: _settingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal)
-                .Compile())
-            .Select(selector: GetLatestArticlesNewsPortal_2_0.GetProjection().Compile());
-
-        var random = new Random();
-
-        return newsPortalDtos.OrderBy(_ => random.Next());
-    }
-
-    private IEnumerable<GetLatestArticlesArticle_2_0> GetFeaturedArticles(
+    private IEnumerable<GetGroupedLatestArticlesArticle> GetFeaturedArticles(
         IEnumerable<Article> savedArticles,
         DateTimeOffset? firstArticleCreateDateTime,
-        GetLatestArticlesQuery_2_0 request,
+        GetGroupedLatestArticlesQuery request,
         IEnumerable<int>? categoryIds,
         IEnumerable<string> keyWordsToFilterOut)
     {
         if (request.Skip != 0)
         {
-            return Array.Empty<GetLatestArticlesArticle_2_0>();
+            return Array.Empty<GetGroupedLatestArticlesArticle>();
         }
 
         var featuredArticles = savedArticles
@@ -184,11 +152,38 @@ public class GetArticlesQueryHandler_2_0 : IRequestHandler<GetLatestArticlesQuer
             .Take(trendingArticlesTake)
             .OrderArticlesByCategory(categoryIds);
 
-        var articleDtos = featuredArticles
-            .Union(trendingArticles)
+        var joinedArticles = featuredArticles
+            .Union(trendingArticles);
+
+        var articleDtos = joinedArticles
             .Take(featuredArticlesTake)
-            .Select(GetLatestArticlesArticle_2_0.GetProjection().Compile());
+            .Select(GetGroupedLatestArticlesArticle.GetProjection().Compile());
 
         return articleDtos;
+    }
+
+    private IEnumerable<GetGroupedLatestArticlesNewsPortal> GetNewNewsPortals(
+        IEnumerable<NewsPortal> newsPortals,
+        IEnumerable<int>? newsPortalIds,
+        IEnumerable<int>? categoryIds,
+        GetGroupedLatestArticlesQuery request)
+    {
+        if (request.Skip != 0)
+        {
+            return Array.Empty<GetGroupedLatestArticlesNewsPortal>();
+        }
+
+        var newsPortalDtos = newsPortals
+            .Where(
+                predicate: NewsPortal.GetLatestSugestedNewsPortalsPredicate(
+                    newsPortalIds: newsPortalIds,
+                    categoryIds: categoryIds,
+                    maxAgeOfNewNewsPortal: _settingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal)
+                .Compile())
+            .Select(selector: GetGroupedLatestArticlesNewsPortal.GetProjection().Compile());
+
+        var random = new Random();
+
+        return newsPortalDtos.OrderBy(_ => random.Next());
     }
 }

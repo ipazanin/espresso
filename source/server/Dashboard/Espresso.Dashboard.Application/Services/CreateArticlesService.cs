@@ -376,8 +376,8 @@ public class CreateArticlesService : ICreateArticlesService
                 articleCategories: articleData.ArticleCategories,
                 newsPortal: null,
                 rssFeed: null,
-                subordinateArticles: null,
-                mainArticle: null);
+                firstSimilarArticles: null,
+                secondSimilarArticles: null);
 
             return (article, true);
         }
