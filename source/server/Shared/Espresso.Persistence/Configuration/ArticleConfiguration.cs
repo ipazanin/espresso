@@ -60,14 +60,14 @@ public class ArticleConfiguration : IEntityTypeConfiguration<Article>
             .HasForeignKey(articleCategory => articleCategory.ArticleId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany(article => article.SubordinateArticles)
-            .WithOne(similarArticle => similarArticle!.MainArticle!)
-            .HasForeignKey(similarArticle => similarArticle.MainArticleId)
+        builder.HasMany(article => article.FirstSimilarArticles)
+            .WithOne(similarArticle => similarArticle!.FirstArticle)
+            .HasForeignKey(similarArticle => similarArticle.FirstArticleId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(article => article.MainArticle)
-            .WithOne(similarArticle => similarArticle!.SubordinateArticle!)
-            .HasForeignKey<SimilarArticle>(similarArticle => similarArticle.SubordinateArticleId)
-            .OnDelete(DeleteBehavior.Restrict);
+        builder.HasMany(article => article.SecondSimilarArticles)
+            .WithOne(similarArticle => similarArticle.SecondArticle)
+            .HasForeignKey(similarArticle => similarArticle.SecondArticleId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -10,6 +10,7 @@ namespace Espresso.WebApi.Application.Notifications.Commands.SendArticlesNotific
 
 public record SendArticlesNotificationsCommand : Request<Unit>
 {
-    public IEnumerable<ArticleDto> CreatedArticles { get; init; } = new List<ArticleDto>();
-    public IEnumerable<ArticleDto> UpdatedArticles { get; init; } = new List<ArticleDto>();
+    public IEnumerable<Guid> CreatedArticleIds { get; init; } = new List<Guid>();
+
+    public IEnumerable<Guid> UpdatedArticleIds { get; init; } = new List<Guid>();
 }

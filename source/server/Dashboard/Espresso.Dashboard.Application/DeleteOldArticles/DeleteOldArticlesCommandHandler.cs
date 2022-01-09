@@ -5,6 +5,7 @@
 using Espresso.Domain.IServices;
 using Espresso.Persistence.Database;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Espresso.Dashboard.Application.DeleteOldArticles;
 
@@ -29,15 +30,14 @@ public class DeleteOldArticlesCommandHandler : IRequestHandler<DeleteOldArticles
     public async Task<DeleteOldArticlesCommandResponse> Handle(DeleteOldArticlesCommand request, CancellationToken cancellationToken)
     {
         var oldArticles = _removeOldArticlesService.RemoveOldArticlesFromCollection(request.Articles);
+        var oldArticleIds = oldArticles.Select(article => article.Id).ToArray();
 
-        var similarArticlesToDelete = oldArticles
-            .SelectMany(oldArticle => oldArticle.SubordinateArticles.Append(oldArticle.MainArticle))
-            .Where(similarArticle => similarArticle is not null);
+        var databaseArticlesToRemove = await _espressoDatabaseContext
+            .Articles
+            .Where(article => oldArticleIds.Contains(article.Id))
+            .ToListAsync(cancellationToken);
 
-        _espressoDatabaseContext.SimilarArticles.RemoveRange(similarArticlesToDelete!);
-        _ = await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
-
-        _espressoDatabaseContext.Articles.RemoveRange(oldArticles);
+        _espressoDatabaseContext.Articles.RemoveRange(databaseArticlesToRemove);
         var numberOfDeletedDatabaseArticles = await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
 
         var response = new DeleteOldArticlesCommandResponse

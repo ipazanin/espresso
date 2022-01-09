@@ -4,18 +4,18 @@
 
 using System.ComponentModel.DataAnnotations;
 using Espresso.Common.Constants;
-using Espresso.WebApi.Application.Articles.AutoCompleteArticle;
 using Espresso.WebApi.Application.Articles.Commands.HideArticle;
-using Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticleScore;
+using Espresso.WebApi.Application.Articles.Commands.IncrementNumberOfClicks;
 using Espresso.WebApi.Application.Articles.Commands.SetFeaturedArticle;
+using Espresso.WebApi.Application.Articles.Queries.AutoCompleteArticle;
 using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles;
 using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_1_3;
-using Espresso.WebApi.Application.Articles.Queries.GetCategoryArticles_2_0;
 using Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles;
+using Espresso.WebApi.Application.Articles.Queries.GetGroupedCategoryArticles;
+using Espresso.WebApi.Application.Articles.Queries.GetGroupedLatestArticles;
 using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles;
 using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_3;
 using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4;
-using Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0;
 using Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles;
 using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
@@ -51,6 +51,60 @@ public class ArticlesController : ApiController
     /// <summary>
     /// Get articles from selected <paramref name="newsPortalIds"/> and <paramref name="categoryIds"/>.
     /// </summary>
+    /// <param name="basicInformationsHeaderParameters"></param>
+    /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
+    /// <param name="cancellationToken"></param>
+    /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
+    /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
+    /// <param name="titleSearchQuery">Article Title Search Query.</param>
+    /// <param name="keyWordsToFilterOut"></param>
+    /// <returns>Response object containing articles.</returns>
+    /// <response code="200"><see cref="GetGroupedLatestArticlesQueryResponse"/> object containing articles.</response>
+    /// <response code="400">If validation fails.</response>
+    /// <response code="401">If API Key is invalid or missing.</response>
+    /// <response code="403">If API Key is forbiden from requested resource.</response>
+    /// <response code="500">If unhandled exception occurred.</response>
+    [Produces(MimeTypeConstants.Json)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetGroupedLatestArticlesQueryResponse))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
+    [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.2")]
+    [HttpGet]
+    [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
+    [Route("api/articles/grouped")]
+    public async Task<IActionResult> GetGroupedLatestArticles(
+        [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
+        [FromQuery] ArticlePaginationParameters articlePaginationParameters,
+        CancellationToken cancellationToken,
+        [FromQuery] string? newsPortalIds = null,
+        [FromQuery] string? categoryIds = null,
+        [FromQuery] string? titleSearchQuery = null,
+        [FromQuery] string? keyWordsToFilterOut = null)
+    {
+        var response = await Sender.Send(
+            request: new GetGroupedLatestArticlesQuery
+            {
+                Take = articlePaginationParameters.Take,
+                Skip = articlePaginationParameters.Skip,
+                FirstArticleId = articlePaginationParameters.FirstArticleId,
+                NewsPortalIds = newsPortalIds,
+                CategoryIds = categoryIds,
+                TitleSearchQuery = titleSearchQuery,
+                TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                ConsumerVersion = basicInformationsHeaderParameters.Version,
+                DeviceType = basicInformationsHeaderParameters.DeviceType,
+                KeyWordsToFilterOut = keyWordsToFilterOut,
+            },
+            cancellationToken: cancellationToken);
+
+        return Ok(response);
+    }
+
+    /// <summary>
+    /// Get articles from selected <paramref name="newsPortalIds"/> and <paramref name="categoryIds"/>.
+    /// </summary>
     /// <remarks>
     /// Sample request:
     ///     Get /api/articles.
@@ -63,18 +117,20 @@ public class ArticlesController : ApiController
     /// <param name="titleSearchQuery">Article Title Search Query.</param>
     /// <param name="keyWordsToFilterOut"></param>
     /// <returns>Response object containing articles.</returns>
-    /// <response code="200"><see cref="GetLatestArticlesQueryResponse"/> object containing articles.</response>
+    /// <response code="200">Response object containing articles.</response>
     /// <response code="400">If validation fails.</response>
     /// <response code="401">If API Key is invalid or missing.</response>
     /// <response code="403">If API Key is forbiden from requested resource.</response>
     /// <response code="500">If unhandled exception occurred.</response>
     [Produces(MimeTypeConstants.Json)]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetLatestArticlesQueryResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetGroupedLatestArticlesQueryResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
     [ApiVersion("2.2")]
+    [ApiVersion("2.1")]
+    [ApiVersion("2.0")]
     [HttpGet]
     [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
     [Route("api/articles")]
@@ -119,7 +175,6 @@ public class ArticlesController : ApiController
     /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
     /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
     /// <param name="titleSearchQuery">Article Title Search Query.</param>
-    /// <param name="keyWordsToFilterOut"></param>
     /// <returns>Response object containing articles.</returns>
     /// <response code="200">Response object containing articles.</response>
     /// <response code="400">If validation fails.</response>
@@ -127,65 +182,7 @@ public class ArticlesController : ApiController
     /// <response code="403">If API Key is forbiden from requested resource.</response>
     /// <response code="500">If unhandled exception occurred.</response>
     [Produces(MimeTypeConstants.Json)]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetLatestArticlesQueryResponse))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
-    [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
-    [ApiVersion("2.1")]
-    [ApiVersion("2.0")]
-    [HttpGet]
-    [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
-    [Route("api/articles")]
-    public async Task<IActionResult> GetLatestArticles_2_0(
-        [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
-        [FromQuery] ArticlePaginationParameters articlePaginationParameters,
-        CancellationToken cancellationToken,
-        [FromQuery] string? newsPortalIds = null,
-        [FromQuery] string? categoryIds = null,
-        [FromQuery] string? titleSearchQuery = null,
-        [FromQuery] string? keyWordsToFilterOut = null)
-    {
-        var response = await Sender.Send(
-            request: new GetLatestArticlesQuery_2_0
-            {
-                Take = articlePaginationParameters.Take,
-                Skip = articlePaginationParameters.Skip,
-                FirstArticleId = articlePaginationParameters.FirstArticleId,
-                NewsPortalIds = newsPortalIds,
-                CategoryIds = categoryIds,
-                TitleSearchQuery = titleSearchQuery,
-                TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
-                ConsumerVersion = basicInformationsHeaderParameters.Version,
-                DeviceType = basicInformationsHeaderParameters.DeviceType,
-                KeyWordsToFilterOut = keyWordsToFilterOut,
-            },
-            cancellationToken: cancellationToken);
-
-        return Ok(response);
-    }
-
-    /// <summary>
-    /// Get articles from selected <paramref name="newsPortalIds"/> and <paramref name="categoryIds"/>.
-    /// </summary>
-    /// <remarks>
-    /// Sample request:
-    ///     Get /api/articles.
-    /// </remarks>
-    /// <param name="basicInformationsHeaderParameters"></param>
-    /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="newsPortalIds">Articles from given <paramref name="newsPortalIds"/> will be fetched or if <paramref name="newsPortalIds"/> is empty condition will be ignored.</param>
-    /// <param name="categoryIds">Articles from given <paramref name="categoryIds"/> will be fetched or if <paramref name="categoryIds"/> is empty condition will be ignored.</param>
-    /// <param name="titleSearchQuery">Article Title Search Query.</param>
-    /// <returns>Response object containing articles.</returns>
-    /// <response code="200">Response object containing articles.</response>
-    /// <response code="400">If validation fails.</response>
-    /// <response code="401">If API Key is invalid or missing.</response>
-    /// <response code="403">If API Key is forbiden from requested resource.</response>
-    /// <response code="500">If unhandled exception occurred.</response>
-    [Produces(MimeTypeConstants.Json)]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetLatestArticlesQueryResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetGroupedLatestArticlesQueryResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
@@ -240,7 +237,7 @@ public class ArticlesController : ApiController
     /// <response code="403">If API Key is forbiden from requested resource.</response>
     /// <response code="500">If unhandled exception occurred.</response>
     [Produces(MimeTypeConstants.Json)]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetLatestArticlesQueryResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetGroupedLatestArticlesQueryResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
@@ -297,7 +294,7 @@ public class ArticlesController : ApiController
     /// <response code="403">If API Key is forbiden from requested resource.</response>
     /// <response code="500">If unhandled exception occurred.</response>
     [Produces(MimeTypeConstants.Json)]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetCategoryArticlesQueryResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetGroupedCategoryArticlesQueryResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
@@ -305,8 +302,8 @@ public class ArticlesController : ApiController
     [ApiVersion("2.2")]
     [HttpGet]
     [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
-    [Route("api/categories/{categoryId}/articles")]
-    public async Task<IActionResult> GetCategoryArticles(
+    [Route("api/categories/{categoryId}/articles/grouped")]
+    public async Task<IActionResult> GetGroupedCategoryArticles(
         [FromRoute] int categoryId,
         [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
         [FromQuery] ArticlePaginationParameters articlePaginationParameters,
@@ -317,7 +314,7 @@ public class ArticlesController : ApiController
         [FromQuery] string? keyWordsToFilterOut = null)
     {
         var articles = await Sender.Send(
-            request: new GetCategoryArticlesQuery
+            request: new GetGroupedCategoryArticlesQuery
             {
                 Take = articlePaginationParameters.Take,
                 Skip = articlePaginationParameters.Skip,
@@ -358,18 +355,19 @@ public class ArticlesController : ApiController
     /// <response code="403">If API Key is forbiden from requested resource.</response>
     /// <response code="500">If unhandled exception occurred.</response>
     [Produces(MimeTypeConstants.Json)]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetCategoryArticlesQueryResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetGroupedCategoryArticlesQueryResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.2")]
     [ApiVersion("2.1")]
     [ApiVersion("2.0")]
     [ApiVersion("1.4")]
     [HttpGet]
     [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
     [Route("api/categories/{categoryId}/articles")]
-    public async Task<IActionResult> GetCategoryArticles_2_0(
+    public async Task<IActionResult> GetCategoryArticles(
         [FromRoute] int categoryId,
         [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
         [FromQuery] ArticlePaginationParameters articlePaginationParameters,
@@ -380,7 +378,7 @@ public class ArticlesController : ApiController
         [FromQuery] string? keyWordsToFilterOut = null)
     {
         var articles = await Sender.Send(
-            request: new GetCategoryArticlesQuery_2_0
+            request: new GetCategoryArticlesQuery
             {
                 Take = articlePaginationParameters.Take,
                 Skip = articlePaginationParameters.Skip,
@@ -419,7 +417,7 @@ public class ArticlesController : ApiController
     /// <response code="403">If API Key is forbiden from requested resource.</response>
     /// <response code="500">If unhandled exception occurred.</response>
     [Produces(MimeTypeConstants.Json)]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetCategoryArticlesQueryResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetGroupedCategoryArticlesQueryResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]

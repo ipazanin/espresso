@@ -97,8 +97,8 @@ public class ReceiveArticlesBackgroundJob : BackgroundJob<ReceiveArticlesBackgro
                 {
                     await sender.Send(new UpdateInMemoryArticlesCommand
                     {
-                        CreatedArticles = articlesBody.CreatedArticles,
-                        UpdatedArticles = articlesBody.UpdatedArticles,
+                        CreatedArticleIds = articlesBody.CreatedArticleIds,
+                        UpdatedArticleIds = articlesBody.UpdatedArticleIds,
                         TargetedApiVersion = _webApiConfiguration.AppConfiguration.ApiVersion.ToString(),
                         ConsumerVersion = _webApiConfiguration.AppConfiguration.Version,
                         DeviceType = DeviceType.RssFeedParser,

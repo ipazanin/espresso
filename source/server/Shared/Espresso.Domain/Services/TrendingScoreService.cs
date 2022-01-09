@@ -37,7 +37,7 @@ public class TrendingScoreService : ITrendingScoreService
             numberOfArticles: numberOfArticles,
             averageClicks: averageClicks);
 
-        var maxTrendingScore = clicksPerArticle
+        var maxTrendingScore = numberOfArticles == 0 ? 0M : clicksPerArticle
             .Max(clicks => CalculateUnNormalisedTrendingScore(
                 clicks: clicks,
                 averageClicks: averageClicks,
@@ -45,13 +45,14 @@ public class TrendingScoreService : ITrendingScoreService
 
         foreach (var article in articles)
         {
-            article.UpdateTrendingScore(
-                trendingScore: CalculateTrendingScore(
-                    clicks: article.NumberOfClicks,
-                    averageClicks: averageClicks,
-                    standardClicksDeviation: standardClicksDeviation,
-                    maxTrendingScore: maxTrendingScore,
-                    publishDateTime: article.PublishDateTime));
+            var trendingScore = CalculateTrendingScore(
+                clicks: article.NumberOfClicks,
+                averageClicks: averageClicks,
+                standardClicksDeviation: standardClicksDeviation,
+                maxTrendingScore: maxTrendingScore,
+                publishDateTime: article.PublishDateTime);
+
+            article.UpdateTrendingScore(trendingScore);
         }
 
         return articles;

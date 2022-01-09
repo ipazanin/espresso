@@ -1,4 +1,4 @@
-﻿// GetLatestArticlesArticle_2_0.cs
+﻿// GetGroupedLatestArticlesArticle.cs
 //
 // © 2021 Espresso News. All rights reserved.
 
@@ -6,10 +6,9 @@ using System.Linq.Expressions;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 
-namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0;
-#pragma warning disable S101 // Types should be named in PascalCase
-public record GetLatestArticlesArticle_2_0
-#pragma warning restore S101 // Types should be named in PascalCase
+namespace Espresso.WebApi.Application.Articles.Queries.GetGroupedLatestArticles;
+
+public record GetGroupedLatestArticlesArticle
 {
     /// <summary>
     /// Gets iD created by app.
@@ -49,20 +48,20 @@ public record GetLatestArticlesArticle_2_0
     /// <summary>
     /// Gets news Portal ID.
     /// </summary>
-    public GetLatestArticlesNewsPortal_2_0? NewsPortal { get; private set; }
+    public GetGroupedLatestArticlesNewsPortal? NewsPortal { get; private set; }
 
     /// <summary>
     /// Gets list Of Categories article belongs to.
     /// </summary>
-    public IEnumerable<GetLatestArticlesCategory_2_0> Categories { get; private set; } = new List<GetLatestArticlesCategory_2_0>();
+    public IEnumerable<GetGroupedLatestArticlesCategory> Categories { get; private set; } = new List<GetGroupedLatestArticlesCategory>();
 
-    private GetLatestArticlesArticle_2_0()
+    private GetGroupedLatestArticlesArticle()
     {
     }
 
-    public static Expression<Func<Article, GetLatestArticlesArticle_2_0>> GetProjection()
+    public static Expression<Func<Article, GetGroupedLatestArticlesArticle>> GetProjection()
     {
-        return article => new GetLatestArticlesArticle_2_0
+        return article => new GetGroupedLatestArticlesArticle
         {
             Id = article.Id,
             Title = article.Title,
@@ -71,13 +70,13 @@ public record GetLatestArticlesArticle_2_0
             WebUrl = article.WebUrl,
             PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.MobileAppDateTimeFormat),
             NumberOfClicks = article.NumberOfClicks,
-            NewsPortal = GetLatestArticlesNewsPortal_2_0.GetProjection()
+            NewsPortal = GetGroupedLatestArticlesNewsPortal.GetProjection()
                 .Compile()
                 .Invoke(article.NewsPortal!),
             Categories = article.ArticleCategories
                 .AsQueryable()
                 .Select(articleCategory => articleCategory.Category)
-                .Select(GetLatestArticlesCategory_2_0.GetProjection()!),
+                .Select(GetGroupedLatestArticlesCategory.GetProjection()!),
         };
     }
 }

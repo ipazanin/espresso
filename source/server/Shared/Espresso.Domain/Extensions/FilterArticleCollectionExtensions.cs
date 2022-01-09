@@ -5,6 +5,7 @@
 using Espresso.Common.Enums;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
+using Espresso.Domain.Extensions;
 using Espresso.Domain.Utilities;
 
 namespace Espresso.Domain.Extensions;
@@ -85,7 +86,6 @@ public static class FilterArticleCollectionExtensions
                 article =>
                     !article.EditorConfiguration.IsHidden &&
                     article.CreateDateTime <= articleMinimumAge &&
-                    article.MainArticle == null &&
                     (categoryIds == null || article
                         .ArticleCategories
                         .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
@@ -110,53 +110,6 @@ public static class FilterArticleCollectionExtensions
         var categoryIds = new[] { categoryId };
 
         var filteredArticles = articles.FilterArticles(
-            categoryIds: categoryIds,
-            newsPortalIds: newsPortalIds,
-            titleSearchTerm: titleSearchTerm,
-            articleCreateDateTime: articleCreateDateTime);
-
-        return filteredArticles;
-    }
-
-    public static IEnumerable<Article> FilterArticles_2_0(
-                this IEnumerable<Article> articles,
-                IEnumerable<int>? categoryIds,
-                IEnumerable<int>? newsPortalIds,
-                string? titleSearchTerm,
-                DateTimeOffset? articleCreateDateTime)
-    {
-        var articleMinimumAge = articleCreateDateTime ?? DateTimeOffset.UtcNow;
-        var searchTerms = LanguageUtility.GetSearchTerms(titleSearchTerm);
-
-        var filteredArticles = articles
-            .Where(
-                article =>
-                    !article.EditorConfiguration.IsHidden &&
-                    article.CreateDateTime <= articleMinimumAge &&
-                    (categoryIds == null || article
-                        .ArticleCategories
-                        .Any(articleCategory => categoryIds.Contains(articleCategory.CategoryId))) &&
-                    (newsPortalIds?.Contains(article.NewsPortalId) != false) &&
-                    (
-                        searchTerms?
-                            .All(searchTerm => article
-                                .Title
-                                .ReplaceCroatianCharacters()
-                                .Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase)) != false));
-
-        return filteredArticles;
-    }
-
-    public static IEnumerable<Article> FilterArticles_2_0(
-        this IEnumerable<Article> articles,
-        int categoryId,
-        IEnumerable<int>? newsPortalIds,
-        string? titleSearchTerm,
-        DateTimeOffset? articleCreateDateTime)
-    {
-        var categoryIds = new[] { categoryId };
-
-        var filteredArticles = articles.FilterArticles_2_0(
             categoryIds: categoryIds,
             newsPortalIds: newsPortalIds,
             titleSearchTerm: titleSearchTerm,
@@ -209,5 +162,61 @@ public static class FilterArticleCollectionExtensions
                     !article.ArticleCategories.Any(articleCategory => articleCategory.Category!.CategoryType == CategoryType.Local));
 
         return filteredArticles;
+    }
+
+    public static IEnumerable<IEnumerable<Article>> GetGroupedArticlesBySimilarity(
+        this IEnumerable<Article> savedArticles,
+        DateTimeOffset? firstArticleCreateDateTime,
+        IEnumerable<int>? categoryIds,
+        IEnumerable<int>? newsPortalIds,
+        IEnumerable<string> keyWordsToFilterOut,
+        string? titleSearchTerm)
+    {
+        var filteredArticlesDictionary = savedArticles
+            .OrderArticlesByPublishDate()
+            .FilterArticles(
+                categoryIds: categoryIds,
+                newsPortalIds: newsPortalIds,
+                titleSearchTerm: titleSearchTerm,
+                articleCreateDateTime: firstArticleCreateDateTime)
+            .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
+            .ToDictionary(article => article.Id);
+
+        var groupedArticles = new List<IEnumerable<Article>>();
+
+        foreach (var article in filteredArticlesDictionary.Values)
+        {
+            if (!filteredArticlesDictionary.ContainsKey(article.Id))
+            {
+                continue;
+            }
+
+            var articles = new List<Article> { article };
+            foreach (var firstSimilarArticle in article.FirstSimilarArticles)
+            {
+                if (!filteredArticlesDictionary.TryGetValue(firstSimilarArticle.FirstArticleId, out var firstArticle))
+                {
+                    continue;
+                }
+
+                articles.Add(firstArticle);
+                filteredArticlesDictionary.Remove(firstSimilarArticle.FirstArticleId);
+            }
+
+            foreach (var secondSimilarArticle in article.SecondSimilarArticles)
+            {
+                if (!filteredArticlesDictionary.TryGetValue(secondSimilarArticle.SecondArticleId, out var secondArticle))
+                {
+                    continue;
+                }
+
+                articles.Add(secondArticle);
+                filteredArticlesDictionary.Remove(secondSimilarArticle.SecondArticleId);
+            }
+
+            groupedArticles.Add(articles);
+        }
+
+        return groupedArticles;
     }
 }

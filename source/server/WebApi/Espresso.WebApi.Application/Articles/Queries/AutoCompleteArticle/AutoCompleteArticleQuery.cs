@@ -4,7 +4,7 @@
 
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 
-namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle;
+namespace Espresso.WebApi.Application.Articles.Queries.AutoCompleteArticle;
 
 public record AutoCompleteArticleQuery : Request<AutoCompleteArticleQueryResponse>
 {

@@ -4,7 +4,7 @@
 
 using FluentValidation;
 
-namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticleScore;
+namespace Espresso.WebApi.Application.Articles.Commands.IncrementNumberOfClicks;
 
 public class IncrementNumberOfClicksCommandValidator : AbstractValidator<IncrementNumberOfClicksCommand>
 {

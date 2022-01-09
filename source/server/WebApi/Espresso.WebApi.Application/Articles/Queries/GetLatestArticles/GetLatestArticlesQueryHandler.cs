@@ -3,7 +3,6 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
-using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Extensions;
 using Espresso.Domain.Infrastructure;
@@ -11,18 +10,19 @@ using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles;
-
-public class GetLatestArticlesQueryHandler : IRequestHandler<GetLatestArticlesQuery, GetLatestArticlesQueryResponse>
+#pragma warning disable S101 // Types should be named in PascalCase
+public class GetArticlesQueryHandler_2_0 : IRequestHandler<GetLatestArticlesQuery, GetLatestArticlesQueryResponse>
+#pragma warning restore S101 // Types should be named in PascalCase
 {
     private readonly IMemoryCache _memoryCache;
     private readonly ISettingProvider _settingProvider;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GetLatestArticlesQueryHandler"/> class.
+    /// Initializes a new instance of the <see cref="GetArticlesQueryHandler_2_0"/> class.
     /// </summary>
     /// <param name="memoryCache"></param>
     /// <param name="settingProvider"></param>
-    public GetLatestArticlesQueryHandler(IMemoryCache memoryCache, ISettingProvider settingProvider)
+    public GetArticlesQueryHandler_2_0(IMemoryCache memoryCache, ISettingProvider settingProvider)
     {
         _memoryCache = memoryCache;
         _settingProvider = settingProvider;
@@ -42,7 +42,6 @@ public class GetLatestArticlesQueryHandler : IRequestHandler<GetLatestArticlesQu
 
         var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
             key: MemoryCacheConstants.NewsPortalKey);
-
         var keyWordsToFilterOut = request.KeyWordsToFilterOut is null ?
             Enumerable.Empty<string>() :
             request.KeyWordsToFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
@@ -57,8 +56,6 @@ public class GetLatestArticlesQueryHandler : IRequestHandler<GetLatestArticlesQu
 
         var newNewsPortals = GetNewNewsPortals(
             newsPortals: newsPortals,
-            newsPortalIds: newsPortalIds,
-            categoryIds: categoryIds,
             request: request);
 
         var featuredArticles = GetFeaturedArticles(
@@ -84,7 +81,7 @@ public class GetLatestArticlesQueryHandler : IRequestHandler<GetLatestArticlesQu
         return Task.FromResult(result: response);
     }
 
-    private static IEnumerable<IEnumerable<GetLatestArticlesArticle>> GetLatestArticles(
+    private static IEnumerable<GetLatestArticlesArticle> GetLatestArticles(
         IEnumerable<Article> savedArticles,
         DateTimeOffset? firstArticleCreateDateTime,
         GetLatestArticlesQuery request,
@@ -103,12 +100,8 @@ public class GetLatestArticlesQueryHandler : IRequestHandler<GetLatestArticlesQu
             .Skip(request.Skip)
             .Take(request.Take);
 
-        var projection = GetLatestArticlesArticle.GetProjection().Compile();
         var articleDtos = articles
-            .Select(article => new List<GetLatestArticlesArticle>()
-                {
-                        projection.Invoke(article),
-                }.Union(article.SubordinateArticles.Select(similarArticle => projection.Invoke(similarArticle.SubordinateArticle!))));
+            .Select(GetLatestArticlesArticle.GetProjection().Compile());
 
         return articleDtos;
     }
@@ -128,6 +121,31 @@ public class GetLatestArticlesQueryHandler : IRequestHandler<GetLatestArticlesQu
             ?.Where(categoryId => categoryId != default);
 
         return (newsPortalIds, categoryIds);
+    }
+
+    private IEnumerable<GetLatestArticlesNewsPortal> GetNewNewsPortals(
+        IEnumerable<NewsPortal> newsPortals,
+        GetLatestArticlesQuery request)
+    {
+        if (request.Skip != 0)
+        {
+            return Array.Empty<GetLatestArticlesNewsPortal>();
+        }
+
+        var (newsPortalIds, categoryIds) = ParseIds(request);
+
+        var newsPortalDtos = newsPortals
+            .Where(
+                predicate: NewsPortal.GetLatestSugestedNewsPortalsPredicate(
+                    newsPortalIds: newsPortalIds,
+                    categoryIds: categoryIds,
+                    maxAgeOfNewNewsPortal: _settingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal)
+                .Compile())
+            .Select(selector: GetLatestArticlesNewsPortal.GetProjection().Compile());
+
+        var random = new Random();
+
+        return newsPortalDtos.OrderBy(_ => random.Next());
     }
 
     private IEnumerable<GetLatestArticlesArticle> GetFeaturedArticles(
@@ -163,38 +181,11 @@ public class GetLatestArticlesQueryHandler : IRequestHandler<GetLatestArticlesQu
             .Take(trendingArticlesTake)
             .OrderArticlesByCategory(categoryIds);
 
-        var joinedArticles = featuredArticles
-            .Union(trendingArticles);
-
-        var articleDtos = joinedArticles
+        var articleDtos = featuredArticles
+            .Union(trendingArticles)
             .Take(featuredArticlesTake)
             .Select(GetLatestArticlesArticle.GetProjection().Compile());
 
         return articleDtos;
-    }
-
-    private IEnumerable<GetLatestArticlesNewsPortal> GetNewNewsPortals(
-        IEnumerable<NewsPortal> newsPortals,
-        IEnumerable<int>? newsPortalIds,
-        IEnumerable<int>? categoryIds,
-        GetLatestArticlesQuery request)
-    {
-        if (request.Skip != 0)
-        {
-            return Array.Empty<GetLatestArticlesNewsPortal>();
-        }
-
-        var newsPortalDtos = newsPortals
-            .Where(
-                predicate: NewsPortal.GetLatestSugestedNewsPortalsPredicate(
-                    newsPortalIds: newsPortalIds,
-                    categoryIds: categoryIds,
-                    maxAgeOfNewNewsPortal: _settingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal)
-                .Compile())
-            .Select(selector: GetLatestArticlesNewsPortal.GetProjection().Compile());
-
-        var random = new Random();
-
-        return newsPortalDtos.OrderBy(_ => random.Next());
     }
 }

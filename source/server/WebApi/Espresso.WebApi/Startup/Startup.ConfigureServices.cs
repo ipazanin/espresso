@@ -200,6 +200,7 @@ internal sealed partial class Startup
         services.AddScoped<IRemoveOldArticlesService, RemoveOldArticlesService>();
 
         services.AddScoped<IGoogleAnalyticsService, GoogleAnalyticsService>();
+        services.AddScoped<IArticleLoaderService, ArticleDatabaseLoaderService>();
     }
 
     /// <summary>

@@ -71,8 +71,8 @@ public static class ArticleUtility
             articleCategories: articleCategories,
             newsPortal: newsPortal,
             rssFeed: default,
-            subordinateArticles: default,
-            mainArticle: default);
+            firstSimilarArticles: null,
+            secondSimilarArticles: null);
 
         return article;
     }

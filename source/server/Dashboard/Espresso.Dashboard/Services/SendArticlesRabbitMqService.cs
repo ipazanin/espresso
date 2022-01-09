@@ -5,7 +5,6 @@
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Common.Services.Contracts;
 using Espresso.Dashboard.Application.IServices;
-using Espresso.Domain.Entities;
 using RabbitMQ.Client;
 
 namespace Espresso.Dashboard.Services;
@@ -45,18 +44,18 @@ public class SendArticlesRabbitMqService : ISendArticlesService
     }
 
     public async Task SendArticlesMessage(
-        IEnumerable<Article> createArticles,
-        IEnumerable<Article> updateArticles,
+        IEnumerable<Guid> createArticleIds,
+        IEnumerable<Guid> updateArticleIds,
         CancellationToken cancellationToken)
     {
-        if (!createArticles.Any() && !updateArticles.Any())
+        if (!createArticleIds.Any() && !updateArticleIds.Any())
         {
             return;
         }
 
         var articlesBodyUtf8Bytes = await GetMessageBody(
-            createArticles: createArticles,
-            updateArticles: updateArticles,
+            createArticleIds: createArticleIds,
+            updateArticleIds: updateArticleIds,
             cancellationToken: cancellationToken);
 
         var factory = new ConnectionFactory()
@@ -80,15 +79,13 @@ public class SendArticlesRabbitMqService : ISendArticlesService
     }
 
     private async Task<byte[]> GetMessageBody(
-        IEnumerable<Article> createArticles,
-        IEnumerable<Article> updateArticles,
+        IEnumerable<Guid> createArticleIds,
+        IEnumerable<Guid> updateArticleIds,
         CancellationToken cancellationToken)
     {
-        var articleDtoProjection = ArticleDto.GetProjection().Compile();
-
         var data = new ArticlesBodyDto(
-            createdArticles: createArticles.Select(articleDtoProjection),
-            updatedArticles: updateArticles.Select(articleDtoProjection));
+            createdArticleIds: createArticleIds,
+            updatedArticleIds: updateArticleIds);
 
         var articlesBodyJson = await _jsonService.Serialize(data, cancellationToken);
         var articlesBodyUtf8Bytes = Encoding.UTF8.GetBytes(articlesBodyJson);

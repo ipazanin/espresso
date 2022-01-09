@@ -10,7 +10,7 @@ using Espresso.WebApi.Application.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticleScore;
+namespace Espresso.WebApi.Application.Articles.Commands.IncrementNumberOfClicks;
 
 public class IncrementNumberOfClicksCommandHandler : IRequestHandler<IncrementNumberOfClicksCommand>
 {

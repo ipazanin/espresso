@@ -35,8 +35,8 @@ public class Article
     /// <param name="articleCategories"></param>
     /// <param name="newsPortal"></param>
     /// <param name="rssFeed"></param>
-    /// <param name="subordinateArticles"></param>
-    /// <param name="mainArticle"></param>
+    /// <param name="firstSimilarArticles"></param>
+    /// <param name="secondSimilarArticles"></param>
     public Article(
         Guid id,
         string url,
@@ -55,8 +55,8 @@ public class Article
         IEnumerable<ArticleCategory>? articleCategories,
         NewsPortal? newsPortal,
         RssFeed? rssFeed,
-        IEnumerable<SimilarArticle>? subordinateArticles,
-        SimilarArticle? mainArticle)
+        IEnumerable<SimilarArticle>? firstSimilarArticles,
+        IEnumerable<SimilarArticle>? secondSimilarArticles)
     {
         Id = id;
         Url = url;
@@ -75,8 +75,8 @@ public class Article
         ArticleCategories = articleCategories?.ToList() ?? ArticleCategories;
         NewsPortal = newsPortal;
         RssFeed = rssFeed;
-        SubordinateArticles = subordinateArticles?.ToList() ?? SubordinateArticles;
-        MainArticle = mainArticle;
+        FirstSimilarArticles = firstSimilarArticles?.ToList() ?? FirstSimilarArticles;
+        SecondSimilarArticles = secondSimilarArticles?.ToList() ?? SecondSimilarArticles;
     }
 
     /// <summary>
@@ -129,9 +129,9 @@ public class Article
 
     public ICollection<ArticleCategory> ArticleCategories { get; private set; } = new List<ArticleCategory>();
 
-    public ICollection<SimilarArticle> SubordinateArticles { get; private set; } = new List<SimilarArticle>();
+    public ICollection<SimilarArticle> FirstSimilarArticles { get; private set; } = new List<SimilarArticle>();
 
-    public SimilarArticle? MainArticle { get; private set; }
+    public ICollection<SimilarArticle> SecondSimilarArticles { get; private set; } = new List<SimilarArticle>();
 
     /// <summary>
     ///
@@ -287,11 +287,6 @@ public class Article
             .ToList();
     }
 
-    public void SetMainArticle(SimilarArticle mainArticle)
-    {
-        MainArticle = mainArticle;
-    }
-
     public void SetNewsPortal(NewsPortal newsPortal)
     {
         NewsPortal = newsPortal;
@@ -304,33 +299,8 @@ public class Article
         RssFeedId = rssFeed.Id;
     }
 
-    public void RemoveSimilarArticles()
+    public IEnumerable<SimilarArticle> GetSimilarArticles()
     {
-        if (
-            MainArticle is not null &&
-            MainArticle.MainArticle is not null)
-        {
-            MainArticle.MainArticle.RemoveSubordinateArticle(this);
-            MainArticle = null;
-        }
-
-        foreach (var subordinateArticle in SubordinateArticles)
-        {
-            subordinateArticle.SubordinateArticle?.RemoveMainArticle();
-        }
-
-        SubordinateArticles.Clear();
-    }
-
-    private void RemoveSubordinateArticle(Article subordinateArticle)
-    {
-        SubordinateArticles = SubordinateArticles
-            .Where(similarArticle => similarArticle.SubordinateArticleId != subordinateArticle.Id)
-            .ToList();
-    }
-
-    private void RemoveMainArticle()
-    {
-        MainArticle = null;
+        return FirstSimilarArticles.Union(SecondSimilarArticles);
     }
 }

@@ -14,6 +14,4 @@ public record ParseRssFeedsCommand : Request<ParseRssFeedsCommandResponse>
     public IEnumerable<Category> Categories { get; init; } = Array.Empty<Category>();
 
     public IDictionary<Guid, Article> Articles { get; init; } = new Dictionary<Guid, Article>();
-
-    public ISet<Guid> SubordinateArticleIds { get; init; } = new HashSet<Guid>();
 }

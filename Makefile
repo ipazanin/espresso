@@ -401,6 +401,9 @@ consolidate::
 format::
 	dotnet format --verify-no-changes --no-restore $(SolutionPath)
 
+format-fix::
+	dotnet format --no-restore $(SolutionPath)
+
 test::
 ifeq ($(strip $(verbosity)),)
 	dotnet test --verbosity $(DefaultVerbosity) $(SolutionPath)

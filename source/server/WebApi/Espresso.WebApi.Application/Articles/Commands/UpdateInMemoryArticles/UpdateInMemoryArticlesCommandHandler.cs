@@ -2,11 +2,10 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
+using Espresso.Application.Services.Contracts;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
-using Espresso.Domain.ValueObjects.ArticleValueObjects;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -18,6 +17,7 @@ public class UpdateInMemoryArticlesCommandHandler :
     private readonly IMemoryCache _memoryCache;
     private readonly ITrendingScoreService _trendingScoreService;
     private readonly IRemoveOldArticlesService _removeOldArticlesService;
+    private readonly IArticleLoaderService _articleLoaderService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UpdateInMemoryArticlesCommandHandler"/> class.
@@ -25,37 +25,39 @@ public class UpdateInMemoryArticlesCommandHandler :
     /// <param name="memoryCache"></param>
     /// <param name="trendingScoreService"></param>
     /// <param name="removeOldArticlesService"></param>
+    /// <param name="articleLoaderService"></param>
     public UpdateInMemoryArticlesCommandHandler(
         IMemoryCache memoryCache,
         ITrendingScoreService trendingScoreService,
-        IRemoveOldArticlesService removeOldArticlesService)
+        IRemoveOldArticlesService removeOldArticlesService,
+        IArticleLoaderService articleLoaderService)
     {
         _memoryCache = memoryCache;
         _trendingScoreService = trendingScoreService;
         _removeOldArticlesService = removeOldArticlesService;
+        _articleLoaderService = articleLoaderService;
     }
 
-    public Task<UpdateInMemoryArticlesCommandResponse> Handle(UpdateInMemoryArticlesCommand request, CancellationToken cancellationToken)
+    public async Task<UpdateInMemoryArticlesCommandResponse> Handle(UpdateInMemoryArticlesCommand request, CancellationToken cancellationToken)
     {
-        var savedArticlesDictionary = _memoryCache
-            .Get<IEnumerable<Article>>(key: MemoryCacheConstants.ArticleKey)
-            .ToDictionary(article => article.Id);
+        var savedArticles = _memoryCache
+            .Get<IList<Article>>(key: MemoryCacheConstants.ArticleKey);
+        var savedArticlesDictionary = savedArticles.ToDictionary(article => article.Id);
 
-        var newsPortalsDictionary = _memoryCache
-            .Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey)
-            .ToDictionary(newsPortal => newsPortal.Id);
+        var newsPortals = _memoryCache
+            .Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
 
-        var categoriesDictionary = _memoryCache
-            .Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey)
-            .ToDictionary(category => category.Id);
+        var categories = _memoryCache
+            .Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey);
 
-        var articleDtos = request.CreatedArticles.Union(request.UpdatedArticles);
+        var articleIds = request.CreatedArticleIds.Union(request.UpdatedArticleIds);
 
-        UpdateInMemoryArticles(
+        await UpdateInMemoryArticles(
             articlesDictionary: savedArticlesDictionary,
-            newsPortalsDictionary: newsPortalsDictionary,
-            categoriesDictionary: categoriesDictionary,
-            articleDtos: articleDtos);
+            newsPortals: newsPortals,
+            categories: categories,
+            articleIds: articleIds,
+            cancellationToken: cancellationToken);
 
         var articles = _removeOldArticlesService
             .RemoveOldArticles(savedArticlesDictionary.Values);
@@ -68,103 +70,39 @@ public class UpdateInMemoryArticlesCommandHandler :
 
         var response = new UpdateInMemoryArticlesCommandResponse
         {
-            NumberOfUpdatedArticles = request.UpdatedArticles.Count(),
-            NumberOfCreatedArticles = request.CreatedArticles.Count(),
+            NumberOfUpdatedArticles = request.UpdatedArticleIds.Count(),
+            NumberOfCreatedArticles = request.CreatedArticleIds.Count(),
         };
 
-        return Task.FromResult(response);
+        return response;
     }
 
-    private static void UpdateInMemoryArticles(
+    private async Task UpdateInMemoryArticles(
         IDictionary<Guid, Article> articlesDictionary,
-        IDictionary<int, NewsPortal> newsPortalsDictionary,
-        IDictionary<int, Category> categoriesDictionary,
-        IEnumerable<ArticleDto> articleDtos)
+        IEnumerable<NewsPortal> newsPortals,
+        IEnumerable<Category> categories,
+        IEnumerable<Guid> articleIds,
+        CancellationToken cancellationToken)
     {
-        foreach (var articleDto in articleDtos)
-        {
-            var article = CreateArticle(
-                articleDto: articleDto,
-                newsPortalsDictionary: newsPortalsDictionary,
-                categoriesDictionary: categoriesDictionary);
+        var loadedArticles = await _articleLoaderService.LoadArticlesForWebApi(
+            articleIds: articleIds.ToHashSet(),
+            newsPortals: newsPortals,
+            categories: categories,
+            cancellationToken: cancellationToken);
 
-            if (articlesDictionary.ContainsKey(article.Id))
+        _trendingScoreService.CalculateTrendingScore(loadedArticles);
+
+        foreach (var loadedArticle in loadedArticles)
+        {
+            if (articlesDictionary.TryGetValue(loadedArticle.Id, out var savedArticle))
             {
-                articlesDictionary.Remove(article.Id);
-                articlesDictionary.Add(article.Id, article);
+                articlesDictionary.Remove(savedArticle.Id);
+                articlesDictionary.Add(loadedArticle.Id, loadedArticle);
             }
             else
             {
-                articlesDictionary.Add(article.Id, article);
+                articlesDictionary.Add(loadedArticle.Id, loadedArticle);
             }
         }
-
-        var articleDtoIds = articleDtos.Select(articleDto => articleDto.Id);
-        var newArticles = articlesDictionary
-            .Values
-            .Where(article => articleDtoIds.Contains(article.Id));
-
-        foreach (var article in newArticles)
-        {
-            if (
-                article.MainArticle is not null &&
-                articlesDictionary.TryGetValue(article.MainArticle.MainArticleId, out var mainArticle))
-            {
-                var subordinateArticle = article;
-
-                subordinateArticle.MainArticle.SetMainArticle(mainArticle);
-                subordinateArticle.MainArticle.SetSubordinateArticle(subordinateArticle);
-
-                mainArticle.SubordinateArticles.Add(article.MainArticle);
-            }
-        }
-    }
-
-    private static Article CreateArticle(
-        ArticleDto articleDto,
-        IDictionary<int, NewsPortal> newsPortalsDictionary,
-        IDictionary<int, Category> categoriesDictionary)
-    {
-        var articleCategories = articleDto
-            .ArticleCategories
-            .Select(articleCategory => new ArticleCategory(
-                id: articleCategory.Id,
-                articleId: articleDto.Id,
-                categoryId: articleCategory.CategoryId,
-                article: null,
-                category: categoriesDictionary[articleCategory.CategoryId]));
-
-        var mainArticle = articleDto.MainArticle == null ?
-            null :
-            new SimilarArticle(
-                id: articleDto.MainArticle.Id,
-                similarityScore: articleDto.MainArticle.SimilarityScore,
-                mainArticleId: articleDto.MainArticle.MainArticleId,
-                mainArticle: null,
-                subordinateArticleId: articleDto.MainArticle.SubordinateArticleId,
-                subordinateArticle: null);
-
-        var article = new Article(
-            id: articleDto.Id,
-            url: articleDto.Url,
-            webUrl: articleDto.WebUrl,
-            summary: articleDto.Summary,
-            title: articleDto.Title,
-            imageUrl: articleDto.ImageUrl,
-            createDateTime: articleDto.CreateDateTime,
-            updateDateTime: articleDto.UpdateDateTime,
-            publishDateTime: articleDto.PublishDateTime!,
-            numberOfClicks: articleDto.NumberOfClicks,
-            trendingScore: articleDto.TrendingScore,
-            editorConfiguration: new EditorConfiguration(),
-            newsPortalId: articleDto.NewsPortalId,
-            rssFeedId: articleDto.RssFeedId,
-            articleCategories: articleCategories,
-            newsPortal: newsPortalsDictionary[articleDto.NewsPortalId],
-            rssFeed: null,
-            subordinateArticles: null,
-            mainArticle: mainArticle);
-
-        return article;
     }
 }

@@ -3,7 +3,6 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
-using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.CategoryEnums;
 using Espresso.Domain.Extensions;
@@ -48,7 +47,7 @@ public class GetLatestArticlesQueryHandler_1_3 : IRequestHandler<GetLatestArticl
 
         var articleDtos = articles
             .OrderArticlesByPublishDate()
-            .FilterArticles_2_0(
+            .FilterArticles(
                 categoryIds: categoryIds,
                 newsPortalIds: newsPortalIds,
                 titleSearchTerm: request.TitleSearchQuery,

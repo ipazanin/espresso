@@ -80,7 +80,7 @@ public class GroupSimilarArticlesServiceTest
             };
         var service = new GroupSimilarArticlesService(settingProviderMock.Object, loggerServiceMock.Object);
 
-        var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
+        var similarArticles = service.GroupSimilarArticles(articles, default);
         var actualSimilarArticlesCount = similarArticles.Count();
 
         Assert.Equal(
@@ -122,7 +122,7 @@ public class GroupSimilarArticlesServiceTest
         var articles = new List<Article>();
         var service = new GroupSimilarArticlesService(settingProviderMock.Object, loggerServiceMock.Object);
 
-        var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
+        var similarArticles = service.GroupSimilarArticles(articles, default);
         var actualSimilarArticlesCount = similarArticles.Count();
 
         Assert.Equal(
@@ -173,7 +173,7 @@ public class GroupSimilarArticlesServiceTest
             };
         var service = new GroupSimilarArticlesService(settingProviderMock.Object, loggerServiceMock.Object);
 
-        var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
+        var similarArticles = service.GroupSimilarArticles(articles, default);
         var actualSimilarArticlesCount = similarArticles.Count();
 
         Assert.Equal(
@@ -235,7 +235,7 @@ public class GroupSimilarArticlesServiceTest
             };
         var service = new GroupSimilarArticlesService(settingProviderMock.Object, loggerServiceMock.Object);
 
-        var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
+        var similarArticles = service.GroupSimilarArticles(articles, default);
         var actualSimilarArticlesCount = similarArticles.Count();
 
         Assert.Equal(
@@ -296,7 +296,7 @@ public class GroupSimilarArticlesServiceTest
             };
         var service = new GroupSimilarArticlesService(settingProviderMock.Object, loggerServiceMock.Object);
 
-        var similarArticles = service.GroupSimilarArticles(articles, new HashSet<Guid>(), default);
+        var similarArticles = service.GroupSimilarArticles(articles, default);
         var actualSimilarArticlesCount = similarArticles.Count();
 
         Assert.Equal(

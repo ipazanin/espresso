@@ -60,11 +60,11 @@ public class SendArticlesHttpService : ISendArticlesService
     }
 
     public async Task SendArticlesMessage(
-        IEnumerable<Article> createArticles,
-        IEnumerable<Article> updateArticles,
+        IEnumerable<Guid> createArticleIds,
+        IEnumerable<Guid> updateArticleIds,
         CancellationToken cancellationToken)
     {
-        if (!createArticles.Any() && !updateArticles.Any())
+        if (!createArticleIds.Any() && !updateArticleIds.Any())
         {
             return;
         }
@@ -77,11 +77,9 @@ public class SendArticlesHttpService : ISendArticlesService
                 (headerKey: HttpHeaderConstants.DeviceTypeHeaderName, headerValue: DeviceType.RssFeedParser.GetIntegerValueAsString()),
             };
 
-        var articleDtoProjection = ArticleDto.GetProjection().Compile();
-
         var data = new ArticlesBodyDto(
-            createdArticles: createArticles.Select(articleDtoProjection),
-            updatedArticles: updateArticles.Select(articleDtoProjection));
+            createdArticleIds: createArticleIds,
+            updatedArticleIds: updateArticleIds);
 
         var httpContent = await _jsonService.GetJsonHttpContent(
             value: data,

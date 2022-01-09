@@ -66,8 +66,6 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
 
     private IEnumerable<Category> Categories { get; set; } = Array.Empty<Category>();
 
-    private ISet<Guid> SubordinateArticleIds { get; set; } = new HashSet<Guid>();
-
     public override async Task StartAsync(CancellationToken cancellationToken)
     {
         var stopwatch = Stopwatch.StartNew();
@@ -89,8 +87,9 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
 
         var articles = await context.Articles
             .Include(article => article.ArticleCategories)
-            .Include(article => article.MainArticle)
+            .Include(article => article.NewsPortal)
             .AsSplitQuery()
+            .AsNoTracking()
             .ToListAsync(cancellationToken: cancellationToken);
 
         var rssFeeds = await context.RssFeeds
@@ -103,20 +102,12 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
             .AsSplitQuery()
             .ToListAsync(cancellationToken: cancellationToken);
 
-        var similarArticles = await context
-            .SimilarArticles
-            .ToListAsync(cancellationToken: cancellationToken);
-
         RssFeeds = rssFeeds;
 
         Categories = categories;
 
         Articles = articles.ToDictionary(article => article.Id);
         _memoryCache.Set(MemoryCacheConstants.ArticleKey, Articles);
-
-        SubordinateArticleIds = similarArticles
-            .Select(similarArticle => similarArticle.SubordinateArticleId)
-            .ToHashSet();
 
         stopwatch.Stop();
 
@@ -128,13 +119,13 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
         var rssFeedCount = rssFeeds.Count;
 
         var arguments = new List<(string parameterName, object parameterValue)>
-            {
-                (nameof(duration), duration),
-                (nameof(categoriesCount), categoriesCount),
-                (nameof(newsPortalsCount), newsPortalsCount),
-                (nameof(allArticlesCount), allArticlesCount),
-                (nameof(rssFeedCount), rssFeedCount),
-            };
+        {
+            (nameof(duration), duration),
+            (nameof(categoriesCount), categoriesCount),
+            (nameof(newsPortalsCount), newsPortalsCount),
+            (nameof(allArticlesCount), allArticlesCount),
+            (nameof(rssFeedCount), rssFeedCount),
+        };
 
         loggerService.Log(eventName, LogLevel.Information, arguments);
 
@@ -158,7 +149,6 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
                 Articles = Articles,
                 RssFeeds = RssFeeds,
                 Categories = Categories,
-                SubordinateArticleIds = SubordinateArticleIds,
             },
             cancellationToken: cancellationToken);
 

@@ -2,7 +2,7 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-namespace Espresso.WebApi.Application.Articles.AutoCompleteArticle;
+namespace Espresso.WebApi.Application.Articles.Queries.AutoCompleteArticle;
 
 public record AutoCompleteArticleQueryResponse
 {

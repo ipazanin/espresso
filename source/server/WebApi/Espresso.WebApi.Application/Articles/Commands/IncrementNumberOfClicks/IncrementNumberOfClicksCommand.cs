@@ -5,7 +5,7 @@
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using MediatR;
 
-namespace Espresso.WebApi.Application.Articles.Commands.IncrementTrendingArticleScore;
+namespace Espresso.WebApi.Application.Articles.Commands.IncrementNumberOfClicks;
 
 public record IncrementNumberOfClicksCommand : Request<Unit>
 {

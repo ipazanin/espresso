@@ -1,14 +1,13 @@
-﻿// GetLatestArticlesNewsPortal_2_0.cs
+﻿// GetGroupedCategoryArticlesNewsPortal.cs
 //
 // © 2021 Espresso News. All rights reserved.
 
 using System.Linq.Expressions;
 using Espresso.Domain.Entities;
 
-namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_2_0;
-#pragma warning disable S101 // Types should be named in PascalCase
-public record GetLatestArticlesNewsPortal_2_0
-#pragma warning restore S101 // Types should be named in PascalCase
+namespace Espresso.WebApi.Application.Articles.Queries.GetGroupedCategoryArticles;
+
+public record GetGroupedCategoryArticlesNewsPortal
 {
     /// <summary>
     /// Gets news Portal ID.
@@ -22,13 +21,13 @@ public record GetLatestArticlesNewsPortal_2_0
 
     public string IconUrl { get; private set; } = string.Empty;
 
-    private GetLatestArticlesNewsPortal_2_0()
+    private GetGroupedCategoryArticlesNewsPortal()
     {
     }
 
-    public static Expression<Func<NewsPortal, GetLatestArticlesNewsPortal_2_0>> GetProjection()
+    public static Expression<Func<NewsPortal, GetGroupedCategoryArticlesNewsPortal>> GetProjection()
     {
-        return newsPortal => new GetLatestArticlesNewsPortal_2_0
+        return newsPortal => new GetGroupedCategoryArticlesNewsPortal
         {
             Id = newsPortal.Id,
             Name = newsPortal.Name,

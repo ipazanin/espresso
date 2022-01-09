@@ -3,7 +3,6 @@
 // © 2021 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
-using Espresso.Common.Extensions;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Extensions;
 using Espresso.Domain.Infrastructure;
@@ -32,29 +31,45 @@ public class GetCategoryArticlesQueryHandler : IRequestHandler<GetCategoryArticl
         GetCategoryArticlesQuery request,
         CancellationToken cancellationToken)
     {
+        var articles = _memoryCache.Get<IEnumerable<Article>>(
+            key: MemoryCacheConstants.ArticleKey);
+
+        var firstArticle = articles.FirstOrDefault(
+            article => article.Id.Equals(request.FirstArticleId));
+
         var newsPortalIds = request.NewsPortalIds
             ?.Replace(" ", string.Empty)
             ?.Split(',')
             ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
             ?.Where(newsPortalId => newsPortalId != default);
 
-        var newsPortalDtos = GetNewNewsPortals(
-            newsPortalIds: newsPortalIds,
-            request: request);
-
         var keyWordsToFilterOut = request.KeyWordsToFilterOut is null ?
             Enumerable.Empty<string>() :
             request.KeyWordsToFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
-        var articleDtos = GetArticles(
-            request: request,
+        var filteredArticles = articles
+            .OrderArticlesByPublishDate()
+            .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
+            .FilterArticles(
+                categoryId: request.CategoryId,
+                newsPortalIds: newsPortalIds,
+                titleSearchTerm: request.TitleSearchQuery,
+                articleCreateDateTime: firstArticle?.CreateDateTime)
+            .Skip(request.Skip)
+            .Take(request.Take);
+
+        var articleDtos = filteredArticles.Select(GetCategoryArticlesArticle.GetProjection().Compile());
+
+        var newsPortalDtos = GetNewNewsPortals(
             newsPortalIds: newsPortalIds,
-            keyWordsToFilterOut: keyWordsToFilterOut);
+            request: request);
+
+        var random = new Random();
 
         var response = new GetCategoryArticlesQueryResponse
         {
             Articles = articleDtos,
-            NewNewsPortals = newsPortalDtos,
+            NewNewsPortals = newsPortalDtos.OrderBy(newsPortal => random.Next()),
             NewNewsPortalsPosition = _settingProvider.LatestSetting.NewsPortalSetting.NewNewsPortalsPosition,
         };
 
@@ -73,8 +88,6 @@ public class GetCategoryArticlesQueryHandler : IRequestHandler<GetCategoryArticl
         var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
             key: MemoryCacheConstants.NewsPortalKey);
 
-        var random = new Random();
-
         var newsPortalDtos = newsPortals
             .Where(
                 NewsPortal.GetCategorySugestedNewsPortalsPredicate(
@@ -83,41 +96,8 @@ public class GetCategoryArticlesQueryHandler : IRequestHandler<GetCategoryArticl
                     regionId: request.RegionId,
                     maxAgeOfNewNewsPortal: _settingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal)
                 .Compile())
-            .Select(selector: GetCategoryArticlesNewsPortal.GetProjection().Compile())
-            .OrderBy(_ => random.Next());
+            .Select(selector: GetCategoryArticlesNewsPortal.GetProjection().Compile());
 
         return newsPortalDtos;
-    }
-
-    private IEnumerable<IEnumerable<GetCategoryArticlesArticle>> GetArticles(
-        GetCategoryArticlesQuery request,
-        IEnumerable<int>? newsPortalIds,
-        IEnumerable<string> keyWordsToFilterOut)
-    {
-        var articles = _memoryCache.Get<IEnumerable<Article>>(
-            key: MemoryCacheConstants.ArticleKey);
-
-        var firstArticle = articles.FirstOrDefault(
-            article => article.Id.Equals(request.FirstArticleId));
-
-        var filteredArticles = articles
-            .OrderArticlesByPublishDate()
-            .FilterArticles(
-                categoryId: request.CategoryId,
-                newsPortalIds: newsPortalIds,
-                titleSearchTerm: request.TitleSearchQuery,
-                articleCreateDateTime: firstArticle?.CreateDateTime)
-            .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
-            .Skip(request.Skip)
-            .Take(request.Take);
-
-        var projection = GetCategoryArticlesArticle.GetProjection().Compile();
-        var articleDtos = filteredArticles
-            .Select(article => new List<GetCategoryArticlesArticle>()
-                {
-                        projection.Invoke(article),
-                }.Union(article.SubordinateArticles.Select(similarArticle => projection.Invoke(similarArticle.SubordinateArticle!))));
-
-        return articleDtos;
     }
 }

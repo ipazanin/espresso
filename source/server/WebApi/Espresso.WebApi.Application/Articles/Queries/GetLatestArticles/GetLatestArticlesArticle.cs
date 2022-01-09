@@ -7,7 +7,6 @@ using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles;
-
 public record GetLatestArticlesArticle
 {
     /// <summary>
