@@ -113,7 +113,7 @@ public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand,
         _espressoDatabaseContext.ArticleCategories.RemoveRange(deleteArticleCategories);
         await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
 
-        _espressoDatabaseContext.SimilarArticles.AddRange(similarArticles.ToArray());
+        _espressoDatabaseContext.SimilarArticles.AddRange(similarArticles);
 
         _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _espressoDatabaseContext.SaveChangesAsync");
         await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);

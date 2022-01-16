@@ -66,7 +66,7 @@ public class LoginWith2faModel : PageModel
 
         if (user == null)
         {
-            throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+            throw new InvalidOperationException("Unable to load two-factor authentication user.");
         }
 
         ReturnUrl = returnUrl;

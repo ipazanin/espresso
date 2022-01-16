@@ -192,26 +192,29 @@ public static class FilterArticleCollectionExtensions
             }
 
             var articles = new List<Article> { article };
-            foreach (var firstSimilarArticle in article.FirstSimilarArticles)
+
+            var firstArticleIds = article.FirstSimilarArticles.Select(firstSimilarArticle => firstSimilarArticle.FirstArticleId);
+            foreach (var firstArticleId in firstArticleIds)
             {
-                if (!filteredArticlesDictionary.TryGetValue(firstSimilarArticle.FirstArticleId, out var firstArticle))
+                if (!filteredArticlesDictionary.TryGetValue(firstArticleId, out var firstArticle))
                 {
                     continue;
                 }
 
                 articles.Add(firstArticle);
-                filteredArticlesDictionary.Remove(firstSimilarArticle.FirstArticleId);
+                filteredArticlesDictionary.Remove(firstArticleId);
             }
 
-            foreach (var secondSimilarArticle in article.SecondSimilarArticles)
+            var secondArticleIds = article.SecondSimilarArticles.Select(secondSimilarArticle => secondSimilarArticle.SecondArticleId);
+            foreach (var secondArticleId in secondArticleIds)
             {
-                if (!filteredArticlesDictionary.TryGetValue(secondSimilarArticle.SecondArticleId, out var secondArticle))
+                if (!filteredArticlesDictionary.TryGetValue(secondArticleId, out var secondArticle))
                 {
                     continue;
                 }
 
                 articles.Add(secondArticle);
-                filteredArticlesDictionary.Remove(secondSimilarArticle.SecondArticleId);
+                filteredArticlesDictionary.Remove(secondArticleId);
             }
 
             groupedArticles.Add(articles);

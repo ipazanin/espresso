@@ -93,12 +93,9 @@ public class CreateArticlesService : ICreateArticlesService
 
     private static string? GetUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks, string? itemId)
     {
-        if (rssFeed.AmpConfiguration?.HasAmpArticles == true)
-        {
-            return GetAmpUrl(rssFeed, itemLinks, itemId);
-        }
-
-        return GetNormalUrl(rssFeed, itemLinks);
+        return rssFeed.AmpConfiguration?.HasAmpArticles == true ?
+            GetAmpUrl(rssFeed, itemLinks, itemId) :
+            GetNormalUrl(rssFeed, itemLinks);
     }
 
     private static string? GetNormalUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks)

@@ -25,7 +25,7 @@ public partial class RemoveSimilarArticlesConfiguration : Migration
                 Id = table.Column<Guid>(type: "uuid", nullable: false),
                 MainArticleId = table.Column<Guid>(type: "uuid", nullable: false),
                 SimilarityScore = table.Column<double>(type: "double precision", nullable: false),
-                SubordinateArticleId = table.Column<Guid>(type: "uuid", nullable: false)
+                SubordinateArticleId = table.Column<Guid>(type: "uuid", nullable: false),
             },
             constraints: table =>
             {
