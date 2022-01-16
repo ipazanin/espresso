@@ -446,11 +446,10 @@ infer-csharp::
 	docker-compose -f ./scripts/analysis/infer-csharp.yml up --build
 
 start-dashboard::
-ifeq ($(strip $(arg)),)
 	dotnet run --project $(ParserProjectPath) --configuration $(ReleaseConfiguration) --launch-profile $(DashboardLocalLaunchProfile)
-else
+
+watch-dashboard::
 	dotnet watch --project $(ParserProjectPath) run --configuration $(DebugConfiguration)
-endif
 
 start-webapi::
 	make compose-database arg1=up arg2="-d"

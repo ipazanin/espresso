@@ -29,11 +29,8 @@ public class ReadinessHealthCheck : IHealthCheck
     /// <inheritdoc/>
     public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
     {
-        if (ReadinessTaskCompleted)
-        {
-            return Task.FromResult(HealthCheckResult.Healthy("Application is ready to accept requests."));
-        }
-
-        return Task.FromResult(HealthCheckResult.Unhealthy("Application is not ready to accept requests."));
+        return ReadinessTaskCompleted ?
+            Task.FromResult(HealthCheckResult.Healthy("Application is ready to accept requests.")) :
+            Task.FromResult(HealthCheckResult.Unhealthy("Application is not ready to accept requests."));
     }
 }
