@@ -1,4 +1,4 @@
-﻿// ArticlesList.cs
+﻿// ArticlesListBase.cs
 //
 // © 2021 Espresso News. All rights reserved.
 
