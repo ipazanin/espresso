@@ -17,7 +17,7 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure;
 /// <typeparam name="TResponse">Mediator response.</typeparam>
 public class ExceptionRequestPipeline<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : notnull
+    where TRequest : IRequest<TResponse>
 {
     private readonly ILoggerService<ExceptionRequestPipeline<TRequest, TResponse>> _loggerService;
     private readonly ISlackService _slackService;

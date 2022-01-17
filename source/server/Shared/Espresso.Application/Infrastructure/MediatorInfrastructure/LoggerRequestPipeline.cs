@@ -19,7 +19,7 @@ namespace Espresso.Application.Infrastructure.MediatorInfrastructure;
 /// <typeparam name="TResponse">Mediator response.</typeparam>
 public class LoggerRequestPipeline<TRequest, TResponse> :
     IPipelineBehavior<TRequest, TResponse>
-    where TRequest : notnull
+    where TRequest : IRequest<TResponse>
 {
     private readonly Stopwatch _stopWatch;
     private readonly IMemoryCache _memoryCache;

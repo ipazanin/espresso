@@ -136,8 +136,14 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
 
     public override async Task DoWork(CancellationToken cancellationToken)
     {
-        using var scope = _serviceScopeFactory.CreateScope();
+        await CreateArticles(cancellationToken);
+        await DeleteArticles(cancellationToken);
+        _memoryCache.Set(MemoryCacheConstants.ArticleKey, Articles);
+    }
 
+    private async Task CreateArticles(CancellationToken cancellationToken)
+    {
+        using var scope = _serviceScopeFactory.CreateScope();
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
         _ = await mediator.Send(
@@ -151,6 +157,12 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
                 Categories = Categories,
             },
             cancellationToken: cancellationToken);
+    }
+
+    private async Task DeleteArticles(CancellationToken cancellationToken)
+    {
+        using var scope = _serviceScopeFactory.CreateScope();
+        var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
         _ = await mediator.Send(
             request: new DeleteOldArticlesCommand
@@ -161,6 +173,5 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
                 TargetedApiVersion = _configuration.AppConfiguration.Version,
             },
             cancellationToken: cancellationToken);
-        _memoryCache.Set(MemoryCacheConstants.ArticleKey, Articles);
     }
 }

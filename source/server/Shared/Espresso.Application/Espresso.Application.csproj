@@ -25,13 +25,13 @@
 
   <!--Packages-->
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.6" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
     <PackageReference Include="Cronos" Version="0.7.1" />
     <PackageReference Include="Google.Analytics.Data.V1Beta" Version="1.0.0-beta03" />
     <!-- Needed for Google.Analytics.Data to run on Linux -->
-    <PackageReference Include="Grpc.Core" Version="2.42.0" />
+    <PackageReference Include="Grpc.Core" Version="2.43.0" />
   </ItemGroup>
   <!--Packages-->
 
