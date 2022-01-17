@@ -205,12 +205,14 @@ ifeq ($(strip $(v)),)
 	docker build \
 	-f $(EspressoWebApiDockerfilePath) \
 	-t $(WebApiDockerImage):$(DefaultDockerImageTag) \
+	--platform linux/amd64 \
 	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
 	$(DockerBuildContextPath)
 	docker push $(WebApiDockerImage):$(DefaultDockerImageTag)
 	docker build \
 	-f $(EspressoWebApiDockerfilePath) \
 	-t $(WebApiDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag) \
+	--platform linux/amd64 \
 	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
 	$(DockerBuildContextPath)
 	docker push $(WebApiDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag)	
@@ -218,12 +220,14 @@ else
 	docker build \
 	-f $(EspressoWebApiDockerfilePath) \
 	-t $(WebApiDockerImage):$(v) \
+	--platform linux/amd64 \
 	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
 	$(DockerBuildContextPath)
 	docker push $(WebApiDockerImage):$(v)
 	docker build \
 	-f $(EspressoWebApiDockerfilePath) \
 	-t $(WebApiDockerImageGoogleContainerRegistry):$(v) \
+	--platform linux/amd64 \
 	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
 	$(DockerBuildContextPath)
 	docker push $(WebApiDockerImageGoogleContainerRegistry):$(v)	
@@ -234,22 +238,26 @@ ifeq ($(strip $(v)),)
 	docker build \
 	-f $(EspressoParserDockerfilePath) \
 	-t $(DashboardDockerImage):$(DefaultDockerImageTag) \
+	--platform linux/amd64 \
 	$(DockerBuildContextPath)
 	docker push $(DashboardDockerImage):$(DefaultDockerImageTag)
 	docker build \
 	-f $(EspressoParserDockerfilePath) \
 	-t $(DashboardDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag) \
+	--platform linux/amd64 \
 	$(DockerBuildContextPath)
 	docker push $(DashboardDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag)	
 else
 	docker build \
 	-f $(EspressoParserDockerfilePath) \
 	-t $(DashboardDockerImage):$(v) \
+	--platform linux/amd64 \
 	$(DockerBuildContextPath)
 	docker push $(DashboardDockerImage):$(v)
 	docker build \
 	-f $(EspressoParserDockerfilePath) \
 	-t $(DashboardDockerImageGoogleContainerRegistry):$(v) \
+	--platform linux/amd64 \
 	$(DockerBuildContextPath)
 	docker push $(DashboardDockerImageGoogleContainerRegistry):$(v)		
 endif
@@ -449,7 +457,7 @@ start-dashboard::
 	dotnet run --project $(ParserProjectPath) --configuration $(ReleaseConfiguration) --launch-profile $(DashboardLocalLaunchProfile)
 
 watch-dashboard::
-	dotnet watch --project $(ParserProjectPath) run --configuration $(DebugConfiguration)
+	dotnet watch --project $(ParserProjectPath) run --configuration $(DebugConfiguration) --launch-profile $(DashboardLocalLaunchProfile)
 
 start-webapi::
 	make compose-database arg1=up arg2="-d"

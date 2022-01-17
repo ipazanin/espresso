@@ -2,6 +2,7 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+using System.Collections.Concurrent;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Infrastructure;
 using Espresso.Domain.IServices;
@@ -35,7 +36,7 @@ public class GroupSimilarArticlesService : IGroupSimilarArticlesService
         IEnumerable<Article> articles,
         DateTimeOffset lastSimilarityGroupingTime)
     {
-        var similarArticles = new List<SimilarArticle>();
+        var similarArticles = new ConcurrentQueue<SimilarArticle>();
 
         var maxAgeOfSimilarArticleCheckingDateTime = DateTimeOffset.UtcNow - _settingProvider
             .LatestSetting
@@ -79,9 +80,9 @@ public class GroupSimilarArticlesService : IGroupSimilarArticlesService
                 articlesWithFittingCriteria: articlesWithFittingCriteria,
                 groupedArticleIds: groupedArticleIds);
 
-            similarArticles.AddRange(articlesSimilarArticles);
             foreach (var similarArticle in articlesSimilarArticles)
             {
+                similarArticles.Enqueue(similarArticle);
                 groupedArticleIds.Add((similarArticle.FirstArticleId, similarArticle.SecondArticleId));
             }
 
