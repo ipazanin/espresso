@@ -306,7 +306,7 @@ health-check-backend::
 	make restore
 	make build
 	make test
-	make consolidate
+#	make consolidate # requires dotnet 3.1 SKD
 	make format
 
 rebuild-backend::
