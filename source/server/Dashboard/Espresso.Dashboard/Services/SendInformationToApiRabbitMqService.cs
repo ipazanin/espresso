@@ -1,4 +1,4 @@
-﻿// SendArticlesRabbitMqService.cs
+﻿// SendInformationToApiRabbitMqService.cs
 //
 // © 2021 Espresso News. All rights reserved.
 
@@ -9,7 +9,7 @@ using RabbitMQ.Client;
 
 namespace Espresso.Dashboard.Services;
 
-public class SendArticlesRabbitMqService : ISendArticlesService
+public class SendInformationToApiRabbitMqService : ISendInformationToApiService
 {
     private readonly IJsonService _jsonService;
     private readonly string _hostName;
@@ -19,7 +19,7 @@ public class SendArticlesRabbitMqService : ISendArticlesService
     private readonly string _password;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="SendArticlesRabbitMqService"/> class.
+    /// Initializes a new instance of the <see cref="SendInformationToApiRabbitMqService"/> class.
     /// </summary>
     /// <param name="jsonService"></param>
     /// <param name="hostName"></param>
@@ -27,7 +27,7 @@ public class SendArticlesRabbitMqService : ISendArticlesService
     /// <param name="port"></param>
     /// <param name="username"></param>
     /// <param name="password"></param>
-    public SendArticlesRabbitMqService(
+    public SendInformationToApiRabbitMqService(
         IJsonService jsonService,
         string hostName,
         string queueName,
@@ -41,6 +41,11 @@ public class SendArticlesRabbitMqService : ISendArticlesService
         _port = port;
         _username = username;
         _password = password;
+    }
+
+    public Task SendSettingUpdatedNotification(CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task SendArticlesMessage(

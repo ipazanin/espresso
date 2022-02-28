@@ -152,7 +152,7 @@ internal sealed partial class Startup
 
         services.AddScoped<IEmailService, SendGridEmailService>(_ => new SendGridEmailService(
             sendGridKey: _dashboardConfiguration.AppConfiguration.SendGridApiKey));
-        services.AddSingleton<ISettingProvider, SettingProvider>();
+        services.AddScoped<ISettingProvider, SettingProvider>();
     }
 
     /// <summary>
@@ -207,20 +207,20 @@ internal sealed partial class Startup
         services.AddScoped<ISortArticlesService, SortArticlesService>();
         services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
         services.AddScoped<IGroupSimilarArticlesService, GroupSimilarArticlesService>();
-        services.AddScoped<ISendArticlesService>(
+        services.AddScoped<ISendInformationToApiService>(
             serviceProvider =>
             {
                 return _dashboardConfiguration.RabbitMqConfiguration.UseRabbitMqServer ?
-                    new SendArticlesRabbitMqService(
+                    new SendInformationToApiRabbitMqService(
                         jsonService: serviceProvider.GetRequiredService<IJsonService>(),
                         hostName: _dashboardConfiguration.RabbitMqConfiguration.HostName,
                         queueName: _dashboardConfiguration.RabbitMqConfiguration.ArticlesQueueName,
                         port: _dashboardConfiguration.RabbitMqConfiguration.Port,
                         username: _dashboardConfiguration.RabbitMqConfiguration.Username,
                         password: _dashboardConfiguration.RabbitMqConfiguration.Password) :
-                    new SendArticlesHttpService(
+                    new SendInformationToApiHttpService(
                        httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
-                       loggerService: serviceProvider.GetRequiredService<ILoggerService<SendArticlesHttpService>>(),
+                       loggerService: serviceProvider.GetRequiredService<ILoggerService<SendInformationToApiHttpService>>(),
                        slackService: serviceProvider.GetRequiredService<ISlackService>(),
                        jsonService: serviceProvider.GetRequiredService<IJsonService>(),
                        parserApiKey: _dashboardConfiguration.ApiKeysConfiguration.ParserApiKey,
@@ -230,6 +230,7 @@ internal sealed partial class Startup
             });
         services.AddTransient<IJsonService, SystemTextJsonService>(_ => new SystemTextJsonService(_dashboardConfiguration.SystemTextJsonSerializerConfiguration.JsonSerializerOptions));
         services.AddScoped<IRemoveOldArticlesService, RemoveOldArticlesService>();
+        services.AddScoped<ISettingChangedService, SettingChangedService>();
     }
 
     /// <summary>
@@ -239,17 +240,17 @@ internal sealed partial class Startup
     private void AddPersistence(IServiceCollection services)
     {
         services.AddDbContext<IEspressoDatabaseContext, EspressoDatabaseContext>(options =>
-         {
-             options.UseNpgsql(
-                 connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString,
-                 npgsqlOptionsAction: npgOptions =>
-                 {
-                     npgOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
-                 });
-             options.UseQueryTrackingBehavior(_dashboardConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
-             options.EnableDetailedErrors(_dashboardConfiguration.DatabaseConfiguration.EnableDetailedErrors);
-             options.EnableSensitiveDataLogging(_dashboardConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
-         });
+        {
+            options.UseNpgsql(
+                connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString,
+                npgsqlOptionsAction: npgOptions =>
+                {
+                    npgOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
+                });
+            options.UseQueryTrackingBehavior(_dashboardConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
+            options.EnableDetailedErrors(_dashboardConfiguration.DatabaseConfiguration.EnableDetailedErrors);
+            options.EnableSensitiveDataLogging(_dashboardConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
+        });
 
         services.AddDbContext<IEspressoIdentityDatabaseContext, EspressoIdentityDatabaseContext>(options =>
         {

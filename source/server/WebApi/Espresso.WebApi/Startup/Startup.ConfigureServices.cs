@@ -93,7 +93,7 @@ internal sealed partial class Startup
         services.AddSingleton(_ => new ApplicationInformation(
             appEnvironment: _webApiConfiguration.AppConfiguration.AppEnvironment,
             version: _webApiConfiguration.AppConfiguration.Version));
-        services.AddSingleton<ISettingProvider, SettingProvider>();
+        services.AddScoped<ISettingProvider, SettingProvider>();
     }
 
     /// <summary>

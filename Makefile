@@ -278,7 +278,7 @@ DebugConfiguration="Debug"
 DefaultConfiguration=$(DebugConfiguration) # Configurations: Release, Debug
 
 WebApiProjectPath="source/server/WebApi/Espresso.WebApi/Espresso.WebApi.csproj"
-ParserProjectPath="source/server/Dashboard/Espresso.Dashboard/Espresso.Dashboard.csproj"
+DashboardProjectPath="source/server/Dashboard/Espresso.Dashboard/Espresso.Dashboard.csproj"
 WebApiUrls="http://localhost:8000"
 DashboardUrls="http://localhost:9000"
 ReleaseConfiguration="Release"
@@ -300,7 +300,7 @@ EspressoDatabaseMigrationsFolder="EspressoDatabaseMigrations"
 EspressoIdentityDatabaseMigrationsFolder="IdentityDatabaseMigrations"
 
 DashboardLocalLaunchProfile='dashboard-local'
-WebApiLocalLaunchProfile='webapi-local'
+WebApiLocalLaunchProfile='web-api-local'
 
 health-check-backend::
 	make restore
@@ -404,13 +404,13 @@ restore::
 	dotnet restore --configfile $(NugetConfigPath) $(SolutionPath)
 
 consolidate::
-	dotnet consolidate --solutions $(SolutionPath)
+#	dotnet consolidate --solutions $(SolutionPath)
 
 format::
-	dotnet format --verify-no-changes --no-restore $(SolutionPath)
+#	dotnet format --verify-no-changes --no-restore $(SolutionPath)
 
 format-fix::
-	dotnet format --no-restore $(SolutionPath)
+#	dotnet format --no-restore $(SolutionPath)
 
 test::
 ifeq ($(strip $(verbosity)),)
@@ -454,48 +454,18 @@ infer-csharp::
 	docker-compose -f ./scripts/analysis/infer-csharp.yml up --build
 
 start-dashboard::
-	dotnet run --project $(ParserProjectPath) --configuration $(ReleaseConfiguration) --launch-profile $(DashboardLocalLaunchProfile)
+	dotnet run --project $(DashboardProjectPath) --configuration $(ReleaseConfiguration) --launch-profile $(DashboardLocalLaunchProfile)
 
+# watch is missing because of: https://github.com/dotnet/sdk/issues/24115
 watch-dashboard::
-	dotnet watch --project $(ParserProjectPath) run --configuration $(DebugConfiguration) --launch-profile $(DashboardLocalLaunchProfile)
+	dotnet watch run --project $(DashboardProjectPath)
 
 start-webapi::
-	make compose-database arg1=up arg2="-d"
-ifeq ($(strip $(arg)),)
-	ASPNETCORE_ENVIRONMENT=local \
-    DATABASE_NAME=local \
-    APIKEYSCONFIGURATION__ANDROID='cfb490b1-b392-49a8-aa07-4c0d0409312f' \
-    APIKEYSCONFIGURATION__IOS='b8b9cc0a-90f6-4aa3-96b6-c1d9bc7b15dd' \
-    APIKEYSCONFIGURATION__WEB='09ed7f5c-00bb-4c2d-9051-1c12de62abf9' \
-    APIKEYSCONFIGURATION__PARSER='0161565a-bc3d-4595-b694-d9a200f28d63' \
-    APIKEYSCONFIGURATION__DEVIOS='c90dea5c-c284-400e-b364-b3b0e080c3a8' \
-    APIKEYSCONFIGURATION__DEVANDROID='67cce045-b19a-47a6-b367-18b1f7bfe910' \
-    DATABASECONFIGURATION__ESPRESSODATABASECONNECTIONSTRING=$(EspressoDatabaseConnectionString) \
-    DATABASECONFIGURATION__ESPRESSOIDENTITYDATABASECONNECTIONSTRING=$(EspressoIdentityDatabaseConnectionString) \
-    APPCONFIGURATION__SLACKWEBHOOK=$(SlackWebHook) \
-    RABBITMQCONFIGURATION__USERNAME="ipazanin" \
-    RABBITMQCONFIGURATION__PASSWORD="Opatija1" \
-    RABBITMQCONFIGURATION__HOSTNAME="localhost" \
-	dotnet run --project $(WebApiProjectPath) --urls $(WebApiUrls) --configuration $(ReleaseConfiguration)
-else ifeq ($(arg), watch)
-	ASPNETCORE_ENVIRONMENT=local \
-    DATABASE_NAME=local \
-    APIKEYSCONFIGURATION__ANDROID='cfb490b1-b392-49a8-aa07-4c0d0409312f' \
-    APIKEYSCONFIGURATION__IOS='b8b9cc0a-90f6-4aa3-96b6-c1d9bc7b15dd' \
-    APIKEYSCONFIGURATION__WEB='09ed7f5c-00bb-4c2d-9051-1c12de62abf9' \
-    APIKEYSCONFIGURATION__PARSER='0161565a-bc3d-4595-b694-d9a200f28d63' \
-    APIKEYSCONFIGURATION__DEVIOS='c90dea5c-c284-400e-b364-b3b0e080c3a8' \
-    APIKEYSCONFIGURATION__DEVANDROID='67cce045-b19a-47a6-b367-18b1f7bfe910' \
-    DATABASECONFIGURATION__ESPRESSODATABASECONNECTIONSTRING=$(EspressoDatabaseConnectionString) \
-    DATABASECONFIGURATION__ESPRESSOIDENTITYDATABASECONNECTIONSTRING=$(EspressoIdentityDatabaseConnectionString) \
-    APPCONFIGURATION__SLACKWEBHOOK=$(SlackWebHook) \
-    RABBITMQCONFIGURATION__USERNAME="ipazanin" \
-    RABBITMQCONFIGURATION__PASSWORD="Opatija1" \
-    RABBITMQCONFIGURATION__HOSTNAME="localhost" \
-	dotnet watch --project $(WebApiProjectPath) run --urls $(WebApiUrls) --configuration $(DebugConfiguration)
-else
-	echo "Invalid Argument. Accepted arguments: {empty}, watch"
-endif
+	dotnet run --project $(WebApiProjectPath) --configuration $(ReleaseConfiguration) --launch-profile $(WebApiLocalLaunchProfile)
+
+# watch is missing because of: https://github.com/dotnet/sdk/issues/24115
+watch-webapi::
+	dotnet watch run --project $(WebApiProjectPath) --configuration $(DebugConfiguration)
 
 
 #######################################################

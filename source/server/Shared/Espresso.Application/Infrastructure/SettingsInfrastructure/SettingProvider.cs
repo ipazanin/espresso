@@ -24,9 +24,6 @@ public sealed class SettingProvider : ISettingProvider
     {
         _espressoDatabaseContext = espressoDatabaseContext;
 
-        // This is necessary evil to apply migrations before settings are used in configuring application
-        espressoDatabaseContext.Database.Migrate();
-
         LatestSetting = GetLatestSettingFromStore();
     }
 
@@ -34,9 +31,9 @@ public sealed class SettingProvider : ISettingProvider
     public Setting LatestSetting { get; private set; }
 
     /// <inheritdoc/>
-    public void UpdateLatestSetting()
+    public async Task UpdateLatestSetting(CancellationToken cancellationToken)
     {
-        LatestSetting = GetLatestSettingFromStore();
+        LatestSetting = await GetLatestSettingFromStoreAsync(cancellationToken);
     }
 
     private Setting GetLatestSettingFromStore()
@@ -45,5 +42,13 @@ public sealed class SettingProvider : ISettingProvider
             .Settings
             .OrderByDescending(setting => setting.Created)
             .First();
+    }
+
+    private Task<Setting> GetLatestSettingFromStoreAsync(CancellationToken cancellationToken)
+    {
+        return _espressoDatabaseContext
+            .Settings
+            .OrderByDescending(setting => setting.Created)
+            .FirstAsync(cancellationToken);
     }
 }
