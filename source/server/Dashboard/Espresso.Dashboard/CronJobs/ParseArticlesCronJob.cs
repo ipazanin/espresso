@@ -29,7 +29,6 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
     private readonly IMemoryCache _memoryCache;
     private readonly IServiceScopeFactory _serviceScopeFactory;
     private readonly ReadinessHealthCheck _readinessHealthCheck;
-    private readonly ISettingProvider _settingProvider;
     private readonly IDashboardConfiguration _configuration;
 
     /// <summary>
@@ -39,13 +38,11 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
     /// <param name="cronJobConfiguration"></param>
     /// <param name="serviceScopeFactory"></param>
     /// <param name="readinessHealthCheck"></param>
-    /// <param name="settingProvider"></param>
     public ParseArticlesCronJob(
         IMemoryCache memoryCache,
         ICronJobConfiguration<ParseArticlesCronJob> cronJobConfiguration,
         IServiceScopeFactory serviceScopeFactory,
-        ReadinessHealthCheck readinessHealthCheck,
-        ISettingProvider settingProvider)
+        ReadinessHealthCheck readinessHealthCheck)
         : base(
             cronJobConfiguration: cronJobConfiguration,
             serviceScopeFactory: serviceScopeFactory)
@@ -53,12 +50,22 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
         _memoryCache = memoryCache;
         _serviceScopeFactory = serviceScopeFactory;
         _readinessHealthCheck = readinessHealthCheck;
-        _settingProvider = settingProvider;
         using var scope = _serviceScopeFactory.CreateScope();
+
+        // TODO: check if this can be done better
         _configuration = scope.ServiceProvider.GetRequiredService<IDashboardConfiguration>();
     }
 
-    protected override CronExpression CronExpression => CronExpression.Parse(_settingProvider.LatestSetting.JobsSetting.ParseArticlesCronExpression);
+    protected override CronExpression CronExpression
+    {
+        get
+        {
+            using var scope = _serviceScopeFactory.CreateScope();
+            var settingProvider = scope.ServiceProvider.GetRequiredService<ISettingProvider>();
+
+            return CronExpression.Parse(settingProvider.LatestSetting.JobsSetting.ParseArticlesCronExpression);
+        }
+    }
 
     private IDictionary<Guid, Article> Articles { get; set; } = new Dictionary<Guid, Article>();
 

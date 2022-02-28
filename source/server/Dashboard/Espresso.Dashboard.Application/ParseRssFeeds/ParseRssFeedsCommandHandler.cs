@@ -19,7 +19,7 @@ public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand,
     private readonly ILoadRssFeedsService _loadRssFeedsService;
     private readonly ISortArticlesService _sortArticlesService;
     private readonly IGroupSimilarArticlesService _groupSimilarArticlesService;
-    private readonly ISendArticlesService _sendArticlesService;
+    private readonly ISendInformationToApiService _sendArticlesService;
     private readonly IEspressoDatabaseContext _espressoDatabaseContext;
     private readonly IMemoryCache _memoryCache;
 
@@ -38,7 +38,7 @@ public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand,
         ILoadRssFeedsService loadRssFeedsService,
         ISortArticlesService sortArticlesService,
         IGroupSimilarArticlesService groupSimilarArticlesService,
-        ISendArticlesService sendArticlesService,
+        ISendInformationToApiService sendArticlesService,
         IEspressoDatabaseContext espressoDatabaseContext,
         IMemoryCache memoryCache)
     {
@@ -90,11 +90,12 @@ public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand,
             savedArticles: request.Articles,
             changedArticles: createArticles.Union(updateArticles));
 
-        _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _groupSimilarArticlesService.GroupSimilarArticles");
-        var similarArticles = _groupSimilarArticlesService
-            .GroupSimilarArticles(
-                articles: request.Articles.Values,
-                lastSimilarityGroupingTime: lastSimilarityGroupingTime);
+        // TODO: check performance for similar articles
+        // _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _groupSimilarArticlesService.GroupSimilarArticles");
+        // var similarArticles = _groupSimilarArticlesService
+        //     .GroupSimilarArticles(
+        //         articles: request.Articles.Values,
+        //         lastSimilarityGroupingTime: lastSimilarityGroupingTime);
 
         _espressoDatabaseContext.Articles.AddRange(createArticles);
         await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
@@ -113,7 +114,7 @@ public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand,
         _espressoDatabaseContext.ArticleCategories.RemoveRange(deleteArticleCategories);
         await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
 
-        _espressoDatabaseContext.SimilarArticles.AddRange(similarArticles);
+        // _espressoDatabaseContext.SimilarArticles.AddRange(similarArticles);
 
         _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _espressoDatabaseContext.SaveChangesAsync");
         await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);

@@ -19,5 +19,6 @@ public interface ISettingProvider
     /// <summary>
     /// Updates latest <see cref="Setting"/>.
     /// </summary>
-    public void UpdateLatestSetting();
+    /// <param name="cancellationToken"></param>
+    public Task UpdateLatestSetting(CancellationToken cancellationToken);
 }

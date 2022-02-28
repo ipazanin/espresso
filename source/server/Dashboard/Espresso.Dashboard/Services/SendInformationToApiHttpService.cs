@@ -1,4 +1,4 @@
-﻿// SendArticlesHttpService.cs
+﻿// SendInformationToApiHttpService.cs
 //
 // © 2021 Espresso News. All rights reserved.
 
@@ -11,25 +11,22 @@ using Espresso.Common.Extensions;
 using Espresso.Common.Services.Contracts;
 using Espresso.Dashboard.Application.Constants;
 using Espresso.Dashboard.Application.IServices;
-using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
 using Microsoft.Extensions.Logging;
 
 namespace Espresso.Dashboard.Services;
 
-public class SendArticlesHttpService : ISendArticlesService
+public class SendInformationToApiHttpService : ISendInformationToApiService
 {
-    private readonly ILoggerService<SendArticlesHttpService> _loggerService;
+    private readonly ILoggerService<SendInformationToApiHttpService> _loggerService;
     private readonly ISlackService _slackService;
     private readonly IJsonService _jsonService;
-    private readonly string _parserApiKey;
-    private readonly string _targetedApiVersion;
     private readonly string _currentVersion;
     private readonly string _serverUrl;
     private readonly HttpClient _httpClient;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="SendArticlesHttpService"/> class.
+    /// Initializes a new instance of the <see cref="SendInformationToApiHttpService"/> class.
     /// </summary>
     /// <param name="httpClientFactory"></param>
     /// <param name="loggerService"></param>
@@ -39,9 +36,9 @@ public class SendArticlesHttpService : ISendArticlesService
     /// <param name="targetedApiVersion"></param>
     /// <param name="currentVersion"></param>
     /// <param name="serverUrl"></param>
-    public SendArticlesHttpService(
+    public SendInformationToApiHttpService(
         IHttpClientFactory httpClientFactory,
-        ILoggerService<SendArticlesHttpService> loggerService,
+        ILoggerService<SendInformationToApiHttpService> loggerService,
         ISlackService slackService,
         IJsonService jsonService,
         string parserApiKey,
@@ -52,11 +49,48 @@ public class SendArticlesHttpService : ISendArticlesService
         _loggerService = loggerService;
         _slackService = slackService;
         _jsonService = jsonService;
-        _parserApiKey = parserApiKey;
-        _targetedApiVersion = targetedApiVersion;
         _currentVersion = currentVersion;
         _serverUrl = serverUrl;
         _httpClient = httpClientFactory.CreateClient(HttpClientConstants.SendArticlesHttpClientName);
+
+        var httpHeaders = new List<(string headerKey, string headerValue)>
+        {
+            (headerKey: HttpHeaderConstants.ApiKeyHeaderName, headerValue: parserApiKey),
+            (headerKey: HttpHeaderConstants.ApiVersionHeaderName, headerValue: targetedApiVersion),
+            (headerKey: HttpHeaderConstants.VersionHeaderName, headerValue: currentVersion),
+            (headerKey: HttpHeaderConstants.DeviceTypeHeaderName, headerValue: DeviceType.RssFeedParser.GetIntegerValueAsString()),
+        };
+        _ = _httpClient.AddHeadersToHttpClient(httpHeaders);
+    }
+
+    public async Task SendSettingUpdatedNotification(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var response = await _httpClient.PostAsync(
+                requestUri: $"{_serverUrl}/api/notifications/setting",
+                content: null,
+                cancellationToken: cancellationToken);
+
+            _ = response.EnsureSuccessStatusCode();
+        }
+        catch (Exception exception)
+        {
+            const string EventName = "Setting Updated API Notification";
+            var version = _currentVersion;
+            var arguments = new (string parameterName, object parameterValue)[]
+            {
+                (nameof(version), version),
+            };
+
+            _loggerService.Log(EventName, exception, LogLevel.Error, arguments);
+
+            await _slackService.LogError(
+                    eventName: EventName,
+                    message: exception.Message,
+                    exception: exception,
+                    cancellationToken: cancellationToken);
+        }
     }
 
     public async Task SendArticlesMessage(
@@ -69,14 +103,6 @@ public class SendArticlesHttpService : ISendArticlesService
             return;
         }
 
-        var httpHeaders = new List<(string headerKey, string headerValue)>
-            {
-                (headerKey: HttpHeaderConstants.ApiKeyHeaderName, headerValue: _parserApiKey),
-                (headerKey: HttpHeaderConstants.ApiVersionHeaderName, headerValue: _targetedApiVersion),
-                (headerKey: HttpHeaderConstants.VersionHeaderName, headerValue: _currentVersion),
-                (headerKey: HttpHeaderConstants.DeviceTypeHeaderName, headerValue: DeviceType.RssFeedParser.GetIntegerValueAsString()),
-            };
-
         var data = new ArticlesBodyDto(
             createdArticleIds: createArticleIds,
             updatedArticleIds: updateArticleIds);
@@ -87,13 +113,12 @@ public class SendArticlesHttpService : ISendArticlesService
 
         try
         {
-            _httpClient.AddHeadersToHttpClient(httpHeaders);
             var response = await _httpClient.PostAsync(
                 requestUri: $"{_serverUrl}/api/notifications/articles",
                 content: httpContent,
                 cancellationToken: cancellationToken);
 
-            response.EnsureSuccessStatusCode();
+            _ = response.EnsureSuccessStatusCode();
         }
         catch (Exception exception)
         {
@@ -101,7 +126,7 @@ public class SendArticlesHttpService : ISendArticlesService
             var version = _currentVersion;
             var arguments = new (string parameterName, object parameterValue)[]
             {
-                    (nameof(version), version),
+                (nameof(version), version),
             };
 
             _loggerService.Log(eventName, exception, LogLevel.Error, arguments);

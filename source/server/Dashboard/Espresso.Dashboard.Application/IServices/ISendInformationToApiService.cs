@@ -1,10 +1,10 @@
-﻿// ISendArticlesService.cs
+﻿// ISendInformationToApiService.cs
 //
 // © 2021 Espresso News. All rights reserved.
 
 namespace Espresso.Dashboard.Application.IServices;
 
-public interface ISendArticlesService
+public interface ISendInformationToApiService
 {
     /// <summary>
     ///
@@ -17,4 +17,10 @@ public interface ISendArticlesService
         IEnumerable<Guid> createArticleIds,
         IEnumerable<Guid> updateArticleIds,
         CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Notifies application API that settings has changed.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    public Task SendSettingUpdatedNotification(CancellationToken cancellationToken);
 }
