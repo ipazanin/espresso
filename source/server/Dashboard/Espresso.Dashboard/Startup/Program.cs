@@ -29,24 +29,24 @@ internal static class Program
                 _ = configureOptions
                     .AddJsonFile(path: $"{parentDirectory}/configuration/app-settings.json", optional: false)
                     .AddJsonFile(path: $"{parentDirectory}/configuration/app-settings.{environmentName}.json", optional: false)
-                    .AddJsonFile(path: $"AppSettings/app-settings.json", optional: false)
+                    .AddJsonFile(path: "AppSettings/app-settings.json", optional: false)
                     .AddJsonFile(path: $"AppSettings/app-settings.{environmentName}.json", optional: false)
                     .AddEnvironmentVariables()
                     .Build();
             })
             .ConfigureWebHostDefaults(webBuilder =>
             {
-                webBuilder.UseStartup<Startup>();
-                webBuilder.ConfigureAppConfiguration((ctx, _) =>
-                {
-                    StaticWebAssetsLoader.UseStaticWebAssets(
-                        environment: ctx.HostingEnvironment,
-                        configuration: ctx.Configuration);
-                });
-                webBuilder.ConfigureLogging(loggingBuilder =>
-                {
-                    loggingBuilder.ClearProviders();
-                    loggingBuilder.AddSimpleConsole();
-                });
+                _ = webBuilder.UseStartup<Startup>();
+                _ = webBuilder.ConfigureAppConfiguration((ctx, _) =>
+                  {
+                      StaticWebAssetsLoader.UseStaticWebAssets(
+                          environment: ctx.HostingEnvironment,
+                          configuration: ctx.Configuration);
+                  });
+                _ = webBuilder.ConfigureLogging(loggingBuilder =>
+                  {
+                      _ = loggingBuilder.ClearProviders();
+                      _ = loggingBuilder.AddSimpleConsole();
+                  });
             });
 }

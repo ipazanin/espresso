@@ -21,27 +21,32 @@ namespace Espresso.WebApi.Jobs.CronJobs;
 public class AnalyticsCronJob : CronJob<AnalyticsCronJob>
 {
     private readonly IServiceScopeFactory _scopeFactory;
-    private readonly ISettingProvider _settingProvider;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AnalyticsCronJob"/> class.
     /// </summary>
     /// <param name="serviceScopeFactory"></param>
     /// <param name="cronJobConfiguration"></param>
-    /// <param name="settingProvider"></param>
     public AnalyticsCronJob(
         IServiceScopeFactory serviceScopeFactory,
-        ICronJobConfiguration<AnalyticsCronJob> cronJobConfiguration,
-        ISettingProvider settingProvider)
+        ICronJobConfiguration<AnalyticsCronJob> cronJobConfiguration)
         : base(
         cronJobConfiguration: cronJobConfiguration,
         serviceScopeFactory: serviceScopeFactory)
     {
         _scopeFactory = serviceScopeFactory;
-        _settingProvider = settingProvider;
     }
 
-    protected override CronExpression CronExpression => CronExpression.Parse(_settingProvider.LatestSetting.JobsSetting.AnalyticsCronExpression);
+    protected override CronExpression CronExpression
+    {
+        get
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var settingProvider = scope.ServiceProvider.GetRequiredService<ISettingProvider>();
+
+            return CronExpression.Parse(settingProvider.LatestSetting.JobsSetting.AnalyticsCronExpression);
+        }
+    }
 
     /// <summary>
     ///

@@ -8,7 +8,7 @@
       "args": [
         "watch",
         "run",
-        "${workspaceFolder}/source/server/Espresso/Espresso.WebApi/Espresso.WebApi.csproj",
+        "${workspaceFolder}/source/server/WebApi/Espresso.WebApi/Espresso.WebApi.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -22,7 +22,7 @@
         "build",
         "--configuration",
         "Debug",
-        "${workspaceFolder}/source/server/Espresso/Espresso.WebApi/Espresso.WebApi.csproj",
+        "${workspaceFolder}/source/server/WebApi/Espresso.WebApi/Espresso.WebApi.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -34,7 +34,7 @@
       "type": "process",
       "args": [
         "publish",
-        "${workspaceFolder}/source/server/Espresso/Espresso.WebApi/Espresso.WebApi.csproj",
+        "${workspaceFolder}/source/server/WebApi/Espresso.WebApi/Espresso.WebApi.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -48,7 +48,7 @@
         "build",
         "--configuration",
         "Debug",
-        "${workspaceFolder}/source/server/Espresso/Espresso.Dashboard/Espresso.Dashboard.csproj",
+        "${workspaceFolder}/source/server/Dashboard/Espresso.Dashboard/Espresso.Dashboard.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -60,7 +60,7 @@
       "type": "process",
       "args": [
         "publish",
-        "${workspaceFolder}/source/server/Espresso/Espresso.Dashboard/Espresso.Dashboard.csproj",
+        "${workspaceFolder}/source/server/Dashboard/Espresso.Dashboard/Espresso.Dashboard.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],

@@ -35,12 +35,7 @@ public static class OrderArticleCollectionExtensions
                     }
 
                     var categoryId = article.ArticleCategories.First().CategoryId;
-                    if (categoriesWithOrderIndex.TryGetValue(categoryId, out var orderIndex))
-                    {
-                        return HalfOfMaxValue + orderIndex;
-                    }
-
-                    return int.MaxValue;
+                    return categoriesWithOrderIndex.TryGetValue(categoryId, out var orderIndex) ? HalfOfMaxValue + orderIndex : int.MaxValue;
                 })
             .OrderArticlesByTrendingScore();
 
@@ -73,13 +68,15 @@ public static class OrderArticleCollectionExtensions
                         return HalfOfMaxValue;
                     }
 
-                    var categoryId = article.ArticleCategories.First().CategoryId;
-                    if (categoriesWithOrderIndex.TryGetValue(categoryId, out var orderIndex))
+                    var articleCategory = article.ArticleCategories.FirstOrDefault();
+
+                    if (articleCategory is null)
                     {
-                        return HalfOfMaxValue + orderIndex;
+                        return HalfOfMaxValue;
                     }
 
-                    return int.MaxValue;
+                    var categoryId = articleCategory.CategoryId;
+                    return categoriesWithOrderIndex.TryGetValue(categoryId, out var orderIndex) ? HalfOfMaxValue + orderIndex : int.MaxValue;
                 })
             .OrderArticlesByTrendingScore();
 

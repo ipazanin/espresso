@@ -1,0 +1,29 @@
+@inherits EditJobsSettingsBase
+
+<h3>Jobs Settings</h3>
+<div class="col-md-6 mb-3">
+  <label for="analytics-job">Analytics (marketing-bot) job cron expression:</label>
+  <input id="analytics-job" type="text" class="form-control @(AnalyticsCronExpressionValidationClass)"
+    @bind=AnalyticsCronExpression />
+  <div class="invalid-feedback">
+    Invalid CRON Expression. (Visit <a href="https://crontab.guru/" target="_blank">crontab</a> for more info)
+  </div>
+</div>
+
+<div class="col-md-6 mb-3">
+  <label for="parse-articles-job">Parse articles job cron expression:</label>
+  <input id="parse-articles-job" type="text" class="form-control @(ParseArticlesCronExpressionValidationClass)"
+    @bind=ParseArticlesCronExpression />
+  <div class="invalid-feedback">
+    Invalid CRON Expression. (Visit <a href="https://crontab.guru/" target="_blank">crontab</a> for more info)
+  </div>
+</div>
+
+<div class="col-md-6 mb-3">
+  <label for="backend-statistics-job">Report (backend-statistics) job cron expression:</label>
+  <input id="backend-statistics-job" type="text" class="form-control @(BackendStatisticsCronExpressionValidationClass)"
+    @bind=BackendStatisticsCronExpression />
+  <div class="invalid-feedback">
+    Invalid CRON Expression. (Visit <a href="https://crontab.guru/" target="_blank">crontab</a> for more info)
+  </div>
+</div>

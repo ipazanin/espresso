@@ -8,6 +8,7 @@ using Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles;
 using Espresso.WebApi.Application.Notifications.Commands.SendArticlesNotifications;
 using Espresso.WebApi.Application.Notifications.Commands.SendPushNotification;
 using Espresso.WebApi.Application.Notifications.Queries.GetPushNotifications;
+using Espresso.WebApi.Application.Setting.Commands.UpdateSetting;
 using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Configuration;
 using Espresso.WebApi.DataTransferObjects;
@@ -91,6 +92,40 @@ public class NotificationsController : ApiController
     }
 
     /// <summary>
+    /// Updates settings upon receiving notification.
+    /// </summary>
+    /// <param name="basicInformationsHeaderParameters"></param>
+    /// <param name="cancellationToken"></param>
+    /// <response code="200">OK.</response>
+    /// <response code="401">If API Key is invalid or missing.</response>
+    /// <response code="403">If API Key is forbiden from requested resource.</response>
+    /// <response code="500">If unhandled exception occurred.</response>
+    [Produces(MimeTypeConstants.Json)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
+    [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.2")]
+    [HttpPost]
+    [Authorize(Roles = ApiKey.ParserRole)]
+    [Route("api/notifications/setting")]
+    public async Task<IActionResult> SettingChangedNotification(
+        [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
+        CancellationToken cancellationToken)
+    {
+        _ = await Sender.Send(
+            request: new UpdateSettingCommand
+            {
+                TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
+                ConsumerVersion = basicInformationsHeaderParameters.Version,
+                DeviceType = basicInformationsHeaderParameters.DeviceType,
+            },
+            cancellationToken: cancellationToken);
+
+        return Ok();
+    }
+
+    /// <summary>
     /// Sends Push notification to mobile apps.
     /// </summary>
     /// <param name="basicInformationsHeaderParameters"></param>
@@ -114,7 +149,7 @@ public class NotificationsController : ApiController
     [HttpPost]
     [Authorize(Roles = ApiKey.DevMobileAppRole)]
     [Route("api/notifications")]
-    public async Task<IActionResult> SendPushNotificition(
+    public async Task<IActionResult> SendPushNotification(
         [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
         [FromBody] SendPushNotificationRequestBody sendPushNotificationRequestBody,
         CancellationToken cancellationToken)
@@ -164,7 +199,7 @@ public class NotificationsController : ApiController
     [HttpGet]
     [Authorize(Roles = ApiKey.DevMobileAppRole)]
     [Route("api/notifications")]
-    public async Task<IActionResult> GetPushNotificition(
+    public async Task<IActionResult> GetPushNotification(
         [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
         [FromQuery] int take,
         [FromQuery] int skip,
