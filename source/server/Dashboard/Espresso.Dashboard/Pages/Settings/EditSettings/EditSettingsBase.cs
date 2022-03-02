@@ -13,6 +13,8 @@ namespace Espresso.Dashboard.Pages.Settings.EditSettings;
 
 public class EditSettingsBase : ComponentBase
 {
+    private readonly IDictionary<string, bool> _formValidationStatusDictionary = new Dictionary<string, bool>();
+
     [Parameter]
     [EditorRequired]
     public int Id { get; init; }
@@ -44,13 +46,12 @@ public class EditSettingsBase : ComponentBase
 
     protected async Task OnSubmit()
     {
-        System.Console.WriteLine("OnSubmit");
-        if (!SettingsState.JobsSettingState.IsFormValid)
+        if (_formValidationStatusDictionary.Values.Any(value => !value))
         {
             return;
         }
 
-        System.Console.WriteLine(SettingsState.ArticleSettingState.FeaturedArticlesTake);
+        Console.WriteLine(SettingsState.ArticleSettingState.FeaturedArticlesTake);
 
         var setting = SettingProvider.LatestSetting;
 
@@ -87,5 +88,12 @@ public class EditSettingsBase : ComponentBase
         await SettingChangedService.UpdateSetting(newSetting, default);
 
         NavigationManager.NavigateTo(uri: "/settings");
+    }
+
+    protected void OnIsValidChanged((bool isValid, string uniqueId) changeArgs)
+    {
+        var (value, uniqueId) = changeArgs;
+
+        _formValidationStatusDictionary[uniqueId] = value;
     }
 }
