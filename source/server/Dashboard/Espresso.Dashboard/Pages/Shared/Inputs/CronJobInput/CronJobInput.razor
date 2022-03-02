@@ -1,0 +1,10 @@
+@inherits CronJobInputBase
+
+<div class="col-md-6 mb-3">
+  <label for="analytics-job">@(Headline)</label>
+  <input id="analytics-job" type="text" class="form-control @(ValidationClass)" value="@(Value)"
+    @onchange="@(OnInputValueChanged)" />
+  <div class="invalid-feedback">
+    Invalid CRON Expression. (Visit <a href="https://crontab.guru/" target="_blank">crontab</a> for more info)
+  </div>
+</div>

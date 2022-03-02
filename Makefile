@@ -322,7 +322,7 @@ ifeq ($(strip $(verbosity)),)
 	dotnet build \
 	--configuration $(DefaultConfiguration) \
 	--verbosity $(DefaultVerbosity) \
-    --configfile $(NugetConfigPath) \
+	--configfile $(NugetConfigPath) \
 	$(SolutionPath)
 else
 	dotnet build \

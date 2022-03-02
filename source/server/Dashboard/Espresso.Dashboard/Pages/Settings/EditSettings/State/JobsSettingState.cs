@@ -6,8 +6,6 @@ namespace Espresso.Dashboard.Pages.Settings.EditSettings.State;
 
 public class JobsSettingState
 {
-    public bool IsFormValid { get; set; } = true;
-
     public string AnalyticsCronExpression { get; set; } = string.Empty;
 
     public string ParseArticlesCronExpression { get; set; } = string.Empty;

@@ -12,4 +12,8 @@ public class EditArticleSettingsBase : ComponentBase
     [Parameter]
     [EditorRequired]
     public SettingsState SettingsState { get; init; } = null!;
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback<(bool IsValid, string uniqueId)> IsValidChanged { get; set; }
 }

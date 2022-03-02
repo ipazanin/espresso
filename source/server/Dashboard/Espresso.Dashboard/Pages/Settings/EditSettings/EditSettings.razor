@@ -2,13 +2,12 @@
 @inherits EditSettingsBase
 @using Espresso.Dashboard.Pages.Settings.EditSettings.JobsSettings
 @using Espresso.Dashboard.Pages.Settings.EditSettings.ArticleSettings
-@using Espresso.Dashboard.Pages.Shared.Inputs.NumberInput
 
 <form>
   <div class="form-group">
 
-    <EditArticleSettings SettingsState="SettingsState" />
-    <EditJobsSettings SettingsState="SettingsState" />
+    <EditArticleSettings SettingsState="SettingsState" IsValidChanged="@(OnIsValidChanged)" />
+    <EditJobsSettings SettingsState="SettingsState" IsValidChanged="@(OnIsValidChanged)" />
 
   </div>
   <button type="submit" class="btn btn-primary" @onclick="OnSubmit" @onclick:preventDefault="true">
