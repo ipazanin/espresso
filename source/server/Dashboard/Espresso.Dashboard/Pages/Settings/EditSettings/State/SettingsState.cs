@@ -9,4 +9,8 @@ public class SettingsState
     public JobsSettingState JobsSettingState { get; } = new();
 
     public ArticleSettingState ArticleSettingState { get; } = new();
+
+    public SimilarArticlesState SimilarArticlesState { get; } = new();
+
+    public NewsPortalSettingState NewsPortalSettingState { get; } = new();
 }

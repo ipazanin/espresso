@@ -41,6 +41,14 @@ public class EditSettingsBase : ComponentBase
         SettingsState.JobsSettingState.ParseArticlesCronExpression = SettingProvider.LatestSetting.JobsSetting.ParseArticlesCronExpression;
         SettingsState.JobsSettingState.WebApiReportCronExpression = SettingProvider.LatestSetting.JobsSetting.WebApiReportCronExpression;
 
+        SettingsState.NewsPortalSettingState.MaxAgeOfNewNewsPortalInDays = (int)SettingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal.TotalDays;
+        SettingsState.NewsPortalSettingState.NewNewsPortalsPositionInApp = SettingProvider.LatestSetting.NewsPortalSetting.NewNewsPortalsPosition;
+
+        SettingsState.SimilarArticlesState.MaxArticleAgeToParseInSimilarArticlesInHours = (int)SettingProvider.LatestSetting.SimilarArticleSetting.MaxAgeOfSimilarArticleChecking.TotalHours;
+        SettingsState.SimilarArticlesState.MaxDurationBetweenTwoSimilarArticlesInHours = (int)SettingProvider.LatestSetting.SimilarArticleSetting.ArticlePublishDateTimeDifferenceThreshold.TotalHours;
+        SettingsState.SimilarArticlesState.MinimalNumberOfWordsRequirement = SettingProvider.LatestSetting.SimilarArticleSetting.MinimalNumberOfWordsForArticleToBeComparable;
+        SettingsState.SimilarArticlesState.SimilarityScoreThreshold = SettingProvider.LatestSetting.SimilarArticleSetting.SimilarityScoreThreshold;
+
         StateHasChanged();
     }
 
@@ -62,8 +70,8 @@ public class EditSettingsBase : ComponentBase
             featuredArticlesTake: SettingsState.ArticleSettingState.FeaturedArticlesTake);
 
         var newNewsPortalSettings = new NewsPortalSetting(
-            maxAgeOfNewNewsPortalInMiliseconds: setting.NewsPortalSetting.MaxAgeOfNewNewsPortalInMiliseconds,
-            newNewsPortalsPosition: setting.NewsPortalSetting.NewNewsPortalsPosition);
+            maxAgeOfNewNewsPortalInMiliseconds: (long)TimeSpan.FromDays(SettingsState.NewsPortalSettingState.MaxAgeOfNewNewsPortalInDays).TotalMilliseconds,
+            newNewsPortalsPosition: SettingsState.NewsPortalSettingState.NewNewsPortalsPositionInApp);
 
         var newJobsSettings = new JobsSetting(
             analyticsCronExpression: SettingsState.JobsSettingState.AnalyticsCronExpression,
@@ -71,10 +79,10 @@ public class EditSettingsBase : ComponentBase
             parseArticlesCronExpression: SettingsState.JobsSettingState.ParseArticlesCronExpression);
 
         var newSimilarArticleSetting = new SimilarArticleSetting(
-            similarityScoreThreshold: setting.SimilarArticleSetting.SimilarityScoreThreshold,
-            articlePublishDateTimeDifferenceThresholdInMiliseconds: setting.SimilarArticleSetting.ArticlePublishDateTimeDifferenceThresholdInMiliseconds,
-            maxAgeOfSimilarArticleCheckingInMiliseconds: setting.SimilarArticleSetting.MaxAgeOfSimilarArticleCheckingInMiliseconds,
-            minimalNumberOfWordsForArticleToBeComparable: setting.SimilarArticleSetting.MinimalNumberOfWordsForArticleToBeComparable);
+            similarityScoreThreshold: SettingsState.SimilarArticlesState.SimilarityScoreThreshold,
+            articlePublishDateTimeDifferenceThresholdInMiliseconds: (long)TimeSpan.FromHours(SettingsState.SimilarArticlesState.MaxDurationBetweenTwoSimilarArticlesInHours).TotalMilliseconds,
+            maxAgeOfSimilarArticleCheckingInMiliseconds: (long)TimeSpan.FromHours(SettingsState.SimilarArticlesState.MaxArticleAgeToParseInSimilarArticlesInHours).TotalMilliseconds,
+            minimalNumberOfWordsForArticleToBeComparable: SettingsState.SimilarArticlesState.MinimalNumberOfWordsRequirement);
 
         var newSetting = new Setting(
             id: default,

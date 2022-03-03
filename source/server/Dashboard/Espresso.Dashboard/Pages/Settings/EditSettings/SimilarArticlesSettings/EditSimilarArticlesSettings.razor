@@ -1,0 +1,21 @@
+@using Espresso.Dashboard.Pages.Shared.Inputs.NumberInput
+@using Espresso.Dashboard.Pages.Shared.Inputs.DecimalNumberInput
+@inherits EditSimilarArticlesSettingsBase
+
+<h3>Similar Articles Settings</h3>
+
+<NumberInput Headline="Max duration between two similar articles [hours]:" MinValue="@(1)" MaxValue="@(24)"
+    @bind-Value="@(SimilarArticlesState.MaxDurationBetweenTwoSimilarArticlesInHours)"
+    IsValidChanged="@(IsValidChanged)" />
+
+<NumberInput Headline="Max age for which to search similar articles [hours]:" MinValue="@(1)" MaxValue="@(24)"
+    @bind-Value="@(SimilarArticlesState.MaxArticleAgeToParseInSimilarArticlesInHours)"
+    IsValidChanged="@(IsValidChanged)" />
+
+<NumberInput Headline="Minimal number of words in article requirement:" MinValue="@(1)" MaxValue="@(10)"
+    @bind-Value="@(SimilarArticlesState.MinimalNumberOfWordsRequirement)"
+    IsValidChanged="@(IsValidChanged)" />
+
+<DecimalNumberInput Headline="Similarity score threshold (0-1):" MinValue="@(0)" MaxValue="@(1)"
+    @bind-Value="@(SimilarArticlesState.SimilarityScoreThreshold)"
+    IsValidChanged="@(IsValidChanged)" />

@@ -2,7 +2,6 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
-using Cronos;
 using Espresso.Dashboard.Pages.Settings.EditSettings.State;
 using Microsoft.AspNetCore.Components;
 
@@ -12,7 +11,7 @@ public class EditJobsSettingsBase : ComponentBase
 {
     [Parameter]
     [EditorRequired]
-    public SettingsState SettingsState { get; init; } = null!;
+    public JobsSettingState JobsSettingState { get; init; } = null!;
 
     [Parameter]
     [EditorRequired]

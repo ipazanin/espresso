@@ -2,12 +2,16 @@
 @inherits EditSettingsBase
 @using Espresso.Dashboard.Pages.Settings.EditSettings.JobsSettings
 @using Espresso.Dashboard.Pages.Settings.EditSettings.ArticleSettings
+@using Espresso.Dashboard.Pages.Settings.EditSettings.SimilarArticlesSettings
+@using Espresso.Dashboard.Pages.Settings.EditSettings.NewsPortalSettings
 
 <form>
   <div class="form-group">
 
-    <EditArticleSettings SettingsState="SettingsState" IsValidChanged="@(OnIsValidChanged)" />
-    <EditJobsSettings SettingsState="SettingsState" IsValidChanged="@(OnIsValidChanged)" />
+    <EditArticleSettings ArticleSettingState="SettingsState.ArticleSettingState" IsValidChanged="@(OnIsValidChanged)" />
+    <EditJobsSettings JobsSettingState="SettingsState.JobsSettingState" IsValidChanged="@(OnIsValidChanged)" />
+    <EditSimilarArticlesSettings SimilarArticlesState="SettingsState.SimilarArticlesState" IsValidChanged="@(OnIsValidChanged)" />
+    <EditNewsPortalSettings NewsPortalSettingState="SettingsState.NewsPortalSettingState" IsValidChanged="@(OnIsValidChanged)" />
 
   </div>
   <button type="submit" class="btn btn-primary" @onclick="OnSubmit" @onclick:preventDefault="true">

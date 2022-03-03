@@ -1,17 +1,17 @@
-﻿// EditArticleSettingsBase.cs
+﻿// SimilarArticlesSettingsBase.cs
 //
 // © 2021 Espresso News. All rights reserved.
 
 using Espresso.Dashboard.Pages.Settings.EditSettings.State;
 using Microsoft.AspNetCore.Components;
 
-namespace Espresso.Dashboard.Pages.Settings.EditSettings.ArticleSettings;
+namespace Espresso.Dashboard.Pages.Settings.EditSettings.SimilarArticlesSettings;
 
-public class EditArticleSettingsBase : ComponentBase
+public class EditSimilarArticlesSettingsBase : ComponentBase
 {
     [Parameter]
     [EditorRequired]
-    public ArticleSettingState ArticleSettingState { get; init; } = null!;
+    public SimilarArticlesState SimilarArticlesState { get; init; } = null!;
 
     [Parameter]
     [EditorRequired]
