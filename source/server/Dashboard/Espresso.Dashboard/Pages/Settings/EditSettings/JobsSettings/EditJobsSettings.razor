@@ -5,8 +5,8 @@
 <h3>Jobs Settings</h3>
 
 <CronJobInput Headline="Analytics (marketing-bot) job cron expression:"
-  @bind-Value="@(SettingsState.JobsSettingState.AnalyticsCronExpression)" IsValidChanged="@(IsValidChanged)" />
+  @bind-Value="@(JobsSettingState.AnalyticsCronExpression)" IsValidChanged="@(IsValidChanged)" />
 <CronJobInput Headline="Parse articles job cron expression:"
-  @bind-Value="@(SettingsState.JobsSettingState.ParseArticlesCronExpression)" IsValidChanged="@(IsValidChanged)" />
+  @bind-Value="@(JobsSettingState.ParseArticlesCronExpression)" IsValidChanged="@(IsValidChanged)" />
 <CronJobInput Headline="Report (backend-statistics) job cron expression:"
-  @bind-Value="@(SettingsState.JobsSettingState.WebApiReportCronExpression)" IsValidChanged="@(IsValidChanged)" />
+  @bind-Value="@(JobsSettingState.WebApiReportCronExpression)" IsValidChanged="@(IsValidChanged)" />

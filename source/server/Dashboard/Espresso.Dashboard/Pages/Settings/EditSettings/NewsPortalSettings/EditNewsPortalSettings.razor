@@ -1,0 +1,10 @@
+@using Espresso.Dashboard.Pages.Shared.Inputs.NumberInput
+@inherits EditNewsPortalSettingsBase
+
+<h3>NewsPortal (source) Settings</h3>
+
+<NumberInput Headline="Max age of new news portal [days]:" MinValue="@(1)" MaxValue="@(100)"
+  @bind-Value="@(NewsPortalSettingState.MaxAgeOfNewNewsPortalInDays)" IsValidChanged="@(IsValidChanged)" />
+
+<NumberInput Headline="New news portal position (in applications):" MinValue="@(1)" MaxValue="@(20)"
+  @bind-Value="@(NewsPortalSettingState.NewNewsPortalsPositionInApp)" IsValidChanged="@(IsValidChanged)" />

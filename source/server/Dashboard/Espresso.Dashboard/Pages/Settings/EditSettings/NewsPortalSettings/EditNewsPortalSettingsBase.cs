@@ -1,17 +1,17 @@
-﻿// EditArticleSettingsBase.cs
+﻿// EditNewsPortalSettingsBase.cs
 //
 // © 2021 Espresso News. All rights reserved.
 
 using Espresso.Dashboard.Pages.Settings.EditSettings.State;
 using Microsoft.AspNetCore.Components;
 
-namespace Espresso.Dashboard.Pages.Settings.EditSettings.ArticleSettings;
+namespace Espresso.Dashboard.Pages.Settings.EditSettings.NewsPortalSettings;
 
-public class EditArticleSettingsBase : ComponentBase
+public class EditNewsPortalSettingsBase : ComponentBase
 {
     [Parameter]
     [EditorRequired]
-    public ArticleSettingState ArticleSettingState { get; init; } = null!;
+    public NewsPortalSettingState NewsPortalSettingState { get; init; } = null!;
 
     [Parameter]
     [EditorRequired]

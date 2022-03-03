@@ -1,0 +1,8 @@
+@inherits DecimalNumberInputBase
+
+<div class="col-md-6 mb-3">
+  <label for="number-input">@(Headline)</label>
+  <input id="number-input" type="number" class="form-control @(ValidationClass)" value="@(Value)"
+    @onchange="@(OnInputValueChanged)" />
+  <div class="invalid-feedback">@(ValidationMessage)</div>
+</div>

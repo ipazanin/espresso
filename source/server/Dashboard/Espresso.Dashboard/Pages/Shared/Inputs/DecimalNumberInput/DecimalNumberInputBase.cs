@@ -1,30 +1,30 @@
-﻿// NumberInputBase.cs
+﻿// DecimalNumberInputBase.cs
 //
 // © 2021 Espresso News. All rights reserved.
 
 using Microsoft.AspNetCore.Components;
 
-namespace Espresso.Dashboard.Pages.Shared.Inputs.NumberInput;
+namespace Espresso.Dashboard.Pages.Shared.Inputs.DecimalNumberInput;
 
-public class NumberInputBase : InputBase<int>
+public class DecimalNumberInputBase : InputBase<double>
 {
     [Parameter]
     [EditorRequired]
-    public int MaxValue { get; set; }
+    public double MaxValue { get; set; }
 
     [Parameter]
     [EditorRequired]
-    public int MinValue { get; set; }
-
+    public double MinValue { get; set; }
+    
     protected string ValidationMessage { get; set; } = string.Empty;
 
     protected void OnInputValueChanged(ChangeEventArgs args)
     {
-        if (!int.TryParse(args.Value?.ToString(), out var value))
+        if (!double.TryParse(args.Value?.ToString(), out var value))
         {
             _ = IsValidChanged.InvokeAsync((false, UniqueId));
             ValidationClass = "is-invalid";
-            ValidationMessage = "Value is not integer";
+            ValidationMessage = "Value is not decimal number";
             return;
         }
 
