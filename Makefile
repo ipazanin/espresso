@@ -21,7 +21,7 @@ DefaultDockerImageTag=latest
 EspressoWebApiDockerfilePath="source/server/WebApi/Espresso.WebApi/Dockerfile"
 EspressoParserDockerfilePath="source/server/Dashboard/Espresso.Dashboard/Dockerfile"
 
-DockerBuildContextPath="source"
+DockerBuildContextPath="."
 
 WebApiDockerImage="ghcr.io/espresso-news/espresso-backend/espresso-webapi"
 DashboardDockerImage="ghcr.io/espresso-news/espresso-backend/espresso-dashboard"

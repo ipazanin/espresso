@@ -2,19 +2,20 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS dotnet-runtime
 
 # .NET App
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS dotnet-builder
-WORKDIR /server/Espresso
+WORKDIR /source/server/Espresso
 
 # Restore .NET App
-COPY ["server/Shared/Espresso.Application/Espresso.Application.csproj", "Shared/Espresso.Application/"]
-COPY ["server/Shared/Espresso.Common/Espresso.Common.csproj", "Shared/Espresso.Common/"]
-COPY ["server/Shared/Espresso.Domain/Espresso.Domain.csproj", "Shared/Espresso.Domain/"]
-COPY ["server/Shared/Espresso.Persistence/Espresso.Persistence.csproj", "Shared/Espresso.Persistence/"]
-COPY ["server/Dashboard/Espresso.Dashboard.Application/Espresso.Dashboard.Application.csproj", "Dashboard/Espresso.Dashboard.Application/"]
-COPY ["server/Dashboard/Espresso.Dashboard/Espresso.Dashboard.csproj", "Dashboard/Espresso.Dashboard/"]
+COPY ["source/server/Shared/Espresso.Application/Espresso.Application.csproj", "Shared/Espresso.Application/"]
+COPY ["source/server/Shared/Espresso.Common/Espresso.Common.csproj", "Shared/Espresso.Common/"]
+COPY ["source/server/Shared/Espresso.Domain/Espresso.Domain.csproj", "Shared/Espresso.Domain/"]
+COPY ["source/server/Shared/Espresso.Persistence/Espresso.Persistence.csproj", "Shared/Espresso.Persistence/"]
+COPY ["source/server/Dashboard/Espresso.Dashboard.Application/Espresso.Dashboard.Application.csproj", "Dashboard/Espresso.Dashboard.Application/"]
+COPY ["source/server/Dashboard/Espresso.Dashboard/Espresso.Dashboard.csproj", "Dashboard/Espresso.Dashboard/"]
 RUN dotnet restore "Dashboard/Espresso.Dashboard/Espresso.Dashboard.csproj"
 
 # Build .NET App
-COPY server/ .
+COPY /source/server/ .
+COPY /.editorconfig .
 RUN dotnet build "Dashboard/Espresso.Dashboard/Espresso.Dashboard.csproj" -c Release -o /app/server/build --no-restore
 
 # Publish .NET App

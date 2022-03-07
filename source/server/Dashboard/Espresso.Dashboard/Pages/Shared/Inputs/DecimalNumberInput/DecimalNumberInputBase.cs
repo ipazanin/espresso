@@ -15,7 +15,7 @@ public class DecimalNumberInputBase : InputBase<double>
     [Parameter]
     [EditorRequired]
     public double MinValue { get; set; }
-    
+
     protected string ValidationMessage { get; set; } = string.Empty;
 
     protected void OnInputValueChanged(ChangeEventArgs args)
