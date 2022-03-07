@@ -59,10 +59,6 @@ public class EditSettingsBase : ComponentBase
             return;
         }
 
-        Console.WriteLine(SettingsState.ArticleSettingState.FeaturedArticlesTake);
-
-        var setting = SettingProvider.LatestSetting;
-
         var newArticleSetting = new ArticleSetting(
             maxAgeOfTrendingArticleInMiliseconds: (long)TimeSpan.FromHours(SettingsState.ArticleSettingState.MaxAgeOfTrendingArticleInHours).TotalMilliseconds,
             maxAgeOfFeaturedArticleInMiliseconds: (long)TimeSpan.FromHours(SettingsState.ArticleSettingState.MaxAgeOfFeaturedArticleInHours).TotalMilliseconds,

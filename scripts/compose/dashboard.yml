@@ -5,8 +5,8 @@ services:
     image: docker.pkg.github.com/espresso-news/espresso-backend/espresso-dashboard
     restart: unless-stopped
     build:
-      context: ../../source
-      dockerfile: server/Dashboard/Espresso.Dashboard/Dockerfile
+      context: ../..
+      dockerfile: source/server/Dashboard/Espresso.Dashboard/Dockerfile
     ports:
       - '9000:80'
       - '9001:443'
