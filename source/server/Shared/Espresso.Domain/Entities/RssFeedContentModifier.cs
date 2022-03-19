@@ -2,6 +2,8 @@
 //
 // © 2021 Espresso News. All rights reserved.
 
+#pragma warning disable RCS1170
+
 namespace Espresso.Domain.Entities;
 
 public class RssFeedContentModifier

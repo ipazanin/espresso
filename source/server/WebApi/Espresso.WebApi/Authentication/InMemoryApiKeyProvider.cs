@@ -6,9 +6,6 @@ using Espresso.WebApi.Configuration;
 
 namespace Espresso.WebApi.Authentication;
 
-/// <summary>
-/// 
-/// </summary>
 public class InMemoryApiKeyProvider : IApiKeyProvider
 {
     private readonly IDictionary<string, ApiKey> _apiKeys;
@@ -67,10 +64,6 @@ public class InMemoryApiKeyProvider : IApiKeyProvider
             };
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="providedApiKey"></param>
     public Task<ApiKey> GetApiKey(string providedApiKey)
     {
         _apiKeys.TryGetValue(providedApiKey, out var key);

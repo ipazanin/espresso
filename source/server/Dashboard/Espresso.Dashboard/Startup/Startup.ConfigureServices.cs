@@ -278,7 +278,7 @@ internal sealed partial class Startup
             options.EnableSensitiveDataLogging(_dashboardConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
         });
 
-        services.AddScoped<IDatabaseConnectionFactory, DatabaseConnectionFactory>(serviceProvider => new DatabaseConnectionFactory(
+        services.AddScoped<IDatabaseConnectionFactory, DatabaseConnectionFactory>(_ => new DatabaseConnectionFactory(
             connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString));
     }
 

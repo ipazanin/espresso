@@ -70,8 +70,8 @@ public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
 
         var exceptionBaseModel = new ExceptionDto(
             exceptionMessage: context.Exception.Message,
-            exceptionStackTrace: context.Exception.StackTrace,
             innerExceptionMessage: context.Exception.InnerException?.Message,
+            exceptionStackTrace: context.Exception.StackTrace,
             innerExceptionStackTrace: context.Exception.InnerException?.StackTrace,
             errors: errors);
 

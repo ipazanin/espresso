@@ -84,14 +84,13 @@ public class TrendingScoreService : ITrendingScoreService
         {
             return 0;
         }
-        else if (normalisedTrendingScore >= 1000M)
+
+        if (normalisedTrendingScore >= 1000M)
         {
             return 999M;
         }
-        else
-        {
-            return normalisedTrendingScore;
-        }
+
+        return normalisedTrendingScore;
     }
 
     private static decimal CalculateStandardDeviation(

@@ -252,14 +252,13 @@ public class CreateArticlesService : ICreateArticlesService
         {
             return null;
         }
-        else if (urlFragmentOrFullUrl.StartsWith("http"))
+
+        if (urlFragmentOrFullUrl.StartsWith("http"))
         {
             return urlFragmentOrFullUrl;
         }
-        else
-        {
-            return $"{baseUrl}{urlFragmentOrFullUrl}";
-        }
+
+        return $"{baseUrl}{urlFragmentOrFullUrl}";
     }
 
     private DateTimeOffset? GetPublishDateTime(DateTimeOffset itemPublishDateTime, DateTimeOffset utcNow)
@@ -273,14 +272,13 @@ public class CreateArticlesService : ICreateArticlesService
         {
             return null;
         }
-        else if (rssFeedPublishDateTime > maximumPublishDateTime || rssFeedPublishDateTime < minimumPublishDateTime)
+
+        if (rssFeedPublishDateTime > maximumPublishDateTime || rssFeedPublishDateTime < minimumPublishDateTime)
         {
             return utcNow;
         }
-        else
-        {
-            return rssFeedPublishDateTime;
-        }
+
+        return rssFeedPublishDateTime;
     }
 
     private async Task<(Article? article, bool isValid)> CreateArticleAsync(

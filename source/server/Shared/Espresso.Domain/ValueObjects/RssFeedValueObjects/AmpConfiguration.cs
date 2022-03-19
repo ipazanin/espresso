@@ -4,6 +4,8 @@
 
 using Espresso.Domain.Infrastructure;
 
+#pragma warning disable RCS1170
+
 namespace Espresso.Domain.ValueObjects.RssFeedValueObjects;
 
 public class AmpConfiguration : ValueObject

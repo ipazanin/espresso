@@ -12,15 +12,15 @@ public class AnsiUtilityTest
     [Fact]
     public void EncodeRequestName_EncodesStringWithYellowColorBoldAndUnderline()
     {
-        const int value = 0;
+        const int Value = 0;
         var expectedAnsivalue =
             "\u001b[" +
             "33;1;4" +
             "m" +
-            $"{{{value}}}" +
+            $"{{{Value}}}" +
             "\u001b[0m";
 
-        var actualAnsivalue = AnsiUtility.EncodeEventName(value);
+        var actualAnsivalue = AnsiUtility.EncodeEventName(Value);
 
         Assert.Equal(
             expected: expectedAnsivalue,
@@ -30,15 +30,15 @@ public class AnsiUtilityTest
     [Fact]
     public void EncodeParameterName_EncodesStringWithGreenColorAndBold()
     {
-        const string? parameterName = "parameterName";
+        const string? ParameterName = "parameterName";
         var expectedAnsivalue =
             "\u001b[" +
             "32;1" +
             "m" +
-            parameterName +
+            ParameterName +
             "\u001b[0m";
 
-        var actualAnsivalue = AnsiUtility.EncodeParameterName(parameterName);
+        var actualAnsivalue = AnsiUtility.EncodeParameterName(ParameterName);
 
         Assert.Equal(
             expected: expectedAnsivalue,
@@ -48,15 +48,15 @@ public class AnsiUtilityTest
     [Fact]
     public void EncodeDuration_EncodesStringWithCyanColor()
     {
-        const int value = 0;
+        const int Value = 0;
         var expectedAnsivalue =
             "\u001b[" +
             "36" +
             "m" +
-            $"{{{value}}}" +
+            $"{{{Value}}}" +
             "\u001b[0m";
 
-        var actualAnsivalue = AnsiUtility.EncodeTimespan(value);
+        var actualAnsivalue = AnsiUtility.EncodeTimespan(Value);
 
         Assert.Equal(
             expected: expectedAnsivalue,
@@ -66,15 +66,15 @@ public class AnsiUtilityTest
     [Fact]
     public void EncodeDateTime_EncodesStringWithBlueColor()
     {
-        const int value = 0;
+        const int Value = 0;
         var expectedAnsivalue =
             "\u001b[" +
             "34" +
             "m" +
-            $"{{{value}}}" +
+            $"{{{Value}}}" +
             "\u001b[0m";
 
-        var actualAnsivalue = AnsiUtility.EncodeDateTime(value);
+        var actualAnsivalue = AnsiUtility.EncodeDateTime(Value);
 
         Assert.Equal(
             expected: expectedAnsivalue,
@@ -84,16 +84,16 @@ public class AnsiUtilityTest
     [Fact]
     public void EncodeString_EncodesStringWithWhiteColorAndItalic()
     {
-        const int value = 0;
+        const int Value = 0;
         var expectedAnsivalue =
             "\u001b[" +
             "37" +
             ";3" +
             "m" +
-            $"{{{value}}}" +
+            $"{{{Value}}}" +
             "\u001b[0m";
 
-        var actualAnsivalue = AnsiUtility.EncodeString(value);
+        var actualAnsivalue = AnsiUtility.EncodeString(Value);
 
         Assert.Equal(
             expected: expectedAnsivalue,
@@ -103,15 +103,15 @@ public class AnsiUtilityTest
     [Fact]
     public void EncodeDeviceType_EncodesStringWithYellowColor()
     {
-        const int value = 0;
+        const int Value = 0;
         var expectedAnsivalue =
             "\u001b[" +
             "33" +
             "m" +
-            $"{{{value}}}" +
+            $"{{{Value}}}" +
             "\u001b[0m";
 
-        var actualAnsivalue = AnsiUtility.EncodeEnum(value);
+        var actualAnsivalue = AnsiUtility.EncodeEnum(Value);
 
         Assert.Equal(
             expected: expectedAnsivalue,
@@ -121,15 +121,15 @@ public class AnsiUtilityTest
     [Fact]
     public void EncodeErrorMessage_EncodesStringWithRedColor()
     {
-        const int value = 0;
+        const int Value = 0;
         var expectedAnsivalue =
             "\u001b[" +
             "31" +
             "m" +
-            $"{{{value}}}" +
+            $"{{{Value}}}" +
             "\u001b[0m";
 
-        var actualAnsivalue = AnsiUtility.EncodeErrorMessage(value);
+        var actualAnsivalue = AnsiUtility.EncodeErrorMessage(Value);
 
         Assert.Equal(
             expected: expectedAnsivalue,
@@ -139,15 +139,15 @@ public class AnsiUtilityTest
     [Fact]
     public void EncodeNumber_EncodesStringWithMagentaColor()
     {
-        const int value = 0;
+        const int Value = 0;
         var expectedAnsivalue =
             "\u001b[" +
             "35" +
             "m" +
-            $"{{{value}}}" +
+            $"{{{Value}}}" +
             "\u001b[0m";
 
-        var actualAnsivalue = AnsiUtility.EncodeNumber(value);
+        var actualAnsivalue = AnsiUtility.EncodeNumber(Value);
 
         Assert.Equal(
             expected: expectedAnsivalue,
@@ -157,15 +157,15 @@ public class AnsiUtilityTest
     [Fact]
     public void EncodeObject_EncodesStringWithMagentaColor()
     {
-        const int value = 0;
+        const int Value = 0;
         var expectedAnsivalue =
             "\u001b[" +
             "35" +
             "m" +
-            $"{{{value}}}" +
+            $"{{{Value}}}" +
             "\u001b[0m";
 
-        var actualAnsivalue = AnsiUtility.EncodeObject(value);
+        var actualAnsivalue = AnsiUtility.EncodeObject(Value);
 
         Assert.Equal(
             expected: expectedAnsivalue,

@@ -317,6 +317,10 @@ dotnet_diagnostic.IDE2003.severity = warning
 # csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental
 dotnet_diagnostic.IDE2004.severity = warning
 
+# if statement can be simplified
+dotnet_diagnostic.IDE0045.severity = none
+dotnet_diagnostic.IDE0046.severity = none
+
 # CA1822: Make member static
 # Not enforced as a build 'warning' for 'VisualStudio' layer due to large number of false positives from https://github.com/dotnet/roslyn-analyzers/issues/3857 and https://github.com/dotnet/roslyn-analyzers/issues/3858
 # Additionally, there is a risk of accidentally breaking an internal API that partners rely on though IVT.
@@ -348,6 +352,12 @@ dotnet_diagnostic.CA1707.severity = none
 
 # RCS1090: Add call to 'ConfigureAwait' (or vice versa).
 dotnet_diagnostic.RCS1090.severity = none
+
+# RCS1225: Make class sealed
+dotnet_diagnostic.RCS1225.severity = none
+
+# RCS1021: Use expression-bodied lambda.
+dotnet_diagnostic.RCS1021.severity = none
 
 # VSTHRD111: Use ConfigureAwait(bool)
 dotnet_diagnostic.VSTHRD111.severity = none

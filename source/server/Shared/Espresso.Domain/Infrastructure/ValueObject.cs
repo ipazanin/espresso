@@ -27,8 +27,7 @@ public abstract class ValueObject
                 return false;
             }
 
-            if (thisValues.Current != null &&
-                !thisValues.Current.Equals(otherValues.Current))
+            if (thisValues.Current?.Equals(otherValues.Current) == false)
             {
                 return false;
             }
@@ -40,7 +39,7 @@ public abstract class ValueObject
     public override int GetHashCode()
     {
         return GetAtomicValues()
-            .Select(x => x != null ? x.GetHashCode() : 0)
+            .Select(x => x?.GetHashCode() ?? 0)
             .Aggregate((x, y) => x ^ y);
     }
 

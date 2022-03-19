@@ -31,8 +31,8 @@ public class GetConfigurationQueryHandler_1_3 : IRequestHandler<GetConfiguration
         var categories = _memoryCache.Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey);
 
         var newsPortalDtos = newsPortals
-            .OrderBy(keySelector: newsPortal => newsPortal.Name)
             .Where(predicate: newsPortal => !newsPortal.CategoryId.Equals((int)CategoryId.Local) && newsPortal.IsEnabled)
+            .OrderBy(keySelector: newsPortal => newsPortal.Name)
             .Select(selector: GetConfigurationNewsPortal_1_3.GetProjection().Compile());
 
         var categoryDtos = categories

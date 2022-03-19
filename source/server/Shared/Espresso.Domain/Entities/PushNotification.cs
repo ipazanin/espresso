@@ -4,6 +4,8 @@
 
 using System.Linq.Expressions;
 
+#pragma warning disable RCS1170
+
 namespace Espresso.Domain.Entities;
 
 public class PushNotification

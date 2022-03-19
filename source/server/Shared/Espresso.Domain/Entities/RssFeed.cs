@@ -5,6 +5,8 @@
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.ValueObjects.RssFeedValueObjects;
 
+#pragma warning disable RCS1170
+
 namespace Espresso.Domain.Entities;
 
 public class RssFeed

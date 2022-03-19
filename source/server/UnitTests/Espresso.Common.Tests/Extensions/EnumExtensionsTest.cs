@@ -15,23 +15,23 @@ public class EnumExtensionsTest
     [Fact]
     public void GetDisplayName_WithUndefinedEnum_ReturnsUndefinedString()
     {
-        const AppEnvironment undefinedEnum = (AppEnvironment)(-1);
-        const string? expectedDisplayName = FormatConstants.Undefined;
+        const AppEnvironment UndefinedEnum = (AppEnvironment)(-1);
+        const string? ExpectedDisplayName = FormatConstants.Undefined;
 
-        var actualDisplayName = undefinedEnum.GetDisplayName();
+        var actualDisplayName = UndefinedEnum.GetDisplayName();
 
         Assert.Equal(
-            expected: expectedDisplayName,
+            expected: ExpectedDisplayName,
             actual: actualDisplayName);
     }
 
     [Fact]
     public void GetDisplayName_WithEnumValueWithoutDisplayNameAttribute_ReturnsEnumStringValue()
     {
-        const AppEnvironment enumValueWithoutDisplayAttribute = AppEnvironment.Local;
-        var expectedDisplayName = enumValueWithoutDisplayAttribute.ToString();
+        const AppEnvironment EnumValueWithoutDisplayAttribute = AppEnvironment.Local;
+        var expectedDisplayName = EnumValueWithoutDisplayAttribute.ToString();
 
-        var actualDisplayName = enumValueWithoutDisplayAttribute.GetDisplayName();
+        var actualDisplayName = EnumValueWithoutDisplayAttribute.GetDisplayName();
 
         Assert.Equal(
             expected: expectedDisplayName,
@@ -41,23 +41,23 @@ public class EnumExtensionsTest
     [Fact]
     public void GetDisplayName_WithEnumValueWithDisplayNameAttribute_ReturnsDisplayNameValue()
     {
-        const AppEnvironment enumValueWithDisplayAttribute = AppEnvironment.Prod;
-        const string? expectedDisplayName = "Production";
+        const AppEnvironment EnumValueWithDisplayAttribute = AppEnvironment.Prod;
+        const string? ExpectedDisplayName = "Production";
 
-        var actualDisplayName = enumValueWithDisplayAttribute.GetDisplayName();
+        var actualDisplayName = EnumValueWithDisplayAttribute.GetDisplayName();
 
         Assert.Equal(
-            expected: expectedDisplayName,
+            expected: ExpectedDisplayName,
             actual: actualDisplayName);
     }
 
     [Fact]
     public void GetIntegerValueAsString_WithUndefinedEnum_ReturnsIntegerValueAsString()
     {
-        const AppEnvironment undefinedEnum = (AppEnvironment)(-1);
-        var expectedValue = ((int)undefinedEnum).ToString(CultureInfo.InvariantCulture);
+        const AppEnvironment UndefinedEnum = (AppEnvironment)(-1);
+        var expectedValue = ((int)UndefinedEnum).ToString(CultureInfo.InvariantCulture);
 
-        var actualValue = undefinedEnum.GetIntegerValueAsString();
+        var actualValue = UndefinedEnum.GetIntegerValueAsString();
 
         Assert.Equal(
             expected: expectedValue,
@@ -67,10 +67,10 @@ public class EnumExtensionsTest
     [Fact]
     public void GetIntegerValueAsString_WithDefinedEnum_ReturnsIntegerValueAsString()
     {
-        const AppEnvironment definedEnum = AppEnvironment.Local;
-        var expectedValue = ((int)definedEnum).ToString(CultureInfo.InvariantCulture);
+        const AppEnvironment DefinedEnum = AppEnvironment.Local;
+        var expectedValue = ((int)DefinedEnum).ToString(CultureInfo.InvariantCulture);
 
-        var actualValue = definedEnum.GetIntegerValueAsString();
+        var actualValue = DefinedEnum.GetIntegerValueAsString();
 
         Assert.Equal(
             expected: expectedValue,

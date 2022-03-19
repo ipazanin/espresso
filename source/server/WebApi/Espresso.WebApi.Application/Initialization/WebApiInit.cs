@@ -34,11 +34,11 @@ public class WebApiInit : IWebApiInit
     /// <summary>
     /// Initializes a new instance of the <see cref="WebApiInit"/> class.
     /// </summary>
+    /// <param name="memoryCache"></param>
     /// <param name="context"></param>
     /// <param name="articleLoaderService"></param>
     /// <param name="loggerService"></param>
     /// <param name="readinessHealthCheck"></param>
-    /// <param name="memoryCache"></param>
     /// <summary>
     /// Initializes a new instance of the <see cref="WebApiInit"/> class.
     /// </summary>

@@ -12,10 +12,10 @@ public class StringExtensionsTest
     [Fact]
     public void RemoveExtraWhiteSpaceCharacters_WithStringWithNoEmptyCharacters_ReturnsUnmodifiedString()
     {
-        const string? stringValue = "someValue";
-        var expectedStringValue = stringValue;
+        const string? StringValue = "someValue";
+        var expectedStringValue = StringValue;
 
-        var actualStringValue = stringValue.RemoveExtraWhiteSpaceCharacters();
+        var actualStringValue = StringValue.RemoveExtraWhiteSpaceCharacters();
 
         Assert.Equal(
             expected: expectedStringValue,

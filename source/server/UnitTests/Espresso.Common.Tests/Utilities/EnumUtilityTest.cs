@@ -15,10 +15,10 @@ public class EnumUtilityTest
     [Fact]
     public void TryParseEnum_WithIntegerValueNotDefinedBySelectedEnum_ReturnsFalse()
     {
-        const int notDefinedEnumIntegerValue = -1;
+        const int NotDefinedEnumIntegerValue = -1;
 
         var isConversionSuccessfull = EnumUtility.TryParseEnum<AppEnvironment>(
-            enumValue: notDefinedEnumIntegerValue,
+            enumValue: NotDefinedEnumIntegerValue,
             value: out _);
 
         Assert.False(isConversionSuccessfull);
@@ -27,10 +27,10 @@ public class EnumUtilityTest
     [Fact]
     public void TryParseEnum_WithIntegerValueDefinedBySelectedEnum_ReturnsTrue()
     {
-        const int definedIntegerEnumValue = (int)AppEnvironment.Local;
+        const int DefinedIntegerEnumValue = (int)AppEnvironment.Local;
 
         var isConversionSuccessfull = EnumUtility.TryParseEnum<AppEnvironment>(
-            enumValue: definedIntegerEnumValue,
+            enumValue: DefinedIntegerEnumValue,
             value: out _);
 
         Assert.True(isConversionSuccessfull);
@@ -39,10 +39,10 @@ public class EnumUtilityTest
     [Fact]
     public void TryParseEnum_WithIntegerValueDefinedBySelectedEnum_OutputsRightEnumValue()
     {
-        const int definedIntegerEnumValue = (int)AppEnvironment.Local;
+        const int DefinedIntegerEnumValue = (int)AppEnvironment.Local;
 
         _ = EnumUtility.TryParseEnum<AppEnvironment>(
-            enumValue: definedIntegerEnumValue,
+            enumValue: DefinedIntegerEnumValue,
             value: out var parsedEnum);
 
         Assert.Equal(
@@ -53,10 +53,10 @@ public class EnumUtilityTest
     [Fact]
     public void TryParseEnum_WithStringIntegerValueNotDefinedBySelectedEnum_ReturnsFalse()
     {
-        const string? undefinedIntegerStringEnumValue = "-1";
+        const string? UndefinedIntegerStringEnumValue = "-1";
 
         var isConversionSuccessfull = EnumUtility.TryParseEnum<AppEnvironment>(
-            enumValue: undefinedIntegerStringEnumValue,
+            enumValue: UndefinedIntegerStringEnumValue,
             value: out _);
 
         Assert.False(isConversionSuccessfull);
@@ -91,10 +91,10 @@ public class EnumUtilityTest
     [Fact]
     public void TryParseEnum_WithStringValueNotDefinedBySelectedEnum_ReturnsFalse()
     {
-        const string? invalidEnumStringValue = "invalidValue";
+        const string? InvalidEnumStringValue = "invalidValue";
 
         var isConversionSuccessfull = EnumUtility.TryParseEnum<AppEnvironment>(
-            enumValue: invalidEnumStringValue,
+            enumValue: InvalidEnumStringValue,
             value: out _);
 
         Assert.False(isConversionSuccessfull);
@@ -155,106 +155,106 @@ public class EnumUtilityTest
     [Fact]
     public void GetEnumOrDefault_WithUndefinedIntegerEnumValue_ReturnsDefaultEnumValue()
     {
-        const int undefinedIntegerEnumValue = -1;
-        const AppEnvironment defaultEnumValue = AppEnvironment.Undefined;
+        const int UndefinedIntegerEnumValue = -1;
+        const AppEnvironment DefaultEnumValue = AppEnvironment.Undefined;
 
         var processedEnum = EnumUtility.GetEnumOrDefault(
-            enumValue: undefinedIntegerEnumValue,
-            defaultValue: defaultEnumValue);
+            enumValue: UndefinedIntegerEnumValue,
+            defaultValue: DefaultEnumValue);
 
         Assert.Equal(
-            expected: defaultEnumValue,
+            expected: DefaultEnumValue,
             actual: processedEnum);
     }
 
     [Fact]
     public void GetEnumOrDefault_WithDefinedIntegerEnumValue_ReturnsDefinedEnumValue()
     {
-        const AppEnvironment expectedEnumvalue = AppEnvironment.Dev;
-        var definedIntegerEnumvalue = (int)expectedEnumvalue;
-        const AppEnvironment defaultEnumValue = AppEnvironment.Undefined;
+        const AppEnvironment ExpectedEnumvalue = AppEnvironment.Dev;
+        var definedIntegerEnumvalue = (int)ExpectedEnumvalue;
+        const AppEnvironment DefaultEnumValue = AppEnvironment.Undefined;
 
         var processedEnum = EnumUtility.GetEnumOrDefault(
             enumValue: definedIntegerEnumvalue,
-            defaultValue: defaultEnumValue);
+            defaultValue: DefaultEnumValue);
 
         Assert.Equal(
-            expected: expectedEnumvalue,
+            expected: ExpectedEnumvalue,
             actual: processedEnum);
     }
 
     [Fact]
     public void GetEnumOrDefault_WithUndefinedIntegerStringEnumValue_ReturnsDefaultEnumValue()
     {
-        const string? undefinedIntegerStringEnumValue = "-1";
-        const AppEnvironment defaultEnumValue = AppEnvironment.Undefined;
+        const string? UndefinedIntegerStringEnumValue = "-1";
+        const AppEnvironment DefaultEnumValue = AppEnvironment.Undefined;
 
         var processedEnum = EnumUtility.GetEnumOrDefault(
-            enumValue: undefinedIntegerStringEnumValue,
-            defaultValue: defaultEnumValue);
+            enumValue: UndefinedIntegerStringEnumValue,
+            defaultValue: DefaultEnumValue);
 
         Assert.Equal(
-            expected: defaultEnumValue,
+            expected: DefaultEnumValue,
             actual: processedEnum);
     }
 
     [Fact]
     public void GetEnumOrDefault_WithDefinedIntegerStringEnumValue_ReturnsDefinedEnumValue()
     {
-        const AppEnvironment expectedEnumvalue = AppEnvironment.Dev;
-        var definedIntegerStringEnumvalue = ((int)expectedEnumvalue).ToString(CultureInfo.InvariantCulture);
-        const AppEnvironment defaultEnumValue = AppEnvironment.Undefined;
+        const AppEnvironment ExpectedEnumvalue = AppEnvironment.Dev;
+        var definedIntegerStringEnumvalue = ((int)ExpectedEnumvalue).ToString(CultureInfo.InvariantCulture);
+        const AppEnvironment DefaultEnumValue = AppEnvironment.Undefined;
 
         var processedEnum = EnumUtility.GetEnumOrDefault(
             enumValue: definedIntegerStringEnumvalue,
-            defaultValue: defaultEnumValue);
+            defaultValue: DefaultEnumValue);
 
         Assert.Equal(
-            expected: expectedEnumvalue,
+            expected: ExpectedEnumvalue,
             actual: processedEnum);
     }
 
     [Fact]
     public void GetEnumOrDefault_WithDefinedStringDisplayEnumValue_ReturnsDefinedEnumValue()
     {
-        const AppEnvironment expectedEnumvalue = AppEnvironment.Dev;
-        var definedStringDisplayEnumValue = expectedEnumvalue.GetDisplayName();
-        const AppEnvironment defaultEnumValue = AppEnvironment.Undefined;
+        const AppEnvironment ExpectedEnumvalue = AppEnvironment.Dev;
+        var definedStringDisplayEnumValue = ExpectedEnumvalue.GetDisplayName();
+        const AppEnvironment DefaultEnumValue = AppEnvironment.Undefined;
 
         var processedEnum = EnumUtility.GetEnumOrDefault(
             enumValue: definedStringDisplayEnumValue,
-            defaultValue: defaultEnumValue);
+            defaultValue: DefaultEnumValue);
 
         Assert.Equal(
-            expected: expectedEnumvalue,
+            expected: ExpectedEnumvalue,
             actual: processedEnum);
     }
 
     [Fact]
     public void GetEnumOrDefault_ReturnsProvidedEnumValue_WhenProvidedEnumValueIsDefined()
     {
-        const AppEnvironment expectedEnumvalue = AppEnvironment.Dev;
+        const AppEnvironment ExpectedEnumvalue = AppEnvironment.Dev;
 
         var actualEnum = EnumUtility.GetEnumOrDefault(
             enumValue: AppEnvironment.Dev,
             defaultValue: AppEnvironment.Local);
 
         Assert.Equal(
-            expected: expectedEnumvalue,
+            expected: ExpectedEnumvalue,
             actual: actualEnum);
     }
 
     [Fact]
     public void GetEnumOrDefault_ReturnsDefaultEnumValue_WhenProvidedEnumValueIsUndefined()
     {
-        const AppEnvironment expectedEnumvalue = AppEnvironment.Local;
+        const AppEnvironment ExpectedEnumvalue = AppEnvironment.Local;
 
         var actualEnum = EnumUtility.GetEnumOrDefault(
             enumValue: (AppEnvironment)(-1),
             defaultValue: AppEnvironment.Local);
 
         Assert.Equal(
-            expected: expectedEnumvalue,
+            expected: ExpectedEnumvalue,
             actual: actualEnum);
     }
 

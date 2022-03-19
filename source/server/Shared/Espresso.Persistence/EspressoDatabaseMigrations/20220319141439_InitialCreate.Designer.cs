@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Espresso.Persistence.EspressoDatabaseMigrations
 {
     [DbContext(typeof(EspressoDatabaseContext))]
-    [Migration("20211229123755_AddSimilarArticles")]
-    partial class AddSimilarArticles
+    [Migration("20220319141439_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -4435,7 +4435,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                     b.HasIndex("SecondArticleId");
 
-                    b.ToTable("SimilarArticle");
+                    b.ToTable("SimilarArticles");
                 });
 
             modelBuilder.Entity("Espresso.Domain.Entities.Article", b =>

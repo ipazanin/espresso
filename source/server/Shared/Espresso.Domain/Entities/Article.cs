@@ -4,6 +4,7 @@
 
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
 
+#pragma warning disable RCS1170
 namespace Espresso.Domain.Entities;
 
 public class Article
