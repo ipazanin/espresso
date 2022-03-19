@@ -29,8 +29,8 @@ public class GetNewsPortalsQueryHandler_1_3 : IRequestHandler<GetNewsPortalsQuer
     {
         var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
         var newsPortalDtos = newsPortals
-            .OrderBy(keySelector: newsPortal => newsPortal.Name)
             .Where(predicate: newsPortal => !newsPortal.CategoryId.Equals((int)CategoryId.Local))
+            .OrderBy(keySelector: newsPortal => newsPortal.Name)
             .Select(selector: GetNewsPortalsNewsPortal_1_3.GetProjection().Compile());
 
         var response = new GetNewsPortalsQueryResponse_1_3(newsPortalDtos);

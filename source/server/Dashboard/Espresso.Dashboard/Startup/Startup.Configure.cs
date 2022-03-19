@@ -14,12 +14,6 @@ namespace Espresso.Dashboard.Startup;
 
 internal sealed partial class Startup
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="app"></param>
-    /// <param name="loggerService"></param>
-    /// <param name="memoryCacheInit"></param>
     public void Configure(
         IApplicationBuilder app,
         ILoggerService<Startup> loggerService,

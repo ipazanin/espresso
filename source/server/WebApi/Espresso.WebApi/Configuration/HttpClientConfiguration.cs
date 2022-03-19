@@ -22,14 +22,8 @@ public class HttpClientConfiguration
         _configurationSection = configurationSection;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public int MaxRetries => _configurationSection.GetValue<int>("MaxRetries");
 
-    /// <summary>
-    /// 
-    /// </summary>
     public TimeSpan Timeout => TimeSpan.FromSeconds(
         _configurationSection.GetValue<int>("TimeoutInSeconds"));
 }

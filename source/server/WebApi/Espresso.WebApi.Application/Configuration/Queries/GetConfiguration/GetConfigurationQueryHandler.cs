@@ -36,8 +36,8 @@ public class GetConfigurationQueryHandler : IRequestHandler<GetConfigurationQuer
             .Select(selector: GetConfigurationCategory.GetProjection().Compile());
 
         var categoriesWithNewsPortals = categories
-            .OrderBy(category => category.SortIndex)
             .Where(predicate: Category.GetAllCategoriesExceptLocalExpression().Compile())
+            .OrderBy(category => category.SortIndex)
             .Select(
                 selector: GetConfigurationCategoryWithNewsPortals
                     .GetProjection(maxAgeOfNewNewsPortal: _settingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal)
@@ -45,8 +45,8 @@ public class GetConfigurationQueryHandler : IRequestHandler<GetConfigurationQuer
             .Where(grouping => grouping.NewsPortals.Any());
 
         var regionGroupedNewsPortals = regions
-            .OrderBy(keySelector: Region.GetOrderByRegionNameExpression().Compile())
             .Where(predicate: Region.GetAllRegionsExpectGlobalPredicate().Compile())
+            .OrderBy(keySelector: Region.GetOrderByRegionNameExpression().Compile())
             .Select(
                 selector: GetConfigurationRegion
                     .GetProjection(

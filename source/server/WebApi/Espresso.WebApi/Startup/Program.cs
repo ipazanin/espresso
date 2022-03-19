@@ -39,7 +39,7 @@ internal static class Program
                 _ = configureOptions
                     .AddJsonFile(path: $"{parentDirectory}/configuration/app-settings.json", optional: false)
                     .AddJsonFile(path: $"{parentDirectory}/configuration/app-settings.{environmentName}.json", optional: false)
-                    .AddJsonFile(path: $"AppSettings/app-settings.json", optional: false)
+                    .AddJsonFile(path: "AppSettings/app-settings.json", optional: false)
                     .AddJsonFile(path: $"AppSettings/app-settings.{environmentName}.json", optional: false)
                     .AddEnvironmentVariables()
                     .Build();

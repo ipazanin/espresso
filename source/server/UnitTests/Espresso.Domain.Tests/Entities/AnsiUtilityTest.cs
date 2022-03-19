@@ -12,7 +12,7 @@ public class AnsiUtilityTest
     [Fact]
     public void IncrementNumberOfClicks_IncreasesNumberOfClicksByOne()
     {
-        const int numberOfClicks = 0;
+        const int NumberOfClicks = 0;
         var article = new Article(
             id: default,
             url: default!,
@@ -23,7 +23,7 @@ public class AnsiUtilityTest
             createDateTime: default,
             updateDateTime: default,
             publishDateTime: default,
-            numberOfClicks: numberOfClicks,
+            numberOfClicks: NumberOfClicks,
             trendingScore: default,
             editorConfiguration: default!,
             newsPortalId: default,
@@ -36,8 +36,8 @@ public class AnsiUtilityTest
 
         article.IncrementNumberOfClicks();
 
-        const int expectedNumberOfClicks = numberOfClicks + 1;
+        const int ExpectedNumberOfClicks = NumberOfClicks + 1;
         var actualNumberOfClicks = article.NumberOfClicks;
-        Assert.Equal(expectedNumberOfClicks, actualNumberOfClicks);
+        Assert.Equal(ExpectedNumberOfClicks, actualNumberOfClicks);
     }
 }

@@ -69,7 +69,7 @@ public class GetCategoryArticlesQueryHandler : IRequestHandler<GetCategoryArticl
         var response = new GetCategoryArticlesQueryResponse
         {
             Articles = articleDtos,
-            NewNewsPortals = newsPortalDtos.OrderBy(newsPortal => random.Next()),
+            NewNewsPortals = newsPortalDtos.OrderBy(_ => random.Next()),
             NewNewsPortalsPosition = _settingProvider.LatestSetting.NewsPortalSetting.NewNewsPortalsPosition,
         };
 

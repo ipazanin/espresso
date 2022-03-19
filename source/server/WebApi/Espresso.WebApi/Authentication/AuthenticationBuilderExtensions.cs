@@ -6,16 +6,8 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace Espresso.WebApi.Authentication;
 
-/// <summary>
-/// 
-/// </summary>
 public static class AuthenticationBuilderExtensions
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="authenticationBuilder"></param>
-    /// <param name="options"></param>
     public static AuthenticationBuilder AddApiKeySupport(
         this AuthenticationBuilder authenticationBuilder,
         Action<ApiKeyAuthenticationOptions> options)

@@ -173,7 +173,7 @@ internal sealed partial class Startup
                 options.DefaultAuthenticateScheme = ApiKeyAuthenticationOptions.DefaultScheme;
                 options.DefaultChallengeScheme = ApiKeyAuthenticationOptions.DefaultScheme;
             })
-            .AddApiKeySupport(options => { });
+            .AddApiKeySupport(_ => { });
 
         services.AddTransient<IApiKeyProvider, InMemoryApiKeyProvider>();
     }
@@ -229,7 +229,7 @@ internal sealed partial class Startup
     /// <param name="services"></param>
     private void AddJobs(IServiceCollection services)
     {
-        services.AddSingleton<ICronJobConfiguration<AnalyticsCronJob>>(serviceProvider =>
+        services.AddSingleton<ICronJobConfiguration<AnalyticsCronJob>>(_ =>
         {
             return new CronJobConfiguration<AnalyticsCronJob>
             {

@@ -4,29 +4,14 @@
 
 namespace Espresso.WebApi.Authentication;
 
-/// <summary>
-/// 
-/// </summary>
 public class ApiKey
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public const string MobileAppRole = nameof(MobileAppRole);
 
-    /// <summary>
-    /// 
-    /// </summary>
     public const string WebAppRole = nameof(WebAppRole);
 
-    /// <summary>
-    /// 
-    /// </summary>
     public const string ParserRole = nameof(ParserRole);
 
-    /// <summary>
-    /// 
-    /// </summary>
     public const string DevMobileAppRole = nameof(DevMobileAppRole);
 
     /// <summary>
@@ -45,18 +30,9 @@ public class ApiKey
         Key = key ?? throw new ArgumentNullException(nameof(key));
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public int Id { get; }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public string Role { get; }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public string Key { get; }
 }

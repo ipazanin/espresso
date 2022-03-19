@@ -48,7 +48,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ApplicationDownload", (string)null);
+                    b.ToTable("ApplicationDownload");
                 });
 
             modelBuilder.Entity("Espresso.Domain.Entities.Article", b =>
@@ -109,7 +109,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                     b.HasIndex("RssFeedId");
 
-                    b.ToTable("Articles", (string)null);
+                    b.ToTable("Articles");
                 });
 
             modelBuilder.Entity("Espresso.Domain.Entities.ArticleCategory", b =>
@@ -130,7 +130,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("ArticleCategories", (string)null);
+                    b.ToTable("ArticleCategories");
                 });
 
             modelBuilder.Entity("Espresso.Domain.Entities.Category", b =>
@@ -171,7 +171,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
@@ -321,7 +321,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("NewsPortals", (string)null);
+                    b.ToTable("NewsPortals");
 
                     b.HasData(
                         new
@@ -1795,7 +1795,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PushNotifications", (string)null);
+                    b.ToTable("PushNotifications");
                 });
 
             modelBuilder.Entity("Espresso.Domain.Entities.Region", b =>
@@ -1818,7 +1818,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Regions", (string)null);
+                    b.ToTable("Regions");
 
                     b.HasData(
                         new
@@ -1893,7 +1893,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                     b.HasIndex("NewsPortalId");
 
-                    b.ToTable("RssFeeds", (string)null);
+                    b.ToTable("RssFeeds");
 
                     b.HasData(
                         new
@@ -3302,7 +3302,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                     b.HasIndex("RssFeedId");
 
-                    b.ToTable("RssFeedCategory", (string)null);
+                    b.ToTable("RssFeedCategory");
 
                     b.HasData(
                         new
@@ -4055,7 +4055,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                     b.HasIndex("RssFeedId");
 
-                    b.ToTable("RssFeedContentModifier", (string)null);
+                    b.ToTable("RssFeedContentModifier");
 
                     b.HasData(
                         new
@@ -4409,7 +4409,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                     b.HasIndex("Created");
 
-                    b.ToTable("Settings", (string)null);
+                    b.ToTable("Settings");
                 });
 
             modelBuilder.Entity("Espresso.Domain.Entities.SimilarArticle", b =>
@@ -4433,7 +4433,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                     b.HasIndex("SecondArticleId");
 
-                    b.ToTable("SimilarArticles", (string)null);
+                    b.ToTable("SimilarArticles");
                 });
 
             modelBuilder.Entity("Espresso.Domain.Entities.Article", b =>
@@ -4450,7 +4450,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Espresso.Domain.Entities.Article.EditorConfiguration#Espresso.Domain.ValueObjects.ArticleValueObjects.EditorConfiguration", "EditorConfiguration", b1 =>
+                    b.OwnsOne("Espresso.Domain.ValueObjects.ArticleValueObjects.EditorConfiguration", "EditorConfiguration", b1 =>
                         {
                             b1.Property<Guid>("ArticleId")
                                 .HasColumnType("uuid");
@@ -4468,7 +4468,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                             b1.HasKey("ArticleId");
 
-                            b1.ToTable("Articles", (string)null);
+                            b1.ToTable("Articles");
 
                             b1.WithOwner()
                                 .HasForeignKey("ArticleId");
@@ -4534,7 +4534,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.OwnsOne("Espresso.Domain.Entities.RssFeed.AmpConfiguration#Espresso.Domain.ValueObjects.RssFeedValueObjects.AmpConfiguration", "AmpConfiguration", b1 =>
+                    b.OwnsOne("Espresso.Domain.ValueObjects.RssFeedValueObjects.AmpConfiguration", "AmpConfiguration", b1 =>
                         {
                             b1.Property<int>("RssFeedId")
                                 .HasColumnType("integer");
@@ -4548,7 +4548,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                             b1.HasKey("RssFeedId");
 
-                            b1.ToTable("RssFeeds", (string)null);
+                            b1.ToTable("RssFeeds");
 
                             b1.WithOwner()
                                 .HasForeignKey("RssFeedId");
@@ -4651,7 +4651,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                                 });
                         });
 
-                    b.OwnsOne("Espresso.Domain.Entities.RssFeed.CategoryParseConfiguration#Espresso.Domain.ValueObjects.RssFeedValueObjects.CategoryParseConfiguration", "CategoryParseConfiguration", b1 =>
+                    b.OwnsOne("Espresso.Domain.ValueObjects.RssFeedValueObjects.CategoryParseConfiguration", "CategoryParseConfiguration", b1 =>
                         {
                             b1.Property<int>("RssFeedId")
                                 .HasColumnType("integer");
@@ -4663,7 +4663,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                             b1.HasKey("RssFeedId");
 
-                            b1.ToTable("RssFeeds", (string)null);
+                            b1.ToTable("RssFeeds");
 
                             b1.WithOwner()
                                 .HasForeignKey("RssFeedId");
@@ -4741,7 +4741,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                                 });
                         });
 
-                    b.OwnsOne("Espresso.Domain.Entities.RssFeed.ImageUrlParseConfiguration#Espresso.Domain.ValueObjects.RssFeedValueObjects.ImageUrlParseConfiguration", "ImageUrlParseConfiguration", b1 =>
+                    b.OwnsOne("Espresso.Domain.ValueObjects.RssFeedValueObjects.ImageUrlParseConfiguration", "ImageUrlParseConfiguration", b1 =>
                         {
                             b1.Property<int>("RssFeedId")
                                 .HasColumnType("integer");
@@ -4785,7 +4785,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                             b1.HasKey("RssFeedId");
 
-                            b1.ToTable("RssFeeds", (string)null);
+                            b1.ToTable("RssFeeds");
 
                             b1.WithOwner()
                                 .HasForeignKey("RssFeedId");
@@ -5334,7 +5334,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                                 });
                         });
 
-                    b.OwnsOne("Espresso.Domain.Entities.RssFeed.SkipParseConfiguration#Espresso.Domain.ValueObjects.RssFeedValueObjects.SkipParseConfiguration", "SkipParseConfiguration", b1 =>
+                    b.OwnsOne("Espresso.Domain.ValueObjects.RssFeedValueObjects.SkipParseConfiguration", "SkipParseConfiguration", b1 =>
                         {
                             b1.Property<int>("RssFeedId")
                                 .HasColumnType("integer");
@@ -5347,7 +5347,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                             b1.HasKey("RssFeedId");
 
-                            b1.ToTable("RssFeeds", (string)null);
+                            b1.ToTable("RssFeeds");
 
                             b1.WithOwner()
                                 .HasForeignKey("RssFeedId");
@@ -5738,7 +5738,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
             modelBuilder.Entity("Espresso.Domain.Entities.Setting", b =>
                 {
-                    b.OwnsOne("Espresso.Domain.Entities.Setting.ArticleSetting#Espresso.Domain.ValueObjects.SettingsValueObjects.ArticleSetting", "ArticleSetting", b1 =>
+                    b.OwnsOne("Espresso.Domain.ValueObjects.SettingsValueObjects.ArticleSetting", "ArticleSetting", b1 =>
                         {
                             b1.Property<int>("SettingId")
                                 .HasColumnType("integer");
@@ -5757,13 +5757,13 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                             b1.HasKey("SettingId");
 
-                            b1.ToTable("Settings", (string)null);
+                            b1.ToTable("Settings");
 
                             b1.WithOwner()
                                 .HasForeignKey("SettingId");
                         });
 
-                    b.OwnsOne("Espresso.Domain.Entities.Setting.JobsSetting#Espresso.Domain.ValueObjects.SettingsValueObjects.JobsSetting", "JobsSetting", b1 =>
+                    b.OwnsOne("Espresso.Domain.ValueObjects.SettingsValueObjects.JobsSetting", "JobsSetting", b1 =>
                         {
                             b1.Property<int>("SettingId")
                                 .HasColumnType("integer");
@@ -5782,13 +5782,13 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                             b1.HasKey("SettingId");
 
-                            b1.ToTable("Settings", (string)null);
+                            b1.ToTable("Settings");
 
                             b1.WithOwner()
                                 .HasForeignKey("SettingId");
                         });
 
-                    b.OwnsOne("Espresso.Domain.Entities.Setting.NewsPortalSetting#Espresso.Domain.ValueObjects.SettingsValueObjects.NewsPortalSetting", "NewsPortalSetting", b1 =>
+                    b.OwnsOne("Espresso.Domain.ValueObjects.SettingsValueObjects.NewsPortalSetting", "NewsPortalSetting", b1 =>
                         {
                             b1.Property<int>("SettingId")
                                 .HasColumnType("integer");
@@ -5801,13 +5801,13 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                             b1.HasKey("SettingId");
 
-                            b1.ToTable("Settings", (string)null);
+                            b1.ToTable("Settings");
 
                             b1.WithOwner()
                                 .HasForeignKey("SettingId");
                         });
 
-                    b.OwnsOne("Espresso.Domain.Entities.Setting.SimilarArticleSetting#Espresso.Domain.ValueObjects.SettingsValueObjects.SimilarArticleSetting", "SimilarArticleSetting", b1 =>
+                    b.OwnsOne("Espresso.Domain.ValueObjects.SettingsValueObjects.SimilarArticleSetting", "SimilarArticleSetting", b1 =>
                         {
                             b1.Property<int>("SettingId")
                                 .HasColumnType("integer");
@@ -5826,7 +5826,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                             b1.HasKey("SettingId");
 
-                            b1.ToTable("Settings", (string)null);
+                            b1.ToTable("Settings");
 
                             b1.WithOwner()
                                 .HasForeignKey("SettingId");

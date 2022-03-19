@@ -5,6 +5,8 @@
 using System.Linq.Expressions;
 using Espresso.Domain.Enums.RegionEnums;
 
+#pragma warning disable RCS1170
+
 namespace Espresso.Domain.Entities;
 
 public class Region

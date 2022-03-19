@@ -108,7 +108,7 @@ public class LoggerService<TCaller> : ILoggerService<TCaller>
             foreach (var (argumentName, argumentValue) in arguments)
             {
                 var argumentMessage = GetArgumentEncoding(argumentName, argumentValue, ref count);
-                messageBuilder.Append(argumentMessage);
+                _ = messageBuilder.Append(argumentMessage);
                 args.Add(argumentValue);
             }
         }
@@ -138,6 +138,8 @@ public class LoggerService<TCaller> : ILoggerService<TCaller>
         };
     }
 
+// The logging message template should not vary between calls
+#pragma warning disable CA2254
     private void Log(string message, object[] args, LogLevel logLevel, Exception? exception)
     {
         switch (logLevel)
@@ -160,8 +162,10 @@ public class LoggerService<TCaller> : ILoggerService<TCaller>
             case LogLevel.Critical:
                 _logger.LogCritical(exception: exception, message: message, args: args);
                 break;
-            default:
+            case LogLevel.None:
                 break;
         }
     }
 }
+// The logging message template should not vary between calls
+#pragma warning restore CA2254 
