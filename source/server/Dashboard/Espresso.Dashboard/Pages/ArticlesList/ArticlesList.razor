@@ -1,2 +1,36 @@
 @page "/articles"
+@using Espresso.Dashboard.Shared.Pagination
+@using Espresso.Dashboard.Pages.ArticlesList.ArticleListItem;
 @inherits ArticlesListBase
+
+<h1>Articles</h1>
+
+@if (GetArticlesResponse == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var article in GetArticlesResponse.Articles.Items)
+            {
+                <ArticlesListItem Article="@(article)" />
+            }
+        </tbody>
+    </table>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <Pagination PagingMetadata="@(GetArticlesResponse.Articles.PagingMetadata)" Spread=@(2)
+                SelectedPage="@(OnPageSelected)" />
+            </div>
+        </div>
+    </div>
+}

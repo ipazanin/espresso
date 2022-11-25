@@ -148,7 +148,7 @@ else ifeq ($(strip $(arg)),)
 	-f $(WebApiEnvironmentComposeFile) \
 	-f $(DashboardComposeFile) \
 	-f $(DashboardEnvironmentComposeFile) \
-	up --build
+	up --build --force-recreate
 else ifeq ($(arg), down)
 	docker-compose \
 	-f $(DatabaseComposeFile) \
@@ -300,6 +300,7 @@ EspressoDatabaseMigrationsFolder="EspressoDatabaseMigrations"
 EspressoIdentityDatabaseMigrationsFolder="IdentityDatabaseMigrations"
 
 DashboardLocalLaunchProfile='dashboard-local'
+DashboardProductionLaunchProfile='dashboard-local-production'
 WebApiLocalLaunchProfile='web-api-local'
 
 health-check-backend::
@@ -455,6 +456,9 @@ infer-csharp::
 
 start-dashboard::
 	dotnet run --project $(DashboardProjectPath) --configuration $(ReleaseConfiguration) --launch-profile $(DashboardLocalLaunchProfile)
+
+start-dashboard-production::
+	dotnet run --project $(DashboardProjectPath) --configuration $(ReleaseConfiguration) --launch-profile $(DashboardProductionLaunchProfile)
 
 # watch is missing because of: https://github.com/dotnet/sdk/issues/24115
 watch-dashboard::

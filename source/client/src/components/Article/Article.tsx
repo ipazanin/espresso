@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import moment from 'moment';
 import cx from 'classnames';

@@ -8,7 +8,7 @@ using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
-using Espresso.Dashboard.Application.DeleteOldArticles;
+using Espresso.Dashboard.Application.Articles.Commands.DeleteOldArticles;
 using Espresso.Dashboard.Application.HealthChecks;
 using Espresso.Dashboard.Configuration;
 using Espresso.Dashboard.ParseRssFeeds;
@@ -29,7 +29,6 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
     private readonly IMemoryCache _memoryCache;
     private readonly IServiceScopeFactory _serviceScopeFactory;
     private readonly ReadinessHealthCheck _readinessHealthCheck;
-    private readonly IDashboardConfiguration _configuration;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ParseArticlesCronJob"/> class.
@@ -50,10 +49,6 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
         _memoryCache = memoryCache;
         _serviceScopeFactory = serviceScopeFactory;
         _readinessHealthCheck = readinessHealthCheck;
-        using var scope = _serviceScopeFactory.CreateScope();
-
-        // TODO: check if this can be done better
-        _configuration = scope.ServiceProvider.GetRequiredService<IDashboardConfiguration>();
     }
 
     protected override CronExpression CronExpression
@@ -152,12 +147,13 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
     {
         using var scope = _serviceScopeFactory.CreateScope();
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+        var configuration = scope.ServiceProvider.GetRequiredService<IDashboardConfiguration>();
 
         _ = await mediator.Send(
             request: new ParseRssFeedsCommand
             {
-                TargetedApiVersion = _configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
-                ConsumerVersion = _configuration.AppConfiguration.Version,
+                TargetedApiVersion = configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
+                ConsumerVersion = configuration.AppConfiguration.Version,
                 DeviceType = DeviceType.RssFeedParser,
                 Articles = Articles,
                 RssFeeds = RssFeeds,
@@ -170,14 +166,15 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
     {
         using var scope = _serviceScopeFactory.CreateScope();
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+        var configuration = scope.ServiceProvider.GetRequiredService<IDashboardConfiguration>();
 
         _ = await mediator.Send(
             request: new DeleteOldArticlesCommand
             {
                 Articles = Articles,
                 DeviceType = DeviceType.RssFeedParser,
-                ConsumerVersion = _configuration.AppConfiguration.Version,
-                TargetedApiVersion = _configuration.AppConfiguration.Version,
+                ConsumerVersion = configuration.AppConfiguration.Version,
+                TargetedApiVersion = configuration.AppConfiguration.Version,
             },
             cancellationToken: cancellationToken);
     }

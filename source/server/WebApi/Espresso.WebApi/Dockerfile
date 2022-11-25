@@ -22,7 +22,7 @@ FROM dotnet-builder AS dotnet-publisher
 RUN dotnet publish "WebApi/Espresso.WebApi/Espresso.WebApi.csproj" -c Release -o /app/server/publish
 
 # Client App
-FROM node:14 AS client-builder
+FROM node:18 AS client-builder
 ARG REACT_APP_ENVIRONMENT
 
 # set working directory

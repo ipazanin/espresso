@@ -17,7 +17,7 @@ namespace Espresso.Dashboard.Pages.NewsPortalsList;
 /// </summary>
 [Authorize(Roles = RoleConstants.AdminRoleName)]
 public class NewsPortalsListBase : ComponentBase
-{
+{ 
     /// <summary>
     /// Gets <see cref="NewsPortal"/> request response.
     /// </summary>
@@ -52,7 +52,7 @@ public class NewsPortalsListBase : ComponentBase
     /// </summary>
     /// <param name="page">Page number.</param>
     /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-    protected Task SelectedPage(int page)
+    protected Task OnPageSelected(int page)
     {
         PagingParameters = PagingParameters with { CurrentPage = page };
         return FetchNewsPortals();

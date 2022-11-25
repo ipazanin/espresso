@@ -23,11 +23,11 @@ public record PagingParameters
     /// Returns number of items to take.
     /// </summary>
     /// <returns>Number of items to take.</returns>
-    public int Take() => PageSize;
+    public int GetTake() => PageSize;
 
     /// <summary>
     /// Returns number of items to skip.
     /// </summary>
     /// <returns>Number of items to skip.</returns>
-    public int Skip() => (CurrentPage - 1) * PageSize;
+    public int GetSkip() => (CurrentPage - 1) * PageSize;
 }

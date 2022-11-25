@@ -90,7 +90,6 @@ const AppContainer: React.FC = () => {
       <Navbar
         categories={allCategories}
         routes={allRoutes}
-        onRouteChange={() => {}}
       />
       <Main newsPortalIds={newsPortalIds} category={currentCategory} />
     </>
