@@ -19,7 +19,7 @@ public class NewsPortal
 
     public const int BaseUrlMaxLength = 100;
 
-    public const int IconUrlMaxlength = 100;
+    public const int IconUrlMaxLength = 100;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="NewsPortal"/> class.

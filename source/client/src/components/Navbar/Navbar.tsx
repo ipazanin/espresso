@@ -20,7 +20,6 @@ import styles from './navbar.module.scss';
 interface NavbarProps {
   categories: GetWebConfigurationCategory[];
   routes: string[];
-  onRouteChange: (nextRoute: string) => void;
 }
 
 enum NavArrowActions {

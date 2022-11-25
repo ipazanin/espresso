@@ -5,7 +5,7 @@
 using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using Espresso.Domain.Entities;
 
-namespace Espresso.Dashboard.Application.DeleteOldArticles;
+namespace Espresso.Dashboard.Application.Articles.Commands.DeleteOldArticles;
 
 public record DeleteOldArticlesCommand : Request<DeleteOldArticlesCommandResponse>
 {

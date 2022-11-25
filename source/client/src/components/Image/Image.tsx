@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React, { useState } from 'react';
 
 type HTMLImageProps = React.DetailedHTMLProps<

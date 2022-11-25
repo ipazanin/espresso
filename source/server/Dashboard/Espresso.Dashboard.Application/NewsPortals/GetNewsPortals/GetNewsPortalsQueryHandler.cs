@@ -27,8 +27,8 @@ public class GetNewsPortalsQueryHandler : IRequestHandler<GetNewsPortalsQuery, G
         var newsPortals = await _espressoDatabaseContext
             .NewsPortals
             .OrderBy(newsPortal => newsPortal.Name)
-            .Skip(request.PagingParameters.Skip())
-            .Take(request.PagingParameters.Take())
+            .Skip(request.PagingParameters.GetSkip())
+            .Take(request.PagingParameters.GetTake())
             .Select(GetNewsPortalsNewsPortal.GetProjection())
             .ToListAsync(cancellationToken: cancellationToken);
 

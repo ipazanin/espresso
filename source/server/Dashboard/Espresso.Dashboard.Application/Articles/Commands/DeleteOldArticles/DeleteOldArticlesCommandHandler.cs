@@ -7,7 +7,7 @@ using Espresso.Persistence.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Espresso.Dashboard.Application.DeleteOldArticles;
+namespace Espresso.Dashboard.Application.Articles.Commands.DeleteOldArticles;
 
 public class DeleteOldArticlesCommandHandler : IRequestHandler<DeleteOldArticlesCommand, DeleteOldArticlesCommandResponse>
 {

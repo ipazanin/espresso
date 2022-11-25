@@ -17,7 +17,6 @@ public class PagedList<T>
     /// </summary>
     /// <param name="items">Paging items.</param>
     /// <param name="pagingMetadata">Paging metadata.</param>
-    [JsonConstructor]
     public PagedList(
         IEnumerable<T> items,
         PagingMetadata pagingMetadata)
@@ -29,10 +28,10 @@ public class PagedList<T>
     /// <summary>
     /// Gets paging items.
     /// </summary>
-    public IEnumerable<T> Items { get; init; }
+    public IEnumerable<T> Items { get; }
 
     /// <summary>
     /// Gets paging metadata.
     /// </summary>
-    public PagingMetadata PagingMetadata { get; init; }
+    public PagingMetadata PagingMetadata { get; }
 }

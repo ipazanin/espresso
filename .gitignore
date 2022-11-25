@@ -62,3 +62,6 @@ node_modules/
 
 # .csproj.user .NET projects
 *.csproj.user
+
+# log files
+*.log

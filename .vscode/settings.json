@@ -89,6 +89,7 @@
   "omnisharp.enableAsyncCompletion": true,
   "omnisharp.useEditorFormattingSettings": true,
   "omnisharp.organizeImportsOnFormat": true,
+  "omnisharp.useModernNet": true,
   "prettier.configPath": "./source/client/.prettierrc",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "search.exclude": {
