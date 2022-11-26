@@ -1,6 +1,6 @@
 ﻿// NewsPortalsListBase.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Application.DataTransferObjects.PagingDataTransferObjects;
 using Espresso.Common.Constants;
@@ -17,7 +17,7 @@ namespace Espresso.Dashboard.Pages.NewsPortalsList;
 /// </summary>
 [Authorize(Roles = RoleConstants.AdminRoleName)]
 public class NewsPortalsListBase : ComponentBase
-{ 
+{
     /// <summary>
     /// Gets <see cref="NewsPortal"/> request response.
     /// </summary>

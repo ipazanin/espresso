@@ -1,6 +1,6 @@
 ﻿// Index.cshtml.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
@@ -87,14 +87,14 @@ public partial class IndexModel : PageModel
 
     private async Task LoadAsync(IdentityUser user)
     {
-        var userName = await _userManager.GetUserNameAsync(user);
-        var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+        var userName = await _userManager.GetUserNameAsync(user)!;
+        var phoneNumber = await _userManager.GetPhoneNumberAsync(user)!;
 
-        Username = userName;
+        Username = userName!;
 
         Input = new InputModel
         {
-            PhoneNumber = phoneNumber,
+            PhoneNumber = phoneNumber!,
         };
     }
 

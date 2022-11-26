@@ -1,6 +1,6 @@
 ﻿// EnableAuthenticator.cshtml.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
@@ -108,7 +108,7 @@ public class EnableAuthenticatorModel : PageModel
             return Page();
         }
 
-        await _userManager.SetTwoFactorEnabledAsync(user, true);
+        _ = await _userManager.SetTwoFactorEnabledAsync(user, true);
         var userId = await _userManager.GetUserIdAsync(user);
         _logger.LogInformation("User with ID '{UserId}' has enabled 2FA with an authenticator app.", userId);
 
@@ -117,13 +117,11 @@ public class EnableAuthenticatorModel : PageModel
         if (await _userManager.CountRecoveryCodesAsync(user) == 0)
         {
             var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
-            RecoveryCodes = recoveryCodes.ToArray();
+            RecoveryCodes = recoveryCodes?.ToArray() ?? Array.Empty<string>();
             return RedirectToPage("./ShowRecoveryCodes");
         }
-        else
-        {
-            return RedirectToPage("./TwoFactorAuthentication");
-        }
+
+        return RedirectToPage("./TwoFactorAuthentication");
     }
 
     private static string FormatKey(string unformattedKey)
@@ -132,13 +130,13 @@ public class EnableAuthenticatorModel : PageModel
         var currentPosition = 0;
         while (currentPosition + 4 < unformattedKey.Length)
         {
-            result.Append(unformattedKey.AsSpan(currentPosition, 4)).Append(' ');
+            _ = result.Append(unformattedKey.AsSpan(currentPosition, 4)).Append(' ');
             currentPosition += 4;
         }
 
         if (currentPosition < unformattedKey.Length)
         {
-            result.Append(unformattedKey[currentPosition..]);
+            _ = result.Append(unformattedKey[currentPosition..]);
         }
 
         return result.ToString().ToLowerInvariant();
@@ -150,14 +148,14 @@ public class EnableAuthenticatorModel : PageModel
         var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
         if (string.IsNullOrEmpty(unformattedKey))
         {
-            await _userManager.ResetAuthenticatorKeyAsync(user);
+            _ = await _userManager.ResetAuthenticatorKeyAsync(user);
             unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
         }
 
-        SharedKey = FormatKey(unformattedKey);
+        SharedKey = FormatKey(unformattedKey!);
 
-        var email = await _userManager.GetEmailAsync(user);
-        AuthenticatorUri = GenerateQrCodeUri(email, unformattedKey);
+        var email = await _userManager.GetEmailAsync(user)!;
+        AuthenticatorUri = GenerateQrCodeUri(email!, unformattedKey!);
     }
 
     private string GenerateQrCodeUri(string email, string unformattedKey)

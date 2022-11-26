@@ -1,6 +1,6 @@
 ﻿// SendInformationToApiHttpService.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Application.Extensions;
@@ -67,7 +67,7 @@ public class SendInformationToApiHttpService : ISendInformationToApiService
     {
         try
         {
-            var response = await _httpClient.PostAsync(
+            using var response = await _httpClient.PostAsync(
                 requestUri: $"{_serverUrl}/api/notifications/setting",
                 content: null,
                 cancellationToken: cancellationToken);
@@ -113,7 +113,7 @@ public class SendInformationToApiHttpService : ISendInformationToApiService
 
         try
         {
-            var response = await _httpClient.PostAsync(
+            using var response = await _httpClient.PostAsync(
                 requestUri: $"{_serverUrl}/api/notifications/articles",
                 content: httpContent,
                 cancellationToken: cancellationToken);

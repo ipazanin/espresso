@@ -1,6 +1,6 @@
 ﻿// SystemTextJsonService.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
 using Espresso.Common.Services.Contracts;
@@ -42,7 +42,7 @@ public class SystemTextJsonService : IJsonService
         using var reader = new StreamReader(stream);
 
         var jsonValue = await reader
-            .ReadToEndAsync();
+            .ReadToEndAsync(cancellationToken);
 
         return jsonValue;
     }

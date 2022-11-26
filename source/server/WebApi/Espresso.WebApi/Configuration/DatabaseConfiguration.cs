@@ -1,6 +1,6 @@
 ﻿// DatabaseConfiguration.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +26,7 @@ public class DatabaseConfiguration
     /// <summary>
     ///
     /// </summary>
-    public string EspressoDatabaseConnectionString => _configuration.GetValue<string>("EspressoDatabaseConnectionString");
+    public string EspressoDatabaseConnectionString => _configuration.GetValue<string>("EspressoDatabaseConnectionString")!;
 
     /// <summary>
     ///

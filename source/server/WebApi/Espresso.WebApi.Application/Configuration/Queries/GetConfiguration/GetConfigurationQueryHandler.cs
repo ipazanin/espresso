@@ -1,6 +1,6 @@
 ﻿// GetConfigurationQueryHandler.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
@@ -28,8 +28,8 @@ public class GetConfigurationQueryHandler : IRequestHandler<GetConfigurationQuer
 
     public Task<GetConfigurationQueryResponse> Handle(GetConfigurationQuery request, CancellationToken cancellationToken)
     {
-        var categories = _memoryCache.Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey);
-        var regions = _memoryCache.Get<IEnumerable<Region>>(key: MemoryCacheConstants.RegionKey);
+        var categories = _memoryCache.Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey)!;
+        var regions = _memoryCache.Get<IEnumerable<Region>>(key: MemoryCacheConstants.RegionKey)!;
 
         var categoryDtos = categories
             .Where(predicate: Category.GetAllCategoriesExceptGeneralExpression().Compile())

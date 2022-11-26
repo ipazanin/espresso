@@ -1,6 +1,6 @@
 ﻿// ParseRssFeedsCommandHandler.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
 using Espresso.Dashboard.Application.IServices;
@@ -58,9 +58,9 @@ public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand,
         CancellationToken cancellationToken)
     {
         // Needs to be before articles are added to request.Articles
-        var lastSimilarityGroupingTime = request.Articles.Values.Any() ?
+        var lastSimilarityGroupingTime = request.Articles.Values.Count > 0 ?
             request.Articles.Values.Max(article => article.CreateDateTime) :
-            new DateTimeOffset(default);
+            DateTimeOffset.UtcNow.AddDays(-1);
 
         _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _loadRssFeedsService.ParseRssFeeds");
         var rssFeedItemsChannel = await _loadRssFeedsService.ParseRssFeeds(
@@ -83,7 +83,7 @@ public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand,
                 savedArticles: request.Articles);
 
         var updateArticles = updateArticlesWithModifiedProperties
-            .Select(updatedArticleWithModifiedproperties => updatedArticleWithModifiedproperties.article);
+            .Select(updatedArticleWithModifiedProperties => updatedArticleWithModifiedProperties.article);
 
         _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before UpdateSavedArticles");
         UpdateSavedArticles(

@@ -1,9 +1,8 @@
-// GetArticlesQuery.cs
+﻿// GetArticlesQuery.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Application.DataTransferObjects.PagingDataTransferObjects;
-using Espresso.Application.Infrastructure.MediatorInfrastructure;
 using MediatR;
 
 namespace Espresso.Dashboard.Application.Articles.Queries.GetArticles;

@@ -1,6 +1,6 @@
 ﻿// SpaConfiguration.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Microsoft.Extensions.Configuration;
 
@@ -25,7 +25,7 @@ public class SpaConfiguration
     /// <summary>
     ///
     /// </summary>
-    public string SpaProxyServerUrl => _configuration.GetValue<string>("SpaProxyServerUrl");
+    public string SpaProxyServerUrl => _configuration.GetValue<string>("SpaProxyServerUrl")!;
 
     /// <summary>
     ///

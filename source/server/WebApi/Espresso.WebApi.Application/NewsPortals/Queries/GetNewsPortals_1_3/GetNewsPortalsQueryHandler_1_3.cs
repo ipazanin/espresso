@@ -1,6 +1,6 @@
 ﻿// GetNewsPortalsQueryHandler_1_3.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
@@ -27,7 +27,7 @@ public class GetNewsPortalsQueryHandler_1_3 : IRequestHandler<GetNewsPortalsQuer
 
     public Task<GetNewsPortalsQueryResponse_1_3> Handle(GetNewsPortalsQuery_1_3 request, CancellationToken cancellationToken)
     {
-        var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
+        var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey)!;
         var newsPortalDtos = newsPortals
             .Where(predicate: newsPortal => !newsPortal.CategoryId.Equals((int)CategoryId.Local))
             .OrderBy(keySelector: newsPortal => newsPortal.Name)

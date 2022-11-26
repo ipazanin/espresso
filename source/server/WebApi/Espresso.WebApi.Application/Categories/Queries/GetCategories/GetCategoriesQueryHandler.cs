@@ -1,6 +1,6 @@
 ﻿// GetCategoriesQueryHandler.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
@@ -25,7 +25,7 @@ public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, Get
 
     public Task<GetCategoriesQueryResponse> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
     {
-        var categories = _memoryCache.Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey);
+        var categories = _memoryCache.Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey)!;
         var categoryDtos = categories
             .Where(predicate: Category.GetAllCategoriesExceptGeneralExpression().Compile())
             .Select(GetCategoriesCategory.GetProjection().Compile());

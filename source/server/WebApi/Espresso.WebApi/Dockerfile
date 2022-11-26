@@ -1,7 +1,7 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS dotnet-runtime
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS dotnet-runtime
 
 # .NET App
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS dotnet-builder
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS dotnet-builder
 
 # Restore .NET App
 COPY ["source/server/Shared/Espresso.Application/Espresso.Application.csproj", "Shared/Espresso.Application/"]

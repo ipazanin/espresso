@@ -1,6 +1,6 @@
 ﻿// LanguageUtilityTest.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Domain.Utilities;
 using Xunit;
@@ -57,7 +57,7 @@ public class LanguageUtilityTest
     [InlineData("word1 word2")]
     [InlineData("word1\nword2")]
     [InlineData("word1.word2")]
-    public void SeparateWords_SeparatesWordsByRecognisingDelimiterCharacters(string sentence)
+    public void SeparateWords_SeparatesWordsByRecognizingDelimiterCharacters(string sentence)
     {
         var expectedWords = new string[]
         {
@@ -102,15 +102,15 @@ public class LanguageUtilityTest
     [InlineData("u")]
     [InlineData("i")]
     [InlineData("je")]
-    public void RemoveUnimpactfulCroatianWords_ReturnsWordsWithoutUnimpactfulCroatianWords_WhenUnimpactfulCroatianWordsArePresent(string notImpactfulCroatianWord)
+    public void RemoveImpactfulCroatianWords_ReturnsWordsWithoutImpactfulCroatianWords_WhenImpactfulCroatianWordsArePresent(string notImpactfulCroatianWord)
     {
         var words = new List<string>
-            {
-                "Very",
-                "Cool",
-                "Title",
-            };
-        words.Add(notImpactfulCroatianWord);
+        {
+            "Very",
+            "Cool",
+            "Title",
+            notImpactfulCroatianWord
+        };
 
         var expectedWords = new string[]
         {
@@ -125,7 +125,7 @@ public class LanguageUtilityTest
     }
 
     [Fact]
-    public void RemoveUnimpactfulCroatianWords_ReturnsAllWords_WhenThereAreNoUnimpactfulWords()
+    public void RemoveUnImpactfulCroatianWords_ReturnsAllWords_WhenThereAreNoUnImpactfulWords()
     {
         var words = new List<string>
             {
@@ -147,7 +147,7 @@ public class LanguageUtilityTest
     }
 
     [Fact]
-    public void RemoveUnimpactfulCroatianWords_ReturnsNoWords_WhenThereAreOnlyUnimpactfulWords()
+    public void RemoveUnImpactfulCroatianWords_ReturnsNoWords_WhenThereAreOnlyUnImpactfulWords()
     {
         var words = new List<string>
             {

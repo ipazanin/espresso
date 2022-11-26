@@ -1,6 +1,6 @@
 ﻿// ReadinessHealthCheck.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
@@ -21,7 +21,7 @@ public class ReadinessHealthCheck : IHealthCheck
     /// <summary>
     /// Gets or sets a value indicating whether readiness task is completed.
     /// </summary>
-    public bool ReadinessTaskCompleted { get; set; } = false;
+    public bool ReadinessTaskCompleted { get; set; }
 
     /// <inheritdoc/>
     public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)

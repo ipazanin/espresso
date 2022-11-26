@@ -1,6 +1,6 @@
 ﻿// GetWebConfigurationQueryHandler.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
@@ -27,8 +27,8 @@ public class GetWebConfigurationQueryHandler : IRequestHandler<GetWebConfigurati
 
     public Task<GetWebConfigurationQueryResponse> Handle(GetWebConfigurationQuery request, CancellationToken cancellationToken)
     {
-        var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
-        var categories = _memoryCache.Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey);
+        var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey)!;
+        var categories = _memoryCache.Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey)!;
 
         var categoryDtos = categories
             .Where(predicate: Category.GetAllCategoriesExceptGeneralExpression().Compile())

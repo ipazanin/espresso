@@ -1,6 +1,6 @@
 ﻿// ApiKeysConfiguration.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Microsoft.Extensions.Configuration;
 
@@ -19,15 +19,15 @@ public class ApiKeysConfiguration
         _configuration = configuration;
     }
 
-    public string AndroidApiKey => _configuration.GetValue<string>("Android");
+    public string AndroidApiKey => _configuration.GetValue<string>("Android")!;
 
-    public string IosApiKey => _configuration.GetValue<string>("Ios");
+    public string IosApiKey => _configuration.GetValue<string>("Ios")!;
 
-    public string WebApiKey => _configuration.GetValue<string>("Web");
+    public string WebApiKey => _configuration.GetValue<string>("Web")!;
 
-    public string ParserApiKey => _configuration.GetValue<string>("Parser");
+    public string ParserApiKey => _configuration.GetValue<string>("Parser")!;
 
-    public string DevAndroidApiKey => _configuration.GetValue<string>("DevAndroid");
+    public string DevAndroidApiKey => _configuration.GetValue<string>("DevAndroid")!;
 
-    public string DevIosApiKey => _configuration.GetValue<string>("DevIos");
+    public string DevIosApiKey => _configuration.GetValue<string>("DevIos")!;
 }

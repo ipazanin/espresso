@@ -1,6 +1,6 @@
 ﻿// IncrementNumberOfClicksCommandHandler.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
@@ -38,7 +38,7 @@ public class IncrementNumberOfClicksCommandHandler : IRequestHandler<IncrementNu
     {
         var memoryCacheArticles = _memoryCache
             .Get<IEnumerable<Article>>(key: MemoryCacheConstants.ArticleKey)
-            .ToDictionary(article => article.Id);
+            !.ToDictionary(article => article.Id);
 
         var databaseArticle = await _context.Articles.FindAsync(
             keyValues: new object?[] { request.Id },

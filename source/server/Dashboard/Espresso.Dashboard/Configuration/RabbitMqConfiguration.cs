@@ -1,6 +1,6 @@
 ﻿// RabbitMqConfiguration.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Microsoft.Extensions.Configuration;
 
@@ -19,15 +19,15 @@ public class RabbitMqConfiguration
         _configuration = configuration;
     }
 
-    public string HostName => _configuration.GetValue<string>("HostName");
+    public string HostName => _configuration.GetValue<string>("HostName")!;
 
     public int Port => _configuration.GetValue<int>("Port");
 
-    public string Username => _configuration.GetValue<string>("Username");
+    public string Username => _configuration.GetValue<string>("Username")!;
 
-    public string Password => _configuration.GetValue<string>("Password");
+    public string Password => _configuration.GetValue<string>("Password")!;
 
     public bool UseRabbitMqServer => _configuration.GetValue<bool>("UseRabbitMqServer");
 
-    public string ArticlesQueueName => _configuration.GetValue<string>("ArticlesQueueName");
+    public string ArticlesQueueName => _configuration.GetValue<string>("ArticlesQueueName")!;
 }

@@ -1,6 +1,6 @@
 ﻿// AutoCompleteArticleQueryHandler.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
@@ -26,7 +26,7 @@ public class AutoCompleteArticleQueryHandler : IRequestHandler<AutoCompleteArtic
 
     public Task<AutoCompleteArticleQueryResponse> Handle(AutoCompleteArticleQuery request, CancellationToken cancellationToken)
     {
-        var articles = _memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey);
+        var articles = _memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey)!;
 
         var keyWordsToFilterOut = request.KeyWordsToFilterOut is null ?
             Enumerable.Empty<string>() :

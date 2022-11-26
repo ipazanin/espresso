@@ -1,6 +1,6 @@
 ﻿// DatabaseConfiguration.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,9 +20,9 @@ public class DatabaseConfiguration
         _configuration = configuration;
     }
 
-    public string EspressoDatabaseConnectionString => _configuration.GetValue<string>("EspressoDatabaseConnectionString");
+    public string EspressoDatabaseConnectionString => _configuration.GetValue<string>("EspressoDatabaseConnectionString")!;
 
-    public string EspressoIdentityDatabaseConnectionString => _configuration.GetValue<string>("EspressoIdentityDatabaseConnectionString");
+    public string EspressoIdentityDatabaseConnectionString => _configuration.GetValue<string>("EspressoIdentityDatabaseConnectionString")!;
 
     public int CommandTimeoutInSeconds => _configuration.GetValue<int>("CommandTimeoutInSeconds");
 

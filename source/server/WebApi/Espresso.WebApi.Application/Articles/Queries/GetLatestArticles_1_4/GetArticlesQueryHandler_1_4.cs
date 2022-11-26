@@ -1,6 +1,6 @@
 ﻿// GetArticlesQueryHandler_1_4.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
@@ -34,7 +34,7 @@ public class GetArticlesQueryHandler_1_4 :
         CancellationToken cancellationToken)
     {
         var articles = _memoryCache.Get<IEnumerable<Article>>(
-            key: MemoryCacheConstants.ArticleKey);
+            key: MemoryCacheConstants.ArticleKey)!;
 
         var firstArticle = articles.FirstOrDefault(
             article => article.Id.Equals(request.FirstArticleId));
@@ -63,7 +63,7 @@ public class GetArticlesQueryHandler_1_4 :
             .Select(GetLatestArticlesArticle_1_4.GetProjection().Compile());
 
         var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
-            key: MemoryCacheConstants.NewsPortalKey);
+            key: MemoryCacheConstants.NewsPortalKey)!;
 
         var newsPortalDtos = newsPortals
             .Where(

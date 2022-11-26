@@ -1,6 +1,6 @@
 ﻿// GetCategoryArticlesQueryHandler_1_3.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
@@ -28,7 +28,7 @@ public class GetCategoryArticlesQueryHandler_1_3 : IRequestHandler<GetCategoryAr
     public Task<GetCategoryArticlesQueryResponse_1_3> Handle(GetCategoryArticlesQuery_1_3 request, CancellationToken cancellationToken)
     {
         var articles = _memoryCache.Get<IEnumerable<Article>>(
-            key: MemoryCacheConstants.ArticleKey);
+            key: MemoryCacheConstants.ArticleKey)!;
 
         var newsPortalIds = request.NewsPortalIds
             ?.Replace(" ", string.Empty)
