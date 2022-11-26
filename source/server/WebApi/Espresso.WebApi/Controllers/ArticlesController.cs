@@ -70,6 +70,7 @@ public class ArticlesController : ApiController
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.3")]
     [ApiVersion("2.2")]
     [HttpGet]
     [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
@@ -128,6 +129,7 @@ public class ArticlesController : ApiController
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.3")]
     [ApiVersion("2.2")]
     [ApiVersion("2.1")]
     [ApiVersion("2.0")]
@@ -299,6 +301,7 @@ public class ArticlesController : ApiController
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.3")]
     [ApiVersion("2.2")]
     [HttpGet]
     [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
@@ -360,6 +363,7 @@ public class ArticlesController : ApiController
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.3")]
     [ApiVersion("2.2")]
     [ApiVersion("2.1")]
     [ApiVersion("2.0")]
@@ -524,6 +528,7 @@ public class ArticlesController : ApiController
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.3")]
     [ApiVersion("2.2")]
     [ApiVersion("2.1")]
     [ApiVersion("2.0")]
@@ -580,6 +585,7 @@ public class ArticlesController : ApiController
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.3")]
     [ApiVersion("2.2")]
     [ApiVersion("2.1")]
     [ApiVersion("2.0")]
@@ -594,7 +600,7 @@ public class ArticlesController : ApiController
         [Required] Guid articleId,
         CancellationToken cancellationToken)
     {
-        await Sender.Send(
+        _ = await Sender.Send(
             request: new IncrementNumberOfClicksCommand
             {
                 Id = articleId,
@@ -627,6 +633,7 @@ public class ArticlesController : ApiController
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.3")]
     [ApiVersion("2.2")]
     [ApiVersion("2.1")]
     [ApiVersion("2.0")]
@@ -639,7 +646,7 @@ public class ArticlesController : ApiController
         [FromQuery][Required] bool isHidden,
         CancellationToken cancellationToken)
     {
-        await Sender.Send(
+        _ = await Sender.Send(
             request: new HideArticleCommand
             {
                 ArticleId = articleId,
@@ -672,6 +679,7 @@ public class ArticlesController : ApiController
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.3")]
     [ApiVersion("2.2")]
     [ApiVersion("2.1")]
     [ApiVersion("2.0")]
@@ -683,7 +691,7 @@ public class ArticlesController : ApiController
         [FromBody][Required] IEnumerable<SetArticleFeaturedConfigurationRequestBody> requestBody,
         CancellationToken cancellationToken)
     {
-        await Sender.Send(
+        _ = await Sender.Send(
             request: new SetFeaturedArticleCommand
             {
                 FeaturedArticleConfigurations = requestBody
@@ -723,6 +731,7 @@ public class ArticlesController : ApiController
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.3")]
     [ApiVersion("2.2")]
     [ApiVersion("2.1")]
     [ApiVersion("2.0")]

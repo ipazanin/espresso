@@ -52,6 +52,7 @@ public class ApplicationDownloadsController : ApiController
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.3")]
     [ApiVersion("2.2")]
     [ApiVersion("2.1")]
     [ApiVersion("2.0")]
@@ -70,7 +71,7 @@ public class ApplicationDownloadsController : ApiController
             DeviceType = basicInformationsHeaderParameters.DeviceType,
         };
 
-        await Sender.Send(
+        _ = await Sender.Send(
                 request: command,
                 cancellationToken: cancellationToken);
 
@@ -109,7 +110,7 @@ public class ApplicationDownloadsController : ApiController
             ConsumerVersion = mobileAppVersion,
             DeviceType = mobileDeviceType,
         };
-        await Sender.Send(
+        _ = await Sender.Send(
             request: command,
             cancellationToken: cancellationToken);
 
@@ -133,6 +134,7 @@ public class ApplicationDownloadsController : ApiController
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.3")]
     [ApiVersion("2.2")]
     [ApiVersion("2.1")]
     [ApiVersion("2.0")]

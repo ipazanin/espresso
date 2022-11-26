@@ -57,6 +57,7 @@ public class NotificationsController : ApiController
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.3")]
     [ApiVersion("2.2")]
     [HttpPost]
     [Authorize(Roles = ApiKey.ParserRole)]
@@ -66,7 +67,7 @@ public class NotificationsController : ApiController
         [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
         CancellationToken cancellationToken)
     {
-        await Sender.Send(
+        _ = await Sender.Send(
             request: new UpdateInMemoryArticlesCommand
             {
                 CreatedArticleIds = articlesRequest.CreatedArticleIds,
@@ -77,7 +78,7 @@ public class NotificationsController : ApiController
             },
             cancellationToken: cancellationToken);
 
-        await Sender.Send(
+        _ = await Sender.Send(
             request: new SendArticlesNotificationsCommand
             {
                 CreatedArticleIds = articlesRequest.CreatedArticleIds,
@@ -105,6 +106,7 @@ public class NotificationsController : ApiController
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.3")]
     [ApiVersion("2.2")]
     [HttpPost]
     [Authorize(Roles = ApiKey.ParserRole)]
@@ -143,6 +145,7 @@ public class NotificationsController : ApiController
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.3")]
     [ApiVersion("2.2")]
     [ApiVersion("2.1")]
     [ApiVersion("2.0")]
@@ -154,7 +157,7 @@ public class NotificationsController : ApiController
         [FromBody] SendPushNotificationRequestBody sendPushNotificationRequestBody,
         CancellationToken cancellationToken)
     {
-        await Sender.Send(
+        _ = await Sender.Send(
             request: new SendPushNotificationCommand
             {
                 ArticleId = sendPushNotificationRequestBody.ArticleId,
@@ -192,6 +195,7 @@ public class NotificationsController : ApiController
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.3")]
     [ApiVersion("2.2")]
     [ApiVersion("2.1")]
     [ApiVersion("2.0")]
