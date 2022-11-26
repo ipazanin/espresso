@@ -1,6 +1,6 @@
 ﻿// ScrapeWebService.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Application.Extensions;
 using Espresso.Common.Enums;
@@ -160,7 +160,7 @@ public class ScrapeWebService : IScrapeWebService
                         using var responseStream = await response.Content.ReadAsStreamAsync(cancellationToken);
                         using var decompressedStream = new GZipStream(responseStream, CompressionMode.Decompress);
                         using var streamReader = new StreamReader(decompressedStream);
-                        var pageContent = await streamReader.ReadToEndAsync();
+                        var pageContent = await streamReader.ReadToEndAsync(cancellationToken);
                         return pageContent;
                     }
             }

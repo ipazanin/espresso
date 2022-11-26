@@ -1,17 +1,12 @@
 ﻿// LanguageUtility.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 namespace Espresso.Domain.Utilities;
 
-public static class LanguageUtility
+public static partial class LanguageUtility
 {
-    private const string AllowedCharactersRegex = "([a-z]|[A-Z]|[0-9]|ž|Ž|đ|Đ|ć|Ć|č|Č|š|Š)";
-    private const string DelimiterCharactersRegex = "( |\\.|;|:|,|\\n|$)";
     private const string StartOfWordCharactersRegex = "(^| |\n)";
-    private const string UnImpactfulCroatianWordsRegex = "(u|i|je|na|se|su|što|zbog|do|te|samo|jer" +
-        "|već|za|da|s|od|a|će|iz|koji|ne|kako|o|nije|bi|to|ali|još|sa|kao|koja|sve|biti|po|koje|ga" +
-        "|bio|sam|bez|no|dok|mu|pa|li|oko|ako|ili)";
 
     public static IEnumerable<string> GetSearchTerms(string? searchTerm)
     {
@@ -30,8 +25,7 @@ public static class LanguageUtility
 
     public static IEnumerable<string> SeparateWords(string sentence)
     {
-        var words = Regex
-            .Matches(sentence, $"{AllowedCharactersRegex}+")
+        var words = AllowedCharactersRegex().Matches(sentence)
             .Select(match => match.Value)
             .Where(word => !string.IsNullOrWhiteSpace(word));
 
@@ -44,14 +38,14 @@ public static class LanguageUtility
         var searchRegexPattern = $"{StartOfWordCharactersRegex}{termWithCroatianCharacters}{AllowedCharactersRegex}*{DelimiterCharactersRegex}";
 
         var matchedWords = Regex.Matches(sentence, searchRegexPattern, RegexOptions.IgnoreCase)
-            .Select(match => Regex.Replace(match.Value, DelimiterCharactersRegex, string.Empty));
+            .Select(match => DelimiterCharactersRegex().Replace(match.Value, string.Empty));
 
         return matchedWords;
     }
 
     public static IEnumerable<string> RemoveUnImpactfulCroatianWords(this IEnumerable<string> words)
     {
-        return words.Where(word => !Regex.IsMatch(word, $"^{UnImpactfulCroatianWordsRegex}$", RegexOptions.IgnoreCase));
+        return words.Where(word => !RemoveUnImpactfulCroatianWordsRegex().IsMatch(word));
     }
 
     public static IEnumerable<string> RemoveWordsWithLessThanThreeLetters(this IEnumerable<string> words)
@@ -124,4 +118,13 @@ public static class LanguageUtility
 
         return builder.ToString();
     }
+
+    [GeneratedRegex("([a-z]|[A-Z]|[0-9]|ž|Ž|đ|Đ|ć|Ć|č|Č|š|Š)+")]
+    private static partial Regex AllowedCharactersRegex();
+
+    [GeneratedRegex("( |\\.|;|:|,|\\n|$)")]
+    private static partial Regex DelimiterCharactersRegex();
+
+    [GeneratedRegex("^(u|i|je|na|se|su|što|zbog|do|te|samo|jer|već|za|da|s|od|a|će|iz|koji|ne|kako|o|nije|bi|to|ali|još|sa|kao|koja|sve|biti|po|koje|ga|bio|sam|bez|no|dok|mu|pa|li|oko|ako|ili)$", RegexOptions.IgnoreCase, "en-HR")]
+    private static partial Regex RemoveUnImpactfulCroatianWordsRegex();
 }

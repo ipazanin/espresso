@@ -1,6 +1,6 @@
 ﻿// GetGroupedLatestArticlesQueryResponse.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetGroupedLatestArticles;
 

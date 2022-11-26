@@ -1,6 +1,6 @@
 ﻿// GetLatestArticlesQueryHandler.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
@@ -35,13 +35,13 @@ public class GetArticlesQueryHandler_2_0 : IRequestHandler<GetLatestArticlesQuer
         var (newsPortalIds, categoryIds) = ParseIds(request);
 
         var savedArticles = _memoryCache.Get<IEnumerable<Article>>(
-            key: MemoryCacheConstants.ArticleKey);
+            key: MemoryCacheConstants.ArticleKey)!;
 
         var firstArticle = savedArticles.FirstOrDefault(
             article => article.Id.Equals(request.FirstArticleId));
 
         var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
-            key: MemoryCacheConstants.NewsPortalKey);
+            key: MemoryCacheConstants.NewsPortalKey)!;
         var keyWordsToFilterOut = request.KeyWordsToFilterOut is null ?
             Enumerable.Empty<string>() :
             request.KeyWordsToFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);

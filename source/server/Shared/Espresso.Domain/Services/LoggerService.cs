@@ -1,6 +1,6 @@
 ﻿// LoggerService.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Utilities;
 using Espresso.Domain.IServices;
@@ -138,7 +138,7 @@ public class LoggerService<TCaller> : ILoggerService<TCaller>
         };
     }
 
-// The logging message template should not vary between calls
+    // The logging message template should not vary between calls
 #pragma warning disable CA2254
     private void Log(string message, object[] args, LogLevel logLevel, Exception? exception)
     {
@@ -164,8 +164,11 @@ public class LoggerService<TCaller> : ILoggerService<TCaller>
                 break;
             case LogLevel.None:
                 break;
+            default:
+                break;
         }
     }
 }
+
 // The logging message template should not vary between calls
 #pragma warning restore CA2254 

@@ -1,6 +1,6 @@
 ﻿// SlackService.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Application.DataTransferObjects.SlackDataTransferObjects;
 using Espresso.Application.Models;
@@ -322,7 +322,7 @@ public class SlackService : ISlackService
                 var jsonString = await _jsonService.Serialize(data, cancellationToken);
 
                 var content = new StringContent(jsonString, Encoding.UTF8, MimeTypeConstants.Json);
-                var response = await httpClient.PostAsync(
+                using var response = await httpClient.PostAsync(
                     requestUri: _webHookUrl,
                     content: content,
                     cancellationToken: cancellationToken);

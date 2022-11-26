@@ -1,6 +1,6 @@
 ﻿// SendPushNotificationCommandHandler.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Application.Models;
 using Espresso.Application.Services.Contracts;
@@ -55,7 +55,7 @@ public class SendPushNotificationCommandHandler : IRequestHandler<SendPushNotifi
             return Unit.Value;
         }
 
-        var articles = _memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey);
+        var articles = _memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey)!;
         var pushNotificationArticle = articles.FirstOrDefault(article => article.Id == request.ArticleId);
 
         if (pushNotificationArticle is null)

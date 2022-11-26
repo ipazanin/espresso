@@ -1,6 +1,6 @@
 ﻿// LoadRssFeedsService.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Application.Extensions;
 using Espresso.Common.Enums;
@@ -137,7 +137,7 @@ public class LoadRssFeedsService : ILoadRssFeedsService
         using var responseStream = await response.Content.ReadAsStreamAsync(cancellationToken);
         using var decompressedStream = new GZipStream(responseStream, CompressionMode.Decompress);
         using var streamReader = new StreamReader(decompressedStream);
-        var feedContent = await streamReader.ReadToEndAsync();
+        var feedContent = await streamReader.ReadToEndAsync(cancellationToken);
 
         return feedContent;
     }

@@ -1,6 +1,6 @@
 ﻿// SettingProvider.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Domain.Entities;
 using Espresso.Domain.Infrastructure;
@@ -14,6 +14,28 @@ namespace Espresso.Application.Infrastructure.SettingsInfrastructure;
 /// </summary>
 public sealed class SettingProvider : ISettingProvider
 {
+    private static readonly Setting s_defaultSetting = new(
+        id: 1,
+        settingsRevision: 1,
+        created: DateTimeOffset.UtcNow,
+        articleSetting: new Domain.ValueObjects.SettingsValueObjects.ArticleSetting(
+            maxAgeOfTrendingArticleInMiliseconds: (long)TimeSpan.FromHours(2).TotalMilliseconds,
+            maxAgeOfFeaturedArticleInMiliseconds: (long)TimeSpan.FromHours(2).TotalMilliseconds,
+            maxAgeOfArticleInMiliseconds: (long)TimeSpan.FromDays(5).TotalMilliseconds,
+            featuredArticlesTake: 10),
+        newsPortalSetting: new Domain.ValueObjects.SettingsValueObjects.NewsPortalSetting(
+            maxAgeOfNewNewsPortalInMiliseconds: (long)TimeSpan.FromDays(60).TotalMilliseconds,
+            newNewsPortalsPosition: 3),
+        jobsSetting: new Domain.ValueObjects.SettingsValueObjects.JobsSetting(
+            analyticsCronExpression: "1 16 * * *",
+            webApiReportCronExpression: "0 9 * * *",
+            parseArticlesCronExpression: "* * * * *"),
+        similarArticleSetting: new Domain.ValueObjects.SettingsValueObjects.SimilarArticleSetting(
+            similarityScoreThreshold: 0.65,
+            articlePublishDateTimeDifferenceThresholdInMiliseconds: (long)TimeSpan.FromHours(24).TotalMilliseconds,
+            maxAgeOfSimilarArticleCheckingInMiliseconds: (long)TimeSpan.FromHours(26).TotalMilliseconds,
+            minimalNumberOfWordsForArticleToBeComparable: 4));
+
     private readonly IEspressoDatabaseContext _espressoDatabaseContext;
 
     /// <summary>
@@ -38,10 +60,14 @@ public sealed class SettingProvider : ISettingProvider
 
     private Setting GetLatestSettingFromStore()
     {
-        return _espressoDatabaseContext
+        _espressoDatabaseContext.Database.Migrate();
+
+        var latestSetting = _espressoDatabaseContext
             .Settings
             .OrderByDescending(setting => setting.Created)
-            .First();
+            .FirstOrDefault();
+
+        return latestSetting ?? s_defaultSetting;
     }
 
     private Task<Setting> GetLatestSettingFromStoreAsync(CancellationToken cancellationToken)

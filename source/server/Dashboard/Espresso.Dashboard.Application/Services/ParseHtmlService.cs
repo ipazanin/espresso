@@ -1,6 +1,6 @@
 ﻿// ParseHtmlService.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Extensions;
 using Espresso.Dashboard.Application.IServices;
@@ -9,7 +9,7 @@ using HtmlAgilityPack;
 
 namespace Espresso.Dashboard.Application.Services;
 
-public class ParseHtmlService : IParseHtmlService
+public partial class ParseHtmlService : IParseHtmlService
 {
     public string? GetSrcAttributeFromFirstImgElement(string? html)
     {
@@ -41,7 +41,7 @@ public class ParseHtmlService : IParseHtmlService
             ?.Select(node => node?.InnerText) ?? new List<string>();
 
         var summary = HtmlEntity.DeEntitize(string.Join(" ", nodes));
-        summary = Regex.Replace(summary, @"\r\n?|\n", " ").RemoveExtraWhiteSpaceCharacters();
+        summary = RemoveInvalidCharactersRegex().Replace(summary, " ").RemoveExtraWhiteSpaceCharacters();
 
         if (string.IsNullOrWhiteSpace(summary))
         {
@@ -66,4 +66,7 @@ public class ParseHtmlService : IParseHtmlService
 
         return imageUrl;
     }
+
+    [GeneratedRegex("\\r\\n?|\\n")]
+    private static partial Regex RemoveInvalidCharactersRegex();
 }

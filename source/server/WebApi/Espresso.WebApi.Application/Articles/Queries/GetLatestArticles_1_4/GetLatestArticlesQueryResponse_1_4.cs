@@ -1,6 +1,6 @@
 ﻿// GetLatestArticlesQueryResponse_1_4.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4;
 #pragma warning disable S101 // Types should be named in PascalCase

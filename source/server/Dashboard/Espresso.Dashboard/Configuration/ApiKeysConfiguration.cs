@@ -1,6 +1,6 @@
 ﻿// ApiKeysConfiguration.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Microsoft.Extensions.Configuration;
 
@@ -19,5 +19,5 @@ public class ApiKeysConfiguration
         _configuration = configuration;
     }
 
-    public string ParserApiKey => _configuration.GetValue<string>("Parser");
+    public string ParserApiKey => _configuration.GetValue<string>("Parser")!;
 }

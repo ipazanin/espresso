@@ -1,6 +1,6 @@
 ﻿// RssFeedItem.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using System.Linq.Expressions;
 using Espresso.Common.Extensions;
@@ -11,7 +11,7 @@ namespace Espresso.Dashboard.Application.NewsPortals.GetNewsPortalDetails;
 /// <summary>
 /// <see cref="NewsPortal"/> details <see cref="RssFeed"/> item.
 /// </summary>
-public class RssFeedItem
+public sealed class RssFeedItem
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="RssFeedItem"/> class.

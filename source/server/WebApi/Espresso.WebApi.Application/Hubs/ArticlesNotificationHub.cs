@@ -1,6 +1,6 @@
 ﻿// ArticlesNotificationHub.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Microsoft.AspNetCore.SignalR;
 

@@ -1,13 +1,13 @@
 ﻿// NewArticleDto.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using System.Linq.Expressions;
 using Espresso.Domain.Entities;
 
 namespace Espresso.WebApi.Application.Notifications.Commands.SendArticlesNotifications;
 
-public class NewArticleDto
+public sealed class NewArticleDto
 {
     private NewArticleDto()
     {

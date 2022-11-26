@@ -1,6 +1,6 @@
 ﻿// GetFeaturedArticlesQueryHandler.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
@@ -31,7 +31,7 @@ public class GetFeaturedArticlesQueryHandler :
     public Task<GetFeaturedArticlesQueryResponse> Handle(GetFeaturedArticlesQuery request, CancellationToken cancellationToken)
     {
         var articles = _memoryCache.Get<IEnumerable<Article>>(
-            key: MemoryCacheConstants.ArticleKey);
+            key: MemoryCacheConstants.ArticleKey)!;
 
         var categoryIds = request.CategoryIds
             ?.Replace(" ", string.Empty)

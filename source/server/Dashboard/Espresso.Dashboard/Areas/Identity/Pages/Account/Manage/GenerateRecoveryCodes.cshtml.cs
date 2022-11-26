@@ -1,6 +1,6 @@
 ﻿// GenerateRecoveryCodes.cshtml.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -76,7 +76,7 @@ public class GenerateRecoveryCodesModel : PageModel
         }
 
         var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
-        RecoveryCodes = recoveryCodes.ToArray();
+        RecoveryCodes = recoveryCodes?.ToArray() ?? Array.Empty<string>();
 
         _logger.LogInformation("User with ID '{UserId}' has generated new 2FA recovery codes.", userId);
         StatusMessage = "You have generated new recovery codes.";

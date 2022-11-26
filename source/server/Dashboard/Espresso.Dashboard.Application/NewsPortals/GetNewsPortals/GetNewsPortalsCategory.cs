@@ -1,13 +1,13 @@
 ﻿// GetNewsPortalsCategory.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using System.Linq.Expressions;
 using Espresso.Domain.Entities;
 
 namespace Espresso.Dashboard.Application.NewsPortals.GetNewsPortals;
 
-public class GetNewsPortalsCategory
+public sealed class GetNewsPortalsCategory
 {
     private GetNewsPortalsCategory()
     {

@@ -1,6 +1,6 @@
 ﻿// ArticleDataValidator.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Domain.Entities;
 using Espresso.Domain.Records;
@@ -19,11 +19,11 @@ public class ArticleDataValidator : AbstractValidator<ArticleData>
             .NotEmpty();
 
         RuleFor(articleData => articleData.Url)
-            .Must(url => IsUrl(url))
+            .Must(IsUrl)
             .MaximumLength(Article.UrlMaxLength);
 
         RuleFor(articleData => articleData.WebUrl)
-            .Must(webUrl => IsUrl(webUrl))
+            .Must(IsUrl)
             .MaximumLength(Article.WebUrlMaxLength);
 
         RuleFor(articleData => articleData.Summary)

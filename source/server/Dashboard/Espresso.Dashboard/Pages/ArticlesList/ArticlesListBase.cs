@@ -1,6 +1,6 @@
 ﻿// ArticlesListBase.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Application.DataTransferObjects.PagingDataTransferObjects;
 using Espresso.Dashboard.Application.Articles.Queries.GetArticles;
@@ -31,15 +31,15 @@ public class ArticlesListBase : ComponentBase
         return FetchArticlesList();
     }
 
+    protected Task OnPageSelected(int page)
+    {
+        PagingParameters = PagingParameters with { CurrentPage = page };
+        return FetchArticlesList();
+    }
+
     private async Task FetchArticlesList()
     {
         var request = new GetArticlesQuery(pagingParameters: PagingParameters);
         GetArticlesResponse = await Sender.Send(request);
     }
-
-    protected Task OnPageSelected(int page)
-    {
-        PagingParameters = PagingParameters with { CurrentPage = page };
-        return FetchArticlesList();
-    }    
 }

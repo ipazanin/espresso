@@ -1,6 +1,6 @@
 ﻿// Email.cshtml.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage;
 
-public partial class EmailModel : PageModel
+public class EmailModel : PageModel
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly IEmailService _emailService;
@@ -87,7 +87,7 @@ public partial class EmailModel : PageModel
                 pageHandler: null,
                 values: new { userId, email = Input.NewEmail, code },
                 protocol: Request.Scheme)!;
-            await _emailService.SendMail(
+            _ = await _emailService.SendMail(
                 to: Input.NewEmail,
                 subject: "Confirm your email",
                 content: $"Please confirm your account by clicking {HtmlEncoder.Default.Encode(callbackUrl)}",
@@ -121,6 +121,7 @@ public partial class EmailModel : PageModel
 
         var userId = await _userManager.GetUserIdAsync(user);
         var email = await _userManager.GetEmailAsync(user);
+
         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
         var callbackUrl = Url.Page(
@@ -128,8 +129,8 @@ public partial class EmailModel : PageModel
             pageHandler: null,
             values: new { area = "Identity", userId, code },
             protocol: Request.Scheme)!;
-        await _emailService.SendMail(
-            to: email,
+        _ = await _emailService.SendMail(
+            to: email!,
             subject: "Confirm your email",
             content: $"Please confirm your account by clicking {HtmlEncoder.Default.Encode(callbackUrl)}",
             htmlContent: $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
@@ -141,11 +142,11 @@ public partial class EmailModel : PageModel
     private async Task LoadAsync(IdentityUser user)
     {
         var email = await _userManager.GetEmailAsync(user);
-        Email = email;
+        Email = email!;
 
         Input = new InputModel
         {
-            NewEmail = email,
+            NewEmail = email!,
         };
 
         IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);

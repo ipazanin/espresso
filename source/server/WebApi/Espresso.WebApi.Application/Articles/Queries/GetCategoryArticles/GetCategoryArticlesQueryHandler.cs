@@ -1,6 +1,6 @@
 ﻿// GetCategoryArticlesQueryHandler.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
@@ -32,7 +32,7 @@ public class GetCategoryArticlesQueryHandler : IRequestHandler<GetCategoryArticl
         CancellationToken cancellationToken)
     {
         var articles = _memoryCache.Get<IEnumerable<Article>>(
-            key: MemoryCacheConstants.ArticleKey);
+            key: MemoryCacheConstants.ArticleKey)!;
 
         var firstArticle = articles.FirstOrDefault(
             article => article.Id.Equals(request.FirstArticleId));
@@ -86,7 +86,7 @@ public class GetCategoryArticlesQueryHandler : IRequestHandler<GetCategoryArticl
         }
 
         var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
-            key: MemoryCacheConstants.NewsPortalKey);
+            key: MemoryCacheConstants.NewsPortalKey)!;
 
         var newsPortalDtos = newsPortals
             .Where(

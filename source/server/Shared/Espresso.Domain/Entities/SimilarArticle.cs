@@ -1,6 +1,6 @@
 ﻿// SimilarArticle.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 #pragma warning disable RCS1170
 

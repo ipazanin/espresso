@@ -1,6 +1,6 @@
 ﻿// ParseArticlesCronJob.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using System.Diagnostics;
 using Cronos;
@@ -141,6 +141,13 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
         await CreateArticles(cancellationToken);
         await DeleteArticles(cancellationToken);
         _memoryCache.Set(MemoryCacheConstants.ArticleKey, Articles);
+
+#if DEBUG
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
+        ;
+#endif
     }
 
     private async Task CreateArticles(CancellationToken cancellationToken)

@@ -1,6 +1,6 @@
 ﻿// WebApiReportCronJob.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Cronos;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
@@ -66,8 +66,8 @@ public class WebApiReportCronJob : CronJob<WebApiReportCronJob>
         var slackService = scope.ServiceProvider.GetRequiredService<ISlackService>();
         var memoryCache = scope.ServiceProvider.GetRequiredService<IMemoryCache>();
 
-        var articles = memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey);
-        var newsPortals = memoryCache.Get<IEnumerable<NewsPortal>>(MemoryCacheConstants.NewsPortalKey);
+        var articles = memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey)!;
+        var newsPortals = memoryCache.Get<IEnumerable<NewsPortal>>(MemoryCacheConstants.NewsPortalKey)!;
         var topArticles = GetTopArticles(articles);
         var totalNumberOfClicks = GetTotalClicksForYesterday(articles);
         var topNewsPortals = GetTop10NewsPortalsByNumberOfClicks(

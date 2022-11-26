@@ -1,6 +1,6 @@
 ﻿// GetConfigurationQueryHandler_1_3.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
@@ -27,8 +27,8 @@ public class GetConfigurationQueryHandler_1_3 : IRequestHandler<GetConfiguration
 
     public Task<GetConfigurationQueryResponse_1_3> Handle(GetConfigurationQuery_1_3 request, CancellationToken cancellationToken)
     {
-        var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
-        var categories = _memoryCache.Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey);
+        var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey)!;
+        var categories = _memoryCache.Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey)!;
 
         var newsPortalDtos = newsPortals
             .Where(predicate: newsPortal => !newsPortal.CategoryId.Equals((int)CategoryId.Local) && newsPortal.IsEnabled)

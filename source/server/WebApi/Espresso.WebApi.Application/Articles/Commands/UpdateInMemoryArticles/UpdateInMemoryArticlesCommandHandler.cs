@@ -1,6 +1,6 @@
 ﻿// UpdateInMemoryArticlesCommandHandler.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Application.Services.Contracts;
 using Espresso.Common.Constants;
@@ -41,14 +41,14 @@ public class UpdateInMemoryArticlesCommandHandler :
     public async Task<UpdateInMemoryArticlesCommandResponse> Handle(UpdateInMemoryArticlesCommand request, CancellationToken cancellationToken)
     {
         var savedArticles = _memoryCache
-            .Get<IList<Article>>(key: MemoryCacheConstants.ArticleKey);
+            .Get<IList<Article>>(key: MemoryCacheConstants.ArticleKey)!;
         var savedArticlesDictionary = savedArticles.ToDictionary(article => article.Id);
 
         var newsPortals = _memoryCache
-            .Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey);
+            .Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey)!;
 
         var categories = _memoryCache
-            .Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey);
+            .Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey)!;
 
         var articleIds = request.CreatedArticleIds.Union(request.UpdatedArticleIds);
 

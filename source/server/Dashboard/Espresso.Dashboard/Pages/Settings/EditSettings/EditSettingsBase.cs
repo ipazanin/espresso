@@ -1,6 +1,6 @@
 ﻿// EditSettingsBase.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Dashboard.Application.IServices;
 using Espresso.Dashboard.Pages.Settings.EditSettings.State;

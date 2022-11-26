@@ -1,6 +1,6 @@
 ﻿// AppConfiguration.cs
 //
-// © 2021 Espresso News. All rights reserved.
+// © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Enums;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +32,7 @@ public class AppConfiguration
     /// <summary>
     ///
     /// </summary>
-    public string Version => _configuration.GetValue<string>("Version");
+    public string Version => _configuration.GetValue<string>("Version")!;
 
     /// <summary>
     ///
@@ -57,5 +57,5 @@ public class AppConfiguration
     /// <summary>
     ///
     /// </summary>
-    public string SlackWebHook => _configuration.GetValue<string>("SlackWebHook");
+    public string SlackWebHook => _configuration.GetValue<string>("SlackWebHook")!;
 }
