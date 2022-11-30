@@ -46,8 +46,8 @@ public class LoggerRequestPipeline<TRequest, TResponse> :
     /// <inheritdoc/>
     public async Task<TResponse> Handle(
         TRequest request,
-        CancellationToken cancellationToken,
-        RequestHandlerDelegate<TResponse> next)
+        RequestHandlerDelegate<TResponse> next,
+        CancellationToken cancellationToken)
     {
         var requestBase = request switch
         {
