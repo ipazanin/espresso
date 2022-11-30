@@ -16,8 +16,14 @@ namespace Espresso.Dashboard.Application.Services;
 
 public class LoadRssFeedsService : ILoadRssFeedsService
 {
+    private static readonly BoundedChannelOptions s_boundedChannelOptions = new(50)
+    {
+        FullMode = BoundedChannelFullMode.Wait,
+    };
+
     private readonly ILoggerService<LoadRssFeedsService> _loggerService;
     private readonly HttpClient _httpClient;
+    private readonly Channel<RssFeedItem> _rssFeedItemsChannel = Channel.CreateBounded<RssFeedItem>(s_boundedChannelOptions);
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LoadRssFeedsService"/> class.
@@ -32,13 +38,12 @@ public class LoadRssFeedsService : ILoadRssFeedsService
         _loggerService = loggerService;
     }
 
-    public async Task<Channel<RssFeedItem>> ParseRssFeeds(
+    public ChannelReader<RssFeedItem> RssFeedItemsChannelReader => _rssFeedItemsChannel.Reader;
+
+    public async Task ParseRssFeeds(
         IEnumerable<RssFeed> rssFeeds,
         CancellationToken cancellationToken)
     {
-        var rssFeedItemsChannel = Channel.CreateUnbounded<RssFeedItem>();
-        var writer = rssFeedItemsChannel.Writer;
-
         var getRssFeedRequestTasks = new List<Task>();
 
         foreach (var rssFeed in rssFeeds)
@@ -48,15 +53,13 @@ public class LoadRssFeedsService : ILoadRssFeedsService
                 continue;
             }
 
-            var task = Task.Run(async () => await ParseRssFeed(rssFeed, writer, cancellationToken), cancellationToken);
+            var task = Task.Run(async () => await ParseRssFeed(rssFeed, _rssFeedItemsChannel.Writer, cancellationToken), cancellationToken);
             getRssFeedRequestTasks.Add(task);
         }
 
         await Task.WhenAll(getRssFeedRequestTasks);
 
-        writer.Complete();
-
-        return rssFeedItemsChannel;
+        _rssFeedItemsChannel.Writer.Complete();
     }
 
     private async Task ParseRssFeed(RssFeed rssFeed, ChannelWriter<RssFeedItem> writer, CancellationToken cancellationToken)
@@ -90,7 +93,7 @@ public class LoadRssFeedsService : ILoadRssFeedsService
                         ?.Select(elementExtension => elementExtension?.GetObject<string?>()),
                 };
 
-                _ = writer.TryWrite(rssFeedItem);
+                await writer.WriteAsync(rssFeedItem, cancellationToken);
             }
         }
         catch (Exception exception)

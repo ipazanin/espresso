@@ -59,16 +59,15 @@ public class SortArticlesService : ISortArticlesService
         return (createArticles, updatedArticlesWithModifiedProperties, createArticleCategories, deleteArticleCategories);
     }
 
-    public async Task<IEnumerable<Article>> RemoveDuplicateArticles(Channel<Article> articlesChannel, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Article>> RemoveDuplicateArticles(ChannelReader<Article> articlesChannelReader, CancellationToken cancellationToken)
     {
-        var reader = articlesChannel.Reader;
         var articleIdArticleDictionary = new Dictionary<(int newsPortalId, string articleId), Guid>();
         var titleArticleDictionary = new Dictionary<(int newsPortalId, string title), Guid>();
         var summaryArticleDictionary = new Dictionary<(int newsPortalId, string summary), Guid>();
 
         var uniqueArticles = new Dictionary<Guid, Article>();
 
-        var articles = reader.ReadAllAsync(cancellationToken);
+        var articles = articlesChannelReader.ReadAllAsync(cancellationToken);
 
         await foreach (var article in articles)
         {

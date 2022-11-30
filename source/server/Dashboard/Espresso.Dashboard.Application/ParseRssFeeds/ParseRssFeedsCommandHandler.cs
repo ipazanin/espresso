@@ -63,18 +63,29 @@ public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand,
             DateTimeOffset.UtcNow.AddDays(-1);
 
         _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _loadRssFeedsService.ParseRssFeeds");
-        var rssFeedItemsChannel = await _loadRssFeedsService.ParseRssFeeds(
-            rssFeeds: request.RssFeeds,
+
+        _ = Task.Run(
+            function: async () =>
+            {
+                await _loadRssFeedsService.ParseRssFeeds(
+                    rssFeeds: request.RssFeeds,
+                    cancellationToken: cancellationToken);
+            },
             cancellationToken: cancellationToken);
 
         _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _parseArticlesService.CreateArticlesFromRssFeedItems");
-        var articlesChannel = await _parseArticlesService.CreateArticlesFromRssFeedItems(
-            rssFeedItemChannel: rssFeedItemsChannel,
-            categories: request.Categories,
+        _ = Task.Run(
+            function: async () =>
+            {
+                await _parseArticlesService.CreateArticlesFromRssFeedItems(
+                            rssFeedItemChannelReader: _loadRssFeedsService.RssFeedItemsChannelReader,
+                            categories: request.Categories,
+                            cancellationToken: cancellationToken);
+            },
             cancellationToken: cancellationToken);
 
         _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _sortArticlesService.RemoveDuplicateArticles");
-        var uniqueArticles = await _sortArticlesService.RemoveDuplicateArticles(articlesChannel, cancellationToken);
+        var uniqueArticles = await _sortArticlesService.RemoveDuplicateArticles(_parseArticlesService.ArticlesChannelReader, cancellationToken);
 
         _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _sortArticlesService.SortArticles");
         var (createArticles, updateArticlesWithModifiedProperties, createArticleCategories, deleteArticleCategories) = _sortArticlesService

@@ -18,11 +18,17 @@ namespace Espresso.Dashboard.Application.Services;
 
 public class CreateArticlesService : ICreateArticlesService
 {
+    private static readonly BoundedChannelOptions s_boundedChannelOptions = new(50)
+    {
+        FullMode = BoundedChannelFullMode.Wait,
+    };
+
     private readonly IScrapeWebService _webScrapingService;
     private readonly IParseHtmlService _htmlParsingService;
     private readonly IValidator<ArticleData> _articleDataValidator;
     private readonly ILoggerService<CreateArticlesService> _loggerService;
     private readonly ISettingProvider _settingProvider;
+    private readonly Channel<Article> _articlesChannel = Channel.CreateBounded<Article>(s_boundedChannelOptions);
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CreateArticlesService"/> class.
@@ -46,18 +52,16 @@ public class CreateArticlesService : ICreateArticlesService
         _settingProvider = settingProvider;
     }
 
-    public async Task<Channel<Article>> CreateArticlesFromRssFeedItems(
-        Channel<RssFeedItem> rssFeedItemChannel,
+    public ChannelReader<Article> ArticlesChannelReader => _articlesChannel.Reader;
+    public async Task CreateArticlesFromRssFeedItems(
+        ChannelReader<RssFeedItem> rssFeedItemChannelReader,
         IEnumerable<Category> categories,
         CancellationToken cancellationToken)
     {
-        var reader = rssFeedItemChannel.Reader;
-        var parsedArticlesChannel = Channel.CreateUnbounded<Article>();
-        var writer = parsedArticlesChannel.Writer;
-
         var tasks = new List<Task>();
+        var articleChannelWriter = _articlesChannel.Writer;
 
-        var rssFeedItems = reader.ReadAllAsync(cancellationToken);
+        var rssFeedItems = rssFeedItemChannelReader.ReadAllAsync(cancellationToken);
 
         await foreach (var rssFeedItem in rssFeedItems)
         {
@@ -73,7 +77,7 @@ public class CreateArticlesService : ICreateArticlesService
 
                         if (isValid && article != null)
                         {
-                            _ = writer.TryWrite(article);
+                            await articleChannelWriter.WriteAsync(article);
                         }
                     }
                     catch (Exception exception)
@@ -86,9 +90,7 @@ public class CreateArticlesService : ICreateArticlesService
         }
 
         await Task.WhenAll(tasks);
-        writer.Complete();
-
-        return parsedArticlesChannel;
+        articleChannelWriter.Complete();
     }
 
     private static string? GetUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks, string? itemId)
