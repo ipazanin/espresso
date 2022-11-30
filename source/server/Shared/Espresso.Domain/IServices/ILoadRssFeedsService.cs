@@ -9,13 +9,15 @@ namespace Espresso.Domain.IServices;
 
 public interface ILoadRssFeedsService
 {
+    public ChannelReader<RssFeedItem> RssFeedItemsChannelReader { get; }
+
     /// <summary>
     ///
     /// </summary>
     /// <param name="rssFeeds"></param>
     /// <param name="cancellationToken"></param>
-    /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-    public Task<Channel<RssFeedItem>> ParseRssFeeds(
+    /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+    public Task ParseRssFeeds(
         IEnumerable<RssFeed> rssFeeds,
         CancellationToken cancellationToken);
 }

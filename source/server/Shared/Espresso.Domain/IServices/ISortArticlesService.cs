@@ -19,8 +19,8 @@ public interface ISortArticlesService
     /// <summary>
     ///
     /// </summary>
-    /// <param name="articlesChannel"></param>
+    /// <param name="articlesChannelReader"></param>
     /// <param name="cancellationToken"></param>
     /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-    public Task<IEnumerable<Article>> RemoveDuplicateArticles(Channel<Article> articlesChannel, CancellationToken cancellationToken);
+    public Task<IEnumerable<Article>> RemoveDuplicateArticles(ChannelReader<Article> articlesChannelReader, CancellationToken cancellationToken);
 }
