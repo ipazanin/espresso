@@ -18,7 +18,9 @@ namespace Espresso.Dashboard.Application.Services;
 
 public class CreateArticlesService : ICreateArticlesService
 {
-    private static readonly BoundedChannelOptions s_boundedChannelOptions = new(50)
+    private const int ArticlesChannelCapacity = 200;
+
+    private static readonly BoundedChannelOptions s_boundedChannelOptions = new(ArticlesChannelCapacity)
     {
         FullMode = BoundedChannelFullMode.Wait,
     };

@@ -16,7 +16,10 @@ namespace Espresso.Dashboard.Application.Services;
 
 public class LoadRssFeedsService : ILoadRssFeedsService
 {
-    private static readonly BoundedChannelOptions s_boundedChannelOptions = new(50)
+    private const int RssFeedChunkSize = 30;
+    private const int RssFeedItemChannelCapacity = 200;
+
+    private static readonly BoundedChannelOptions s_boundedChannelOptions = new(RssFeedItemChannelCapacity)
     {
         FullMode = BoundedChannelFullMode.Wait,
     };
@@ -46,18 +49,23 @@ public class LoadRssFeedsService : ILoadRssFeedsService
     {
         var getRssFeedRequestTasks = new List<Task>();
 
-        foreach (var rssFeed in rssFeeds)
+        var chunkedRssFeeds = rssFeeds.Chunk(RssFeedChunkSize);
+
+        foreach (var rssFeedChunk in chunkedRssFeeds)
         {
-            if (!rssFeed.ShouldParse())
+            foreach (var rssFeed in rssFeedChunk)
             {
-                continue;
+                if (!rssFeed.ShouldParse())
+                {
+                    continue;
+                }
+
+                var task = Task.Run(async () => await ParseRssFeed(rssFeed, _rssFeedItemsChannel.Writer, cancellationToken), cancellationToken);
+                getRssFeedRequestTasks.Add(task);
             }
 
-            var task = Task.Run(async () => await ParseRssFeed(rssFeed, _rssFeedItemsChannel.Writer, cancellationToken), cancellationToken);
-            getRssFeedRequestTasks.Add(task);
+            await Task.WhenAll(getRssFeedRequestTasks);
         }
-
-        await Task.WhenAll(getRssFeedRequestTasks);
 
         _rssFeedItemsChannel.Writer.Complete();
     }
