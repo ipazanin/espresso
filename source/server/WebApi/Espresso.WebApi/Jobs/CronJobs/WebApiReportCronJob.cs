@@ -28,7 +28,7 @@ public class WebApiReportCronJob : CronJob<WebApiReportCronJob>
     /// <param name="cronJobConfiguration"></param>
     public WebApiReportCronJob(
         IServiceScopeFactory serviceScopeFactory,
-        ICronJobConfiguration<WebApiReportCronJob> cronJobConfiguration)
+        ICronJobConfiguration cronJobConfiguration)
         : base(
         cronJobConfiguration: cronJobConfiguration,
         serviceScopeFactory: serviceScopeFactory)

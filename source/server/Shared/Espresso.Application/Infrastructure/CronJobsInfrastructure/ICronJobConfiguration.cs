@@ -9,9 +9,7 @@ namespace Espresso.Application.Infrastructure.CronJobsInfrastructure;
 /// <summary>
 /// Cron Job Configuration Contract.
 /// </summary>
-/// <typeparam name="T"><see cref="CronJob{T}"/>.</typeparam>
-public interface ICronJobConfiguration<T>
-    where T : CronJob<T>
+public interface ICronJobConfiguration
 {
     /// <summary>
     /// Gets or sets time Zone Information.

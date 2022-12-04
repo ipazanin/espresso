@@ -21,10 +21,7 @@ public class ReadinessHealthCheck : IHealthCheck
     /// <summary>
     /// Gets or sets a value indicating whether readiness task is completed.
     /// </summary>
-    /// <remarks>
-    /// TODO: Can this be done without property mutation?.
-    /// </remarks>
-    public bool ReadinessTaskCompleted { get; set; }
+    private bool ReadinessTaskCompleted { get; set; }
 
     /// <inheritdoc/>
     public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
@@ -32,5 +29,10 @@ public class ReadinessHealthCheck : IHealthCheck
         return ReadinessTaskCompleted ?
             Task.FromResult(HealthCheckResult.Healthy("Application is ready to accept requests.")) :
             Task.FromResult(HealthCheckResult.Unhealthy("Application is not ready to accept requests."));
+    }
+
+    public void SetApplicationStateAsReady()
+    {
+        ReadinessTaskCompleted = true;
     }
 }
