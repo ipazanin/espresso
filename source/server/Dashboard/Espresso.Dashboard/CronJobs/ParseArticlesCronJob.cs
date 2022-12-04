@@ -28,7 +28,6 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
 {
     private readonly IMemoryCache _memoryCache;
     private readonly IServiceScopeFactory _serviceScopeFactory;
-    private readonly ReadinessHealthCheck _readinessHealthCheck;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ParseArticlesCronJob"/> class.
@@ -36,19 +35,16 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
     /// <param name="memoryCache"></param>
     /// <param name="cronJobConfiguration"></param>
     /// <param name="serviceScopeFactory"></param>
-    /// <param name="readinessHealthCheck"></param>
     public ParseArticlesCronJob(
         IMemoryCache memoryCache,
-        ICronJobConfiguration<ParseArticlesCronJob> cronJobConfiguration,
-        IServiceScopeFactory serviceScopeFactory,
-        ReadinessHealthCheck readinessHealthCheck)
+        ICronJobConfiguration cronJobConfiguration,
+        IServiceScopeFactory serviceScopeFactory)
         : base(
             cronJobConfiguration: cronJobConfiguration,
             serviceScopeFactory: serviceScopeFactory)
     {
         _memoryCache = memoryCache;
         _serviceScopeFactory = serviceScopeFactory;
-        _readinessHealthCheck = readinessHealthCheck;
     }
 
     protected override CronExpression CronExpression
@@ -74,6 +70,7 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
         using var scope = _serviceScopeFactory.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<IEspressoDatabaseContext>();
         var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService<ParseArticlesCronJob>>();
+        var readinessHealthCheck = scope.ServiceProvider.GetRequiredService<ReadinessHealthCheck>();
 
         await context.Database.MigrateAsync(cancellationToken: cancellationToken);
 
@@ -131,7 +128,7 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
 
         loggerService.Log(eventName, LogLevel.Information, arguments);
 
-        _readinessHealthCheck.ReadinessTaskCompleted = true;
+        readinessHealthCheck.SetApplicationStateAsReady();
 
         await base.StartAsync(cancellationToken);
     }

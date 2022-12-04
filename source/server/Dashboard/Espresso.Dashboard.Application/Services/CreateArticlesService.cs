@@ -55,6 +55,7 @@ public class CreateArticlesService : ICreateArticlesService
     }
 
     public ChannelReader<Article> ArticlesChannelReader => _articlesChannel.Reader;
+
     public async Task CreateArticlesFromRssFeedItems(
         ChannelReader<RssFeedItem> rssFeedItemChannelReader,
         IEnumerable<Category> categories,

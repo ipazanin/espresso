@@ -29,7 +29,7 @@ public class AnalyticsCronJob : CronJob<AnalyticsCronJob>
     /// <param name="cronJobConfiguration"></param>
     public AnalyticsCronJob(
         IServiceScopeFactory serviceScopeFactory,
-        ICronJobConfiguration<AnalyticsCronJob> cronJobConfiguration)
+        ICronJobConfiguration cronJobConfiguration)
         : base(
         cronJobConfiguration: cronJobConfiguration,
         serviceScopeFactory: serviceScopeFactory)

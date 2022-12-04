@@ -25,7 +25,6 @@ using Espresso.WebApi.Extensions;
 using Espresso.WebApi.Filters;
 using Espresso.WebApi.Jobs.CronJobs;
 using Espresso.WebApi.Services;
-using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -114,11 +113,7 @@ internal sealed partial class Startup
                     .SystemTextJsonSerializerConfiguration
                     .MapJsonSerializerOptionsToDefaultOptions(
                         jsonSerializerOptions: jsonOptions.JsonSerializerOptions);
-            })
-            .AddFluentValidation(
-                fluentValidatorConfiguration =>
-                    fluentValidatorConfiguration
-                        .RegisterValidatorsFromAssemblyContaining<GetNewsPortalsQueryValidator>());
+            });
 
         services.AddResponseCaching();
 
@@ -229,26 +224,15 @@ internal sealed partial class Startup
     /// <param name="services"></param>
     private void AddJobs(IServiceCollection services)
     {
-        services.AddSingleton<ICronJobConfiguration<AnalyticsCronJob>>(_ =>
+        services.AddSingleton<ICronJobConfiguration>(_ =>
         {
-            return new CronJobConfiguration<AnalyticsCronJob>
-            {
-                TimeZoneInfo = TimeZoneInfo.Utc,
-                AppEnvironment = _webApiConfiguration.AppConfiguration.AppEnvironment,
-                Version = _webApiConfiguration.AppConfiguration.Version,
-            };
+            return new CronJobConfiguration(
+                timeZoneInfo: TimeZoneInfo.Utc,
+                version: _webApiConfiguration.AppConfiguration.Version,
+                appEnvironment: _webApiConfiguration.AppConfiguration.AppEnvironment);
         });
-        services.AddHostedService<AnalyticsCronJob>();
 
-        services.AddSingleton<ICronJobConfiguration<WebApiReportCronJob>>(_ =>
-        {
-            return new CronJobConfiguration<WebApiReportCronJob>
-            {
-                TimeZoneInfo = TimeZoneInfo.Utc,
-                AppEnvironment = _webApiConfiguration.AppConfiguration.AppEnvironment,
-                Version = _webApiConfiguration.AppConfiguration.Version,
-            };
-        });
+        services.AddHostedService<AnalyticsCronJob>();
         services.AddHostedService<WebApiReportCronJob>();
 
         if (_webApiConfiguration.RabbitMqConfiguration.UseRabbitMqServer)

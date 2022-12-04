@@ -288,14 +288,12 @@ internal sealed partial class Startup
     /// <param name="services"></param>
     private void AddJobs(IServiceCollection services)
     {
-        services.AddSingleton<ICronJobConfiguration<ParseArticlesCronJob>>(_ =>
+        services.AddSingleton<ICronJobConfiguration>(_ =>
         {
-            return new CronJobConfiguration<ParseArticlesCronJob>
-            {
-                TimeZoneInfo = TimeZoneInfo.Utc,
-                AppEnvironment = _dashboardConfiguration.AppConfiguration.AppEnvironment,
-                Version = _dashboardConfiguration.AppConfiguration.Version,
-            };
+            return new CronJobConfiguration(
+                timeZoneInfo: TimeZoneInfo.Utc,
+                version: _dashboardConfiguration.AppConfiguration.Version,
+                appEnvironment: _dashboardConfiguration.AppConfiguration.AppEnvironment);
         });
         services.AddHostedService<ParseArticlesCronJob>();
     }

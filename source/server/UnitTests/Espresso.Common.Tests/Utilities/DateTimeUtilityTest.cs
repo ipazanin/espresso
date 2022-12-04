@@ -31,7 +31,7 @@ public class DateTimeUtilityTest
         var actualMilliseconds = DateTimeUtility.TruncateMillisecondsToDate(MillisecondsToTruncate);
 
         Assert.Equal(
-            expected: actualMilliseconds,
-            actual: ExpectedMilliseconds);
+            expected: ExpectedMilliseconds,
+            actual: actualMilliseconds);
     }
 }

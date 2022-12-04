@@ -30,14 +30,14 @@ public abstract class CronJob<T> : IHostedService, IDisposable
     /// <param name="cronJobConfiguration">Cron job configuration.</param>
     /// <param name="serviceScopeFactory">Service scope factory.</param>
     protected CronJob(
-        ICronJobConfiguration<T> cronJobConfiguration,
+        ICronJobConfiguration cronJobConfiguration,
         IServiceScopeFactory serviceScopeFactory)
     {
         CronJobConfiguration = cronJobConfiguration;
         _serviceScopeFactory = serviceScopeFactory;
     }
 
-    protected ICronJobConfiguration<T> CronJobConfiguration { get; }
+    protected ICronJobConfiguration CronJobConfiguration { get; }
 
     protected abstract CronExpression CronExpression { get; }
 
