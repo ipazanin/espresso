@@ -3,6 +3,7 @@
 // © 2022 Espresso News. All rights reserved.
 
 using Espresso.Application.DataTransferObjects.SlackDataTransferObjects;
+using Espresso.Application.Models;
 using Espresso.Domain.Entities;
 
 namespace Espresso.Application.Services.Contracts;
@@ -29,21 +30,11 @@ public interface ISlackService
     /// <summary>
     /// Send application downloads statistics to slack.
     /// </summary>
-    /// <param name="yesterdayAndroidCount">Yesterday android downloads count.</param>
-    /// <param name="yesterdayIosCount">Yesterday iOS downloads count.</param>
-    /// <param name="totalAndroidCount">Total android downloads count.</param>
-    /// <param name="totalIosCount">Total iOS downloads count.</param>
-    /// <param name="activeUsers">Number of active users.</param>
-    /// <param name="revenue">Revenue.</param>
+    /// <param name="applicationStatistics">Application sattistics.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-    public Task LogAppDownloadStatistics(
-        int yesterdayAndroidCount,
-        int yesterdayIosCount,
-        int totalAndroidCount,
-        int totalIosCount,
-        (int activeUsersOnAndroid, int activeUsersOnIos) activeUsers,
-        (decimal androidRevenue, decimal iosRevenue) revenue,
+    public Task LogApplicationStatistics(
+        ApplicationStatistics applicationStatistics,
         CancellationToken cancellationToken);
 
     /// <summary>

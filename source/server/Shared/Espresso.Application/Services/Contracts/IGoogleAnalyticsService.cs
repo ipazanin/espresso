@@ -20,4 +20,16 @@ public interface IGoogleAnalyticsService
     /// </summary>
     /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
     public Task<(decimal androidRevenue, decimal iosRevenue)> GetTotalRevenueFromYesterday();
+
+    /// <summary>
+    /// Gets current month revenue.
+    /// </summary>
+    /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+    public Task<(decimal androidRevenue, decimal iosRevenue)> GetTotalRevenueForCurrentMonth();
+
+    /// <summary>
+    /// Gets previous month revenue.
+    /// </summary>
+    /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+    public Task<(decimal androidRevenue, decimal iosRevenue)> GetTotalRevenueForPreviousMonth();
 }

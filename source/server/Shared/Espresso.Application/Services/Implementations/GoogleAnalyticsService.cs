@@ -16,6 +16,10 @@ public class GoogleAnalyticsService : IGoogleAnalyticsService
 {
     private const string PropertyId = "properties/232499903";
     private const string GoogleAnalyticsSecretsFileName = "google-analytics-key.json";
+    private const string AndroidKey = "Android";
+    private const string IosKey = "iOS";
+    private const string GoogleAnalyticsApiDateFormat = "yyyy-MM-dd";
+
     private readonly ILoggerService<GoogleAnalyticsService> _loggerService;
     private readonly BetaAnalyticsDataClient _client;
 
@@ -60,14 +64,14 @@ public class GoogleAnalyticsService : IGoogleAnalyticsService
 
         var numberOfActiveUsersOnAndroidString = response
             .Rows
-            .First(row => row.DimensionValues.Any(dimension => dimension.Value == "Android"))
+            .First(row => row.DimensionValues.Any(dimension => dimension.Value == AndroidKey))
             .MetricValues[0]
             .Value;
         var numberOfActiveUsersOnAndroid = int.Parse(numberOfActiveUsersOnAndroidString);
 
         var numberOfActiveUsersOnIosString = response
             .Rows
-            .First(row => row.DimensionValues.Any(dimension => dimension.Value == "iOS"))
+            .First(row => row.DimensionValues.Any(dimension => dimension.Value == IosKey))
             .MetricValues[0]
             .Value;
         var numberOfActiveUsersOnIos = int.Parse(numberOfActiveUsersOnIosString);
@@ -76,20 +80,53 @@ public class GoogleAnalyticsService : IGoogleAnalyticsService
     }
 
     /// <inheritdoc/>
-    public async Task<(decimal androidRevenue, decimal iosRevenue)> GetTotalRevenueFromYesterday()
+    public Task<(decimal androidRevenue, decimal iosRevenue)> GetTotalRevenueFromYesterday()
+    {
+        var dateRange = new DateRange
+        {
+            StartDate = "1daysAgo",
+            EndDate = "today",
+        };
+
+        return GetRevenue(dateRange);
+    }
+
+    public Task<(decimal androidRevenue, decimal iosRevenue)> GetTotalRevenueForCurrentMonth()
+    {
+        var currentDate = DateTimeOffset.UtcNow.Date;
+        var beginningOfCurrentMonth = new DateOnly(currentDate.Year, currentDate.Month, 1);
+        var dateRange = new DateRange
+        {
+            StartDate = beginningOfCurrentMonth.ToString(GoogleAnalyticsApiDateFormat),
+            EndDate = "today",
+        };
+
+        return GetRevenue(dateRange);
+    }
+
+    public Task<(decimal androidRevenue, decimal iosRevenue)> GetTotalRevenueForPreviousMonth()
+    {
+        var currentDate = DateTimeOffset.UtcNow.Date;
+        var beginningOfCurrentMonth = new DateOnly(currentDate.Year, currentDate.Month, 1);
+        var beginningOfPreviousMonth = beginningOfCurrentMonth.AddMonths(-1);
+        var endingOfPreviousMonth = beginningOfCurrentMonth.AddDays(-1);
+
+        var dateRange = new DateRange
+        {
+            StartDate = beginningOfPreviousMonth.ToString(GoogleAnalyticsApiDateFormat),
+            EndDate = endingOfPreviousMonth.ToString(GoogleAnalyticsApiDateFormat),
+        };
+
+        return GetRevenue(dateRange);
+    }
+
+    private async Task<(decimal androidRevenue, decimal iosRevenue)> GetRevenue(DateRange dateRange)
     {
         var request = new RunReportRequest
         {
             Property = PropertyId,
             Metrics = { new Metric { Name = "totalRevenue" }, },
-            DateRanges =
-                {
-                    new DateRange
-                    {
-                        StartDate = "1daysAgo",
-                        EndDate = "today",
-                    },
-                },
+            DateRanges = { dateRange },
             Dimensions = { new Dimension { Name = "operatingSystem" } },
         };
 
@@ -97,17 +134,17 @@ public class GoogleAnalyticsService : IGoogleAnalyticsService
 
         var androidRevenueString = response
             .Rows
-            .First(row => row.DimensionValues.Any(dimension => dimension.Value == "Android"))
+            .First(row => row.DimensionValues.Any(dimension => dimension.Value == AndroidKey))
             .MetricValues[0]
             .Value;
-        var androidRevenue = decimal.Parse(androidRevenueString);
+        var androidRevenue = decimal.Parse(androidRevenueString, System.Globalization.CultureInfo.InvariantCulture);
 
         var iosRevenueString = response
                             .Rows
-                            .First(row => row.DimensionValues.Any(dimension => dimension.Value == "iOS"))
+                            .First(row => row.DimensionValues.Any(dimension => dimension.Value == IosKey))
                             .MetricValues[0]
                             .Value;
-        var iosRevenue = decimal.Parse(iosRevenueString);
+        var iosRevenue = decimal.Parse(iosRevenueString, System.Globalization.CultureInfo.InvariantCulture);
 
         return (androidRevenue, iosRevenue);
     }
