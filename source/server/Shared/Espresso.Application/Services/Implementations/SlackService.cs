@@ -41,7 +41,7 @@ public class SlackService : ISlackService
     private const string PushNotificationBotIconEmoji = ":bell:";
     private const string PushNotificationBotUsername = "push-bot";
     private const string PushNotificationChannel = "#general";
-    private static readonly TimeSpan s_exceptionMessageCooldownInterval = TimeSpan.FromHours(4);
+    private static readonly TimeSpan s_exceptionMessageCoolDownInterval = TimeSpan.FromHours(4);
 
     private readonly IMemoryCache _memoryCache;
     private readonly IHttpClientFactory _httpClientFactory;
@@ -101,13 +101,8 @@ public class SlackService : ISlackService
     }
 
     /// <inheritdoc/>
-    public Task LogAppDownloadStatistics(
-        int yesterdayAndroidCount,
-        int yesterdayIosCount,
-        int totalAndroidCount,
-        int totalIosCount,
-        (int activeUsersOnAndroid, int activeUsersOnIos) activeUsers,
-        (decimal androidRevenue, decimal iosRevenue) revenue,
+    public Task LogApplicationStatistics(
+        ApplicationStatistics applicationStatistics,
         CancellationToken cancellationToken)
     {
         var blocks = new List<SlackBlock>
@@ -117,15 +112,15 @@ public class SlackService : ISlackService
                     fields: new List<SlackMarkdownTextBlock>()
                     {
                         new SlackMarkdownTextBlock("Android"),
-                        new SlackMarkdownTextBlock(yesterdayAndroidCount.ToString()),
+                        new SlackMarkdownTextBlock(applicationStatistics.YesterdayAndroidCount.ToString()),
                         new SlackMarkdownTextBlock("iOS"),
-                        new SlackMarkdownTextBlock(yesterdayIosCount.ToString()),
+                        new SlackMarkdownTextBlock(applicationStatistics.YesterdayIosCount.ToString()),
                         new SlackMarkdownTextBlock("Total Android"),
-                        new SlackMarkdownTextBlock(totalAndroidCount.ToString()),
+                        new SlackMarkdownTextBlock(applicationStatistics.TotalAndroidCount.ToString()),
                         new SlackMarkdownTextBlock("Total iOS"),
-                        new SlackMarkdownTextBlock(totalIosCount.ToString()),
+                        new SlackMarkdownTextBlock(applicationStatistics.TotalIosCount.ToString()),
                         new SlackMarkdownTextBlock("Total"),
-                        new SlackMarkdownTextBlock((totalIosCount + totalAndroidCount).ToString()),
+                        new SlackMarkdownTextBlock((applicationStatistics.TotalIosCount + applicationStatistics.TotalAndroidCount).ToString()),
                     },
                     accessory: new SlackImageBlock(
                         imageUrl: "https://aux.iconspalace.com/uploads/download-icon-256-361231194.png",
@@ -136,11 +131,11 @@ public class SlackService : ISlackService
                     fields: new List<SlackMarkdownTextBlock>()
                     {
                         new SlackMarkdownTextBlock("Android"),
-                        new SlackMarkdownTextBlock(activeUsers.activeUsersOnAndroid.ToString()),
+                        new SlackMarkdownTextBlock(applicationStatistics.ActiveUsersOnAndroid.ToString()),
                         new SlackMarkdownTextBlock("iOS"),
-                        new SlackMarkdownTextBlock(activeUsers.activeUsersOnIos.ToString()),
+                        new SlackMarkdownTextBlock(applicationStatistics.ActiveUsersOnIos.ToString()),
                         new SlackMarkdownTextBlock("Total"),
-                        new SlackMarkdownTextBlock($"{activeUsers.activeUsersOnAndroid + activeUsers.activeUsersOnIos}"),
+                        new SlackMarkdownTextBlock($"{applicationStatistics.ActiveUsersOnAndroid + applicationStatistics.ActiveUsersOnIos}"),
                     },
                     accessory: new SlackImageBlock(
                         imageUrl: "https://cdn1.iconfinder.com/data/icons/ui-colored-3-of-3/100/UI_3__23-512.png",
@@ -150,12 +145,16 @@ public class SlackService : ISlackService
                     text: new SlackMarkdownTextBlock("Revenue:"),
                     fields: new List<SlackMarkdownTextBlock>()
                     {
-                        new SlackMarkdownTextBlock("Android"),
-                        new SlackMarkdownTextBlock($"{revenue.androidRevenue:0.##}$"),
-                        new SlackMarkdownTextBlock("iOS"),
-                        new SlackMarkdownTextBlock($"{revenue.iosRevenue:0.##}$"),
-                        new SlackMarkdownTextBlock("Total"),
-                        new SlackMarkdownTextBlock($"{revenue.androidRevenue + revenue.iosRevenue:0.##}$"),
+                        new SlackMarkdownTextBlock("Today Android"),
+                        new SlackMarkdownTextBlock($"{applicationStatistics.AndroidRevenueToday:0.##}$"),
+                        new SlackMarkdownTextBlock("Today iOS"),
+                        new SlackMarkdownTextBlock($"{applicationStatistics.IosRevenueToday:0.##}$"),
+                        new SlackMarkdownTextBlock("Today"),
+                        new SlackMarkdownTextBlock($"{applicationStatistics.AndroidRevenueToday + applicationStatistics.IosRevenueToday:0.##}$"),
+                        new SlackMarkdownTextBlock("Current Month"),
+                        new SlackMarkdownTextBlock($"{applicationStatistics.RevenueCurrentMonth:0.##}$"),
+                        new SlackMarkdownTextBlock("Previous Month"),
+                        new SlackMarkdownTextBlock($"{applicationStatistics.RevenuePreviousMonth:0.##}$"),
                     },
                     accessory: new SlackImageBlock(
                         imageUrl: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency/256/Dollar-USD-icon.png",
@@ -312,11 +311,11 @@ public class SlackService : ISlackService
             return;
         }
 
-        await _memoryCache.GetOrCreateAsync(data.Text, async entry =>
+        _ = await _memoryCache.GetOrCreateAsync(data.Text, async entry =>
         {
             var httpClient = _httpClientFactory.CreateClient(HttpClientConstants.SlackHttpClientName);
 
-            entry.AbsoluteExpirationRelativeToNow = s_exceptionMessageCooldownInterval;
+            entry.AbsoluteExpirationRelativeToNow = s_exceptionMessageCoolDownInterval;
             try
             {
                 var jsonString = await _jsonService.Serialize(data, cancellationToken);
@@ -327,7 +326,7 @@ public class SlackService : ISlackService
                     content: content,
                     cancellationToken: cancellationToken);
 
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
             }
             catch (Exception exception)
             {

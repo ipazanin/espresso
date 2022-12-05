@@ -87,9 +87,9 @@ public partial class InitialCreate : Migration
                 JobsSetting_WebApiReportCronExpression = table.Column<string>(type: "text", nullable: false),
                 JobsSetting_ParseArticlesCronExpression = table.Column<string>(type: "text", nullable: false),
                 SimilarArticleSetting_SimilarityScoreThreshold = table.Column<double>(type: "double precision", nullable: false),
-                SimilarArticleSetting_ArticlePublishDateTimeDifferenceThreshol = table.Column<long>(name: "SimilarArticleSetting_ArticlePublishDateTimeDifferenceThreshol~", type: "bigint", nullable: false),
-                SimilarArticleSetting_MaxAgeOfSimilarArticleCheckingInMiliseco = table.Column<long>(name: "SimilarArticleSetting_MaxAgeOfSimilarArticleCheckingInMiliseco~", type: "bigint", nullable: false),
-                SimilarArticleSetting_MinimalNumberOfWordsForArticleToBeCompar = table.Column<int>(name: "SimilarArticleSetting_MinimalNumberOfWordsForArticleToBeCompar~", type: "integer", nullable: false),
+                SimilarArticleSetting_ArticlePublishDateTimeDifferenceThreshol = table.Column<long>(type: "bigint", name: "SimilarArticleSetting_ArticlePublishDateTimeDifferenceThreshol~", nullable: false),
+                SimilarArticleSetting_MaxAgeOfSimilarArticleCheckingInMiliseco = table.Column<long>(type: "bigint", name: "SimilarArticleSetting_MaxAgeOfSimilarArticleCheckingInMiliseco~", nullable: false),
+                SimilarArticleSetting_MinimalNumberOfWordsForArticleToBeCompar = table.Column<int>(type: "integer", name: "SimilarArticleSetting_MinimalNumberOfWordsForArticleToBeCompar~", nullable: false),
             },
             constraints: table => _ = table.PrimaryKey("PK_Settings", x => x.Id));
 

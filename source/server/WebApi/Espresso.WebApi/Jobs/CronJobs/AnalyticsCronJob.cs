@@ -4,6 +4,7 @@
 
 using Cronos;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
+using Espresso.Application.Models;
 using Espresso.Application.Services.Contracts;
 using Espresso.Common.Enums;
 using Espresso.Domain.Entities;
@@ -63,16 +64,25 @@ public class AnalyticsCronJob : CronJob<AnalyticsCronJob>
         var applicationDownloads = await espressoDatabaseContext.ApplicationDownload.ToListAsync(cancellationToken);
         var (todayAndroidCount, todayIosCount, totalAndroidCount, totalIosCount) = CalculateAppDownloadsPerDeviceType(applicationDownloads);
 
-        var activeUsers = await googleAnalyticsService.GetNumberOfActiveUsersFromYesterday();
-        var revenue = await googleAnalyticsService.GetTotalRevenueFromYesterday();
+        var (activeUsersOnIos, activeUsersOnAndroid) = await googleAnalyticsService.GetNumberOfActiveUsersFromYesterday();
+        var (androidRevenueToday, iosRevenueToday) = await googleAnalyticsService.GetTotalRevenueFromYesterday();
+        var (androidRevenueCurrentMonth, iosRevenueCurrentMonth) = await googleAnalyticsService.GetTotalRevenueForCurrentMonth();
+        var (androidRevenuePreviousMonth, iosRevenuePreviousMonth) = await googleAnalyticsService.GetTotalRevenueForPreviousMonth();
 
-        await slackService.LogAppDownloadStatistics(
-                yesterdayAndroidCount: todayAndroidCount,
-                yesterdayIosCount: todayIosCount,
-                totalAndroidCount: totalAndroidCount,
-                totalIosCount: totalIosCount,
-                activeUsers: activeUsers,
-                revenue: revenue,
+        var applicationStatistics = new ApplicationStatistics(
+            yesterdayAndroidCount: todayAndroidCount,
+            yesterdayIosCount: todayIosCount,
+            totalAndroidCount: totalAndroidCount,
+            totalIosCount: totalIosCount,
+            activeUsersOnAndroid: activeUsersOnAndroid,
+            activeUsersOnIos: activeUsersOnIos,
+            androidRevenueToday: androidRevenueToday,
+            iosRevenueToday: iosRevenueToday,
+            revenueCurrentMonth: androidRevenueCurrentMonth + iosRevenueCurrentMonth,
+            revenuePreviousMonth: androidRevenuePreviousMonth + iosRevenuePreviousMonth);
+
+        await slackService.LogApplicationStatistics(
+                applicationStatistics: applicationStatistics,
                 cancellationToken: cancellationToken);
     }
 

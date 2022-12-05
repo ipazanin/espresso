@@ -215,7 +215,7 @@ ifeq ($(strip $(v)),)
 	--platform linux/amd64 \
 	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
 	$(DockerBuildContextPath)
-	docker push $(WebApiDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag)	
+	docker push $(WebApiDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag)
 else
 	docker build \
 	-f $(EspressoWebApiDockerfilePath) \
@@ -230,7 +230,7 @@ else
 	--platform linux/amd64 \
 	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
 	$(DockerBuildContextPath)
-	docker push $(WebApiDockerImageGoogleContainerRegistry):$(v)	
+	docker push $(WebApiDockerImageGoogleContainerRegistry):$(v)
 endif
 
 docker-build-dashboard::
@@ -246,7 +246,7 @@ ifeq ($(strip $(v)),)
 	-t $(DashboardDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag) \
 	--platform linux/amd64 \
 	$(DockerBuildContextPath)
-	docker push $(DashboardDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag)	
+	docker push $(DashboardDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag)
 else
 	docker build \
 	-f $(EspressoParserDockerfilePath) \
@@ -259,7 +259,7 @@ else
 	-t $(DashboardDockerImageGoogleContainerRegistry):$(v) \
 	--platform linux/amd64 \
 	$(DockerBuildContextPath)
-	docker push $(DashboardDockerImageGoogleContainerRegistry):$(v)		
+	docker push $(DashboardDockerImageGoogleContainerRegistry):$(v)
 endif
 
 docker-build::
