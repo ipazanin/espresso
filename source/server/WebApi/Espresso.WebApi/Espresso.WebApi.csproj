@@ -13,6 +13,7 @@
     <Nullable>enable</Nullable>
     <Features>$(Features);flow-analysis</Features>
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
   <!--Static Code Analysis-->
 
