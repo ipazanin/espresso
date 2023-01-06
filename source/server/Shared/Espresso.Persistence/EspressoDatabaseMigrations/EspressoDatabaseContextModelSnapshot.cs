@@ -17,7 +17,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "7.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -1754,6 +1754,28 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             Name = "PRESS 032",
                             RegionId = 7
                         });
+                });
+
+            modelBuilder.Entity("Espresso.Domain.Entities.NewsPortalImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<byte[]>("ImageBytes")
+                        .HasColumnType("bytea");
+
+                    b.Property<int>("NewsPortalId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NewsPortalId")
+                        .IsUnique();
+
+                    b.ToTable("NewsPortalImages");
                 });
 
             modelBuilder.Entity("Espresso.Domain.Entities.PushNotification", b =>
@@ -4055,7 +4077,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                     b.HasIndex("RssFeedId");
 
-                    b.ToTable("RssFeedContentModifier");
+                    b.ToTable("RssFeedContentModifier", (string)null);
 
                     b.HasData(
                         new
@@ -4520,6 +4542,17 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                     b.Navigation("Region");
                 });
 
+            modelBuilder.Entity("Espresso.Domain.Entities.NewsPortalImage", b =>
+                {
+                    b.HasOne("Espresso.Domain.Entities.NewsPortal", "NewsPortal")
+                        .WithOne("NewsPortalImage")
+                        .HasForeignKey("Espresso.Domain.Entities.NewsPortalImage", "NewsPortalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NewsPortal");
+                });
+
             modelBuilder.Entity("Espresso.Domain.Entities.RssFeed", b =>
                 {
                     b.HasOne("Espresso.Domain.Entities.Category", "Category")
@@ -4539,7 +4572,7 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                             b1.Property<int>("RssFeedId")
                                 .HasColumnType("integer");
 
-                            b1.Property<bool>("HasAmpArticles")
+                            b1.Property<bool?>("HasAmpArticles")
                                 .HasColumnType("boolean");
 
                             b1.Property<string>("TemplateUrl")
@@ -5691,7 +5724,8 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
                                 });
                         });
 
-                    b.Navigation("AmpConfiguration");
+                    b.Navigation("AmpConfiguration")
+                        .IsRequired();
 
                     b.Navigation("Category");
 
@@ -5703,7 +5737,8 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
 
                     b.Navigation("NewsPortal");
 
-                    b.Navigation("SkipParseConfiguration");
+                    b.Navigation("SkipParseConfiguration")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Espresso.Domain.Entities.RssFeedCategory", b =>
@@ -5885,6 +5920,8 @@ namespace Espresso.Persistence.EspressoDatabaseMigrations
             modelBuilder.Entity("Espresso.Domain.Entities.NewsPortal", b =>
                 {
                     b.Navigation("Articles");
+
+                    b.Navigation("NewsPortalImage");
 
                     b.Navigation("RssFeeds");
                 });

@@ -49,6 +49,11 @@ public class NewsPortalConfiguration : IEntityTypeConfiguration<NewsPortal>
             .HasForeignKey(newsPortal => newsPortal.RegionId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        builder.HasOne(newsPortal => newsPortal.NewsPortalImage)
+            .WithOne(newsPortalImage => newsPortalImage.NewsPortal)
+            .HasForeignKey<NewsPortalImage>(newsPortalImage => newsPortalImage.NewsPortalId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         NewsPortalDataSeed.SeedData(builder);
         LocalNewsPortalDataSeed.SeedData(builder);
     }

@@ -1,0 +1,41 @@
+@inherits CreateEditCategoryBase
+@using Espresso.Domain.Enums.CategoryEnums
+
+@if (Category is null)
+{
+    <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+}
+else
+{
+    <MudGrid>
+    <MudItem xs="12" sm="12">
+        <MudPaper Class="pa-4">
+            <MudForm @ref="Form" @bind-IsValid="@Success" @bind-Errors="@Errors">
+                <MudTextField T="string" Label="Name" Required="true" RequiredError="Name is required!"
+                    @bind-Value="@Category.Name" />
+
+                <MudColorPicker Label="Color" @bind-Text="Category.Color" ColorPickerMode="ColorPickerMode.HEX"
+                    Style="@($"color: {Category.Color};")" Placeholder="Select Color" />
+
+                <MudSelect T="CategoryType" Label="Category Type" Required="true"
+                    RequiredError="Category Type is required" @bind-Value="@Category.CategoryType">
+                    @foreach (var enumValue in Enum.GetValues<CategoryType>())
+                        {
+                            <MudSelectItem Value="@(enumValue)" />
+                        }
+                    </MudSelect>
+
+                    <MudTextField T="string" Label="KeyWordsRegexPattern" Required="false"
+                    @bind-Value="@Category.KeyWordsRegexPattern" />
+
+                    <MudTextField T="int?" Label="SortIndex" Required="false" @bind-Value="@Category.SortIndex" />
+
+                    <MudTextField T="int?" Label="Position" Required="false" @bind-Value="@Category.Position" />
+
+                    <MudButton ButtonType="ButtonType.Button" OnClick="@OnSaveButtonClick" Disabled="@(!Success)"
+                    Style="margin-top: 10px" Variant="Variant.Outlined">Save</MudButton>
+                </MudForm>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+}

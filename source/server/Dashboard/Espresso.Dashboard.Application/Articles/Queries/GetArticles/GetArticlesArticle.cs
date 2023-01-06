@@ -19,6 +19,11 @@ public sealed class GetArticlesArticle
         {
             Id = article.Id,
             Title = article.Title,
+            NewsPortal = article.NewsPortal!.Name,
+            NewsPortalId = article.NewsPortalId,
+            Categories = article.ArticleCategories.Select(articleCategory => new ValueTuple<string, string>(articleCategory.Category!.Name, articleCategory.Category!.Color)),
+            ArticleUrl = article.Url,
+            ImageUrl = article.ImageUrl ?? string.Empty,
             Created = article.CreateDateTime,
         };
     }
@@ -26,6 +31,16 @@ public sealed class GetArticlesArticle
     public Guid Id { get; private set; }
 
     public string Title { get; private set; } = string.Empty;
+
+    public string NewsPortal { get; private set; } = string.Empty;
+
+    public int NewsPortalId { get; private set; }
+
+    public IEnumerable<(string categoryName, string categoryColor)> Categories { get; private set; } = Enumerable.Empty<(string, string)>();
+
+    public string ArticleUrl { get; private set; } = string.Empty;
+
+    public string ImageUrl { get; private set; } = string.Empty;
 
     public DateTimeOffset Created { get; private set; }
 }

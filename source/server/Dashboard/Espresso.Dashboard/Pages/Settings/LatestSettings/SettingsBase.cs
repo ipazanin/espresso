@@ -2,22 +2,86 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using Espresso.Domain.Infrastructure;
+using Cronos;
+using Espresso.Dashboard.Application.Settings.Commands.UpdateSetting;
+using Espresso.Dashboard.Application.Settings.Queries.GetLatestSetting;
+using MediatR;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.DependencyInjection;
+using MudBlazor;
 
-namespace Espresso.Dashboard.Pages.Settings;
+namespace Espresso.Dashboard.Pages.Settings.LatestSettings;
 
 public class SettingsBase : ComponentBase
 {
     [Inject]
-    protected ISettingProvider SettingProvider { get; init; } = null!;
+    protected IServiceScopeFactory ServiceScopeFactory { get; init; } = null!;
 
     [Inject]
-    private NavigationManager NavigationManager { get; init; } = null!;
+    protected NavigationManager NavigationManager { get; init; } = null!;
 
-    protected void EditSettings()
+    protected GetLatestSettingQueryResponse? GetLatestSettingQueryResponse { get; set; }
+
+    protected string[] Errors { get; set; } = Array.Empty<string>();
+
+    protected MudForm? Form { get; set; }
+
+    protected bool Success { get; set; }
+
+    protected Func<string?, string?> ValidateCronExpression { get; } = new Func<string?, string?>((inputValue) =>
     {
-        var settingId = SettingProvider.LatestSetting.Id;
-        NavigationManager.NavigateTo(uri: $"/settings/edit/{settingId}");
+        try
+        {
+            _ = CronExpression.Parse(inputValue);
+            return null;
+        }
+        catch
+        {
+            return "Invalid Cron Expression! Check https://crontab.guru/ for more info on CRON expressions.";
+        }
+    });
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var scope = ServiceScopeFactory.CreateScope();
+        var sender = scope.ServiceProvider.GetRequiredService<ISender>();
+
+        GetLatestSettingQueryResponse = await sender.Send(new GetLatestSettingQuery());
+    }
+
+    protected async Task OnSaveButtonClick()
+    {
+        if (!Success)
+        {
+            return;
+        }
+
+        if (GetLatestSettingQueryResponse is null)
+        {
+            return;
+        }
+
+        using var scope = ServiceScopeFactory.CreateAsyncScope();
+        var sender = scope.ServiceProvider.GetRequiredService<ISender>();
+
+        var command = new UpdateSettingCommand(GetLatestSettingQueryResponse.Setting);
+        _ = await sender.Send(command);
+
+        NavigationManager.NavigateTo("/");
+    }
+
+    protected string GetCronExpressionNextOccurrence(string inputValue)
+    {
+        try
+        {
+            var cronExpression = CronExpression.Parse(inputValue);
+            var nextOccurrence = cronExpression.GetNextOccurrence(DateTime.UtcNow);
+
+            return $"Next occurrence: {nextOccurrence}";
+        }
+        catch
+        {
+            return string.Empty;
+        }
     }
 }

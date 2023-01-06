@@ -26,57 +26,61 @@ public class EspressoDatabaseContext : DbContext, IEspressoDatabaseContext
     /// <summary>
     /// Gets or sets <see cref="NewsPortal"/> database set.
     /// </summary>
-    public DbSet<NewsPortal> NewsPortals { get; set; } = null!;
+    public DbSet<NewsPortal> NewsPortals { get; init; } = null!;
 
     /// <summary>
     /// Gets or sets <see cref="RssFeed"/> database set.
     /// </summary>
-    public DbSet<RssFeed> RssFeeds { get; set; } = null!;
+    public DbSet<RssFeed> RssFeeds { get; init; } = null!;
 
     /// <summary>
     /// Gets or sets <see cref="Article"/> database set.
     /// </summary>
-    public DbSet<Article> Articles { get; set; } = null!;
+    public DbSet<Article> Articles { get; init; } = null!;
 
     /// <summary>
     /// Gets or sets <see cref="Category"/> database set.
     /// </summary>
-    public DbSet<Category> Categories { get; set; } = null!;
+    public DbSet<Category> Categories { get; init; } = null!;
 
     /// <summary>
     /// Gets or sets <see cref="ArticleCategory"/> database set.
     /// </summary>
-    public DbSet<ArticleCategory> ArticleCategories { get; set; } = null!;
+    public DbSet<ArticleCategory> ArticleCategories { get; init; } = null!;
 
     /// <summary>
     /// Gets or sets <see cref="Domain.Entities.ApplicationDownload"/> database set.
     /// </summary>
-    public DbSet<ApplicationDownload> ApplicationDownload { get; set; } = null!;
+    public DbSet<ApplicationDownload> ApplicationDownload { get; init; } = null!;
 
     /// <summary>
     /// Gets or sets <see cref="Domain.Entities.RssFeedCategory"/> database set.
     /// </summary>
-    public DbSet<RssFeedCategory> RssFeedCategory { get; set; } = null!;
+    public DbSet<RssFeedCategory> RssFeedCategory { get; init; } = null!;
 
     /// <summary>
     /// Gets or sets <see cref="PushNotification"/> database set.
     /// </summary>
-    public DbSet<PushNotification> PushNotifications { get; set; } = null!;
+    public DbSet<PushNotification> PushNotifications { get; init; } = null!;
 
     /// <summary>
     /// Gets or sets <see cref="Region"/> database set.
     /// </summary>
-    public DbSet<Region> Regions { get; set; } = null!;
+    public DbSet<Region> Regions { get; init; } = null!;
 
     /// <summary>
     /// Gets or sets <see cref="SimilarArticle"/> database set.
     /// </summary>
-    public DbSet<SimilarArticle> SimilarArticles { get; set; } = null!;
+    public DbSet<SimilarArticle> SimilarArticles { get; init; } = null!;
 
     /// <summary>
     /// Gets or sets <see cref="Setting"/> database set.
     /// </summary>
-    public DbSet<Setting> Settings { get; set; } = null!;
+    public DbSet<Setting> Settings { get; init; } = null!;
+
+    public DbSet<NewsPortalImage> NewsPortalImages { get; init; } = null!;
+
+    public DbSet<RssFeedContentModifier> RssFeedContentModifiers { get; init; } = null!;
 
     /// <inheritdoc/>
     protected override void OnModelCreating(ModelBuilder modelBuilder)

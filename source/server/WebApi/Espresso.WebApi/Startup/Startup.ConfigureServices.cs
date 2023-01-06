@@ -26,6 +26,7 @@ using Espresso.WebApi.Filters;
 using Espresso.WebApi.Jobs.CronJobs;
 using Espresso.WebApi.Services;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
@@ -196,6 +197,12 @@ internal sealed partial class Startup
 
         services.AddScoped<IGoogleAnalyticsService, GoogleAnalyticsService>();
         services.AddScoped<IArticleLoaderService, ArticleDatabaseLoaderService>();
+        services.AddScoped<IRefreshWebApiCache, RefreshWebApiCache>();
+        services.AddScoped<INewsPortalImagesService>(serviceProvider => new NewsPortalImagesService(
+            espressoDatabaseContext: serviceProvider.GetRequiredService<IEspressoDatabaseContext>(),
+            httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
+            serverUrl: string.Empty,
+            folderRootPath: serviceProvider.GetRequiredService<IWebHostEnvironment>().WebRootPath));
     }
 
     /// <summary>

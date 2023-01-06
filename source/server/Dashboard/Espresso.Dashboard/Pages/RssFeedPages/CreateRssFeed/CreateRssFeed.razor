@@ -1,0 +1,10 @@
+@page "/rss-feeds/create"
+@inherits CreateRssFeedBase
+@using Espresso.Dashboard.Pages.RssFeedPages.CreateEditRssFeed
+
+<MudContainer MaxWidth="MaxWidth.Large">
+    <MudText Typo="@Typo.h3" Style="margin: 20px">Create Rss Feed</MudText>
+
+    <CreateEditRssFeed @bind-Success="@Success" RssFeedDetails="@RssFeedDetails"
+        OnSaveButtonClick="@OnSaveButtonClick" />
+</MudContainer>

@@ -1,0 +1,39 @@
+@page "/regions"
+@inherits RegionsListBase
+
+<MudTable ServerData="@GetTableData" Dense="@false" Hover="@false" Bordered="@false" FixedHeader="@true"
+    FixedFooter="@true" Height="600px" Striped="@true" @ref="Table">
+    <ToolBarContent>
+        <MudGrid>
+            <MudItem xs="4">
+                <MudText Typo="Typo.h6">Regions</MudText>
+            </MudItem>
+            <MudItem xs="4">
+                <MudButton Href="regions/create" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Create</MudButton>
+            </MudItem>
+        </MudGrid>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Name</MudTh>
+        <MudTh>Subtitle</MudTh>
+        <MudTh></MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Type">@context.Subtitle</MudTd>
+        <MudTd>
+            <MudButton Variant="@Variant.Filled" Color="Color.Primary" Href="@($"regions/{context.Id}")">
+                Details
+            </MudButton>
+        </MudTd>
+        <MudTd>
+            <MudButton Variant="@Variant.Filled" Color="Color.Secondary" OnClick="@(async () => await DeleteRegion(context.Id))">
+                Delete
+            </MudButton>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 10, 20, 50 }" />
+    </PagerContent>
+</MudTable>

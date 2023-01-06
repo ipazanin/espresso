@@ -2,6 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+using Espresso.Application.DataTransferObjects;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
 using Espresso.Dashboard.Application.IServices;
@@ -30,6 +31,7 @@ public class CreateArticlesService : ICreateArticlesService
     private readonly IValidator<ArticleData> _articleDataValidator;
     private readonly ILoggerService<CreateArticlesService> _loggerService;
     private readonly ISettingProvider _settingProvider;
+    private readonly IParsingMessagesService _parsingMessagesService;
     private readonly Channel<Article> _articlesChannel = Channel.CreateBounded<Article>(s_boundedChannelOptions);
 
     /// <summary>
@@ -40,18 +42,21 @@ public class CreateArticlesService : ICreateArticlesService
     /// <param name="articleDataValidator"></param>
     /// <param name="loggerService"></param>
     /// <param name="settingProvider"></param>
+    /// <param name="parsingMessagesService"></param>
     public CreateArticlesService(
         IScrapeWebService webScrapingService,
         IParseHtmlService htmlParsingService,
         IValidator<ArticleData> articleDataValidator,
         ILoggerService<CreateArticlesService> loggerService,
-        ISettingProvider settingProvider)
+        ISettingProvider settingProvider,
+        IParsingMessagesService parsingMessagesService)
     {
         _webScrapingService = webScrapingService;
         _htmlParsingService = htmlParsingService;
         _articleDataValidator = articleDataValidator;
         _loggerService = loggerService;
         _settingProvider = settingProvider;
+        _parsingMessagesService = parsingMessagesService;
     }
 
     public ChannelReader<Article> ArticlesChannelReader => _articlesChannel.Reader;
@@ -87,6 +92,12 @@ public class CreateArticlesService : ICreateArticlesService
                     {
                         const string? EventName = "Create Article Unhandled Exception";
                         _loggerService.Log(EventName, exception, LogLevel.Error);
+
+                        var parsingErrorMessage = new ParsingErrorMessageDto(
+                            logLevel: LogLevel.Error,
+                            message: $"Create Article Unhandled Exception: {exception.Message}",
+                            rssFeedId: rssFeedItem.RssFeed.Id);
+                        _parsingMessagesService.PushMessage(parsingErrorMessage);
                     }
                 }, cancellationToken);
             tasks.Add(task);
@@ -150,7 +161,7 @@ public class CreateArticlesService : ICreateArticlesService
         RssFeed rssFeed)
     {
         var articleCategories = new HashSet<ArticleCategory>();
-        var articleCategoriesFromKeyWords = GetArticleCategoriesFromCategorysKeyWords(
+        var articleCategoriesFromKeyWords = GetArticleCategoriesFromCategoriesKeyWords(
             categories: categories,
             itemTitle: itemTitle,
             itemSummary: itemSummary,
@@ -166,7 +177,7 @@ public class CreateArticlesService : ICreateArticlesService
                 articleCategories.UnionWith(articleCategoriesFromRssFeed);
                 break;
             case CategoryParseStrategy.FromUrl:
-                var articleCategoriesFromUrl = GetArticlecategoriesFromFromUrl(
+                var articleCategoriesFromUrl = GetArticleCategoriesFromFromUrl(
                     articleId: articleId,
                     itemUrl: itemUrl,
                     rssFeed: rssFeed);
@@ -177,32 +188,32 @@ public class CreateArticlesService : ICreateArticlesService
         return articleCategories;
     }
 
-    private static IEnumerable<ArticleCategory> GetArticleCategoriesFromCategorysKeyWords(
+    private static IEnumerable<ArticleCategory> GetArticleCategoriesFromCategoriesKeyWords(
         IEnumerable<Category> categories,
         string? itemTitle,
         string? itemSummary,
         Guid articleId)
     {
-        var categoryIds = new HashSet<ArticleCategory>();
+        var articleCategories = new HashSet<ArticleCategory>();
         foreach (var category in categories)
         {
             if (
                 !string.IsNullOrEmpty(category.KeyWordsRegexPattern) &&
                 Regex.IsMatch($"{itemTitle} {itemSummary}", category.KeyWordsRegexPattern, RegexOptions.IgnoreCase))
             {
-                categoryIds.Add(new ArticleCategory(
+                articleCategories.Add(new ArticleCategory(
                     id: Guid.NewGuid(),
                     articleId: articleId,
                     categoryId: category.Id,
                     article: null,
-                    category: category));
+                    category: null));
             }
         }
 
-        return categoryIds;
+        return articleCategories;
     }
 
-    private static IEnumerable<ArticleCategory> GetArticlecategoriesFromFromUrl(
+    private static IEnumerable<ArticleCategory> GetArticleCategoriesFromFromUrl(
         Guid articleId,
         Uri? itemUrl,
         RssFeed rssFeed)
@@ -323,7 +334,7 @@ public class CreateArticlesService : ICreateArticlesService
             itemPublishDateTime: rssFeedItem.PublishDateTime,
             utcNow: utcNow);
 
-        var articlecategories = GetArticleCategories(
+        var articleCategories = GetArticleCategories(
             categories: categories,
             itemTitle: rssFeedItem.Title,
             itemSummary: summary,
@@ -344,7 +355,7 @@ public class CreateArticlesService : ICreateArticlesService
             UpdateDateTime = utcNow,
             Url = url,
             WebUrl = webUrl,
-            ArticleCategories = articlecategories,
+            ArticleCategories = articleCategories,
         };
 
         return CreateArticle(
@@ -392,6 +403,12 @@ public class CreateArticlesService : ICreateArticlesService
             };
 
             _loggerService.Log(eventName, exceptionMessage, LogLevel.Error, parameters);
+
+            var parsingErrorMessage = new ParsingErrorMessageDto(
+                logLevel: LogLevel.Warning,
+                message: $"Invalid Article: {exceptionMessage}",
+                rssFeedId: rssFeed.Id);
+            _parsingMessagesService.PushMessage(parsingErrorMessage);
 
             return (null, false);
         }
@@ -479,6 +496,15 @@ public class CreateArticlesService : ICreateArticlesService
             };
 
             _loggerService.Log(eventName, LogLevel.Information, arguments);
+        }
+
+        if (string.IsNullOrEmpty(imageUrl))
+        {
+            var parsingErrorMessage = new ParsingErrorMessageDto(
+                logLevel: LogLevel.Warning,
+                message: $"Article {webUrl} does not have image!",
+                rssFeedId: rssFeed.Id);
+            _parsingMessagesService.PushMessage(parsingErrorMessage);
         }
 
         return AddBaseUrlToUrlFragment(imageUrl, rssFeed.NewsPortal?.BaseUrl);

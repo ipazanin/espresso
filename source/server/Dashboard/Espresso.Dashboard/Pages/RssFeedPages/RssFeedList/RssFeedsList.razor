@@ -1,0 +1,62 @@
+@page "/rss-feeds"
+@inherits RssFeedsListBase
+@using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects
+@using Espresso.Dashboard.Application.RssFeeds.Queries.GetRssFeeds
+@using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects.RssFeedDataTransferObjects
+@using Espresso.Application.DataTransferObjects.CategoryDataTransferObjects
+
+<MudTable ServerData="@GetTableData" Dense="@false" Hover="@false" Bordered="@false" FixedHeader="@true"
+    FixedFooter="@true" Height="600px" Striped="@true" @ref="@Table">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Rss Feeds</MudText>
+        <MudSpacer />
+        <MudTextField T="string" ValueChanged="@(OnSearch)" Placeholder="Search" Adornment="Adornment.Start"
+            AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0">
+        </MudTextField>
+        <MudSpacer />
+        <MudItem xs="4">
+            <MudButton Href="rss-feeds/create" ButtonType="ButtonType.Button" Variant="Variant.Filled"
+                Color="Color.Primary">Create</MudButton>
+        </MudItem>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>
+            <MudTableSortLabel SortLabel="@(nameof(RssFeedDto.Url))" T="GetRssFeedsQueryRssFeed">
+                Url
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh>Request Type</MudTh>
+        <MudTh>
+            <MudTableSortLabel SortLabel="@(nameof(NewsPortalDto))" T="GetRssFeedsQueryRssFeed">
+                Source
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortLabel="@(nameof(CategoryDto))" T="GetRssFeedsQueryRssFeed">
+                Category
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh></MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Url">@context.RssFeed.Url</MudTd>
+        <MudTd DataLabel="RequestType">@context.RssFeed.RequestType</MudTd>
+        <MudTd DataLabel="Source">@context.NewsPortal.Name</MudTd>
+        <MudTd DataLabel="Category">@context.Category.Name</MudTd>
+        <MudTd>
+            <MudButton Variant="@Variant.Filled" Color="Color.Primary" Href="@($"rss-feeds/{context.RssFeed.Id}")">
+                Details
+            </MudButton>
+        </MudTd>
+        <MudTd>
+            <MudButton Variant="@Variant.Filled" Color="Color.Secondary"
+                OnClick="@(async () => await DeleteRssFeed(context.RssFeed.Id))">
+                Delete
+            </MudButton>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 10, 20, 50 }" />
+    </PagerContent>
+</MudTable>

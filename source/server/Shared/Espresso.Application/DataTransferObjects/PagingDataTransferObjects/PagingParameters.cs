@@ -5,9 +5,9 @@
 namespace Espresso.Application.DataTransferObjects.PagingDataTransferObjects;
 
 /// <summary>
-/// Paginationparameters Model
+/// Pagination Parameters Model.
 /// </summary>
-public record PagingParameters
+public class PagingParameters
 {
     /// <summary>
     /// Gets Current page.
@@ -18,6 +18,12 @@ public record PagingParameters
     /// Gets page size.
     /// </summary>
     public int PageSize { get; init; }
+
+    public string SearchString { get; init; } = string.Empty;
+
+    public string SortColumn { get; init; } = string.Empty;
+
+    public OrderType OrderType { get; init; }
 
     /// <summary>
     /// Returns number of items to take.

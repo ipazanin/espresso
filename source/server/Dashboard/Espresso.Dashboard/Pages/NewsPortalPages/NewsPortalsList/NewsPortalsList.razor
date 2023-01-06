@@ -1,0 +1,68 @@
+@page "/news-portals"
+@inherits NewsPortalsListBase
+@using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects
+@using Espresso.Application.DataTransferObjects.CategoryDataTransferObjects
+@using Espresso.Dashboard.Application.NewsPortals.Queries.GetNewsPortals
+
+<MudTable ServerData="@GetTableData" Dense="@false" Hover="@false" Bordered="@false" FixedHeader="@true"
+    FixedFooter="@true" Height="600px" Striped="@true" @ref="Table">
+    <ToolBarContent>
+        <MudGrid>
+            <MudItem xs="4">
+                <MudText Typo="Typo.h6">News Portals</MudText>
+            </MudItem>
+            <MudTextField T="string" ValueChanged="@(OnSearch)" Placeholder="Search" Adornment="Adornment.Start"
+                AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0">
+            </MudTextField>
+            <MudItem xs="4">
+                <MudButton Href="news-portals/create" ButtonType="ButtonType.Button" Variant="Variant.Filled"
+                    Color="Color.Primary">Create</MudButton>
+            </MudItem>
+        </MudGrid>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh></MudTh>
+        <MudTh>
+            <MudTableSortLabel SortLabel="@(nameof(NewsPortalDto.Name))" T="GetNewsPortalsQueryNewsPortal">
+                Name
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortLabel="@(nameof(CategoryDto))" T="GetNewsPortalsQueryNewsPortal">
+                Category
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortLabel="@(nameof(NewsPortalDto.IsEnabled))" T="GetNewsPortalsQueryNewsPortal">
+                Is Enabled
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh></MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Image">
+            <MudImage Alt="News Portal Image" Src="@($"/{context.NewsPortal.IconUrl}")" />
+        </MudTd>
+        <MudTd DataLabel="Name">@context.NewsPortal.Name</MudTd>
+        <MudTd DataLabel="Name">@context.Category.Name</MudTd>
+        <MudTd DataLabel="Name">
+            <MudSwitch Checked="@context.NewsPortal.IsEnabled" ReadOnly="@true" Color="Color.Primary" />
+        </MudTd>
+        <MudTd>
+            <MudButton Variant="@Variant.Filled" Color="Color.Primary"
+                Href="@($"news-portals/{context.NewsPortal.Id}")">
+                Details
+            </MudButton>
+        </MudTd>
+        <MudTd>
+            <MudButton Variant="@Variant.Filled" Color="Color.Secondary"
+                OnClick="@(async () => await DeleteNewsPortal(context.NewsPortal.Id))">
+                Delete
+            </MudButton>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 10, 20, 50 }" />
+    </PagerContent>
+</MudTable>

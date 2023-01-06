@@ -1,0 +1,60 @@
+@page "/articles"
+@inherits ArticlesListBase
+@using Espresso.Dashboard.Application.Articles.Queries.GetArticles
+
+<MudTable @ref="Table" ServerData="@GetTableData" Dense="@false" Hover="@false" Bordered="@false" FixedHeader="@true"
+    FixedFooter="@true" Height="600px" Striped="@true">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Articles</MudText>
+        <MudSpacer />
+        <MudTextField T="string" ValueChanged="@(OnSearch)" Placeholder="Search" Adornment="Adornment.Start"
+            AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0">
+        </MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Image</MudTh>
+        <MudTh>
+            <MudTableSortLabel SortLabel="@(nameof(GetArticlesArticle.Title))" T="GetArticlesArticle">
+                Title
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortLabel="@(nameof(GetArticlesArticle.Categories))" T="GetArticlesArticle">
+                Categories
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortLabel="@(nameof(GetArticlesArticle.NewsPortal))" T="GetArticlesArticle">
+                Source
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh SortLabel="@(nameof(GetArticlesArticle.Created))">
+            <MudTableSortLabel SortLabel="@(nameof(GetArticlesArticle.Created))" T="GetArticlesArticle">
+                Created
+            </MudTableSortLabel>
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="ImageUrl">
+            <MudLink Href="@context.ArticleUrl" Target="_blank">
+                <MudImage Src="@context.ImageUrl" Alt="Article Image" Height="@(64)" Width="@(64)" />
+            </MudLink>
+        </MudTd>
+        <MudTd DataLabel="Title">@context.Title</MudTd>
+        <MudTd DataLabel="Categories">
+            @foreach (var (category, color) in context.Categories)
+            {
+                <label style="@($"color: {color};")">@category</label>
+            }
+        </MudTd>
+        <MudTd DataLabel="NewsPortal">
+            <MudLink Href="@($"/news-portals/{context.NewsPortalId}")">
+                @context.NewsPortal
+            </MudLink>
+        </MudTd>
+        <MudTd DataLabel="Title">@context.Created.DateTime</MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 10, 20, 50 }" />
+    </PagerContent>
+</MudTable>

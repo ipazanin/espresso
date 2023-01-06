@@ -1,0 +1,51 @@
+@page "/database"
+@inherits ExportImportDatabaseBase
+
+<MudContainer MaxWidth="MaxWidth.Medium">
+
+    <MudText Typo="Typo.h3" Style="margin-bottom: 50px;">Export/Import Database</MudText>
+
+    <MudGrid>
+
+        <MudItem xs="12" sm="5">
+            <MudFileUpload T="IBrowserFile" FilesChanged="OnImportDatabase">
+                <ButtonTemplate>
+                    <MudButton Href="api/database" HtmlTag="label" Variant="Variant.Filled" Color="Color.Primary"
+                        StartIcon="@Icons.Filled.CloudDownload">
+                        Export Database
+                    </MudButton>
+                </ButtonTemplate>
+            </MudFileUpload>
+        </MudItem>
+
+        <MudItem xs="12" sm="5">
+            <MudFileUpload T="IBrowserFile" FilesChanged="OnImportDatabase">
+                <ButtonTemplate>
+                    <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Secondary"
+                        StartIcon="@Icons.Filled.CloudUpload" for="@context">
+                        Import Database
+                    </MudButton>
+                </ButtonTemplate>
+            </MudFileUpload>
+        </MudItem>
+
+        @if (IsImportInProgress)
+        {
+            <MudItem xs="12" sm="5">
+                <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+            </MudItem>
+        }
+
+        @if (!string.IsNullOrEmpty(Errors))
+        {
+            <MudItem xs="12" sm="5">
+                <MudPaper Class="pa-4 mud-height-full">
+                    <MudText Color="@Color.Error">@Errors</MudText>
+                </MudPaper>
+            </MudItem>
+        }
+
+    </MudGrid>
+
+
+</MudContainer>

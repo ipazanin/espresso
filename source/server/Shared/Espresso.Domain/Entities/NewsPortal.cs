@@ -124,6 +124,8 @@ public class NewsPortal
 
     public ICollection<Article> Articles { get; private set; } = new List<Article>();
 
+    public NewsPortalImage? NewsPortalImage { get; private set; }
+
     public static Expression<Func<NewsPortal, bool>> GetCategorySugestedNewsPortalsPredicate(
         IEnumerable<int>? newsPortalIds,
         int categoryId,

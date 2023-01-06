@@ -29,6 +29,17 @@ public interface IJsonService
     public string Serialize<TValue>(TValue value);
 
     /// <summary>
+    /// Serializes <paramref name="value"/> to JSON Stream.
+    /// </summary>
+    /// <typeparam name="TValue">Type that is being serialized.</typeparam>
+    /// <param name="value">value that is being serialized.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+    public Task<Stream> SerializeToStream<TValue>(
+        TValue value,
+        CancellationToken cancellationToken);
+
+    /// <summary>
     /// Deserializes <paramref name="json"/> string into object of type <typeparamref name="TValue"/>.
     /// </summary>
     /// <typeparam name="TValue">Resulting object type.</typeparam>
@@ -48,6 +59,17 @@ public interface IJsonService
     /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
     public Task<TValue?> Deserialize<TValue>(
         byte[] utf8Bytes,
+        CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Deserializes <paramref name="utf8Stream"/> stream into object of type <typeparamref name="TValue"/>.
+    /// </summary>
+    /// <typeparam name="TValue">Resulting object type.</typeparam>
+    /// <param name="utf8Stream">JSON UTF8 stream.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+    public Task<TValue?> Deserialize<TValue>(
+        Stream utf8Stream,
         CancellationToken cancellationToken);
 
     /// <summary>

@@ -15,7 +15,7 @@ public class AmpConfiguration : ValueObject
     /// </summary>
     /// <param name="hasAmpArticles"></param>
     /// <param name="templateUrl"></param>
-    public AmpConfiguration(bool hasAmpArticles, string templateUrl)
+    public AmpConfiguration(bool? hasAmpArticles, string? templateUrl)
     {
         HasAmpArticles = hasAmpArticles;
         TemplateUrl = templateUrl;
@@ -29,7 +29,7 @@ public class AmpConfiguration : ValueObject
     {
     }
 
-    public bool HasAmpArticles { get; private set; }
+    public bool? HasAmpArticles { get; private set; }
 
     /// <summary>
     /// Gets {0} = ArticleId

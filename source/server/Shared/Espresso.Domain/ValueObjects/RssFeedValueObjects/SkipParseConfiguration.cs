@@ -33,7 +33,7 @@ public class SkipParseConfiguration : ValueObject
 
     public bool ShouldParse()
     {
-        if (NumberOfSkips is null && CurrentSkip is null)
+        if (NumberOfSkips is null || CurrentSkip is null)
         {
             return true;
         }

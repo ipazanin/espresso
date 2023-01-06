@@ -2,25 +2,20 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using System.Diagnostics;
 using Cronos;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
-using Espresso.Common.Extensions;
 using Espresso.Dashboard.Application.Articles.Commands.DeleteOldArticles;
 using Espresso.Dashboard.Application.HealthChecks;
+using Espresso.Dashboard.Application.IServices;
+using Espresso.Dashboard.Application.RssFeeds.Commands.ParseRssFeeds;
 using Espresso.Dashboard.Configuration;
-using Espresso.Dashboard.ParseRssFeeds;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Infrastructure;
-using Espresso.Domain.IServices;
-using Espresso.Persistence.Database;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Espresso.Dashboard.CronJobs;
 
@@ -58,76 +53,14 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
         }
     }
 
-    private IDictionary<Guid, Article> Articles { get; set; } = new Dictionary<Guid, Article>();
-
-    private IEnumerable<RssFeed> RssFeeds { get; set; } = Array.Empty<RssFeed>();
-
-    private IEnumerable<Category> Categories { get; set; } = Array.Empty<Category>();
-
     public override async Task StartAsync(CancellationToken cancellationToken)
     {
-        var stopwatch = Stopwatch.StartNew();
         using var scope = _serviceScopeFactory.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<IEspressoDatabaseContext>();
-        var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService<ParseArticlesCronJob>>();
+        var refreshMemoryCacheService = scope.ServiceProvider.GetRequiredService<IRefreshDashboardCacheService>();
+
+        await refreshMemoryCacheService.RefreshCache();
+
         var readinessHealthCheck = scope.ServiceProvider.GetRequiredService<ReadinessHealthCheck>();
-
-        await context.Database.MigrateAsync(cancellationToken: cancellationToken);
-
-        var newsPortals = await context
-            .NewsPortals
-            .AsNoTracking()
-            .ToListAsync(cancellationToken: cancellationToken);
-
-        var categories = await context
-            .Categories
-            .AsNoTracking()
-            .ToListAsync(cancellationToken: cancellationToken);
-
-        var articles = await context.Articles
-            .Include(article => article.ArticleCategories)
-            .Include(article => article.NewsPortal)
-            .AsSplitQuery()
-            .AsNoTracking()
-            .ToListAsync(cancellationToken: cancellationToken);
-
-        var rssFeeds = await context.RssFeeds
-            .Include(rssFeed => rssFeed.Category)
-            .Include(rssFeed => rssFeed.NewsPortal)
-            .Include(rssFeed => rssFeed.RssFeedCategories)
-            .ThenInclude(rssFeedCategory => rssFeedCategory.Category)
-            .Include(rssFeed => rssFeed.RssFeedContentModifiers)
-            .AsNoTracking()
-            .AsSplitQuery()
-            .ToListAsync(cancellationToken: cancellationToken);
-
-        RssFeeds = rssFeeds;
-
-        Categories = categories;
-
-        Articles = articles.ToDictionary(article => article.Id);
-        _memoryCache.Set(MemoryCacheConstants.ArticleKey, Articles);
-
-        stopwatch.Stop();
-
-        var eventName = Event.DashboardEspressoDatabaseInit.GetDisplayName();
-        var duration = stopwatch.Elapsed;
-        var categoriesCount = categories.Count;
-        var newsPortalsCount = newsPortals.Count;
-        var allArticlesCount = articles.Count;
-        var rssFeedCount = rssFeeds.Count;
-
-        var arguments = new List<(string parameterName, object parameterValue)>
-        {
-            (nameof(duration), duration),
-            (nameof(categoriesCount), categoriesCount),
-            (nameof(newsPortalsCount), newsPortalsCount),
-            (nameof(allArticlesCount), allArticlesCount),
-            (nameof(rssFeedCount), rssFeedCount),
-        };
-
-        loggerService.Log(eventName, LogLevel.Information, arguments);
-
         readinessHealthCheck.SetApplicationStateAsReady();
 
         await base.StartAsync(cancellationToken);
@@ -137,7 +70,6 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
     {
         await CreateArticles(cancellationToken);
         await DeleteArticles(cancellationToken);
-        _memoryCache.Set(MemoryCacheConstants.ArticleKey, Articles);
     }
 
     private async Task CreateArticles(CancellationToken cancellationToken)
@@ -146,15 +78,19 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
         var configuration = scope.ServiceProvider.GetRequiredService<IDashboardConfiguration>();
 
+        var articles = _memoryCache.Get<IDictionary<Guid, Article>>(MemoryCacheConstants.ArticleKey)!;
+        var rssFeeds = _memoryCache.Get<IEnumerable<RssFeed>>(MemoryCacheConstants.RssFeedKey)!;
+        var categories = _memoryCache.Get<IEnumerable<Category>>(MemoryCacheConstants.CategoryKey)!;
+
         _ = await mediator.Send(
             request: new ParseRssFeedsCommand
             {
                 TargetedApiVersion = configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
                 ConsumerVersion = configuration.AppConfiguration.Version,
                 DeviceType = DeviceType.RssFeedParser,
-                Articles = Articles,
-                RssFeeds = RssFeeds,
-                Categories = Categories,
+                Articles = articles,
+                RssFeeds = rssFeeds,
+                Categories = categories,
             },
             cancellationToken: cancellationToken);
     }
@@ -164,11 +100,12 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
         using var scope = _serviceScopeFactory.CreateScope();
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
         var configuration = scope.ServiceProvider.GetRequiredService<IDashboardConfiguration>();
+        var articles = _memoryCache.Get<IDictionary<Guid, Article>>(MemoryCacheConstants.ArticleKey)!;
 
         _ = await mediator.Send(
             request: new DeleteOldArticlesCommand
             {
-                Articles = Articles,
+                Articles = articles,
                 DeviceType = DeviceType.RssFeedParser,
                 ConsumerVersion = configuration.AppConfiguration.Version,
                 TargetedApiVersion = configuration.AppConfiguration.Version,

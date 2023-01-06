@@ -57,6 +57,20 @@ public class SystemTextJsonService : IJsonService
         return jsonString;
     }
 
+    /// <inheritdoc />
+    public async Task<Stream> SerializeToStream<TValue>(
+        TValue value,
+        CancellationToken cancellationToken)
+    {
+        var memoryStream = new MemoryStream();
+
+        await JsonSerializer.SerializeAsync(memoryStream, value, typeof(TValue), _defaultJsonSerializerOptions, cancellationToken);
+
+        memoryStream.Position = 0;
+
+        return memoryStream;
+    }
+
     /// <inheritdoc/>
     public async Task<TValue?> Deserialize<TValue>(
         string json,
@@ -86,6 +100,19 @@ public class SystemTextJsonService : IJsonService
 
         var value = await JsonSerializer.DeserializeAsync<TValue?>(
             utf8Json: stream,
+            options: _defaultJsonSerializerOptions,
+            cancellationToken: cancellationToken);
+
+        return value;
+    }
+
+    /// <inheritdoc/>
+    public async Task<TValue?> Deserialize<TValue>(
+        Stream utf8Stream,
+        CancellationToken cancellationToken)
+    {
+        var value = await JsonSerializer.DeserializeAsync<TValue?>(
+            utf8Json: utf8Stream,
             options: _defaultJsonSerializerOptions,
             cancellationToken: cancellationToken);
 

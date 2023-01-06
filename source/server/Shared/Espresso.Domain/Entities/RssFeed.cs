@@ -37,6 +37,30 @@ public class RssFeed
         RequestType = requestType;
         CategoryParseConfiguration = null!;
         ImageUrlParseConfiguration = null!;
+        SkipParseConfiguration = null!;
+        AmpConfiguration = null!;
+    }
+
+    public RssFeed(
+        int id,
+        string url,
+        RequestType requestType,
+        AmpConfiguration ampConfiguration,
+        CategoryParseConfiguration categoryParseConfiguration,
+        ImageUrlParseConfiguration imageUrlParseConfiguration,
+        SkipParseConfiguration skipParseConfiguration,
+        int newsPortalId,
+        int categoryId)
+    {
+        Id = id;
+        Url = url;
+        RequestType = requestType;
+        AmpConfiguration = ampConfiguration;
+        CategoryParseConfiguration = categoryParseConfiguration;
+        ImageUrlParseConfiguration = imageUrlParseConfiguration;
+        SkipParseConfiguration = skipParseConfiguration;
+        NewsPortalId = newsPortalId;
+        CategoryId = categoryId;
     }
 
     /// <summary>
@@ -46,6 +70,8 @@ public class RssFeed
     private RssFeed()
     {
         Url = null!;
+        SkipParseConfiguration = null!;
+        AmpConfiguration = null!;
         CategoryParseConfiguration = null!;
         ImageUrlParseConfiguration = null!;
     }
@@ -62,13 +88,13 @@ public class RssFeed
 
     public RequestType RequestType { get; private set; }
 
-    public AmpConfiguration? AmpConfiguration { get; private set; }
+    public AmpConfiguration AmpConfiguration { get; private set; }
 
     public CategoryParseConfiguration CategoryParseConfiguration { get; private set; }
 
     public ImageUrlParseConfiguration ImageUrlParseConfiguration { get; private set; }
 
-    public SkipParseConfiguration? SkipParseConfiguration { get; private set; }
+    public SkipParseConfiguration SkipParseConfiguration { get; private set; }
 
     public ICollection<RssFeedContentModifier> RssFeedContentModifiers { get; private set; } = new List<RssFeedContentModifier>();
 
@@ -88,7 +114,7 @@ public class RssFeed
     {
         AmpConfiguration = new AmpConfiguration(false, string.Empty);
 
-        return NewsPortal?.IsEnabled == true && SkipParseConfiguration?.ShouldParse() != false;
+        return NewsPortal!.IsEnabled && SkipParseConfiguration.ShouldParse();
     }
 
     public string ModifyContent(string feedContent)
