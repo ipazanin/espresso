@@ -1,108 +1,100 @@
 @page "/settings"
 @inherits SettingsBase
 
-<div class="container">
-    <div class="row m-2 ml-0 mr-0">
-        <div class="col-md-5">
-            <div class="project-info-box">
-                <h5><strong>Current Settings</strong></h5>
-            </div>
-            <div class="project-info-box">
-                <p class="m-0 p-0">
-                    <b>Created:</b>
-                    <span class="float-right">
-                        @(SettingProvider.LatestSetting.Created.DateTime.ToString("MMMM dd yyyy - HH:MM"))
-                    </span>
-                </p>
-                <p class="m-0 p-0">
-                    <b>Revision:</b>
-                    <span class="float-right">
-                        @(SettingProvider.LatestSetting.SettingsRevision)
-                    </span>
-                </p>
-            </div>
-        </div>
-    </div>
-    <hr />
-    <div class="row m-2 ml-0 mr-0">
-        <div class="col-md-6">
-            <div class="project-info-box">
-                <h5><strong>Similar Articles Settings</strong></h5>
-            </div>
-            <div class="project-info-box">
-                <p class="m-0 p-0"><b>Max duration between two similar articles [hours]:</b> <span
-                        class="float-right">@(SettingProvider.LatestSetting.SimilarArticleSetting.ArticlePublishDateTimeDifferenceThreshold.TotalHours)</span>
-                </p>
-                <p class="m-0 p-0"><b>Max age for which to search similar articles [hours]:</b> <span
-                        class="float-right">@(SettingProvider.LatestSetting.SimilarArticleSetting.MaxAgeOfSimilarArticleChecking.TotalHours)</span>
-                </p>
-                <p class="m-0 p-0"><b>Minimal number of words in article requirement:</b> <span
-                        class="float-right">@(SettingProvider.LatestSetting.SimilarArticleSetting.MinimalNumberOfWordsForArticleToBeComparable)</span>
-                </p>
-                <p class="m-0 p-0"><b>Similarity score threshold (0-1):</b> <span
-                        class="float-right">@(SettingProvider.LatestSetting.SimilarArticleSetting.SimilarityScoreThreshold)</span>
-                </p>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="project-info-box">
-                <h5><strong>Article Settings</strong></h5>
-            </div>
-            <div class="project-info-box">
-                <p class="m-0 p-0"><b>Number of featured articles:</b> <span
-                        class="float-right">@(SettingProvider.LatestSetting.ArticleSetting.FeaturedArticlesTake)</span>
-                </p>
-                <p class="m-0 p-0"><b>Max age of article [days]:</b> <span
-                        class="float-right">@(SettingProvider.LatestSetting.ArticleSetting.MaxAgeOfArticle.TotalDays)</span>
-                </p>
-                <p class="m-0 p-0"><b>Max age of featured articles [hours]:</b> <span
-                        class="float-right">@(SettingProvider.LatestSetting.ArticleSetting.MaxAgeOfFeaturedArticle.TotalHours)</span>
-                </p>
-                <p class="m-0 p-0"><b>Max age of trending articles [hours]:</b> <span
-                        class="float-right">@(SettingProvider.LatestSetting.ArticleSetting.MaxAgeOfTrendingArticle.TotalHours)</span>
-                </p>
-            </div>
-        </div>
-    </div>
-    <hr />
-    <div class="row m-2 ml-0 mr-0">
-        <div class="col-md-6">
-            <div class="project-info-box">
-                <h5><strong>Jobs Settings</strong></h5>
-            </div>
-            <div class="project-info-box">
-                <p class="m-0 p-0"><b>Analytics (marketing-bot) job cron expression:</b> <span
-                        class="float-right">@(SettingProvider.LatestSetting.JobsSetting.AnalyticsCronExpression)</span>
-                </p>
-                <p class="m-0 p-0"><b>Parse articles job cron expression:</b> <span
-                        class="float-right">@(SettingProvider.LatestSetting.JobsSetting.ParseArticlesCronExpression)</span>
-                </p>
-                <p class="m-0 p-0"><b>Report (backend-statistics) job cron expression:</b> <span
-                        class="float-right">@(SettingProvider.LatestSetting.JobsSetting.WebApiReportCronExpression)</span>
-                </p>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="project-info-box">
-                <h5><strong>NewsPortal (source) Settings</strong></h5>
-            </div>
-            <div class="project-info-box">
-                <p class="m-0 p-0"><b>Max age of new news portal [days]:</b> <span
-                        class="float-right">@(SettingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal.TotalDays)</span>
-                </p>
-                <p class="m-0 p-0"><b>New news portal position (in applications):</b> <span
-                        class="float-right">@(SettingProvider.LatestSetting.NewsPortalSetting.NewNewsPortalsPosition)</span>
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <hr />
-
-    <div class="row m-2 ml-0 mr-0">
-        <div class="col-md-6">
-            <button type="button" class="btn btn-primary" @onclick=(EditSettings)>Edit</button>
-        </div>
-    </div>
-</div>
+@if (GetLatestSettingQueryResponse is null)
+{
+    <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+}
+else
+{
+    <MudForm @ref="Form" @bind-IsValid="@Success" @bind-Errors="@Errors">
+    <MudGrid Justify="Justify.SpaceEvenly">
+        <MudItem xs="12" sm="6">
+            <MudPaper Class="pa-4">
+                <MudText Typo="@Typo.h5" Style="margin: 5px">General</MudText>
+                <MudTextField T="int" Label="Revision" ReadOnly="@true"
+                    Value="@GetLatestSettingQueryResponse.Setting.Revision" />
+                <MudTextField T="DateTime" Label="Date" ReadOnly="@true"
+                    Value="@GetLatestSettingQueryResponse.Setting.Created.Date" />
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <MudPaper Class="pa-4">
+                <MudText Typo="@Typo.h5" Style="margin: 5px">News Portal Settings</MudText>
+                <MudNumericField T="double" Label="Max age of New News Portal in days" Required="@true"
+                    RequiredError="Max age of New News Portal in days is required"
+                    @bind-Value="@GetLatestSettingQueryResponse.Setting.NewsPortalSetting.MaxAgeOfNewNewsPortalInDays" />
+                <MudNumericField T="int" Label="New News Portals Position in app" Required="@true"
+                    RequiredError="New News Portals Position in app is required"
+                    @bind-Value="@GetLatestSettingQueryResponse.Setting.NewsPortalSetting.NewNewsPortalsPositionInApp" />
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <MudPaper Class="pa-4">
+                <MudText Typo="@Typo.h5" Style="margin: 5px">Articles Settings</MudText>
+                <MudNumericField T="double" Label="Max age of Articles in days" Required="@true"
+                    RequiredError="Max age of Articles in days is required"
+                    @bind-Value="@GetLatestSettingQueryResponse.Setting.ArticleSetting.MaxAgeOfArticleInDays" />
+                <MudNumericField T="double" Label="Max age of Trending Articles in hours" Required="@true"
+                    RequiredError="Max age of Trending Articles in hours is required"
+                    @bind-Value="@GetLatestSettingQueryResponse.Setting.ArticleSetting.MaxAgeOfTrendingArticleInHours" />
+                <MudNumericField T="double" Label="Max age of Featured Articles in hours" Required="@true"
+                    RequiredError="Max age of Featured Articles in hours is required"
+                    @bind-Value="@GetLatestSettingQueryResponse.Setting.ArticleSetting.MaxAgeOfFeaturedArticleInHours" />
+                <MudNumericField T="int" Label="Number of Featured Articles" Required="@true"
+                    RequiredError="Number of featured articles is required"
+                    @bind-Value="@GetLatestSettingQueryResponse.Setting.ArticleSetting.FeaturedArticlesTake" />
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <MudPaper Class="pa-4">
+                <MudText Typo="@Typo.h5" Style="margin: 5px">Jobs Settings</MudText>
+                <MudTextField T="string"
+                    Label="@($"Analytics Cron Expression. {GetCronExpressionNextOccurrence(GetLatestSettingQueryResponse.Setting.JobsSetting.AnalyticsCronExpression)}")"
+                    Required="@true" RequiredError="Cron Expression is required"
+                    Validation="@(ValidateCronExpression)"
+                    @bind-Value="@GetLatestSettingQueryResponse.Setting.JobsSetting.AnalyticsCronExpression" />
+                <MudTextField T="string"
+                    Label="@($"Web API Cron Expression. {GetCronExpressionNextOccurrence(GetLatestSettingQueryResponse.Setting.JobsSetting.WebApiReportCronExpression)}")"
+                    Required="@true" RequiredError="Cron Expression is required"
+                    Validation="@(ValidateCronExpression)"
+                    @bind-Value="@GetLatestSettingQueryResponse.Setting.JobsSetting.WebApiReportCronExpression" />
+                <MudTextField T="string"
+                    Label="@($"Parse Articles Cron Expression. {GetCronExpressionNextOccurrence(GetLatestSettingQueryResponse.Setting.JobsSetting.ParseArticlesCronExpression)}")"
+                    Required="@true" RequiredError="Cron Expression is required"
+                    Validation="@(ValidateCronExpression)"
+                    @bind-Value="@GetLatestSettingQueryResponse.Setting.JobsSetting.ParseArticlesCronExpression" />
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12">
+            <MudPaper Class="pa-4">
+                <MudText Typo="@Typo.h5" Style="margin: 5px">Similar Articles Settings</MudText>
+                <MudNumericField T="double" Label="Max time in which two articles could be considered similar in hours"
+                    Required="@true"
+                    RequiredError="Max time in which two articles could be considered similar in hours is required"
+                    @bind-Value="@GetLatestSettingQueryResponse.Setting.SimilarArticlesSetting.MaxDurationBetweenTwoSimilarArticlesInHours" />
+                <MudNumericField T="double"
+                    Label="Max age of article in which would be taken into consideration for similarity parsing"
+                    Required="@true"
+                    RequiredError="Max age of article in which would be taken into consideration for similarity parsing is required"
+                    @bind-Value="@GetLatestSettingQueryResponse.Setting.SimilarArticlesSetting.MaxArticleAgeToParseInSimilarArticlesInHours" />
+                <MudNumericField T="int"
+                    Label="Minimal number of words in title for article to be taken into similarity consideration"
+                    Required="@true"
+                    RequiredError="Minimal number of words in title for article to be taken into similarity consideration is required"
+                    @bind-Value="@GetLatestSettingQueryResponse.Setting.SimilarArticlesSetting.MinimalNumberOfWordsRequirement" />
+                <MudNumericField T="double" Label="Similarity Score threshold [0-1]" Required="@true"
+                    RequiredError="Similarity Score threshold is required"
+                    @bind-Value="@GetLatestSettingQueryResponse.Setting.SimilarArticlesSetting.SimilarityScoreThreshold" />
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <MudPaper Class="pa-4">
+                <MudText Typo="@Typo.h5" Style="margin: 5px">Submit</MudText>
+                <MudButton ButtonType="ButtonType.Button" OnClick="@OnSaveButtonClick" Disabled="@(!Success)"
+                    Style="margin-top: 10px" Variant="Variant.Outlined">Save</MudButton>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</MudForm>
+}

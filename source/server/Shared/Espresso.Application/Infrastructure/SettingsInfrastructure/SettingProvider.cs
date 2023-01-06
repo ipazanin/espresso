@@ -64,6 +64,7 @@ public sealed class SettingProvider : ISettingProvider
 
         var latestSetting = _espressoDatabaseContext
             .Settings
+            .AsNoTracking()
             .OrderByDescending(setting => setting.Created)
             .FirstOrDefault();
 
@@ -74,6 +75,7 @@ public sealed class SettingProvider : ISettingProvider
     {
         return _espressoDatabaseContext
             .Settings
+            .AsNoTracking()
             .OrderByDescending(setting => setting.Created)
             .FirstAsync(cancellationToken);
     }

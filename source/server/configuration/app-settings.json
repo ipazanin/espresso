@@ -2,7 +2,7 @@
   "AppConfiguration": {
     "MajorVersion": 2,
     "MinorVersion": 3,
-    "Version": "2.3.0"
+    "Version": "2.3.1"
   },
   "DatabaseConfiguration": {
     "CommandTimeoutInSeconds": 360,

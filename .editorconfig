@@ -617,6 +617,9 @@ dotnet_diagnostic.SA1124.severity = none
 # SA1310: Field names should not contain underscore
 dotnet_diagnostic.SA1310.severity = none
 
+# S112: Should not throw IndexOutOfRangeException
+dotnet_diagnostic.S112.severity = none
+
 ######################################################
 #           Custom Analysers
 ######################################################

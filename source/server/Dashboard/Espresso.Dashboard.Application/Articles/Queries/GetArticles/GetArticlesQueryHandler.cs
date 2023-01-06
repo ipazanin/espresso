@@ -27,6 +27,9 @@ public class GetArticlesQueryHandler : IRequestHandler<GetArticlesQuery, GetArti
 
         var articles = await _espressoDatabaseContext
             .Articles
+            .AsNoTracking()
+            .FilterArticles(request.PagingParameters)
+            .OrderArticles(request.PagingParameters)
             .Skip(skip)
             .Take(take)
             .Select(GetArticlesArticle.Projection)
@@ -34,6 +37,8 @@ public class GetArticlesQueryHandler : IRequestHandler<GetArticlesQuery, GetArti
 
         var totalCount = await _espressoDatabaseContext
             .Articles
+            .AsNoTracking()
+            .FilterArticles(request.PagingParameters)
             .CountAsync(cancellationToken);
 
         var pagingMetadata = new PagingMetadata(

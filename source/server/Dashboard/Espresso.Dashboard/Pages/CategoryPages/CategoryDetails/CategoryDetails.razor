@@ -1,0 +1,12 @@
+@page "/categories/{Id:int}"
+@inherits CategoryDetailsBase
+@using Espresso.Domain.Enums.CategoryEnums
+@using Espresso.Dashboard.Pages.CategoryPages.CreateEditCategory
+
+<MudContainer MaxWidth="MaxWidth.Small">
+    <MudText Typo="@Typo.h3" Style="margin: 20px">Category Details</MudText>
+
+    <CreateEditCategory Category="@Category" @bind-Success="@Success"
+        OnSaveButtonClick="@OnSaveButtonClick" />
+
+</MudContainer>

@@ -11,16 +11,18 @@ public interface ISendInformationToApiService
     /// </summary>
     /// <param name="createArticleIds"></param>
     /// <param name="updateArticleIds"></param>
-    /// <param name="cancellationToken"></param>
     /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
     public Task SendArticlesMessage(
         IEnumerable<Guid> createArticleIds,
-        IEnumerable<Guid> updateArticleIds,
-        CancellationToken cancellationToken);
+        IEnumerable<Guid> updateArticleIds);
 
     /// <summary>
     /// Notifies application API that settings has changed.
     /// </summary>
-    /// <param name="cancellationToken"></param>
-    public Task SendSettingUpdatedNotification(CancellationToken cancellationToken);
+    public Task SendSettingUpdatedNotification();
+
+    /// <summary>
+    /// Notifies application API that cache (RssFeed, Categories, Regions...) has changed.
+    /// </summary>
+    public Task SendCacheUpdatedNotification();
 }

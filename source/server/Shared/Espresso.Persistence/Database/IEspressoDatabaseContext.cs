@@ -69,10 +69,16 @@ public interface IEspressoDatabaseContext
     /// </summary>
     public DbSet<Setting> Settings { get; }
 
+    public DbSet<RssFeedContentModifier> RssFeedContentModifiers { get; }
+
+    public DbSet<NewsPortalImage> NewsPortalImages { get; }
+
     /// <summary>
     /// Gets object that provides access to database related information and operations for this context.
     /// </summary>
     public DatabaseFacade Database { get; }
+
+    public ChangeTracker ChangeTracker { get; }
 
     /// <summary>
     ///  Creates a Microsoft.EntityFrameworkCore.DbSet`1 that can be used to query and save instances of TEntity.

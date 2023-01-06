@@ -15,12 +15,12 @@ using Espresso.Dashboard.Application.Constants;
 using Espresso.Dashboard.Application.HealthChecks;
 using Espresso.Dashboard.Application.Initialization;
 using Espresso.Dashboard.Application.IServices;
+using Espresso.Dashboard.Application.RssFeeds.Commands.ParseRssFeeds;
+using Espresso.Dashboard.Application.RssFeeds.Commands.ParseRssFeeds.Validators;
 using Espresso.Dashboard.Application.Services;
 using Espresso.Dashboard.Areas.Identity;
 using Espresso.Dashboard.Configuration;
 using Espresso.Dashboard.CronJobs;
-using Espresso.Dashboard.ParseRssFeeds;
-using Espresso.Dashboard.ParseRssFeeds.Validators;
 using Espresso.Dashboard.Services;
 using Espresso.Domain.Infrastructure;
 using Espresso.Domain.IServices;
@@ -29,10 +29,12 @@ using Espresso.Persistence.Database;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
+using MudBlazor.Services;
 using Polly;
 using Polly.Extensions.Http;
 using Polly.Timeout;
@@ -50,6 +52,12 @@ internal sealed partial class Startup
         AddPersistence(services);
         AddJobs(services);
         AddAuth(services);
+        AddBlazorServices(services);
+    }
+
+    private static void AddBlazorServices(IServiceCollection services)
+    {
+        services.AddMudServices();
     }
 
     private static void AddAuth(IServiceCollection services)
@@ -104,6 +112,7 @@ internal sealed partial class Startup
             espressoIdentityContext: serviceProvider.GetRequiredService<IEspressoIdentityDatabaseContext>(),
             roleManager: serviceProvider.GetRequiredService<RoleManager<IdentityRole>>(),
             userManager: serviceProvider.GetRequiredService<UserManager<IdentityUser>>(),
+            newsPortalImagesService: serviceProvider.GetRequiredService<INewsPortalImagesService>(),
             adminUserPassword: _dashboardConfiguration.AppConfiguration.AdminUserPassword));
         services.AddSingleton(_ => _dashboardConfiguration);
 
@@ -210,27 +219,26 @@ internal sealed partial class Startup
         services.AddScoped<ISendInformationToApiService>(
             serviceProvider =>
             {
-                return _dashboardConfiguration.RabbitMqConfiguration.UseRabbitMqServer ?
-                    new SendInformationToApiRabbitMqService(
-                        jsonService: serviceProvider.GetRequiredService<IJsonService>(),
-                        hostName: _dashboardConfiguration.RabbitMqConfiguration.HostName,
-                        queueName: _dashboardConfiguration.RabbitMqConfiguration.ArticlesQueueName,
-                        port: _dashboardConfiguration.RabbitMqConfiguration.Port,
-                        username: _dashboardConfiguration.RabbitMqConfiguration.Username,
-                        password: _dashboardConfiguration.RabbitMqConfiguration.Password) :
-                    new SendInformationToApiHttpService(
-                       httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
-                       loggerService: serviceProvider.GetRequiredService<ILoggerService<SendInformationToApiHttpService>>(),
-                       slackService: serviceProvider.GetRequiredService<ISlackService>(),
-                       jsonService: serviceProvider.GetRequiredService<IJsonService>(),
-                       parserApiKey: _dashboardConfiguration.ApiKeysConfiguration.ParserApiKey,
-                       targetedApiVersion: _dashboardConfiguration.AppConfiguration.RssFeedParserMajorMinorVersion,
-                       currentVersion: _dashboardConfiguration.AppConfiguration.Version,
-                       serverUrl: _dashboardConfiguration.AppConfiguration.ServerUrl);
+                return new SendInformationToApiHttpService(
+                    httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
+                    loggerService: serviceProvider.GetRequiredService<ILoggerService<SendInformationToApiHttpService>>(),
+                    slackService: serviceProvider.GetRequiredService<ISlackService>(),
+                    jsonService: serviceProvider.GetRequiredService<IJsonService>(),
+                    parserApiKey: _dashboardConfiguration.ApiKeysConfiguration.ParserApiKey,
+                    targetedApiVersion: _dashboardConfiguration.AppConfiguration.RssFeedParserMajorMinorVersion,
+                    currentVersion: _dashboardConfiguration.AppConfiguration.Version,
+                    serverUrl: _dashboardConfiguration.AppConfiguration.ServerUrl);
             });
         services.AddTransient<IJsonService, SystemTextJsonService>(_ => new SystemTextJsonService(_dashboardConfiguration.SystemTextJsonSerializerConfiguration.JsonSerializerOptions));
         services.AddScoped<IRemoveOldArticlesService, RemoveOldArticlesService>();
         services.AddScoped<ISettingChangedService, SettingChangedService>();
+        services.AddScoped<IRefreshDashboardCacheService, RefreshDashboardCacheService>();
+        services.AddSingleton<IParsingMessagesService, ParsingMessagesService>();
+        services.AddScoped<INewsPortalImagesService>(serviceProvider => new NewsPortalImagesService(
+            espressoDatabaseContext: serviceProvider.GetRequiredService<IEspressoDatabaseContext>(),
+            httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
+            serverUrl: _dashboardConfiguration.AppConfiguration.ServerUrl,
+            folderRootPath: serviceProvider.GetRequiredService<IWebHostEnvironment>().WebRootPath));
     }
 
     /// <summary>

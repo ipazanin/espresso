@@ -42,9 +42,9 @@ public class ImageUrlParseConfiguration : ValueObject
         ImageUrlParseStrategy imageUrlParseStrategy,
         string imgElementXPath,
         string attributeName,
-        bool shouldImageUrlBeWebScraped,
+        bool? shouldImageUrlBeWebScraped,
         ImageUrlWebScrapeType imageUrlWebScrapeType,
-        string jsonWebScrapePropertyNames,
+        string? jsonWebScrapePropertyNames,
         int? elementExtensionIndex,
         bool? isSavedInHtmlElementWithSrcAttribute)
     {

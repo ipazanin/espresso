@@ -1,0 +1,41 @@
+@inherits CreateEditRegionBase
+
+@if (RegionDetails is null)
+{
+    <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+}
+else
+{
+    <MudGrid>
+    <MudItem xs="12" sm="6">
+        <MudPaper Class="pa-4">
+            <MudForm @ref="Form" @bind-IsValid="@Success" @bind-Errors="@Errors">
+                <MudTextField T="string" Label="Name" Required="true" RequiredError="Name is required!"
+                    @bind-Value="@RegionDetails.Region.Name" />
+                <MudTextField T="string" Label="Subtitle" Required="true" RequiredError="Subtitle is required!"
+                    @bind-Value="@RegionDetails.Region.Subtitle" />
+
+                <MudButton ButtonType="ButtonType.Button" OnClick="@OnSaveButtonClick" Disabled="@(!Success)"
+                    Style="margin-top: 10px" Variant="Variant.Outlined">Save</MudButton>
+            </MudForm>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" sm="6">
+        <MudTable Items="@RegionDetails.NewsPortals" Hover="@false" Breakpoint="Breakpoint.Sm" Height="500px">
+            <ToolBarContent>
+            <MudItem xs="4">
+                <MudText Typo="Typo.h6">News Portals</MudText>
+            </MudItem>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh>Name</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Name">
+                    <MudLink Href="@($"news-portals/{context.Id}")">@context.Name</MudLink>
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+    </MudItem>
+</MudGrid>
+}

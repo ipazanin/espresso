@@ -1,0 +1,10 @@
+@page "/news-portals/create"
+@inherits CreateNewsPortalBase
+@using Espresso.Dashboard.Pages.NewsPortalPages.CreateEditNewsPortal
+
+<MudContainer MaxWidth="MaxWidth.Large">
+    <MudText Typo="@Typo.h3" Style="margin: 20px">Create News Portal</MudText>
+
+    <CreateEditNewsPortal @bind-Success="@Success" NewsPortalDetailsResponse="@NewsPortalDetailsQueryResponse"
+        NewsPortalImageResponse="@NewsPortalImageResponse" OnSaveButtonClick="@OnSaveButtonClick" />
+</MudContainer>

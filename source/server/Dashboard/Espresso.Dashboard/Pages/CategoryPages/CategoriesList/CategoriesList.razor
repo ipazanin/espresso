@@ -1,0 +1,41 @@
+@page "/categories"
+@inherits CategoriesListBase
+
+<MudTable ServerData="@GetTableData" Dense="@false" Hover="@false" Bordered="@false" FixedHeader="@true"
+    FixedFooter="@true" Height="600px" Striped="@true" @ref="Table">
+    <ToolBarContent>
+        <MudGrid>
+            <MudItem xs="4">
+                <MudText Typo="Typo.h6">Categories</MudText>
+            </MudItem>
+            <MudItem xs="4">
+                <MudButton Href="categories/create" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Create</MudButton>
+            </MudItem>
+        </MudGrid>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Name</MudTh>
+        <MudTh>Type</MudTh>
+        <MudTh>Regex for matching articles to this category</MudTh>
+        <MudTh></MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Name" Style="@($"color: {context.Color}")">@context.Name</MudTd>
+        <MudTd DataLabel="Type">@context.CategoryType</MudTd>
+        <MudTd DataLabel="Regex">@(context.KeyWordsRegexPattern ?? "/")</MudTd>
+        <MudTd>
+            <MudButton Variant="@Variant.Filled" Color="Color.Primary" Href="@($"categories/{context.Id}")">
+                Details
+            </MudButton>
+        </MudTd>
+        <MudTd>
+            <MudButton Variant="@Variant.Filled" Color="Color.Secondary" OnClick="@(async () => await DeleteCategory(context.Id))">
+                Delete
+            </MudButton>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 10, 20, 50 }" />
+    </PagerContent>
+</MudTable>

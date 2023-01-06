@@ -17,6 +17,8 @@ public class RssFeedContentModifierConfiguration : IEntityTypeConfiguration<RssF
     /// <inheritdoc/>
     public void Configure(EntityTypeBuilder<RssFeedContentModifier> builder)
     {
+        builder.ToTable(nameof(RssFeedContentModifier));
+
         builder.Property(rssfeedContentModifier => rssfeedContentModifier.SourceValue)
             .HasMaxLength(RssFeedContentModifier.SourceValueMaxLength);
 

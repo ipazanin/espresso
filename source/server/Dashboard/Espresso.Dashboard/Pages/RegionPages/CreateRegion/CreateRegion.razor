@@ -1,0 +1,11 @@
+@page "/regions/create"
+@inherits CreateRegionBase
+@using Espresso.Dashboard.Pages.RegionPages.CreateEditRegion
+
+<MudContainer MaxWidth="MaxWidth.Small">
+    <MudText Typo="@Typo.h3" Style="margin: 20px">Create Region</MudText>
+
+    <CreateEditRegion RegionDetails="@RegionDetails" @bind-Success="@Success"
+        OnSaveButtonClick="@OnSaveButtonClick" />
+
+</MudContainer>

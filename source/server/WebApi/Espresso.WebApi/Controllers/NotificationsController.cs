@@ -5,6 +5,8 @@
 using Espresso.Application.DataTransferObjects.ArticleDataTransferObjects;
 using Espresso.Common.Constants;
 using Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles;
+
+using Espresso.WebApi.Application.Notifications.Commands.RefreshCacheNotification;
 using Espresso.WebApi.Application.Notifications.Commands.SendArticlesNotifications;
 using Espresso.WebApi.Application.Notifications.Commands.SendPushNotification;
 using Espresso.WebApi.Application.Notifications.Queries.GetPushNotifications;
@@ -99,7 +101,7 @@ public class NotificationsController : ApiController
     /// <param name="cancellationToken"></param>
     /// <response code="200">OK.</response>
     /// <response code="401">If API Key is invalid or missing.</response>
-    /// <response code="403">If API Key is forbiden from requested resource.</response>
+    /// <response code="403">If API Key is forbidden from requested resource.</response>
     /// <response code="500">If unhandled exception occurred.</response>
     [Produces(MimeTypeConstants.Json)]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -122,6 +124,33 @@ public class NotificationsController : ApiController
                 ConsumerVersion = basicInformationsHeaderParameters.Version,
                 DeviceType = basicInformationsHeaderParameters.DeviceType,
             },
+            cancellationToken: cancellationToken);
+
+        return Ok();
+    }
+
+    /// <summary>
+    /// Updates settings upon receiving notification.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <response code="200">OK.</response>
+    /// <response code="401">If API Key is invalid or missing.</response>
+    /// <response code="403">If API Key is forbidden from requested resource.</response>
+    /// <response code="500">If unhandled exception occurred.</response>
+    [Produces(MimeTypeConstants.Json)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
+    [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.3")]
+    [ApiVersion("2.2")]
+    [HttpPost]
+    [Authorize(Roles = ApiKey.ParserRole)]
+    [Route("api/notifications/cache")]
+    public async Task<IActionResult> CacheChangedNotification(CancellationToken cancellationToken)
+    {
+        _ = await Sender.Send(
+            request: new RefreshCacheNotificationCommand(),
             cancellationToken: cancellationToken);
 
         return Ok();

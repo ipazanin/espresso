@@ -32,6 +32,6 @@ public class SettingChangedService : ISettingChangedService
 
         await _settingProvider.UpdateLatestSetting(cancellationToken);
 
-        await _sendInformationToApiService.SendSettingUpdatedNotification(cancellationToken);
+        await _sendInformationToApiService.SendSettingUpdatedNotification();
     }
 }

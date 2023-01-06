@@ -63,14 +63,13 @@ public class SendInformationToApiHttpService : ISendInformationToApiService
         _ = _httpClient.AddHeadersToHttpClient(httpHeaders);
     }
 
-    public async Task SendSettingUpdatedNotification(CancellationToken cancellationToken)
+    public async Task SendSettingUpdatedNotification()
     {
         try
         {
             using var response = await _httpClient.PostAsync(
                 requestUri: $"{_serverUrl}/api/notifications/setting",
-                content: null,
-                cancellationToken: cancellationToken);
+                content: null);
 
             _ = response.EnsureSuccessStatusCode();
         }
@@ -89,14 +88,13 @@ public class SendInformationToApiHttpService : ISendInformationToApiService
                     eventName: EventName,
                     message: exception.Message,
                     exception: exception,
-                    cancellationToken: cancellationToken);
+                    cancellationToken: default);
         }
     }
 
     public async Task SendArticlesMessage(
         IEnumerable<Guid> createArticleIds,
-        IEnumerable<Guid> updateArticleIds,
-        CancellationToken cancellationToken)
+        IEnumerable<Guid> updateArticleIds)
     {
         if (!createArticleIds.Any() && !updateArticleIds.Any())
         {
@@ -109,14 +107,13 @@ public class SendInformationToApiHttpService : ISendInformationToApiService
 
         var httpContent = await _jsonService.GetJsonHttpContent(
             value: data,
-            cancellationToken: cancellationToken);
+            cancellationToken: default);
 
         try
         {
             using var response = await _httpClient.PostAsync(
                 requestUri: $"{_serverUrl}/api/notifications/articles",
-                content: httpContent,
-                cancellationToken: cancellationToken);
+                content: httpContent);
 
             _ = response.EnsureSuccessStatusCode();
         }
@@ -135,7 +132,36 @@ public class SendInformationToApiHttpService : ISendInformationToApiService
                     eventName: eventName,
                     message: exception.Message,
                     exception: exception,
-                    cancellationToken: cancellationToken);
+                    cancellationToken: default);
+        }
+    }
+
+    public async Task SendCacheUpdatedNotification()
+    {
+        try
+        {
+            using var response = await _httpClient.PostAsync(
+                requestUri: $"{_serverUrl}/api/notifications/cache",
+                content: null);
+
+            _ = response.EnsureSuccessStatusCode();
+        }
+        catch (Exception exception)
+        {
+            const string EventName = "Cache Updated API Notification";
+            var version = _currentVersion;
+            var arguments = new (string parameterName, object parameterValue)[]
+            {
+                (nameof(version), version),
+            };
+
+            _loggerService.Log(EventName, exception, LogLevel.Error, arguments);
+
+            await _slackService.LogError(
+                    eventName: EventName,
+                    message: exception.Message,
+                    exception: exception,
+                    cancellationToken: default);
         }
     }
 }

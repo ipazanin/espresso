@@ -2,6 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+using Espresso.Application.Services.Contracts;
 using Espresso.Common.Constants;
 using Espresso.Persistence.Database;
 using Microsoft.AspNetCore.Identity;
@@ -17,8 +18,8 @@ public class DashboardInit : IDashboardInit
     private readonly IEspressoIdentityDatabaseContext _espressoIdentityContext;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly UserManager<IdentityUser> _userManager;
+    private readonly INewsPortalImagesService _newsPortalImagesService;
     private readonly string _adminUserPassword;
-
     private readonly IEnumerable<string> _adminUserEmails = new[]
     {
         "ivan.pazanin1996@gmail.com",
@@ -35,22 +36,27 @@ public class DashboardInit : IDashboardInit
     /// <param name="espressoIdentityContext"></param>
     /// <param name="roleManager"></param>
     /// <param name="userManager"></param>
+    /// <param name="newsPortalImagesService"></param>
     /// <param name="adminUserPassword"></param>
     public DashboardInit(
         IEspressoIdentityDatabaseContext espressoIdentityContext,
         RoleManager<IdentityRole> roleManager,
         UserManager<IdentityUser> userManager,
+        INewsPortalImagesService newsPortalImagesService,
         string adminUserPassword)
     {
         _espressoIdentityContext = espressoIdentityContext;
         _roleManager = roleManager;
         _userManager = userManager;
+        _newsPortalImagesService = newsPortalImagesService;
         _adminUserPassword = adminUserPassword;
     }
 
-    public Task InitParserDeleter()
+    public async Task InitParserDeleter()
     {
-        return InitEspressoIdentityDatabase();
+        await InitEspressoIdentityDatabase();
+        await _newsPortalImagesService.DownloadImagesFromWebServer();
+        await _newsPortalImagesService.LoadImagesAndSaveToRootFolder();
     }
 
     private async Task InitEspressoIdentityDatabase()
@@ -60,7 +66,7 @@ public class DashboardInit : IDashboardInit
         {
             var adminRole = new IdentityRole(
                 roleName: RoleConstants.AdminRoleName);
-            await _roleManager.CreateAsync(role: adminRole);
+            _ = await _roleManager.CreateAsync(role: adminRole);
         }
 
         foreach (var adminUserEmail in _adminUserEmails)
@@ -81,7 +87,7 @@ public class DashboardInit : IDashboardInit
                 _ = await _userManager.CreateAsync(
                     user: adminUser,
                     password: _adminUserPassword);
-                await _userManager.AddToRoleAsync(adminUser, RoleConstants.AdminRoleName);
+                _ = await _userManager.AddToRoleAsync(adminUser, RoleConstants.AdminRoleName);
             }
         }
     }

@@ -1,0 +1,51 @@
+@page "/parsing-errors"
+@inherits RssFeedParsingErrorsBase
+@using Espresso.Application.DataTransferObjects
+
+<MudTable Items="@ParsingMessages" Hover="@false" Breakpoint="Breakpoint.Sm" Filter="@Filter" Height="600px">
+    <ToolBarContent>
+        <MudItem xs="4">
+            <MudText Typo="Typo.h6">Parsing Error Messages</MudText>
+        </MudItem>
+        <MudSpacer />
+        <MudTextField T="string" Placeholder="Search" Adornment="Adornment.Start" @bind-Value="@SearchString"
+            AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<ParsingErrorMessageDto, object>(x => x.Created)">
+                Time
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<ParsingErrorMessageDto, object>(x => x.LogLevel)">
+                Log Level
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<ParsingErrorMessageDto, object>(x => x.Message)">
+                Message
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<ParsingErrorMessageDto, object>(x => x.RssFeedId)">
+                Rss Feed
+            </MudTableSortLabel>
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Date Time">@context.Created.TimeOfDay</MudTd>
+        <MudTd DataLabel="Log Level">
+            <MudText Color="@GetColorFromLogLevel(context.LogLevel)">@context.LogLevel</MudText>
+        </MudTd>
+        <MudTd DataLabel="Message">
+            <MudText Color="@GetColorFromLogLevel(context.LogLevel)">@context.Message</MudText>
+        </MudTd>
+        <MudTd DataLabel="Rss Feed">
+            <MudLink Href="@($"rss-feeds/{context.RssFeedId}")">@context.RssFeedId</MudLink>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 10, 20, 50 }" />
+    </PagerContent>
+</MudTable>

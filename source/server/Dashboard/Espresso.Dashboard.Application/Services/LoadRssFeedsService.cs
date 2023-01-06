@@ -2,10 +2,12 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+using Espresso.Application.DataTransferObjects;
 using Espresso.Application.Extensions;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
 using Espresso.Dashboard.Application.Constants;
+using Espresso.Dashboard.Application.IServices;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.IServices;
@@ -25,6 +27,7 @@ public class LoadRssFeedsService : ILoadRssFeedsService
     };
 
     private readonly ILoggerService<LoadRssFeedsService> _loggerService;
+    private readonly IParsingMessagesService _parseWarningsService;
     private readonly HttpClient _httpClient;
     private readonly Channel<RssFeedItem> _rssFeedItemsChannel = Channel.CreateBounded<RssFeedItem>(s_boundedChannelOptions);
 
@@ -33,12 +36,15 @@ public class LoadRssFeedsService : ILoadRssFeedsService
     /// </summary>
     /// <param name="httpClientFactory"></param>
     /// <param name="loggerService"></param>
+    /// <param name="parseWarningsService"></param>
     public LoadRssFeedsService(
         IHttpClientFactory httpClientFactory,
-        ILoggerService<LoadRssFeedsService> loggerService)
+        ILoggerService<LoadRssFeedsService> loggerService,
+        IParsingMessagesService parseWarningsService)
     {
         _httpClient = httpClientFactory.CreateClient(HttpClientConstants.LoadRssFeedsHttpClientName);
         _loggerService = loggerService;
+        _parseWarningsService = parseWarningsService;
     }
 
     public ChannelReader<RssFeedItem> RssFeedItemsChannelReader => _rssFeedItemsChannel.Reader;
@@ -111,10 +117,16 @@ public class LoadRssFeedsService : ILoadRssFeedsService
             var arguments = new (string, object)[]
             {
                     (nameof(rssFeedUrl), rssFeedUrl),
-                    ("IsEnabled", rssFeed.NewsPortal?.IsEnabled.ToString() ?? "Empty"),
+                    ("IsEnabled", rssFeed.NewsPortal!.IsEnabled.ToString()),
             };
 
             _loggerService.Log(eventName, exception, LogLevel.Error, arguments);
+
+            var parsingErrorMessage = new ParsingErrorMessageDto(
+                logLevel: LogLevel.Error,
+                message: $"RssFeed loading exception: {exception.Message}",
+                rssFeedId: rssFeed.Id);
+            _parseWarningsService.PushMessage(parsingErrorMessage);
         }
     }
 

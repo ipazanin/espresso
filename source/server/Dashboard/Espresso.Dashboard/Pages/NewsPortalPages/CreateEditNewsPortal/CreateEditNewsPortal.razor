@@ -1,0 +1,88 @@
+@inherits CreateEditNewsPortalBase
+
+@if (NewsPortalDetailsResponse is null)
+{
+    <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+}
+else
+{
+    <MudForm @ref="Form" @bind-IsValid="@Success" @bind-Errors="@Errors">
+    <MudGrid Justify="Justify.SpaceEvenly">
+        <MudItem xs="12" sm="6">
+            <MudPaper Class="pa-4">
+                <MudText Typo="@Typo.h5" Style="margin: 5px">General</MudText>
+                <MudTextField T="string" Label="Name" Required="true" RequiredError="Name is required!"
+                    @bind-Value="@NewsPortalDetailsResponse.NewsPortal.Name" />
+                <MudTextField T="string" Label="Base Url" Required="true" RequiredError="Base Url is required!"
+                    @bind-Value="@NewsPortalDetailsResponse.NewsPortal.BaseUrl" />
+                <MudTextField T="string" Label="Icon Url" Required="true" RequiredError="Icon Url is required!"
+                    @bind-Value="@NewsPortalDetailsResponse.NewsPortal.IconUrl" Validation="@IconUrlValidation" />
+                <MudTextField T="DateTime" Label="Created At" ReadOnly="@true" Required="@false"
+                    Value="@NewsPortalDetailsResponse.NewsPortal.CreatedAt.Date" />
+                <MudSwitch @bind-Checked="@NewsPortalDetailsResponse.NewsPortal.IsNewOverride"
+                    Label="Is News Portal New Override" Required="false" Color="Color.Info" />
+                <MudSwitch @bind-Checked="@NewsPortalDetailsResponse.NewsPortal.IsEnabled" Label="Is Enabled"
+                    Color="Color.Info" />
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <MudPaper Class="pa-4">
+                <MudImage Alt="News Portal Image" Src="@($"/{NewsPortalDetailsResponse.NewsPortal.IconUrl}")" />
+            <MudFileUpload T="IBrowserFile" FilesChanged="OnUploadIcon">
+                <ButtonTemplate>
+                    <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Secondary"
+                        StartIcon="@Icons.Filled.CloudUpload" for="@context">
+                        Import Icon
+                    </MudButton>
+                </ButtonTemplate>
+            </MudFileUpload>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <MudPaper Class="pa-4">
+                <MudText Typo="@Typo.h5" Style="margin: 5px">Rss Feeds</MudText>
+                <MudTable Items="@NewsPortalDetailsResponse.RssFeeds" Hover="true" Breakpoint="Breakpoint.Sm">
+                    <HeaderContent>
+                        <MudTh>Url</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Url">
+                            <MudLink Href="@($"rss-feeds/{context.Id}")">@context.Url</MudLink>
+                        </MudTd>
+                    </RowTemplate>
+                </MudTable>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <MudPaper Class="pa-4">
+                <MudText Typo="@Typo.h5" Style="margin: 5px">Category</MudText>
+                <MudSelect T="int" Label="Category" Required="true" RequiredError="Category is required"
+                    @bind-Value="@NewsPortalDetailsResponse.NewsPortal.CategoryId">
+                    @foreach (var category in NewsPortalDetailsResponse.Categories)
+                        {
+                            <MudSelectItem Value="@(category.Id)">
+                                <MudText Style="@($"color: {category.Color};")">@category.Name</MudText>
+                            </MudSelectItem>
+                        }
+                    </MudSelect>
+                    <MudSelect T="int" Label="Region" Required="true" RequiredError="Region is required"
+                    @bind-Value="@NewsPortalDetailsResponse.NewsPortal.RegionId">
+                        @foreach (var region in NewsPortalDetailsResponse.Regions)
+                        {
+                            <MudSelectItem Value="@(region.Id)">
+                                <MudText>@region.Name</MudText>
+                            </MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudPaper Class="pa-4">
+                    <MudText Typo="@Typo.h5" Style="margin: 5px">Submit</MudText>
+                    <MudButton ButtonType="ButtonType.Button" OnClick="@OnSaveButtonClick" Disabled="@(!Success)"
+                    Style="margin-top: 10px" Variant="Variant.Outlined">Save</MudButton>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </MudForm>
+}
