@@ -13,4 +13,6 @@ public interface IParsingMessagesService
     public IEnumerable<ParsingErrorMessageDto> GetMessages(int rssFeedId);
 
     public IEnumerable<ParsingErrorMessageDto> GetMessages();
+
+    public void ClearMessages();
 }

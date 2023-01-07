@@ -20,17 +20,20 @@ public class RefreshDashboardCacheService : IRefreshDashboardCacheService
     private readonly IMemoryCache _memoryCache;
     private readonly INewsPortalImagesService _newsPortalImagesService;
     private readonly ILoggerService<RefreshDashboardCacheService> _loggerService;
+    private readonly IParsingMessagesService _parsingMessagesService;
 
     public RefreshDashboardCacheService(
         IEspressoDatabaseContext espressoDatabaseContext,
         IMemoryCache memoryCache,
         INewsPortalImagesService newsPortalImagesService,
-        ILoggerService<RefreshDashboardCacheService> loggerService)
+        ILoggerService<RefreshDashboardCacheService> loggerService,
+        IParsingMessagesService parsingMessagesService)
     {
         _espressoDatabaseContext = espressoDatabaseContext;
         _memoryCache = memoryCache;
         _newsPortalImagesService = newsPortalImagesService;
         _loggerService = loggerService;
+        _parsingMessagesService = parsingMessagesService;
     }
 
     public async Task RefreshCache()
@@ -85,5 +88,7 @@ public class RefreshDashboardCacheService : IRefreshDashboardCacheService
         _ = _memoryCache.Set(MemoryCacheConstants.ArticleKey, articlesDictionary);
         _ = _memoryCache.Set(MemoryCacheConstants.RssFeedKey, rssFeeds);
         _ = _memoryCache.Set(MemoryCacheConstants.CategoryKey, categories);
+
+        _parsingMessagesService.ClearMessages();
     }
 }

@@ -30,7 +30,6 @@ public class ParsingErrorMessageDto
     public override bool Equals(object? obj)
     {
         return obj is ParsingErrorMessageDto dto &&
-               Created.Equals(dto.Created) &&
                LogLevel == dto.LogLevel &&
                Message == dto.Message &&
                RssFeedId == dto.RssFeedId;
@@ -38,6 +37,6 @@ public class ParsingErrorMessageDto
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Created, LogLevel, Message, RssFeedId);
+        return HashCode.Combine(LogLevel, Message, RssFeedId);
     }
 }

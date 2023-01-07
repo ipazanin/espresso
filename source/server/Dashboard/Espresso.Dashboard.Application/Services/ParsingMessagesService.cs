@@ -61,4 +61,12 @@ public class ParsingMessagesService : IParsingMessagesService
                 .ToArray();
         }
     }
+
+    public void ClearMessages()
+    {
+        lock (_messagesLock)
+        {
+            _parseMessages.Clear();
+        }
+    }
 }
