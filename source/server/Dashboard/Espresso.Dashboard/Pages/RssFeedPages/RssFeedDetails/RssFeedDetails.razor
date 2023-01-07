@@ -2,6 +2,7 @@
 @inherits RssFeedDetailsBase
 @using Microsoft.Extensions.Logging
 @using Espresso.Dashboard.Pages.RssFeedPages.CreateEditRssFeed
+@using Espresso.Application.DataTransferObjects
 
 <MudContainer MaxWidth="MaxWidth.Large">
     <MudText Typo="@Typo.h3" Style="margin: 20px">Rss Feed Details</MudText>
@@ -9,26 +10,51 @@
     <CreateEditRssFeed @bind-Success="@Success" RssFeedDetails="@RssFeedDetails"
         OnSaveButtonClick="@OnSaveButtonClick" />
 
-    <MudPaper Class="pa-4">
-        <MudText Typo="@Typo.h5" Style="margin: 5px">Parsing Messages</MudText>
-
-        <MudGrid Justify="Justify.SpaceEvenly">
-
-            @foreach (var parsingMessage in ParsingMessages)
-            {
-                var color = parsingMessage.LogLevel switch
-                {
-                    LogLevel.Error or LogLevel.Critical => Color.Error,
-                    LogLevel.Warning => Color.Warning,
-                    _ => Color.Info,
-                };
-                <MudItem xs="12" sm="6">
-
-                    <MudPaper Style="padding: 5px;">
-                        <MudText Color="@color">@parsingMessage.Message</MudText>
-                    </MudPaper>
+        <MudTable Items="@ParsingMessages" Hover="@false" Breakpoint="Breakpoint.Sm" Filter="@FilterParsingMessages" Height="600px">
+            <ToolBarContent>
+                <MudItem xs="4">
+                    <MudText Typo="Typo.h6">Parsing Error Messages</MudText>
                 </MudItem>
-            }
-        </MudGrid>
-    </MudPaper>
+                <MudSpacer />
+                <MudTextField T="string" Placeholder="Search" Adornment="Adornment.Start" @bind-Value="@ParsingMessagesSearchString"
+                    AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<ParsingErrorMessageDto, object>(x => x.Created)">
+                        Time
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<ParsingErrorMessageDto, object>(x => x.LogLevel)">
+                        Log Level
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<ParsingErrorMessageDto, object>(x => x.Message)">
+                        Message
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<ParsingErrorMessageDto, object>(x => x.RssFeedId)">
+                        Rss Feed
+                    </MudTableSortLabel>
+                </MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Date Time">@context.Created.TimeOfDay</MudTd>
+                <MudTd DataLabel="Log Level">
+                    <MudText Color="@GetColorFromLogLevel(context.LogLevel)">@context.LogLevel</MudText>
+                </MudTd>
+                <MudTd DataLabel="Message">
+                    <MudText Color="@GetColorFromLogLevel(context.LogLevel)">@context.Message</MudText>
+                </MudTd>
+                <MudTd DataLabel="Rss Feed">
+                    <MudLink Href="@($"rss-feeds/{context.RssFeedId}")">@context.RssFeedId</MudLink>
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[] { 10, 20, 50 }" />
+            </PagerContent>
+        </MudTable>
 </MudContainer>

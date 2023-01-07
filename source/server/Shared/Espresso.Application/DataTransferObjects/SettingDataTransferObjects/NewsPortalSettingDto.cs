@@ -9,6 +9,12 @@ namespace Espresso.Application.DataTransferObjects.SettingDataTransferObjects;
 
 public sealed class NewsPortalSettingDto
 {
+    public NewsPortalSettingDto(double maxAgeOfNewNewsPortalInDays, int newNewsPortalsPositionInApp)
+    {
+        MaxAgeOfNewNewsPortalInDays = maxAgeOfNewNewsPortalInDays;
+        NewNewsPortalsPositionInApp = newNewsPortalsPositionInApp;
+    }
+
     private NewsPortalSettingDto()
     {
     }

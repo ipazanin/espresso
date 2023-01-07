@@ -16,6 +16,8 @@ namespace Espresso.Dashboard.Pages.DatabasePages;
 /// </summary>
 public class ExportImportDatabaseBase : ComponentBase
 {
+    private const int MaxAllowedFileSize = 8_000_000;
+
     protected string Errors { get; set; } = string.Empty;
 
     protected bool IsImportInProgress { get; private set; }
@@ -33,16 +35,16 @@ public class ExportImportDatabaseBase : ComponentBase
 
         Errors = string.Empty;
 
-        var fileStream = databaseFile.OpenReadStream();
-        var importDatabaseRequest = await JsonService.Deserialize<ImportDatabaseCommand>(fileStream, default);
-
-        if (importDatabaseRequest is null)
-        {
-            return;
-        }
-
         try
         {
+            var fileStream = databaseFile.OpenReadStream(maxAllowedSize: MaxAllowedFileSize);
+            var importDatabaseRequest = await JsonService.Deserialize<ImportDatabaseCommand>(fileStream, default);
+
+            if (importDatabaseRequest is null)
+            {
+                return;
+            }
+
             IsImportInProgress = true;
             StateHasChanged();
             _ = await sender.Send(importDatabaseRequest);

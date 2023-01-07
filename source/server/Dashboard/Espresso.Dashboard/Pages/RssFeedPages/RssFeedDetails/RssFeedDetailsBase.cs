@@ -10,6 +10,8 @@ using Espresso.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using MudBlazor;
 
 namespace Espresso.Dashboard.Pages.RssFeedPages.RssFeedDetails;
 
@@ -34,6 +36,8 @@ public class RssFeedDetailsBase : ComponentBase, IDisposable
     protected bool Success { get; set; }
 
     protected IEnumerable<ParsingErrorMessageDto> ParsingMessages { get; private set; } = Enumerable.Empty<ParsingErrorMessageDto>();
+
+    protected string ParsingMessagesSearchString { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets <see cref="Mediator"/> request sender.
@@ -96,6 +100,28 @@ public class RssFeedDetailsBase : ComponentBase, IDisposable
         _ = await sender.Send(command);
 
         NavigationManager.NavigateTo("rss-feeds");
+    }
+
+    protected bool FilterParsingMessages(ParsingErrorMessageDto parsingMessage)
+    {
+        if (string.IsNullOrWhiteSpace(ParsingMessagesSearchString))
+        {
+            return true;
+        }
+
+        return parsingMessage.LogLevel.ToString().Contains(ParsingMessagesSearchString, StringComparison.InvariantCultureIgnoreCase) ||
+                parsingMessage.Message.Contains(ParsingMessagesSearchString, StringComparison.InvariantCultureIgnoreCase) ||
+                parsingMessage.RssFeedId.ToString().Contains(ParsingMessagesSearchString, StringComparison.InvariantCultureIgnoreCase);
+    }
+
+    protected Color GetColorFromLogLevel(LogLevel logLevel)
+    {
+        return logLevel switch
+        {
+            LogLevel.Error or LogLevel.Critical => Color.Error,
+            LogLevel.Warning => Color.Warning,
+            _ => Color.Info,
+        };
     }
 
     private async Task RefreshParsedMessages()
