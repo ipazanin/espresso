@@ -4,7 +4,6 @@
 
 using Espresso.Domain.Entities;
 using Espresso.Domain.ValueObjects.RssFeedValueObjects;
-using Espresso.Persistence.DataSeed;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -50,13 +49,6 @@ public class RssFeedConfiguration : IEntityTypeConfiguration<RssFeed>
             .WithOne(rssFeedContentModifier => rssFeedContentModifier.RssFeed!)
             .HasForeignKey(rssFeedContentModifier => rssFeedContentModifier.RssFeedId)
             .OnDelete(DeleteBehavior.Cascade);
-
-        RssFeedDataSeed.Seed(builder);
-        RssFeedAmpConfigurationSeed.Seed(builder);
-        RssFeedSkipParseConfigurationSeed.Seed(builder);
-        RssFeedCategoryParseConfigurationSeed.Seed(builder);
-        RssFeedImageUrlParseConfigurationSeed.Seed(builder);
-        LocalRssFeedDataSeed.Seed(builder);
     }
 
     private static void ConfigureAmpConfiguration(EntityTypeBuilder<RssFeed> builder)
@@ -124,5 +116,9 @@ public class RssFeedConfiguration : IEntityTypeConfiguration<RssFeed>
         imageUrlParseConfiguration
             .Property(imageUrlConfig => imageUrlConfig.IsSavedInHtmlElementWithSrcAttribute)
             .HasDefaultValue(ImageUrlParseConfiguration.IsSavedInHtmlElementWithSrcAttributeDefaultValue);
+
+        imageUrlParseConfiguration
+            .Property(imageUrlConfig => imageUrlConfig.WebScrapeRequestType)
+            .HasDefaultValue(ImageUrlParseConfiguration.WebScrapeRequestTypeDefaultValue);
     }
 }

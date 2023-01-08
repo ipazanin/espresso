@@ -3,7 +3,6 @@
 // © 2022 Espresso News. All rights reserved.
 
 using Espresso.Domain.Entities;
-using Espresso.Persistence.DataSeed;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -29,7 +28,5 @@ public class RssFeedContentModifierConfiguration : IEntityTypeConfiguration<RssF
             .WithMany(rssFeed => rssFeed!.RssFeedContentModifiers)
             .HasForeignKey(rssFeedModifier => rssFeedModifier.RssFeedId)
             .OnDelete(DeleteBehavior.Cascade);
-
-        RssFeedContentModifierDataSeed.Seed(builder);
     }
 }

@@ -3,7 +3,6 @@
 // © 2022 Espresso News. All rights reserved.
 
 using Espresso.Domain.Entities;
-using Espresso.Persistence.DataSeed;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -53,8 +52,5 @@ public class NewsPortalConfiguration : IEntityTypeConfiguration<NewsPortal>
             .WithOne(newsPortalImage => newsPortalImage.NewsPortal)
             .HasForeignKey<NewsPortalImage>(newsPortalImage => newsPortalImage.NewsPortalId)
             .OnDelete(DeleteBehavior.Cascade);
-
-        NewsPortalDataSeed.SeedData(builder);
-        LocalNewsPortalDataSeed.SeedData(builder);
     }
 }

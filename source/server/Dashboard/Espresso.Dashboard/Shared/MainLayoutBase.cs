@@ -46,11 +46,18 @@ public class MainLayoutBase : LayoutComponentBase
             return;
         }
 
-        var isDarkModeStorageResult = await ProtectedLocalStorage.GetAsync<bool>(nameof(IsDarkMode));
-        if (isDarkModeStorageResult.Success)
+        try
         {
-            IsDarkMode = isDarkModeStorageResult.Value;
-            StateHasChanged();
+            var isDarkModeStorageResult = await ProtectedLocalStorage.GetAsync<bool>(nameof(IsDarkMode));
+            if (isDarkModeStorageResult.Success)
+            {
+                IsDarkMode = isDarkModeStorageResult.Value;
+                StateHasChanged();
+            }
+        }
+        catch
+        {
+            // if session got corrupted
         }
     }
 
