@@ -2,8 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using Espresso.Domain.Enums.RssFeedEnums;
-using Espresso.Domain.ValueObjects.RssFeedValueObjects;
+using Espresso.Domain.Entities;
 
 namespace Espresso.Dashboard.Application.IServices;
 
@@ -13,13 +12,11 @@ public interface IScrapeWebService
     ///
     /// </summary>
     /// <param name="articleUrl"></param>
-    /// <param name="requestType"></param>
-    /// <param name="imageUrlParseConfiguration"></param>
+    /// <param name="rssFeed"></param>
     /// <param name="cancellationToken"></param>
     /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
     public Task<string?> GetSrcAttributeFromElementDefinedByXPath(
         string? articleUrl,
-        RequestType requestType,
-        ImageUrlParseConfiguration imageUrlParseConfiguration,
+        RssFeed rssFeed,
         CancellationToken cancellationToken);
 }

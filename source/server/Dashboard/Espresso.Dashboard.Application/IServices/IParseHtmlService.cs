@@ -12,7 +12,7 @@ public interface IParseHtmlService
 
     public string? GetText(string? html);
 
-    public string? GetImageUrlFromSrcAttribute(
+    public string? GetImageUrlFromAttribute(
         HtmlNodeCollection elementTags,
         string attributeName);
 }

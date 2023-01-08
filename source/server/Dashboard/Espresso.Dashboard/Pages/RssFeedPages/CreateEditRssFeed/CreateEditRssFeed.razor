@@ -85,6 +85,15 @@ else
                     @bind-Checked="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.IsSavedInHtmlElementWithSrcAttribute"
                     Label="Is Saved In Html Element With Src Attribute" Required="false" Color="Color.Info" />
 
+                    <MudSelect T="RequestType" Label="Web Scrape Request Type" Required="true"
+                    RequiredError="Web Scrape Request Type is required"
+                    @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.WebScrapeRequestType">
+                        @foreach (var enumValue in Enum.GetValues<RequestType>())
+                        {
+                            <MudSelectItem Value="@(enumValue)" />
+                        }
+                    </MudSelect>
+
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" sm="6">

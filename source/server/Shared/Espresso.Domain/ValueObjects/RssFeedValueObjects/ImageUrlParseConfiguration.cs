@@ -27,6 +27,8 @@ public class ImageUrlParseConfiguration : ValueObject
 
     public const int JsonWebScrapePropertyNamesHasMaxLength = 300;
 
+    public const RequestType WebScrapeRequestTypeDefaultValue = RequestType.Browser;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="ImageUrlParseConfiguration"/> class.
     /// </summary>
@@ -38,15 +40,17 @@ public class ImageUrlParseConfiguration : ValueObject
     /// <param name="jsonWebScrapePropertyNames"></param>
     /// <param name="elementExtensionIndex"></param>
     /// <param name="isSavedInHtmlElementWithSrcAttribute"></param>
+    /// <param name="webScrapeRequestType"></param>
     public ImageUrlParseConfiguration(
         ImageUrlParseStrategy imageUrlParseStrategy,
         string imgElementXPath,
         string attributeName,
-        bool? shouldImageUrlBeWebScraped,
+        bool shouldImageUrlBeWebScraped,
         ImageUrlWebScrapeType imageUrlWebScrapeType,
         string? jsonWebScrapePropertyNames,
         int? elementExtensionIndex,
-        bool? isSavedInHtmlElementWithSrcAttribute)
+        bool? isSavedInHtmlElementWithSrcAttribute,
+        RequestType webScrapeRequestType)
     {
         ImageUrlParseStrategy = imageUrlParseStrategy;
         XPath = imgElementXPath;
@@ -56,6 +60,7 @@ public class ImageUrlParseConfiguration : ValueObject
         JsonWebScrapePropertyNames = jsonWebScrapePropertyNames;
         ElementExtensionIndex = elementExtensionIndex;
         IsSavedInHtmlElementWithSrcAttribute = isSavedInHtmlElementWithSrcAttribute;
+        WebScrapeRequestType = webScrapeRequestType;
     }
 
     /// <summary>
@@ -80,7 +85,7 @@ public class ImageUrlParseConfiguration : ValueObject
 
     public string AttributeName { get; private set; }
 
-    public bool? ShouldImageUrlBeWebScraped { get; private set; }
+    public bool ShouldImageUrlBeWebScraped { get; private set; }
 
     public ImageUrlWebScrapeType ImageUrlWebScrapeType { get; private set; }
 
@@ -92,6 +97,8 @@ public class ImageUrlParseConfiguration : ValueObject
     public int? ElementExtensionIndex { get; private set; }
 
     public bool? IsSavedInHtmlElementWithSrcAttribute { get; private set; }
+
+    public RequestType WebScrapeRequestType { get; set; }
 
     public IEnumerable<string> GetPropertyNames()
     {

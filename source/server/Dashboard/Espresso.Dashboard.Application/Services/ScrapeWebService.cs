@@ -2,15 +2,16 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+using Espresso.Application.DataTransferObjects;
 using Espresso.Application.Extensions;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
 using Espresso.Common.Services.Contracts;
 using Espresso.Dashboard.Application.Constants;
 using Espresso.Dashboard.Application.IServices;
+using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.IServices;
-using Espresso.Domain.ValueObjects.RssFeedValueObjects;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 
@@ -22,6 +23,7 @@ public class ScrapeWebService : IScrapeWebService
     private readonly IParseHtmlService _parseHtmlService;
     private readonly ILoggerService<ScrapeWebService> _loggerService;
     private readonly IJsonService _jsonService;
+    private readonly IParsingMessagesService _parsingMessagesService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ScrapeWebService"/> class.
@@ -30,32 +32,35 @@ public class ScrapeWebService : IScrapeWebService
     /// <param name="httpClientFactory"></param>
     /// <param name="loggerService"></param>
     /// <param name="jsonService"></param>
+    /// <param name="parsingMessagesService"></param>
     public ScrapeWebService(
         IParseHtmlService parseHtmlService,
         IHttpClientFactory httpClientFactory,
         ILoggerService<ScrapeWebService> loggerService,
-        IJsonService jsonService)
+        IJsonService jsonService,
+        IParsingMessagesService parsingMessagesService)
     {
         _httpClient = httpClientFactory.CreateClient(HttpClientConstants.ScrapeWebHttpClientName);
         _parseHtmlService = parseHtmlService;
         _loggerService = loggerService;
         _jsonService = jsonService;
+        _parsingMessagesService = parsingMessagesService;
     }
 
     public async Task<string?> GetSrcAttributeFromElementDefinedByXPath(
         string? articleUrl,
-        RequestType requestType,
-        ImageUrlParseConfiguration imageUrlParseConfiguration,
+        RssFeed rssFeed,
         CancellationToken cancellationToken)
     {
-        if (articleUrl is null || string.IsNullOrEmpty(imageUrlParseConfiguration.XPath))
+        if (articleUrl is null || string.IsNullOrEmpty(rssFeed.ImageUrlParseConfiguration.XPath))
         {
             return null;
         }
 
         var htmlString = await GetStringPageContent(
             articleUrl: articleUrl,
-            requestType: requestType,
+            requestType: rssFeed.ImageUrlParseConfiguration.WebScrapeRequestType,
+            rssFeed: rssFeed,
             cancellationToken: cancellationToken);
 
         if (htmlString is null)
@@ -65,22 +70,27 @@ public class ScrapeWebService : IScrapeWebService
 
         var htmlDocument = new HtmlDocument();
         htmlDocument.LoadHtml(htmlString);
-        var elementTags = htmlDocument.DocumentNode.SelectNodes(imageUrlParseConfiguration.XPath);
+        var elementTags = htmlDocument.DocumentNode.SelectNodes(rssFeed.ImageUrlParseConfiguration.XPath);
 
         if (elementTags is null)
         {
+            var parsingErrorMessage = new ParsingErrorMessageDto(
+                logLevel: LogLevel.Warning,
+                message: $"No HTML element found with xPath: {rssFeed.ImageUrlParseConfiguration.XPath}",
+                rssFeedId: rssFeed.Id);
+            _parsingMessagesService.PushMessage(parsingErrorMessage);
             return null;
         }
 
-        var imageUrl = imageUrlParseConfiguration.ImageUrlWebScrapeType switch
+        var imageUrl = rssFeed.ImageUrlParseConfiguration.ImageUrlWebScrapeType switch
         {
             ImageUrlWebScrapeType.JsonObjectInScriptElement => await GetImageUrlFromJsonObjectFromScriptTag(
                 elementTags: elementTags,
-                propertyNames: imageUrlParseConfiguration.GetPropertyNames(),
+                propertyNames: rssFeed.ImageUrlParseConfiguration.GetPropertyNames(),
                 cancellationToken: cancellationToken),
-            _ => _parseHtmlService.GetImageUrlFromSrcAttribute(
+            _ => _parseHtmlService.GetImageUrlFromAttribute(
                 elementTags: elementTags,
-                attributeName: imageUrlParseConfiguration.AttributeName),
+                attributeName: rssFeed.ImageUrlParseConfiguration.AttributeName),
         };
 
         return imageUrl;
@@ -137,6 +147,7 @@ public class ScrapeWebService : IScrapeWebService
     private async Task<string?> GetStringPageContent(
         string articleUrl,
         RequestType requestType,
+        RssFeed rssFeed,
         CancellationToken cancellationToken)
     {
         try
@@ -171,6 +182,12 @@ public class ScrapeWebService : IScrapeWebService
                 exception: exception,
                 articleUrl: articleUrl,
                 requestType: requestType);
+
+            var parsingErrorMessage = new ParsingErrorMessageDto(
+                logLevel: LogLevel.Warning,
+                message: $"Scraping Exception while downloading web page: {exception}",
+                rssFeedId: rssFeed.Id);
+            _parsingMessagesService.PushMessage(parsingErrorMessage);
             return null;
         }
     }

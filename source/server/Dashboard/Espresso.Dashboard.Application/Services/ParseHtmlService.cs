@@ -57,7 +57,7 @@ public partial class ParseHtmlService : IParseHtmlService
         return summary;
     }
 
-    public string? GetImageUrlFromSrcAttribute(
+    public string? GetImageUrlFromAttribute(
         HtmlNodeCollection elementTags,
         string attributeName)
     {

@@ -405,7 +405,7 @@ public class CreateArticlesService : ICreateArticlesService
             _loggerService.Log(eventName, exceptionMessage, LogLevel.Error, parameters);
 
             var parsingErrorMessage = new ParsingErrorMessageDto(
-                logLevel: LogLevel.Warning,
+                logLevel: LogLevel.Information,
                 message: $"Invalid Article: {exceptionMessage}",
                 rssFeedId: rssFeed.Id);
             _parsingMessagesService.PushMessage(parsingErrorMessage);
@@ -474,15 +474,13 @@ public class CreateArticlesService : ICreateArticlesService
                 break;
         }
 
-        var shouldImageBeWebScraped = rssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped
-            ?? string.IsNullOrEmpty(imageUrl);
+        var shouldImageBeWebScraped = rssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped;
 
         if (shouldImageBeWebScraped)
         {
             imageUrl = await _webScrapingService.GetSrcAttributeFromElementDefinedByXPath(
                 articleUrl: webUrl,
-                requestType: RequestType.Browser,
-                imageUrlParseConfiguration: rssFeed.ImageUrlParseConfiguration,
+                rssFeed: rssFeed,
                 cancellationToken: cancellationToken);
 
             var eventName = Event.ImageUrlWebScrapingData.GetDisplayName();
@@ -507,6 +505,6 @@ public class CreateArticlesService : ICreateArticlesService
             _parsingMessagesService.PushMessage(parsingErrorMessage);
         }
 
-        return AddBaseUrlToUrlFragment(imageUrl, rssFeed.NewsPortal?.BaseUrl);
+        return AddBaseUrlToUrlFragment(imageUrl, rssFeed.NewsPortal!.BaseUrl);
     }
 }
