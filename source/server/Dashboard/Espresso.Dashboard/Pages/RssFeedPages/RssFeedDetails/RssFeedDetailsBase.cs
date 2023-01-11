@@ -73,7 +73,10 @@ public class RssFeedDetailsBase : ComponentBase, IDisposable
 
         RssFeedDetails = await sender.Send(new GetRssFeedDetailsQuery(Id));
 
-        ParsingMessages = ParsingMessagesService.GetMessages(Id).ToArray();
+        ParsingMessages = ParsingMessagesService
+            .GetMessages(Id)
+            .OrderByDescending(message => message.Created)
+            .ToArray();
 
         _ = Task.Run(RefreshParsedMessages);
     }
@@ -130,7 +133,10 @@ public class RssFeedDetailsBase : ComponentBase, IDisposable
         {
             await Task.Delay(1000);
 
-            ParsingMessages = ParsingMessagesService.GetMessages(Id).ToArray();
+            ParsingMessages = ParsingMessagesService
+                .GetMessages(Id)
+                .OrderByDescending(message => message.Created)
+                .ToArray();
 
             await InvokeAsync(StateHasChanged);
         }

@@ -2,6 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+using System.Xml.Linq;
 using Espresso.Domain.Entities;
 
 namespace Espresso.Domain.Records;
@@ -20,7 +21,7 @@ public class RssFeedItem
 
     public DateTimeOffset PublishDateTime { get; set; }
 
-    public IEnumerable<string?>? ElementExtensions { get; set; }
+    public IEnumerable<XElement> ElementExtensions { get; set; } = Enumerable.Empty<XElement>();
 
     public RssFeed RssFeed { get; set; } = null!;
 }

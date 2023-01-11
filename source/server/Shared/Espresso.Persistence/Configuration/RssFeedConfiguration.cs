@@ -110,12 +110,12 @@ public class RssFeedConfiguration : IEntityTypeConfiguration<RssFeed>
             .HasDefaultValue(ImageUrlParseConfiguration.JsonWebScrapePropertyNamesDefaultValue);
 
         imageUrlParseConfiguration
-            .Property(imageUrlConfig => imageUrlConfig.ElementExtensionIndex)
-            .HasDefaultValue(ImageUrlParseConfiguration.ElementExtensionIndexDefaultValue);
+            .Property(imageUrlConfig => imageUrlConfig.ElementExtensionName)
+            .HasMaxLength(ImageUrlParseConfiguration.ElementExtensionNameMaxLength);
 
         imageUrlParseConfiguration
-            .Property(imageUrlConfig => imageUrlConfig.IsSavedInHtmlElementWithSrcAttribute)
-            .HasDefaultValue(ImageUrlParseConfiguration.IsSavedInHtmlElementWithSrcAttributeDefaultValue);
+            .Property(imageUrlConfig => imageUrlConfig.ElementExtensionAttributeName)
+            .HasMaxLength(ImageUrlParseConfiguration.ElementExtensionAttributeNameMaxLength);
 
         imageUrlParseConfiguration
             .Property(imageUrlConfig => imageUrlConfig.WebScrapeRequestType)

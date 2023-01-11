@@ -200,8 +200,6 @@ internal sealed partial class Startup
         services.AddScoped<IRefreshWebApiCache, RefreshWebApiCache>();
         services.AddScoped<INewsPortalImagesService>(serviceProvider => new NewsPortalImagesService(
             espressoDatabaseContext: serviceProvider.GetRequiredService<IEspressoDatabaseContext>(),
-            httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
-            serverUrl: string.Empty,
             folderRootPath: serviceProvider.GetRequiredService<IWebHostEnvironment>().WebRootPath));
     }
 

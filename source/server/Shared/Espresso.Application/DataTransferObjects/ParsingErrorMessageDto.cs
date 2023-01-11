@@ -1,4 +1,4 @@
-// ParsingErrorMessageDto.cs
+﻿// ParsingErrorMessageDto.cs
 //
 // © 2022 Espresso News. All rights reserved.
 
@@ -19,7 +19,7 @@ public class ParsingErrorMessageDto
         RssFeedId = rssFeedId;
     }
 
-    public DateTimeOffset Created { get; }
+    public DateTimeOffset Created { get; set; }
 
     public LogLevel LogLevel { get; }
 

@@ -13,6 +13,7 @@ using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
 using Microsoft.Extensions.Logging;
+using System.Xml.Linq;
 
 namespace Espresso.Dashboard.Application.Services;
 
@@ -104,7 +105,8 @@ public class LoadRssFeedsService : ILoadRssFeedsService
                     PublishDateTime = syndicationItem.PublishDate.DateTime,
                     ElementExtensions = syndicationItem
                         .ElementExtensions
-                        ?.Select(elementExtension => elementExtension?.GetObject<string?>()),
+                        ?.Select(e => e.GetObject<XElement>())
+                        ?? Enumerable.Empty<XElement>(),
                 };
 
                 await writer.WriteAsync(rssFeedItem, cancellationToken);

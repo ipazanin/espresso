@@ -236,8 +236,6 @@ internal sealed partial class Startup
         services.AddSingleton<IParsingMessagesService, ParsingMessagesService>();
         services.AddScoped<INewsPortalImagesService>(serviceProvider => new NewsPortalImagesService(
             espressoDatabaseContext: serviceProvider.GetRequiredService<IEspressoDatabaseContext>(),
-            httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
-            serverUrl: _dashboardConfiguration.AppConfiguration.ServerUrl,
             folderRootPath: serviceProvider.GetRequiredService<IWebHostEnvironment>().WebRootPath));
     }
 

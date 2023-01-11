@@ -29,6 +29,11 @@ public class ImageUrlParseConfiguration : ValueObject
 
     public const RequestType WebScrapeRequestTypeDefaultValue = RequestType.Browser;
 
+    public const int ElementExtensionNameMaxLength = 100;
+
+    public const int ElementExtensionAttributeNameMaxLength = 100;
+
+
     /// <summary>
     /// Initializes a new instance of the <see cref="ImageUrlParseConfiguration"/> class.
     /// </summary>
@@ -38,8 +43,8 @@ public class ImageUrlParseConfiguration : ValueObject
     /// <param name="shouldImageUrlBeWebScraped"></param>
     /// <param name="imageUrlWebScrapeType"></param>
     /// <param name="jsonWebScrapePropertyNames"></param>
-    /// <param name="elementExtensionIndex"></param>
-    /// <param name="isSavedInHtmlElementWithSrcAttribute"></param>
+    /// <param name="elementExtensionName"></param>
+    /// <param name="elementExtensionAttributeName"></param>
     /// <param name="webScrapeRequestType"></param>
     public ImageUrlParseConfiguration(
         ImageUrlParseStrategy imageUrlParseStrategy,
@@ -48,8 +53,8 @@ public class ImageUrlParseConfiguration : ValueObject
         bool shouldImageUrlBeWebScraped,
         ImageUrlWebScrapeType imageUrlWebScrapeType,
         string? jsonWebScrapePropertyNames,
-        int? elementExtensionIndex,
-        bool? isSavedInHtmlElementWithSrcAttribute,
+        string elementExtensionName,
+        string elementExtensionAttributeName,
         RequestType webScrapeRequestType)
     {
         ImageUrlParseStrategy = imageUrlParseStrategy;
@@ -58,8 +63,8 @@ public class ImageUrlParseConfiguration : ValueObject
         ShouldImageUrlBeWebScraped = shouldImageUrlBeWebScraped;
         ImageUrlWebScrapeType = imageUrlWebScrapeType;
         JsonWebScrapePropertyNames = jsonWebScrapePropertyNames;
-        ElementExtensionIndex = elementExtensionIndex;
-        IsSavedInHtmlElementWithSrcAttribute = isSavedInHtmlElementWithSrcAttribute;
+        ElementExtensionName = elementExtensionName;
+        ElementExtensionAttributeName = elementExtensionAttributeName;
         WebScrapeRequestType = webScrapeRequestType;
     }
 
@@ -71,11 +76,9 @@ public class ImageUrlParseConfiguration : ValueObject
     {
         XPath = null!;
         AttributeName = null!;
+        ElementExtensionName = null!;
+        ElementExtensionAttributeName = null!;
     }
-
-    public static int? ElementExtensionIndexDefaultValue => null;
-
-    public static bool? IsSavedInHtmlElementWithSrcAttributeDefaultValue => null;
 
     public static bool? ShouldImageUrlBeWebScrapedDefaultValue => null;
 
@@ -91,12 +94,9 @@ public class ImageUrlParseConfiguration : ValueObject
 
     public string? JsonWebScrapePropertyNames { get; private set; }
 
-    /// <summary>
-    /// Gets index of element extension containing Image Url.
-    /// </summary>
-    public int? ElementExtensionIndex { get; private set; }
+    public string ElementExtensionName { get; private set; }
 
-    public bool? IsSavedInHtmlElementWithSrcAttribute { get; private set; }
+    public string ElementExtensionAttributeName { get; private set; }
 
     public RequestType WebScrapeRequestType { get; set; }
 
@@ -116,5 +116,8 @@ public class ImageUrlParseConfiguration : ValueObject
         yield return ShouldImageUrlBeWebScraped;
         yield return ImageUrlWebScrapeType;
         yield return JsonWebScrapePropertyNames;
+        yield return ElementExtensionName;
+        yield return ElementExtensionAttributeName;
+        yield return WebScrapeRequestType;
     }
 }
