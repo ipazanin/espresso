@@ -14,6 +14,7 @@ using Espresso.Domain.Records;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
+using System.Xml.Linq;
 
 namespace Espresso.Dashboard.Application.Services;
 
@@ -406,7 +407,7 @@ public class CreateArticlesService : ICreateArticlesService
 
             var parsingErrorMessage = new ParsingErrorMessageDto(
                 logLevel: LogLevel.Information,
-                message: $"Invalid Article: {exceptionMessage}",
+                message: $"Article: {articleData.WebUrl} is invalid: {exceptionMessage}",
                 rssFeedId: rssFeed.Id);
             _parsingMessagesService.PushMessage(parsingErrorMessage);
 
@@ -426,12 +427,9 @@ public class CreateArticlesService : ICreateArticlesService
         string? itemContent,
         RssFeed rssFeed,
         string? webUrl,
-        IEnumerable<string?>? elementExtensions,
+        IEnumerable<XElement> elementExtensions,
         CancellationToken cancellationToken)
     {
-        var elementExtensionIndex = rssFeed.ImageUrlParseConfiguration.ElementExtensionIndex;
-        var isSavedInHtmlElementWithSrcAttribute = rssFeed.ImageUrlParseConfiguration.IsSavedInHtmlElementWithSrcAttribute;
-
         string? imageUrl;
         switch (rssFeed.ImageUrlParseConfiguration.ImageUrlParseStrategy)
         {
@@ -439,27 +437,12 @@ public class CreateArticlesService : ICreateArticlesService
                 imageUrl = _htmlParsingService.GetSrcAttributeFromFirstImgElement(itemContent);
                 break;
             case ImageUrlParseStrategy.FromElementExtension:
-                if (elementExtensionIndex is null || elementExtensions is null)
-                {
-                    imageUrl = null;
-                    break;
-                }
+                var elementExtension = elementExtensions
+                    .FirstOrDefault(e => e.Name.LocalName == rssFeed.ImageUrlParseConfiguration.ElementExtensionName);
 
-                if (elementExtensions.Count() <= elementExtensionIndex.Value)
-                {
-                    imageUrl = null;
-                    break;
-                }
-
-                if (isSavedInHtmlElementWithSrcAttribute == true)
-                {
-                    imageUrl = _htmlParsingService.GetSrcAttributeFromFirstImgElement(elementExtensions.ElementAt(elementExtensionIndex.Value));
-                }
-                else
-                {
-                    imageUrl = elementExtensions.ElementAt(elementExtensionIndex.Value);
-                }
-
+                imageUrl = elementExtension
+                    ?.Attribute(rssFeed.ImageUrlParseConfiguration.ElementExtensionAttributeName)
+                    ?.Value;
                 break;
             default:
                 if (itemLinks?.Count() > 1)

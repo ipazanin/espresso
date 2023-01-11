@@ -1,4 +1,4 @@
-// ParsingMessagesService.cs
+﻿// ParsingMessagesService.cs
 //
 // © 2022 Espresso News. All rights reserved.
 
@@ -28,12 +28,15 @@ public class ParsingMessagesService : IParsingMessagesService
             }
             else
             {
-                if (existingMessages.Contains(parsingErrorMessage))
+                var existingMessage = existingMessages.FirstOrDefault(message => message.Equals(parsingErrorMessage));
+
+                if (existingMessage is null)
                 {
+                    existingMessages.PushFront(parsingErrorMessage);
                     return;
                 }
 
-                existingMessages.PushFront(parsingErrorMessage);
+                existingMessage.Created = parsingErrorMessage.Created;
             }
         }
     }
@@ -47,7 +50,7 @@ public class ParsingMessagesService : IParsingMessagesService
                 return Enumerable.Empty<ParsingErrorMessageDto>();
             }
 
-            return warnings.ToArray();
+            return warnings;
         }
     }
 
@@ -57,8 +60,7 @@ public class ParsingMessagesService : IParsingMessagesService
         {
             return _parseMessages
                 .Values
-                .SelectMany(buffer => buffer)
-                .ToArray();
+                .SelectMany(buffer => buffer);
         }
     }
 

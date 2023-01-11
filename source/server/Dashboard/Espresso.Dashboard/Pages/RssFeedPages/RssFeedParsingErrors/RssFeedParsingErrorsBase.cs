@@ -1,4 +1,4 @@
-// RssFeedParsingErrorsBase.cs
+﻿// RssFeedParsingErrorsBase.cs
 //
 // © 2022 Espresso News. All rights reserved.
 
@@ -50,7 +50,10 @@ public class RssFeedParsingErrorsBase : ComponentBase, IDisposable
     /// <inheritdoc/>
     protected override void OnInitialized()
     {
-        ParsingMessages = ParsingMessagesService.GetMessages();
+        ParsingMessages = ParsingMessagesService
+            .GetMessages()
+            .OrderByDescending(message => message.Created)
+            .ToArray();
     }
 
     protected Color GetColorFromLogLevel(LogLevel logLevel)

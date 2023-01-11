@@ -62,8 +62,9 @@ public class CreateRssFeedBase : ComponentBase
             shouldImageUrlBeWebScraped: false,
             imageUrlWebScrapeType: ImageUrlWebScrapeType.Attribute,
             jsonWebScrapePropertyNames: string.Empty,
-            elementExtensionIndex: null,
-            isSavedInHtmlElementWithSrcAttribute: false);
+            elementExtensionName: string.Empty,
+            elementExtensionAttributeName: string.Empty,
+            webScrapeRequestType: RequestType.Browser);
         var skipParseConfiguration = new SkipParseConfigurationDto(numberOfSkips: 2);
 
         var rssFeedDto = new RssFeedDto(

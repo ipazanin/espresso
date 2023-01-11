@@ -1,4 +1,4 @@
-// ImageUrlParseConfigurationDto.cs
+﻿// ImageUrlParseConfigurationDto.cs
 //
 // © 2022 Espresso News. All rights reserved.
 
@@ -17,8 +17,9 @@ public class ImageUrlParseConfigurationDto
         bool shouldImageUrlBeWebScraped,
         ImageUrlWebScrapeType imageUrlWebScrapeType,
         string? jsonWebScrapePropertyNames,
-        int? elementExtensionIndex,
-        bool? isSavedInHtmlElementWithSrcAttribute)
+        string elementExtensionName,
+        string elementExtensionAttributeName,
+        RequestType webScrapeRequestType)
     {
         ImageUrlParseStrategy = imageUrlParseStrategy;
         XPath = xPath;
@@ -26,8 +27,9 @@ public class ImageUrlParseConfigurationDto
         ShouldImageUrlBeWebScraped = shouldImageUrlBeWebScraped;
         ImageUrlWebScrapeType = imageUrlWebScrapeType;
         JsonWebScrapePropertyNames = jsonWebScrapePropertyNames;
-        ElementExtensionIndex = elementExtensionIndex;
-        IsSavedInHtmlElementWithSrcAttribute = isSavedInHtmlElementWithSrcAttribute;
+        ElementExtensionName = elementExtensionName;
+        ElementExtensionAttributeName = elementExtensionAttributeName;
+        WebScrapeRequestType = webScrapeRequestType;
     }
 
     private ImageUrlParseConfigurationDto()
@@ -44,8 +46,8 @@ public class ImageUrlParseConfigurationDto
             ShouldImageUrlBeWebScraped = imageUrlParseConfiguration.ShouldImageUrlBeWebScraped,
             ImageUrlWebScrapeType = imageUrlParseConfiguration.ImageUrlWebScrapeType,
             JsonWebScrapePropertyNames = imageUrlParseConfiguration.JsonWebScrapePropertyNames,
-            ElementExtensionIndex = imageUrlParseConfiguration.ElementExtensionIndex,
-            IsSavedInHtmlElementWithSrcAttribute = imageUrlParseConfiguration.IsSavedInHtmlElementWithSrcAttribute,
+            ElementExtensionName = imageUrlParseConfiguration.ElementExtensionName,
+            ElementExtensionAttributeName = imageUrlParseConfiguration.ElementExtensionAttributeName,
             WebScrapeRequestType = imageUrlParseConfiguration.WebScrapeRequestType,
         };
     }
@@ -62,12 +64,9 @@ public class ImageUrlParseConfigurationDto
 
     public string? JsonWebScrapePropertyNames { get; set; }
 
-    /// <summary>
-    /// Gets index of element extension containing Image Url.
-    /// </summary>
-    public int? ElementExtensionIndex { get; set; }
+    public string ElementExtensionName { get; set; } = string.Empty;
 
-    public bool? IsSavedInHtmlElementWithSrcAttribute { get; set; }
+    public string ElementExtensionAttributeName { get; set; } = string.Empty;
 
     public RequestType WebScrapeRequestType { get; set; }
 
@@ -80,8 +79,8 @@ public class ImageUrlParseConfigurationDto
             shouldImageUrlBeWebScraped: ShouldImageUrlBeWebScraped,
             imageUrlWebScrapeType: ImageUrlWebScrapeType,
             jsonWebScrapePropertyNames: JsonWebScrapePropertyNames,
-            elementExtensionIndex: ElementExtensionIndex,
-            isSavedInHtmlElementWithSrcAttribute: IsSavedInHtmlElementWithSrcAttribute,
+            elementExtensionName: ElementExtensionName,
+            elementExtensionAttributeName: ElementExtensionAttributeName,
             webScrapeRequestType: WebScrapeRequestType);
     }
 }

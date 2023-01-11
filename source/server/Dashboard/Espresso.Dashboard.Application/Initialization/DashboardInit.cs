@@ -55,7 +55,6 @@ public class DashboardInit : IDashboardInit
     public async Task InitParserDeleter()
     {
         await InitEspressoIdentityDatabase();
-        await _newsPortalImagesService.DownloadImagesFromWebServer();
         await _newsPortalImagesService.LoadImagesAndSaveToRootFolder();
     }
 

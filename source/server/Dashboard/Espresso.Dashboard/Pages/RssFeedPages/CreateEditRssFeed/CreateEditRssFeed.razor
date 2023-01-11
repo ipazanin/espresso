@@ -74,16 +74,13 @@ else
                     </MudSelect>
 
                     <MudTextField T="string" Label="Json Web Scrape Property Names" Required="false"
-                    RequiredError="JsonWebScrapePropertyNames is required!"
                     @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.JsonWebScrapePropertyNames" />
 
-                    <MudNumericField T="int?" Label="Element Extension Index" Required="false"
-                    RequiredError="Element Extension Index is required!"
-                    @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ElementExtensionIndex" />
+                    <MudTextField T="string" Label="Element Extension Name" Required="false"
+                              @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ElementExtensionName" />
 
-                    <MudSwitch
-                    @bind-Checked="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.IsSavedInHtmlElementWithSrcAttribute"
-                    Label="Is Saved In Html Element With Src Attribute" Required="false" Color="Color.Info" />
+                    <MudTextField T="string" Label="Element Extension Attribute Name" Required="false"
+                              @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ElementExtensionAttributeName" />
 
                     <MudSelect T="RequestType" Label="Web Scrape Request Type" Required="true"
                     RequiredError="Web Scrape Request Type is required"
