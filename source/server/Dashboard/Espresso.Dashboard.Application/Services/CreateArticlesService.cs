@@ -440,7 +440,9 @@ public class CreateArticlesService : ICreateArticlesService
                 var elementExtension = elementExtensions
                     .FirstOrDefault(e => e.Name.LocalName == rssFeed.ImageUrlParseConfiguration.ElementExtensionName);
 
-                imageUrl = elementExtension
+                imageUrl = rssFeed.ImageUrlParseConfiguration.ElementExtensionAttributeName == string.Empty ?
+                    elementExtension?.Value :
+                    elementExtension
                     ?.Attribute(rssFeed.ImageUrlParseConfiguration.ElementExtensionAttributeName)
                     ?.Value;
                 break;
