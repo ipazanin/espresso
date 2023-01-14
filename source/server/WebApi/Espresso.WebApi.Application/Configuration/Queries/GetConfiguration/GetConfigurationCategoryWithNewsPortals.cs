@@ -42,6 +42,7 @@ public record GetConfigurationCategoryWithNewsPortals
             Position = category.Position,
             CategoryType = category.CategoryType,
             NewsPortals = category.NewsPortals
+                .Where(newsPortal => newsPortal.IsEnabled)
                 .Select(
                     GetConfigurationNewsPortal
                         .GetProjection(maxAgeOfNewNewsPortal)
