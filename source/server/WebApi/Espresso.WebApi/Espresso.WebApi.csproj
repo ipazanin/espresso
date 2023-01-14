@@ -18,6 +18,7 @@
   <!--Static Code Analysis-->
 
   <!--Project References-->
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'web-api-local' " />
   <ItemGroup>
     <ProjectReference Include="..\Espresso.WebApi.Application\Espresso.WebApi.Application.csproj" />
     <ProjectReference Include="..\..\Shared\Espresso.Common\Espresso.Common.csproj" />

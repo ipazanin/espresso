@@ -14,7 +14,6 @@ using Espresso.Domain.Records;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
-using System.Xml.Linq;
 
 namespace Espresso.Dashboard.Application.Services;
 
@@ -440,11 +439,17 @@ public class CreateArticlesService : ICreateArticlesService
                 var elementExtension = elementExtensions
                     .FirstOrDefault(e => e.Name.LocalName == rssFeed.ImageUrlParseConfiguration.ElementExtensionName);
 
-                imageUrl = rssFeed.ImageUrlParseConfiguration.ElementExtensionAttributeName == string.Empty ?
-                    elementExtension?.Value :
-                    elementExtension
-                    ?.Attribute(rssFeed.ImageUrlParseConfiguration.ElementExtensionAttributeName)
-                    ?.Value;
+                var value = rssFeed.ImageUrlParseConfiguration.ElementExtensionValueType switch
+                {
+                    XmlValueType.Attribute => elementExtension?.Attribute(rssFeed.ImageUrlParseConfiguration.ElementExtensionAttributeName)?.Value,
+                    XmlValueType.Value or _ => elementExtension?.Value,
+                };
+
+                imageUrl = rssFeed.ImageUrlParseConfiguration.ElementExtensionValueParseType switch
+                {
+                    ValueParseType.Html => _htmlParsingService.GetSrcAttributeFromFirstImgElement(value),
+                    ValueParseType.FullValue or _ => value,
+                };
                 break;
             default:
                 if (itemLinks?.Count() > 1)

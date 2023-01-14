@@ -18,6 +18,8 @@
   <!--Static Code Analysis-->
 
   <!--Project References-->
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'dashboard-local' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'dashboard-local-production' " />
   <ItemGroup>
     <ProjectReference Include="..\Espresso.Dashboard.Application\Espresso.Dashboard.Application.csproj" />
     <ProjectReference Include="..\..\Shared\Espresso.Common\Espresso.Common.csproj" />
