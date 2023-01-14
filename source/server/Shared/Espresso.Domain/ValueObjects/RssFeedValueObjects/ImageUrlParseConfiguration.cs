@@ -33,7 +33,6 @@ public class ImageUrlParseConfiguration : ValueObject
 
     public const int ElementExtensionAttributeNameMaxLength = 100;
 
-
     /// <summary>
     /// Initializes a new instance of the <see cref="ImageUrlParseConfiguration"/> class.
     /// </summary>
@@ -46,6 +45,8 @@ public class ImageUrlParseConfiguration : ValueObject
     /// <param name="elementExtensionName"></param>
     /// <param name="elementExtensionAttributeName"></param>
     /// <param name="webScrapeRequestType"></param>
+    /// <param name="elementExtensionValueParseType"></param>
+    /// <param name="elementExtensionValueType"></param>
     public ImageUrlParseConfiguration(
         ImageUrlParseStrategy imageUrlParseStrategy,
         string imgElementXPath,
@@ -55,7 +56,9 @@ public class ImageUrlParseConfiguration : ValueObject
         string? jsonWebScrapePropertyNames,
         string elementExtensionName,
         string elementExtensionAttributeName,
-        RequestType webScrapeRequestType)
+        RequestType webScrapeRequestType,
+        ValueParseType elementExtensionValueParseType,
+        XmlValueType elementExtensionValueType)
     {
         ImageUrlParseStrategy = imageUrlParseStrategy;
         XPath = imgElementXPath;
@@ -66,6 +69,8 @@ public class ImageUrlParseConfiguration : ValueObject
         ElementExtensionName = elementExtensionName;
         ElementExtensionAttributeName = elementExtensionAttributeName;
         WebScrapeRequestType = webScrapeRequestType;
+        ElementExtensionValueParseType = elementExtensionValueParseType;
+        ElementExtensionValueType = elementExtensionValueType;
     }
 
     /// <summary>
@@ -94,9 +99,13 @@ public class ImageUrlParseConfiguration : ValueObject
 
     public string? JsonWebScrapePropertyNames { get; private set; }
 
+    public XmlValueType ElementExtensionValueType { get; private set; }
+
     public string ElementExtensionName { get; private set; }
 
     public string ElementExtensionAttributeName { get; private set; }
+
+    public ValueParseType ElementExtensionValueParseType { get; private set; }
 
     public RequestType WebScrapeRequestType { get; set; }
 
@@ -119,5 +128,7 @@ public class ImageUrlParseConfiguration : ValueObject
         yield return ElementExtensionName;
         yield return ElementExtensionAttributeName;
         yield return WebScrapeRequestType;
+        yield return ElementExtensionValueType;
+        yield return ElementExtensionValueParseType;
     }
 }

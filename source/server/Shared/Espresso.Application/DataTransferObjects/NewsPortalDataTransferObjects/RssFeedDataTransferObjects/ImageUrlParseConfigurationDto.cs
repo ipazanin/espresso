@@ -19,7 +19,9 @@ public class ImageUrlParseConfigurationDto
         string? jsonWebScrapePropertyNames,
         string elementExtensionName,
         string elementExtensionAttributeName,
-        RequestType webScrapeRequestType)
+        RequestType webScrapeRequestType,
+        ValueParseType elementExtensionValueParseType,
+        XmlValueType elementExtensionValueType)
     {
         ImageUrlParseStrategy = imageUrlParseStrategy;
         XPath = xPath;
@@ -30,6 +32,8 @@ public class ImageUrlParseConfigurationDto
         ElementExtensionName = elementExtensionName;
         ElementExtensionAttributeName = elementExtensionAttributeName;
         WebScrapeRequestType = webScrapeRequestType;
+        ElementExtensionValueParseType = elementExtensionValueParseType;
+        ElementExtensionValueType = elementExtensionValueType;
     }
 
     private ImageUrlParseConfigurationDto()
@@ -49,6 +53,8 @@ public class ImageUrlParseConfigurationDto
             ElementExtensionName = imageUrlParseConfiguration.ElementExtensionName,
             ElementExtensionAttributeName = imageUrlParseConfiguration.ElementExtensionAttributeName,
             WebScrapeRequestType = imageUrlParseConfiguration.WebScrapeRequestType,
+            ElementExtensionValueParseType = imageUrlParseConfiguration.ElementExtensionValueParseType,
+            ElementExtensionValueType = imageUrlParseConfiguration.ElementExtensionValueType,
         };
     }
 
@@ -64,9 +70,13 @@ public class ImageUrlParseConfigurationDto
 
     public string? JsonWebScrapePropertyNames { get; set; }
 
+    public XmlValueType ElementExtensionValueType { get; set; }
+
     public string ElementExtensionName { get; set; } = string.Empty;
 
     public string ElementExtensionAttributeName { get; set; } = string.Empty;
+
+    public ValueParseType ElementExtensionValueParseType { get; set; }
 
     public RequestType WebScrapeRequestType { get; set; }
 
@@ -81,6 +91,8 @@ public class ImageUrlParseConfigurationDto
             jsonWebScrapePropertyNames: JsonWebScrapePropertyNames,
             elementExtensionName: ElementExtensionName,
             elementExtensionAttributeName: ElementExtensionAttributeName,
-            webScrapeRequestType: WebScrapeRequestType);
+            webScrapeRequestType: WebScrapeRequestType,
+            elementExtensionValueParseType: ElementExtensionValueParseType,
+            elementExtensionValueType: ElementExtensionValueType);
     }
 }

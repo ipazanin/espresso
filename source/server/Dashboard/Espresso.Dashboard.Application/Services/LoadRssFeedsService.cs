@@ -13,7 +13,6 @@ using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Records;
 using Microsoft.Extensions.Logging;
-using System.Xml.Linq;
 
 namespace Espresso.Dashboard.Application.Services;
 
@@ -153,11 +152,11 @@ public class LoadRssFeedsService : ILoadRssFeedsService
     private async Task<string> LoadCompressedFeedContent(RssFeed rssFeed, CancellationToken cancellationToken)
     {
         using var request = new HttpRequestMessage(HttpMethod.Get, rssFeed.Url);
-        request.AddBrowserHeadersToHttpRequestMessage();
+        _ = request.AddBrowserHeadersToHttpRequestMessage();
 
         using var response = await _httpClient.SendAsync(request, cancellationToken);
 
-        response.EnsureSuccessStatusCode();
+        _ = response.EnsureSuccessStatusCode();
 
         using var responseStream = await response.Content.ReadAsStreamAsync(cancellationToken);
         using var decompressedStream = new GZipStream(responseStream, CompressionMode.Decompress);
@@ -173,7 +172,7 @@ public class LoadRssFeedsService : ILoadRssFeedsService
 
         using var response = await _httpClient.SendAsync(request, cancellationToken);
 
-        response.EnsureSuccessStatusCode();
+        _ = response.EnsureSuccessStatusCode();
 
         var feedContent = await response.Content.ReadAsStringAsync(cancellationToken);
 

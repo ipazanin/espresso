@@ -8,30 +8,35 @@
 else
 {
     <MudForm @ref="Form" @bind-IsValid="@Success" @bind-Errors="@Errors">
-    <MudGrid Justify="Justify.SpaceEvenly">
-        <MudItem xs="12" sm="6">
-            <MudPaper Class="pa-4">
-                <MudText Typo="@Typo.h5" Style="margin: 5px">General</MudText>
-                <MudTextField T="string" Label="Url" Required="true" RequiredError="Url is required!"
-                    @bind-Value="@RssFeedDetails.RssFeed.Url" />
-                <MudSelect T="RequestType" Label="Request Type" Required="true" RequiredError="Request Type is required"
-                    @bind-Value="@RssFeedDetails.RssFeed.RequestType">
-                    @foreach (var enumValue in Enum.GetValues<RequestType>())
+        <MudGrid Justify="Justify.SpaceEvenly">
+            <MudItem xs="12" sm="6">
+                <MudPaper Class="pa-4">
+                    <MudText Typo="@Typo.h5" Style="margin: 5px">General</MudText>
+                    <MudTextField T="string" Label="Url" Required="true" RequiredError="Url is required!"
+                                  @bind-Value="@RssFeedDetails.RssFeed.Url" />
+                    <MudSelect T="RequestType" Label="Request Type" Required="true" RequiredError="Request Type is required"
+                               @bind-Value="@RssFeedDetails.RssFeed.RequestType">
+                        @foreach (var enumValue in Enum.GetValues<RequestType>())
                         {
                             <MudSelectItem Value="@(enumValue)" />
                         }
                     </MudSelect>
-                    <MudSelect T="int" Label="Category" Required="true" RequiredError="Category is required"
-                    @bind-Value="@RssFeedDetails.RssFeed.CategoryId">
-                        @foreach (var category in RssFeedDetails.Categories)
-                        {
-                            <MudSelectItem Value="@(category.Id)">
-                                <MudText Style="@($"color: {category.Color};")">@category.Name</MudText>
-                            </MudSelectItem>
-                        }
-                    </MudSelect>
+
+                    @if (RssFeedDetails.RssFeed.CategoryParseConfiguration.CategoryParseStrategy == CategoryParseStrategy.FromRssFeed)
+                    {
+                        <MudSelect T="int" Label="Category" Required="true" RequiredError="Category is required"
+                                   @bind-Value="@RssFeedDetails.RssFeed.CategoryId">
+                            @foreach (var category in RssFeedDetails.Categories)
+                            {
+                                <MudSelectItem Value="@(category.Id)">
+                                    <MudText Style="@($"color: {category.Color};")">@category.Name</MudText>
+                                </MudSelectItem>
+                            }
+                        </MudSelect>
+                    }
+
                     <MudSelect T="int" Label="Source" Required="true" RequiredError="Source is required"
-                    @bind-Value="@RssFeedDetails.RssFeed.NewsPortalId">
+                               @bind-Value="@RssFeedDetails.RssFeed.NewsPortalId">
                         @foreach (var newsPortal in RssFeedDetails.NewsPortals)
                         {
                             <MudSelectItem Value="@(newsPortal.Id)">
@@ -46,50 +51,82 @@ else
                     <MudText Typo="@Typo.h5" Style="margin: 5px">Image URL Parsing</MudText>
 
                     <MudSelect T="ImageUrlParseStrategy" Label="Image URL Parse Strategy" Required="true"
-                    RequiredError="Image URL Parse Strategy is required"
-                    @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ImageUrlParseStrategy">
+                               RequiredError="Image URL Parse Strategy is required"
+                               @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ImageUrlParseStrategy">
                         @foreach (var enumValue in Enum.GetValues<ImageUrlParseStrategy>())
                         {
                             <MudSelectItem Value="@(enumValue)" />
                         }
                     </MudSelect>
 
-                    <MudTextField T="string" Label="Image XPath" Required="false" RequiredError="XPath is required!"
-                    @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.XPath" />
+                    @if (RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ImageUrlParseStrategy == ImageUrlParseStrategy.FromElementExtension)
+                    {
+                        <MudTextField T="string" Label="Element Extension Name" Required="false"
+                                      @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ElementExtensionName" />
 
-                    <MudTextField T="string" Label="Attribute Name" Required="false"
-                    RequiredError="Attribute Name is required!"
-                    @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.AttributeName" />
+
+                        <MudSelect T="XmlValueType" Label="Element Extension Value Type" Required="true"
+                                   RequiredError="Image Url Web Scrape Type is required"
+                                   @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ElementExtensionValueType">
+                            @foreach (var enumValue in Enum.GetValues<XmlValueType>())
+                            {
+                                <MudSelectItem Value="@(enumValue)" />
+                            }
+                        </MudSelect>
+
+                        @if (RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ElementExtensionValueType == XmlValueType.Attribute)
+                        {
+                            <MudTextField T="string" Label="Element Extension Attribute Name" Required="false"
+                                          @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ElementExtensionAttributeName" />
+                        }
+
+                        <MudSelect T="ValueParseType" Label="Element Extension Value Parse Type" Required="true"
+                                   RequiredError="Image Url Web Scrape Type is required"
+                                   @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ElementExtensionValueParseType">
+                            @foreach (var enumValue in Enum.GetValues<ValueParseType>())
+                            {
+                                <MudSelectItem Value="@(enumValue)" />
+                            }
+                        </MudSelect>
+                    }
 
                     <MudSwitch @bind-Checked="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped"
-                    Label="Should Image Url Be Web Scraped" Required="false" Color="Color.Info" />
+                               Label="Should Image Url Be Web Scraped" Required="false" Color="Color.Info" />
 
-                    <MudSelect T="ImageUrlWebScrapeType" Label="Image Url Web Scrape Type" Required="true"
-                    RequiredError="Image Url Web Scrape Type is required"
-                    @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ImageUrlWebScrapeType">
-                        @foreach (var enumValue in Enum.GetValues<ImageUrlWebScrapeType>())
+                    @if (RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped)
+                    {
+                        <MudTextField T="string" Label="Image XPath" Required="false" RequiredError="XPath is required!"
+                                      @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.XPath" />
+
+                        <MudTextField T="string" Label="Attribute Name" Required="false"
+                                      RequiredError="Attribute Name is required!"
+                                      @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.AttributeName" />
+
+                        <MudSelect T="ImageUrlWebScrapeType" Label="Image Url Web Scrape Type" Required="true"
+                                   RequiredError="Image Url Web Scrape Type is required"
+                                   @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ImageUrlWebScrapeType">
+                            @foreach (var enumValue in Enum.GetValues<ImageUrlWebScrapeType>())
+                            {
+                                <MudSelectItem Value="@(enumValue)" />
+                            }
+                        </MudSelect>
+
+                        if (RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ImageUrlWebScrapeType == ImageUrlWebScrapeType.JsonObjectInScriptElement)
                         {
-                            <MudSelectItem Value="@(enumValue)" />
+                            <MudTextField T="string" Label="Json Web Scrape Property Names" Required="false"
+                                          @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.JsonWebScrapePropertyNames" />
                         }
-                    </MudSelect>
 
-                    <MudTextField T="string" Label="Json Web Scrape Property Names" Required="false"
-                    @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.JsonWebScrapePropertyNames" />
 
-                    <MudTextField T="string" Label="Element Extension Name" Required="false"
-                              @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ElementExtensionName" />
-
-                    <MudTextField T="string" Label="Element Extension Attribute Name" Required="false"
-                              @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ElementExtensionAttributeName" />
-
-                    <MudSelect T="RequestType" Label="Web Scrape Request Type" Required="true"
-                    RequiredError="Web Scrape Request Type is required"
-                    @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.WebScrapeRequestType">
-                        @foreach (var enumValue in Enum.GetValues<RequestType>())
-                        {
-                            <MudSelectItem Value="@(enumValue)" />
-                        }
-                    </MudSelect>
+                        <MudSelect T="RequestType" Label="Web Scrape Request Type" Required="true"
+                                   RequiredError="Web Scrape Request Type is required"
+                                   @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.WebScrapeRequestType">
+                            @foreach (var enumValue in Enum.GetValues<RequestType>())
+                            {
+                                <MudSelectItem Value="@(enumValue)" />
+                            }
+                        </MudSelect>
+                    }
 
                 </MudPaper>
             </MudItem>
@@ -97,8 +134,8 @@ else
                 <MudPaper Class="pa-4">
                     <MudText Typo="@Typo.h5" Style="margin: 5px">Category Parsing</MudText>
                     <MudSelect T="CategoryParseStrategy" Label="Category Parse Strategy" Required="true"
-                    RequiredError="Category Parse Strategy is required"
-                    @bind-Value="@RssFeedDetails.RssFeed.CategoryParseConfiguration.CategoryParseStrategy">
+                               RequiredError="Category Parse Strategy is required"
+                               @bind-Value="@RssFeedDetails.RssFeed.CategoryParseConfiguration.CategoryParseStrategy">
                         @foreach (var enumValue in Enum.GetValues<CategoryParseStrategy>())
                         {
                             <MudSelectItem Value="@(enumValue)" />
@@ -110,38 +147,43 @@ else
                 <MudPaper Class="pa-4">
                     <MudText Typo="@Typo.h5" Style="margin: 5px">Parsing</MudText>
                     <MudNumericField T="int?" Label="Number Of parsing cycles feed should be skipped"
-                    @bind-Value="@RssFeedDetails.RssFeed.SkipParseConfiguration.NumberOfSkips" />
+                                     @bind-Value="@RssFeedDetails.RssFeed.SkipParseConfiguration.NumberOfSkips" />
                 </MudPaper>
             </MudItem>
-            <MudItem xs="12">
-                <MudPaper Class="pa-4">
-                    <MudText Typo="@Typo.h5" Style="margin: 5px">RssFeed Categories</MudText>
 
-                    <MudGrid>
-                        @foreach (var rssFeedCategory in RssFeedDetails.RssFeedCategories)
-                        {
-                            <MudItem xs="12" sm="6">
-                                <MudTextField T="string" Label="URL Regex" Required="true"
-                            @bind-Value="@rssFeedCategory.UrlRegex" />
-                                <MudNumericField T="int" Label="URL Segment Index" Required="true"
-                            @bind-Value="@rssFeedCategory.UrlSegmentIndex" />
-                                <MudSelect T="int" Label="Category" Required="true" RequiredError="Category is required"
-                            @bind-Value="@rssFeedCategory.CategoryId">
-                                    @foreach (var category in RssFeedDetails.Categories)
-                                    {
-                                        <MudSelectItem Value="@(category.Id)">
-                                            <MudText Style="@($"color: {category.Color};")">@category.Name</MudText>
-                                        </MudSelectItem>
-                                    }
-                                </MudSelect>
-                                <MudIconButton Icon="@Icons.Material.Filled.Delete"
-                            OnClick="@(() => OnDeleteRssFeedCategoryButtonClicked(rssFeedCategory.Id))" />
-                            </MudItem>
-                        }
-                    </MudGrid>
-                    <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="@(OnAddRssFeedCategoryButtonClicked)" />
-                </MudPaper>
-            </MudItem>
+            @if (RssFeedDetails.RssFeed.CategoryParseConfiguration.CategoryParseStrategy == CategoryParseStrategy.FromUrl)
+            {
+                <MudItem xs="12">
+                    <MudPaper Class="pa-4">
+                        <MudText Typo="@Typo.h5" Style="margin: 5px">RssFeed Categories</MudText>
+
+                        <MudGrid>
+                            @foreach (var rssFeedCategory in RssFeedDetails.RssFeedCategories)
+                            {
+                                <MudItem xs="12" sm="6">
+                                    <MudTextField T="string" Label="URL Regex" Required="true"
+                                                  @bind-Value="@rssFeedCategory.UrlRegex" />
+                                    <MudNumericField T="int" Label="URL Segment Index" Required="true"
+                                                     @bind-Value="@rssFeedCategory.UrlSegmentIndex" />
+                                    <MudSelect T="int" Label="Category" Required="true" RequiredError="Category is required"
+                                               @bind-Value="@rssFeedCategory.CategoryId">
+                                        @foreach (var category in RssFeedDetails.Categories)
+                                        {
+                                            <MudSelectItem Value="@(category.Id)">
+                                                <MudText Style="@($"color: {category.Color};")">@category.Name</MudText>
+                                            </MudSelectItem>
+                                        }
+                                    </MudSelect>
+                                    <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                                   OnClick="@(() => OnDeleteRssFeedCategoryButtonClicked(rssFeedCategory.Id))" />
+                                </MudItem>
+                            }
+                        </MudGrid>
+                        <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="@(OnAddRssFeedCategoryButtonClicked)" />
+                    </MudPaper>
+                </MudItem>
+            }
+
             <MudItem xs="12">
                 <MudPaper Class="pa-4">
                     <MudText Typo="@Typo.h5" Style="margin: 5px">RssFeed Content Modifiers</MudText>
@@ -150,37 +192,37 @@ else
                         {
                             <MudItem xs="12" sm="6">
                                 <MudTextField T="string" Label="Value To Replace" Required="true"
-                            @bind-Value="@rssFeedContentModifier.SourceValue" />
+                                              @bind-Value="@rssFeedContentModifier.SourceValue" />
                                 <MudTextField T="String" Label="Replacement Value" Required="true"
-                            @bind-Value="@rssFeedContentModifier.ReplacementValue" />
+                                              @bind-Value="@rssFeedContentModifier.ReplacementValue" />
 
                                 <MudNumericField T="int" Label="Order Of execution Index" Required="true"
-                            @bind-Value="@rssFeedContentModifier.OrderIndex" />
+                                                 @bind-Value="@rssFeedContentModifier.OrderIndex" />
 
                                 <MudIconButton Icon="@Icons.Material.Filled.Delete"
-                            OnClick="@(() => OnDeleteRssFeedContentModifierButtonClicked(rssFeedContentModifier.Id))" />
+                                               OnClick="@(() => OnDeleteRssFeedContentModifierButtonClicked(rssFeedContentModifier.Id))" />
                             </MudItem>
                         }
                     </MudGrid>
                     <MudIconButton Icon="@Icons.Material.Filled.Add"
-                    OnClick="@(OnAddRssFeedContentModifierButtonClicked)" />
+                                   OnClick="@(OnAddRssFeedContentModifierButtonClicked)" />
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" sm="6">
                 <MudPaper Class="pa-4">
                     <MudText Typo="@Typo.h5" Style="margin: 5px">Amp</MudText>
                     <MudSwitch @bind-Checked="@RssFeedDetails.RssFeed.AmpConfiguration.HasAmpArticles"
-                    Label="Has Amp Articles" Required="false" Color="Color.Info" />
+                               Label="Has Amp Articles" Required="false" Color="Color.Info" />
 
                     <MudTextField T="string" Label="Amp URL Template" Required="false"
-                    @bind-Value="@RssFeedDetails.RssFeed.AmpConfiguration.TemplateUrl" />
+                                  @bind-Value="@RssFeedDetails.RssFeed.AmpConfiguration.TemplateUrl" />
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" sm="6">
                 <MudPaper Class="pa-4">
                     <MudText Typo="@Typo.h5" Style="margin: 5px">Submit</MudText>
                     <MudButton ButtonType="ButtonType.Button" OnClick="@OnSaveButtonClick" Disabled="@(!Success)"
-                    Style="margin-top: 10px" Variant="Variant.Outlined">Save</MudButton>
+                               Style="margin-top: 10px" Variant="Variant.Outlined">Save</MudButton>
                 </MudPaper>
             </MudItem>
         </MudGrid>

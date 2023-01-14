@@ -64,7 +64,9 @@ public class CreateRssFeedBase : ComponentBase
             jsonWebScrapePropertyNames: string.Empty,
             elementExtensionName: string.Empty,
             elementExtensionAttributeName: string.Empty,
-            webScrapeRequestType: RequestType.Browser);
+            webScrapeRequestType: RequestType.Browser,
+            elementExtensionValueParseType: ValueParseType.FullValue,
+            elementExtensionValueType: XmlValueType.Value);
         var skipParseConfiguration = new SkipParseConfigurationDto(numberOfSkips: 2);
 
         var rssFeedDto = new RssFeedDto(

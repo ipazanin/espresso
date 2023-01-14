@@ -15,6 +15,23 @@ public class MainLayoutBase : LayoutComponentBase
 
     protected MudTheme Theme { get; } = new();
 
+#pragma warning disable S125 // Sections of code should not be commented out
+#pragma warning disable SA1515 // Single-line comment should be preceded by blank line
+#pragma warning disable SA1005 // Single line comments should begin with single space
+    //{
+    //    Palette = new()
+    //    {
+    //        Primary = "#d7545a",
+    //        Secondary = "#1d1d1b66",
+    //        AppbarBackground = "#d7545a",
+    //    },
+    //    PaletteDark = new(),
+    //    LayoutProperties = new(),
+    //};
+#pragma warning restore S125 // Sections of code should not be commented out
+#pragma warning restore SA1005 // Single line comments should begin with single space
+#pragma warning restore SA1515 // Single-line comment should be preceded by blank line
+
     protected bool IsDarkMode { get; set; }
 
     [CascadingParameter]
