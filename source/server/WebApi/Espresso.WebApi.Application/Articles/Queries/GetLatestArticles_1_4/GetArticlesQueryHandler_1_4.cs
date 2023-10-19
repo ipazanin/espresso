@@ -67,7 +67,7 @@ public class GetArticlesQueryHandler_1_4 :
 
         var newsPortalDtos = newsPortals
             .Where(
-                predicate: NewsPortal.GetLatestSugestedNewsPortalsPredicate(
+                predicate: NewsPortal.GetLatestSuggestedNewsPortalsPredicate(
                     newsPortalIds: newsPortalIds,
                     categoryIds: categoryIds,
                     maxAgeOfNewNewsPortal: _settingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal)

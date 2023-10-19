@@ -7,7 +7,7 @@ using Espresso.Persistence.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Espresso.Dashboard.Application.NewsPortalImage.Queries.GetNewsPortalImage;
+namespace Espresso.Dashboard.Application.NewsPortalImages.Queries.GetNewsPortalImage;
 
 public class GetNewsPortalImageQueryHandler : IRequestHandler<GetNewsPortalImageQuery, GetNewsPortalImageQueryResponse>
 {

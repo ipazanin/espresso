@@ -2,12 +2,13 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+using Espresso.Domain.Infrastructure;
 using Espresso.Domain.ValueObjects.ArticleValueObjects;
 
 #pragma warning disable RCS1170
 namespace Espresso.Domain.Entities;
 
-public class Article
+public class Article : IEntity<Guid>
 {
     public const int SummaryMaxLength = 2000;
     public const int TitleMaxLength = 500;

@@ -5,7 +5,7 @@
 using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects;
 using MediatR;
 
-namespace Espresso.Dashboard.Application.NewsPortalImage.Commands.ImportNewsPortalImage;
+namespace Espresso.Dashboard.Application.NewsPortalImages.Commands.ImportNewsPortalImage;
 
 public class ImportNewsPortalImageCommand : IRequest
 {

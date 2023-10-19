@@ -4,9 +4,11 @@
 
 #pragma warning disable RCS1170
 
+using Espresso.Domain.Infrastructure;
+
 namespace Espresso.Domain.Entities;
 
-public class RssFeedContentModifier
+public class RssFeedContentModifier : IEntity<int>
 {
     public const int SourceValueMaxLength = 1000;
     public const int ReplacementValueMaxLength = 1000;

@@ -90,7 +90,7 @@ public class GetCategoryArticlesQueryHandler : IRequestHandler<GetCategoryArticl
 
         var newsPortalDtos = newsPortals
             .Where(
-                NewsPortal.GetCategorySugestedNewsPortalsPredicate(
+                NewsPortal.GetCategorySuggestedNewsPortalsPredicate(
                     newsPortalIds: newsPortalIds,
                     categoryId: request.CategoryId,
                     regionId: request.RegionId,

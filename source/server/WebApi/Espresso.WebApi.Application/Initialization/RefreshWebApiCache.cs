@@ -19,6 +19,7 @@ public class RefreshWebApiCache : IRefreshWebApiCache
     private readonly IMemoryCache _memoryCache;
     private readonly IArticleLoaderService _articleLoaderService;
     private readonly INewsPortalImagesService _newsPortalImagesService;
+    private readonly ICountryImagesService _countryImagesService;
     private readonly ILoggerService<IRefreshWebApiCache> _loggerService;
 
     public RefreshWebApiCache(
@@ -26,12 +27,14 @@ public class RefreshWebApiCache : IRefreshWebApiCache
         IMemoryCache memoryCache,
         IArticleLoaderService articleLoaderService,
         INewsPortalImagesService newsPortalImagesService,
+        ICountryImagesService countryImagesService,
         ILoggerService<IRefreshWebApiCache> loggerService)
     {
         _espressoDatabaseContext = espressoDatabaseContext;
         _memoryCache = memoryCache;
         _articleLoaderService = articleLoaderService;
         _newsPortalImagesService = newsPortalImagesService;
+        _countryImagesService = countryImagesService;
         _loggerService = loggerService;
     }
 
@@ -41,6 +44,7 @@ public class RefreshWebApiCache : IRefreshWebApiCache
 
         await RefreshMemoryCacheValues();
         await _newsPortalImagesService.LoadImagesAndSaveToRootFolder();
+        await _countryImagesService.LoadImagesAndSaveToRootFolder();
 
         stopwatch.Stop();
 
@@ -58,10 +62,10 @@ public class RefreshWebApiCache : IRefreshWebApiCache
     private async Task RefreshMemoryCacheValues()
     {
         var regions = await _espressoDatabaseContext
-                  .Regions
-                  .Include(region => region.NewsPortals)
-                  .AsNoTracking()
-                  .ToListAsync();
+            .Regions
+            .Include(region => region.NewsPortals)
+            .AsNoTracking()
+            .ToListAsync();
 
         _memoryCache.Set(
             key: MemoryCacheConstants.RegionKey,

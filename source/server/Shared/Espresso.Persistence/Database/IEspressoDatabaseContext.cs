@@ -73,6 +73,10 @@ public interface IEspressoDatabaseContext
 
     public DbSet<NewsPortalImage> NewsPortalImages { get; }
 
+    public DbSet<Country> Countries { get; }
+
+    public DbSet<CountryImage> CountryImages { get; }
+
     /// <summary>
     /// Gets object that provides access to database related information and operations for this context.
     /// </summary>

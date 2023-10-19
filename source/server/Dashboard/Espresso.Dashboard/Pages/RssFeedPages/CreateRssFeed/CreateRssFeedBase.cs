@@ -77,8 +77,8 @@ public class CreateRssFeedBase : ComponentBase
             categoryParseConfiguration: categoryParseConfiguration,
             imageUrlParseConfiguration: imageUrlParseConfiguration,
             skipParseConfiguration: skipParseConfiguration,
-            newsPortalId: newsPortals.NewsPortals.Items.First().NewsPortal.Id,
-            categoryId: categories.CategoriesPagedList.Items.First().Id);
+            newsPortalId: newsPortals.NewsPortals.Items[0].NewsPortal.Id,
+            categoryId: categories.CategoriesPagedList.Items[0].Id);
 
         RssFeedDetails = new GetRssFeedDetailsQueryResponse(
             rssFeed: rssFeedDto,

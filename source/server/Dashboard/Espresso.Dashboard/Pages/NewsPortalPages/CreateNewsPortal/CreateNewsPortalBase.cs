@@ -6,7 +6,8 @@ using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects;
 using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects.RssFeedDataTransferObjects;
 using Espresso.Application.DataTransferObjects.PagingDataTransferObjects;
 using Espresso.Dashboard.Application.Categories.Queries.GetCategories;
-using Espresso.Dashboard.Application.NewsPortalImage.Queries.GetNewsPortalImage;
+using Espresso.Dashboard.Application.Countries.Queries.GetCountries;
+using Espresso.Dashboard.Application.NewsPortalImages.Queries.GetNewsPortalImage;
 using Espresso.Dashboard.Application.NewsPortals.Commands.CreateNewsPortal;
 using Espresso.Dashboard.Application.NewsPortals.Queries.GetNewsPortalDetails;
 using Espresso.Dashboard.Application.Regions.Queries.GetRegions;
@@ -54,6 +55,7 @@ public class CreateNewsPortalBase : ComponentBase
 
         var categories = await sender.Send(new GetCategoriesQuery(pagingParameters));
         var regions = await sender.Send(new GetRegionsQuery(pagingParameters));
+        var countries = await sender.Send(new GetCountriesQuery(pagingParameters));
 
         var newsPortal = new NewsPortalDto(
             id: default,
@@ -63,14 +65,16 @@ public class CreateNewsPortalBase : ComponentBase
             isNewOverride: default,
             createdAt: DateTimeOffset.UtcNow,
             isEnabled: true,
-            categoryId: categories.CategoriesPagedList.Items.First().Id,
-            regionId: regions.RegionsPagedList.Items.First().Id);
+            categoryId: categories.CategoriesPagedList.Items[0].Id,
+            regionId: regions.RegionsPagedList.Items[0].Id,
+            countryId: Country.DefaultCountryId);
 
         NewsPortalDetailsQueryResponse = new GetNewsPortalDetailsQueryResponse(
             newsPortal: newsPortal,
             categories: categories.CategoriesPagedList.Items,
             regions: regions.RegionsPagedList.Items,
-            rssFeeds: Enumerable.Empty<RssFeedDto>());
+            rssFeeds: Enumerable.Empty<RssFeedDto>(),
+            countries: countries.CountriesPagedList.Items);
 
         NewsPortalImageResponse = new(null);
     }
@@ -91,8 +95,8 @@ public class CreateNewsPortalBase : ComponentBase
         var sender = scope.ServiceProvider.GetRequiredService<ISender>();
 
         var command = new CreateNewsPortalCommand(
-            NewsPortalDetailsQueryResponse.NewsPortal,
-            NewsPortalImageResponse.NewsPortalImage);
+            newsPortal: NewsPortalDetailsQueryResponse.NewsPortal,
+            newsPortalImage: NewsPortalImageResponse.NewsPortalImage);
         _ = await sender.Send(command);
 
         NavigationManager.NavigateTo("news-portals");

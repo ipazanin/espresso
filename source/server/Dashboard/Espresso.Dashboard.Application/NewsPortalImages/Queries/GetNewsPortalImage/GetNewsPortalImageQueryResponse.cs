@@ -2,9 +2,14 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+
+// GetNewsPortalImageQueryResponse.cs
+//
+// © 2022 Espresso News. All rights reserved.
+
 using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects;
 
-namespace Espresso.Dashboard.Application.NewsPortalImage.Queries.GetNewsPortalImage;
+namespace Espresso.Dashboard.Application.NewsPortalImages.Queries.GetNewsPortalImage;
 
 public class GetNewsPortalImageQueryResponse
 {

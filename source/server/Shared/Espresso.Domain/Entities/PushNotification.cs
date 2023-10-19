@@ -3,12 +3,13 @@
 // © 2022 Espresso News. All rights reserved.
 
 using System.Linq.Expressions;
+using Espresso.Domain.Infrastructure;
 
 #pragma warning disable RCS1170
 
 namespace Espresso.Domain.Entities;
 
-public class PushNotification
+public class PushNotification : IEntity<Guid>
 {
     public const int InternalNameMaxLength = 1000;
     public const int TitleMaxLength = 1000;

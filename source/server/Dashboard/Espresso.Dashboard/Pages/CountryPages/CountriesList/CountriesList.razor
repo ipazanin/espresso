@@ -1,0 +1,54 @@
+@page "/news-portals"
+@inherits CountriesListBase
+@using Espresso.Application.DataTransferObjects.CountryDataTransferObjects
+@using Espresso.Dashboard.Application.Countries.Queries.GetCountries
+
+
+<MudTable ServerData="@GetTableData" Dense="@false" Hover="@false" Bordered="@false" FixedHeader="@true"
+    FixedFooter="@true" Height="600px" Striped="@true" @ref="Table">
+    <ToolBarContent>
+        <MudGrid>
+            <MudItem xs="4">
+                <MudText Typo="Typo.h6">News Portals</MudText>
+            </MudItem>
+            <MudTextField T="string" ValueChanged="@(OnSearch)" Placeholder="Search" Adornment="Adornment.Start"
+                AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0">
+            </MudTextField>
+            <MudItem xs="4">
+                <MudButton Href="news-portals/create" ButtonType="ButtonType.Button" Variant="Variant.Filled"
+                    Color="Color.Primary">Create</MudButton>
+            </MudItem>
+        </MudGrid>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh></MudTh>
+        <MudTh>
+            <MudTableSortLabel SortLabel="@(nameof(CountryDto.Name))" T="CountryDto">
+                Name
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh></MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Image">
+            <MudImage Alt="Country Image" Src="@($"/{context.RelativeImageUrl}")" />
+        </MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd>
+            <MudButton Variant="@Variant.Filled" Color="Color.Primary"
+                Href="@($"news-portals/{context.Id}")">
+                Details
+            </MudButton>
+        </MudTd>
+        <MudTd>
+            <MudButton Variant="@Variant.Filled" Color="Color.Secondary"
+                    OnClick="@(async () => await DeleteCountry(context.Id, context.Name))">
+                Delete
+            </MudButton>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 10, 20, 50 }" />
+    </PagerContent>
+</MudTable>

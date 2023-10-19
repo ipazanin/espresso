@@ -28,6 +28,9 @@ public class NewsPortalConfiguration : IEntityTypeConfiguration<NewsPortal>
         _ = builder.Property(newsPortal => newsPortal.IsEnabled)
             .HasDefaultValue(NewsPortal.IsEnabledDefaultValue);
 
+        _ = builder.Property(newsPortal => newsPortal.CountryId)
+            .HasDefaultValue(Country.DefaultCountryId);
+
         _ = builder.HasMany(newsPortal => newsPortal.RssFeeds)
             .WithOne(rssFeed => rssFeed.NewsPortal!)
             .HasForeignKey(rssFeed => rssFeed.NewsPortalId)
@@ -52,5 +55,9 @@ public class NewsPortalConfiguration : IEntityTypeConfiguration<NewsPortal>
             .WithOne(newsPortalImage => newsPortalImage.NewsPortal)
             .HasForeignKey<NewsPortalImage>(newsPortalImage => newsPortalImage.NewsPortalId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(newsPortal => newsPortal.Country)
+            .WithMany(country => country.NewsPortals)
+            .HasForeignKey(newsPortal => newsPortal.CountryId);
     }
 }

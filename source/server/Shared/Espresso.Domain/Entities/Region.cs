@@ -4,12 +4,13 @@
 
 using System.Linq.Expressions;
 using Espresso.Domain.Enums.RegionEnums;
+using Espresso.Domain.Infrastructure;
 
 #pragma warning disable RCS1170
 
 namespace Espresso.Domain.Entities;
 
-public class Region
+public class Region : IEntity<int>
 {
     public const int RegionNameHasMaxLength = 100;
     public const int RegionSubtitleHasMaxLength = 100;

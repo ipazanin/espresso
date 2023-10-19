@@ -3,6 +3,7 @@
 // © 2022 Espresso News. All rights reserved.
 
 using System.Linq.Expressions;
+using Espresso.Domain.Infrastructure;
 
 #pragma warning disable RCS1170 // Use read-only auto-implemented property.
 
@@ -11,7 +12,7 @@ namespace Espresso.Domain.Entities;
 /// <summary>
 /// Represents news source, for example www.index.hr.
 /// </summary>
-public class NewsPortal
+public class NewsPortal : IEntity<int>
 {
     public const bool IsEnabledDefaultValue = true;
 
@@ -33,6 +34,7 @@ public class NewsPortal
     /// <param name="categoryId"></param>
     /// <param name="regionId"></param>
     /// <param name="isEnabled"></param>
+    /// <param name="countryId"></param>
     public NewsPortal(
         int id,
         string name,
@@ -42,7 +44,8 @@ public class NewsPortal
         DateTimeOffset createdAt,
         int categoryId,
         int regionId,
-        bool isEnabled)
+        bool isEnabled,
+        int countryId)
     {
         Id = id;
         Name = name;
@@ -53,6 +56,7 @@ public class NewsPortal
         CategoryId = categoryId;
         RegionId = regionId;
         IsEnabled = isEnabled;
+        CountryId = countryId;
     }
 
     /// <summary>
@@ -126,7 +130,11 @@ public class NewsPortal
 
     public NewsPortalImage? NewsPortalImage { get; private set; }
 
-    public static Expression<Func<NewsPortal, bool>> GetCategorySugestedNewsPortalsPredicate(
+    public int CountryId { get; private set; }
+
+    public Country? Country { get; private set; }
+
+    public static Expression<Func<NewsPortal, bool>> GetCategorySuggestedNewsPortalsPredicate(
         IEnumerable<int>? newsPortalIds,
         int categoryId,
         int? regionId,
@@ -137,11 +145,10 @@ public class NewsPortal
             newsPortalIds != null && !newsPortalIds.Contains(newsPortal.Id) &&
             categoryId.Equals(newsPortal.CategoryId) &&
             (regionId == null || newsPortal.RegionId == regionId) &&
-            (
-                newsPortal.IsNewOverride ?? newsPortal.CreatedAt > newNewsPortalMinDate);
+            (newsPortal.IsNewOverride ?? newsPortal.CreatedAt > newNewsPortalMinDate);
     }
 
-    public static Expression<Func<NewsPortal, bool>> GetLatestSugestedNewsPortalsPredicate(
+    public static Expression<Func<NewsPortal, bool>> GetLatestSuggestedNewsPortalsPredicate(
         IEnumerable<int>? newsPortalIds,
         IEnumerable<int>? categoryIds,
         TimeSpan maxAgeOfNewNewsPortal)
@@ -152,7 +159,6 @@ public class NewsPortal
             newsPortalIds != null && !newsPortalIds.Contains(newsPortal.Id) &&
             (categoryIds == null || categoryIds.Contains(newsPortal.CategoryId)) &&
             (!newsPortal.CategoryId.Equals((int)Enums.CategoryEnums.CategoryId.Local)) &&
-            (
-                newsPortal.IsNewOverride ?? newsPortal.CreatedAt > newNewsPortalMinDate);
+            (newsPortal.IsNewOverride ?? newsPortal.CreatedAt > newNewsPortalMinDate);
     }
 }

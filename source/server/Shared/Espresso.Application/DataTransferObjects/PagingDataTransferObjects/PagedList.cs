@@ -16,7 +16,7 @@ public class PagedList<T>
     /// <param name="items">Paging items.</param>
     /// <param name="pagingMetadata">Paging metadata.</param>
     public PagedList(
-        IEnumerable<T> items,
+        IReadOnlyList<T> items,
         PagingMetadata pagingMetadata)
     {
         Items = items;
@@ -26,7 +26,7 @@ public class PagedList<T>
     /// <summary>
     /// Gets paging items.
     /// </summary>
-    public IEnumerable<T> Items { get; }
+    public IReadOnlyList<T> Items { get; }
 
     /// <summary>
     /// Gets paging metadata.

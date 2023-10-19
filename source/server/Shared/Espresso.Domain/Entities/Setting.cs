@@ -2,6 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+using Espresso.Domain.Infrastructure;
 using Espresso.Domain.ValueObjects.SettingsValueObjects;
 
 namespace Espresso.Domain.Entities;
@@ -9,7 +10,7 @@ namespace Espresso.Domain.Entities;
 /// <summary>
 /// Represents application settings.
 /// </summary>
-public class Setting
+public class Setting : IEntity<int>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="Setting"/> class.

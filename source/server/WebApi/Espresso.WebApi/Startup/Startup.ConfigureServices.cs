@@ -201,6 +201,9 @@ internal sealed partial class Startup
         services.AddScoped<INewsPortalImagesService>(serviceProvider => new NewsPortalImagesService(
             espressoDatabaseContext: serviceProvider.GetRequiredService<IEspressoDatabaseContext>(),
             folderRootPath: serviceProvider.GetRequiredService<IWebHostEnvironment>().WebRootPath));
+        services.AddScoped<ICountryImagesService>(serviceProvider => new CountryImagesService(
+            espressoDatabaseContext: serviceProvider.GetRequiredService<IEspressoDatabaseContext>(),
+            folderRootPath: serviceProvider.GetRequiredService<IWebHostEnvironment>().WebRootPath));
     }
 
     /// <summary>

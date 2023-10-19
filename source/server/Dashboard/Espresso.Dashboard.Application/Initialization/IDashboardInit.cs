@@ -10,5 +10,5 @@ public interface IDashboardInit
     ///
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-    public Task InitParserDeleter();
+    public Task InitializeDashboard();
 }

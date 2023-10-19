@@ -4,9 +4,11 @@
 
 #pragma warning disable RCS1170 // Use read-only auto-implemented property.
 
+using Espresso.Domain.Infrastructure;
+
 namespace Espresso.Domain.Entities;
 
-public class NewsPortalImage
+public class NewsPortalImage : IEntity<int>
 {
     public NewsPortalImage(
         int id,

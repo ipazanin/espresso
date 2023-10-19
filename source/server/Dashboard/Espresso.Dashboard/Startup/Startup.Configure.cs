@@ -25,7 +25,7 @@ internal sealed partial class Startup
             namedArguments: new (string, object)[] { ("version", _dashboardConfiguration.AppConfiguration.Version) });
 
 #pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
-        memoryCacheInit.InitParserDeleter().GetAwaiter().GetResult();
+        memoryCacheInit.InitializeDashboard().GetAwaiter().GetResult();
 #pragma warning restore VSTHRD002 // Avoid problematic synchronous waits
 
         if (_dashboardConfiguration.AppConfiguration.AppEnvironment == AppEnvironment.Local)

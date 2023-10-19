@@ -74,6 +74,15 @@ else
                             </MudSelectItem>
                         }
                     </MudSelect>
+                    <MudSelect T="int" Label="Country" Required="true" RequiredError="Country is required"
+                        @bind-Value="@NewsPortalDetailsResponse.NewsPortal.CountryId">
+                        @foreach (var country in NewsPortalDetailsResponse.Countries)
+                        {
+                            <MudSelectItem Value="@(country.Id)">
+                                <MudText>@country.Name</MudText>
+                            </MudSelectItem>
+                        }
+                    </MudSelect>
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" sm="6">

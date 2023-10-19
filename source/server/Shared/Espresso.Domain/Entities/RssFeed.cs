@@ -3,13 +3,14 @@
 // © 2022 Espresso News. All rights reserved.
 
 using Espresso.Domain.Enums.RssFeedEnums;
+using Espresso.Domain.Infrastructure;
 using Espresso.Domain.ValueObjects.RssFeedValueObjects;
 
 #pragma warning disable RCS1170
 
 namespace Espresso.Domain.Entities;
 
-public class RssFeed
+public class RssFeed : IEntity<int>
 {
     public const int UrlMaxLength = 300;
 

@@ -4,12 +4,13 @@
 
 using System.Linq.Expressions;
 using Espresso.Domain.Enums.CategoryEnums;
+using Espresso.Domain.Infrastructure;
 
 #pragma warning disable RCS1170
 
 namespace Espresso.Domain.Entities;
 
-public class Category
+public class Category : IEntity<int>
 {
     public const int NameHasMaxLenght = 20;
 

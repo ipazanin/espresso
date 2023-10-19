@@ -175,7 +175,7 @@ public class GetGroupedLatestArticlesQueryHandler : IRequestHandler<GetGroupedLa
 
         var newsPortalDtos = newsPortals
             .Where(
-                predicate: NewsPortal.GetLatestSugestedNewsPortalsPredicate(
+                predicate: NewsPortal.GetLatestSuggestedNewsPortalsPredicate(
                     newsPortalIds: newsPortalIds,
                     categoryIds: categoryIds,
                     maxAgeOfNewNewsPortal: _settingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal)

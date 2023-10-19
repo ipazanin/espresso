@@ -113,6 +113,7 @@ internal sealed partial class Startup
             roleManager: serviceProvider.GetRequiredService<RoleManager<IdentityRole>>(),
             userManager: serviceProvider.GetRequiredService<UserManager<IdentityUser>>(),
             newsPortalImagesService: serviceProvider.GetRequiredService<INewsPortalImagesService>(),
+            countryImagesService: serviceProvider.GetRequiredService<ICountryImagesService>(),
             adminUserPassword: _dashboardConfiguration.AppConfiguration.AdminUserPassword));
         services.AddSingleton(_ => _dashboardConfiguration);
 
@@ -235,6 +236,9 @@ internal sealed partial class Startup
         services.AddScoped<IRefreshDashboardCacheService, RefreshDashboardCacheService>();
         services.AddSingleton<IParsingMessagesService, ParsingMessagesService>();
         services.AddScoped<INewsPortalImagesService>(serviceProvider => new NewsPortalImagesService(
+            espressoDatabaseContext: serviceProvider.GetRequiredService<IEspressoDatabaseContext>(),
+            folderRootPath: serviceProvider.GetRequiredService<IWebHostEnvironment>().WebRootPath));
+        services.AddScoped<ICountryImagesService>(serviceProvider => new CountryImagesService(
             espressoDatabaseContext: serviceProvider.GetRequiredService<IEspressoDatabaseContext>(),
             folderRootPath: serviceProvider.GetRequiredService<IWebHostEnvironment>().WebRootPath));
     }

@@ -82,6 +82,10 @@ public class EspressoDatabaseContext : DbContext, IEspressoDatabaseContext
 
     public DbSet<RssFeedContentModifier> RssFeedContentModifiers { get; init; } = null!;
 
+    public DbSet<Country> Countries { get; init; } = null!;
+
+    public DbSet<CountryImage> CountryImages { get; init; } = null!;
+
     /// <inheritdoc/>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

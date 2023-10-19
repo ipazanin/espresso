@@ -1,0 +1,14 @@
+@page "/news-portals/{Id:int}"
+@inherits CountryDetailsBase
+@using Espresso.Dashboard.Pages.CountryPages.CreateEditCountry
+
+<MudContainer MaxWidth="MaxWidth.Large">
+    <MudText Typo="@Typo.h3" Style="margin: 20px">News Portal Details</MudText>
+
+    @if (Country is not null && CountryImage is not null)
+    {
+        <CreateEditCountry @bind-Success="@Success" Country="@Country"
+            CountryImage="@CountryImage" OnSaveButtonClick="@OnSaveButtonClick" />
+    }
+
+</MudContainer>

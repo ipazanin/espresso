@@ -51,7 +51,8 @@ public static class ArticleUtility
             createdAt: default,
             categoryId: default,
             regionId: default,
-            isEnabled: true);
+            isEnabled: true,
+            countryId: Country.DefaultCountryId);
 
         var article = new Article(
             id: id,

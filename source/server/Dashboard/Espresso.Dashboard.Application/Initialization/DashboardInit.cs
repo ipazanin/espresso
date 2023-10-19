@@ -19,6 +19,7 @@ public class DashboardInit : IDashboardInit
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly UserManager<IdentityUser> _userManager;
     private readonly INewsPortalImagesService _newsPortalImagesService;
+    private readonly ICountryImagesService _countryImagesService;
     private readonly string _adminUserPassword;
     private readonly IEnumerable<string> _adminUserEmails = new[]
     {
@@ -37,25 +38,29 @@ public class DashboardInit : IDashboardInit
     /// <param name="roleManager"></param>
     /// <param name="userManager"></param>
     /// <param name="newsPortalImagesService"></param>
+    /// <param name="countryImagesService"></param>
     /// <param name="adminUserPassword"></param>
     public DashboardInit(
         IEspressoIdentityDatabaseContext espressoIdentityContext,
         RoleManager<IdentityRole> roleManager,
         UserManager<IdentityUser> userManager,
         INewsPortalImagesService newsPortalImagesService,
+        ICountryImagesService countryImagesService,
         string adminUserPassword)
     {
         _espressoIdentityContext = espressoIdentityContext;
         _roleManager = roleManager;
         _userManager = userManager;
         _newsPortalImagesService = newsPortalImagesService;
+        _countryImagesService = countryImagesService;
         _adminUserPassword = adminUserPassword;
     }
 
-    public async Task InitParserDeleter()
+    public async Task InitializeDashboard()
     {
         await InitEspressoIdentityDatabase();
         await _newsPortalImagesService.LoadImagesAndSaveToRootFolder();
+        await _countryImagesService.LoadImagesAndSaveToRootFolder();
     }
 
     private async Task InitEspressoIdentityDatabase()

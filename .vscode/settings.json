@@ -63,7 +63,6 @@
   "eslint.options": {
     "configFile": ".eslintrc"
   },
-  "eslint.packageManager": "npm",
   "eslint.validate": ["javascript", "typescript"],
   "eslint.workingDirectories": ["./source/client"],
   "files.associations": {
@@ -81,11 +80,9 @@
   },
   "omnisharp.autoStart": true,
   "omnisharp.enableEditorConfigSupport": true,
-  "omnisharp.enableImportCompletion": true,
   "omnisharp.enableMsBuildLoadProjectsOnDemand": false,
   "omnisharp.enableRoslynAnalyzers": true,
   "omnisharp.projectLoadTimeout": 360,
-  "omnisharp.defaultLaunchSolution": "Espresso.sln",
   "omnisharp.enableAsyncCompletion": true,
   "omnisharp.useEditorFormattingSettings": true,
   "omnisharp.organizeImportsOnFormat": true,
@@ -106,5 +103,8 @@
     "**/.hg/store/**": true,
     "**/obj": true,
     "**/bin": true
-  }
+  },
+  "dotnet.defaultSolution": "Espresso.sln",
+  "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
+  "sarif-viewer.connectToGithubCodeScanning": "off"
 }

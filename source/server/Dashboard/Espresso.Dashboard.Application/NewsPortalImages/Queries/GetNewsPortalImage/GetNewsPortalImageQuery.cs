@@ -4,7 +4,7 @@
 
 using MediatR;
 
-namespace Espresso.Dashboard.Application.NewsPortalImage.Queries.GetNewsPortalImage;
+namespace Espresso.Dashboard.Application.NewsPortalImages.Queries.GetNewsPortalImage;
 
 public class GetNewsPortalImageQuery : IRequest<GetNewsPortalImageQueryResponse>
 {

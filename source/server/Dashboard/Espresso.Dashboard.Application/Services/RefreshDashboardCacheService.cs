@@ -19,6 +19,7 @@ public class RefreshDashboardCacheService : IRefreshDashboardCacheService
     private readonly IEspressoDatabaseContext _espressoDatabaseContext;
     private readonly IMemoryCache _memoryCache;
     private readonly INewsPortalImagesService _newsPortalImagesService;
+    private readonly ICountryImagesService _countryImagesService;
     private readonly ILoggerService<RefreshDashboardCacheService> _loggerService;
     private readonly IParsingMessagesService _parsingMessagesService;
 
@@ -26,12 +27,14 @@ public class RefreshDashboardCacheService : IRefreshDashboardCacheService
         IEspressoDatabaseContext espressoDatabaseContext,
         IMemoryCache memoryCache,
         INewsPortalImagesService newsPortalImagesService,
+        ICountryImagesService countryImagesService,
         ILoggerService<RefreshDashboardCacheService> loggerService,
         IParsingMessagesService parsingMessagesService)
     {
         _espressoDatabaseContext = espressoDatabaseContext;
         _memoryCache = memoryCache;
         _newsPortalImagesService = newsPortalImagesService;
+        _countryImagesService = countryImagesService;
         _loggerService = loggerService;
         _parsingMessagesService = parsingMessagesService;
     }
@@ -43,6 +46,7 @@ public class RefreshDashboardCacheService : IRefreshDashboardCacheService
         await RefreshMemoryCacheFromDatabase();
 
         await _newsPortalImagesService.LoadImagesAndSaveToRootFolder();
+        await _countryImagesService.LoadImagesAndSaveToRootFolder();
 
         stopwatch.Stop();
 

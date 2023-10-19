@@ -7,7 +7,7 @@ using Espresso.Persistence.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Espresso.Dashboard.Application.NewsPortalImage.Commands.ImportNewsPortalImage;
+namespace Espresso.Dashboard.Application.NewsPortalImages.Commands.ImportNewsPortalImage;
 
 public class ImportNewsPortalImageCommandHandler : IRequestHandler<ImportNewsPortalImageCommand>
 {
@@ -28,9 +28,7 @@ public class ImportNewsPortalImageCommandHandler : IRequestHandler<ImportNewsPor
     public async Task<Unit> Handle(ImportNewsPortalImageCommand request, CancellationToken cancellationToken)
     {
         if (request.NewsPortalImage is null)
-        {
             return Unit.Value;
-        }
 
         var newsPortalImageExistsInDatabase = await _espressoDatabaseContext
             .NewsPortalImages
@@ -38,9 +36,7 @@ public class ImportNewsPortalImageCommandHandler : IRequestHandler<ImportNewsPor
 
         var newsPortalImage = request.NewsPortalImage.CreateNewsPortalImage();
         if (newsPortalImageExistsInDatabase)
-        {
             _espressoDatabaseContext.NewsPortalImages.Update(newsPortalImage);
-        }
         else
         {
             _espressoDatabaseContext.NewsPortalImages.Add(newsPortalImage);

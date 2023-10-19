@@ -3,6 +3,7 @@
 // © 2022 Espresso News. All rights reserved.
 
 using Espresso.Application.DataTransferObjects.CategoryDataTransferObjects;
+using Espresso.Application.DataTransferObjects.CountryDataTransferObjects;
 using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects;
 using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects.RssFeedDataTransferObjects;
 using Espresso.Application.DataTransferObjects.SettingDataTransferObjects;
@@ -13,13 +14,15 @@ public class ExportDatabaseQueryResponse
 {
     public ExportDatabaseQueryResponse(
         SettingDto setting,
-        IEnumerable<NewsPortalDto> newsPortals,
-        IEnumerable<RegionDto> regions,
-        IEnumerable<CategoryDto> categories,
-        IEnumerable<RssFeedDto> rssFeeds,
-        IEnumerable<RssFeedContentModifierDto> rssFeedContentModifiers,
-        IEnumerable<RssFeedCategoryDto> rssFeedCategories,
-        IEnumerable<NewsPortalImageDto> newsPortalImages)
+        IReadOnlyList<NewsPortalDto> newsPortals,
+        IReadOnlyList<RegionDto> regions,
+        IReadOnlyList<CategoryDto> categories,
+        IReadOnlyList<RssFeedDto> rssFeeds,
+        IReadOnlyList<RssFeedContentModifierDto> rssFeedContentModifiers,
+        IReadOnlyList<RssFeedCategoryDto> rssFeedCategories,
+        IReadOnlyList<NewsPortalImageDto> newsPortalImages,
+        IReadOnlyList<CountryDto> countries,
+        IReadOnlyList<CountryImageDto> countryImages)
     {
         Setting = setting;
         NewsPortals = newsPortals;
@@ -29,21 +32,27 @@ public class ExportDatabaseQueryResponse
         RssFeedContentModifiers = rssFeedContentModifiers;
         RssFeedCategories = rssFeedCategories;
         NewsPortalImages = newsPortalImages;
+        Countries = countries;
+        CountryImages = countryImages;
     }
 
     public SettingDto Setting { get; }
 
-    public IEnumerable<NewsPortalDto> NewsPortals { get; }
+    public IReadOnlyList<NewsPortalDto> NewsPortals { get; }
 
-    public IEnumerable<RegionDto> Regions { get; }
+    public IReadOnlyList<RegionDto> Regions { get; }
 
-    public IEnumerable<CategoryDto> Categories { get; }
+    public IReadOnlyList<CategoryDto> Categories { get; }
 
-    public IEnumerable<RssFeedDto> RssFeeds { get; }
+    public IReadOnlyList<RssFeedDto> RssFeeds { get; }
 
-    public IEnumerable<RssFeedContentModifierDto> RssFeedContentModifiers { get; }
+    public IReadOnlyList<RssFeedContentModifierDto> RssFeedContentModifiers { get; }
 
-    public IEnumerable<RssFeedCategoryDto> RssFeedCategories { get; }
+    public IReadOnlyList<RssFeedCategoryDto> RssFeedCategories { get; }
 
-    public IEnumerable<NewsPortalImageDto> NewsPortalImages { get; }
+    public IReadOnlyList<NewsPortalImageDto> NewsPortalImages { get; }
+
+    public IReadOnlyList<CountryDto> Countries { get; }
+
+    public IReadOnlyList<CountryImageDto> CountryImages { get; }
 }

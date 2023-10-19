@@ -21,7 +21,8 @@ public class NewsPortalDto
         DateTimeOffset createdAt,
         bool isEnabled,
         int categoryId,
-        int regionId)
+        int regionId,
+        int countryId)
     {
         Id = id;
         Name = name;
@@ -32,6 +33,7 @@ public class NewsPortalDto
         IsEnabled = isEnabled;
         CategoryId = categoryId;
         RegionId = regionId;
+        CountryId = countryId;
     }
 
     private NewsPortalDto()
@@ -56,6 +58,8 @@ public class NewsPortalDto
 
     public int RegionId { get; set; }
 
+    public int CountryId { get; set; }
+
     public static Expression<Func<NewsPortal, NewsPortalDto>> GetProjection()
     {
         return newsPortal => new NewsPortalDto
@@ -69,6 +73,7 @@ public class NewsPortalDto
             IsEnabled = newsPortal.IsEnabled,
             CategoryId = newsPortal.CategoryId,
             RegionId = newsPortal.RegionId,
+            CountryId = newsPortal.CountryId,
         };
     }
 
@@ -83,6 +88,7 @@ public class NewsPortalDto
             createdAt: CreatedAt,
             categoryId: CategoryId,
             regionId: RegionId,
-            isEnabled: IsEnabled);
+            isEnabled: IsEnabled,
+            countryId: CountryId);
     }
 }

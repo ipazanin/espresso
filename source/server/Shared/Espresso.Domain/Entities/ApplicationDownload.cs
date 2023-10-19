@@ -3,12 +3,13 @@
 // © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Enums;
+using Espresso.Domain.Infrastructure;
 
 #pragma warning disable RCS1170
 
 namespace Espresso.Domain.Entities;
 
-public class ApplicationDownload
+public class ApplicationDownload : IEntity<int>
 {
     public const int WebApiVersionMaxLenght = 10;
 

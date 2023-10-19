@@ -3,6 +3,7 @@
 // © 2022 Espresso News. All rights reserved.
 
 using Espresso.Application.DataTransferObjects.CategoryDataTransferObjects;
+using Espresso.Application.DataTransferObjects.CountryDataTransferObjects;
 using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects;
 using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects.RssFeedDataTransferObjects;
 using Espresso.Application.DataTransferObjects.SettingDataTransferObjects;
@@ -82,6 +83,22 @@ public class ExportDatabaseQueryHandler : IRequestHandler<ExportDatabaseQuery, E
             .Select(NewsPortalImageDto.GetProjection())
             .ToArrayAsync(cancellationToken);
 
+        var countries = await _espressoDatabaseContext
+            .Countries
+            .AsNoTracking()
+            .AsSplitQuery()
+            .OrderBy(country => country.Id)
+            .Select(CountryDto.GetProjection())
+            .ToArrayAsync(cancellationToken);
+
+        var countryImages = await _espressoDatabaseContext
+            .CountryImages
+            .AsNoTracking()
+            .AsSplitQuery()
+            .OrderBy(countryImage => countryImage.Id)
+            .Select(CountryImageDto.GetProjection())
+            .ToArrayAsync(cancellationToken);
+
         return new ExportDatabaseQueryResponse(
             setting: settingDto,
             newsPortals: newsPortals,
@@ -90,6 +107,8 @@ public class ExportDatabaseQueryHandler : IRequestHandler<ExportDatabaseQuery, E
             rssFeeds: rssFeeds,
             rssFeedContentModifiers: rssFeedContentModifiers,
             rssFeedCategories: rssFeedCategories,
-            newsPortalImages: newsPortalImages);
+            newsPortalImages: newsPortalImages,
+            countries: countries,
+            countryImages: countryImages);
     }
 }

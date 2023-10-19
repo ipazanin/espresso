@@ -4,12 +4,14 @@
 
 #pragma warning disable RCS1170
 
+using Espresso.Domain.Infrastructure;
+
 namespace Espresso.Domain.Entities;
 
 /// <summary>
 /// Represents way to convert <see cref="RssFeed"/> articles url to category.
 /// </summary>
-public class RssFeedCategory
+public class RssFeedCategory : IEntity<int>
 {
     public const int UrlRegexMaxLength = 100;
 

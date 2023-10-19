@@ -4,9 +4,11 @@
 
 #pragma warning disable RCS1170
 
+using Espresso.Domain.Infrastructure;
+
 namespace Espresso.Domain.Entities;
 
-public class SimilarArticle
+public class SimilarArticle : IEntity<Guid>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="SimilarArticle"/> class.

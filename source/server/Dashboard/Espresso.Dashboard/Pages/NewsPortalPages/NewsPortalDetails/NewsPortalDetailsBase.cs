@@ -2,8 +2,8 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using Espresso.Dashboard.Application.NewsPortalImage.Commands.ImportNewsPortalImage;
-using Espresso.Dashboard.Application.NewsPortalImage.Queries.GetNewsPortalImage;
+using Espresso.Dashboard.Application.NewsPortalImages.Commands.ImportNewsPortalImage;
+using Espresso.Dashboard.Application.NewsPortalImages.Queries.GetNewsPortalImage;
 using Espresso.Dashboard.Application.NewsPortals.Commands.UpdateNewsPortal;
 using Espresso.Dashboard.Application.NewsPortals.GetNewsPortalDetails;
 using Espresso.Dashboard.Application.NewsPortals.Queries.GetNewsPortalDetails;

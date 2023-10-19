@@ -3,7 +3,7 @@
 // © 2022 Espresso News. All rights reserved.
 
 using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects;
-using Espresso.Dashboard.Application.NewsPortalImage.Queries.GetNewsPortalImage;
+using Espresso.Dashboard.Application.NewsPortalImages.Queries.GetNewsPortalImage;
 using Espresso.Dashboard.Application.NewsPortals.Queries.GetNewsPortalDetails;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;

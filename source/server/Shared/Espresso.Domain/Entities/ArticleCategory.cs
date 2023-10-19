@@ -4,9 +4,11 @@
 
 #pragma warning disable RCS1170 // Use read-only auto-implemented property.
 
+using Espresso.Domain.Infrastructure;
+
 namespace Espresso.Domain.Entities;
 
-public class ArticleCategory
+public class ArticleCategory : IEntity<Guid>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="ArticleCategory"/> class.
