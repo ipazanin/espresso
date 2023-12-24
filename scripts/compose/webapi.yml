@@ -7,9 +7,10 @@ services:
     build:
       context: ../..
       dockerfile: source/server/WebApi/Espresso.WebApi/Dockerfile
+    environment:
+      ASPNETCORE_URLS: http://*:80
     ports:
       - '8000:80'
-      - '8001:443'
     networks:
       - espresso
 

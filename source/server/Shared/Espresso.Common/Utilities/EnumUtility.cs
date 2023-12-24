@@ -4,6 +4,7 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace Espresso.Domain.Utilities;
 
@@ -24,7 +25,7 @@ public static class EnumUtility
     {
         var type = typeof(T);
 
-        value = (T)Enum.Parse(typeof(T), enumValue.ToString(), true);
+        value = (T)Enum.Parse(typeof(T), enumValue.ToString(CultureInfo.InvariantCulture), true);
 
         return Enum.IsDefined(type, value);
     }

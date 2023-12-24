@@ -25,7 +25,7 @@ public class CreateNewsPortalCommandHandler : IRequestHandler<CreateNewsPortalCo
         _sendInformationToApiService = sendInformationToApiService;
     }
 
-    public async Task<Unit> Handle(CreateNewsPortalCommand request, CancellationToken cancellationToken)
+    public async Task Handle(CreateNewsPortalCommand request, CancellationToken cancellationToken)
     {
         var updatedNewsPortal = request.NewsPortal.CreateNewsPortal();
 
@@ -46,7 +46,5 @@ public class CreateNewsPortalCommandHandler : IRequestHandler<CreateNewsPortalCo
 
         await _refreshDashboardCacheService.RefreshCache();
         await _sendInformationToApiService.SendCacheUpdatedNotification();
-
-        return Unit.Value;
     }
 }

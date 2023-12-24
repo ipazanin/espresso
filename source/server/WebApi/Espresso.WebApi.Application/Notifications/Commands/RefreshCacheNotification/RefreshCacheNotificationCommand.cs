@@ -16,10 +16,10 @@ public class RefreshCacheNotificationCommandHandler : IRequestHandler<RefreshCac
         _refreshWebApiCache = refreshWebApiCache;
     }
 
-    public async Task<Unit> Handle(RefreshCacheNotificationCommand request, CancellationToken cancellationToken)
+#pragma warning disable AsyncFixer01 // Unnecessary async/await usage
+    public async Task Handle(RefreshCacheNotificationCommand request, CancellationToken cancellationToken)
     {
         await _refreshWebApiCache.RefreshCacheValues();
-
-        return Unit.Value;
     }
+#pragma warning restore AsyncFixer01 // Unnecessary async/await usage
 }

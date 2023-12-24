@@ -29,7 +29,9 @@ public class GenerateRecoveryCodesModel : PageModel
     }
 
     [TempData]
+#pragma warning disable CA1819 // Properties should not return arrays
     public string[]? RecoveryCodes { get; set; }
+#pragma warning restore CA1819 // Properties should not return arrays
 
     [TempData]
     public string? StatusMessage { get; set; }

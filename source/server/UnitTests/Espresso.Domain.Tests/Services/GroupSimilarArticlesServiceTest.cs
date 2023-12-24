@@ -40,7 +40,7 @@ public class GroupSimilarArticlesServiceTest
         _ = loggerServiceMock.Setup(loggerService => loggerService.Log(
               It.IsAny<string>(),
               It.IsAny<LogLevel>(),
-              It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
+              It.IsAny<IReadOnlyList<(string argumentName, object argumentValue)>>()));
 
         var similarArticleSetting = new SimilarArticleSetting(
             similarityScoreThreshold: 0.6,
@@ -98,7 +98,7 @@ public class GroupSimilarArticlesServiceTest
         _ = loggerServiceMock.Setup(loggerService => loggerService.Log(
               It.IsAny<string>(),
               It.IsAny<LogLevel>(),
-              It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
+              It.IsAny<IReadOnlyList<(string argumentName, object argumentValue)>>()));
 
         var similarArticleSetting = new SimilarArticleSetting(
             similarityScoreThreshold: 0.6,
@@ -140,7 +140,7 @@ public class GroupSimilarArticlesServiceTest
         _ = loggerServiceMock.Setup(loggerService => loggerService.Log(
               It.IsAny<string>(),
               It.IsAny<LogLevel>(),
-              It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
+              It.IsAny<IReadOnlyList<(string argumentName, object argumentValue)>>()));
 
         var similarArticleSetting = new SimilarArticleSetting(
             similarityScoreThreshold: 0.6,
@@ -195,7 +195,7 @@ public class GroupSimilarArticlesServiceTest
         _ = loggerServiceMock.Setup(loggerService => loggerService.Log(
               It.IsAny<string>(),
               It.IsAny<LogLevel>(),
-              It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
+              It.IsAny<IReadOnlyList<(string argumentName, object argumentValue)>>()));
 
         var similarArticleSetting = new SimilarArticleSetting(
             similarityScoreThreshold: 0.6,
@@ -256,7 +256,7 @@ public class GroupSimilarArticlesServiceTest
         _ = loggerServiceMock.Setup(loggerService => loggerService.Log(
               It.IsAny<string>(),
               It.IsAny<LogLevel>(),
-              It.IsAny<IEnumerable<(string argumentName, object argumentValue)>>()));
+              It.IsAny<IReadOnlyList<(string argumentName, object argumentValue)>>()));
 
         var similarArticleSetting = new SimilarArticleSetting(
             similarityScoreThreshold: 0.6,

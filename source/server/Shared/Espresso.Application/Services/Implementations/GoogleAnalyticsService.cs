@@ -2,6 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+using System.Globalization;
 using Espresso.Application.Services.Contracts;
 using Espresso.Domain.IServices;
 using Google.Analytics.Data.V1Beta;
@@ -67,14 +68,14 @@ public class GoogleAnalyticsService : IGoogleAnalyticsService
             .First(row => row.DimensionValues.Any(dimension => dimension.Value == AndroidKey))
             .MetricValues[0]
             .Value;
-        var numberOfActiveUsersOnAndroid = int.Parse(numberOfActiveUsersOnAndroidString);
+        var numberOfActiveUsersOnAndroid = int.Parse(numberOfActiveUsersOnAndroidString, CultureInfo.InvariantCulture);
 
         var numberOfActiveUsersOnIosString = response
             .Rows
             .First(row => row.DimensionValues.Any(dimension => dimension.Value == IosKey))
             .MetricValues[0]
             .Value;
-        var numberOfActiveUsersOnIos = int.Parse(numberOfActiveUsersOnIosString);
+        var numberOfActiveUsersOnIos = int.Parse(numberOfActiveUsersOnIosString, CultureInfo.InvariantCulture);
 
         return (numberOfActiveUsersOnAndroid, numberOfActiveUsersOnIos);
     }
@@ -97,7 +98,7 @@ public class GoogleAnalyticsService : IGoogleAnalyticsService
         var beginningOfCurrentMonth = new DateOnly(currentDate.Year, currentDate.Month, 1);
         var dateRange = new DateRange
         {
-            StartDate = beginningOfCurrentMonth.ToString(GoogleAnalyticsApiDateFormat),
+            StartDate = beginningOfCurrentMonth.ToString(GoogleAnalyticsApiDateFormat, CultureInfo.InvariantCulture),
             EndDate = "today",
         };
 
@@ -113,8 +114,8 @@ public class GoogleAnalyticsService : IGoogleAnalyticsService
 
         var dateRange = new DateRange
         {
-            StartDate = beginningOfPreviousMonth.ToString(GoogleAnalyticsApiDateFormat),
-            EndDate = endingOfPreviousMonth.ToString(GoogleAnalyticsApiDateFormat),
+            StartDate = beginningOfPreviousMonth.ToString(GoogleAnalyticsApiDateFormat, CultureInfo.InvariantCulture),
+            EndDate = endingOfPreviousMonth.ToString(GoogleAnalyticsApiDateFormat, CultureInfo.InvariantCulture),
         };
 
         return GetRevenue(dateRange);

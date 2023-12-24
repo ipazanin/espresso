@@ -49,7 +49,7 @@ public class RemoveOldArticlesServiceTest
 
         var actualArticles = sortArticlesService.RemoveOldArticles(articles: articles);
 
-        var actualArticlesCount = actualArticles.Count();
+        var actualArticlesCount = actualArticles.Count;
         Assert.Equal(
             expected: expectedArticlesCount,
             actual: actualArticlesCount);
@@ -87,7 +87,7 @@ public class RemoveOldArticlesServiceTest
 
         var actualArticles = sortArticlesService.RemoveOldArticles(articles: articles);
 
-        var actualArticlesCount = actualArticles.Count();
+        var actualArticlesCount = actualArticles.Count;
         Assert.Equal(
             expected: expectedArticlesCount,
             actual: actualArticlesCount);

@@ -10,8 +10,10 @@ namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage;
 public class ShowRecoveryCodesModel : PageModel
 #pragma warning restore SA1649 // File name should match first type name
 {
+#pragma warning disable CA1819 // Properties should not return arrays
     [TempData]
     public string[]? RecoveryCodes { get; set; }
+#pragma warning restore CA1819 // Properties should not return arrays
 
     [TempData]
     public string? StatusMessage { get; set; }

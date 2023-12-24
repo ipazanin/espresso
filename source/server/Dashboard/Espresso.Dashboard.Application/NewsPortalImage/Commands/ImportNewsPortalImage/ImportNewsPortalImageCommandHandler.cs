@@ -25,11 +25,11 @@ public class ImportNewsPortalImageCommandHandler : IRequestHandler<ImportNewsPor
         _sendInformationToApiService = sendInformationToApiService;
     }
 
-    public async Task<Unit> Handle(ImportNewsPortalImageCommand request, CancellationToken cancellationToken)
+    public async Task Handle(ImportNewsPortalImageCommand request, CancellationToken cancellationToken)
     {
         if (request.NewsPortalImage is null)
         {
-            return Unit.Value;
+            return;
         }
 
         var newsPortalImageExistsInDatabase = await _espressoDatabaseContext
@@ -50,7 +50,5 @@ public class ImportNewsPortalImageCommandHandler : IRequestHandler<ImportNewsPor
 
         await _refreshDashboardCacheService.RefreshCache();
         await _sendInformationToApiService.SendCacheUpdatedNotification();
-
-        return Unit.Value;
     }
 }

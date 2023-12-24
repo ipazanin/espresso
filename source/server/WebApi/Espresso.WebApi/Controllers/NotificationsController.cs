@@ -69,7 +69,7 @@ public class NotificationsController : ApiController
         [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
         CancellationToken cancellationToken)
     {
-        _ = await Sender.Send(
+        await Sender.Send(
             request: new UpdateInMemoryArticlesCommand
             {
                 CreatedArticleIds = articlesRequest.CreatedArticleIds,
@@ -80,7 +80,7 @@ public class NotificationsController : ApiController
             },
             cancellationToken: cancellationToken);
 
-        _ = await Sender.Send(
+        await Sender.Send(
             request: new SendArticlesNotificationsCommand
             {
                 CreatedArticleIds = articlesRequest.CreatedArticleIds,
@@ -117,7 +117,7 @@ public class NotificationsController : ApiController
         [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
         CancellationToken cancellationToken)
     {
-        _ = await Sender.Send(
+        await Sender.Send(
             request: new UpdateSettingCommand
             {
                 TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
@@ -149,7 +149,7 @@ public class NotificationsController : ApiController
     [Route("api/notifications/cache")]
     public async Task<IActionResult> CacheChangedNotification(CancellationToken cancellationToken)
     {
-        _ = await Sender.Send(
+        await Sender.Send(
             request: new RefreshCacheNotificationCommand(),
             cancellationToken: cancellationToken);
 
@@ -186,7 +186,7 @@ public class NotificationsController : ApiController
         [FromBody] SendPushNotificationRequestBody sendPushNotificationRequestBody,
         CancellationToken cancellationToken)
     {
-        _ = await Sender.Send(
+        await Sender.Send(
             request: new SendPushNotificationCommand
             {
                 ArticleId = sendPushNotificationRequestBody.ArticleId,

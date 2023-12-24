@@ -2,7 +2,6 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using Espresso.Common.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -33,14 +32,7 @@ public class ResendEmailConfirmationModel : PageModel
     }
 
     [BindProperty]
-    public InputModel Input { get; set; } = null!;
-
-    public class InputModel
-    {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; } = null!;
-    }
+    public ResendEmailConformationInputModel Input { get; set; } = null!;
 
 #pragma warning disable SA1201 // Elements should appear in the correct order
     public void OnGet()
@@ -76,7 +68,7 @@ public class ResendEmailConfirmationModel : PageModel
             values: new { userId, code },
             protocol: Request.Scheme)!;
         await _emailService.SendMail(
-            to: Input.Email,
+            recipient: Input.Email,
             subject: "Confirm your email",
             content: $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
             htmlContent: $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

@@ -32,11 +32,11 @@ DashboardDockerImageGoogleContainerRegistry="gcr.io/espresso-8c4ac/espresso-dash
 DefaultReactEnvironment="production"
 
 DatabaseComposeFile="scripts/compose/database.yml"
-DatabaseEnvironmentComposeFile="scripts/compose/database-environment-postgres.yml"
+DatabaseEnvironmentComposeFile="scripts/compose/database-environment.yml"
 DashboardComposeFile="scripts/compose/dashboard.yml"
-DashboardEnvironmentComposeFile="scripts/compose/dashboard-environment-postgres.yml"
+DashboardEnvironmentComposeFile="scripts/compose/dashboard-environment.yml"
 WebApiComposeFile="scripts/compose/webapi.yml"
-WebApiEnvironmentComposeFile="scripts/compose/webapi-environment-postgres.yml"
+WebApiEnvironmentComposeFile="scripts/compose/webapi-environment.yml"
 RabbitMqComposeFile="scripts/compose/rabbitmq.yml"
 RabbitMqEnvironmentComposeFile="scripts/compose/rabbitmq-environment.yml"
 

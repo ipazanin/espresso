@@ -7,9 +7,10 @@ services:
     build:
       context: ../..
       dockerfile: source/server/Dashboard/Espresso.Dashboard/Dockerfile
+    environment:
+      ASPNETCORE_URLS: http://*:80
     ports:
       - '9000:80'
-      - '9001:443'
     networks:
       - espresso
 

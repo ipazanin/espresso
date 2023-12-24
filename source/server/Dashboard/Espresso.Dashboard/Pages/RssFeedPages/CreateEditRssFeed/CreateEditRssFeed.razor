@@ -90,7 +90,7 @@ else
                         </MudSelect>
                     }
 
-                    <MudSwitch @bind-Checked="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped"
+                    <MudSwitch @bind-Value="@RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped"
                                Label="Should Image Url Be Web Scraped" Required="false" Color="Color.Info" />
 
                     @if (RssFeedDetails.RssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped)
@@ -211,7 +211,7 @@ else
             <MudItem xs="12" sm="6">
                 <MudPaper Class="pa-4">
                     <MudText Typo="@Typo.h5" Style="margin: 5px">Amp</MudText>
-                    <MudSwitch @bind-Checked="@RssFeedDetails.RssFeed.AmpConfiguration.HasAmpArticles"
+                    <MudSwitch @bind-Value="@RssFeedDetails.RssFeed.AmpConfiguration.HasAmpArticles"
                                Label="Has Amp Articles" Required="false" Color="Color.Info" />
 
                     <MudTextField T="string" Label="Amp URL Template" Required="false"

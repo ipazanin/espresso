@@ -34,7 +34,7 @@ public class IncrementNumberOfClicksCommandHandler : IRequestHandler<IncrementNu
         _trendingScoreService = trendingScoreService;
     }
 
-    public async Task<Unit> Handle(IncrementNumberOfClicksCommand request, CancellationToken cancellationToken)
+    public async Task Handle(IncrementNumberOfClicksCommand request, CancellationToken cancellationToken)
     {
         var memoryCacheArticles = _memoryCache
             .Get<IEnumerable<Article>>(key: MemoryCacheConstants.ArticleKey)
@@ -42,12 +42,7 @@ public class IncrementNumberOfClicksCommandHandler : IRequestHandler<IncrementNu
 
         var databaseArticle = await _context.Articles.FindAsync(
             keyValues: new object?[] { request.Id },
-            cancellationToken: cancellationToken);
-
-        if (databaseArticle is null)
-        {
-            throw new NotFoundException(typeName: nameof(Article), id: request.Id.ToString());
-        }
+            cancellationToken: cancellationToken) ?? throw new NotFoundException(typeName: nameof(Article), id: request.Id.ToString());
 
         databaseArticle.IncrementNumberOfClicks();
         _context.Articles.Update(databaseArticle);
@@ -57,13 +52,11 @@ public class IncrementNumberOfClicksCommandHandler : IRequestHandler<IncrementNu
         {
             memoryCacheArticle.IncrementNumberOfClicks();
 
-            var articlesWithUpdatedTrendingScore = _trendingScoreService.CalculateTrendingScore(articles: memoryCacheArticles.Values);
+            var articlesWithUpdatedTrendingScore = _trendingScoreService.CalculateTrendingScore(articles: memoryCacheArticles.Values.ToArray());
 
             _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
                 value: articlesWithUpdatedTrendingScore.ToList());
         }
-
-        return Unit.Value;
     }
 }

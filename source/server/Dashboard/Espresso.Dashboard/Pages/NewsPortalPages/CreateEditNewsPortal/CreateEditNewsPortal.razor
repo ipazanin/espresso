@@ -19,9 +19,9 @@ else
                     @bind-Value="@NewsPortalDetailsResponse.NewsPortal.IconUrl" Validation="@IconUrlValidation" />
                 <MudTextField T="DateTime" Label="Created At" ReadOnly="@true" Required="@false"
                     Value="@NewsPortalDetailsResponse.NewsPortal.CreatedAt.Date" />
-                <MudSwitch @bind-Checked="@NewsPortalDetailsResponse.NewsPortal.IsNewOverride"
+                <MudSwitch @bind-Value="@NewsPortalDetailsResponse.NewsPortal.IsNewOverride"
                     Label="Is News Portal New Override" Required="false" Color="Color.Info" />
-                <MudSwitch @bind-Checked="@NewsPortalDetailsResponse.NewsPortal.IsEnabled" Label="Is Enabled"
+                <MudSwitch @bind-Value="@NewsPortalDetailsResponse.NewsPortal.IsEnabled" Label="Is Enabled"
                     Color="Color.Info" />
             </MudPaper>
         </MudItem>
@@ -31,7 +31,7 @@ else
             <MudFileUpload T="IBrowserFile" FilesChanged="OnUploadIcon">
                 <ButtonTemplate>
                     <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Secondary"
-                        StartIcon="@Icons.Filled.CloudUpload" for="@context">
+                        StartIcon="@Icons.Material.Filled.CloudUpload" for="@context">
                         Import Icon
                     </MudButton>
                 </ButtonTemplate>

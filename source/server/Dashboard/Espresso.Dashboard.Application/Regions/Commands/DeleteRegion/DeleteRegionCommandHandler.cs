@@ -25,7 +25,7 @@ public class DeleteRegionCommandHandler : IRequestHandler<DeleteRegionCommand>
         _sendInformationToApiService = sendInformationToApiService;
     }
 
-    public async Task<Unit> Handle(DeleteRegionCommand request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteRegionCommand request, CancellationToken cancellationToken)
     {
         var regionToDelete = await _espressoDatabaseContext
             .Regions
@@ -37,7 +37,5 @@ public class DeleteRegionCommandHandler : IRequestHandler<DeleteRegionCommand>
 
         await _refreshDashboardCacheService.RefreshCache();
         await _sendInformationToApiService.SendCacheUpdatedNotification();
-
-        return Unit.Value;
     }
 }

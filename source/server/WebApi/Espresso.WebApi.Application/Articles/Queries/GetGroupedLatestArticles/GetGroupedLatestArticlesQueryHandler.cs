@@ -2,6 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+using System.Security.Cryptography;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Extensions;
@@ -77,7 +78,7 @@ public class GetGroupedLatestArticlesQueryHandler : IRequestHandler<GetGroupedLa
                 .OrderByDescending(newsPortal => newsPortal.CreatedAt)
                 .First()
                 .CreatedAt
-                .ToString(DateTimeConstants.MobileAppDateTimeFormat),
+                .ToString(DateTimeConstants.MobileAppDateTimeFormat, CultureInfo.InvariantCulture),
         };
 
         return Task.FromResult(result: response);
@@ -105,16 +106,16 @@ public class GetGroupedLatestArticlesQueryHandler : IRequestHandler<GetGroupedLa
     private static (IEnumerable<int>? newsPortalIds, IEnumerable<int>? categoryIds) ParseIds(GetGroupedLatestArticlesQuery request)
     {
         var newsPortalIds = request.NewsPortalIds
-            ?.Replace(" ", string.Empty)
-            ?.Split(',')
-            ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
-            ?.Where(newsPortalId => newsPortalId != default);
+            ?.Replace(" ", string.Empty, StringComparison.Ordinal)
+            .Split(',')
+            .Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
+            .Where(newsPortalId => newsPortalId != default);
 
         var categoryIds = request.CategoryIds
-            ?.Replace(" ", string.Empty)
-            ?.Split(',')
-            ?.Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
-            ?.Where(categoryId => categoryId != default);
+            ?.Replace(" ", string.Empty, StringComparison.Ordinal)
+            .Split(',')
+            .Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
+            .Where(categoryId => categoryId != default);
 
         return (newsPortalIds, categoryIds);
     }
@@ -182,8 +183,6 @@ public class GetGroupedLatestArticlesQueryHandler : IRequestHandler<GetGroupedLa
                 .Compile())
             .Select(selector: GetGroupedLatestArticlesNewsPortal.GetProjection().Compile());
 
-        var random = new Random();
-
-        return newsPortalDtos.OrderBy(_ => random.Next());
+        return newsPortalDtos.OrderBy(_ => RandomNumberGenerator.GetInt32(100));
     }
 }

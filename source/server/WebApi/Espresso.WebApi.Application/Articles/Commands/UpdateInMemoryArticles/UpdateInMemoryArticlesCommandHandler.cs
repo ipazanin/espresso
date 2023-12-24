@@ -45,12 +45,16 @@ public class UpdateInMemoryArticlesCommandHandler :
         var savedArticlesDictionary = savedArticles.ToDictionary(article => article.Id);
 
         var newsPortals = _memoryCache
-            .Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey)!;
+            .Get<IEnumerable<NewsPortal>>(key: MemoryCacheConstants.NewsPortalKey)
+            !.ToArray();
 
         var categories = _memoryCache
-            .Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey)!;
+            .Get<IEnumerable<Category>>(key: MemoryCacheConstants.CategoryKey)
+            !.ToArray();
 
-        var articleIds = request.CreatedArticleIds.Union(request.UpdatedArticleIds);
+        var articleIds = request.CreatedArticleIds
+            .Union(request.UpdatedArticleIds)
+            .ToArray();
 
         await UpdateInMemoryArticles(
             articlesDictionary: savedArticlesDictionary,
@@ -60,9 +64,11 @@ public class UpdateInMemoryArticlesCommandHandler :
             cancellationToken: cancellationToken);
 
         var articles = _removeOldArticlesService
-            .RemoveOldArticles(savedArticlesDictionary.Values);
+            .RemoveOldArticles(savedArticlesDictionary.Values.ToArray());
 
-        var articlesToSave = _trendingScoreService.CalculateTrendingScore(articles);
+        var articlesToSave = _trendingScoreService
+            .CalculateTrendingScore(articles)
+            .ToArray();
 
         _memoryCache.Set(
             key: MemoryCacheConstants.ArticleKey,
@@ -78,10 +84,10 @@ public class UpdateInMemoryArticlesCommandHandler :
     }
 
     private async Task UpdateInMemoryArticles(
-        IDictionary<Guid, Article> articlesDictionary,
-        IEnumerable<NewsPortal> newsPortals,
-        IEnumerable<Category> categories,
-        IEnumerable<Guid> articleIds,
+        Dictionary<Guid, Article> articlesDictionary,
+        IReadOnlyList<NewsPortal> newsPortals,
+        IReadOnlyList<Category> categories,
+        IReadOnlyList<Guid> articleIds,
         CancellationToken cancellationToken)
     {
         var loadedArticles = await _articleLoaderService.LoadArticlesForWebApi(

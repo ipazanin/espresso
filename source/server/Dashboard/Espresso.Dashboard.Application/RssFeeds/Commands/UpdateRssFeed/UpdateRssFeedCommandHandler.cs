@@ -26,18 +26,22 @@ public class UpdateRssFeedCommandHandler : IRequestHandler<UpdateRssFeedCommand>
         _refreshDashboardCacheService = refreshDashboardCacheService;
     }
 
-    public async Task<Unit> Handle(UpdateRssFeedCommand request, CancellationToken cancellationToken)
+    public async Task Handle(UpdateRssFeedCommand request, CancellationToken cancellationToken)
     {
         var rssFeed = request.RssFeed.CreateRssFeed();
 
         var importedRssFeedCategories = request
             .RssFeedCategories
-            .Select(rssFeedCategory => rssFeedCategory.CreateRssFeedCategory());
+            .Select(rssFeedCategory => rssFeedCategory.CreateRssFeedCategory())
+            .ToArray();
+
         await ImportRssFeedCategories(importedRssFeedCategories, rssFeed.Id, cancellationToken);
 
         var importedRssFeedContentModifiers = request
             .RssFeedContentModifiers
-            .Select(rssFeedContentModifier => rssFeedContentModifier.CreateRssFeedContentModifier());
+            .Select(rssFeedContentModifier => rssFeedContentModifier.CreateRssFeedContentModifier())
+            .ToArray();
+
         await ImportRssFeedContentModifiers(importedRssFeedContentModifiers, rssFeed.Id, cancellationToken);
         _ = _espressoDatabaseContext.RssFeeds.Update(rssFeed);
 
@@ -45,12 +49,10 @@ public class UpdateRssFeedCommandHandler : IRequestHandler<UpdateRssFeedCommand>
 
         await _sendInformationToApiService.SendCacheUpdatedNotification();
         await _refreshDashboardCacheService.RefreshCache();
-
-        return Unit.Value;
     }
 
     private async Task ImportRssFeedCategories(
-        IEnumerable<RssFeedCategory> importedRssFeedCategories,
+        IReadOnlyList<RssFeedCategory> importedRssFeedCategories,
         int rssFeedId,
         CancellationToken cancellationToken)
     {
@@ -97,7 +99,7 @@ public class UpdateRssFeedCommandHandler : IRequestHandler<UpdateRssFeedCommand>
     }
 
     private async Task ImportRssFeedContentModifiers(
-        IEnumerable<RssFeedContentModifier> importedRssFeedContentModifiers,
+        IReadOnlyList<RssFeedContentModifier> importedRssFeedContentModifiers,
         int rssFeedId,
         CancellationToken cancellationToken)
     {

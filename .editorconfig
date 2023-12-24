@@ -620,6 +620,33 @@ dotnet_diagnostic.SA1310.severity = none
 # S112: Should not throw IndexOutOfRangeException
 dotnet_diagnostic.S112.severity = none
 
+# CA1062: Validate parameter is non-null before using it. If appropriate, throw an 'ArgumentNullException' when the argument is 'null'.
+dotnet_diagnostic.CA1062.severity = none
+
+# CA1056: Change the type of property from 'string' to 'System.Uri'
+dotnet_diagnostic.CA1056.severity = none
+
+# CA1055: Change the return type of method from 'string' to 'System.Uri'
+dotnet_diagnostic.CA1055.severity = none
+
+# CA1054: Change the return type of method from 'string' to 'System.Uri'
+dotnet_diagnostic.CA1054.severity = none
+
+# CA1024: Use properties where appropriate
+dotnet_diagnostic.CA1024.severity = none
+
+# CA1032: Modify to catch a more specific allowed exception type, or rethrow the exception
+dotnet_diagnostic.CA1032.severity = none
+
+# CA1031: Modify to catch a more specific allowed exception type, or rethrow the exception
+dotnet_diagnostic.CA1031.severity = none
+
+# CA1848: For improved performance, use the LoggerMessage delegates instead of calling 'LoggerExtensions.LogTrace(ILogger, Exception?, string?, params object?[])'
+dotnet_diagnostic.CA1848.severity = none
+
+# CA2234: Modify to call 'HttpClient.PostAsync(Uri, HttpContent)' instead of 'HttpClient.PostAsync(string, HttpContent)'
+dotnet_diagnostic.CA2234.severity = none
+
 ######################################################
 #           Custom Analysers
 ######################################################

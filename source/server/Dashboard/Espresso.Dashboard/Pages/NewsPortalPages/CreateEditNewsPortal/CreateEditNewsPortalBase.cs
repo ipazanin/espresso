@@ -3,6 +3,7 @@
 // © 2022 Espresso News. All rights reserved.
 
 using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects;
+using Espresso.Common.Constants;
 using Espresso.Dashboard.Application.NewsPortalImage.Queries.GetNewsPortalImage;
 using Espresso.Dashboard.Application.NewsPortals.Queries.GetNewsPortalDetails;
 using Microsoft.AspNetCore.Components;
@@ -56,7 +57,9 @@ public class CreateEditNewsPortalBase : ComponentBase
     }
 #pragma warning restore BL0007 // Component parameter should be auto property
 
+#pragma warning disable CA1819 // Properties should not return arrays
     protected string[] Errors { get; set; } = Array.Empty<string>();
+#pragma warning restore CA1819 // Properties should not return arrays
 
     protected MudForm? Form { get; set; }
 
@@ -67,12 +70,12 @@ public class CreateEditNewsPortalBase : ComponentBase
             return "Icon URL must be defined";
         }
 
-        if (!iconUrlValue.EndsWith(".png") && !iconUrlValue.EndsWith(".jpg"))
+        if (!iconUrlValue.EndsWith(FileExtensionConstants.Png, StringComparison.OrdinalIgnoreCase) && !iconUrlValue.EndsWith(FileExtensionConstants.Jpg, StringComparison.Ordinal))
         {
-            return "Icon URL must end with .png or .jpg";
+            return $"Icon URL must end with {FileExtensionConstants.Png} or {FileExtensionConstants.Jpg}";
         }
 
-        if (!iconUrlValue.StartsWith("Icons/"))
+        if (!iconUrlValue.StartsWith("Icons/", StringComparison.OrdinalIgnoreCase))
         {
             return "Are you sure you want to create icon outside Icons/ folder?";
         }

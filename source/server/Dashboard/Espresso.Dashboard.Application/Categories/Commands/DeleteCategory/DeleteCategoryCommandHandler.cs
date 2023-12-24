@@ -25,7 +25,7 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
         _refreshDashboardCacheService = refreshDashboardCacheService;
     }
 
-    public async Task<Unit> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
         var categoryToRemove = await _espressoDatabaseContext
             .Categories
@@ -33,7 +33,7 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
 
         if (categoryToRemove is null)
         {
-            return Unit.Value;
+            return;
         }
 
         _ = _espressoDatabaseContext.Categories.Remove(categoryToRemove);
@@ -41,7 +41,5 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
 
         await _sendInformationToApiService.SendCacheUpdatedNotification();
         await _refreshDashboardCacheService.RefreshCache();
-
-        return Unit.Value;
     }
 }

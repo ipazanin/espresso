@@ -58,7 +58,7 @@ public class RegionDetailsBase : ComponentBase
         using var scope = ServiceScopeFactory.CreateScope();
         var sender = scope.ServiceProvider.GetRequiredService<ISender>();
 
-        _ = await sender.Send(new UpdateRegionCommand(RegionDetails.Region));
+        await sender.Send(new UpdateRegionCommand(RegionDetails.Region));
 
         NavigationManager.NavigateTo("/regions");
     }

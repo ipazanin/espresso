@@ -34,10 +34,10 @@ public class GetFeaturedArticlesQueryHandler :
             key: MemoryCacheConstants.ArticleKey)!;
 
         var categoryIds = request.CategoryIds
-            ?.Replace(" ", string.Empty)
-            ?.Split(',')
-            ?.Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
-            ?.Where(categoryId => categoryId != default);
+            ?.Replace(" ", string.Empty, StringComparison.Ordinal)
+            .Split(',')
+            .Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
+            .Where(categoryId => categoryId != default);
 
         var keyWordsToFilterOut = request.KeyWordsToFilterOut is null ?
             Enumerable.Empty<string>() :

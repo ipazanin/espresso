@@ -28,9 +28,9 @@ public class ExternalLoginsModel : PageModel
         _signInManager = signInManager;
     }
 
-    public IList<UserLoginInfo> CurrentLogins { get; set; } = null!;
+    public IList<UserLoginInfo> CurrentLogins { get; private set; } = null!;
 
-    public IList<AuthenticationScheme> OtherLogins { get; set; } = null!;
+    public IList<AuthenticationScheme> OtherLogins { get; private set; } = null!;
 
     public bool ShowRemoveButton { get; set; }
 
@@ -111,11 +111,7 @@ public class ExternalLoginsModel : PageModel
             return NotFound("Unable to load user with ID 'user.Id'.");
         }
 
-        var info = await _signInManager.GetExternalLoginInfoAsync(user.Id);
-        if (info == null)
-        {
-            throw new InvalidOperationException($"Unexpected error occurred loading external login info for user with ID '{user.Id}'.");
-        }
+        var info = await _signInManager.GetExternalLoginInfoAsync(user.Id) ?? throw new InvalidOperationException($"Unexpected error occurred loading external login info for user with ID '{user.Id}'.");
 
         var result = await _userManager.AddLoginAsync(user, info);
         if (!result.Succeeded)

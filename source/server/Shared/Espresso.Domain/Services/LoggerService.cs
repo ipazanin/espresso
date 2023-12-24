@@ -26,7 +26,7 @@ public class LoggerService<TCaller> : ILoggerService<TCaller>
     public void Log(
         string eventName,
         LogLevel logLevel,
-        IEnumerable<(string argumentName, object argumentValue)>? namedArguments = null)
+        IReadOnlyList<(string argumentName, object argumentValue)>? namedArguments = null)
     {
         var count = 0;
         var messageBuilder = new StringBuilder(
@@ -49,7 +49,7 @@ public class LoggerService<TCaller> : ILoggerService<TCaller>
         string eventName,
         string errorMessage,
         LogLevel logLevel,
-        IEnumerable<(string argumentName, object argumentValue)>? namedArguments = null)
+        IReadOnlyList<(string argumentName, object argumentValue)>? namedArguments = null)
     {
         var count = 0;
         var messageBuilder = new StringBuilder(
@@ -74,7 +74,7 @@ public class LoggerService<TCaller> : ILoggerService<TCaller>
         string eventName,
         Exception exception,
         LogLevel logLevel,
-        IEnumerable<(string argumentName, object argumentValue)>? namedArguments = null)
+        IReadOnlyList<(string argumentName, object argumentValue)>? namedArguments = null)
     {
         var count = 0;
         var messageBuilder = new StringBuilder(
@@ -99,8 +99,8 @@ public class LoggerService<TCaller> : ILoggerService<TCaller>
 
     private static (string message, object[] args) GetMessageAndArguments(
         StringBuilder messageBuilder,
-        IEnumerable<(string argumentName, object argumentValue)>? arguments,
-        IList<object> args,
+        IReadOnlyList<(string argumentName, object argumentValue)>? arguments,
+        List<object> args,
         int count)
     {
         if (arguments is not null)
@@ -171,4 +171,4 @@ public class LoggerService<TCaller> : ILoggerService<TCaller>
 }
 
 // The logging message template should not vary between calls
-#pragma warning restore CA2254 
+#pragma warning restore CA2254

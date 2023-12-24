@@ -64,7 +64,7 @@ public class CategoriesListBase : ComponentBase
         }
 
         var request = new DeleteCategoryCommand(categoryId);
-        _ = await Sender.Send(request);
+        await Sender.Send(request);
 
         await Table.ReloadServerData();
     }

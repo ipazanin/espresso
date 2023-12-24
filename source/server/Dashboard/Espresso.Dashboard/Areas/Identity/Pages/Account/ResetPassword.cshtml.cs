@@ -2,7 +2,6 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +11,7 @@ using Microsoft.AspNetCore.WebUtilities;
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account;
 
 [AllowAnonymous]
-#pragma warning disable SA1649 // File name should match first type name
 public class ResetPasswordModel : PageModel
-#pragma warning restore SA1649 // File name should match first type name
 {
     private readonly UserManager<IdentityUser> _userManager;
 
@@ -28,26 +25,7 @@ public class ResetPasswordModel : PageModel
     }
 
     [BindProperty]
-    public InputModel Input { get; set; } = null!;
-
-    public class InputModel
-    {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; } = null!;
-
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        public string Password { get; set; } = null!;
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; } = null!;
-
-        public string Code { get; set; } = null!;
-    }
+    public ResetPasswordInputModel Input { get; set; } = null!;
 
 #pragma warning disable SA1201 // Elements should appear in the correct order
     public IActionResult OnGet(string? code = null)
@@ -59,7 +37,7 @@ public class ResetPasswordModel : PageModel
         }
         else
         {
-            Input = new InputModel
+            Input = new ResetPasswordInputModel
             {
                 Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code)),
             };

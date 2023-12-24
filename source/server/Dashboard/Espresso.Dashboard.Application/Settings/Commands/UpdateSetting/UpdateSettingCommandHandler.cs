@@ -25,7 +25,7 @@ public class UpdateSettingCommandHandler : IRequestHandler<UpdateSettingCommand>
         _sendInformationToApiService = sendInformationToApiService;
     }
 
-    public async Task<Unit> Handle(UpdateSettingCommand request, CancellationToken cancellationToken)
+    public async Task Handle(UpdateSettingCommand request, CancellationToken cancellationToken)
     {
         var updatedSetting = request.Setting.CreateSetting();
 
@@ -35,7 +35,5 @@ public class UpdateSettingCommandHandler : IRequestHandler<UpdateSettingCommand>
 
         await _settingProvider.UpdateLatestSetting(default);
         await _sendInformationToApiService.SendSettingUpdatedNotification();
-
-        return Unit.Value;
     }
 }

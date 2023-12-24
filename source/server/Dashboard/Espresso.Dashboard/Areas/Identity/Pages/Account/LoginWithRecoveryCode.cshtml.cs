@@ -2,7 +2,6 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -31,18 +30,9 @@ public class LoginWithRecoveryCodeModel : PageModel
     }
 
     [BindProperty]
-    public InputModel Input { get; set; } = null!;
+    public LoginWithRecoveryCodeInputModel Input { get; set; } = null!;
 
     public string? ReturnUrl { get; set; }
-
-    public class InputModel
-    {
-        [BindProperty]
-        [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "Recovery Code")]
-        public string RecoveryCode { get; set; } = null!;
-    }
 
     /// <summary>
     ///
@@ -54,11 +44,7 @@ public class LoginWithRecoveryCodeModel : PageModel
 #pragma warning restore SA1201 // Elements should appear in the correct order
     {
         // Ensure the user has gone through the username & password screen first
-        var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-        if (user == null)
-        {
-            throw new InvalidOperationException("Unable to load two-factor authentication user.");
-        }
+        _ = await _signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException("Unable to load two-factor authentication user.");
 
         ReturnUrl = returnUrl;
 
@@ -77,13 +63,9 @@ public class LoginWithRecoveryCodeModel : PageModel
             return Page();
         }
 
-        var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-        if (user == null)
-        {
-            throw new InvalidOperationException("Unable to load two-factor authentication user.");
-        }
+        var user = await _signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException("Unable to load two-factor authentication user.");
 
-        var recoveryCode = Input.RecoveryCode.Replace(" ", string.Empty);
+        var recoveryCode = Input.RecoveryCode.Replace(" ", string.Empty, StringComparison.Ordinal);
 
         var result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
 

@@ -45,7 +45,9 @@ public class CreateEditCategoryBase : ComponentBase
     }
 #pragma warning restore BL0007 // Component parameter should be auto property
 
+#pragma warning disable CA1819 // Properties should not return arrays
     protected string[] Errors { get; set; } = Array.Empty<string>();
+#pragma warning restore CA1819 // Properties should not return arrays
 
     protected MudForm? Form { get; set; }
 }

@@ -194,7 +194,7 @@ public class ScrapeWebService : IScrapeWebService
 
     private void LogImageUrlWebScrapingRequestError(Exception exception, string articleUrl, RequestType requestType)
     {
-        var eventName = Event.ImageUrlWebScrapingRequest.GetDisplayName();
+        var eventName = LoggingEvent.ImageUrlWebScrapingRequest.GetDisplayName();
         var arguments = new (string, object)[]
         {
                 (nameof(articleUrl), articleUrl),

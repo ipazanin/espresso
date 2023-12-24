@@ -70,11 +70,11 @@ public class NewsPortalDetailsBase : ComponentBase
         var sender = scope.ServiceProvider.GetRequiredService<ISender>();
 
         var command = new UpdateNewsPortalCommand(NewsPortalDetailsQueryResponse.NewsPortal);
-        _ = await sender.Send(command);
+        await sender.Send(command);
 
         if (NewsPortalImageResponse is not null)
         {
-            _ = await sender.Send(new ImportNewsPortalImageCommand(NewsPortalImageResponse.NewsPortalImage));
+            await sender.Send(new ImportNewsPortalImageCommand(NewsPortalImageResponse.NewsPortalImage));
         }
 
         NavigationManager.NavigateTo("news-portals");

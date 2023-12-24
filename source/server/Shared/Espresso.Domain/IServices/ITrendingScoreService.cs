@@ -8,5 +8,5 @@ namespace Espresso.Domain.IServices;
 
 public interface ITrendingScoreService
 {
-    public IEnumerable<Article> CalculateTrendingScore(IEnumerable<Article> articles);
+    public IReadOnlyList<Article> CalculateTrendingScore(IReadOnlyList<Article> articles);
 }

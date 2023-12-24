@@ -34,7 +34,7 @@ public class ImportDatabaseCommandHandler : IRequestHandler<ImportDatabaseComman
         _refreshDashboardCacheService = refreshDashboardCacheService;
     }
 
-    public async Task<Unit> Handle(ImportDatabaseCommand request, CancellationToken cancellationToken)
+    public async Task Handle(ImportDatabaseCommand request, CancellationToken cancellationToken)
     {
         await ImportSetting(request.Setting, cancellationToken);
         await _settingProvider.UpdateLatestSetting(cancellationToken);
@@ -50,8 +50,6 @@ public class ImportDatabaseCommandHandler : IRequestHandler<ImportDatabaseComman
 
         await _sendInformationToApiService.SendCacheUpdatedNotification();
         await _refreshDashboardCacheService.RefreshCache();
-
-        return Unit.Value;
     }
 
     private async Task ImportSetting(SettingDto settingDto, CancellationToken cancellationToken)

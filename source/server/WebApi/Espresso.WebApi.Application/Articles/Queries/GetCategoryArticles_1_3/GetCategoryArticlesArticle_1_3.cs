@@ -2,7 +2,6 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using System.Linq.Expressions;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 
@@ -58,7 +57,7 @@ public record GetCategoryArticlesArticle_1_3
             Title = article.Title,
             ImageUrl = article.ImageUrl,
             Url = article.Url,
-            PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.MobileAppDateTimeFormat),
+            PublishDateTime = article.PublishDateTime.ToString(DateTimeConstants.MobileAppDateTimeFormat, CultureInfo.InvariantCulture),
             NewsPortal = GetCategoryArticlesNewsPortal_1_3.GetProjection()
                 .Compile()
                 .Invoke(article.NewsPortal!),

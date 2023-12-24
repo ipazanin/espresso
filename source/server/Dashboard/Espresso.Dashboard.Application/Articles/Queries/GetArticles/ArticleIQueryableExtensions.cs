@@ -38,6 +38,6 @@ public static class ArticleIQueryableExtensions
 
         return articles.Where(article => article.Title.Contains(pagingParameters.SearchString) ||
             article.NewsPortal!.Name.Contains(pagingParameters.SearchString) ||
-            article.ArticleCategories.Any(articleCategory => articleCategory.Category!.Name.Contains(pagingParameters.SearchString)));
+            article.ArticleCategories.Any(articleCategory => articleCategory.Category!.Name.Contains(pagingParameters.SearchString, StringComparison.Ordinal)));
     }
 }

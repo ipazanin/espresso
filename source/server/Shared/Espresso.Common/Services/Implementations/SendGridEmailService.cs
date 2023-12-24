@@ -30,14 +30,14 @@ public class SendGridEmailService : IEmailService
 
     /// <inheritdoc/>
     public async Task<bool> SendMail(
-        string to,
+        string recipient,
         string subject,
         string content,
         string htmlContent)
     {
         var client = new SendGridClient(_sendGridKey);
         var fromEmail = new EmailAddress(SenderEmail, SenderName);
-        var toEmail = new EmailAddress(to);
+        var toEmail = new EmailAddress(recipient);
 
         var message = MailHelper.CreateSingleEmail(
             from: fromEmail,

@@ -21,7 +21,8 @@ public class NewSourcesRequestCommandHandler : IRequestHandler<NewsSourcesReques
         _slackService = slackService;
     }
 
-    public async Task<Unit> Handle(
+#pragma warning disable AsyncFixer01 // Unnecessary async/await usage
+    public async Task Handle(
         NewsSourcesRequestCommand request,
         CancellationToken cancellationToken)
     {
@@ -31,7 +32,6 @@ public class NewSourcesRequestCommandHandler : IRequestHandler<NewsSourcesReques
                 email: request.Email,
                 url: request.Url,
                 cancellationToken: cancellationToken);
-
-        return Unit.Value;
     }
+#pragma warning restore AsyncFixer01 // Unnecessary async/await usage
 }

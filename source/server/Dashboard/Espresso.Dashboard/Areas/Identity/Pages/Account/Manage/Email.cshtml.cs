@@ -2,7 +2,6 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using Espresso.Common.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
@@ -40,7 +39,7 @@ public class EmailModel : PageModel
     public string? StatusMessage { get; set; }
 
     [BindProperty]
-    public InputModel Input { get; set; } = null!;
+    public EmailInputModel Input { get; set; } = null!;
 
     /// <summary>
     ///
@@ -88,7 +87,7 @@ public class EmailModel : PageModel
                 values: new { userId, email = Input.NewEmail, code },
                 protocol: Request.Scheme)!;
             _ = await _emailService.SendMail(
-                to: Input.NewEmail,
+                recipient: Input.NewEmail,
                 subject: "Confirm your email",
                 content: $"Please confirm your account by clicking {HtmlEncoder.Default.Encode(callbackUrl)}",
                 htmlContent: $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
@@ -130,7 +129,7 @@ public class EmailModel : PageModel
             values: new { area = "Identity", userId, code },
             protocol: Request.Scheme)!;
         _ = await _emailService.SendMail(
-            to: email!,
+            recipient: email!,
             subject: "Confirm your email",
             content: $"Please confirm your account by clicking {HtmlEncoder.Default.Encode(callbackUrl)}",
             htmlContent: $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
@@ -144,19 +143,11 @@ public class EmailModel : PageModel
         var email = await _userManager.GetEmailAsync(user);
         Email = email!;
 
-        Input = new InputModel
+        Input = new EmailInputModel
         {
             NewEmail = email!,
         };
 
         IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
-    }
-
-    public class InputModel
-    {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "New email")]
-        public string NewEmail { get; set; } = null!;
     }
 }

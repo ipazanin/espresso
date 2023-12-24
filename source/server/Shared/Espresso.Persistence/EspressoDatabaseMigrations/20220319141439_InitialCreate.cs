@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+#pragma warning disable CA1861 // Avoid constant arrays as arguments
 
 namespace Espresso.Persistence.EspressoDatabaseMigrations;
 

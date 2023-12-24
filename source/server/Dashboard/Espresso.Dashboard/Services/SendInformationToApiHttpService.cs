@@ -119,7 +119,7 @@ public class SendInformationToApiHttpService : ISendInformationToApiService
         }
         catch (Exception exception)
         {
-            var eventName = Event.SendNewAndUpdatedArticlesRequest.GetDisplayName();
+            var eventName = LoggingEvent.SendNewAndUpdatedArticlesRequest.GetDisplayName();
             var version = _currentVersion;
             var arguments = new (string parameterName, object parameterValue)[]
             {

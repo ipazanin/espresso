@@ -47,7 +47,7 @@ public class ExportImportDatabaseBase : ComponentBase
 
             IsImportInProgress = true;
             StateHasChanged();
-            _ = await sender.Send(importDatabaseRequest);
+            await sender.Send(importDatabaseRequest);
         }
         catch (Exception exception)
         {

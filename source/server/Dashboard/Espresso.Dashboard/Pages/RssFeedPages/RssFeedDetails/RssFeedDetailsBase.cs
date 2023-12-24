@@ -2,6 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+using System.Globalization;
 using Espresso.Application.DataTransferObjects;
 using Espresso.Dashboard.Application.IServices;
 using Espresso.Dashboard.Application.RssFeeds.Commands.UpdateRssFeed;
@@ -100,7 +101,7 @@ public class RssFeedDetailsBase : ComponentBase, IDisposable
             rssFeed: RssFeedDetails.RssFeed,
             rssFeedCategories: RssFeedDetails.RssFeedCategories,
             rssFeedContentModifiers: RssFeedDetails.RssFeedContentModifiers);
-        _ = await sender.Send(command);
+        await sender.Send(command);
 
         NavigationManager.NavigateTo("rss-feeds");
     }
@@ -112,9 +113,9 @@ public class RssFeedDetailsBase : ComponentBase, IDisposable
             return true;
         }
 
-        return parsingMessage.LogLevel.ToString().Contains(ParsingMessagesSearchString, StringComparison.InvariantCultureIgnoreCase) ||
-                parsingMessage.Message.Contains(ParsingMessagesSearchString, StringComparison.InvariantCultureIgnoreCase) ||
-                parsingMessage.RssFeedId.ToString().Contains(ParsingMessagesSearchString, StringComparison.InvariantCultureIgnoreCase);
+        return parsingMessage.LogLevel.ToString().Contains(ParsingMessagesSearchString, StringComparison.OrdinalIgnoreCase) ||
+                parsingMessage.Message.Contains(ParsingMessagesSearchString, StringComparison.OrdinalIgnoreCase) ||
+                parsingMessage.RssFeedId.ToString(CultureInfo.InvariantCulture).Contains(ParsingMessagesSearchString, StringComparison.OrdinalIgnoreCase);
     }
 
     protected Color GetColorFromLogLevel(LogLevel logLevel)

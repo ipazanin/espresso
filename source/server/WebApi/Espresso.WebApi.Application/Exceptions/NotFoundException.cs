@@ -2,11 +2,8 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using System.Runtime.Serialization;
-
 namespace Espresso.WebApi.Application.Exceptions;
 
-[Serializable]
 public class NotFoundException : Exception
 {
     /// <summary>
@@ -34,11 +31,6 @@ public class NotFoundException : Exception
 
     public NotFoundException(string? message, Exception? innerException)
         : base(message, innerException)
-    {
-    }
-
-    protected NotFoundException(SerializationInfo serializationInfo, StreamingContext streamingContext)
-        : base(serializationInfo, streamingContext)
     {
     }
 }

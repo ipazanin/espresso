@@ -6,9 +6,10 @@ namespace Espresso.Domain.Enums.RssFeedEnums;
 
 public enum SearchType
 {
+    None = 0,
     Equals = 1,
     Contains = 2,
-    DateMiliseconds = 3,
+    DateMilliseconds = 3,
     Date = 4,
     Like = 5,
 }

@@ -25,7 +25,7 @@ public class DeleteNewsPortalCommandHandler : IRequestHandler<DeleteNewsPortalCo
         _sendInformationToApiService = sendInformationToApiService;
     }
 
-    public async Task<Unit> Handle(DeleteNewsPortalCommand request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteNewsPortalCommand request, CancellationToken cancellationToken)
     {
         var newsPortalToDelete = await _espressoDatabaseContext
             .NewsPortals
@@ -37,7 +37,5 @@ public class DeleteNewsPortalCommandHandler : IRequestHandler<DeleteNewsPortalCo
 
         await _refreshDashboardCacheService.RefreshCache();
         await _sendInformationToApiService.SendCacheUpdatedNotification();
-
-        return Unit.Value;
     }
 }

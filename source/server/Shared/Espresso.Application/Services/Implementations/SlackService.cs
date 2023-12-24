@@ -2,6 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+using System.Globalization;
 using Espresso.Application.DataTransferObjects.SlackDataTransferObjects;
 using Espresso.Application.Models;
 using Espresso.Application.Services.Contracts;
@@ -112,15 +113,15 @@ public class SlackService : ISlackService
                     fields: new List<SlackMarkdownTextBlock>()
                     {
                         new SlackMarkdownTextBlock("Android"),
-                        new SlackMarkdownTextBlock(applicationStatistics.YesterdayAndroidCount.ToString()),
+                        new SlackMarkdownTextBlock(applicationStatistics.YesterdayAndroidCount.ToString(CultureInfo.InvariantCulture)),
                         new SlackMarkdownTextBlock("iOS"),
-                        new SlackMarkdownTextBlock(applicationStatistics.YesterdayIosCount.ToString()),
+                        new SlackMarkdownTextBlock(applicationStatistics.YesterdayIosCount.ToString(CultureInfo.InvariantCulture)),
                         new SlackMarkdownTextBlock("Total Android"),
-                        new SlackMarkdownTextBlock(applicationStatistics.TotalAndroidCount.ToString()),
+                        new SlackMarkdownTextBlock(applicationStatistics.TotalAndroidCount.ToString(CultureInfo.InvariantCulture)),
                         new SlackMarkdownTextBlock("Total iOS"),
-                        new SlackMarkdownTextBlock(applicationStatistics.TotalIosCount.ToString()),
+                        new SlackMarkdownTextBlock(applicationStatistics.TotalIosCount.ToString(CultureInfo.InvariantCulture)),
                         new SlackMarkdownTextBlock("Total"),
-                        new SlackMarkdownTextBlock((applicationStatistics.TotalIosCount + applicationStatistics.TotalAndroidCount).ToString()),
+                        new SlackMarkdownTextBlock((applicationStatistics.TotalIosCount + applicationStatistics.TotalAndroidCount).ToString(CultureInfo.InvariantCulture)),
                     },
                     accessory: new SlackImageBlock(
                         imageUrl: "https://aux.iconspalace.com/uploads/download-icon-256-361231194.png",
@@ -131,9 +132,9 @@ public class SlackService : ISlackService
                     fields: new List<SlackMarkdownTextBlock>()
                     {
                         new SlackMarkdownTextBlock("Android"),
-                        new SlackMarkdownTextBlock(applicationStatistics.ActiveUsersOnAndroid.ToString()),
+                        new SlackMarkdownTextBlock(applicationStatistics.ActiveUsersOnAndroid.ToString(CultureInfo.InvariantCulture)),
                         new SlackMarkdownTextBlock("iOS"),
-                        new SlackMarkdownTextBlock(applicationStatistics.ActiveUsersOnIos.ToString()),
+                        new SlackMarkdownTextBlock(applicationStatistics.ActiveUsersOnIos.ToString(CultureInfo.InvariantCulture)),
                         new SlackMarkdownTextBlock("Total"),
                         new SlackMarkdownTextBlock($"{applicationStatistics.ActiveUsersOnAndroid + applicationStatistics.ActiveUsersOnIos}"),
                     },
@@ -226,7 +227,7 @@ public class SlackService : ISlackService
         var blocks = new List<SlackBlock>
             {
                 new SlackHeaderBlock(new SlackPlainTextBlock("Total clicks yesterday:")),
-                new SlackTextSectionBlock(new SlackMarkdownTextBlock(totalNumberOfClicks.ToString())),
+                new SlackTextSectionBlock(new SlackMarkdownTextBlock(totalNumberOfClicks.ToString(CultureInfo.InvariantCulture))),
                 new SlackHeaderBlock(new SlackPlainTextBlock("Top Articles")),
             };
 
@@ -243,7 +244,7 @@ public class SlackService : ISlackService
                         new SlackMarkdownTextBlock("*Publish Time*"),
                         new SlackMarkdownTextBlock(article.PublishDateTime.DateTime.ToShortTimeString()),
                         new SlackMarkdownTextBlock("*Number Of Clicks*"),
-                        new SlackMarkdownTextBlock(article.NumberOfClicks.ToString()),
+                        new SlackMarkdownTextBlock(article.NumberOfClicks.ToString(CultureInfo.InvariantCulture)),
                         new SlackMarkdownTextBlock("*Clicks ‰*"),
                         new SlackMarkdownTextBlock($"{Math.Round(totalNumberOfClicks == 0 ? 0 : 100 * article.NumberOfClicks / (double)totalNumberOfClicks, 2)}‰"),
                 },
@@ -330,7 +331,7 @@ public class SlackService : ISlackService
             }
             catch (Exception exception)
             {
-                const string EventName = nameof(Event.SlackServiceException);
+                const string EventName = nameof(LoggingEvent.SlackServiceException);
                 var exceptionMessage = exception.Message;
                 var innerExceptionMessage = exception.InnerException?.Message ?? string.Empty;
 

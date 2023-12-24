@@ -2,6 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+using System.Security.Cryptography;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Extensions;
@@ -38,10 +39,10 @@ public class GetGroupedCategoryArticlesQueryHandler : IRequestHandler<GetGrouped
             article => article.Id.Equals(request.FirstArticleId));
 
         var newsPortalIds = request.NewsPortalIds
-            ?.Replace(" ", string.Empty)
-            ?.Split(',')
-            ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
-            ?.Where(newsPortalId => newsPortalId != default);
+            ?.Replace(" ", string.Empty, StringComparison.Ordinal)
+            .Split(',')
+            .Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
+            .Where(newsPortalId => newsPortalId != default);
 
         var newsPortalDtos = GetNewNewsPortals(
             newsPortalIds: newsPortalIds,
@@ -100,8 +101,6 @@ public class GetGroupedCategoryArticlesQueryHandler : IRequestHandler<GetGrouped
         var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(
             key: MemoryCacheConstants.NewsPortalKey)!;
 
-        var random = new Random();
-
         var newsPortalDtos = newsPortals
             .Where(
                 NewsPortal.GetCategorySugestedNewsPortalsPredicate(
@@ -111,7 +110,7 @@ public class GetGroupedCategoryArticlesQueryHandler : IRequestHandler<GetGrouped
                     maxAgeOfNewNewsPortal: _settingProvider.LatestSetting.NewsPortalSetting.MaxAgeOfNewNewsPortal)
                 .Compile())
             .Select(selector: GetGroupedCategoryArticlesNewsPortal.GetProjection().Compile())
-            .OrderBy(_ => random.Next());
+            .OrderBy(_ => RandomNumberGenerator.GetInt32(100));
 
         return newsPortalDtos;
     }

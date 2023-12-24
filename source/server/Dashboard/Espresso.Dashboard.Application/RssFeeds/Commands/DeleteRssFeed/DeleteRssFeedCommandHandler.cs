@@ -25,7 +25,7 @@ public class DeleteRssFeedCommandHandler : IRequestHandler<DeleteRssFeedCommand>
         _sendInformationToApiService = sendInformationToApiService;
     }
 
-    public async Task<Unit> Handle(DeleteRssFeedCommand request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteRssFeedCommand request, CancellationToken cancellationToken)
     {
         var rssFeedToDelete = await _espressoDatabaseContext
             .RssFeeds
@@ -39,7 +39,5 @@ public class DeleteRssFeedCommandHandler : IRequestHandler<DeleteRssFeedCommand>
 
         await _refreshDashboardCacheService.RefreshCache();
         await _sendInformationToApiService.SendCacheUpdatedNotification();
-
-        return Unit.Value;
     }
 }

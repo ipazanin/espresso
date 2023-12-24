@@ -29,7 +29,7 @@ public class HideArticleCommandHandler : IRequestHandler<HideArticleCommand>
         _memoryCache = memoryCache;
     }
 
-    public async Task<Unit> Handle(
+    public async Task Handle(
         HideArticleCommand request,
         CancellationToken cancellationToken)
     {
@@ -39,14 +39,9 @@ public class HideArticleCommandHandler : IRequestHandler<HideArticleCommand>
 
         var databaseArticle = await _espressoDatabaseContext.Articles.FindAsync(
             keyValues: new object?[] { request.ArticleId },
-            cancellationToken: cancellationToken);
-
-        if (databaseArticle is null)
-        {
-            throw new NotFoundException(
+            cancellationToken: cancellationToken) ?? throw new NotFoundException(
                 typeName: nameof(Article),
                 id: request.ArticleId.ToString());
-        }
 
         databaseArticle.SetIsHidden(request.IsHidden);
         _espressoDatabaseContext.Articles.Update(databaseArticle);
@@ -59,7 +54,5 @@ public class HideArticleCommandHandler : IRequestHandler<HideArticleCommand>
                 key: MemoryCacheConstants.ArticleKey,
                 value: memoryCacheArticles.Values.ToList());
         }
-
-        return Unit.Value;
     }
 }

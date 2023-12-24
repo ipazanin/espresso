@@ -46,9 +46,11 @@ public abstract class ValueObject
     protected static bool EqualOperator(ValueObject left, ValueObject right)
     {
         // Bitwise XOR
+#pragma warning disable S2589 // Boolean expressions should not be gratuitous
         return !(left is null ^ right is null) &&
             right != null &&
             left?.Equals(right) != false;
+#pragma warning restore S2589 // Boolean expressions should not be gratuitous
     }
 
     protected static bool NotEqualOperator(ValueObject left, ValueObject right)

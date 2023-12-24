@@ -39,12 +39,5 @@ public static class DateTimeConstants
         dateTime: UnixEpochStartDateTime,
         offset: TimeSpan.Zero);
 
-    public static DateTime UnixEpochStartDateTime => new(
-        year: 1970,
-        month: 1,
-        day: 1,
-        hour: 0,
-        minute: 0,
-        second: 0,
-        kind: DateTimeKind.Utc);
+    public static DateTime UnixEpochStartDateTime => DateTime.UnixEpoch;
 }

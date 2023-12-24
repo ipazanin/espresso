@@ -31,10 +31,10 @@ public class GetCategoryArticlesQueryHandler_1_3 : IRequestHandler<GetCategoryAr
             key: MemoryCacheConstants.ArticleKey)!;
 
         var newsPortalIds = request.NewsPortalIds
-            ?.Replace(" ", string.Empty)
-            ?.Split(',')
-            ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
-            ?.Where(newsPortalId => newsPortalId != default);
+            ?.Replace(" ", string.Empty, StringComparison.Ordinal)
+            .Split(',')
+            .Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
+            .Where(newsPortalId => newsPortalId != default);
 
         var articleDtos = articles
             .OrderArticlesByPublishDate()

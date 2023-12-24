@@ -107,7 +107,7 @@ public class CreateRssFeedBase : ComponentBase
             rssFeed: RssFeedDetails.RssFeed,
             rssFeedCategories: RssFeedDetails.RssFeedCategories,
             rssFeedContentModifiers: RssFeedDetails.RssFeedContentModifiers);
-        _ = await sender.Send(command);
+        await sender.Send(command);
 
         NavigationManager.NavigateTo("rss-feeds");
     }

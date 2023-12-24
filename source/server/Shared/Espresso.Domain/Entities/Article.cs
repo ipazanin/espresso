@@ -184,35 +184,35 @@ public class Article
     {
         var shouldUpdate = false;
         var modifiedProperties = new List<string>();
-        if (!Url.Equals(other.Url))
+        if (!Url.Equals(other.Url, StringComparison.Ordinal))
         {
             Url = other.Url;
             shouldUpdate = true;
             modifiedProperties.Add(nameof(Url));
         }
 
-        if (!WebUrl.Equals(other.WebUrl))
+        if (!WebUrl.Equals(other.WebUrl, StringComparison.Ordinal))
         {
             WebUrl = other.WebUrl;
             shouldUpdate = true;
             modifiedProperties.Add(nameof(WebUrl));
         }
 
-        if (!Summary.Equals(other.Summary))
+        if (!Summary.Equals(other.Summary, StringComparison.Ordinal))
         {
             Summary = other.Summary;
             shouldUpdate = true;
             modifiedProperties.Add(nameof(Summary));
         }
 
-        if (!Title.Equals(other.Title))
+        if (!Title.Equals(other.Title, StringComparison.Ordinal))
         {
             Title = other.Title;
             shouldUpdate = true;
             modifiedProperties.Add(nameof(Title));
         }
 
-        if (!(ImageUrl is null ? other.ImageUrl is null : ImageUrl.Equals(other.ImageUrl)))
+        if (!(ImageUrl is null ? other.ImageUrl is null : ImageUrl.Equals(other.ImageUrl, StringComparison.Ordinal)))
         {
             ImageUrl = other.ImageUrl;
             shouldUpdate = true;

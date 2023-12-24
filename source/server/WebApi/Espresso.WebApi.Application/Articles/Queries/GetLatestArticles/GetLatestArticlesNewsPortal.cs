@@ -2,7 +2,6 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using System.Linq.Expressions;
 using Espresso.Domain.Entities;
 
 namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles;

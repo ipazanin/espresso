@@ -18,9 +18,9 @@ public class ArticleDatabaseLoaderService : IArticleLoaderService
         _espressoDatabaseContext = espressoDatabaseContext;
     }
 
-    public async Task<IEnumerable<Article>> LoadArticlesForWebApi(
-        IEnumerable<NewsPortal> newsPortals,
-        IEnumerable<Category> categories,
+    public async Task<IReadOnlyList<Article>> LoadArticlesForWebApi(
+        IReadOnlyList<NewsPortal> newsPortals,
+        IReadOnlyList<Category> categories,
         CancellationToken cancellationToken)
     {
         var articles = await LoadArticles()
@@ -34,10 +34,10 @@ public class ArticleDatabaseLoaderService : IArticleLoaderService
         return articles;
     }
 
-    public async Task<IEnumerable<Article>> LoadArticlesForWebApi(
+    public async Task<IReadOnlyList<Article>> LoadArticlesForWebApi(
         ISet<Guid> articleIds,
-        IEnumerable<NewsPortal> newsPortals,
-        IEnumerable<Category> categories,
+        IReadOnlyList<NewsPortal> newsPortals,
+        IReadOnlyList<Category> categories,
         CancellationToken cancellationToken)
     {
         var articles = await LoadArticles()
@@ -53,9 +53,9 @@ public class ArticleDatabaseLoaderService : IArticleLoaderService
     }
 
     private static void UpdateArticleRelations(
-        IEnumerable<Article> articles,
-        IEnumerable<NewsPortal> newsPortals,
-        IEnumerable<Category> categories)
+        IReadOnlyList<Article> articles,
+        IReadOnlyList<NewsPortal> newsPortals,
+        IReadOnlyList<Category> categories)
     {
         var newsPortalsDictionary = newsPortals
             .ToDictionary(newsPortal => newsPortal.Id);

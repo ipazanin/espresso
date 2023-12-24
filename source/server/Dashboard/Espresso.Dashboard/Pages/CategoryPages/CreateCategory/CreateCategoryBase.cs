@@ -55,7 +55,7 @@ public class CreateCategoryBase : ComponentBase
             return;
         }
 
-        _ = await Sender.Send(new CreateCategoryCommand(Category));
+        await Sender.Send(new CreateCategoryCommand(Category));
 
         NavigationManager.NavigateTo("/categories");
     }

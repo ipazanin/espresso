@@ -54,7 +54,7 @@ public class CreateRegionBase : ComponentBase
             return;
         }
 
-        _ = await Sender.Send(new CreateRegionCommand(RegionDetails.Region));
+        await Sender.Send(new CreateRegionCommand(RegionDetails.Region));
 
         NavigationManager.NavigateTo("/categories");
     }

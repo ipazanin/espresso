@@ -12,7 +12,7 @@ public class ParsingMessagesService : IParsingMessagesService
 {
     private const int MessagesCapacity = 100;
 
-    private readonly IDictionary<int, CircularBuffer<ParsingErrorMessageDto>> _parseMessages = new Dictionary<int, CircularBuffer<ParsingErrorMessageDto>>();
+    private readonly Dictionary<int, CircularBuffer<ParsingErrorMessageDto>> _parseMessages = new();
 
     private readonly object _messagesLock = new();
 

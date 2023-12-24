@@ -2,7 +2,6 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,9 +12,7 @@ using Microsoft.Extensions.Logging;
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account;
 
 [AllowAnonymous]
-#pragma warning disable SA1649 // File name should match first type name
 public class LoginModel : PageModel
-#pragma warning restore SA1649 // File name should match first type name
 {
     private readonly SignInManager<IdentityUser> _signInManager;
     private readonly ILogger<LoginModel> _logger;
@@ -34,28 +31,16 @@ public class LoginModel : PageModel
     }
 
     [BindProperty]
-    public InputModel Input { get; set; } = null!;
+    public LoginInputModel Input { get; set; } = null!;
 
+#pragma warning disable CA2227 // Collection properties should be read only
     public IList<AuthenticationScheme> ExternalLogins { get; set; } = null!;
+#pragma warning restore CA2227 // Collection properties should be read only
 
     public string? ReturnUrl { get; set; }
 
     [TempData]
     public string? ErrorMessage { get; set; }
-
-    public class InputModel
-    {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; } = null!;
-
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; } = null!;
-
-        [Display(Name = "Remember me?")]
-        public bool RememberMe { get; set; }
-    }
 
     /// <summary>
     ///

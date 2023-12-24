@@ -14,17 +14,17 @@ public interface ILoggerService<TCaller>
     public void Log(
         string eventName,
         LogLevel logLevel,
-        IEnumerable<(string argumentName, object argumentValue)>? namedArguments = null);
+        IReadOnlyList<(string argumentName, object argumentValue)>? namedArguments = null);
 
     public void Log(
         string eventName,
         string errorMessage,
         LogLevel logLevel,
-        IEnumerable<(string argumentName, object argumentValue)>? namedArguments = null);
+        IReadOnlyList<(string argumentName, object argumentValue)>? namedArguments = null);
 
     public void Log(
         string eventName,
         Exception exception,
         LogLevel logLevel,
-        IEnumerable<(string argumentName, object argumentValue)>? namedArguments = null);
+        IReadOnlyList<(string argumentName, object argumentValue)>? namedArguments = null);
 }

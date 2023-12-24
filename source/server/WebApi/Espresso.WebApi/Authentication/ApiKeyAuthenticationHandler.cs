@@ -34,21 +34,18 @@ public class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthentic
     /// <param name="options"></param>
     /// <param name="logger"></param>
     /// <param name="encoder"></param>
-    /// <param name="clock"></param>
     /// <param name="apiKeyProvider"></param>
     /// <param name="jsonService"></param>
     public ApiKeyAuthenticationHandler(
         IOptionsMonitor<ApiKeyAuthenticationOptions> options,
         ILoggerFactory logger,
         UrlEncoder encoder,
-        ISystemClock clock,
         IApiKeyProvider apiKeyProvider,
         IJsonService jsonService)
         : base(
         options: options,
         logger: logger,
-        encoder: encoder,
-        clock: clock)
+        encoder: encoder)
     {
         _apiKeyProvider = apiKeyProvider;
         _jsonService = jsonService;

@@ -24,7 +24,7 @@ public class CreateRegionCommandHandler : IRequestHandler<CreateRegionCommand>
         _sendInformationToApiService = sendInformationToApiService;
     }
 
-    public async Task<Unit> Handle(CreateRegionCommand request, CancellationToken cancellationToken)
+    public async Task Handle(CreateRegionCommand request, CancellationToken cancellationToken)
     {
         var createdRegion = request.Region.CreateRegion();
 
@@ -34,7 +34,5 @@ public class CreateRegionCommandHandler : IRequestHandler<CreateRegionCommand>
 
         await _refreshDashboardCacheService.RefreshCache();
         await _sendInformationToApiService.SendCacheUpdatedNotification();
-
-        return Unit.Value;
     }
 }

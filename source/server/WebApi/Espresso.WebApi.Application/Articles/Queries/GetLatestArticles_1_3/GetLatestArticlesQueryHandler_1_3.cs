@@ -34,16 +34,16 @@ public class GetLatestArticlesQueryHandler_1_3 : IRequestHandler<GetLatestArticl
             key: MemoryCacheConstants.ArticleKey)!;
 
         var newsPortalIds = request.NewsPortalIds
-            ?.Replace(" ", string.Empty)
-            ?.Split(',')
-            ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
-            ?.Where(newsPortalId => newsPortalId != default);
+            ?.Replace(" ", string.Empty, StringComparison.Ordinal)
+            .Split(',')
+            .Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
+            .Where(newsPortalId => newsPortalId != default);
 
         var categoryIds = request.CategoryIds
-            ?.Replace(" ", string.Empty)
-            ?.Split(',')
-            ?.Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
-            ?.Where(categoryId => categoryId != default);
+            ?.Replace(" ", string.Empty, StringComparison.Ordinal)
+            .Split(',')
+            .Select(categoryIdString => int.TryParse(categoryIdString, out var categoryId) ? categoryId : default)
+            .Where(categoryId => categoryId != default);
 
         var articleDtos = articles
             .OrderArticlesByPublishDate()

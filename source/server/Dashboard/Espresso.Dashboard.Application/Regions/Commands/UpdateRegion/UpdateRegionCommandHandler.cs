@@ -24,7 +24,7 @@ public class UpdateRegionCommandHandler : IRequestHandler<UpdateRegionCommand>
         _refreshDashboardCacheService = refreshDashboardCacheService;
     }
 
-    public async Task<Unit> Handle(UpdateRegionCommand request, CancellationToken cancellationToken)
+    public async Task Handle(UpdateRegionCommand request, CancellationToken cancellationToken)
     {
         var updatedRegion = request.Region.CreateRegion();
 
@@ -34,7 +34,5 @@ public class UpdateRegionCommandHandler : IRequestHandler<UpdateRegionCommand>
 
         await _refreshDashboardCacheService.RefreshCache();
         await _sendInformationToApiService.SendCacheUpdatedNotification();
-
-        return Unit.Value;
     }
 }

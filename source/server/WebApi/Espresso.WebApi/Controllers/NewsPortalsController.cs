@@ -158,7 +158,7 @@ public class NewsPortalsController : ApiController
         [FromBody] RequestNewsPortalRequestBody requestNewsPortalRequestObject,
         CancellationToken cancellationToken)
     {
-        var getNewsPortalsQueryResponse = await Sender.Send(
+        await Sender.Send(
             request: new NewsSourcesRequestCommand
             {
                 NewsPortalName = requestNewsPortalRequestObject.NewsPortalName ?? string.Empty,
@@ -170,6 +170,6 @@ public class NewsPortalsController : ApiController
             },
             cancellationToken: cancellationToken);
 
-        return Ok(getNewsPortalsQueryResponse);
+        return Ok();
     }
 }

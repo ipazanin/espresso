@@ -124,7 +124,7 @@ public class RssFeed
 
         foreach (var rssFeedContentModifier in orderedRssFeedContentModifiers)
         {
-            feedContent = feedContent.Replace(rssFeedContentModifier.SourceValue, rssFeedContentModifier.ReplacementValue);
+            feedContent = feedContent.Replace(rssFeedContentModifier.SourceValue, rssFeedContentModifier.ReplacementValue, StringComparison.Ordinal);
         }
 
         return feedContent;

@@ -54,7 +54,7 @@ public class CategoryDetailsBase : ComponentBase
             return;
         }
 
-        _ = await Sender.Send(new UpdateCategoryCommand(Category));
+        await Sender.Send(new UpdateCategoryCommand(Category));
 
         NavigationManager.NavigateTo("/categories");
     }

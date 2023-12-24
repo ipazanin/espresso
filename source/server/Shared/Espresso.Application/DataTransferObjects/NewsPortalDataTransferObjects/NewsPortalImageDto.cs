@@ -22,7 +22,9 @@ public sealed class NewsPortalImageDto
 
     public int Id { get; set; }
 
+#pragma warning disable CA1819 // Properties should not return arrays
     public byte[]? ImageBytes { get; set; }
+#pragma warning restore CA1819 // Properties should not return arrays
 
     public int NewsPortalId { get; set; }
 

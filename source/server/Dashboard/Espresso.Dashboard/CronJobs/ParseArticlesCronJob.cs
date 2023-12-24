@@ -79,8 +79,8 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
         var configuration = scope.ServiceProvider.GetRequiredService<IDashboardConfiguration>();
 
         var articles = _memoryCache.Get<IDictionary<Guid, Article>>(MemoryCacheConstants.ArticleKey)!;
-        var rssFeeds = _memoryCache.Get<IEnumerable<RssFeed>>(MemoryCacheConstants.RssFeedKey)!;
-        var categories = _memoryCache.Get<IEnumerable<Category>>(MemoryCacheConstants.CategoryKey)!;
+        var rssFeeds = _memoryCache.Get<IReadOnlyList<RssFeed>>(MemoryCacheConstants.RssFeedKey)!;
+        var categories = _memoryCache.Get<IReadOnlyList<Category>>(MemoryCacheConstants.CategoryKey)!;
 
         _ = await mediator.Send(
             request: new ParseRssFeedsCommand

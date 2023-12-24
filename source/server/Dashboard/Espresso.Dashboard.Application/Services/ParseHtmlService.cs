@@ -50,7 +50,7 @@ public partial class ParseHtmlService : IParseHtmlService
 
         if (summary.Length > Article.SummaryMaxLength)
         {
-            summary = summary.Replace(@"\n", " ");
+            summary = summary.Replace(@"\n", " ", StringComparison.InvariantCulture);
             summary = $"{string.Concat(summary.Take(Article.SummaryMaxLength - 4))}...";
         }
 

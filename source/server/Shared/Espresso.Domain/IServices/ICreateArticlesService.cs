@@ -20,6 +20,6 @@ public interface ICreateArticlesService
     /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
     public Task CreateArticlesFromRssFeedItems(
         ChannelReader<RssFeedItem> rssFeedItemChannelReader,
-        IEnumerable<Category> categories,
+        IReadOnlyList<Category> categories,
         CancellationToken cancellationToken);
 }

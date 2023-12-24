@@ -25,10 +25,10 @@ public class TrendingScoreService : ITrendingScoreService
         _ageWeight = ageWeight;
     }
 
-    public IEnumerable<Article> CalculateTrendingScore(IEnumerable<Article> articles)
+    public IReadOnlyList<Article> CalculateTrendingScore(IReadOnlyList<Article> articles)
     {
-        var clicksPerArticle = articles.Select(articleKey => articleKey.NumberOfClicks);
-        var numberOfArticles = articles.Count();
+        var clicksPerArticle = articles.Select(articleKey => articleKey.NumberOfClicks).ToArray();
+        var numberOfArticles = articles.Count;
 
         var averageClicks = numberOfArticles == 0 ? 0M : clicksPerArticle.Select(click => (decimal)click).Average();
 
@@ -38,7 +38,7 @@ public class TrendingScoreService : ITrendingScoreService
             averageClicks: averageClicks);
 
         var maxTrendingScore = numberOfArticles == 0 ? 0M : clicksPerArticle
-            .Max(clicks => CalculateUnNormalisedTrendingScore(
+            .Max(clicks => CalculateUnNormalizedTrendingScore(
                 clicks: clicks,
                 averageClicks: averageClicks,
                 standardClicksDeviation: standardClicksDeviation));
@@ -65,7 +65,7 @@ public class TrendingScoreService : ITrendingScoreService
         decimal maxTrendingScore,
         DateTimeOffset publishDateTime)
     {
-        var trendingScore = CalculateUnNormalisedTrendingScore(
+        var trendingScore = CalculateUnNormalizedTrendingScore(
                 clicks: clicks,
                 averageClicks: averageClicks,
                 standardClicksDeviation: standardClicksDeviation);
@@ -117,7 +117,7 @@ public class TrendingScoreService : ITrendingScoreService
         return standardClicksDeviation;
     }
 
-    private static decimal CalculateUnNormalisedTrendingScore(
+    private static decimal CalculateUnNormalizedTrendingScore(
         int clicks,
         decimal averageClicks,
         decimal standardClicksDeviation)

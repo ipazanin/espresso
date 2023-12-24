@@ -2,7 +2,6 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using System.Linq.Expressions;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 
@@ -44,7 +43,7 @@ public sealed class GetPushNotificationsPushNotification
             Topic = pushNotification.Topic,
             ArticleUrl = pushNotification.ArticleUrl,
             IsSoundEnabled = pushNotification.IsSoundEnabled,
-            CreatedAt = pushNotification.CreatedAt.ToString(DateTimeConstants.MobileAppDateTimeFormat),
+            CreatedAt = pushNotification.CreatedAt.ToString(DateTimeConstants.MobileAppDateTimeFormat, CultureInfo.InvariantCulture),
         };
     }
 }

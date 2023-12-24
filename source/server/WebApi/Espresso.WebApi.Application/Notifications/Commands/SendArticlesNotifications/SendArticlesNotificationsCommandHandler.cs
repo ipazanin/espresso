@@ -29,11 +29,11 @@ public class SendArticlesNotificationsCommandHandler : IRequestHandler<SendArtic
         _espressoDatabaseContext = espressoDatabaseContext;
     }
 
-    public async Task<Unit> Handle(SendArticlesNotificationsCommand request, CancellationToken cancellationToken)
+    public async Task Handle(SendArticlesNotificationsCommand request, CancellationToken cancellationToken)
     {
         if (!request.CreatedArticleIds.Any())
         {
-            return Unit.Value;
+            return;
         }
 
         var createArticleIds = request
@@ -52,7 +52,5 @@ public class SendArticlesNotificationsCommandHandler : IRequestHandler<SendArtic
             method: LatestArticlesClientMethodName,
             arg1: newArticlesNotificationDto,
             cancellationToken: cancellationToken);
-
-        return Unit.Value;
     }
 }

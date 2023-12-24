@@ -30,7 +30,7 @@ public class SetFeaturedArticleCommandHandler : IRequestHandler<SetFeaturedArtic
         _context = context;
     }
 
-    public async Task<Unit> Handle(
+    public async Task Handle(
         SetFeaturedArticleCommand request,
         CancellationToken cancellationToken)
     {
@@ -67,7 +67,5 @@ public class SetFeaturedArticleCommandHandler : IRequestHandler<SetFeaturedArtic
         _memoryCache.Set(
             key: MemoryCacheConstants.ArticleKey,
             value: memoryCacheArticles.Values.ToList());
-
-        return Unit.Value;
     }
 }

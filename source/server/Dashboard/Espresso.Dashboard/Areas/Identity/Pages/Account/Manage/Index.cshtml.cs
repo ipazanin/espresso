@@ -2,14 +2,13 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage;
 
-public partial class IndexModel : PageModel
+public class IndexModel : PageModel
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
@@ -33,7 +32,7 @@ public partial class IndexModel : PageModel
     public string? StatusMessage { get; set; }
 
     [BindProperty]
-    public InputModel Input { get; set; } = null!;
+    public ManageAccountInputModel Input { get; set; } = null!;
 
     /// <summary>
     ///
@@ -92,16 +91,9 @@ public partial class IndexModel : PageModel
 
         Username = userName!;
 
-        Input = new InputModel
+        Input = new ManageAccountInputModel
         {
             PhoneNumber = phoneNumber!,
         };
-    }
-
-    public class InputModel
-    {
-        [Phone]
-        [Display(Name = "Phone number")]
-        public string PhoneNumber { get; set; } = null!;
     }
 }

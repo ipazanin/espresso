@@ -56,7 +56,7 @@ public static class SwaggerServiceCollectionExtensions
                 .DeclaredApiVersions
                 .Select(supportedApiVersion => supportedApiVersion.ToString());
 
-            return apiVersions.Any(v => version.Equals(v));
+            return apiVersions.Any(v => version.Equals(v, StringComparison.Ordinal));
         });
     }
 

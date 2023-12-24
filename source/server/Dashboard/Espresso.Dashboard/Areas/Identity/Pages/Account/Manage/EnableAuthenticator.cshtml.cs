@@ -2,7 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +10,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
 namespace Espresso.Dashboard.Areas.Identity.Pages.Account.Manage;
+
 #pragma warning disable SA1649 // File name should match first type name
 public class EnableAuthenticatorModel : PageModel
 #pragma warning restore SA1649 // File name should match first type name
 {
     private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
+
+    private static readonly CompositeFormat s_authenticatorUriCompositeFormat = CompositeFormat.Parse(AuthenticatorUriFormat);
 
     private readonly UserManager<IdentityUser> _userManager;
     private readonly ILogger<EnableAuthenticatorModel> _logger;
@@ -40,23 +43,16 @@ public class EnableAuthenticatorModel : PageModel
 
     public string AuthenticatorUri { get; set; } = null!;
 
+#pragma warning disable CA1819 // Properties should not return arrays
     [TempData]
     public string[]? RecoveryCodes { get; set; }
+#pragma warning restore CA1819 // Properties should not return arrays
 
     [TempData]
     public string? StatusMessage { get; set; }
 
     [BindProperty]
-    public InputModel Input { get; set; } = null!;
-
-    public class InputModel
-    {
-        [Required]
-        [StringLength(7, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Text)]
-        [Display(Name = "Verification Code")]
-        public string Code { get; set; } = null!;
-    }
+    public EnableAuthenticatorInputModel Input { get; set; } = null!;
 
     /// <summary>
     ///
@@ -95,8 +91,11 @@ public class EnableAuthenticatorModel : PageModel
             return Page();
         }
 
-        // Strip spaces and hypens
-        var verificationCode = Input.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
+        // Strip spaces and hyphens
+        var verificationCode = Input
+            .Code
+            .Replace(" ", string.Empty, StringComparison.Ordinal)
+            .Replace("-", string.Empty, StringComparison.Ordinal);
 
         var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
             user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
@@ -139,7 +138,9 @@ public class EnableAuthenticatorModel : PageModel
             _ = result.Append(unformattedKey[currentPosition..]);
         }
 
+#pragma warning disable CA1308 // Normalize strings to uppercase
         return result.ToString().ToLowerInvariant();
+#pragma warning restore CA1308 // Normalize strings to uppercase
     }
 
     private async Task LoadSharedKeyAndQrCodeUriAsync(IdentityUser user)
@@ -161,9 +162,10 @@ public class EnableAuthenticatorModel : PageModel
     private string GenerateQrCodeUri(string email, string unformattedKey)
     {
         return string.Format(
-            AuthenticatorUriFormat,
-            _urlEncoder.Encode("Espresso.Dashboard"),
-            _urlEncoder.Encode(email),
-            unformattedKey);
+            CultureInfo.InvariantCulture,
+            format: s_authenticatorUriCompositeFormat,
+            arg0: _urlEncoder.Encode("Espresso.Dashboard"),
+            arg1: _urlEncoder.Encode(email),
+            arg2: unformattedKey);
     }
 }

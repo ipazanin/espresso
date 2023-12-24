@@ -48,20 +48,15 @@ public class SendPushNotificationCommandHandler : IRequestHandler<SendPushNotifi
         _applicationInformation = applicationInformation;
     }
 
-    public async Task<Unit> Handle(SendPushNotificationCommand request, CancellationToken cancellationToken)
+    public async Task Handle(SendPushNotificationCommand request, CancellationToken cancellationToken)
     {
         if (_applicationInformation.AppEnvironment != Common.Enums.AppEnvironment.Prod)
         {
-            return Unit.Value;
+            return;
         }
 
         var articles = _memoryCache.Get<IEnumerable<Article>>(MemoryCacheConstants.ArticleKey)!;
-        var pushNotificationArticle = articles.FirstOrDefault(article => article.Id == request.ArticleId);
-
-        if (pushNotificationArticle is null)
-        {
-            throw new NotFoundException("Article was not found!");
-        }
+        var pushNotificationArticle = articles.FirstOrDefault(article => article.Id == request.ArticleId) ?? throw new NotFoundException("Article was not found!");
 
         var articleDto = SendPushNotificationArticle
             .GetProjection()
@@ -121,14 +116,12 @@ public class SendPushNotificationCommandHandler : IRequestHandler<SendPushNotifi
             pushNotification: pushNotification,
             article: pushNotificationArticle,
             cancellationToken: cancellationToken);
-
-        return Unit.Value;
     }
 
     private static string GetInternalName(string? internalName)
     {
         return string.IsNullOrWhiteSpace(internalName) ?
-            $"ESPR-{DateTimeOffset.UtcNow.ToString(DateTimeConstants.PushNotificationInternalNameFormat)}" :
+            $"ESPR-{DateTimeOffset.UtcNow.ToString(DateTimeConstants.PushNotificationInternalNameFormat, CultureInfo.InvariantCulture)}" :
             internalName;
     }
 }

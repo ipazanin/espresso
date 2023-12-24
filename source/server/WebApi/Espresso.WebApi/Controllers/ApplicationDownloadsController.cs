@@ -71,7 +71,7 @@ public class ApplicationDownloadsController : ApiController
             DeviceType = basicInformationsHeaderParameters.DeviceType,
         };
 
-        _ = await Sender.Send(
+        await Sender.Send(
                 request: command,
                 cancellationToken: cancellationToken);
 
@@ -110,7 +110,7 @@ public class ApplicationDownloadsController : ApiController
             ConsumerVersion = mobileAppVersion,
             DeviceType = mobileDeviceType,
         };
-        _ = await Sender.Send(
+        await Sender.Send(
             request: command,
             cancellationToken: cancellationToken);
 

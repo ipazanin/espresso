@@ -24,7 +24,7 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
         _refreshDashboardCacheService = refreshDashboardCacheService;
     }
 
-    public async Task<Unit> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+    public async Task Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
     {
         var updatedCategory = request.Category.CreateCategory();
 
@@ -33,7 +33,5 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
 
         await _sendInformationToApiService.SendCacheUpdatedNotification();
         await _refreshDashboardCacheService.RefreshCache();
-
-        return Unit.Value;
     }
 }

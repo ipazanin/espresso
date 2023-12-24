@@ -18,14 +18,6 @@ public interface IEspressoIdentityDatabaseContext
     public DatabaseFacade Database { get; }
 
     /// <summary>
-    ///  Creates a Microsoft.EntityFrameworkCore.DbSet`1 that can be used to query and save instances of TEntity.
-    /// </summary>
-    /// <typeparam name="T">The type of entity for which a set should be returned.</typeparam>
-    /// <returns>A set for the given entity type.</returns>
-    public DbSet<T> Set<T>()
-        where T : class;
-
-    /// <summary>
     /// Saves all changes made in this context to the database. <br/>
     /// This method will automatically call Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.DetectChanges
     /// to discover any changes to entity instances before saving to the underlying database. <br/>

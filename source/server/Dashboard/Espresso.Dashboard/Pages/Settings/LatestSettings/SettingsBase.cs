@@ -22,7 +22,9 @@ public class SettingsBase : ComponentBase
 
     protected GetLatestSettingQueryResponse? GetLatestSettingQueryResponse { get; set; }
 
+#pragma warning disable CA1819 // Properties should not return arrays
     protected string[] Errors { get; set; } = Array.Empty<string>();
+#pragma warning restore CA1819 // Properties should not return arrays
 
     protected MudForm? Form { get; set; }
 
@@ -65,7 +67,7 @@ public class SettingsBase : ComponentBase
         var sender = scope.ServiceProvider.GetRequiredService<ISender>();
 
         var command = new UpdateSettingCommand(GetLatestSettingQueryResponse.Setting);
-        _ = await sender.Send(command);
+        await sender.Send(command);
 
         NavigationManager.NavigateTo("/");
     }

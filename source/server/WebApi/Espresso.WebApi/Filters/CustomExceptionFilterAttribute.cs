@@ -23,12 +23,8 @@ namespace Espresso.WebApi.Filters;
 /// Filters thrown exceptions and sets appropriate HTTP Status Code.
 /// </summary>
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
+public sealed class CustomExceptionFilterAttribute : ExceptionFilterAttribute
 {
-    private readonly IWebApiConfiguration _webApiConfiguration;
-    private readonly ISlackService _slackService;
-    private readonly ILoggerService<CustomExceptionFilterAttribute> _loggerService;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="CustomExceptionFilterAttribute"/> class.
     /// </summary>
@@ -40,10 +36,16 @@ public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
         ISlackService slackService,
         ILoggerService<CustomExceptionFilterAttribute> loggerService)
     {
-        _webApiConfiguration = webApiConfiguration;
-        _slackService = slackService;
-        _loggerService = loggerService;
+        WebApiConfiguration = webApiConfiguration;
+        SlackService = slackService;
+        LoggerService = loggerService;
     }
+
+    public IWebApiConfiguration WebApiConfiguration { get; }
+
+    public ISlackService SlackService { get; }
+
+    public ILoggerService<CustomExceptionFilterAttribute> LoggerService { get; }
 
     /// <summary>
     ///
@@ -75,7 +77,7 @@ public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
             innerExceptionStackTrace: context.Exception.InnerException?.StackTrace,
             errors: errors);
 
-        var exceptionModel = _webApiConfiguration.AppConfiguration.AppEnvironment switch
+        var exceptionModel = WebApiConfiguration.AppConfiguration.AppEnvironment switch
         {
             AppEnvironment.Prod => new ExceptionDto(
                 exceptionMessage: FormatConstants.UnhandledExceptionMessage,
@@ -92,17 +94,17 @@ public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
         context.Result = new JsonResult(
             value: exceptionModel);
 
-        var eventName = Event.CustomExceptionFilterAttribute.GetDisplayName();
-        var version = _webApiConfiguration.AppConfiguration.Version;
+        var eventName = LoggingEvent.CustomExceptionFilterAttribute.GetDisplayName();
+        var version = WebApiConfiguration.AppConfiguration.Version;
 
         var arguments = new (string, object)[]
         {
                 (nameof(version), version),
         };
 
-        _loggerService.Log(eventName, context.Exception, LogLevel.Error, arguments);
+        LoggerService.Log(eventName, context.Exception, LogLevel.Error, arguments);
 
-        return _slackService.LogError(
+        return SlackService.LogError(
                 eventName: eventName,
                 message: context.Exception.Message,
                 exception: context.Exception,

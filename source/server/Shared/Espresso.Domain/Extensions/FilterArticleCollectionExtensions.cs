@@ -58,8 +58,8 @@ public static class FilterArticleCollectionExtensions
 
         var filteredArticles = articles.Where(
             article => !BannedKeywords.Any(
-                bannedKeyword => article.Title.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase) ||
-                    article.Summary.Contains(bannedKeyword, StringComparison.InvariantCultureIgnoreCase)));
+                bannedKeyword => article.Title.Contains(bannedKeyword, StringComparison.OrdinalIgnoreCase) ||
+                    article.Summary.Contains(bannedKeyword, StringComparison.OrdinalIgnoreCase)));
 
         return filteredArticles;
     }
@@ -67,7 +67,7 @@ public static class FilterArticleCollectionExtensions
     public static IEnumerable<Article> FilterArticlesContainingKeyWords(this IEnumerable<Article> articles, IEnumerable<string> keywords)
     {
         return articles
-            .Where(article => !keywords.Any(keyword => article.Title.Contains(keyword, StringComparison.InvariantCultureIgnoreCase)));
+            .Where(article => !keywords.Any(keyword => article.Title.Contains(keyword, StringComparison.OrdinalIgnoreCase)));
     }
 
     public static IEnumerable<Article> FilterArticles(
@@ -94,7 +94,7 @@ public static class FilterArticleCollectionExtensions
                             .All(searchTerm => article
                                 .Title
                                 .ReplaceCroatianCharacters()
-                                .Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase)) != false));
+                                .Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) != false));
 
         return filteredArticles;
     }

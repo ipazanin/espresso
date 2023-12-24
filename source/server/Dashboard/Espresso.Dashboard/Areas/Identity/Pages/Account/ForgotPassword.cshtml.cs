@@ -2,7 +2,6 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using Espresso.Common.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -33,14 +32,7 @@ public class ForgotPasswordModel : PageModel
     }
 
     [BindProperty]
-    public InputModel Input { get; set; } = null!;
-
-    public class InputModel
-    {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; } = null!;
-    }
+    public ForgetPasswordInputModel Input { get; set; } = null!;
 
     /// <summary>
     ///
@@ -59,7 +51,7 @@ public class ForgotPasswordModel : PageModel
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
 
-            // For more information on how to enable account confirmation and password reset please 
+            // For more information on how to enable account confirmation and password reset please
             // visit https://go.microsoft.com/fwlink/?LinkID=532713
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -70,7 +62,7 @@ public class ForgotPasswordModel : PageModel
                 protocol: Request.Scheme)!;
 
             await _emailService.SendMail(
-                to: Input.Email,
+                recipient: Input.Email,
                 subject: "Reset Password",
                 content: $"Please reset your password by clicking {HtmlEncoder.Default.Encode(callbackUrl)}",
                 htmlContent: $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

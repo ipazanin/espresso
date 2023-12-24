@@ -600,7 +600,7 @@ public class ArticlesController : ApiController
         [Required] Guid articleId,
         CancellationToken cancellationToken)
     {
-        _ = await Sender.Send(
+        await Sender.Send(
             request: new IncrementNumberOfClicksCommand
             {
                 Id = articleId,
@@ -646,7 +646,7 @@ public class ArticlesController : ApiController
         [FromQuery][Required] bool isHidden,
         CancellationToken cancellationToken)
     {
-        _ = await Sender.Send(
+        await Sender.Send(
             request: new HideArticleCommand
             {
                 ArticleId = articleId,
@@ -691,7 +691,7 @@ public class ArticlesController : ApiController
         [FromBody][Required] IEnumerable<SetArticleFeaturedConfigurationRequestBody> requestBody,
         CancellationToken cancellationToken)
     {
-        _ = await Sender.Send(
+        await Sender.Send(
             request: new SetFeaturedArticleCommand
             {
                 FeaturedArticleConfigurations = requestBody

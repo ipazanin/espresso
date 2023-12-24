@@ -2,6 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+using System.Globalization;
 using Espresso.Common.Constants;
 
 namespace Espresso.Application.Middleware.SecurityHeaders;
@@ -11,6 +12,14 @@ namespace Espresso.Application.Middleware.SecurityHeaders;
 /// </summary>
 public class SecurityHeadersBuilder
 {
+    private static readonly CompositeFormat s_frameOptionsAllowFromUriCompositeFormat = CompositeFormat.Parse(HttpHeaderConstants.FrameOptionsAllowFromUri);
+
+    private static readonly CompositeFormat s_xssProtectionReportCompositeFormat = CompositeFormat.Parse(HttpHeaderConstants.XssProtectionReport);
+
+    private static readonly CompositeFormat s_strictTransportSecurityMaxAgeCompositeFormat = CompositeFormat.Parse(HttpHeaderConstants.StrictTransportSecurityMaxAge);
+
+    private static readonly CompositeFormat s_strictTransportSecurityMaxAgeIncludeSubdomainsCompositeFormat = CompositeFormat.Parse(HttpHeaderConstants.StrictTransportSecurityMaxAgeIncludeSubdomains);
+
     private readonly SecurityHeadersPolicy _policy = new();
 
     /// <summary>
@@ -57,7 +66,7 @@ public class SecurityHeadersBuilder
     /// <returns>Current <see cref="SecurityHeadersBuilder"/>.</returns>
     public SecurityHeadersBuilder AddFrameOptionsSameOrigin(string uri)
     {
-        _policy.SetHeaders[HttpHeaderConstants.FrameOptionsHeader] = string.Format(HttpHeaderConstants.FrameOptionsAllowFromUri, uri);
+        _policy.SetHeaders[HttpHeaderConstants.FrameOptionsHeader] = string.Format(CultureInfo.InvariantCulture, s_frameOptionsAllowFromUriCompositeFormat, uri);
         return this;
     }
 
@@ -102,7 +111,7 @@ public class SecurityHeadersBuilder
     /// <returns>Current <see cref="SecurityHeadersBuilder"/>.</returns>
     public SecurityHeadersBuilder AddXssProtectionReport(string reportUrl)
     {
-        _policy.SetHeaders[HttpHeaderConstants.XssProtectionHeader] = string.Format(HttpHeaderConstants.XssProtectionReport, reportUrl);
+        _policy.SetHeaders[HttpHeaderConstants.XssProtectionHeader] = string.Format(CultureInfo.InvariantCulture, s_xssProtectionReportCompositeFormat, reportUrl);
         return this;
     }
 
@@ -114,7 +123,7 @@ public class SecurityHeadersBuilder
     /// <returns>Current <see cref="SecurityHeadersBuilder"/>.</returns>
     public SecurityHeadersBuilder AddStrictTransportSecurityMaxAge(int maxAge = DateTimeConstants.OneYearInSeconds)
     {
-        _policy.SetHeaders[HttpHeaderConstants.StrictTransportSecurityHeader] = string.Format(HttpHeaderConstants.StrictTransportSecurityMaxAge, maxAge);
+        _policy.SetHeaders[HttpHeaderConstants.StrictTransportSecurityHeader] = string.Format(CultureInfo.InvariantCulture, s_strictTransportSecurityMaxAgeCompositeFormat, maxAge);
         return this;
     }
 
@@ -126,7 +135,7 @@ public class SecurityHeadersBuilder
     /// <returns>Current <see cref="SecurityHeadersBuilder"/>.</returns>
     public SecurityHeadersBuilder AddStrictTransportSecurityMaxAgeIncludeSubDomains(int maxAge = DateTimeConstants.OneYearInSeconds)
     {
-        _policy.SetHeaders[HttpHeaderConstants.StrictTransportSecurityHeader] = string.Format(HttpHeaderConstants.StrictTransportSecurityMaxAgeIncludeSubdomains, maxAge);
+        _policy.SetHeaders[HttpHeaderConstants.StrictTransportSecurityHeader] = string.Format(CultureInfo.InvariantCulture, s_strictTransportSecurityMaxAgeIncludeSubdomainsCompositeFormat, maxAge);
         return this;
     }
 

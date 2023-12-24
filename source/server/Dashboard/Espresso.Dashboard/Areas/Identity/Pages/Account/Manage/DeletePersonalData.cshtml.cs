@@ -2,7 +2,6 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -34,14 +33,7 @@ public class DeletePersonalDataModel : PageModel
     }
 
     [BindProperty]
-    public InputModel Input { get; set; } = null!;
-
-    public class InputModel
-    {
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; } = null!;
-    }
+    public DeletePersonalDataInputModel Input { get; set; } = null!;
 
 #pragma warning disable SA1201 // Elements should appear in the correct order
     public bool RequirePassword { get; set; }

@@ -8,7 +8,7 @@ namespace Espresso.WebApi.Authentication;
 
 public class InMemoryApiKeyProvider : IApiKeyProvider
 {
-    private readonly IDictionary<string, ApiKey> _apiKeys;
+    private readonly Dictionary<string, ApiKey> _apiKeys;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="InMemoryApiKeyProvider"/> class.

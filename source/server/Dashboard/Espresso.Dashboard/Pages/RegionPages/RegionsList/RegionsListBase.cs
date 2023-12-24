@@ -64,7 +64,7 @@ public class RegionsListBase : ComponentBase
         }
 
         var request = new DeleteRegionCommand(categoryId);
-        _ = await Sender.Send(request);
+        await Sender.Send(request);
 
         await Table.ReloadServerData();
     }

@@ -65,3 +65,6 @@ node_modules/
 
 # log files
 *.log
+
+# Generated Icons
+**/wwwroot/Icons/

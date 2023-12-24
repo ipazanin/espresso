@@ -9,9 +9,9 @@ namespace Espresso.Dashboard.Application.RssFeeds.Commands.ParseRssFeeds;
 
 public record ParseRssFeedsCommand : Request<ParseRssFeedsCommandResponse>
 {
-    public IEnumerable<RssFeed> RssFeeds { get; init; } = Array.Empty<RssFeed>();
+    public IReadOnlyList<RssFeed> RssFeeds { get; init; } = Array.Empty<RssFeed>();
 
-    public IEnumerable<Category> Categories { get; init; } = Array.Empty<Category>();
+    public IReadOnlyList<Category> Categories { get; init; } = Array.Empty<Category>();
 
     public IDictionary<Guid, Article> Articles { get; init; } = new Dictionary<Guid, Article>();
 }

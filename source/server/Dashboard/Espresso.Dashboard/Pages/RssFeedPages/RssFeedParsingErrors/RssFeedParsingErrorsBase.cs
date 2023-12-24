@@ -2,6 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+using System.Globalization;
 using Espresso.Application.DataTransferObjects;
 using Espresso.Dashboard.Application.IServices;
 using Microsoft.AspNetCore.Components;
@@ -42,9 +43,9 @@ public class RssFeedParsingErrorsBase : ComponentBase, IDisposable
             return true;
         }
 
-        return parsingMessage.LogLevel.ToString().Contains(SearchString, StringComparison.InvariantCultureIgnoreCase) ||
-                parsingMessage.Message.Contains(SearchString, StringComparison.InvariantCultureIgnoreCase) ||
-                parsingMessage.RssFeedId.ToString().Contains(SearchString, StringComparison.InvariantCultureIgnoreCase);
+        return parsingMessage.LogLevel.ToString().Contains(SearchString, StringComparison.OrdinalIgnoreCase) ||
+                parsingMessage.Message.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ||
+                parsingMessage.RssFeedId.ToString(CultureInfo.InvariantCulture).Contains(SearchString, StringComparison.OrdinalIgnoreCase);
     }
 
     /// <inheritdoc/>
@@ -74,8 +75,8 @@ public class RssFeedParsingErrorsBase : ComponentBase, IDisposable
         }
 
         ParsingMessages = ParsingMessages
-            .Where(parsingMessage => parsingMessage.LogLevel.ToString().Contains(searchValue, StringComparison.InvariantCultureIgnoreCase) ||
-                parsingMessage.Message.Contains(searchValue, StringComparison.InvariantCultureIgnoreCase) ||
-                parsingMessage.RssFeedId.ToString().Contains(searchValue, StringComparison.InvariantCultureIgnoreCase));
+            .Where(parsingMessage => parsingMessage.LogLevel.ToString().Contains(searchValue, StringComparison.OrdinalIgnoreCase) ||
+                parsingMessage.Message.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ||
+                parsingMessage.RssFeedId.ToString(CultureInfo.InvariantCulture).Contains(searchValue, StringComparison.OrdinalIgnoreCase));
     }
 }

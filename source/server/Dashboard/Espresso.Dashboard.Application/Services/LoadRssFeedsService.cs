@@ -114,7 +114,7 @@ public class LoadRssFeedsService : ILoadRssFeedsService
         catch (Exception exception)
         {
             var rssFeedUrl = rssFeed.Url;
-            var eventName = Event.RssFeedLoading.GetDisplayName();
+            var eventName = LoggingEvent.RssFeedLoading.GetDisplayName();
             var arguments = new (string, object)[]
             {
                     (nameof(rssFeedUrl), rssFeedUrl),
@@ -142,7 +142,7 @@ public class LoadRssFeedsService : ILoadRssFeedsService
 
         var modifiedFeedContent = rssFeed.ModifyContent(feedContent);
 
-        var reader = XmlReader.Create(
+        using var reader = XmlReader.Create(
             input: new StringReader(modifiedFeedContent));
         var feed = SyndicationFeed.Load(reader);
 

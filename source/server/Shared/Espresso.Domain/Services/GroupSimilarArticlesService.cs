@@ -3,6 +3,7 @@
 // © 2022 Espresso News. All rights reserved.
 
 using System.Collections.Concurrent;
+using System.Globalization;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Infrastructure;
 using Espresso.Domain.IServices;
@@ -109,12 +110,14 @@ public class GroupSimilarArticlesService : IGroupSimilarArticlesService
         var firstArticleWords = LanguageUtility
             .SeparateWords(firstArticleTitle)
             .RemoveUnImpactfulCroatianWords()
-            .RemoveWordsWithLessThanThreeLetters();
+            .RemoveWordsWithLessThanThreeLetters()
+            .ToArray();
 
         var secondArticleWords = LanguageUtility
             .SeparateWords(secondArticleTitle)
             .RemoveUnImpactfulCroatianWords()
-            .RemoveWordsWithLessThanThreeLetters();
+            .RemoveWordsWithLessThanThreeLetters()
+            .ToArray();
 
         var similarityScore = CalculateSimilarityScoreBetweenWords(
             firstArticleWords,
@@ -124,8 +127,8 @@ public class GroupSimilarArticlesService : IGroupSimilarArticlesService
     }
 
     private static double CalculateSimilarityScoreBetweenWords(
-        IEnumerable<string> firstArticleWords,
-        IEnumerable<string> secondArticleWords)
+        IReadOnlyList<string> firstArticleWords,
+        IReadOnlyList<string> secondArticleWords)
     {
         var totalSimilarityScore = 0.0d;
         foreach (var firstArticleWord in firstArticleWords)
@@ -150,7 +153,7 @@ public class GroupSimilarArticlesService : IGroupSimilarArticlesService
             totalSimilarityScore += bestSecondArticleTitleMatchScore;
         }
 
-        var averageSimilarityScore = totalSimilarityScore / firstArticleWords.Count();
+        var averageSimilarityScore = totalSimilarityScore / firstArticleWords.Count;
 
         return averageSimilarityScore;
     }
@@ -162,12 +165,12 @@ public class GroupSimilarArticlesService : IGroupSimilarArticlesService
         var length = firstWord.Length < secondWord.Length ? firstWord.Length : secondWord.Length;
         var matchedCases = 0;
 
-        var lowerCaseFirstWord = firstWord.ToLower();
-        var lowerCaseSecondWord = secondWord.ToLower();
+        var upperCaseFirstWord = firstWord.ToUpperInvariant();
+        var upperCaseSecondWord = secondWord.ToUpperInvariant();
 
         for (var i = 0; i < length; i++)
         {
-            if (lowerCaseFirstWord[i].Equals(lowerCaseSecondWord[i]))
+            if (upperCaseFirstWord[i].Equals(upperCaseSecondWord[i]))
             {
                 matchedCases++;
             }
@@ -210,8 +213,8 @@ public class GroupSimilarArticlesService : IGroupSimilarArticlesService
                         ("Similarity Score", similarityScore),
                         ("Main Article Title", newArticle.Title),
                         ("Subordinate Article Title", possibleSimilarArticle.Title),
-                        ("Main Article Source", newArticle.NewsPortal?.Name ?? newArticle.NewsPortalId.ToString()),
-                        ("Subordinate Article Source", possibleSimilarArticle.NewsPortal?.Name ?? possibleSimilarArticle.NewsPortalId.ToString()),
+                        ("Main Article Source", newArticle.NewsPortal?.Name ?? newArticle.NewsPortalId.ToString(CultureInfo.CurrentCulture)),
+                        ("Subordinate Article Source", possibleSimilarArticle.NewsPortal?.Name ?? possibleSimilarArticle.NewsPortalId.ToString(CultureInfo.CurrentCulture)),
             };
 
             _loggerService.Log(

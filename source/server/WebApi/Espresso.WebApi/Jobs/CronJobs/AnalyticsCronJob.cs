@@ -87,7 +87,7 @@ public class AnalyticsCronJob : CronJob<AnalyticsCronJob>
     }
 
     private static (int todayAndroidCount, int todayIosCount, int totalAndroidCount, int totalIosCount) CalculateAppDownloadsPerDeviceType(
-        IEnumerable<ApplicationDownload> applicationDownloads)
+        IReadOnlyList<ApplicationDownload> applicationDownloads)
     {
         var todayAndroidCount = applicationDownloads.Count(applicationDownloads =>
             applicationDownloads.MobileDeviceType == DeviceType.Android &&

@@ -3,8 +3,12 @@
 // © 2022 Espresso News. All rights reserved.
 
 using System.Collections;
+using System.Globalization;
 
 namespace Espresso.Common.Collections;
+
+#pragma warning disable CA2201 // Do not raise reserved exception types
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
 
 /// <inheritdoc/>
 /// <summary>
@@ -66,10 +70,7 @@ public class CircularBuffer<T> : IEnumerable<T>
                 "Circular buffer cannot have negative or zero capacity.", nameof(capacity));
         }
 
-        if (items == null)
-        {
-            throw new ArgumentNullException(nameof(items));
-        }
+        ArgumentNullException.ThrowIfNull(items);
 
         if (items.Length > capacity)
         {
@@ -138,12 +139,12 @@ public class CircularBuffer<T> : IEnumerable<T>
         {
             if (IsEmpty)
             {
-                throw new IndexOutOfRangeException(string.Format("Cannot access index {0}. Buffer is empty", index));
+                throw new IndexOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "Cannot access index {0}. Buffer is empty", index));
             }
 
             if (index >= Size)
             {
-                throw new IndexOutOfRangeException(string.Format("Cannot access index {0}. Buffer size is {1}", index, Size));
+                throw new IndexOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "Cannot access index {0}. Buffer size is {1}", index, Size));
             }
 
             var actualIndex = InternalIndex(index);
@@ -154,12 +155,12 @@ public class CircularBuffer<T> : IEnumerable<T>
         {
             if (IsEmpty)
             {
-                throw new IndexOutOfRangeException(string.Format("Cannot access index {0}. Buffer is empty", index));
+                throw new IndexOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "Cannot access index {0}. Buffer is empty", index));
             }
 
             if (index >= Size)
             {
-                throw new IndexOutOfRangeException(string.Format("Cannot access index {0}. Buffer size is {1}", index, Size));
+                throw new IndexOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "Cannot access index {0}. Buffer size is {1}", index, Size));
             }
 
             var actualIndex = InternalIndex(index);

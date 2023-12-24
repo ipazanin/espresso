@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Espresso.WebApi.Application.Setting.Commands.UpdateSetting;
 
-public class UpdateSettingCommandHandler : IRequestHandler<UpdateSettingCommand, UpdateSettingCommandResponse>
+public class UpdateSettingCommandHandler : IRequestHandler<UpdateSettingCommand>
 {
     private readonly ISettingProvider _settingProvider;
 
@@ -16,10 +16,10 @@ public class UpdateSettingCommandHandler : IRequestHandler<UpdateSettingCommand,
         _settingProvider = settingProvider;
     }
 
-    public async Task<UpdateSettingCommandResponse> Handle(UpdateSettingCommand request, CancellationToken cancellationToken)
+#pragma warning disable AsyncFixer01 // Unnecessary async/await usage
+    public async Task Handle(UpdateSettingCommand request, CancellationToken cancellationToken)
     {
         await _settingProvider.UpdateLatestSetting(cancellationToken);
-
-        return new();
     }
+#pragma warning restore AsyncFixer01 // Unnecessary async/await usage
 }

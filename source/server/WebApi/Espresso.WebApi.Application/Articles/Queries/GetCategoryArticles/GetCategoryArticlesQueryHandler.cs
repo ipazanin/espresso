@@ -2,6 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+using System.Security.Cryptography;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Extensions;
@@ -38,10 +39,10 @@ public class GetCategoryArticlesQueryHandler : IRequestHandler<GetCategoryArticl
             article => article.Id.Equals(request.FirstArticleId));
 
         var newsPortalIds = request.NewsPortalIds
-            ?.Replace(" ", string.Empty)
-            ?.Split(',')
-            ?.Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
-            ?.Where(newsPortalId => newsPortalId != default);
+            ?.Replace(" ", string.Empty, StringComparison.Ordinal)
+            .Split(',')
+            .Select(newsPortalIdString => int.TryParse(newsPortalIdString, out var newsPortalId) ? newsPortalId : default)
+            .Where(newsPortalId => newsPortalId != default);
 
         var keyWordsToFilterOut = request.KeyWordsToFilterOut is null ?
             Enumerable.Empty<string>() :
@@ -64,12 +65,10 @@ public class GetCategoryArticlesQueryHandler : IRequestHandler<GetCategoryArticl
             newsPortalIds: newsPortalIds,
             request: request);
 
-        var random = new Random();
-
         var response = new GetCategoryArticlesQueryResponse
         {
             Articles = articleDtos,
-            NewNewsPortals = newsPortalDtos.OrderBy(_ => random.Next()),
+            NewNewsPortals = newsPortalDtos.OrderBy(_ => RandomNumberGenerator.GetInt32(100)),
             NewNewsPortalsPosition = _settingProvider.LatestSetting.NewsPortalSetting.NewNewsPortalsPosition,
         };
 

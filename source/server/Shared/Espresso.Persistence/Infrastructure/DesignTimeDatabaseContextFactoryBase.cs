@@ -30,7 +30,7 @@ public abstract class DesignTimeDatabaseContextFactoryBase<TContext> :
     public TContext CreateDbContext(string[] args)
     {
         var connectionString = args.Length != 1 ?
-            throw new Exception("Connection String must be specified as first argument!") :
+            throw new ArgumentException("Connection String must be specified as first argument!") :
             args[0];
 
         return Create(connectionString);

@@ -93,7 +93,7 @@ public class CreateNewsPortalBase : ComponentBase
         var command = new CreateNewsPortalCommand(
             NewsPortalDetailsQueryResponse.NewsPortal,
             NewsPortalImageResponse.NewsPortalImage);
-        _ = await sender.Send(command);
+        await sender.Send(command);
 
         NavigationManager.NavigateTo("news-portals");
     }

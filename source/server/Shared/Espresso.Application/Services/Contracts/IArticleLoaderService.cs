@@ -8,14 +8,14 @@ namespace Espresso.Application.Services.Contracts;
 
 public interface IArticleLoaderService
 {
-    public Task<IEnumerable<Article>> LoadArticlesForWebApi(
-        IEnumerable<NewsPortal> newsPortals,
-        IEnumerable<Category> categories,
+    public Task<IReadOnlyList<Article>> LoadArticlesForWebApi(
+        IReadOnlyList<NewsPortal> newsPortals,
+        IReadOnlyList<Category> categories,
         CancellationToken cancellationToken);
 
-    public Task<IEnumerable<Article>> LoadArticlesForWebApi(
+    public Task<IReadOnlyList<Article>> LoadArticlesForWebApi(
         ISet<Guid> articleIds,
-        IEnumerable<NewsPortal> newsPortals,
-        IEnumerable<Category> categories,
+        IReadOnlyList<NewsPortal> newsPortals,
+        IReadOnlyList<Category> categories,
         CancellationToken cancellationToken);
 }

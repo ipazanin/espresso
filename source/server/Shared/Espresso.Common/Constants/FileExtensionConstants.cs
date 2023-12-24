@@ -14,6 +14,8 @@ public static class FileExtensionConstants
     /// </summary>
     public const string Png = ".png";
 
+    public const string Jpg = ".jpg";
+
     /// <summary>
     /// JSON.
     /// </summary>

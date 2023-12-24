@@ -2,6 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+using System.Globalization;
 using Espresso.Application.DataTransferObjects;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
@@ -63,7 +64,7 @@ public class CreateArticlesService : ICreateArticlesService
 
     public async Task CreateArticlesFromRssFeedItems(
         ChannelReader<RssFeedItem> rssFeedItemChannelReader,
-        IEnumerable<Category> categories,
+        IReadOnlyList<Category> categories,
         CancellationToken cancellationToken)
     {
         var tasks = new List<Task>();
@@ -125,23 +126,25 @@ public class CreateArticlesService : ICreateArticlesService
 
     private static string? GetAmpUrl(RssFeed rssFeed, IEnumerable<Uri?>? itemLinks, string? itemId)
     {
-        if (
-            itemId is null ||
+        if (itemId is null ||
             itemLinks?.FirstOrDefault() is null ||
             string.IsNullOrEmpty(rssFeed.AmpConfiguration?.TemplateUrl))
         {
             return null;
         }
 
-        var articleId = $"{itemId[(itemId.IndexOf("id=") + 3)..]}";
+        var articleId = $"{itemId[(itemId.IndexOf("id=", StringComparison.Ordinal) + 3)..]}";
         var urlSegments = itemLinks.FirstOrDefault()?.Segments ?? Array.Empty<string>();
 
-        var firstArticleSegment = urlSegments.Length < 2 ? string.Empty : urlSegments[1].ToLower();
-        var secondArticleSegment = urlSegments.Length < 3 ? string.Empty : urlSegments[2].ToLower();
-        var thirdArticleSegment = urlSegments.Length < 4 ? string.Empty : urlSegments[3].ToLower();
-        var fourthArticleSegment = urlSegments.Length < 5 ? string.Empty : urlSegments[4].ToLower();
+#pragma warning disable CA1308 // Normalize strings to uppercase
+        var firstArticleSegment = urlSegments.Length < 2 ? string.Empty : urlSegments[1].ToLowerInvariant();
+        var secondArticleSegment = urlSegments.Length < 3 ? string.Empty : urlSegments[2].ToLowerInvariant();
+        var thirdArticleSegment = urlSegments.Length < 4 ? string.Empty : urlSegments[3].ToLowerInvariant();
+        var fourthArticleSegment = urlSegments.Length < 5 ? string.Empty : urlSegments[4].ToLowerInvariant();
+#pragma warning restore CA1308 // Normalize strings to uppercase
 
         var articleUrl = string.Format(
+            CultureInfo.InvariantCulture,
             rssFeed.AmpConfiguration.TemplateUrl,
             articleId,
             firstArticleSegment,
@@ -152,21 +155,19 @@ public class CreateArticlesService : ICreateArticlesService
         return articleUrl;
     }
 
-    private static IEnumerable<ArticleCategory> GetArticleCategories(
-        IEnumerable<Category> categories,
+    private static HashSet<ArticleCategory> GetArticleCategories(
+        IReadOnlyList<Category> categories,
         string? itemTitle,
         string? itemSummary,
         Guid articleId,
         Uri? itemUrl,
         RssFeed rssFeed)
     {
-        var articleCategories = new HashSet<ArticleCategory>();
-        var articleCategoriesFromKeyWords = GetArticleCategoriesFromCategoriesKeyWords(
+        var articleCategories = GetArticleCategoriesFromCategoriesKeyWords(
             categories: categories,
             itemTitle: itemTitle,
             itemSummary: itemSummary,
             articleId: articleId);
-        articleCategories.UnionWith(articleCategoriesFromKeyWords);
 
         switch (rssFeed.CategoryParseConfiguration.CategoryParseStrategy)
         {
@@ -188,8 +189,8 @@ public class CreateArticlesService : ICreateArticlesService
         return articleCategories;
     }
 
-    private static IEnumerable<ArticleCategory> GetArticleCategoriesFromCategoriesKeyWords(
-        IEnumerable<Category> categories,
+    private static HashSet<ArticleCategory> GetArticleCategoriesFromCategoriesKeyWords(
+        IReadOnlyList<Category> categories,
         string? itemTitle,
         string? itemSummary,
         Guid articleId)
@@ -213,7 +214,7 @@ public class CreateArticlesService : ICreateArticlesService
         return articleCategories;
     }
 
-    private static IEnumerable<ArticleCategory> GetArticleCategoriesFromFromUrl(
+    private static HashSet<ArticleCategory> GetArticleCategoriesFromFromUrl(
         Guid articleId,
         Uri? itemUrl,
         RssFeed rssFeed)
@@ -226,9 +227,9 @@ public class CreateArticlesService : ICreateArticlesService
                 itemUrl?.Segments != null &&
                 itemUrl.Segments.Length > rssFeedCategory.UrlSegmentIndex)
             {
-                var secondUrlSegment = itemUrl?
+                var secondUrlSegment = itemUrl
                     .Segments[rssFeedCategory.UrlSegmentIndex]
-                    .Replace("/", string.Empty).ToLower();
+                    .Replace("/", string.Empty, StringComparison.Ordinal);
 
                 if (
                     !string.IsNullOrEmpty(rssFeedCategory.UrlRegex) &&
@@ -269,7 +270,7 @@ public class CreateArticlesService : ICreateArticlesService
             return null;
         }
 
-        if (urlFragmentOrFullUrl.StartsWith("http"))
+        if (urlFragmentOrFullUrl.StartsWith("http", StringComparison.Ordinal))
         {
             return urlFragmentOrFullUrl;
         }
@@ -299,7 +300,7 @@ public class CreateArticlesService : ICreateArticlesService
 
     private async Task<(Article? article, bool isValid)> CreateArticleAsync(
         RssFeedItem rssFeedItem,
-        IEnumerable<Category> categories,
+        IReadOnlyList<Category> categories,
         CancellationToken cancellationToken)
     {
         var id = Guid.NewGuid();
@@ -396,7 +397,7 @@ public class CreateArticlesService : ICreateArticlesService
         {
             var rssFeedUrl = rssFeed.Url;
             var exceptionMessage = validationResult.ToString();
-            var eventName = Event.CreateArticle.GetDisplayName();
+            var eventName = LoggingEvent.CreateArticle.GetDisplayName();
             var parameters = new (string, object)[]
             {
                     (nameof(rssFeedUrl), rssFeedUrl),
@@ -442,13 +443,13 @@ public class CreateArticlesService : ICreateArticlesService
                 var value = rssFeed.ImageUrlParseConfiguration.ElementExtensionValueType switch
                 {
                     XmlValueType.Attribute => elementExtension?.Attribute(rssFeed.ImageUrlParseConfiguration.ElementExtensionAttributeName)?.Value,
-                    XmlValueType.Value or _ => elementExtension?.Value,
+                    _ => elementExtension?.Value,
                 };
 
                 imageUrl = rssFeed.ImageUrlParseConfiguration.ElementExtensionValueParseType switch
                 {
                     ValueParseType.Html => _htmlParsingService.GetSrcAttributeFromFirstImgElement(value),
-                    ValueParseType.FullValue or _ => value,
+                    _ => value,
                 };
                 break;
             default:
@@ -473,7 +474,7 @@ public class CreateArticlesService : ICreateArticlesService
                 rssFeed: rssFeed,
                 cancellationToken: cancellationToken);
 
-            var eventName = Event.ImageUrlWebScrapingData.GetDisplayName();
+            var eventName = LoggingEvent.ImageUrlWebScrapingData.GetDisplayName();
             var rssFeedUrl = rssFeed.Url;
             var newsPortalName = rssFeed.NewsPortal?.Name ?? string.Empty;
             var arguments = new (string, object)[]

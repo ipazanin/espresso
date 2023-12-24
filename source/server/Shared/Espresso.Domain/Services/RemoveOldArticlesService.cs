@@ -26,7 +26,7 @@ public class RemoveOldArticlesService : IRemoveOldArticlesService
     /// </summary>
     /// <param name="articles"></param>
     /// <returns>Removed articles.</returns>
-    public IEnumerable<Article> RemoveOldArticlesFromCollection(IDictionary<Guid, Article> articles)
+    public IReadOnlyList<Article> RemoveOldArticlesFromCollection(IDictionary<Guid, Article> articles)
     {
         var maxAgeDate = DateTimeOffset.UtcNow - _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfArticle;
         var articlesToRemove = new List<Article>();
@@ -47,12 +47,12 @@ public class RemoveOldArticlesService : IRemoveOldArticlesService
         return articlesToRemove;
     }
 
-    public IEnumerable<Article> RemoveOldArticles(IEnumerable<Article> articles)
+    public IReadOnlyList<Article> RemoveOldArticles(IReadOnlyList<Article> articles)
     {
         var maxAgeDate = DateTimeOffset.UtcNow - _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfArticle;
 
         var notOldArticles = articles.Where(article => article.PublishDateTime > maxAgeDate);
 
-        return notOldArticles;
+        return notOldArticles.ToArray();
     }
 }

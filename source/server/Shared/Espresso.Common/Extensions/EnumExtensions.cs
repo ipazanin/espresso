@@ -3,6 +3,7 @@
 // © 2022 Espresso News. All rights reserved.
 
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using Espresso.Common.Constants;
 
 namespace Espresso.Common.Extensions;
@@ -41,6 +42,6 @@ public static class EnumExtensions
     /// <returns><paramref name="value"/> converted to <see cref="int"/> then to <see cref="string"/>.</returns>
     public static string GetIntegerValueAsString(this Enum value)
     {
-        return Convert.ToInt32(value).ToString();
+        return Convert.ToInt32(value, CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture);
     }
 }
