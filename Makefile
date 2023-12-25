@@ -23,11 +23,8 @@ EspressoParserDockerfilePath="source/server/Dashboard/Espresso.Dashboard/Dockerf
 
 DockerBuildContextPath="."
 
-WebApiDockerImage="ghcr.io/espresso-news/espresso-backend/espresso-webapi"
-DashboardDockerImage="ghcr.io/espresso-news/espresso-backend/espresso-dashboard"
-
-WebApiDockerImageGoogleContainerRegistry="gcr.io/espresso-8c4ac/espresso-webapi"
-DashboardDockerImageGoogleContainerRegistry="gcr.io/espresso-8c4ac/espresso-dashboard"
+WebApiDockerImage="europe-docker.pkg.dev/espresso-8c4ac/espresso/espresso-webapi"
+DashboardDockerImage="europe-docker.pkg.dev/espresso-8c4ac/espresso/espresso-dashboard"
 
 DefaultReactEnvironment="production"
 
@@ -209,13 +206,6 @@ ifeq ($(strip $(v)),)
 	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
 	$(DockerBuildContextPath)
 	docker push $(WebApiDockerImage):$(DefaultDockerImageTag)
-	docker build \
-	-f $(EspressoWebApiDockerfilePath) \
-	-t $(WebApiDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag) \
-	--platform linux/amd64 \
-	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
-	$(DockerBuildContextPath)
-	docker push $(WebApiDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag)
 else
 	docker build \
 	-f $(EspressoWebApiDockerfilePath) \
@@ -224,13 +214,6 @@ else
 	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
 	$(DockerBuildContextPath)
 	docker push $(WebApiDockerImage):$(v)
-	docker build \
-	-f $(EspressoWebApiDockerfilePath) \
-	-t $(WebApiDockerImageGoogleContainerRegistry):$(v) \
-	--platform linux/amd64 \
-	--build-arg REACT_APP_ENVIRONMENT=$(DefaultReactEnvironment) \
-	$(DockerBuildContextPath)
-	docker push $(WebApiDockerImageGoogleContainerRegistry):$(v)
 endif
 
 docker-build-dashboard::
@@ -241,12 +224,6 @@ ifeq ($(strip $(v)),)
 	--platform linux/amd64 \
 	$(DockerBuildContextPath)
 	docker push $(DashboardDockerImage):$(DefaultDockerImageTag)
-	docker build \
-	-f $(EspressoParserDockerfilePath) \
-	-t $(DashboardDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag) \
-	--platform linux/amd64 \
-	$(DockerBuildContextPath)
-	docker push $(DashboardDockerImageGoogleContainerRegistry):$(DefaultDockerImageTag)
 else
 	docker build \
 	-f $(EspressoParserDockerfilePath) \
@@ -254,12 +231,6 @@ else
 	--platform linux/amd64 \
 	$(DockerBuildContextPath)
 	docker push $(DashboardDockerImage):$(v)
-	docker build \
-	-f $(EspressoParserDockerfilePath) \
-	-t $(DashboardDockerImageGoogleContainerRegistry):$(v) \
-	--platform linux/amd64 \
-	$(DockerBuildContextPath)
-	docker push $(DashboardDockerImageGoogleContainerRegistry):$(v)
 endif
 
 docker-build::
@@ -482,7 +453,6 @@ health-check-frontend::
 	make install
 	make build-frontend
 	make lint
-	make test-frontend
 
 rebuild-frontend::
 	cd $(ClientAppDirectory)

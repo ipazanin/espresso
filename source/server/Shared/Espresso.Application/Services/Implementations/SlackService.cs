@@ -201,7 +201,7 @@ public class SlackService : ISlackService
         string? url,
         CancellationToken cancellationToken)
     {
-        var text = "There’s a request for new source\n" +
+        var text = "There's a request for new source\n" +
             $"Source Name: {newsPortalName}\n" +
             $"Email: {email}\n" +
             $"Url: {url}";

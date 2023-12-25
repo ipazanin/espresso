@@ -2,7 +2,7 @@ version: '3.8'
 services:
   espresso-webapi:
     container_name: espresso-webapi
-    image: docker.pkg.github.com/espresso-news/espresso-backend/espresso-webapi
+    image: espresso-webapi
     restart: unless-stopped
     build:
       context: ../..

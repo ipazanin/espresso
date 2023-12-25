@@ -12,6 +12,11 @@ COPY ["source/server/WebApi/Espresso.WebApi.Application/Espresso.WebApi.Applicat
 COPY ["source/server/WebApi/Espresso.WebApi/Espresso.WebApi.csproj", "WebApi/Espresso.WebApi/"]
 RUN dotnet restore "WebApi/Espresso.WebApi/Espresso.WebApi.csproj"
 
+# Copy Secrets to ensure they exist
+COPY source/server/WebApi/Espresso.WebApi/firebase-key.json WebApi/Espresso.WebApi/
+COPY source/server/WebApi/Espresso.WebApi/google-analytics-key.json WebApi/Espresso.WebApi/
+
+
 # Build .NET App
 COPY /source/server/ .
 COPY /.editorconfig .
