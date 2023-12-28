@@ -20,7 +20,7 @@ public class AppConfiguration
         _configuration = configuration;
     }
 
-    public string RssFeedParserMajorMinorVersion => $"{_configuration.GetValue<int>("MajorVersion")}.{_configuration.GetValue<int>("MinorVersion")}";
+    public string MajorMinorVersion => $"{_configuration.GetValue<int>("MajorVersion")}.{_configuration.GetValue<int>("MinorVersion")}";
 
     public string ServerUrl => _configuration.GetValue<string>("ServerUrl")!;
 

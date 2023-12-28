@@ -85,7 +85,7 @@ public class ParseArticlesCronJob : CronJob<ParseArticlesCronJob>
         _ = await mediator.Send(
             request: new ParseRssFeedsCommand
             {
-                TargetedApiVersion = configuration.AppConfiguration.RssFeedParserMajorMinorVersion,
+                TargetedApiVersion = configuration.AppConfiguration.MajorMinorVersion,
                 ConsumerVersion = configuration.AppConfiguration.Version,
                 DeviceType = DeviceType.RssFeedParser,
                 Articles = articles,

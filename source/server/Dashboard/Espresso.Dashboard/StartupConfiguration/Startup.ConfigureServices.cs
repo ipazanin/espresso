@@ -229,7 +229,7 @@ public sealed partial class Startup
                     slackService: serviceProvider.GetRequiredService<ISlackService>(),
                     jsonService: serviceProvider.GetRequiredService<IJsonService>(),
                     parserApiKey: _dashboardConfiguration.ApiKeysConfiguration.ParserApiKey,
-                    targetedApiVersion: _dashboardConfiguration.AppConfiguration.RssFeedParserMajorMinorVersion,
+                    targetedApiVersion: _dashboardConfiguration.AppConfiguration.MajorMinorVersion,
                     currentVersion: _dashboardConfiguration.AppConfiguration.Version,
                     serverUrl: _dashboardConfiguration.AppConfiguration.ServerUrl);
             });
