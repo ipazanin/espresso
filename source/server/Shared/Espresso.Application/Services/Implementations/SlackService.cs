@@ -48,7 +48,9 @@ public class SlackService : ISlackService
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ILoggerService<SlackService> _loggerService;
     private readonly IJsonService _jsonService;
-    private readonly string _webHookUrl;
+    private readonly string _analyticsWebHookUrl;
+    private readonly string _crashReportWebHookUrl;
+    private readonly string _newSourceRequestWebHookUrl;
     private readonly ApplicationInformation _applicationInformation;
 
     /// <summary>
@@ -58,21 +60,27 @@ public class SlackService : ISlackService
     /// <param name="httpClientFactory">HTTP client factory.</param>
     /// <param name="loggerService">Logger service.</param>
     /// <param name="jsonService">JSON service.</param>
-    /// <param name="webHookUrl">Slack web hook url.</param>
+    /// <param name="analyticsWebHookUrl">Slack web hook url.</param>
+    /// <param name="crashReportWebHookUrl"></param>
+    /// <param name="newSourceRequestWebHookUrl"></param>
     /// <param name="applicationInformation">Application information.</param>
     public SlackService(
         IMemoryCache memoryCache,
         IHttpClientFactory httpClientFactory,
         ILoggerService<SlackService> loggerService,
         IJsonService jsonService,
-        string webHookUrl,
+        string analyticsWebHookUrl,
+        string crashReportWebHookUrl,
+        string newSourceRequestWebHookUrl,
         ApplicationInformation applicationInformation)
     {
         _memoryCache = memoryCache;
         _httpClientFactory = httpClientFactory;
         _loggerService = loggerService;
         _jsonService = jsonService;
-        _webHookUrl = webHookUrl;
+        _analyticsWebHookUrl = analyticsWebHookUrl;
+        _crashReportWebHookUrl = crashReportWebHookUrl;
+        _newSourceRequestWebHookUrl = newSourceRequestWebHookUrl;
         _applicationInformation = applicationInformation;
     }
 
@@ -92,6 +100,7 @@ public class SlackService : ISlackService
             $":exclamation: Inner Exception Message: {innerExceptionMessage}\n";
 
         return SendToSlack(
+            webHookUrl: _crashReportWebHookUrl,
             data: new SlackWebHookRequestBodyDto(
                 userName: ErrorBotUsername,
                 iconEmoji: ErrorsBotIconEmoji,
@@ -163,6 +172,7 @@ public class SlackService : ISlackService
             };
 
         return SendToSlack(
+            webHookUrl: _analyticsWebHookUrl,
             data: new SlackWebHookRequestBodyDto(
                 userName: MarketingBotUsername,
                 iconEmoji: MarketingBotIconEmoji,
@@ -185,6 +195,7 @@ public class SlackService : ISlackService
             $":email: Url-SegmentIndex:Category Map: {urlCategories}\n";
 
         return SendToSlack(
+            webHookUrl: _crashReportWebHookUrl,
             data: new SlackWebHookRequestBodyDto(
                 userName: MissingCategoriesErrorsBotUsername,
                 iconEmoji: MissingCategoriesErrorsBotIconEmoji,
@@ -207,6 +218,7 @@ public class SlackService : ISlackService
             $"Url: {url}";
 
         return SendToSlack(
+            webHookUrl: _newSourceRequestWebHookUrl,
             data: new SlackWebHookRequestBodyDto(
                 userName: NewNewsPortalRequestBotUsername,
                 iconEmoji: NewNewsPortalRequestBotIconEmoji,
@@ -257,6 +269,7 @@ public class SlackService : ISlackService
         }
 
         return SendToSlack(
+            webHookUrl: _analyticsWebHookUrl,
             data: new SlackWebHookRequestBodyDto(
                 userName: BackendStatisticsBotUsername,
                 iconEmoji: BackendStatisticsBotIconEmoji,
@@ -294,6 +307,7 @@ public class SlackService : ISlackService
             };
 
         return SendToSlack(
+            webHookUrl: _analyticsWebHookUrl,
             data: new SlackWebHookRequestBodyDto(
                 userName: PushNotificationBotUsername,
                 iconEmoji: PushNotificationBotIconEmoji,
@@ -303,7 +317,8 @@ public class SlackService : ISlackService
             cancellationToken: cancellationToken);
     }
 
-    public async Task SendToSlack(
+    private async Task SendToSlack(
+        string webHookUrl,
         SlackWebHookRequestBodyDto data,
         CancellationToken cancellationToken)
     {
@@ -323,7 +338,7 @@ public class SlackService : ISlackService
 
                 var content = new StringContent(jsonString, Encoding.UTF8, MimeTypeConstants.Json);
                 using var response = await httpClient.PostAsync(
-                    requestUri: _webHookUrl,
+                    requestUri: webHookUrl,
                     content: content,
                     cancellationToken: cancellationToken);
 

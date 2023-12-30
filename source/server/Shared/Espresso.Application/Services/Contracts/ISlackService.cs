@@ -2,7 +2,6 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using Espresso.Application.DataTransferObjects.SlackDataTransferObjects;
 using Espresso.Application.Models;
 using Espresso.Domain.Entities;
 
@@ -91,15 +90,5 @@ public interface ISlackService
     public Task LogPushNotification(
         PushNotification pushNotification,
         Article article,
-        CancellationToken cancellationToken);
-
-    /// <summary>
-    /// Sends message to slack.
-    /// </summary>
-    /// <param name="data">Message data.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-    public Task SendToSlack(
-        SlackWebHookRequestBodyDto data,
         CancellationToken cancellationToken);
 }

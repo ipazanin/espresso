@@ -207,12 +207,14 @@ public sealed partial class Startup
     private void AddApplicationServices(IServiceCollection services)
     {
         services.AddScoped<ISlackService, SlackService>(serviceProvider => new SlackService(
-           memoryCache: serviceProvider.GetRequiredService<IMemoryCache>(),
-           httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
-           loggerService: serviceProvider.GetRequiredService<ILoggerService<SlackService>>(),
-           jsonService: serviceProvider.GetRequiredService<IJsonService>(),
-           webHookUrl: _dashboardConfiguration.AppConfiguration.SlackWebHook,
-           applicationInformation: serviceProvider.GetRequiredService<ApplicationInformation>()));
+            memoryCache: serviceProvider.GetRequiredService<IMemoryCache>(),
+            httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
+            loggerService: serviceProvider.GetRequiredService<ILoggerService<SlackService>>(),
+            jsonService: serviceProvider.GetRequiredService<IJsonService>(),
+            analyticsWebHookUrl: _dashboardConfiguration.AppConfiguration.AnalyticsSlackWebHook,
+            crashReportWebHookUrl: _dashboardConfiguration.AppConfiguration.CrashReportSlackWebHook,
+            newSourceRequestWebHookUrl: _dashboardConfiguration.AppConfiguration.NewSourceRequestSlackWebHook,
+            applicationInformation: serviceProvider.GetRequiredService<ApplicationInformation>()));
         services.AddScoped<ILoadRssFeedsService, LoadRssFeedsService>();
         services.AddScoped<ICreateArticlesService, CreateArticlesService>();
         services.AddScoped<IScrapeWebService, ScrapeWebService>();

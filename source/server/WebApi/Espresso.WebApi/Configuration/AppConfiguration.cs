@@ -54,8 +54,9 @@ public class AppConfiguration
         new ApiVersion(1, 2),
     };
 
-    /// <summary>
-    ///
-    /// </summary>
-    public string SlackWebHook => _configuration.GetValue<string>("SlackWebHook")!;
+    public string AnalyticsSlackWebHook => _configuration.GetValue<string>("AnalyticsSlackWebHook")!;
+
+    public string CrashReportSlackWebHook => _configuration.GetValue<string>("CrashReportSlackWebHook")!;
+
+    public string NewSourceRequestSlackWebHook => _configuration.GetValue<string>("NewSourceRequestSlackWebHook")!;
 }

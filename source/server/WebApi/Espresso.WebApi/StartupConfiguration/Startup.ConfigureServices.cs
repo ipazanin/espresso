@@ -188,7 +188,9 @@ public sealed partial class Startup
             httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
             loggerService: serviceProvider.GetRequiredService<ILoggerService<SlackService>>(),
             jsonService: serviceProvider.GetRequiredService<IJsonService>(),
-            webHookUrl: _webApiConfiguration.AppConfiguration.SlackWebHook,
+            analyticsWebHookUrl: _webApiConfiguration.AppConfiguration.AnalyticsSlackWebHook,
+            crashReportWebHookUrl: _webApiConfiguration.AppConfiguration.CrashReportSlackWebHook,
+            newSourceRequestWebHookUrl: _webApiConfiguration.AppConfiguration.NewSourceRequestSlackWebHook,
             applicationInformation: serviceProvider.GetRequiredService<ApplicationInformation>()));
         services.AddTransient<ITrendingScoreService, TrendingScoreService>(_ => new TrendingScoreService(
             halfOfMaxTrendingScoreValue: _webApiConfiguration.TrendingScoreConfiguration.HalfOfMaxTrendingScoreValue,

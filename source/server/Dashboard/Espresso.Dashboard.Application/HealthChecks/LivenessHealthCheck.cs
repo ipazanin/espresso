@@ -2,7 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using Espresso.Application.DataTransferObjects.SlackDataTransferObjects;
+using System.Net;
 using Espresso.Application.Services.Contracts;
 using Espresso.Common.Constants;
 using Espresso.Domain.Entities;
@@ -58,13 +58,10 @@ public class LivenessHealthCheck : IHealthCheck
         if (timespan.TotalMinutes > 20)
         {
             var deadLockMessage = _memoryCache.Get<string>(MemoryCacheConstants.DeadLockLogKey);
-            await _slackService.SendToSlack(
-                data: new SlackWebHookRequestBodyDto(
-                    userName: "Liveness health check failed",
-                    iconEmoji: ":warning:",
-                    text: $"Liveness health check failed with message: {deadLockMessage}.\nCheck if new articles are being parsed!",
-                    channel: "#general",
-                    Enumerable.Empty<object>()),
+            await _slackService.LogError(
+                eventName: "Liveness health check failed",
+                message: $"Liveness health check failed with message: {deadLockMessage}.\nCheck if new articles are being parsed!",
+                exception: new WebException($"Liveness health check failed with message: {deadLockMessage}.\nCheck if new articles are being parsed!"),
                 cancellationToken: cancellationToken);
 
             return unhealthyResult;
