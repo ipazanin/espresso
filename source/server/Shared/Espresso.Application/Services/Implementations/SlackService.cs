@@ -8,8 +8,7 @@ using Espresso.Application.Models;
 using Espresso.Application.Services.Contracts;
 using Espresso.Common.Constants;
 using Espresso.Common.Enums;
-using Espresso.Common.Services.Contracts;
-using Espresso.Dashboard.Application.Constants;
+using Espresso.Common.Services.Contacts;
 using Espresso.Domain.Entities;
 using Espresso.Domain.IServices;
 using Microsoft.Extensions.Caching.Memory;
@@ -106,7 +105,7 @@ public class SlackService : ISlackService
                 iconEmoji: ErrorsBotIconEmoji,
                 text: text,
                 channel: ErrorsChannel,
-                blocks: Array.Empty<SlackBlock>()),
+                blocks: []),
             cancellationToken: cancellationToken);
     }
 
@@ -119,8 +118,8 @@ public class SlackService : ISlackService
             {
                 new SlackTextFieldsImageSectionBlock(
                     text: new SlackMarkdownTextBlock("Downloads:"),
-                    fields: new List<SlackMarkdownTextBlock>()
-                    {
+                    fields:
+                    [
                         new SlackMarkdownTextBlock("Android"),
                         new SlackMarkdownTextBlock(applicationStatistics.YesterdayAndroidCount.ToString(CultureInfo.InvariantCulture)),
                         new SlackMarkdownTextBlock("iOS"),
@@ -131,30 +130,30 @@ public class SlackService : ISlackService
                         new SlackMarkdownTextBlock(applicationStatistics.TotalIosCount.ToString(CultureInfo.InvariantCulture)),
                         new SlackMarkdownTextBlock("Total"),
                         new SlackMarkdownTextBlock((applicationStatistics.TotalIosCount + applicationStatistics.TotalAndroidCount).ToString(CultureInfo.InvariantCulture)),
-                    },
+                    ],
                     accessory: new SlackImageBlock(
                         imageUrl: "https://aux.iconspalace.com/uploads/download-icon-256-361231194.png",
                         altText: "Downloads Icon")),
                 new SlackDividerBlock(),
                 new SlackTextFieldsImageSectionBlock(
                     text: new SlackMarkdownTextBlock("Active Users:"),
-                    fields: new List<SlackMarkdownTextBlock>()
-                    {
+                    fields:
+                    [
                         new SlackMarkdownTextBlock("Android"),
                         new SlackMarkdownTextBlock(applicationStatistics.ActiveUsersOnAndroid.ToString(CultureInfo.InvariantCulture)),
                         new SlackMarkdownTextBlock("iOS"),
                         new SlackMarkdownTextBlock(applicationStatistics.ActiveUsersOnIos.ToString(CultureInfo.InvariantCulture)),
                         new SlackMarkdownTextBlock("Total"),
                         new SlackMarkdownTextBlock($"{applicationStatistics.ActiveUsersOnAndroid + applicationStatistics.ActiveUsersOnIos}"),
-                    },
+                    ],
                     accessory: new SlackImageBlock(
                         imageUrl: "https://cdn1.iconfinder.com/data/icons/ui-colored-3-of-3/100/UI_3__23-512.png",
                         altText: "Active Users Icon")),
                 new SlackDividerBlock(),
                 new SlackTextFieldsImageSectionBlock(
                     text: new SlackMarkdownTextBlock("Revenue:"),
-                    fields: new List<SlackMarkdownTextBlock>()
-                    {
+                    fields:
+                    [
                         new SlackMarkdownTextBlock("Today Android"),
                         new SlackMarkdownTextBlock($"{applicationStatistics.AndroidRevenueToday:0.##}$"),
                         new SlackMarkdownTextBlock("Today iOS"),
@@ -165,7 +164,7 @@ public class SlackService : ISlackService
                         new SlackMarkdownTextBlock($"{applicationStatistics.RevenueCurrentMonth:0.##}$"),
                         new SlackMarkdownTextBlock("Previous Month"),
                         new SlackMarkdownTextBlock($"{applicationStatistics.RevenuePreviousMonth:0.##}$"),
-                    },
+                    ],
                     accessory: new SlackImageBlock(
                         imageUrl: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency/256/Dollar-USD-icon.png",
                         altText: "Revenue Icon")),
@@ -201,7 +200,7 @@ public class SlackService : ISlackService
                 iconEmoji: MissingCategoriesErrorsBotIconEmoji,
                 text: text,
                 channel: MissingCategoriesErrorsChannel,
-                blocks: Array.Empty<SlackBlock>()),
+                blocks: []),
             cancellationToken: cancellationToken);
     }
 
@@ -224,7 +223,7 @@ public class SlackService : ISlackService
                 iconEmoji: NewNewsPortalRequestBotIconEmoji,
                 text: text,
                 channel: NewNewsPortalRequestChannel,
-                blocks: Array.Empty<SlackBlock>()),
+                blocks: []),
             cancellationToken: cancellationToken);
     }
 
@@ -247,8 +246,8 @@ public class SlackService : ISlackService
         {
             var articleBlock = new SlackTextFieldsImageSectionBlock(
                 text: new SlackMarkdownTextBlock($"<{article.Url}|{article.Title}>"),
-                fields: new List<SlackMarkdownTextBlock>()
-                {
+                fields:
+                [
                         new SlackMarkdownTextBlock("*Source*"),
                         new SlackMarkdownTextBlock($"<{article.NewsPortal!.BaseUrl}|{article.NewsPortal!.Name}>"),
                         new SlackMarkdownTextBlock("*Category*"),
@@ -259,7 +258,7 @@ public class SlackService : ISlackService
                         new SlackMarkdownTextBlock(article.NumberOfClicks.ToString(CultureInfo.InvariantCulture)),
                         new SlackMarkdownTextBlock("*Clicks ‰*"),
                         new SlackMarkdownTextBlock($"{Math.Round(totalNumberOfClicks == 0 ? 0 : 100 * article.NumberOfClicks / (double)totalNumberOfClicks, 2)}‰"),
-                },
+                ],
                 accessory: new SlackImageBlock(
                     imageUrl: article.ImageUrl ?? article.NewsPortal?.IconUrl ?? "https://via.placeholder.com/350x150.jpg",
                     altText: "article image"));
@@ -290,8 +289,8 @@ public class SlackService : ISlackService
                 new SlackHeaderBlock(new SlackPlainTextBlock(pushNotification.InternalName)),
                 new SlackTextFieldsImageSectionBlock(
                     text: new SlackMarkdownTextBlock($"<{pushNotification.ArticleUrl}|{article.Title}>"),
-                    fields: new List<SlackMarkdownTextBlock>
-                    {
+                    fields:
+                    [
                         new SlackMarkdownTextBlock("*Topic*"),
                         new SlackMarkdownTextBlock(pushNotification.Topic),
                         new SlackMarkdownTextBlock("*Message*"),
@@ -300,7 +299,7 @@ public class SlackService : ISlackService
                         new SlackMarkdownTextBlock(pushNotification.Title),
                         new SlackMarkdownTextBlock("*Source*"),
                         new SlackMarkdownTextBlock(article.NewsPortal?.Name ?? string.Empty),
-                    },
+                    ],
                     accessory: new SlackImageBlock(
                         imageUrl: article.ImageUrl ?? "https://via.placeholder.com/350x150.jpg",
                         altText: "article image")),

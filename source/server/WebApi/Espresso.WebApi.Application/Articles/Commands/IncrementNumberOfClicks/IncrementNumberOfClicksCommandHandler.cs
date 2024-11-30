@@ -41,20 +41,20 @@ public class IncrementNumberOfClicksCommandHandler : IRequestHandler<IncrementNu
             !.ToDictionary(article => article.Id);
 
         var databaseArticle = await _context.Articles.FindAsync(
-            keyValues: new object?[] { request.Id },
+            keyValues: [request.Id],
             cancellationToken: cancellationToken) ?? throw new NotFoundException(typeName: nameof(Article), id: request.Id.ToString());
 
         databaseArticle.IncrementNumberOfClicks();
-        _context.Articles.Update(databaseArticle);
-        await _context.SaveChangesAsync(cancellationToken);
+        _ = _context.Articles.Update(databaseArticle);
+        _ = await _context.SaveChangesAsync(cancellationToken);
 
         if (memoryCacheArticles.TryGetValue(request.Id, out var memoryCacheArticle))
         {
             memoryCacheArticle.IncrementNumberOfClicks();
 
-            var articlesWithUpdatedTrendingScore = _trendingScoreService.CalculateTrendingScore(articles: memoryCacheArticles.Values.ToArray());
+            var articlesWithUpdatedTrendingScore = _trendingScoreService.CalculateTrendingScore(articles: [.. memoryCacheArticles.Values]);
 
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
                 value: articlesWithUpdatedTrendingScore.ToList());
         }

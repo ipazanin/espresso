@@ -3,6 +3,7 @@
 <MudThemeProvider @bind-IsDarkMode="@IsDarkMode" Theme="Theme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
+<MudPopoverProvider />
 
 <MudLayout>
     <MudAppBar Elevation="1">
@@ -18,7 +19,9 @@
     <MudDrawer @bind-Open="DrawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <NavMenu />
     </MudDrawer>
-    <MudMainContent MaxWidth="MaxWidth.Medium">
-        @Body
+    <MudMainContent>
+        <MudContainer MaxWidth="@(MaxWidth.Medium)">
+            @Body
+        </MudContainer>
     </MudMainContent>
 </MudLayout>

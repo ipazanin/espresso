@@ -3,7 +3,7 @@
 // © 2022 Espresso News. All rights reserved.
 
 using System.Text.Encodings.Web;
-using Espresso.Common.Services.Contracts;
+using Espresso.Common.Services.Contacts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

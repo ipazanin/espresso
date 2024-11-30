@@ -43,7 +43,7 @@ public record GetCategoryArticlesArticle_1_3
     /// <summary>
     /// Gets list Of Categories article belongs to.
     /// </summary>
-    public IEnumerable<GetCategoryArticlesCategory_1_3> Categories { get; private set; } = new List<GetCategoryArticlesCategory_1_3>();
+    public IEnumerable<GetCategoryArticlesCategory_1_3> Categories { get; private set; } = [];
 
     private GetCategoryArticlesArticle_1_3()
     {

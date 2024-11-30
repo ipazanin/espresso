@@ -112,7 +112,7 @@ public class ImageUrlParseConfiguration : ValueObject
     public IEnumerable<string> GetPropertyNames()
     {
         var propertyNames = JsonWebScrapePropertyNames?.Split(",", StringSplitOptions.RemoveEmptyEntries) ??
-            Array.Empty<string>();
+            [];
 
         return propertyNames;
     }

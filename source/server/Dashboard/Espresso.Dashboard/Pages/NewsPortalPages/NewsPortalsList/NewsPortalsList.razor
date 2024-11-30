@@ -4,8 +4,8 @@
 @using Espresso.Application.DataTransferObjects.CategoryDataTransferObjects
 @using Espresso.Dashboard.Application.NewsPortals.Queries.GetNewsPortals
 
-<MudTable ServerData="@GetTableData" Dense="@false" Hover="@false" Bordered="@false" FixedHeader="@true"
-    FixedFooter="@true" Height="600px" Striped="@true" @ref="Table">
+<MudTable T="@(GetNewsPortalsQueryNewsPortal)" ServerData="@GetTableData" Dense="@false" Hover="@false"
+    Bordered="@false" FixedHeader="@true" FixedFooter="@true" Height="600px" Striped="@true" @ref="Table">
     <ToolBarContent>
         <MudGrid>
             <MudItem xs="4">

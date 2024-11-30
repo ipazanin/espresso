@@ -12,7 +12,7 @@ public static partial class LanguageUtility
     {
         if (searchTerm is null)
         {
-            return Array.Empty<string>();
+            return [];
         }
 
         var searchTerms = SeparateWords(searchTerm);
@@ -113,7 +113,7 @@ public static partial class LanguageUtility
                 _ => ch.ToString(),
             };
 
-            builder.Append(regexExpression);
+            _ = builder.Append(regexExpression);
         }
 
         return builder.ToString();

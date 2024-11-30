@@ -6,11 +6,11 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetGroupedLatestArticles;
 
 public record GetGroupedLatestArticlesQueryResponse
 {
-    public IEnumerable<IEnumerable<GetGroupedLatestArticlesArticle>> Articles { get; init; } = new List<IEnumerable<GetGroupedLatestArticlesArticle>>();
+    public IEnumerable<IEnumerable<GetGroupedLatestArticlesArticle>> Articles { get; init; } = [];
 
-    public IEnumerable<GetGroupedLatestArticlesArticle> FeaturedArticles { get; init; } = new List<GetGroupedLatestArticlesArticle>();
+    public IEnumerable<GetGroupedLatestArticlesArticle> FeaturedArticles { get; init; } = [];
 
-    public IEnumerable<GetGroupedLatestArticlesNewsPortal> NewNewsPortals { get; init; } = new List<GetGroupedLatestArticlesNewsPortal>();
+    public IEnumerable<GetGroupedLatestArticlesNewsPortal> NewNewsPortals { get; init; } = [];
 
     public int NewNewsPortalsPosition { get; init; }
 

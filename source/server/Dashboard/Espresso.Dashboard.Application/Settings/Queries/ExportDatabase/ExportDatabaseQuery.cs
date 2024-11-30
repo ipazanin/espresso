@@ -4,7 +4,7 @@
 
 using MediatR;
 
-namespace Espresso.Dashboard.Application.Settings.ExportDatabase;
+namespace Espresso.Dashboard.Application.Settings.Queries.ExportDatabase;
 
 public class ExportDatabaseQuery : IRequest<ExportDatabaseQueryResponse>
 {

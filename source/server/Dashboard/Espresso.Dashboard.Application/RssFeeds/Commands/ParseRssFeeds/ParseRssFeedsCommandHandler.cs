@@ -53,7 +53,7 @@ public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand,
         ParseRssFeedsCommand request,
         CancellationToken cancellationToken)
     {
-        _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _loadRssFeedsService.ParseRssFeeds");
+        _ = _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _loadRssFeedsService.ParseRssFeeds");
 
         _ = Task.Run(
             function: async () =>
@@ -64,7 +64,7 @@ public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand,
             },
             cancellationToken: cancellationToken);
 
-        _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _parseArticlesService.CreateArticlesFromRssFeedItems");
+        _ = _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _parseArticlesService.CreateArticlesFromRssFeedItems");
         _ = Task.Run(
             function: async () =>
             {
@@ -75,10 +75,10 @@ public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand,
             },
             cancellationToken: cancellationToken);
 
-        _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _sortArticlesService.RemoveDuplicateArticles");
+        _ = _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _sortArticlesService.RemoveDuplicateArticles");
         var uniqueArticles = await _sortArticlesService.RemoveDuplicateArticles(_parseArticlesService.ArticlesChannelReader, cancellationToken);
 
-        _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _sortArticlesService.SortArticles");
+        _ = _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _sortArticlesService.SortArticles");
         var (createArticles, updateArticlesWithModifiedProperties, createArticleCategories, deleteArticleCategories) = _sortArticlesService
             .SortArticles(
                 articles: uniqueArticles,
@@ -87,13 +87,13 @@ public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand,
         var updateArticles = updateArticlesWithModifiedProperties
             .Select(updatedArticleWithModifiedProperties => updatedArticleWithModifiedProperties.article);
 
-        _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before UpdateSavedArticles");
+        _ = _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before UpdateSavedArticles");
         UpdateSavedArticles(
             savedArticles: request.Articles,
             changedArticles: createArticles.Union(updateArticles));
 
         _espressoDatabaseContext.Articles.AddRange(createArticles);
-        await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
+        _ = await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
 
         foreach (var (article, modifiedProperties) in updateArticlesWithModifiedProperties)
         {
@@ -103,21 +103,21 @@ public class ParseRssFeedsCommandHandler : IRequestHandler<ParseRssFeedsCommand,
             }
         }
 
-        await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
+        _ = await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
 
         _espressoDatabaseContext.ArticleCategories.AddRange(createArticleCategories);
         _espressoDatabaseContext.ArticleCategories.RemoveRange(deleteArticleCategories);
-        await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
+        _ = await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
 
-        _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _espressoDatabaseContext.SaveChangesAsync");
-        await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
+        _ = _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _espressoDatabaseContext.SaveChangesAsync");
+        _ = await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
 
-        _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _sendArticlesService.SendArticlesMessage");
+        _ = _memoryCache.Set(MemoryCacheConstants.DeadLockLogKey, "Before _sendArticlesService.SendArticlesMessage");
         await _sendArticlesService.SendArticlesMessage(
             createArticleIds: createArticles.Select(article => article.Id),
             updateArticleIds: updateArticles.Select(article => article.Id));
 
-        _memoryCache.Set(MemoryCacheConstants.ArticleKey, request.Articles);
+        _ = _memoryCache.Set(MemoryCacheConstants.ArticleKey, request.Articles);
 
         return new ParseRssFeedsCommandResponse
         {

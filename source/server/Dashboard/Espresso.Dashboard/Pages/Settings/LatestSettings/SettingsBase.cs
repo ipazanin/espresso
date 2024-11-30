@@ -23,7 +23,7 @@ public class SettingsBase : ComponentBase
     protected GetLatestSettingQueryResponse? GetLatestSettingQueryResponse { get; set; }
 
 #pragma warning disable CA1819 // Properties should not return arrays
-    protected string[] Errors { get; set; } = Array.Empty<string>();
+    protected string[] Errors { get; set; } = [];
 #pragma warning restore CA1819 // Properties should not return arrays
 
     protected MudForm? Form { get; set; }
@@ -42,6 +42,21 @@ public class SettingsBase : ComponentBase
             return "Invalid Cron Expression! Check https://crontab.guru/ for more info on CRON expressions.";
         }
     });
+
+    protected static string GetCronExpressionNextOccurrence(string inputValue)
+    {
+        try
+        {
+            var cronExpression = CronExpression.Parse(inputValue);
+            var nextOccurrence = cronExpression.GetNextOccurrence(DateTime.UtcNow);
+
+            return $"Next occurrence: {nextOccurrence}";
+        }
+        catch
+        {
+            return string.Empty;
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -70,20 +85,5 @@ public class SettingsBase : ComponentBase
         await sender.Send(command);
 
         NavigationManager.NavigateTo("/");
-    }
-
-    protected string GetCronExpressionNextOccurrence(string inputValue)
-    {
-        try
-        {
-            var cronExpression = CronExpression.Parse(inputValue);
-            var nextOccurrence = cronExpression.GetNextOccurrence(DateTime.UtcNow);
-
-            return $"Next occurrence: {nextOccurrence}";
-        }
-        catch
-        {
-            return string.Empty;
-        }
     }
 }

@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace Espresso.WebApi.Authentication;
 
-public class ApiKeyAuthenticationOptions : AuthenticationSchemeOptions
+public sealed class ApiKeyAuthenticationOptions : AuthenticationSchemeOptions
 {
     public const string DefaultScheme = "API Key";
 
-    public string Scheme => DefaultScheme;
+    public static string Scheme => DefaultScheme;
 
-    public string AuthenticationType => DefaultScheme;
+    public static string AuthenticationType => DefaultScheme;
 }

@@ -647,6 +647,12 @@ dotnet_diagnostic.CA1848.severity = none
 # CA2234: Modify to call 'HttpClient.PostAsync(Uri, HttpContent)' instead of 'HttpClient.PostAsync(string, HttpContent)'
 dotnet_diagnostic.CA2234.severity = none
 
+# IDE0290: Use primary constructor
+dotnet_diagnostic.IDE0290.severity = none
+
+# SA1010: An opening square bracket within a C# statement is not spaced correctly.
+dotnet_diagnostic.SA1010.severity = none
+
 ######################################################
 #           Custom Analysers
 ######################################################
@@ -687,6 +693,12 @@ dotnet_diagnostic.SA1601.severity = none
 
 # SA1615: Element return value should be documented
 dotnet_diagnostic.SA1615.severity = none
+
+# S6934: A Route attribute should be added to the controller when a route template is specified at the action level
+dotnet_diagnostic.S6934.severity = none
+
+# S6964
+dotnet_diagnostic.S6964.severity = none
 
 ######################################################
 #           Code Documentation Analysers End

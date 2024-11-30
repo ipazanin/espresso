@@ -3,7 +3,7 @@
 // © 2022 Espresso News. All rights reserved.
 
 using Espresso.Application.DataTransferObjects.CategoryDataTransferObjects;
-using Espresso.Dashboard.Application.Categories.Commands.UpdateCategory;
+using Espresso.Dashboard.Application.Categories.Commands.CreateCategory;
 using Espresso.Domain.Enums.CategoryEnums;
 using MediatR;
 using Microsoft.AspNetCore.Components;

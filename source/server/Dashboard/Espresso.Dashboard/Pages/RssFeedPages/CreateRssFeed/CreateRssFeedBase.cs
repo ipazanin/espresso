@@ -14,7 +14,7 @@ using MediatR;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Espresso.Dashboard.Pages.RssFeedPages.CreateEditRssFeed;
+namespace Espresso.Dashboard.Pages.RssFeedPages.CreateRssFeed;
 
 /// <summary>
 /// NewsPortalDetailsBase.
@@ -84,8 +84,8 @@ public class CreateRssFeedBase : ComponentBase
             rssFeed: rssFeedDto,
             newsPortals: newsPortals.NewsPortals.Items.Select(newsPortalResponse => newsPortalResponse.NewsPortal),
             categories: categories.CategoriesPagedList.Items,
-            rssFeedCategories: new List<RssFeedCategoryDto>(),
-            rssFeedContentModifiers: new List<RssFeedContentModifierDto>());
+            rssFeedCategories: [],
+            rssFeedContentModifiers: []);
     }
 
     protected async Task OnSaveButtonClick()

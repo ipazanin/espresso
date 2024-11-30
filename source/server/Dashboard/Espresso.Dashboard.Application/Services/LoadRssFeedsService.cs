@@ -4,9 +4,9 @@
 
 using Espresso.Application.DataTransferObjects;
 using Espresso.Application.Extensions;
+using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
-using Espresso.Dashboard.Application.Constants;
 using Espresso.Dashboard.Application.IServices;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.RssFeedEnums;
@@ -105,7 +105,7 @@ public class LoadRssFeedsService : ILoadRssFeedsService
                     ElementExtensions = syndicationItem
                         .ElementExtensions
                         ?.Select(e => e.GetObject<XElement>())
-                        ?? Enumerable.Empty<XElement>(),
+                        ?? [],
                 };
 
                 await writer.WriteAsync(rssFeedItem, cancellationToken);
@@ -137,7 +137,7 @@ public class LoadRssFeedsService : ILoadRssFeedsService
         {
             RequestType.Browser => await LoadCompressedFeedContent(rssFeed, cancellationToken),
             RequestType.Normal => await LoadFeedContent(rssFeed, cancellationToken),
-            _ => await LoadFeedContent(rssFeed, cancellationToken)
+            RequestType.None or _ => await LoadFeedContent(rssFeed, cancellationToken)
         };
 
         var modifiedFeedContent = rssFeed.ModifyContent(feedContent);

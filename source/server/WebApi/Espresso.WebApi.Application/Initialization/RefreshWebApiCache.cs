@@ -63,7 +63,7 @@ public class RefreshWebApiCache : IRefreshWebApiCache
                   .AsNoTracking()
                   .ToListAsync();
 
-        _memoryCache.Set(
+        _ = _memoryCache.Set(
             key: MemoryCacheConstants.RegionKey,
             value: regions.ToList());
 
@@ -74,7 +74,7 @@ public class RefreshWebApiCache : IRefreshWebApiCache
             .AsNoTracking()
             .ToListAsync();
 
-        _memoryCache.Set(
+        _ = _memoryCache.Set(
             key: MemoryCacheConstants.NewsPortalKey,
             value: newsPortals.ToList());
 
@@ -84,7 +84,7 @@ public class RefreshWebApiCache : IRefreshWebApiCache
             .AsNoTracking()
             .ToListAsync();
 
-        _memoryCache.Set(
+        _ = _memoryCache.Set(
             key: MemoryCacheConstants.CategoryKey,
             value: categories);
 
@@ -93,7 +93,7 @@ public class RefreshWebApiCache : IRefreshWebApiCache
             categories: categories,
             cancellationToken: default);
 
-        _memoryCache.Set(
+        _ = _memoryCache.Set(
            key: MemoryCacheConstants.ArticleKey,
            value: articles.ToList());
     }

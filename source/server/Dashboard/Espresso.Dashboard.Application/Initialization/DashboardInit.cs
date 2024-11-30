@@ -20,14 +20,14 @@ public class DashboardInit : IDashboardInit
     private readonly UserManager<IdentityUser> _userManager;
     private readonly INewsPortalImagesService _newsPortalImagesService;
     private readonly string _adminUserPassword;
-    private readonly IEnumerable<string> _adminUserEmails = new[]
-    {
+    private readonly IEnumerable<string> _adminUserEmails =
+    [
         "ivan.pazanin1996@gmail.com",
         "miro@espressonews.co",
         "nikola.dadic@gmail.com",
         "iferencak@profico.hr",
         "pero.pavlovicit@gmail.com",
-    };
+    ];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DashboardInit"/> class.

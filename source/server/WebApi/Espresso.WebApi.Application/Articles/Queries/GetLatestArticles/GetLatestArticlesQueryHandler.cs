@@ -130,7 +130,7 @@ public class GetArticlesQueryHandler_2_0 : IRequestHandler<GetLatestArticlesQuer
     {
         if (request.Skip != 0)
         {
-            return Array.Empty<GetLatestArticlesNewsPortal>();
+            return [];
         }
 
         var (newsPortalIds, categoryIds) = ParseIds(request);
@@ -156,7 +156,7 @@ public class GetArticlesQueryHandler_2_0 : IRequestHandler<GetLatestArticlesQuer
     {
         if (request.Skip != 0)
         {
-            return Array.Empty<GetLatestArticlesArticle>();
+            return [];
         }
 
         var featuredArticles = savedArticles

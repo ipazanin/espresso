@@ -52,7 +52,7 @@ public record GetGroupedLatestArticlesArticle
     /// <summary>
     /// Gets list Of Categories article belongs to.
     /// </summary>
-    public IEnumerable<GetGroupedLatestArticlesCategory> Categories { get; private set; } = new List<GetGroupedLatestArticlesCategory>();
+    public IEnumerable<GetGroupedLatestArticlesCategory> Categories { get; private set; } = [];
 
     private GetGroupedLatestArticlesArticle()
     {

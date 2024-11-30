@@ -29,12 +29,12 @@ else
             <MudPaper Class="pa-4">
                 <MudImage Alt="News Portal Image" Src="@($"/{NewsPortalDetailsResponse.NewsPortal.IconUrl}")" />
             <MudFileUpload T="IBrowserFile" FilesChanged="OnUploadIcon">
-                <ButtonTemplate>
+                <ActivatorContent>
                     <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Secondary"
-                        StartIcon="@Icons.Material.Filled.CloudUpload" for="@context">
+                        StartIcon="@Icons.Material.Filled.CloudUpload">
                         Import Icon
                     </MudButton>
-                </ButtonTemplate>
+                </ActivatorContent>
             </MudFileUpload>
             </MudPaper>
         </MudItem>

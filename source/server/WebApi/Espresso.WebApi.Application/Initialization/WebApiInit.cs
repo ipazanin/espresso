@@ -57,7 +57,7 @@ public class WebApiInit : IWebApiInit
             path1: AppDomain.CurrentDomain.BaseDirectory ?? string.Empty,
             path2: ConfigurationFileName);
 
-        FirebaseApp.Create(new AppOptions()
+        _ = FirebaseApp.Create(new AppOptions()
         {
             Credential = GoogleCredential.FromFile(firebaseKeyPath),
         });

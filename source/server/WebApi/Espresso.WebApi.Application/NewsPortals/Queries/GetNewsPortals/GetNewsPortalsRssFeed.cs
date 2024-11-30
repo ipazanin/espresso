@@ -16,9 +16,9 @@ public sealed class GetNewsPortalsRssFeed
 
     public string Url { get; private set; } = string.Empty;
 
-    public IEnumerable<GetNewsPortalsRssFeedContentModifier> RssFeedContentModifiers { get; private set; } = new List<GetNewsPortalsRssFeedContentModifier>();
+    public IEnumerable<GetNewsPortalsRssFeedContentModifier> RssFeedContentModifiers { get; private set; } = [];
 
-    public IEnumerable<GetNewsPortalsRssFeedCategory> RssFeedCategories { get; private set; } = new List<GetNewsPortalsRssFeedCategory>();
+    public IEnumerable<GetNewsPortalsRssFeedCategory> RssFeedCategories { get; private set; } = [];
 
     public static Expression<Func<RssFeed, GetNewsPortalsRssFeed>> GetProjection()
     {

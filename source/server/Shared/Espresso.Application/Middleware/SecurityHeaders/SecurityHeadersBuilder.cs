@@ -28,10 +28,10 @@ public class SecurityHeadersBuilder
     /// <returns>Current <see cref="SecurityHeadersBuilder"/>.</returns>
     public SecurityHeadersBuilder AddDefaultSecurePolicy()
     {
-        AddFrameOptionsDeny();
-        AddXssProtectionBlock();
-        AddContentTypeOptionsNoSniff();
-        AddStrictTransportSecurityMaxAge();
+        _ = AddFrameOptionsDeny();
+        _ = AddXssProtectionBlock();
+        _ = AddContentTypeOptionsNoSniff();
+        _ = AddStrictTransportSecurityMaxAge();
 
         return this;
     }
@@ -190,7 +190,7 @@ public class SecurityHeadersBuilder
             throw new ArgumentNullException(nameof(header));
         }
 
-        _policy.RemoveHeaders.Add(header);
+        _ = _policy.RemoveHeaders.Add(header);
         return this;
     }
 

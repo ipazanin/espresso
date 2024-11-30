@@ -16,10 +16,10 @@ public class SettingConfiguration : IEntityTypeConfiguration<Setting>
     /// <inheritdoc/>
     public void Configure(EntityTypeBuilder<Setting> builder)
     {
-        builder.Property(setting => setting.SettingsRevision)
+        _ = builder.Property(setting => setting.SettingsRevision)
             .ValueGeneratedOnAdd();
 
-        builder.HasIndex(setting => setting.Created);
+        _ = builder.HasIndex(setting => setting.Created);
 
         ConfigureArticleSetting(builder);
         ConfigureNewsPortalSetting(builder);

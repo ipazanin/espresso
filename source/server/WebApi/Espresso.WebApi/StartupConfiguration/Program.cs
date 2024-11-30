@@ -46,11 +46,11 @@ internal static class Program
             })
             .ConfigureWebHostDefaults(webBuilder =>
             {
-                webBuilder.UseStartup<Startup>();
-                webBuilder.ConfigureLogging(loggingBuilder =>
+                _ = webBuilder.UseStartup<Startup>();
+                _ = webBuilder.ConfigureLogging(loggingBuilder =>
                 {
-                    loggingBuilder.ClearProviders();
-                    loggingBuilder.AddSimpleConsole();
+                    _ = loggingBuilder.ClearProviders();
+                    _ = loggingBuilder.AddSimpleConsole();
                 });
             });
 }

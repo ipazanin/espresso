@@ -6,7 +6,7 @@ using System.Net;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using Espresso.Common.Constants;
-using Espresso.Common.Services.Contracts;
+using Espresso.Common.Services.Contacts;
 using Espresso.WebApi.DataTransferObjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -75,13 +75,13 @@ public class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthentic
         {
             var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Role, existingApiKey.Role),
+                    new(ClaimTypes.Role, existingApiKey.Role),
                 };
 
-            var identity = new ClaimsIdentity(claims, Options.AuthenticationType);
+            var identity = new ClaimsIdentity(claims, ApiKeyAuthenticationOptions.AuthenticationType);
             var identities = new List<ClaimsIdentity> { identity };
             var principal = new ClaimsPrincipal(identities);
-            var ticket = new AuthenticationTicket(principal, Options.Scheme);
+            var ticket = new AuthenticationTicket(principal, ApiKeyAuthenticationOptions.Scheme);
 
             return AuthenticateResult.Success(ticket);
         }

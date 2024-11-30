@@ -70,7 +70,7 @@ public class NotificationsController : ApiController
         [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
         CancellationToken cancellationToken)
     {
-        await Sender.Send(
+        _ = await Sender.Send(
             request: new UpdateInMemoryArticlesCommand
             {
                 CreatedArticleIds = articlesRequest.CreatedArticleIds,

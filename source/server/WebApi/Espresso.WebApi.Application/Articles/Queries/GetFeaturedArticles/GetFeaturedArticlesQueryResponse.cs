@@ -6,5 +6,5 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetFeaturedArticles;
 
 public record GetFeaturedArticlesQueryResponse
 {
-    public IEnumerable<GetFeaturedArticlesArticle> Articles { get; init; } = new List<GetFeaturedArticlesArticle>();
+    public IEnumerable<GetFeaturedArticlesArticle> Articles { get; init; } = [];
 }

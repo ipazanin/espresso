@@ -24,5 +24,5 @@ public record SetFeaturedArticleCommand : IRequest
     /// </summary>
     public DeviceType DeviceType { get; init; }
 
-    public IEnumerable<(Guid articleId, bool? isFeatured, int? featuredPosition)> FeaturedArticleConfigurations { get; init; } = new List<(Guid articleId, bool? isFeatured, int? featuredPosition)>();
+    public IEnumerable<(Guid articleId, bool? isFeatured, int? featuredPosition)> FeaturedArticleConfigurations { get; init; } = [];
 }

@@ -18,29 +18,29 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     /// <inheritdoc/>
     public void Configure(EntityTypeBuilder<Category> builder)
     {
-        builder.Property(category => category.Name)
+        _ = builder.Property(category => category.Name)
             .HasMaxLength(Category.NameHasMaxLenght);
 
-        builder.Property(category => category.Color)
+        _ = builder.Property(category => category.Color)
             .HasMaxLength(Category.ColorHasMaxLenght);
 
-        builder.Property(category => category.KeyWordsRegexPattern)
+        _ = builder.Property(category => category.KeyWordsRegexPattern)
             .HasMaxLength(Category.KeyWordsRegexPatterHasMaxLenght);
 
-        builder.Property(category => category.Url)
+        _ = builder.Property(category => category.Url)
             .HasMaxLength(Category.UrlHasMaxLength);
 
-        builder.HasMany(category => category.ArticleCategories)
+        _ = builder.HasMany(category => category.ArticleCategories)
             .WithOne(articleCategory => articleCategory.Category!)
             .OnDelete(DeleteBehavior.Cascade)
             .HasForeignKey(articleCategory => articleCategory.CategoryId);
 
-        builder.HasMany(category => category.RssFeeds)
+        _ = builder.HasMany(category => category.RssFeeds)
             .WithOne(rssFeed => rssFeed.Category!)
             .OnDelete(DeleteBehavior.Restrict)
             .HasForeignKey(articleCategory => articleCategory.CategoryId);
 
-        builder.HasMany(category => category.NewsPortals)
+        _ = builder.HasMany(category => category.NewsPortals)
             .WithOne(newsPortal => newsPortal.Category!)
             .HasForeignKey(newsPortal => newsPortal.CategoryId)
             .OnDelete(DeleteBehavior.Cascade);
@@ -52,7 +52,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
         var categories = new List<Category>
             {
-                new Category(
+                new(
                     id: (int)CategoryId.Vijesti,
                     name: CategoryId.Vijesti.GetDisplayName(),
                     color: "#E84855",
@@ -61,7 +61,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
                     position: null,
                     categoryType: CategoryType.Normal,
                     categoryUrl: "/vijesti"),
-                new Category(
+                new(
                     id: (int)CategoryId.Sport,
                     name: CategoryId.Sport.GetDisplayName(),
                     color: "#4CB944",
@@ -70,7 +70,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
                     position: null,
                     categoryType: CategoryType.Normal,
                     categoryUrl: "/sport"),
-                new Category(
+                new(
                     id: (int)CategoryId.Show,
                     name: CategoryId.Show.GetDisplayName(),
                     color: "#F4B100",
@@ -79,7 +79,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
                     position: null,
                     categoryType: CategoryType.Normal,
                     categoryUrl: "/show"),
-                new Category(
+                new(
                     id: (int)CategoryId.Lifestyle,
                     name: CategoryId.Lifestyle.GetDisplayName(),
                     color: "#32936F",
@@ -88,7 +88,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
                     position: null,
                     categoryType: CategoryType.Normal,
                     categoryUrl: "/lifestyle"),
-                new Category(
+                new(
                     id: (int)CategoryId.Tech,
                     name: CategoryId.Tech.GetDisplayName(),
                     color: "#2E86AB",
@@ -97,7 +97,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
                     position: null,
                     categoryType: CategoryType.Normal,
                     categoryUrl: "/tech"),
-                new Category(
+                new(
                     id: (int)CategoryId.Viral,
                     name: CategoryId.Viral.GetDisplayName(),
                     color: "#9055A2",
@@ -106,7 +106,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
                     position: null,
                     categoryType: CategoryType.Normal,
                     categoryUrl: "/viral"),
-                new Category(
+                new(
                     id: (int)CategoryId.Biznis,
                     name: CategoryId.Biznis.GetDisplayName(),
                     color: "#3185FC",
@@ -115,7 +115,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
                     position: null,
                     categoryType: CategoryType.Normal,
                     categoryUrl: "/biznis"),
-                new Category(
+                new(
                     id: (int)CategoryId.AutoMoto,
                     name: CategoryId.AutoMoto.GetDisplayName(),
                     color: "#FC814A",
@@ -124,7 +124,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
                     position: null,
                     categoryType: CategoryType.Normal,
                     categoryUrl: "/auto-moto"),
-                new Category(
+                new(
                     id: (int)CategoryId.Kultura,
                     name: CategoryId.Kultura.GetDisplayName(),
                     color: "#AC80A0",
@@ -133,7 +133,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
                     position: null,
                     categoryType: CategoryType.Normal,
                     categoryUrl: "/kultura"),
-                new Category(
+                new(
                     id: (int)CategoryId.General,
                     name: CategoryId.General.GetDisplayName(),
                     color: "#AC80A0",
@@ -142,7 +142,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
                     position: null,
                     categoryType: CategoryType.General,
                     categoryUrl: "/general"),
-                new Category(
+                new(
                     id: (int)CategoryId.Local,
                     name: CategoryId.Local.GetDisplayName(),
                     color: "#AC80A0",
@@ -153,6 +153,6 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
                     categoryUrl: "/local"),
             };
 
-        builder.HasData(categories);
+        _ = builder.HasData(categories);
     }
 }

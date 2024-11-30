@@ -8,7 +8,7 @@ namespace Espresso.WebApi.Application.Articles.Commands.UpdateInMemoryArticles;
 
 public record UpdateInMemoryArticlesCommand : Request<UpdateInMemoryArticlesCommandResponse>
 {
-    public IEnumerable<Guid> CreatedArticleIds { get; init; } = new List<Guid>();
+    public IEnumerable<Guid> CreatedArticleIds { get; init; } = [];
 
-    public IEnumerable<Guid> UpdatedArticleIds { get; init; } = new List<Guid>();
+    public IEnumerable<Guid> UpdatedArticleIds { get; init; } = [];
 }

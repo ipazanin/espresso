@@ -6,5 +6,5 @@ namespace Espresso.WebApi.Application.Articles.Queries.AutoCompleteArticle;
 
 public record AutoCompleteArticleQueryResponse
 {
-    public IEnumerable<string> MatchedWords { get; init; } = new List<string>();
+    public IEnumerable<string> MatchedWords { get; init; } = [];
 }

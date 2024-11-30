@@ -47,7 +47,7 @@ public class CreateEditRssFeedBase : ComponentBase
 #pragma warning restore BL0007 // Component parameter should be auto property
 
 #pragma warning disable CA1819 // Properties should not return arrays
-    protected string[] Errors { get; set; } = Array.Empty<string>();
+    protected string[] Errors { get; set; } = [];
 #pragma warning restore CA1819 // Properties should not return arrays
 
     protected MudForm? Form { get; set; }
@@ -60,7 +60,7 @@ public class CreateEditRssFeedBase : ComponentBase
         }
 
         var rssFeedCategoryDtoToRemove = RssFeedDetails.RssFeedCategories.First(rssFeedCategory => rssFeedCategory.Id == rssFeedCategoryId);
-        RssFeedDetails.RssFeedCategories.Remove(rssFeedCategoryDtoToRemove);
+        _ = RssFeedDetails.RssFeedCategories.Remove(rssFeedCategoryDtoToRemove);
     }
 
     protected void OnAddRssFeedCategoryButtonClicked()
@@ -91,7 +91,7 @@ public class CreateEditRssFeedBase : ComponentBase
             .RssFeedContentModifiers
             .First(rssFeedContentModifier => rssFeedContentModifier.Id == rssFeedContentModifierId);
 
-        RssFeedDetails.RssFeedContentModifiers.Remove(rssFeedContentModifierToRemove);
+        _ = RssFeedDetails.RssFeedContentModifiers.Remove(rssFeedContentModifierToRemove);
     }
 
     protected void OnAddRssFeedContentModifierButtonClicked()

@@ -36,27 +36,27 @@ public sealed partial class Startup
         loggerService.Log(
             eventName: "WebApi Startup",
             logLevel: Microsoft.Extensions.Logging.LogLevel.Information,
-            namedArguments: new (string, object)[]
-            {
+            namedArguments:
+            [
                    ("version", _webApiConfiguration.AppConfiguration.Version),
                    ("address", string.Join(',', serverAddressesFeature!.Addresses)),
-            });
+            ]);
 
 #pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
         memoryCacheInit.InitWebApi().GetAwaiter().GetResult();
 #pragma warning restore VSTHRD002 // Avoid problematic synchronous waits
 
-        app.UseSecurityHeadersMiddleware(securityHeadersBuilder => securityHeadersBuilder.AddDefaultSecurePolicy());
+        _ = app.UseSecurityHeadersMiddleware(securityHeadersBuilder => securityHeadersBuilder.AddDefaultSecurePolicy());
 
         if (_webApiConfiguration.SpaConfiguration.EnableCors)
         {
-            app.UseCors(CustomCorsPolicyName);
+            _ = app.UseCors(CustomCorsPolicyName);
         }
 
-        app.UseHsts();
+        _ = app.UseHsts();
 
-        app.UseSwagger();
-        app.UseSwaggerUI(options =>
+        _ = app.UseSwagger();
+        _ = app.UseSwaggerUI(options =>
         {
             foreach (var apiVersion in _webApiConfiguration.AppConfiguration.ApiVersions)
             {
@@ -68,11 +68,11 @@ public sealed partial class Startup
             options.RoutePrefix = SwaggerApiExplorerRoute;
         });
 
-        app.UseRouting();
-        app.UseAuthentication();
-        app.UseAuthorization();
+        _ = app.UseRouting();
+        _ = app.UseAuthentication();
+        _ = app.UseAuthorization();
 
-        app.UseStaticFiles();
+        _ = app.UseStaticFiles();
         app.UseSpaStaticFiles();
 
         app.UseSpa(spa =>
@@ -87,23 +87,23 @@ public sealed partial class Startup
             }
         });
 
-        app.UseResponseCaching();
-        app.UseEndpoints(endpoints =>
+        _ = app.UseResponseCaching();
+        _ = app.UseEndpoints(endpoints =>
         {
-            endpoints.MapControllers();
-            endpoints.MapHealthChecks("/health/startup", new HealthCheckOptions
+            _ = endpoints.MapControllers();
+            _ = endpoints.MapHealthChecks("/health/startup", new HealthCheckOptions
             {
                 Predicate = check => check.Tags.Contains(HealthCheckConstants.StartupTag),
             });
-            endpoints.MapHealthChecks("/health/readiness", new HealthCheckOptions
+            _ = endpoints.MapHealthChecks("/health/readiness", new HealthCheckOptions
             {
                 Predicate = check => check.Tags.Contains(HealthCheckConstants.ReadinessTag),
             });
-            endpoints.MapHealthChecks("/health/liveness", new HealthCheckOptions
+            _ = endpoints.MapHealthChecks("/health/liveness", new HealthCheckOptions
             {
                 Predicate = check => check.Tags.Contains(HealthCheckConstants.LivenessTag),
             });
-            endpoints.MapHub<ArticlesNotificationHub>("/notifications/articles");
+            _ = endpoints.MapHub<ArticlesNotificationHub>("/notifications/articles");
         });
     }
 }

@@ -5,7 +5,7 @@
 using Espresso.Application.DataTransferObjects.CategoryDataTransferObjects;
 using MediatR;
 
-namespace Espresso.Dashboard.Application.Categories.Commands.UpdateCategory;
+namespace Espresso.Dashboard.Application.Categories.Commands.CreateCategory;
 
 public class CreateCategoryCommand : IRequest
 {

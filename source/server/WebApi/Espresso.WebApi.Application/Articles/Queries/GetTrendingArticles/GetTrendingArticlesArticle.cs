@@ -47,7 +47,7 @@ public record GetTrendingArticlesArticle
     /// <summary>
     /// Gets list Of Categories article belongs to.
     /// </summary>
-    public IEnumerable<GetTrendingArticlesCategory> Categories { get; private set; } = new List<GetTrendingArticlesCategory>();
+    public IEnumerable<GetTrendingArticlesCategory> Categories { get; private set; } = [];
 
     private GetTrendingArticlesArticle()
     {

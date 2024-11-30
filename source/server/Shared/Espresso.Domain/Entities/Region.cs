@@ -20,7 +20,7 @@ public class Region
 
     public string Subtitle { get; private set; }
 
-    public IEnumerable<NewsPortal> NewsPortals { get; private set; } = new List<NewsPortal>();
+    public ICollection<NewsPortal> NewsPortals { get; private set; } = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Region"/> class.

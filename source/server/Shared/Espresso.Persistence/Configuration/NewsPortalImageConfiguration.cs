@@ -12,7 +12,7 @@ public class NewsPortalImageConfiguration : IEntityTypeConfiguration<NewsPortalI
 {
     public void Configure(EntityTypeBuilder<NewsPortalImage> builder)
     {
-        builder.HasOne(newsPortalImage => newsPortalImage.NewsPortal)
+        _ = builder.HasOne(newsPortalImage => newsPortalImage.NewsPortal)
             .WithOne(newsPortal => newsPortal.NewsPortalImage)
             .HasForeignKey<NewsPortalImage>(newsPortalImage => newsPortalImage.NewsPortalId)
             .OnDelete(DeleteBehavior.Cascade);

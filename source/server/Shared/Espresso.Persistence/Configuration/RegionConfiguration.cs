@@ -18,13 +18,13 @@ public class RegionConfiguration : IEntityTypeConfiguration<Region>
     /// <inheritdoc/>
     public void Configure(EntityTypeBuilder<Region> builder)
     {
-        builder.Property(region => region.Name)
+        _ = builder.Property(region => region.Name)
             .HasMaxLength(Region.RegionNameHasMaxLength);
 
-        builder.Property(region => region.Subtitle)
+        _ = builder.Property(region => region.Subtitle)
             .HasMaxLength(Region.RegionSubtitleHasMaxLength);
 
-        builder.HasMany(region => region.NewsPortals)
+        _ = builder.HasMany(region => region.NewsPortals)
             .WithOne(newsPortal => newsPortal.Region!)
             .HasForeignKey(newsPortal => newsPortal.RegionId)
             .OnDelete(DeleteBehavior.Cascade);
@@ -36,36 +36,36 @@ public class RegionConfiguration : IEntityTypeConfiguration<Region>
     {
         var regions = new List<Region>
             {
-                new Region(
+                new(
                     id: (int)RegionId.Global,
                     name: RegionId.Global.GetDisplayName(),
                     subtitle: "Global"),
-                new Region(
+                new(
                     id: (int)RegionId.Dalmacija,
                     name: RegionId.Dalmacija.GetDisplayName(),
                     subtitle: "Split, Zadar, Dubrovnik, Šibenik, Kaštela, Imotski..."),
-                new Region(
+                new(
                     id: (int)RegionId.Istra,
                     name: RegionId.Istra.GetDisplayName(),
                     subtitle: "Rijeka, Pula, Opatija, Pazin, Umag, Poreč, Rovinj..."),
-                new Region(
+                new(
                     id: (int)RegionId.Lika,
                     name: RegionId.Lika.GetDisplayName(),
                     subtitle: "Lokalne vijesti iz Ličko-Senjske županije"),
-                new Region(
+                new(
                     id: (int)RegionId.SjevernaHrvatska,
                     name: RegionId.SjevernaHrvatska.GetDisplayName(),
                     subtitle: "Međimurje, Podravina, Sisak, Zagorje..."),
-                new Region(
+                new(
                     id: (int)RegionId.Slavonija,
                     name: RegionId.Slavonija.GetDisplayName(),
                     subtitle: "Osijek, Vinkovci, Slavonski Brod, Vukovar, Požega..."),
-                new Region(
+                new(
                     id: (int)RegionId.Zagreb,
                     name: RegionId.Zagreb.GetDisplayName(),
                     subtitle: "Lokalne vijesti iz grada Zagreba i okolice"),
             };
 
-        builder.HasData(regions);
+        _ = builder.HasData(regions);
     }
 }

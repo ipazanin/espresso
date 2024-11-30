@@ -13,7 +13,7 @@ public class GetTrendingArticlesQueryValidator : AbstractValidator<GetTrendingAr
     /// </summary>
     public GetTrendingArticlesQueryValidator()
     {
-        RuleFor(query => query.Take).GreaterThan(0).LessThan(100);
-        RuleFor(query => query.Skip).GreaterThanOrEqualTo(0);
+        _ = RuleFor(query => query.Take).GreaterThan(0).LessThan(100);
+        _ = RuleFor(query => query.Skip).GreaterThanOrEqualTo(0);
     }
 }

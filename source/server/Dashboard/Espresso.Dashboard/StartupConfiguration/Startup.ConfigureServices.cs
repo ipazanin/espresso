@@ -9,9 +9,8 @@ using Espresso.Application.Models;
 using Espresso.Application.Services.Contracts;
 using Espresso.Application.Services.Implementations;
 using Espresso.Common.Constants;
-using Espresso.Common.Services.Contracts;
+using Espresso.Common.Services.Contacts;
 using Espresso.Common.Services.Implementations;
-using Espresso.Dashboard.Application.Constants;
 using Espresso.Dashboard.Application.HealthChecks;
 using Espresso.Dashboard.Application.Initialization;
 using Espresso.Dashboard.Application.IServices;
@@ -57,14 +56,14 @@ public sealed partial class Startup
 
     private static void AddBlazorServices(IServiceCollection services)
     {
-        services.AddMudServices();
+        _ = services.AddMudServices();
     }
 
     private static void AddAuth(IServiceCollection services)
     {
-        services.AddOptions();
-        services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-        services.AddIdentity<IdentityUser, IdentityRole>(identityOptions =>
+        _ = services.AddOptions();
+        _ = services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+        _ = services.AddIdentity<IdentityUser, IdentityRole>(identityOptions =>
         {
             identityOptions.Password.RequireDigit = true;
             identityOptions.Password.RequiredLength = 8;
@@ -79,9 +78,9 @@ public sealed partial class Startup
             .AddEntityFrameworkStores<EspressoIdentityDatabaseContext>()
             .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>(TokenOptions.DefaultProvider);
 
-        services.AddAuthentication();
+        _ = services.AddAuthentication();
 
-        services.AddAuthorization();
+        _ = services.AddAuthorization();
     }
 
     /// <summary>
@@ -90,14 +89,14 @@ public sealed partial class Startup
     /// <param name="services">Services.</param>
     private static void AddMediatRServices(IServiceCollection services)
     {
-        services.AddMediatR(configuration =>
+        _ = services.AddMediatR(configuration =>
         {
-            configuration.RegisterServicesFromAssemblyContaining<ParseRssFeedsCommandHandler>();
-            configuration.RegisterServicesFromAssemblyContaining(typeof(LoggerRequestPipeline<,>));
+            _ = configuration.RegisterServicesFromAssemblyContaining<ParseRssFeedsCommandHandler>();
+            _ = configuration.RegisterServicesFromAssemblyContaining(typeof(LoggerRequestPipeline<,>));
         });
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionRequestPipeline<,>));
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggerRequestPipeline<,>));
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
+        _ = services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionRequestPipeline<,>));
+        _ = services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggerRequestPipeline<,>));
+        _ = services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
     }
 
     /// <summary>
@@ -111,23 +110,23 @@ public sealed partial class Startup
             .Or<TimeoutRejectedException>() // thrown by Polly's TimeoutPolicy if the inner execution times out
             .RetryAsync(3);
 
-        services.AddMemoryCache();
-        services.AddTransient<IDashboardInit, DashboardInit>(serviceProvider => new DashboardInit(
+        _ = services.AddMemoryCache();
+        _ = services.AddTransient<IDashboardInit, DashboardInit>(serviceProvider => new DashboardInit(
             espressoIdentityContext: serviceProvider.GetRequiredService<IEspressoIdentityDatabaseContext>(),
             roleManager: serviceProvider.GetRequiredService<RoleManager<IdentityRole>>(),
             userManager: serviceProvider.GetRequiredService<UserManager<IdentityUser>>(),
             newsPortalImagesService: serviceProvider.GetRequiredService<INewsPortalImagesService>(),
             adminUserPassword: _dashboardConfiguration.AppConfiguration.AdminUserPassword));
-        services.AddSingleton(_ => _dashboardConfiguration);
+        _ = services.AddSingleton(_ => _dashboardConfiguration);
 
-        services
+        _ = services
             .AddHttpClient(
                 name: HttpClientConstants.SlackHttpClientName,
                 configureClient: (_, httpClient) => httpClient.Timeout = _dashboardConfiguration.SlackHttpClientConfiguration.Timeout)
             .AddPolicyHandler(retryPolicy)
             .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(20)));
 
-        services
+        _ = services
             .AddHttpClient(
                 name: HttpClientConstants.SendArticlesHttpClientName,
                 configureClient: (_, httpClient) =>
@@ -137,7 +136,7 @@ public sealed partial class Startup
             .AddPolicyHandler(retryPolicy)
             .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(90)));
 
-        services
+        _ = services
             .AddHttpClient(
                 name: HttpClientConstants.LoadRssFeedsHttpClientName,
                 configureClient: (_, httpClient) =>
@@ -147,7 +146,7 @@ public sealed partial class Startup
             .AddPolicyHandler(retryPolicy)
             .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(10)));
 
-        services
+        _ = services
             .AddHttpClient(
                 name: HttpClientConstants.ScrapeWebHttpClientName,
                 configureClient: (_, httpClient) =>
@@ -157,15 +156,15 @@ public sealed partial class Startup
             .AddPolicyHandler(retryPolicy)
             .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(10)));
 
-        services.AddSingleton<IDashboardConfiguration, DashboardConfiguration>();
-        services.AddValidatorsFromAssembly(typeof(ArticleDataValidator).Assembly);
-        services.AddSingleton(_ => new ApplicationInformation(
+        _ = services.AddSingleton<IDashboardConfiguration, DashboardConfiguration>();
+        _ = services.AddValidatorsFromAssembly(typeof(ArticleDataValidator).Assembly);
+        _ = services.AddSingleton(_ => new ApplicationInformation(
             appEnvironment: _dashboardConfiguration.AppConfiguration.AppEnvironment,
             version: _dashboardConfiguration.AppConfiguration.Version));
 
-        services.AddScoped<IEmailService, SendGridEmailService>(_ => new SendGridEmailService(
+        _ = services.AddScoped<IEmailService, SendGridEmailService>(_ => new SendGridEmailService(
             sendGridKey: _dashboardConfiguration.AppConfiguration.SendGridApiKey));
-        services.AddScoped<ISettingProvider, SettingProvider>();
+        _ = services.AddScoped<ISettingProvider, SettingProvider>();
     }
 
     /// <summary>
@@ -174,8 +173,8 @@ public sealed partial class Startup
     /// <param name="services">Services.</param>
     private void AddWebApi(IServiceCollection services)
     {
-        services.AddServerSideBlazor();
-        services.AddRazorPages()
+        _ = services.AddServerSideBlazor();
+        _ = services.AddRazorPages()
             .AddJsonOptions(jsonOptions =>
             {
                 _dashboardConfiguration
@@ -184,20 +183,20 @@ public sealed partial class Startup
                         jsonSerializerOptions: jsonOptions.JsonSerializerOptions);
             });
 
-        services.AddSingleton<ReadinessHealthCheck>();
-        services.AddHealthChecks()
+        _ = services.AddSingleton<ReadinessHealthCheck>();
+        _ = services.AddHealthChecks()
             .AddCheck<StartupHealthCheck>(
                 name: nameof(StartupHealthCheck),
                 failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
-                tags: new[] { HealthCheckConstants.StartupTag })
+                tags: [HealthCheckConstants.StartupTag])
             .AddCheck<ReadinessHealthCheck>(
                 name: nameof(ReadinessHealthCheck),
                 failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
-                tags: new[] { HealthCheckConstants.ReadinessTag })
+                tags: [HealthCheckConstants.ReadinessTag])
             .AddCheck<LivenessHealthCheck>(
                 name: nameof(LivenessHealthCheck),
                 failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
-                tags: new[] { HealthCheckConstants.LivenessTag });
+                tags: [HealthCheckConstants.LivenessTag]);
     }
 
     /// <summary>
@@ -206,7 +205,7 @@ public sealed partial class Startup
     /// <param name="services"></param>
     private void AddApplicationServices(IServiceCollection services)
     {
-        services.AddScoped<ISlackService, SlackService>(serviceProvider => new SlackService(
+        _ = services.AddScoped<ISlackService, SlackService>(serviceProvider => new SlackService(
             memoryCache: serviceProvider.GetRequiredService<IMemoryCache>(),
             httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
             loggerService: serviceProvider.GetRequiredService<ILoggerService<SlackService>>(),
@@ -215,14 +214,14 @@ public sealed partial class Startup
             crashReportWebHookUrl: _dashboardConfiguration.AppConfiguration.CrashReportSlackWebHook,
             newSourceRequestWebHookUrl: _dashboardConfiguration.AppConfiguration.NewSourceRequestSlackWebHook,
             applicationInformation: serviceProvider.GetRequiredService<ApplicationInformation>()));
-        services.AddScoped<ILoadRssFeedsService, LoadRssFeedsService>();
-        services.AddScoped<ICreateArticlesService, CreateArticlesService>();
-        services.AddScoped<IScrapeWebService, ScrapeWebService>();
-        services.AddScoped<IParseHtmlService, ParseHtmlService>();
-        services.AddScoped<ISortArticlesService, SortArticlesService>();
-        services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
-        services.AddScoped<IGroupSimilarArticlesService, GroupSimilarArticlesService>();
-        services.AddScoped<ISendInformationToApiService>(
+        _ = services.AddScoped<ILoadRssFeedsService, LoadRssFeedsService>();
+        _ = services.AddScoped<ICreateArticlesService, CreateArticlesService>();
+        _ = services.AddScoped<IScrapeWebService, ScrapeWebService>();
+        _ = services.AddScoped<IParseHtmlService, ParseHtmlService>();
+        _ = services.AddScoped<ISortArticlesService, SortArticlesService>();
+        _ = services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
+        _ = services.AddScoped<IGroupSimilarArticlesService, GroupSimilarArticlesService>();
+        _ = services.AddScoped<ISendInformationToApiService>(
             serviceProvider =>
             {
                 return new SendInformationToApiHttpService(
@@ -235,12 +234,12 @@ public sealed partial class Startup
                     currentVersion: _dashboardConfiguration.AppConfiguration.Version,
                     serverUrl: _dashboardConfiguration.AppConfiguration.ServerUrl);
             });
-        services.AddTransient<IJsonService, SystemTextJsonService>(_ => new SystemTextJsonService(_dashboardConfiguration.SystemTextJsonSerializerConfiguration.JsonSerializerOptions));
-        services.AddScoped<IRemoveOldArticlesService, RemoveOldArticlesService>();
-        services.AddScoped<ISettingChangedService, SettingChangedService>();
-        services.AddScoped<IRefreshDashboardCacheService, RefreshDashboardCacheService>();
-        services.AddSingleton<IParsingMessagesService, ParsingMessagesService>();
-        services.AddScoped<INewsPortalImagesService>(serviceProvider => new NewsPortalImagesService(
+        _ = services.AddTransient<IJsonService, SystemTextJsonService>(_ => new SystemTextJsonService(_dashboardConfiguration.SystemTextJsonSerializerConfiguration.JsonSerializerOptions));
+        _ = services.AddScoped<IRemoveOldArticlesService, RemoveOldArticlesService>();
+        _ = services.AddScoped<ISettingChangedService, SettingChangedService>();
+        _ = services.AddScoped<IRefreshDashboardCacheService, RefreshDashboardCacheService>();
+        _ = services.AddSingleton<IParsingMessagesService, ParsingMessagesService>();
+        _ = services.AddScoped<INewsPortalImagesService>(serviceProvider => new NewsPortalImagesService(
             espressoDatabaseContext: serviceProvider.GetRequiredService<IEspressoDatabaseContext>(),
             folderRootPath: serviceProvider.GetRequiredService<IWebHostEnvironment>().WebRootPath));
     }
@@ -251,46 +250,46 @@ public sealed partial class Startup
     /// <param name="services"></param>
     private void AddPersistence(IServiceCollection services)
     {
-        services.AddDbContext<IEspressoDatabaseContext, EspressoDatabaseContext>(options =>
+        _ = services.AddDbContext<IEspressoDatabaseContext, EspressoDatabaseContext>(options =>
         {
-            options.UseNpgsql(
+            _ = options.UseNpgsql(
                 connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString,
                 npgsqlOptionsAction: npgOptions =>
                 {
-                    npgOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
+                    _ = npgOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
                 });
-            options.UseQueryTrackingBehavior(_dashboardConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
-            options.EnableDetailedErrors(_dashboardConfiguration.DatabaseConfiguration.EnableDetailedErrors);
-            options.EnableSensitiveDataLogging(_dashboardConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
+            _ = options.UseQueryTrackingBehavior(_dashboardConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
+            _ = options.EnableDetailedErrors(_dashboardConfiguration.DatabaseConfiguration.EnableDetailedErrors);
+            _ = options.EnableSensitiveDataLogging(_dashboardConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
         });
 
-        services.AddDbContext<IEspressoIdentityDatabaseContext, EspressoIdentityDatabaseContext>(options =>
+        _ = services.AddDbContext<IEspressoIdentityDatabaseContext, EspressoIdentityDatabaseContext>(options =>
         {
-            options.UseNpgsql(
+            _ = options.UseNpgsql(
                 connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoIdentityDatabaseConnectionString,
                 npgsqlOptionsAction: npgOptions =>
                 {
-                    npgOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
+                    _ = npgOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
                 });
-            options.UseQueryTrackingBehavior(_dashboardConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
-            options.EnableDetailedErrors(_dashboardConfiguration.DatabaseConfiguration.EnableDetailedErrors);
-            options.EnableSensitiveDataLogging(_dashboardConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
+            _ = options.UseQueryTrackingBehavior(_dashboardConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
+            _ = options.EnableDetailedErrors(_dashboardConfiguration.DatabaseConfiguration.EnableDetailedErrors);
+            _ = options.EnableSensitiveDataLogging(_dashboardConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
         });
 
-        services.AddDbContext<EspressoIdentityDatabaseContext>(options =>
+        _ = services.AddDbContext<EspressoIdentityDatabaseContext>(options =>
         {
-            options.UseNpgsql(
+            _ = options.UseNpgsql(
                 connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoIdentityDatabaseConnectionString,
                 npgsqlOptionsAction: npgOptions =>
                 {
-                    npgOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
+                    _ = npgOptions.CommandTimeout(_dashboardConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds);
                 });
-            options.UseQueryTrackingBehavior(_dashboardConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
-            options.EnableDetailedErrors(_dashboardConfiguration.DatabaseConfiguration.EnableDetailedErrors);
-            options.EnableSensitiveDataLogging(_dashboardConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
+            _ = options.UseQueryTrackingBehavior(_dashboardConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
+            _ = options.EnableDetailedErrors(_dashboardConfiguration.DatabaseConfiguration.EnableDetailedErrors);
+            _ = options.EnableSensitiveDataLogging(_dashboardConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
         });
 
-        services.AddScoped<IDatabaseConnectionFactory, DatabaseConnectionFactory>(_ => new DatabaseConnectionFactory(
+        _ = services.AddScoped<IDatabaseConnectionFactory, DatabaseConnectionFactory>(_ => new DatabaseConnectionFactory(
             connectionString: _dashboardConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString));
     }
 
@@ -300,13 +299,13 @@ public sealed partial class Startup
     /// <param name="services"></param>
     private void AddJobs(IServiceCollection services)
     {
-        services.AddSingleton<ICronJobConfiguration>(_ =>
+        _ = services.AddSingleton<ICronJobConfiguration>(_ =>
         {
             return new CronJobConfiguration(
                 timeZoneInfo: TimeZoneInfo.Utc,
                 version: _dashboardConfiguration.AppConfiguration.Version,
                 appEnvironment: _dashboardConfiguration.AppConfiguration.AppEnvironment);
         });
-        services.AddHostedService<ParseArticlesCronJob>();
+        _ = services.AddHostedService<ParseArticlesCronJob>();
     }
 }

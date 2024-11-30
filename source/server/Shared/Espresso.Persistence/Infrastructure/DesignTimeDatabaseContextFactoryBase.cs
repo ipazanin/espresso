@@ -54,9 +54,9 @@ public abstract class DesignTimeDatabaseContextFactoryBase<TContext> :
 
         var optionsBuilder = new DbContextOptionsBuilder<TContext>();
 
-        optionsBuilder.EnableSensitiveDataLogging();
+        _ = optionsBuilder.EnableSensitiveDataLogging();
 
-        optionsBuilder.UseNpgsql(connectionString);
+        _ = optionsBuilder.UseNpgsql(connectionString);
 
         return CreateNewInstance(optionsBuilder.Options);
     }

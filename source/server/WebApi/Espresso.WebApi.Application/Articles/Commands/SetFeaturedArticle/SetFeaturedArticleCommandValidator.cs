@@ -14,7 +14,7 @@ public class SetFeaturedArticleCommandValidator
     /// </summary>
     public SetFeaturedArticleCommandValidator()
     {
-        RuleForEach(request => request.FeaturedArticleConfigurations)
+        _ = RuleForEach(request => request.FeaturedArticleConfigurations)
             .Must(featuredConfiguration => featuredConfiguration.articleId != Guid.Empty).WithMessage("Article ID cannot be empty!")
             .Must(featuredConfiguration => featuredConfiguration.featuredPosition is null or >= 0).WithMessage("Featured Position cannot be lower than 0");
     }

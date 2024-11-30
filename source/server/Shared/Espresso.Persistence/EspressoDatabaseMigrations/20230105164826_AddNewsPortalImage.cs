@@ -15,7 +15,7 @@ public partial class AddNewsPortalImage : Migration
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder.CreateTable(
+        _ = migrationBuilder.CreateTable(
             name: "NewsPortalImages",
             columns: table => new
             {
@@ -26,8 +26,8 @@ public partial class AddNewsPortalImage : Migration
             },
             constraints: table =>
             {
-                table.PrimaryKey("PK_NewsPortalImages", x => x.Id);
-                table.ForeignKey(
+                _ = table.PrimaryKey("PK_NewsPortalImages", x => x.Id);
+                _ = table.ForeignKey(
                     name: "FK_NewsPortalImages_NewsPortals_NewsPortalId",
                     column: x => x.NewsPortalId,
                     principalTable: "NewsPortals",
@@ -35,7 +35,7 @@ public partial class AddNewsPortalImage : Migration
                     onDelete: ReferentialAction.Cascade);
             });
 
-        migrationBuilder.CreateIndex(
+        _ = migrationBuilder.CreateIndex(
             name: "IX_NewsPortalImages_NewsPortalId",
             table: "NewsPortalImages",
             column: "NewsPortalId",
@@ -45,7 +45,7 @@ public partial class AddNewsPortalImage : Migration
     /// <inheritdoc />
     protected override void Down(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder.DropTable(
+        _ = migrationBuilder.DropTable(
             name: "NewsPortalImages");
     }
 }

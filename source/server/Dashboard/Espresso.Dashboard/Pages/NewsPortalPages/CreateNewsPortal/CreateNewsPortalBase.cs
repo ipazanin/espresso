@@ -3,7 +3,6 @@
 // © 2022 Espresso News. All rights reserved.
 
 using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects;
-using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects.RssFeedDataTransferObjects;
 using Espresso.Application.DataTransferObjects.PagingDataTransferObjects;
 using Espresso.Dashboard.Application.Categories.Queries.GetCategories;
 using Espresso.Dashboard.Application.NewsPortalImage.Queries.GetNewsPortalImage;
@@ -70,7 +69,7 @@ public class CreateNewsPortalBase : ComponentBase
             newsPortal: newsPortal,
             categories: categories.CategoriesPagedList.Items,
             regions: regions.RegionsPagedList.Items,
-            rssFeeds: Enumerable.Empty<RssFeedDto>());
+            rssFeeds: []);
 
         NewsPortalImageResponse = new(null);
     }

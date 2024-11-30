@@ -102,7 +102,7 @@ public class LoggerRequestPipeline<TRequest, TResponse> :
         total += duration;
         count++;
 
-        _memoryCache.Set(key: performanceMeasurementKey, value: (total, count));
+        _ = _memoryCache.Set(key: performanceMeasurementKey, value: (total, count));
 
         return total / count;
     }

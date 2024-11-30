@@ -42,7 +42,7 @@ public class SecurityHeadersMiddleware
 
         foreach (var header in _policy.RemoveHeaders)
         {
-            headers.Remove(header);
+            _ = headers.Remove(header);
         }
 
         return _next(context);

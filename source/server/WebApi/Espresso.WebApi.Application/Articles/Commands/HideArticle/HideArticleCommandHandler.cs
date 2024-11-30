@@ -38,19 +38,19 @@ public class HideArticleCommandHandler : IRequestHandler<HideArticleCommand>
             !.ToDictionary(article => article.Id);
 
         var databaseArticle = await _espressoDatabaseContext.Articles.FindAsync(
-            keyValues: new object?[] { request.ArticleId },
+            keyValues: [request.ArticleId],
             cancellationToken: cancellationToken) ?? throw new NotFoundException(
                 typeName: nameof(Article),
                 id: request.ArticleId.ToString());
 
         databaseArticle.SetIsHidden(request.IsHidden);
-        _espressoDatabaseContext.Articles.Update(databaseArticle);
-        await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
+        _ = _espressoDatabaseContext.Articles.Update(databaseArticle);
+        _ = await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
 
         if (memoryCacheArticles.TryGetValue(key: request.ArticleId, value: out var memoryCacheArticle))
         {
             memoryCacheArticle.SetIsHidden(request.IsHidden);
-            _memoryCache.Set(
+            _ = _memoryCache.Set(
                 key: MemoryCacheConstants.ArticleKey,
                 value: memoryCacheArticles.Values.ToList());
         }

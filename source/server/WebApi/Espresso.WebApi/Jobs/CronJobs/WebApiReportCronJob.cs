@@ -6,9 +6,9 @@ using Cronos;
 using Espresso.Application.Infrastructure.CronJobsInfrastructure;
 using Espresso.Application.Services.Contracts;
 using Espresso.Common.Constants;
+using Espresso.Common.Utilities;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Infrastructure;
-using Espresso.Domain.Utilities;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 

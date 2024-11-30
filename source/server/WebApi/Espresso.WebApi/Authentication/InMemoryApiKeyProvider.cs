@@ -66,7 +66,7 @@ public class InMemoryApiKeyProvider : IApiKeyProvider
 
     public Task<ApiKey> GetApiKey(string providedApiKey)
     {
-        _apiKeys.TryGetValue(providedApiKey, out var key);
+        _ = _apiKeys.TryGetValue(providedApiKey, out var key);
 
         return key is null ? throw new ArgumentNullException(paramName: nameof(providedApiKey)) : Task.FromResult(key);
     }

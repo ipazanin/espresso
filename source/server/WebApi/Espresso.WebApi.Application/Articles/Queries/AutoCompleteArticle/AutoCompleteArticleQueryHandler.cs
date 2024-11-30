@@ -49,7 +49,7 @@ public class AutoCompleteArticleQueryHandler : IRequestHandler<AutoCompleteArtic
     {
         if (request.TitleSearchQuery is null)
         {
-            return Array.Empty<string>();
+            return [];
         }
 
         var result = new List<string> { request.TitleSearchQuery };

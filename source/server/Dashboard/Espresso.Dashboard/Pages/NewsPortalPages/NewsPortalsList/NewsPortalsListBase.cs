@@ -30,7 +30,7 @@ public class NewsPortalsListBase : ComponentBase
     [Inject]
     private IDialogService DialogService { get; init; } = null!;
 
-    protected async Task<TableData<GetNewsPortalsQueryNewsPortal>> GetTableData(TableState tableState)
+    protected async Task<TableData<GetNewsPortalsQueryNewsPortal>> GetTableData(TableState tableState, CancellationToken cancellationToken)
     {
         var pagingParameters = new PagingParameters
         {
@@ -39,14 +39,16 @@ public class NewsPortalsListBase : ComponentBase
             OrderType = tableState.SortDirection switch
             {
                 SortDirection.Ascending => OrderType.Ascending,
+                SortDirection.None => OrderType.Descending,
+                SortDirection.Descending => OrderType.Descending,
                 _ => OrderType.Descending,
             },
-            SortColumn = tableState.SortLabel,
+            SortColumn = tableState.SortLabel ?? string.Empty,
             SearchString = SearchString,
         };
 
         var request = new GetNewsPortalsQuery(pagingParameters: pagingParameters);
-        var getArticlesResponse = await Sender.Send(request);
+        var getArticlesResponse = await Sender.Send(request, cancellationToken);
 
         var tableData = new TableData<GetNewsPortalsQueryNewsPortal>
         {

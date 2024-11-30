@@ -16,10 +16,10 @@ public class RssFeedCategoryConfiguration : IEntityTypeConfiguration<RssFeedCate
     /// <inheritdoc/>
     public void Configure(EntityTypeBuilder<RssFeedCategory> builder)
     {
-        builder.Property(rssFeedcategory => rssFeedcategory.UrlRegex)
+        _ = builder.Property(rssFeedcategory => rssFeedcategory.UrlRegex)
             .HasMaxLength(RssFeedCategory.UrlRegexMaxLength);
 
-        builder.HasOne(rssFeedCategory => rssFeedCategory.RssFeed)
+        _ = builder.HasOne(rssFeedCategory => rssFeedCategory.RssFeed)
             .WithMany(rssFeed => rssFeed!.RssFeedCategories)
             .HasForeignKey(rssFeedCategory => rssFeedCategory.RssFeedId)
             .OnDelete(DeleteBehavior.Cascade);

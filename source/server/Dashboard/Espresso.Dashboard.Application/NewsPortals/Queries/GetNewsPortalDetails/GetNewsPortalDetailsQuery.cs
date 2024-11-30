@@ -2,11 +2,10 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using Espresso.Dashboard.Application.NewsPortals.Queries.GetNewsPortalDetails;
 using Espresso.Domain.Entities;
 using MediatR;
 
-namespace Espresso.Dashboard.Application.NewsPortals.GetNewsPortalDetails;
+namespace Espresso.Dashboard.Application.NewsPortals.Queries.GetNewsPortalDetails;
 
 /// <summary>
 /// Get news portal details query.

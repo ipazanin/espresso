@@ -1,7 +1,7 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS dotnet-runtime
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS dotnet-runtime
 
 # .NET App
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS dotnet-builder
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS dotnet-builder
 WORKDIR /source/server/Espresso
 
 # Restore .NET App

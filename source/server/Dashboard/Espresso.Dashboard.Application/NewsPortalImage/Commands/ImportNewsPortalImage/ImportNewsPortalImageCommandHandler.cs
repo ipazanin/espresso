@@ -39,14 +39,14 @@ public class ImportNewsPortalImageCommandHandler : IRequestHandler<ImportNewsPor
         var newsPortalImage = request.NewsPortalImage.CreateNewsPortalImage();
         if (newsPortalImageExistsInDatabase)
         {
-            _espressoDatabaseContext.NewsPortalImages.Update(newsPortalImage);
+            _ = _espressoDatabaseContext.NewsPortalImages.Update(newsPortalImage);
         }
         else
         {
-            _espressoDatabaseContext.NewsPortalImages.Add(newsPortalImage);
+            _ = _espressoDatabaseContext.NewsPortalImages.Add(newsPortalImage);
         }
 
-        await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
+        _ = await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
 
         await _refreshDashboardCacheService.RefreshCache();
         await _sendInformationToApiService.SendCacheUpdatedNotification();

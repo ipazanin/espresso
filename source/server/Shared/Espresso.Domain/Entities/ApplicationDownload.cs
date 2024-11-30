@@ -5,6 +5,7 @@
 using Espresso.Common.Enums;
 
 #pragma warning disable RCS1170
+#pragma warning disable S1144 // Unused private types or members should be removed
 
 namespace Espresso.Domain.Entities;
 

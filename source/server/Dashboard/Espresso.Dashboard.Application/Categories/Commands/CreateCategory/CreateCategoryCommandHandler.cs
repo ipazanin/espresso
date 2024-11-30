@@ -2,7 +2,6 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using Espresso.Dashboard.Application.Categories.Commands.UpdateCategory;
 using Espresso.Dashboard.Application.IServices;
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;

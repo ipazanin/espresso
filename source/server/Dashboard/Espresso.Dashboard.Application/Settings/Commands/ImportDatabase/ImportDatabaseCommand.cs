@@ -8,7 +8,7 @@ using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects.Rss
 using Espresso.Application.DataTransferObjects.SettingDataTransferObjects;
 using MediatR;
 
-namespace Espresso.Dashboard.Application.Settings.ImportDatabase;
+namespace Espresso.Dashboard.Application.Settings.Commands.ImportDatabase;
 
 public class ImportDatabaseCommand : IRequest
 {

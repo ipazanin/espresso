@@ -2,8 +2,8 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using Espresso.Common.Services.Contracts;
-using Espresso.Dashboard.Application.Settings.ImportDatabase;
+using Espresso.Common.Services.Contacts;
+using Espresso.Dashboard.Application.Settings.Commands.ImportDatabase;
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;

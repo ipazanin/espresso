@@ -12,9 +12,9 @@ public class ParsingMessagesService : IParsingMessagesService
 {
     private const int MessagesCapacity = 100;
 
-    private readonly Dictionary<int, CircularBuffer<ParsingErrorMessageDto>> _parseMessages = new();
+    private readonly Dictionary<int, CircularBuffer<ParsingErrorMessageDto>> _parseMessages = [];
 
-    private readonly object _messagesLock = new();
+    private readonly Lock _messagesLock = new();
 
     public void PushMessage(ParsingErrorMessageDto parsingErrorMessage)
     {
@@ -47,7 +47,7 @@ public class ParsingMessagesService : IParsingMessagesService
         {
             if (!_parseMessages.TryGetValue(rssFeedId, out var warnings))
             {
-                return Enumerable.Empty<ParsingErrorMessageDto>();
+                return [];
             }
 
             return warnings;

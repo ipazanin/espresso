@@ -13,6 +13,6 @@ public class IncrementNumberOfClicksCommandValidator : AbstractValidator<Increme
     /// </summary>
     public IncrementNumberOfClicksCommandValidator()
     {
-        RuleFor(incrementArticleTrendingScoreCommand => incrementArticleTrendingScoreCommand.Id).NotEmpty();
+        _ = RuleFor(incrementArticleTrendingScoreCommand => incrementArticleTrendingScoreCommand.Id).NotEmpty();
     }
 }

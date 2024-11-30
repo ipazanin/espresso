@@ -14,14 +14,14 @@ public partial class AddElementExtensionAdditionalConfiguration : Migration
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder.AddColumn<int>(
+        _ = migrationBuilder.AddColumn<int>(
             name: "ImageUrlParseConfiguration_ElementExtensionValueParseType",
             table: "RssFeeds",
             type: "integer",
             nullable: false,
             defaultValue: 0);
 
-        migrationBuilder.AddColumn<int>(
+        _ = migrationBuilder.AddColumn<int>(
             name: "ImageUrlParseConfiguration_ElementExtensionValueType",
             table: "RssFeeds",
             type: "integer",
@@ -32,11 +32,11 @@ public partial class AddElementExtensionAdditionalConfiguration : Migration
     /// <inheritdoc />
     protected override void Down(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder.DropColumn(
+        _ = migrationBuilder.DropColumn(
             name: "ImageUrlParseConfiguration_ElementExtensionValueParseType",
             table: "RssFeeds");
 
-        migrationBuilder.DropColumn(
+        _ = migrationBuilder.DropColumn(
             name: "ImageUrlParseConfiguration_ElementExtensionValueType",
             table: "RssFeeds");
     }

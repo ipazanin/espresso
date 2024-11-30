@@ -3,6 +3,7 @@
 // © 2022 Espresso News. All rights reserved.
 
 #pragma warning disable RCS1170 // Use read-only auto-implemented property.
+#pragma warning disable S1144 // Unused private types or members should be removed
 
 namespace Espresso.Domain.Entities;
 

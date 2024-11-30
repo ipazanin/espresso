@@ -36,7 +36,7 @@ public class RssFeedDetailsBase : ComponentBase, IDisposable
 
     protected bool Success { get; set; }
 
-    protected IEnumerable<ParsingErrorMessageDto> ParsingMessages { get; private set; } = Enumerable.Empty<ParsingErrorMessageDto>();
+    protected IEnumerable<ParsingErrorMessageDto> ParsingMessages { get; private set; } = [];
 
     protected string ParsingMessagesSearchString { get; set; } = string.Empty;
 
@@ -58,6 +58,20 @@ public class RssFeedDetailsBase : ComponentBase, IDisposable
         GC.SuppressFinalize(this);
     }
 
+    protected static Color GetColorFromLogLevel(LogLevel logLevel)
+    {
+        return logLevel switch
+        {
+            LogLevel.Error or LogLevel.Critical => Color.Error,
+            LogLevel.Warning => Color.Warning,
+            LogLevel.Trace or
+            LogLevel.Debug or
+            LogLevel.Information or
+            LogLevel.None or
+            _ => Color.Info,
+        };
+    }
+
     protected virtual void Dispose(bool disposing)
     {
         if (!_disposedValue)
@@ -74,10 +88,9 @@ public class RssFeedDetailsBase : ComponentBase, IDisposable
 
         RssFeedDetails = await sender.Send(new GetRssFeedDetailsQuery(Id));
 
-        ParsingMessages = ParsingMessagesService
+        ParsingMessages = [.. ParsingMessagesService
             .GetMessages(Id)
-            .OrderByDescending(message => message.Created)
-            .ToArray();
+            .OrderByDescending(message => message.Created)];
 
         _ = Task.Run(RefreshParsedMessages);
     }
@@ -118,26 +131,15 @@ public class RssFeedDetailsBase : ComponentBase, IDisposable
                 parsingMessage.RssFeedId.ToString(CultureInfo.InvariantCulture).Contains(ParsingMessagesSearchString, StringComparison.OrdinalIgnoreCase);
     }
 
-    protected Color GetColorFromLogLevel(LogLevel logLevel)
-    {
-        return logLevel switch
-        {
-            LogLevel.Error or LogLevel.Critical => Color.Error,
-            LogLevel.Warning => Color.Warning,
-            _ => Color.Info,
-        };
-    }
-
     private async Task RefreshParsedMessages()
     {
         while (!_disposedValue)
         {
             await Task.Delay(1000);
 
-            ParsingMessages = ParsingMessagesService
+            ParsingMessages = [.. ParsingMessagesService
                 .GetMessages(Id)
-                .OrderByDescending(message => message.Created)
-                .ToArray();
+                .OrderByDescending(message => message.Created)];
 
             await InvokeAsync(StateHasChanged);
         }

@@ -5,7 +5,6 @@
 using Espresso.Dashboard.Application.NewsPortalImage.Commands.ImportNewsPortalImage;
 using Espresso.Dashboard.Application.NewsPortalImage.Queries.GetNewsPortalImage;
 using Espresso.Dashboard.Application.NewsPortals.Commands.UpdateNewsPortal;
-using Espresso.Dashboard.Application.NewsPortals.GetNewsPortalDetails;
 using Espresso.Dashboard.Application.NewsPortals.Queries.GetNewsPortalDetails;
 using Espresso.Domain.Entities;
 using MediatR;

@@ -16,15 +16,15 @@ public class RssFeedContentModifierConfiguration : IEntityTypeConfiguration<RssF
     /// <inheritdoc/>
     public void Configure(EntityTypeBuilder<RssFeedContentModifier> builder)
     {
-        builder.ToTable(nameof(RssFeedContentModifier));
+        _ = builder.ToTable(nameof(RssFeedContentModifier));
 
-        builder.Property(rssfeedContentModifier => rssfeedContentModifier.SourceValue)
+        _ = builder.Property(rssfeedContentModifier => rssfeedContentModifier.SourceValue)
             .HasMaxLength(RssFeedContentModifier.SourceValueMaxLength);
 
-        builder.Property(rssfeedContentModifier => rssfeedContentModifier.ReplacementValue)
+        _ = builder.Property(rssfeedContentModifier => rssfeedContentModifier.ReplacementValue)
             .HasMaxLength(RssFeedContentModifier.ReplacementValueMaxLength);
 
-        builder.HasOne(rssFeedModifier => rssFeedModifier.RssFeed)
+        _ = builder.HasOne(rssFeedModifier => rssFeedModifier.RssFeed)
             .WithMany(rssFeed => rssFeed!.RssFeedContentModifiers)
             .HasForeignKey(rssFeedModifier => rssFeedModifier.RssFeedId)
             .OnDelete(DeleteBehavior.Cascade);

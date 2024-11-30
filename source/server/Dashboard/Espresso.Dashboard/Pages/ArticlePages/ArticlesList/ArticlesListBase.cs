@@ -22,23 +22,25 @@ public class ArticlesListBase : ComponentBase
     [Inject]
     private ISender Sender { get; init; } = null!;
 
-    protected async Task<TableData<GetArticlesArticle>> GetTableData(TableState tableState)
+    protected async Task<TableData<GetArticlesArticle>> GetTableData(TableState tableState, CancellationToken cancellationToken)
     {
         var pagingParameters = new PagingParameters
         {
             CurrentPage = tableState.Page + 1,
             PageSize = tableState.PageSize,
             SearchString = SearchString,
-            SortColumn = tableState.SortDirection is SortDirection.None ? nameof(GetArticlesArticle.Created) : tableState.SortLabel,
+            SortColumn = tableState.SortDirection is SortDirection.None ? nameof(GetArticlesArticle.Created) : tableState.SortLabel ?? string.Empty,
             OrderType = tableState.SortDirection switch
             {
                 SortDirection.Ascending => OrderType.Ascending,
+                SortDirection.None => OrderType.Descending,
+                SortDirection.Descending => OrderType.Descending,
                 _ => OrderType.Descending,
             },
         };
 
         var request = new GetArticlesQuery(pagingParameters: pagingParameters);
-        var getArticlesResponse = await Sender.Send(request);
+        var getArticlesResponse = await Sender.Send(request, cancellationToken);
 
         var tableData = new TableData<GetArticlesArticle>
         {

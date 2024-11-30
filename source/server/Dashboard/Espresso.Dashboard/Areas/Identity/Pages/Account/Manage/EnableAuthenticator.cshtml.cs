@@ -116,7 +116,7 @@ public class EnableAuthenticatorModel : PageModel
         if (await _userManager.CountRecoveryCodesAsync(user) == 0)
         {
             var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
-            RecoveryCodes = recoveryCodes?.ToArray() ?? Array.Empty<string>();
+            RecoveryCodes = recoveryCodes?.ToArray() ?? [];
             return RedirectToPage("./ShowRecoveryCodes");
         }
 

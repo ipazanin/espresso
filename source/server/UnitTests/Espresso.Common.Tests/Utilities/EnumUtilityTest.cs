@@ -5,7 +5,7 @@
 using System.Globalization;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
-using Espresso.Domain.Utilities;
+using Espresso.Common.Utilities;
 using Xunit;
 
 namespace Espresso.Common.Tests.Utilities;

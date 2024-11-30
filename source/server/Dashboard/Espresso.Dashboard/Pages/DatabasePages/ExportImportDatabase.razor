@@ -9,23 +9,23 @@
 
         <MudItem xs="12" sm="5">
             <MudFileUpload T="IBrowserFile" FilesChanged="OnImportDatabase">
-                <ButtonTemplate>
+                <ActivatorContent>
                     <MudButton Href="api/database" HtmlTag="label" Variant="Variant.Filled" Color="Color.Primary"
                         StartIcon="@Icons.Material.Filled.CloudDownload">
                         Export Database
                     </MudButton>
-                </ButtonTemplate>
+                </ActivatorContent>
             </MudFileUpload>
         </MudItem>
 
         <MudItem xs="12" sm="5">
             <MudFileUpload T="IBrowserFile" FilesChanged="OnImportDatabase">
-                <ButtonTemplate>
+                <ActivatorContent>
                     <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Secondary"
-                        StartIcon="@Icons.Material.Filled.CloudUpload" for="@context">
+                        StartIcon="@Icons.Material.Filled.CloudUpload">
                         Import Database
                     </MudButton>
-                </ButtonTemplate>
+                </ActivatorContent>
             </MudFileUpload>
         </MudItem>
 

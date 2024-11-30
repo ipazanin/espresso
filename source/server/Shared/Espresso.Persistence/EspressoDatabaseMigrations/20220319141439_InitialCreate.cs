@@ -309,7 +309,7 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "Categories",
-            columns: new[] { "Id", "CategoryType", "Color", "KeyWordsRegexPattern", "Name", "Position", "SortIndex", "Url" },
+            columns: ["Id", "CategoryType", "Color", "KeyWordsRegexPattern", "Name", "Position", "SortIndex", "Url"],
             values: new object[,]
             {
                 { 1, 1, "#E84855", null, "Vijesti", null, 2, "/vijesti" },
@@ -327,7 +327,7 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "Regions",
-            columns: new[] { "Id", "Name", "Subtitle" },
+            columns: ["Id", "Name", "Subtitle"],
             values: new object[,]
             {
                 { 1, "Global", "Global" },
@@ -341,7 +341,7 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "NewsPortals",
-            columns: new[] { "Id", "BaseUrl", "CategoryId", "CreatedAt", "IconUrl", "IsEnabled", "IsNewOverride", "Name", "RegionId" },
+            columns: ["Id", "BaseUrl", "CategoryId", "CreatedAt", "IconUrl", "IsEnabled", "IsNewOverride", "Name", "RegionId"],
             values: new object[,]
             {
                 { 1, "https://www.index.hr", 11, new DateTimeOffset(new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "Icons/Index.png", true, null, "Index.hr", 1 },
@@ -451,12 +451,12 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "NewsPortals",
-            columns: new[] { "Id", "BaseUrl", "CategoryId", "CreatedAt", "IconUrl", "IsNewOverride", "Name", "RegionId" },
-            values: new object[] { 111, "https://vozim.hr", 8, new DateTimeOffset(new DateTime(2020, 9, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "Icons/VozimHr.png", null, "Vozim.HR", 1 });
+            columns: ["Id", "BaseUrl", "CategoryId", "CreatedAt", "IconUrl", "IsNewOverride", "Name", "RegionId"],
+            values: [111, "https://vozim.hr", 8, new DateTimeOffset(new DateTime(2020, 9, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "Icons/VozimHr.png", null, "Vozim.HR", 1]);
 
         _ = migrationBuilder.InsertData(
             table: "NewsPortals",
-            columns: new[] { "Id", "BaseUrl", "CategoryId", "CreatedAt", "IconUrl", "IsEnabled", "IsNewOverride", "Name", "RegionId" },
+            columns: ["Id", "BaseUrl", "CategoryId", "CreatedAt", "IconUrl", "IsEnabled", "IsNewOverride", "Name", "RegionId"],
             values: new object[,]
             {
                 { 112, "https://ams.hr", 8, new DateTimeOffset(new DateTime(2020, 9, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "Icons/AutoMotorSport.png", true, null, "AUTO MOTOR I SPORT", 1 },
@@ -466,12 +466,12 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "NewsPortals",
-            columns: new[] { "Id", "BaseUrl", "CategoryId", "CreatedAt", "IconUrl", "IsNewOverride", "Name", "RegionId" },
-            values: new object[] { 115, "http://balkans.aljazeera.net", 1, new DateTimeOffset(new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "Icons/AlJazeera.png", null, "Al Jazeera Balkans", 1 });
+            columns: ["Id", "BaseUrl", "CategoryId", "CreatedAt", "IconUrl", "IsNewOverride", "Name", "RegionId"],
+            values: [115, "http://balkans.aljazeera.net", 1, new DateTimeOffset(new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "Icons/AlJazeera.png", null, "Al Jazeera Balkans", 1]);
 
         _ = migrationBuilder.InsertData(
             table: "NewsPortals",
-            columns: new[] { "Id", "BaseUrl", "CategoryId", "CreatedAt", "IconUrl", "IsEnabled", "IsNewOverride", "Name", "RegionId" },
+            columns: ["Id", "BaseUrl", "CategoryId", "CreatedAt", "IconUrl", "IsEnabled", "IsNewOverride", "Name", "RegionId"],
             values: new object[,]
             {
                 { 116, "https://www.hifimedia.hr", 5, new DateTimeOffset(new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "Icons/HifiMedia.png", true, null, "hifimedia", 1 },
@@ -500,7 +500,7 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
             values: new object[,]
             {
                 { 1, 1, 1, 1, "https://www.index.hr/rss/vijesti", true, "https://www.index.hr/mobile/clanak.aspx?id={0}", null, 1, null, null, null, "//figure[contains(@class, 'img-container')]//img" },
@@ -512,7 +512,7 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
             values: new object[,]
             {
                 { 6, 1, 2, 1, "https://www.24sata.hr/feeds/news.xml", false, null, null, null, null, null, "//img[contains(@class, 'article__figure_img')]" },
@@ -525,22 +525,22 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
-            values: new object[] { 12, 2, 3, 2, "http://sportske.jutarnji.hr/sn/feed", null, null, null, null, "//img[contains(@class, 'media-object adaptive lazy')]" });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
+            values: [12, 2, 3, 2, "http://sportske.jutarnji.hr/sn/feed", null, null, null, null, "//img[contains(@class, 'media-object adaptive lazy')]"]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-            values: new object[] { 13, 1, 4, 2, "https://www.jutarnji.hr/feed", 2, null, null, null, null, "//img[contains(@class, 'media-object adaptive lazy')]", 0, 5 });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
+            values: [13, 1, 4, 2, "https://www.jutarnji.hr/feed", 2, null, null, null, null, "//img[contains(@class, 'media-object adaptive lazy')]", 0, 5]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
-            values: new object[] { 14, 1, 5, 1, "https://net.hr/feed", false, null, 2, null, null, null, null, "//div[contains(@class, 'featured-img')]//img" });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
+            values: [14, 1, 5, 1, "https://net.hr/feed", false, null, 2, null, null, null, null, "//div[contains(@class, 'featured-img')]//img"]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
             values: new object[,]
             {
                 { 15, 1, 6, 2, "https://www.slobodnadalmacija.hr/feed/category/119", null, null, null, null, "//img[contains(@class, 'card__image')]", 0, 5 },
@@ -561,7 +561,7 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
             values: new object[,]
             {
                 { 29, 1, 7, 1, "https://www.tportal.hr/rss-vijesti.xml", null, null, null, null, "//img[contains(@class, 'lateImage lateImageLoaded')]" },
@@ -576,32 +576,32 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlWebScrapeType", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
-            values: new object[] { 37, 1, 8, 1, "https://www.vecernji.hr/feeds/latest", true, "https://m.vecernji.hr/amp/{1}{2}", 2, null, 2, null, "image,url", true, "//script[contains(@type, 'application/ld+json')]" });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlWebScrapeType", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
+            values: [37, 1, 8, 1, "https://www.vecernji.hr/feeds/latest", true, "https://m.vecernji.hr/amp/{1}{2}", 2, null, 2, null, "image,url", true, "//script[contains(@type, 'application/ld+json')]"]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
-            values: new object[] { 39, 1, 9, 1, "https://www.telegram.hr/feed/", 2, null, null, null, null, "//div[contains(@class, 'thumb')]//img" });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
+            values: [39, 1, 9, 1, "https://www.telegram.hr/feed/", 2, null, null, null, null, "//div[contains(@class, 'thumb')]//img"]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
-            values: new object[] { 40, 2, 9, 1, "https://telesport.telegram.hr/feed/", null, null, null, null, "//div[contains(@class, 'featured-img')]//img" });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
+            values: [40, 2, 9, 1, "https://telesport.telegram.hr/feed/", null, null, null, null, "//div[contains(@class, 'featured-img')]//img"]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
-            values: new object[] { 42, 1, 10, 1, "https://dnevnik.hr/assets/feed/articles/", true, "https://dnevnik.hr/amp/{1}{2}{3}", 2, null, null, null, null, "//figure[contains(@class, 'article-main-img')]//img" });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
+            values: [42, 1, 10, 1, "https://dnevnik.hr/assets/feed/articles/", true, "https://dnevnik.hr/amp/{1}{2}{3}", 2, null, null, null, null, "//figure[contains(@class, 'article-main-img')]//img"]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
-            values: new object[] { 43, 2, 11, 1, "https://gol.dnevnik.hr/assets/feed/articles", true, "https://gol.dnevnik.hr/amp/{1}{2}{3}{4}", null, null, null, null, "//figure[contains(@class, 'article-image main-image')]//img" });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
+            values: [43, 2, 11, 1, "https://gol.dnevnik.hr/assets/feed/articles", true, "https://gol.dnevnik.hr/amp/{1}{2}{3}{4}", null, null, null, null, "//figure[contains(@class, 'article-image main-image')]//img"]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
             values: new object[,]
             {
                 { 44, 2, 12, 2, "https://sportnet.rtl.hr/rss/", null, null, null, null, "//img[contains(@class, 'naslovna')]" },
@@ -615,22 +615,22 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
-            values: new object[] { 56, 5, 20, 1, "https://zimo.dnevnik.hr/assets/feed/articles", true, "https://zimo.dnevnik.hr/amp/clanak/{2}", null, null, null, null, "//div[contains(@class, 'img-holder')]//img" });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
+            values: [56, 5, 20, 1, "https://zimo.dnevnik.hr/assets/feed/articles", true, "https://zimo.dnevnik.hr/amp/clanak/{2}", null, null, null, null, "//div[contains(@class, 'img-holder')]//img"]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
-            values: new object[] { 57, 5, 21, 1, "http://www.netokracija.com/feed", true, "https://www.netokracija.com/{1}/amp", null, 2, null, null, null, "//div[contains(@class, 'post__hero')]//img" });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "AmpConfiguration_HasAmpArticles", "AmpConfiguration_TemplateUrl", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
+            values: [57, 5, 21, 1, "http://www.netokracija.com/feed", true, "https://www.netokracija.com/{1}/amp", null, 2, null, null, null, "//div[contains(@class, 'post__hero')]//img"]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-            values: new object[] { 58, 7, 22, 2, "http://www.poslovnipuls.com/feed/", null, null, null, null, "//div[contains(@class, 'postFeaturedImg postFeaturedImg--single')]//img", 0, 10 });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
+            values: [58, 7, 22, 2, "http://www.poslovnipuls.com/feed/", null, null, null, null, "//div[contains(@class, 'postFeaturedImg postFeaturedImg--single')]//img", 0, 10]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
             values: new object[,]
             {
                 { 59, 5, 23, 1, "http://pcchip.hr/feed/", null, null, null, null, "//div[contains(@class, 'td-post-featured-image')]//img" },
@@ -639,12 +639,12 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
-            values: new object[] { 62, 4, 26, 1, "http://wall.hr/cdn/feed.xml", null, 2, null, null, null, "//figure[contains(@class, 'dcms-image article-image')]//img" });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
+            values: [62, 4, 26, 1, "http://wall.hr/cdn/feed.xml", null, 2, null, null, null, "//figure[contains(@class, 'dcms-image article-image')]//img"]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
             values: new object[,]
             {
                 { 63, 4, 27, 1, "http://www.ljepotaizdravlje.hr/feed", null, null, null, null, "//div[contains(@class, 'post-thumbnail')]//img" },
@@ -653,17 +653,17 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
-            values: new object[] { 65, 1, 29, 2, "http://hr.n1info.com/rss/249/Naslovna", 2, 0, 3, false, null, null, "//figure[contains(@class, 'media')]//img" });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
+            values: [65, 1, 29, 2, "http://hr.n1info.com/rss/249/Naslovna", 2, 0, 3, false, null, null, "//figure[contains(@class, 'media')]//img"]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
-            values: new object[] { 66, 1, 30, 2, "https://narod.hr/feed", 2, null, null, null, null, "//div[contains(@class, 'td-post-featured-image')]//img" });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
+            values: [66, 1, 30, 2, "https://narod.hr/feed", 2, null, null, null, null, "//div[contains(@class, 'td-post-featured-image')]//img"]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
             values: new object[,]
             {
                 { 67, 1, 31, 1, "https://www.hrt.hr/rss/vijesti/", null, null, null, null, "//div[contains(@class, 'image-slider')]//img", 0, 5 },
@@ -674,17 +674,17 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-            values: new object[] { 71, 1, 32, 1, "https://100posto.jutarnji.hr/rss", 2, null, null, null, null, "//picture[contains(@class, 'pic')]//img", 0, 5 });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
+            values: [71, 1, 32, 1, "https://100posto.jutarnji.hr/rss", 2, null, null, null, null, "//picture[contains(@class, 'pic')]//img", 0, 5]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
-            values: new object[] { 72, 1, 33, 1, "https://www.dnevno.hr/feed/", 2, null, null, null, null, "//div[contains(@class, 'img-holder inner')]//img" });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
+            values: [72, 1, 33, 1, "https://www.dnevno.hr/feed/", 2, null, null, null, null, "//div[contains(@class, 'img-holder inner')]//img"]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
             values: new object[,]
             {
                 { 74, 1, 35, 1, "https://direktno.hr/rss/publish/latest/direkt-50/", null, null, null, null, "//div[contains(@class, 'pd-hero-image')]//img" },
@@ -699,12 +699,12 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-            values: new object[] { 82, 1, 36, 2, "https://www.scena.hr/feed/", 2, 1, 3, true, null, null, "//div[contains(@class, 'mycontent')]//img", 0, 6 });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
+            values: [82, 1, 36, 2, "https://www.scena.hr/feed/", 2, 1, 3, true, null, null, "//div[contains(@class, 'mycontent')]//img", 0, 6]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
             values: new object[,]
             {
                 { 83, 12, 37, 1, "https://www.dalmacijadanas.hr/feed/", null, null, null, null, "//div[contains(@class, 'td-full-screen-header-image-wrap')]//img" },
@@ -713,12 +713,12 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-            values: new object[] { 85, 1, 39, 1, "https://express.24sata.hr/feeds/placeholder-head/rss_feed", 2, null, null, null, null, "//img[contains(@class, 'article__figure_img')]", 0, 10 });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
+            values: [85, 1, 39, 1, "https://express.24sata.hr/feeds/placeholder-head/rss_feed", 2, null, null, null, null, "//img[contains(@class, 'article__figure_img')]", 0, 10]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url"],
             values: new object[,]
             {
                 { 86, 12, 40, 1, "https://www.dalmacijanews.hr/rss" },
@@ -733,12 +733,12 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
-            values: new object[] { 96, 12, 50, 1, "https://www.index.hr/rss/vijesti-zagreb", null, 2, null, null, null, "//figure[contains(@class, 'img-container')]//img" });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
+            values: [96, 12, 50, 1, "https://www.index.hr/rss/vijesti-zagreb", null, 2, null, null, null, "//figure[contains(@class, 'img-container')]//img"]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url"],
             values: new object[,]
             {
                 { 97, 12, 51, 1, "https://www.zagreb.info/feed" },
@@ -759,7 +759,7 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
             values: new object[,]
             {
                 { 111, 12, 65, 1, "https://slobodnadalmacija.hr/feed/category/246", 0, 5 },
@@ -768,7 +768,7 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url"],
             values: new object[,]
             {
                 { 113, 12, 67, 2, "https://www.dubrovniknet.hr/feed" },
@@ -806,7 +806,7 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
             values: new object[,]
             {
                 { 144, 1, 99, 1, "https://otvoreno.hr/feed", 2, null, null, null, null, "//div[contains(@class, 'td-post-featured-image')]//img" },
@@ -815,32 +815,32 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
-            values: new object[] { 146, 1, 101, 1, "https://povijest.hr/feed/", null, null, null, null, "//div[contains(@class, 'td-post-featured-image')]//img" });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
+            values: [146, 1, 101, 1, "https://povijest.hr/feed/", null, null, null, null, "//div[contains(@class, 'td-post-featured-image')]//img"]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
-            values: new object[] { 147, 1, 102, 1, "https://7dnevno.hr/feed", 2, null, null, null, null, "//div[contains(@class, 'td-post-featured-image')]//img" });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "CategoryParseConfiguration_CategoryParseStrategy", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
+            values: [147, 1, 102, 1, "https://7dnevno.hr/feed", 2, null, null, null, null, "//div[contains(@class, 'td-post-featured-image')]//img"]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-            values: new object[] { 148, 2, 103, 1, "https://basketball.hr/vijesti.xml", null, null, null, null, "//div[contains(@class, 'img')]//img", 0, 5 });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
+            values: [148, 2, 103, 1, "https://basketball.hr/vijesti.xml", null, null, null, null, "//div[contains(@class, 'img')]//img", 0, 5]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-            values: new object[] { 149, 6, 104, 1, "https://joomboos.24sata.hr/feeds/axiom-feed/tes-partnerski", 0, 7 });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
+            values: [149, 6, 104, 1, "https://joomboos.24sata.hr/feeds/axiom-feed/tes-partnerski", 0, 7]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-            values: new object[] { 150, 5, 105, 1, "https://www.ictbusiness.info/rss2.xml", null, 1, null, null, null, "//div[contains(@class, 'main-content')]//img", 0, 8 });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
+            values: [150, 5, 105, 1, "https://www.ictbusiness.info/rss2.xml", null, 1, null, null, null, "//div[contains(@class, 'main-content')]//img", 0, 8]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
             values: new object[,]
             {
                 { 151, 5, 106, 1, "https://www.hcl.hr/feed", null, null, null, null, "//div[contains(@class, 'article')]//img", 0, 7 },
@@ -849,12 +849,12 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-            values: new object[] { 153, 8, 108, 1, "https://www.motori.hr/feed", 1, 3, true, null, null, "//div[contains(@class, 'content')]//img", 0, 6 });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
+            values: [153, 8, 108, 1, "https://www.motori.hr/feed", 1, 3, true, null, null, "//div[contains(@class, 'content')]//img", 0, 6]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
             values: new object[,]
             {
                 { 154, 8, 109, 1, "https://autoportal.hr/feed", null, null, null, null, "//div[contains(@class, 'td-post-content')]//img", 0, 3 },
@@ -867,12 +867,12 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath" },
-            values: new object[] { 160, 1, 115, 1, "http://balkans.aljazeera.net/mobile/articles", null, null, null, null, "//div[contains(@class, 'field-items')]//img" });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath"],
+            values: [160, 1, 115, 1, "http://balkans.aljazeera.net/mobile/articles", null, null, null, null, "//div[contains(@class, 'field-items')]//img"]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
             values: new object[,]
             {
                 { 161, 5, 116, 2, "https://www.hifimedia.hr/feed", null, null, null, false, "//figure[contains(@class, 'post-gallery')]//img", 0, 7 },
@@ -885,42 +885,42 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-            values: new object[] { 167, 12, 122, 1, "https://ogportal.com/feed", 0, 5 });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
+            values: [167, 12, 122, 1, "https://ogportal.com/feed", 0, 5]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-            values: new object[] { 168, 12, 123, 1, "https://zupanjac.net/feed", null, null, null, null, "//div[contains(@class, 'feature-img')]//img", 0, 4 });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
+            values: [168, 12, 123, 1, "https://zupanjac.net/feed", null, null, null, null, "//div[contains(@class, 'feature-img')]//img", 0, 4]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-            values: new object[] { 169, 12, 124, 1, "https://press032.com/feed", 0, 7 });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
+            values: [169, 12, 124, 1, "https://press032.com/feed", 0, 7]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_AttributeName", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-            values: new object[] { 170, 1, 125, 2, "https://www.bitno.net/feed", "data-lazy-src", null, null, null, null, "//section[contains(@class, 'article-content')]//picture[contains(@class, 'wp-caption')]//img[@data-lazy-src]", 0, 5 });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_AttributeName", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "ImageUrlParseConfiguration_XPath", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
+            values: [170, 1, 125, 2, "https://www.bitno.net/feed", "data-lazy-src", null, null, null, null, "//section[contains(@class, 'article-content')]//picture[contains(@class, 'wp-caption')]//img[@data-lazy-src]", 0, 5]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-            values: new object[] { 171, 12, 126, 1, "https://ploce.com.hr/feed", 0, 3 });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
+            values: [171, 12, 126, 1, "https://ploce.com.hr/feed", 0, 3]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped" },
-            values: new object[] { 172, 12, 127, 1, "https://kaportal.net.hr/feed", null, 3, null, null, null });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped"],
+            values: [172, 12, 127, 1, "https://kaportal.net.hr/feed", null, 3, null, null, null]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url" },
-            values: new object[] { 173, 12, 128, 1, "https://radio-mreznica.hr/feed" });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url"],
+            values: [173, 12, 128, 1, "https://radio-mreznica.hr/feed"]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
             values: new object[,]
             {
                 { 174, 1, 129, 1, "https://www.maxportal.hr/feed", 0, 3 },
@@ -932,12 +932,12 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
-            values: new object[] { 179, 5, 133, 1, "https://mob.hr/feed", 2, 3, true, null, null, 0, 9 });
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "ImageUrlParseConfiguration_ElementExtensionIndex", "ImageUrlParseConfiguration_ImageUrlParseStrategy", "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute", "ImageUrlParseConfiguration_JsonWebScrapePropertyNames", "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
+            values: [179, 5, 133, 1, "https://mob.hr/feed", 2, 3, true, null, null, 0, 9]);
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url", "SkipParseConfiguration_CurrentSkip", "SkipParseConfiguration_NumberOfSkips"],
             values: new object[,]
             {
                 { 180, 1, 134, 1, "https://www.startnews.hr/feeds/latest", 0, 7 },
@@ -946,7 +946,7 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeeds",
-            columns: new[] { "Id", "CategoryId", "NewsPortalId", "RequestType", "Url" },
+            columns: ["Id", "CategoryId", "NewsPortalId", "RequestType", "Url"],
             values: new object[,]
             {
                 { 182, 2, 136, 1, "https://sportklub.hr/feed" },
@@ -955,7 +955,7 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeedCategory",
-            columns: new[] { "Id", "CategoryId", "RssFeedId", "UrlRegex", "UrlSegmentIndex" },
+            columns: ["Id", "CategoryId", "RssFeedId", "UrlRegex", "UrlSegmentIndex"],
             values: new object[,]
             {
                 { 1, 1, 13, "vijesti", 1 },
@@ -1052,7 +1052,7 @@ public partial class InitialCreate : Migration
 
         _ = migrationBuilder.InsertData(
             table: "RssFeedContentModifier",
-            columns: new[] { "Id", "OrderIndex", "ReplacementValue", "RssFeedId", "SourceValue" },
+            columns: ["Id", "OrderIndex", "ReplacementValue", "RssFeedId", "SourceValue"],
             values: new object[,]
             {
                 { 1, 1, "<notused>", 5, "<description>" },

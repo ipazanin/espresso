@@ -2,7 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-namespace Espresso.Domain.Utilities;
+namespace Espresso.Common.Utilities;
 
 /// <summary>
 /// <see cref="DateTime"/> utility.

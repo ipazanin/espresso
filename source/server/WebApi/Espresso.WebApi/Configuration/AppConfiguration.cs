@@ -44,15 +44,15 @@ public class AppConfiguration
     /// <summary>
     /// Gets all Api Versions.
     /// </summary>
-    public IEnumerable<ApiVersion> ApiVersions => new[]
-    {
+    public IEnumerable<ApiVersion> ApiVersions =>
+    [
         ApiVersion,
         new ApiVersion(2, 1),
         new ApiVersion(2, 0),
         new ApiVersion(1, 4),
         new ApiVersion(1, 3),
         new ApiVersion(1, 2),
-    };
+    ];
 
     public string AnalyticsSlackWebHook => _configuration.GetValue<string>("AnalyticsSlackWebHook")!;
 

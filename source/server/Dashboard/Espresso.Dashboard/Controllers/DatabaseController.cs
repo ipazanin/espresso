@@ -3,14 +3,15 @@
 // © 2022 Espresso News. All rights reserved.
 
 using Espresso.Common.Constants;
-using Espresso.Common.Services.Contracts;
-using Espresso.Dashboard.Application.Settings.ExportDatabase;
+using Espresso.Common.Services.Contacts;
+using Espresso.Dashboard.Application.Settings.Queries.ExportDatabase;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Espresso.Dashboard.Controllers;
 
 [ApiController]
+[Route("api")]
 public class DatabaseController : ControllerBase
 {
     private readonly ISender _sender;
@@ -24,7 +25,7 @@ public class DatabaseController : ControllerBase
     }
 
     [HttpGet]
-    [Route("api/database")]
+    [Route("database")]
     public async Task<IActionResult> ExportDatabase(CancellationToken cancellationToken)
     {
         var database = await _sender.Send(new ExportDatabaseQuery(), cancellationToken);

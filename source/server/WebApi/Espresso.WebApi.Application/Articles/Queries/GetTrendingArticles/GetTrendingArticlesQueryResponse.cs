@@ -6,5 +6,5 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles;
 
 public record GetTrendingArticlesQueryResponse
 {
-    public IEnumerable<GetTrendingArticlesArticle> Articles { get; init; } = new List<GetTrendingArticlesArticle>();
+    public IEnumerable<GetTrendingArticlesArticle> Articles { get; init; } = [];
 }

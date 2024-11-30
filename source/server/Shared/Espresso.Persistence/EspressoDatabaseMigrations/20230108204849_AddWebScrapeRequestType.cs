@@ -16,7 +16,7 @@ public partial class AddWebScrapeRequestType : Migration
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder.AlterColumn<bool>(
+        _ = migrationBuilder.AlterColumn<bool>(
             name: "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped",
             table: "RssFeeds",
             type: "boolean",
@@ -26,7 +26,7 @@ public partial class AddWebScrapeRequestType : Migration
             oldType: "boolean",
             oldNullable: true);
 
-        migrationBuilder.AddColumn<int>(
+        _ = migrationBuilder.AddColumn<int>(
             name: "ImageUrlParseConfiguration_WebScrapeRequestType",
             table: "RssFeeds",
             type: "integer",
@@ -37,11 +37,11 @@ public partial class AddWebScrapeRequestType : Migration
     /// <inheritdoc />
     protected override void Down(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder.DropColumn(
+        _ = migrationBuilder.DropColumn(
             name: "ImageUrlParseConfiguration_WebScrapeRequestType",
             table: "RssFeeds");
 
-        migrationBuilder.AlterColumn<bool>(
+        _ = migrationBuilder.AlterColumn<bool>(
             name: "ImageUrlParseConfiguration_ShouldImageUrlBeWebScraped",
             table: "RssFeeds",
             type: "boolean",

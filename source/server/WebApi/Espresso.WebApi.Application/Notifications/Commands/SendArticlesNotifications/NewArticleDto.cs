@@ -29,5 +29,5 @@ public sealed class NewArticleDto
 
     public int NewsPortal { get; private set; }
 
-    public IEnumerable<int> CategoryIds { get; private set; } = Enumerable.Empty<int>();
+    public IEnumerable<int> CategoryIds { get; private set; } = [];
 }

@@ -3,7 +3,7 @@
 // © 2022 Espresso News. All rights reserved.
 
 using System.Text.Encodings.Web;
-using Espresso.Common.Services.Contracts;
+using Espresso.Common.Services.Contacts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -45,7 +45,7 @@ public class ForgotPasswordModel : PageModel
         if (ModelState.IsValid)
         {
             var user = await _userManager.FindByEmailAsync(Input.Email);
-            if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+            if (user == null || !await _userManager.IsEmailConfirmedAsync(user))
             {
                 // Don't reveal that the user does not exist or is not confirmed
                 return RedirectToPage("./ForgotPasswordConfirmation");
@@ -61,7 +61,7 @@ public class ForgotPasswordModel : PageModel
                 values: new { area = "Identity", code },
                 protocol: Request.Scheme)!;
 
-            await _emailService.SendMail(
+            _ = await _emailService.SendMail(
                 recipient: Input.Email,
                 subject: "Reset Password",
                 content: $"Please reset your password by clicking {HtmlEncoder.Default.Encode(callbackUrl)}",

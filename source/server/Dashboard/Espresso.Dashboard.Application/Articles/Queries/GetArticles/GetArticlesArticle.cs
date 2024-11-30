@@ -36,7 +36,7 @@ public sealed class GetArticlesArticle
 
     public int NewsPortalId { get; private set; }
 
-    public IEnumerable<(string categoryName, string categoryColor)> Categories { get; private set; } = Enumerable.Empty<(string, string)>();
+    public IEnumerable<(string categoryName, string categoryColor)> Categories { get; private set; } = [];
 
     public string ArticleUrl { get; private set; } = string.Empty;
 

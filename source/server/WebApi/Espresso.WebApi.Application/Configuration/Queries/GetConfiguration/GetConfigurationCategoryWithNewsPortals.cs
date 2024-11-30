@@ -25,7 +25,7 @@ public record GetConfigurationCategoryWithNewsPortals
 
     public CategoryType CategoryType { get; private set; }
 
-    public IEnumerable<GetConfigurationNewsPortal> NewsPortals { get; private set; } = new List<GetConfigurationNewsPortal>();
+    public IEnumerable<GetConfigurationNewsPortal> NewsPortals { get; private set; } = [];
 
     private GetConfigurationCategoryWithNewsPortals()
     {

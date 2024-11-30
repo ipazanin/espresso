@@ -3,7 +3,7 @@
 // © 2022 Espresso News. All rights reserved.
 
 using System.Text.Encodings.Web;
-using Espresso.Common.Services.Contracts;
+using Espresso.Common.Services.Contacts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -67,7 +67,7 @@ public class ResendEmailConfirmationModel : PageModel
             pageHandler: null,
             values: new { userId, code },
             protocol: Request.Scheme)!;
-        await _emailService.SendMail(
+        _ = await _emailService.SendMail(
             recipient: Input.Email,
             subject: "Confirm your email",
             content: $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",

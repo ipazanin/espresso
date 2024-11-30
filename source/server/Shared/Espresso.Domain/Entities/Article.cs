@@ -128,11 +128,11 @@ public class Article
 
     public RssFeed? RssFeed { get; private set; }
 
-    public ICollection<ArticleCategory> ArticleCategories { get; private set; } = new List<ArticleCategory>();
+    public ICollection<ArticleCategory> ArticleCategories { get; private set; } = [];
 
-    public ICollection<SimilarArticle> FirstSimilarArticles { get; private set; } = new List<SimilarArticle>();
+    public ICollection<SimilarArticle> FirstSimilarArticles { get; private set; } = [];
 
-    public ICollection<SimilarArticle> SecondSimilarArticles { get; private set; } = new List<SimilarArticle>();
+    public ICollection<SimilarArticle> SecondSimilarArticles { get; private set; } = [];
 
     /// <summary>
     ///
@@ -234,7 +234,7 @@ public class Article
 
         foreach (var articleCategory in articleCategoriesToDelete)
         {
-            ArticleCategories.Remove(articleCategory);
+            _ = ArticleCategories.Remove(articleCategory);
         }
 
         foreach (var otherArticleCategory in other.ArticleCategories)

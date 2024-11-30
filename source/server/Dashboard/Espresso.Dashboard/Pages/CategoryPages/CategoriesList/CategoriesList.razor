@@ -1,15 +1,17 @@
 @page "/categories"
+@using Espresso.Application.DataTransferObjects.CategoryDataTransferObjects
 @inherits CategoriesListBase
 
-<MudTable ServerData="@GetTableData" Dense="@false" Hover="@false" Bordered="@false" FixedHeader="@true"
-    FixedFooter="@true" Height="600px" Striped="@true" @ref="Table">
+<MudTable T="@(CategoryDto)" ServerData="@GetTableData" Dense="@false" Hover="@false" Bordered="@false"
+    FixedHeader="@true" FixedFooter="@true" Height="600px" Striped="@true" @ref="Table">
     <ToolBarContent>
         <MudGrid>
             <MudItem xs="4">
                 <MudText Typo="Typo.h6">Categories</MudText>
             </MudItem>
             <MudItem xs="4">
-                <MudButton Href="categories/create" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Create</MudButton>
+                <MudButton Href="categories/create" ButtonType="ButtonType.Button" Variant="Variant.Filled"
+                    Color="Color.Primary">Create</MudButton>
             </MudItem>
         </MudGrid>
     </ToolBarContent>
@@ -30,7 +32,8 @@
             </MudButton>
         </MudTd>
         <MudTd>
-            <MudButton Variant="@Variant.Filled" Color="Color.Secondary" OnClick="@(async () => await DeleteCategory(context.Id))">
+            <MudButton Variant="@Variant.Filled" Color="Color.Secondary"
+                OnClick="@(async () => await DeleteCategory(context.Id))">
                 Delete
             </MudButton>
         </MudTd>

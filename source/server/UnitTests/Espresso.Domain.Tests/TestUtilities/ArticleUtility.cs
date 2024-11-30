@@ -34,7 +34,7 @@ public static class ArticleUtility
 
         var articleCategories = new List<ArticleCategory>()
             {
-                new ArticleCategory(
+                new(
                     id: default,
                     article: null,
                     articleId: default,

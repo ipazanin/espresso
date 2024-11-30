@@ -55,7 +55,7 @@ public class SetFeaturedArticleCommandHandler : IRequestHandler<SetFeaturedArtic
             }
 
             databaseArticle.SetIsFeaturedValue(isFeatured, featuredPosition);
-            _context.Articles.Update(databaseArticle);
+            _ = _context.Articles.Update(databaseArticle);
 
             if (memoryCacheArticles.TryGetValue(articleId, out var memoryCacheArticle))
             {
@@ -63,8 +63,8 @@ public class SetFeaturedArticleCommandHandler : IRequestHandler<SetFeaturedArtic
             }
         }
 
-        await _context.SaveChangesAsync(cancellationToken: default);
-        _memoryCache.Set(
+        _ = await _context.SaveChangesAsync(cancellationToken: default);
+        _ = _memoryCache.Set(
             key: MemoryCacheConstants.ArticleKey,
             value: memoryCacheArticles.Values.ToList());
     }

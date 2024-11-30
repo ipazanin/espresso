@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace Espresso.Domain.Utilities;
+namespace Espresso.Common.Utilities;
 
 /// <summary>
 /// <see cref="Enum"/> utility.

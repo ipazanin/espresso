@@ -13,6 +13,6 @@ public class HideArticleCommandValidator : AbstractValidator<HideArticleCommand>
     /// </summary>
     public HideArticleCommandValidator()
     {
-        RuleFor(request => request.ArticleId).NotEmpty();
+        _ = RuleFor(request => request.ArticleId).NotEmpty();
     }
 }

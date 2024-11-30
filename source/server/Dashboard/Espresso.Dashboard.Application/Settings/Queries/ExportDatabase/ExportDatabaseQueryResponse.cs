@@ -7,7 +7,7 @@ using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects;
 using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects.RssFeedDataTransferObjects;
 using Espresso.Application.DataTransferObjects.SettingDataTransferObjects;
 
-namespace Espresso.Dashboard.Application.Settings.ExportDatabase;
+namespace Espresso.Dashboard.Application.Settings.Queries.ExportDatabase;
 
 public class ExportDatabaseQueryResponse
 {

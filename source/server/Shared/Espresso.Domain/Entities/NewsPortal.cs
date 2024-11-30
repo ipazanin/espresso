@@ -5,6 +5,7 @@
 using System.Linq.Expressions;
 
 #pragma warning disable RCS1170 // Use read-only auto-implemented property.
+#pragma warning disable S1144 // Unused private types or members should be removed
 
 namespace Espresso.Domain.Entities;
 
@@ -120,9 +121,9 @@ public class NewsPortal
 
     public Category? Category { get; private set; }
 
-    public ICollection<RssFeed> RssFeeds { get; private set; } = new List<RssFeed>();
+    public ICollection<RssFeed> RssFeeds { get; private set; } = [];
 
-    public ICollection<Article> Articles { get; private set; } = new List<Article>();
+    public ICollection<Article> Articles { get; private set; } = [];
 
     public NewsPortalImage? NewsPortalImage { get; private set; }
 

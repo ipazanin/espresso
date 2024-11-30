@@ -62,8 +62,8 @@ public class ResetAuthenticatorModel : PageModel
             return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
         }
 
-        await _userManager.SetTwoFactorEnabledAsync(user, false);
-        await _userManager.ResetAuthenticatorKeyAsync(user);
+        _ = await _userManager.SetTwoFactorEnabledAsync(user, false);
+        _ = await _userManager.ResetAuthenticatorKeyAsync(user);
         _logger.LogInformation("User with ID '{UserId}' has reset their authentication app key.", user.Id);
 
         await _signInManager.RefreshSignInAsync(user);

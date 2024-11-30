@@ -29,9 +29,9 @@ public class UpdateSettingCommandHandler : IRequestHandler<UpdateSettingCommand>
     {
         var updatedSetting = request.Setting.CreateSetting();
 
-        _espressoDatabaseContext.Settings.Update(updatedSetting);
+        _ = _espressoDatabaseContext.Settings.Update(updatedSetting);
 
-        await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
+        _ = await _espressoDatabaseContext.SaveChangesAsync(cancellationToken);
 
         await _settingProvider.UpdateLatestSetting(default);
         await _sendInformationToApiService.SendSettingUpdatedNotification();

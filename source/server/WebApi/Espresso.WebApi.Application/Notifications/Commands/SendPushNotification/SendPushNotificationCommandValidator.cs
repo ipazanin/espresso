@@ -14,21 +14,21 @@ public class SendPushNotificationCommandValidator : AbstractValidator<SendPushNo
     /// </summary>
     public SendPushNotificationCommandValidator()
     {
-        RuleFor(requets => requets.InternalName)
+        _ = RuleFor(requets => requets.InternalName)
             .MaximumLength(PushNotification.InternalNameMaxLength);
 
-        RuleFor(requets => requets.Title)
+        _ = RuleFor(requets => requets.Title)
             .MaximumLength(PushNotification.InternalNameMaxLength);
 
-        RuleFor(requets => requets.Message)
+        _ = RuleFor(requets => requets.Message)
             .MaximumLength(PushNotification.InternalNameMaxLength)
             .NotEmpty();
 
-        RuleFor(requets => requets.Topic)
+        _ = RuleFor(requets => requets.Topic)
             .MaximumLength(PushNotification.InternalNameMaxLength)
             .NotEmpty();
 
-        RuleFor(requets => requets.ArticleUrl)
+        _ = RuleFor(requets => requets.ArticleUrl)
             .MaximumLength(PushNotification.InternalNameMaxLength)
             .NotEmpty();
     }

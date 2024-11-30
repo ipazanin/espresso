@@ -38,7 +38,7 @@ public partial class ParseHtmlService : IParseHtmlService
         htmlDocument.LoadHtml(html);
         var nodes = htmlDocument.DocumentNode
             .SelectNodes(".//text()")
-            ?.Select(node => node?.InnerText) ?? new List<string>();
+            ?.Select(node => node?.InnerText) ?? [];
 
         var summary = HtmlEntity.DeEntitize(string.Join(" ", nodes));
         summary = RemoveInvalidCharactersRegex().Replace(summary, " ").RemoveExtraWhiteSpaceCharacters();

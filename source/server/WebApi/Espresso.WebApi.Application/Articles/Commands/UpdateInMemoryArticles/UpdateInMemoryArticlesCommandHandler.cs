@@ -64,13 +64,13 @@ public class UpdateInMemoryArticlesCommandHandler :
             cancellationToken: cancellationToken);
 
         var articles = _removeOldArticlesService
-            .RemoveOldArticles(savedArticlesDictionary.Values.ToArray());
+            .RemoveOldArticles([.. savedArticlesDictionary.Values]);
 
         var articlesToSave = _trendingScoreService
             .CalculateTrendingScore(articles)
             .ToArray();
 
-        _memoryCache.Set(
+        _ = _memoryCache.Set(
             key: MemoryCacheConstants.ArticleKey,
             value: articlesToSave.ToList());
 
@@ -96,13 +96,13 @@ public class UpdateInMemoryArticlesCommandHandler :
             categories: categories,
             cancellationToken: cancellationToken);
 
-        _trendingScoreService.CalculateTrendingScore(loadedArticles);
+        _ = _trendingScoreService.CalculateTrendingScore(loadedArticles);
 
         foreach (var loadedArticle in loadedArticles)
         {
             if (articlesDictionary.TryGetValue(loadedArticle.Id, out var savedArticle))
             {
-                articlesDictionary.Remove(savedArticle.Id);
+                _ = articlesDictionary.Remove(savedArticle.Id);
                 articlesDictionary.Add(loadedArticle.Id, loadedArticle);
             }
             else

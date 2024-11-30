@@ -52,7 +52,7 @@ public record GetFeaturedArticlesArticle
     /// <summary>
     /// Gets list Of Categories article belongs to.
     /// </summary>
-    public IEnumerable<GetFeaturedArticlesCategory> Categories { get; private set; } = new List<GetFeaturedArticlesCategory>();
+    public IEnumerable<GetFeaturedArticlesCategory> Categories { get; private set; } = [];
 
     private GetFeaturedArticlesArticle()
     {

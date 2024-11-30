@@ -316,6 +316,19 @@ else
 	$(SolutionPath)
 endif
 
+upgrade-check::
+	dotnet outdated $(SolutionPath) --pre-release Never --fail-on-updates
+
+upgrade::
+	dotnet outdated $(SolutionPath) --upgrade
+
+upgrade-tools::
+	dotnet tool update dotnet-consolidate
+	dotnet tool update dotnet-outdated-tool
+	dotnet tool update dotnet-format
+	dotnet tool update dotnet-ef
+	dotnet tool update dotnet-reportgenerator-globaltool
+
 database-update-espresso-database::
 	dotnet ef database update \
     --project $(PersistenceProjectPath) \

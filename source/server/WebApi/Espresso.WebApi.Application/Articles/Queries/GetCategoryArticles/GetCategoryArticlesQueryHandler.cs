@@ -81,7 +81,7 @@ public class GetCategoryArticlesQueryHandler : IRequestHandler<GetCategoryArticl
     {
         if (request.Skip != 0)
         {
-            return Array.Empty<GetCategoryArticlesNewsPortal>();
+            return [];
         }
 
         var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(

@@ -47,7 +47,9 @@ public class MainLayoutBase : LayoutComponentBase
     {
         OnInitialized();
 
+#pragma warning disable VSTHRD003 // Avoid awaiting foreign Tasks
         var user = (await AuthState).User;
+#pragma warning restore VSTHRD003 // Avoid awaiting foreign Tasks
         if (user.Identity?.IsAuthenticated == false)
         {
             NavigationManager.NavigateTo("Identity/Account/Login");

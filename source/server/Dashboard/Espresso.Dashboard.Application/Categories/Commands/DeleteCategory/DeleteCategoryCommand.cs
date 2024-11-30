@@ -4,7 +4,7 @@
 
 using MediatR;
 
-namespace Espresso.Dashboard.Application.Categories.Commands.UpdateCategory;
+namespace Espresso.Dashboard.Application.Categories.Commands.DeleteCategory;
 
 public class DeleteCategoryCommand : IRequest
 {

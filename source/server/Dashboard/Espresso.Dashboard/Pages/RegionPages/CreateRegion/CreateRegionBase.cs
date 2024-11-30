@@ -37,7 +37,7 @@ public class CreateRegionBase : ComponentBase
 
         RegionDetails = new(
             region: region,
-            newsPortals: Enumerable.Empty<NewsPortalDto>());
+            newsPortals: []);
 
         StateHasChanged();
     }

@@ -5,13 +5,12 @@
 using Espresso.Application.DataTransferObjects.CategoryDataTransferObjects;
 using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects;
 using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects.RssFeedDataTransferObjects;
-using Espresso.Dashboard.Application.NewsPortals.Queries.GetNewsPortalDetails;
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Espresso.Dashboard.Application.NewsPortals.GetNewsPortalDetails;
+namespace Espresso.Dashboard.Application.NewsPortals.Queries.GetNewsPortalDetails;
 
 /// <summary>
 /// Get <see cref="NewsPortal"/> details query handler.

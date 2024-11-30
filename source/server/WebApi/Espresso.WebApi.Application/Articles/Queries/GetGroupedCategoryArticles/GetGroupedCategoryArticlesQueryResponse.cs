@@ -6,9 +6,9 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetGroupedCategoryArticle
 
 public record GetGroupedCategoryArticlesQueryResponse
 {
-    public IEnumerable<IEnumerable<GetGroupedCategoryArticlesArticle>> Articles { get; init; } = new List<IEnumerable<GetGroupedCategoryArticlesArticle>>();
+    public IEnumerable<IEnumerable<GetGroupedCategoryArticlesArticle>> Articles { get; init; } = [];
 
-    public IEnumerable<GetGroupedCategoryArticlesNewsPortal> NewNewsPortals { get; init; } = new List<GetGroupedCategoryArticlesNewsPortal>();
+    public IEnumerable<GetGroupedCategoryArticlesNewsPortal> NewNewsPortals { get; init; } = [];
 
     public int NewNewsPortalsPosition { get; init; }
 }

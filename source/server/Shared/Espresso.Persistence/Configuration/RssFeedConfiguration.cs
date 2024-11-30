@@ -17,7 +17,7 @@ public class RssFeedConfiguration : IEntityTypeConfiguration<RssFeed>
     /// <inheritdoc/>
     public void Configure(EntityTypeBuilder<RssFeed> builder)
     {
-        builder.Property(rssFeed => rssFeed.Url)
+        _ = builder.Property(rssFeed => rssFeed.Url)
             .HasMaxLength(RssFeed.UrlMaxLength);
 
         ConfigureAmpConfiguration(builder);
@@ -25,27 +25,27 @@ public class RssFeedConfiguration : IEntityTypeConfiguration<RssFeed>
         ConfigureCategoryParseConfiguration(builder);
         ConfigureImageUrlParseConfiguration(builder);
 
-        builder.HasOne(rssFeed => rssFeed.NewsPortal)
+        _ = builder.HasOne(rssFeed => rssFeed.NewsPortal)
             .WithMany(newsPortal => newsPortal!.RssFeeds)
             .HasForeignKey(rssFeed => rssFeed.NewsPortalId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(rssFeed => rssFeed.Category)
+        _ = builder.HasOne(rssFeed => rssFeed.Category)
             .WithMany(category => category!.RssFeeds)
             .HasForeignKey(rssFeed => rssFeed.CategoryId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasMany(rssFeed => rssFeed.RssFeedCategories)
+        _ = builder.HasMany(rssFeed => rssFeed.RssFeedCategories)
             .WithOne(rssFeedCategory => rssFeedCategory.RssFeed!)
             .HasForeignKey(rssFeedCategory => rssFeedCategory.RssFeedId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany(rssFeed => rssFeed.Articles)
+        _ = builder.HasMany(rssFeed => rssFeed.Articles)
             .WithOne(newArticle => newArticle.RssFeed!)
             .HasForeignKey(rssFeedCategory => rssFeedCategory.RssFeedId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany(rssFeed => rssFeed.RssFeedContentModifiers)
+        _ = builder.HasMany(rssFeed => rssFeed.RssFeedContentModifiers)
             .WithOne(rssFeedContentModifier => rssFeedContentModifier.RssFeed!)
             .HasForeignKey(rssFeedContentModifier => rssFeedContentModifier.RssFeedId)
             .OnDelete(DeleteBehavior.Cascade);
@@ -55,11 +55,11 @@ public class RssFeedConfiguration : IEntityTypeConfiguration<RssFeed>
     {
         var ampConfigurationBuilder = builder.OwnsOne(rssFeed => rssFeed.AmpConfiguration);
 
-        ampConfigurationBuilder
+        _ = ampConfigurationBuilder
             .Property(ampConfiguration => ampConfiguration!.TemplateUrl)
             .HasMaxLength(RssFeed.AmpConfigurationTemplateUrlMaxLength);
 
-        ampConfigurationBuilder
+        _ = ampConfigurationBuilder
             .Property(ampConfiguration => ampConfiguration!.HasAmpArticles);
     }
 
@@ -73,7 +73,7 @@ public class RssFeedConfiguration : IEntityTypeConfiguration<RssFeed>
         var categoryParseConfigurationBuilder = builder
             .OwnsOne(rssFeed => rssFeed.CategoryParseConfiguration);
 
-        categoryParseConfigurationBuilder
+        _ = categoryParseConfigurationBuilder
             .Property(categoryParseConfiguration => categoryParseConfiguration.CategoryParseStrategy)
             .HasDefaultValue(CategoryParseConfiguration.CategoryParseStrategyDefaultValue);
     }
@@ -82,42 +82,42 @@ public class RssFeedConfiguration : IEntityTypeConfiguration<RssFeed>
     {
         var imageUrlParseConfiguration = builder.OwnsOne(rssFeed => rssFeed.ImageUrlParseConfiguration);
 
-        imageUrlParseConfiguration
+        _ = imageUrlParseConfiguration
             .Property(imageUrlConfig => imageUrlConfig.XPath)
             .HasMaxLength(ImageUrlParseConfiguration.ImgElementXPathHasMaxLength)
             .HasDefaultValue(ImageUrlParseConfiguration.ImgElementXPathDefaultValue);
 
-        imageUrlParseConfiguration
+        _ = imageUrlParseConfiguration
             .Property(imageUrlConfig => imageUrlConfig.AttributeName)
             .HasMaxLength(ImageUrlParseConfiguration.AttributeNameMaxLength)
             .HasDefaultValue(ImageUrlParseConfiguration.AttributeNameDefaultValue);
 
-        imageUrlParseConfiguration
+        _ = imageUrlParseConfiguration
             .Property(imageUrlConfig => imageUrlConfig.ImageUrlParseStrategy)
             .HasDefaultValue(ImageUrlParseConfiguration.ImageUrlParseStrategyDefaultValue);
 
-        imageUrlParseConfiguration
+        _ = imageUrlParseConfiguration
             .Property(imageUrlConfig => imageUrlConfig.ShouldImageUrlBeWebScraped)
             .HasDefaultValue(ImageUrlParseConfiguration.ShouldImageUrlBeWebScrapedDefaultValue);
 
-        imageUrlParseConfiguration
+        _ = imageUrlParseConfiguration
             .Property(imageUrlConfig => imageUrlConfig.ImageUrlWebScrapeType)
             .HasDefaultValue(ImageUrlParseConfiguration.ImageUrlWebScrapeTypeDefaultValue);
 
-        imageUrlParseConfiguration
+        _ = imageUrlParseConfiguration
             .Property(imageUrlConfig => imageUrlConfig.JsonWebScrapePropertyNames)
             .HasMaxLength(ImageUrlParseConfiguration.JsonWebScrapePropertyNamesHasMaxLength)
             .HasDefaultValue(ImageUrlParseConfiguration.JsonWebScrapePropertyNamesDefaultValue);
 
-        imageUrlParseConfiguration
+        _ = imageUrlParseConfiguration
             .Property(imageUrlConfig => imageUrlConfig.ElementExtensionName)
             .HasMaxLength(ImageUrlParseConfiguration.ElementExtensionNameMaxLength);
 
-        imageUrlParseConfiguration
+        _ = imageUrlParseConfiguration
             .Property(imageUrlConfig => imageUrlConfig.ElementExtensionAttributeName)
             .HasMaxLength(ImageUrlParseConfiguration.ElementExtensionAttributeNameMaxLength);
 
-        imageUrlParseConfiguration
+        _ = imageUrlParseConfiguration
             .Property(imageUrlConfig => imageUrlConfig.WebScrapeRequestType)
             .HasDefaultValue(ImageUrlParseConfiguration.WebScrapeRequestTypeDefaultValue);
     }

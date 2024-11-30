@@ -5,7 +5,7 @@
 using Espresso.Application.Models;
 using Espresso.Application.Services.Contracts;
 using Espresso.Common.Constants;
-using Espresso.Common.Services.Contracts;
+using Espresso.Common.Services.Contacts;
 using Espresso.Domain.Entities;
 using Espresso.Persistence.Database;
 using Espresso.WebApi.Application.Exceptions;

@@ -24,7 +24,7 @@ public static class SwaggerServiceCollectionExtensions
     /// <param name="configuration"></param>
     public static IServiceCollection AddSwaggerServices(this IServiceCollection services, IWebApiConfiguration configuration)
     {
-        services.AddSwaggerGen(options => ConfigureSwagger(options, configuration));
+        _ = services.AddSwaggerGen(options => ConfigureSwagger(options, configuration));
 
         return services;
     }

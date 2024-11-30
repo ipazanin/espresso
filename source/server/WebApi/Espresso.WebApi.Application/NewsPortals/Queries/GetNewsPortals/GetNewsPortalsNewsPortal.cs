@@ -29,7 +29,7 @@ public sealed class GetNewsPortalsNewsPortal
 
     public GetNewsPortalsRegion Region { get; private set; } = null!;
 
-    public IEnumerable<GetNewsPortalsRssFeed> RssFeeds { get; private set; } = new List<GetNewsPortalsRssFeed>();
+    public IEnumerable<GetNewsPortalsRssFeed> RssFeeds { get; private set; } = [];
 
     public static Expression<Func<NewsPortal, GetNewsPortalsNewsPortal>> GetProjection()
     {

@@ -129,7 +129,7 @@ public class GetGroupedLatestArticlesQueryHandler : IRequestHandler<GetGroupedLa
     {
         if (request.Skip != 0)
         {
-            return Array.Empty<GetGroupedLatestArticlesArticle>();
+            return [];
         }
 
         var featuredArticles = savedArticles
@@ -171,7 +171,7 @@ public class GetGroupedLatestArticlesQueryHandler : IRequestHandler<GetGroupedLa
     {
         if (request.Skip != 0)
         {
-            return Array.Empty<GetGroupedLatestArticlesNewsPortal>();
+            return [];
         }
 
         var newsPortalDtos = newsPortals

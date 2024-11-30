@@ -15,8 +15,8 @@ public class CreateApplicationDownloadCommandValidator : AbstractValidator<Creat
     /// </summary>
     public CreateApplicationDownloadCommandValidator()
     {
-        RuleFor(createApplicationDownloadCommand => createApplicationDownloadCommand.ConsumerVersion).NotEmpty().MaximumLength(ApplicationDownload.MobileAppVersionMaxLenght);
+        _ = RuleFor(createApplicationDownloadCommand => createApplicationDownloadCommand.ConsumerVersion).NotEmpty().MaximumLength(ApplicationDownload.MobileAppVersionMaxLenght);
 
-        RuleFor(createApplicationDownloadCommand => createApplicationDownloadCommand.DeviceType).Must(mobileDeviceType => Enum.IsDefined(typeof(DeviceType), mobileDeviceType) && mobileDeviceType != DeviceType.Undefined);
+        _ = RuleFor(createApplicationDownloadCommand => createApplicationDownloadCommand.DeviceType).Must(mobileDeviceType => Enum.IsDefined(typeof(DeviceType), mobileDeviceType) && mobileDeviceType != DeviceType.Undefined);
     }
 }

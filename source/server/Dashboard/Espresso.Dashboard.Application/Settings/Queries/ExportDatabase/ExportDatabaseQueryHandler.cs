@@ -11,7 +11,7 @@ using Espresso.Persistence.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Espresso.Dashboard.Application.Settings.ExportDatabase;
+namespace Espresso.Dashboard.Application.Settings.Queries.ExportDatabase;
 
 public class ExportDatabaseQueryHandler : IRequestHandler<ExportDatabaseQuery, ExportDatabaseQueryResponse>
 {

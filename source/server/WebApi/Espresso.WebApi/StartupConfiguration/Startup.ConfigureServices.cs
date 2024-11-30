@@ -9,9 +9,8 @@ using Espresso.Application.Models;
 using Espresso.Application.Services.Contracts;
 using Espresso.Application.Services.Implementations;
 using Espresso.Common.Constants;
-using Espresso.Common.Services.Contracts;
+using Espresso.Common.Services.Contacts;
 using Espresso.Common.Services.Implementations;
-using Espresso.Dashboard.Application.Constants;
 using Espresso.Domain.Infrastructure;
 using Espresso.Domain.IServices;
 using Espresso.Domain.Services;
@@ -23,7 +22,6 @@ using Espresso.WebApi.Authentication;
 using Espresso.WebApi.Extensions;
 using Espresso.WebApi.Filters;
 using Espresso.WebApi.Jobs.CronJobs;
-using Espresso.WebApi.Services;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -52,7 +50,7 @@ public sealed partial class Startup
         AddPersistence(services);
         AddJobs(services);
 
-        services.AddSwaggerServices(_webApiConfiguration);
+        _ = services.AddSwaggerServices(_webApiConfiguration);
     }
 
     /// <summary>
@@ -61,14 +59,14 @@ public sealed partial class Startup
     /// <param name="services"></param>
     private static void AddMediatRServices(IServiceCollection services)
     {
-        services.AddMediatR(configuration =>
+        _ = services.AddMediatR(configuration =>
         {
-            configuration.RegisterServicesFromAssemblyContaining<GetNewsPortalsQuery>();
-            configuration.RegisterServicesFromAssemblyContaining(typeof(LoggerRequestPipeline<,>));
+            _ = configuration.RegisterServicesFromAssemblyContaining<GetNewsPortalsQuery>();
+            _ = configuration.RegisterServicesFromAssemblyContaining(typeof(LoggerRequestPipeline<,>));
         });
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionRequestPipeline<,>));
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggerRequestPipeline<,>));
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
+        _ = services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionRequestPipeline<,>));
+        _ = services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggerRequestPipeline<,>));
+        _ = services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
     }
 
     /// <summary>
@@ -77,26 +75,26 @@ public sealed partial class Startup
     /// <param name="services"></param>
     private void AddEssentials(IServiceCollection services)
     {
-        services.AddMemoryCache();
-        services.AddTransient<IWebApiInit, WebApiInit>();
+        _ = services.AddMemoryCache();
+        _ = services.AddTransient<IWebApiInit, WebApiInit>();
 
         var retryPolicy = HttpPolicyExtensions
             .HandleTransientHttpError()
             .Or<TimeoutRejectedException>() // thrown by Polly's TimeoutPolicy if the inner execution times out
             .RetryAsync(3);
 
-        services
+        _ = services
             .AddHttpClient(
                 name: HttpClientConstants.SlackHttpClientName,
                 configureClient: (_, httpClient) => httpClient.Timeout = _webApiConfiguration.SlackHttpClientConfiguration.Timeout)
             .AddPolicyHandler(retryPolicy)
             .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(20)));
 
-        services.AddSingleton(_ => _webApiConfiguration);
-        services.AddSingleton(_ => new ApplicationInformation(
+        _ = services.AddSingleton(_ => _webApiConfiguration);
+        _ = services.AddSingleton(_ => new ApplicationInformation(
             appEnvironment: _webApiConfiguration.AppConfiguration.AppEnvironment,
             version: _webApiConfiguration.AppConfiguration.Version));
-        services.AddScoped<ISettingProvider, SettingProvider>();
+        _ = services.AddScoped<ISettingProvider, SettingProvider>();
     }
 
     /// <summary>
@@ -105,10 +103,10 @@ public sealed partial class Startup
     /// <param name="services"></param>
     private void AddWebApi(IServiceCollection services)
     {
-        services
+        _ = services
             .AddControllers(mvcOptions =>
             {
-                mvcOptions.Filters.Add(typeof(CustomExceptionFilterAttribute));
+                _ = mvcOptions.Filters.Add(typeof(CustomExceptionFilterAttribute));
                 mvcOptions.EnableEndpointRouting = false;
             })
             .AddJsonOptions(jsonOptions =>
@@ -119,43 +117,43 @@ public sealed partial class Startup
                         jsonSerializerOptions: jsonOptions.JsonSerializerOptions);
             });
 
-        services.AddResponseCaching();
+        _ = services.AddResponseCaching();
 
-        services.AddSingleton<ReadinessHealthCheck>();
-        services.AddHealthChecks()
+        _ = services.AddSingleton<ReadinessHealthCheck>();
+        _ = services.AddHealthChecks()
             .AddCheck<StartupHealthCheck>(
                 name: nameof(StartupHealthCheck),
                 failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
-                tags: new[] { HealthCheckConstants.StartupTag })
+                tags: [HealthCheckConstants.StartupTag])
             .AddCheck<ReadinessHealthCheck>(
                 name: nameof(ReadinessHealthCheck),
                 failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
-                tags: new[] { HealthCheckConstants.ReadinessTag })
+                tags: [HealthCheckConstants.ReadinessTag])
             .AddCheck<LivenessHealthCheck>(
                 name: nameof(LivenessHealthCheck),
                 failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy,
-                tags: new[] { HealthCheckConstants.LivenessTag });
+                tags: [HealthCheckConstants.LivenessTag]);
 
-        services.AddSignalR();
+        _ = services.AddSignalR();
 
         services
             .AddSpaStaticFiles(configuration => configuration.RootPath = ClientAppStaticFilesDirectory);
 
         if (_webApiConfiguration.SpaConfiguration.EnableCors)
         {
-            services
+            _ = services
                 .AddCors(corsOptions =>
                     corsOptions.AddPolicy(
                         name: CustomCorsPolicyName,
                         configurePolicy: corsPolicyBuilder =>
                         {
-                            corsPolicyBuilder.AllowAnyOrigin()
+                            _ = corsPolicyBuilder.AllowAnyOrigin()
                                    .AllowAnyMethod()
                                    .AllowAnyHeader();
                         }));
         }
 
-        services
+        _ = services
             .AddApiVersioning(apiVersioningOptions =>
             {
                 apiVersioningOptions.DefaultApiVersion = new ApiVersion(
@@ -166,7 +164,7 @@ public sealed partial class Startup
                 apiVersioningOptions.ApiVersionReader = new HeaderApiVersionReader(HttpHeaderConstants.ApiVersionHeaderName);
             });
 
-        services
+        _ = services
             .AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = ApiKeyAuthenticationOptions.DefaultScheme;
@@ -174,7 +172,7 @@ public sealed partial class Startup
             })
             .AddApiKeySupport(_ => { });
 
-        services.AddTransient<IApiKeyProvider, InMemoryApiKeyProvider>();
+        _ = services.AddTransient<IApiKeyProvider, InMemoryApiKeyProvider>();
     }
 
     /// <summary>
@@ -183,7 +181,7 @@ public sealed partial class Startup
     /// <param name="services"></param>
     private void AddApplicationServices(IServiceCollection services)
     {
-        services.AddScoped<ISlackService, SlackService>(serviceProvider => new SlackService(
+        _ = services.AddScoped<ISlackService, SlackService>(serviceProvider => new SlackService(
             memoryCache: serviceProvider.GetRequiredService<IMemoryCache>(),
             httpClientFactory: serviceProvider.GetRequiredService<IHttpClientFactory>(),
             loggerService: serviceProvider.GetRequiredService<ILoggerService<SlackService>>(),
@@ -192,18 +190,18 @@ public sealed partial class Startup
             crashReportWebHookUrl: _webApiConfiguration.AppConfiguration.CrashReportSlackWebHook,
             newSourceRequestWebHookUrl: _webApiConfiguration.AppConfiguration.NewSourceRequestSlackWebHook,
             applicationInformation: serviceProvider.GetRequiredService<ApplicationInformation>()));
-        services.AddTransient<ITrendingScoreService, TrendingScoreService>(_ => new TrendingScoreService(
+        _ = services.AddTransient<ITrendingScoreService, TrendingScoreService>(_ => new TrendingScoreService(
             halfOfMaxTrendingScoreValue: _webApiConfiguration.TrendingScoreConfiguration.HalfOfMaxTrendingScoreValue,
             ageWeight: _webApiConfiguration.TrendingScoreConfiguration.AgeWeight));
-        services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
-        services.AddTransient<IJsonService, SystemTextJsonService>(_ => new SystemTextJsonService(
+        _ = services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
+        _ = services.AddTransient<IJsonService, SystemTextJsonService>(_ => new SystemTextJsonService(
             defaultJsonSerializerOptions: _webApiConfiguration.SystemTextJsonSerializerConfiguration.JsonSerializerOptions));
-        services.AddScoped<IRemoveOldArticlesService, RemoveOldArticlesService>();
+        _ = services.AddScoped<IRemoveOldArticlesService, RemoveOldArticlesService>();
 
-        services.AddScoped<IGoogleAnalyticsService, GoogleAnalyticsService>();
-        services.AddScoped<IArticleLoaderService, ArticleDatabaseLoaderService>();
-        services.AddScoped<IRefreshWebApiCache, RefreshWebApiCache>();
-        services.AddScoped<INewsPortalImagesService>(serviceProvider => new NewsPortalImagesService(
+        _ = services.AddScoped<IGoogleAnalyticsService, GoogleAnalyticsService>();
+        _ = services.AddScoped<IArticleLoaderService, ArticleDatabaseLoaderService>();
+        _ = services.AddScoped<IRefreshWebApiCache, RefreshWebApiCache>();
+        _ = services.AddScoped<INewsPortalImagesService>(serviceProvider => new NewsPortalImagesService(
             espressoDatabaseContext: serviceProvider.GetRequiredService<IEspressoDatabaseContext>(),
             folderRootPath: serviceProvider.GetRequiredService<IWebHostEnvironment>().WebRootPath));
     }
@@ -214,17 +212,17 @@ public sealed partial class Startup
     /// <param name="services"></param>
     private void AddPersistence(IServiceCollection services)
     {
-        services.AddDbContext<IEspressoDatabaseContext, EspressoDatabaseContext>(options =>
+        _ = services.AddDbContext<IEspressoDatabaseContext, EspressoDatabaseContext>(options =>
         {
-            options.UseNpgsql(
+            _ = options.UseNpgsql(
                 connectionString: _webApiConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString,
                 npgsqlOptionsAction: npgOptions => npgOptions.CommandTimeout(_webApiConfiguration.DatabaseConfiguration.CommandTimeoutInSeconds));
-            options.UseQueryTrackingBehavior(_webApiConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
-            options.EnableDetailedErrors(_webApiConfiguration.DatabaseConfiguration.EnableDetailedErrors);
-            options.EnableSensitiveDataLogging(_webApiConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
+            _ = options.UseQueryTrackingBehavior(_webApiConfiguration.DatabaseConfiguration.QueryTrackingBehavior);
+            _ = options.EnableDetailedErrors(_webApiConfiguration.DatabaseConfiguration.EnableDetailedErrors);
+            _ = options.EnableSensitiveDataLogging(_webApiConfiguration.DatabaseConfiguration.EnableSensitiveDataLogging);
         });
 
-        services.AddScoped<IDatabaseConnectionFactory>(
+        _ = services.AddScoped<IDatabaseConnectionFactory>(
             _ => new DatabaseConnectionFactory(_webApiConfiguration.DatabaseConfiguration.EspressoDatabaseConnectionString));
     }
 
@@ -234,7 +232,7 @@ public sealed partial class Startup
     /// <param name="services"></param>
     private void AddJobs(IServiceCollection services)
     {
-        services.AddSingleton<ICronJobConfiguration>(_ =>
+        _ = services.AddSingleton<ICronJobConfiguration>(_ =>
         {
             return new CronJobConfiguration(
                 timeZoneInfo: TimeZoneInfo.Utc,
@@ -242,20 +240,7 @@ public sealed partial class Startup
                 appEnvironment: _webApiConfiguration.AppConfiguration.AppEnvironment);
         });
 
-        services.AddHostedService<AnalyticsCronJob>();
-        services.AddHostedService<WebApiReportCronJob>();
-
-        if (_webApiConfiguration.RabbitMqConfiguration.UseRabbitMqServer)
-        {
-            services.AddHostedService(serviceProvider => new ReceiveArticlesBackgroundJob(
-                serviceScopeFactory: serviceProvider.GetRequiredService<IServiceScopeFactory>(),
-                webApiConfiguration: _webApiConfiguration,
-                jsonService: serviceProvider.GetRequiredService<IJsonService>(),
-                hostName: _webApiConfiguration.RabbitMqConfiguration.HostName,
-                queueName: _webApiConfiguration.RabbitMqConfiguration.ArticlesQueueName,
-                port: _webApiConfiguration.RabbitMqConfiguration.Port,
-                userName: _webApiConfiguration.RabbitMqConfiguration.Username,
-                password: _webApiConfiguration.RabbitMqConfiguration.Password));
-        }
+        _ = services.AddHostedService<AnalyticsCronJob>();
+        _ = services.AddHostedService<WebApiReportCronJob>();
     }
 }

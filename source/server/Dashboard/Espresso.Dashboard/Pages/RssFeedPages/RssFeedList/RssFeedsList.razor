@@ -5,8 +5,8 @@
 @using Espresso.Application.DataTransferObjects.NewsPortalDataTransferObjects.RssFeedDataTransferObjects
 @using Espresso.Application.DataTransferObjects.CategoryDataTransferObjects
 
-<MudTable ServerData="@GetTableData" Dense="@false" Hover="@false" Bordered="@false" FixedHeader="@true"
-    FixedFooter="@true" Height="600px" Striped="@true" @ref="@Table">
+<MudTable T="@(GetRssFeedsQueryRssFeed)" ServerData="@GetTableData" Dense="@false" Hover="@false" Bordered="@false"
+    FixedHeader="@true" FixedFooter="@true" Height="600px" Striped="@true" @ref="@Table">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Rss Feeds</MudText>
         <MudSpacer />

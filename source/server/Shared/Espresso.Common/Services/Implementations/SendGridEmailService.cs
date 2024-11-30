@@ -2,7 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using Espresso.Common.Services.Contracts;
+using Espresso.Common.Services.Contacts;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 

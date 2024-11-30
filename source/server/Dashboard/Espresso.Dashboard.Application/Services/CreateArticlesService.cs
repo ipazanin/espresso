@@ -2,6 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+using System.Diagnostics;
 using System.Globalization;
 using Espresso.Application.DataTransferObjects;
 using Espresso.Common.Enums;
@@ -134,7 +135,7 @@ public class CreateArticlesService : ICreateArticlesService
         }
 
         var articleId = $"{itemId[(itemId.IndexOf("id=", StringComparison.Ordinal) + 3)..]}";
-        var urlSegments = itemLinks.FirstOrDefault()?.Segments ?? Array.Empty<string>();
+        var urlSegments = itemLinks.FirstOrDefault()?.Segments ?? [];
 
 #pragma warning disable CA1308 // Normalize strings to uppercase
         var firstArticleSegment = urlSegments.Length < 2 ? string.Empty : urlSegments[1].ToLowerInvariant();
@@ -171,7 +172,8 @@ public class CreateArticlesService : ICreateArticlesService
 
         switch (rssFeed.CategoryParseConfiguration.CategoryParseStrategy)
         {
-            default:
+            case CategoryParseStrategy.None:
+            case CategoryParseStrategy.FromRssFeed:
                 var articleCategoriesFromRssFeed = GetArticleCategoriesFromRssFeed(
                     articleId: articleId,
                     rssFeed: rssFeed);
@@ -184,6 +186,8 @@ public class CreateArticlesService : ICreateArticlesService
                     rssFeed: rssFeed);
                 articleCategories.UnionWith(articleCategoriesFromUrl);
                 break;
+            default:
+                throw new UnreachableException($"Unknown CategoryParseStrategy: {rssFeed.CategoryParseConfiguration.CategoryParseStrategy}");
         }
 
         return articleCategories;
@@ -202,7 +206,7 @@ public class CreateArticlesService : ICreateArticlesService
                 !string.IsNullOrEmpty(category.KeyWordsRegexPattern) &&
                 Regex.IsMatch($"{itemTitle} {itemSummary}", category.KeyWordsRegexPattern, RegexOptions.IgnoreCase))
             {
-                articleCategories.Add(new ArticleCategory(
+                _ = articleCategories.Add(new ArticleCategory(
                     id: Guid.NewGuid(),
                     articleId: articleId,
                     categoryId: category.Id,
@@ -236,7 +240,7 @@ public class CreateArticlesService : ICreateArticlesService
                     !string.IsNullOrEmpty(secondUrlSegment) &&
                     Regex.IsMatch(secondUrlSegment, rssFeedCategory.UrlRegex, RegexOptions.IgnoreCase))
                 {
-                    articleCategories.Add(new ArticleCategory(
+                    _ = articleCategories.Add(new ArticleCategory(
                         id: Guid.NewGuid(),
                         articleId: articleId,
                         categoryId: rssFeedCategory.CategoryId,
@@ -443,16 +447,17 @@ public class CreateArticlesService : ICreateArticlesService
                 var value = rssFeed.ImageUrlParseConfiguration.ElementExtensionValueType switch
                 {
                     XmlValueType.Attribute => elementExtension?.Attribute(rssFeed.ImageUrlParseConfiguration.ElementExtensionAttributeName)?.Value,
-                    _ => elementExtension?.Value,
+                    XmlValueType.Value or _ => elementExtension?.Value,
                 };
 
                 imageUrl = rssFeed.ImageUrlParseConfiguration.ElementExtensionValueParseType switch
                 {
                     ValueParseType.Html => _htmlParsingService.GetSrcAttributeFromFirstImgElement(value),
-                    _ => value,
+                    ValueParseType.FullValue or _ => value,
                 };
                 break;
-            default:
+            case ImageUrlParseStrategy.None:
+            case ImageUrlParseStrategy.SecondLinkOrFromSummary:
                 if (itemLinks?.Count() > 1)
                 {
                     imageUrl = itemLinks.ElementAt(1)?.ToString();
@@ -463,6 +468,8 @@ public class CreateArticlesService : ICreateArticlesService
                 }
 
                 break;
+            default:
+                throw new UnreachableException($"Unknown image url parse strategy: {rssFeed.ImageUrlParseConfiguration.ImageUrlParseStrategy}");
         }
 
         var shouldImageBeWebScraped = rssFeed.ImageUrlParseConfiguration.ShouldImageUrlBeWebScraped;

@@ -56,7 +56,7 @@ public class GetGroupedCategoryArticlesQueryHandler : IRequestHandler<GetGrouped
             savedArticles: savedArticles,
             firstArticleCreateDateTime: firstArticle?.CreateDateTime,
             titleSearchTerm: request.TitleSearchQuery,
-            categoryIds: new[] { request.CategoryId },
+            categoryIds: [request.CategoryId],
             newsPortalIds: newsPortalIds,
             keyWordsToFilterOut: keyWordsToFilterOut);
 
@@ -95,7 +95,7 @@ public class GetGroupedCategoryArticlesQueryHandler : IRequestHandler<GetGrouped
     {
         if (request.Skip != 0)
         {
-            return Array.Empty<GetGroupedCategoryArticlesNewsPortal>();
+            return [];
         }
 
         var newsPortals = _memoryCache.Get<IEnumerable<NewsPortal>>(

@@ -21,7 +21,7 @@ public class RssFeedItem
 
     public DateTimeOffset PublishDateTime { get; set; }
 
-    public IEnumerable<XElement> ElementExtensions { get; set; } = Enumerable.Empty<XElement>();
+    public IEnumerable<XElement> ElementExtensions { get; set; } = [];
 
     public RssFeed RssFeed { get; set; } = null!;
 }

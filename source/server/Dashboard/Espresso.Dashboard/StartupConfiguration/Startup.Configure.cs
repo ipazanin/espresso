@@ -22,7 +22,7 @@ public sealed partial class Startup
         loggerService.Log(
             eventName: "Dashboard Startup",
             logLevel: Microsoft.Extensions.Logging.LogLevel.Information,
-            namedArguments: new (string, object)[] { ("version", _dashboardConfiguration.AppConfiguration.Version) });
+            namedArguments: [("version", _dashboardConfiguration.AppConfiguration.Version)]);
 
 #pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
         memoryCacheInit.InitParserDeleter().GetAwaiter().GetResult();
@@ -30,43 +30,43 @@ public sealed partial class Startup
 
         if (_dashboardConfiguration.AppConfiguration.AppEnvironment == AppEnvironment.Local)
         {
-            app.UseDeveloperExceptionPage();
+            _ = app.UseDeveloperExceptionPage();
         }
         else
         {
-            app.UseExceptionHandler("/Error");
-            app.UseHsts();
+            _ = app.UseExceptionHandler("/Error");
+            _ = app.UseHsts();
         }
 
-        app.UseSecurityHeadersMiddleware(securityHeadersBuilder =>
+        _ = app.UseSecurityHeadersMiddleware(securityHeadersBuilder =>
         {
-            securityHeadersBuilder.AddDefaultSecurePolicy();
+            _ = securityHeadersBuilder.AddDefaultSecurePolicy();
         });
 
-        app.UseStaticFiles();
+        _ = app.UseStaticFiles();
 
-        app.UseRouting();
+        _ = app.UseRouting();
 
-        app.UseAuthentication();
-        app.UseAuthorization();
+        _ = app.UseAuthentication();
+        _ = app.UseAuthorization();
 
-        app.UseEndpoints(endpoints =>
+        _ = app.UseEndpoints(endpoints =>
         {
-            endpoints.MapControllers();
-            endpoints.MapBlazorHub();
-            endpoints.MapHealthChecks("/health/startup", new HealthCheckOptions
+            _ = endpoints.MapControllers();
+            _ = endpoints.MapBlazorHub();
+            _ = endpoints.MapHealthChecks("/health/startup", new HealthCheckOptions
             {
                 Predicate = check => check.Tags.Contains(HealthCheckConstants.StartupTag),
             });
-            endpoints.MapHealthChecks("/health/readiness", new HealthCheckOptions
+            _ = endpoints.MapHealthChecks("/health/readiness", new HealthCheckOptions
             {
                 Predicate = check => check.Tags.Contains(HealthCheckConstants.ReadinessTag),
             });
-            endpoints.MapHealthChecks("/health/liveness", new HealthCheckOptions
+            _ = endpoints.MapHealthChecks("/health/liveness", new HealthCheckOptions
             {
                 Predicate = check => check.Tags.Contains(HealthCheckConstants.LivenessTag),
             });
-            endpoints.MapFallbackToPage("/_Host");
+            _ = endpoints.MapFallbackToPage("/_Host");
         });
     }
 }

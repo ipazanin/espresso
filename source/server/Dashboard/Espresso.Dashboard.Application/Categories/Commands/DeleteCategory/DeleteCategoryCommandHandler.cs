@@ -2,7 +2,6 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-using Espresso.Dashboard.Application.Categories.Commands.UpdateCategory;
 using Espresso.Dashboard.Application.IServices;
 using Espresso.Persistence.Database;
 using MediatR;
@@ -29,7 +28,7 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
     {
         var categoryToRemove = await _espressoDatabaseContext
             .Categories
-            .FindAsync(keyValues: new object[] { request.CategoryId }, cancellationToken: cancellationToken);
+            .FindAsync(keyValues: [request.CategoryId], cancellationToken: cancellationToken);
 
         if (categoryToRemove is null)
         {

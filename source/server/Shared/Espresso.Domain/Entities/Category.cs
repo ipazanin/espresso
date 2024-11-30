@@ -77,11 +77,11 @@ public class Category
 
     public string Url { get; private set; }
 
-    public ICollection<ArticleCategory> ArticleCategories { get; private set; } = new List<ArticleCategory>();
+    public ICollection<ArticleCategory> ArticleCategories { get; private set; } = [];
 
-    public ICollection<RssFeed> RssFeeds { get; private set; } = new List<RssFeed>();
+    public ICollection<RssFeed> RssFeeds { get; private set; } = [];
 
-    public ICollection<NewsPortal> NewsPortals { get; private set; } = new List<NewsPortal>();
+    public ICollection<NewsPortal> NewsPortals { get; private set; } = [];
 
     public static Expression<Func<Category, bool>> GetAllCategoriesExceptGeneralExpression()
     {

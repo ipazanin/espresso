@@ -6,6 +6,7 @@ using Espresso.Domain.Enums.RssFeedEnums;
 using Espresso.Domain.ValueObjects.RssFeedValueObjects;
 
 #pragma warning disable RCS1170
+#pragma warning disable S1144 // Unused private types or members should be removed
 
 namespace Espresso.Domain.Entities;
 
@@ -96,9 +97,9 @@ public class RssFeed
 
     public SkipParseConfiguration SkipParseConfiguration { get; private set; }
 
-    public ICollection<RssFeedContentModifier> RssFeedContentModifiers { get; private set; } = new List<RssFeedContentModifier>();
+    public ICollection<RssFeedContentModifier> RssFeedContentModifiers { get; private set; } = [];
 
-    public ICollection<RssFeedCategory> RssFeedCategories { get; private set; } = new List<RssFeedCategory>();
+    public ICollection<RssFeedCategory> RssFeedCategories { get; private set; } = [];
 
     public int NewsPortalId { get; private set; }
 
@@ -108,7 +109,7 @@ public class RssFeed
 
     public Category? Category { get; private set; }
 
-    public ICollection<Article> Articles { get; private set; } = new List<Article>();
+    public ICollection<Article> Articles { get; private set; } = [];
 
     public bool ShouldParse()
     {

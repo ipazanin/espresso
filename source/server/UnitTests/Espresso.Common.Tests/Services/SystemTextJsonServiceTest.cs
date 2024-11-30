@@ -298,7 +298,7 @@ public class SystemTextJsonServiceTest
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             });
 
-        Assert.Throws<JsonException>(() =>
+        _ = Assert.Throws<JsonException>(() =>
         {
             var actualDeserializedObject = systemTextJsonService.Deserialize<ExampleClassWithPublicSetters>(
                 json: SerializedObject);

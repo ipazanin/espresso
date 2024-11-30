@@ -28,9 +28,9 @@ public class SortArticlesService : ISortArticlesService
 
         foreach (var (id, article) in savedArticles)
         {
-            savedArticlesArticleIdDictionary.TryAdd((article.NewsPortalId, article.Url), id);
-            savedArticlesTitleDictionary.TryAdd((article.NewsPortalId, article.Title), id);
-            savedArticlesSummaryDictionary.TryAdd((article.NewsPortalId, article.Summary), id);
+            _ = savedArticlesArticleIdDictionary.TryAdd((article.NewsPortalId, article.Url), id);
+            _ = savedArticlesTitleDictionary.TryAdd((article.NewsPortalId, article.Title), id);
+            _ = savedArticlesSummaryDictionary.TryAdd((article.NewsPortalId, article.Summary), id);
         }
 
         foreach (var article in articles)
@@ -83,10 +83,10 @@ public class SortArticlesService : ISortArticlesService
             }
             else
             {
-                uniqueArticles.TryAdd(article.Id, article);
-                articleIdArticleDictionary.TryAdd((article.NewsPortalId, article.Url), article.Id);
-                titleArticleDictionary.TryAdd((article.NewsPortalId, article.Title), article.Id);
-                summaryArticleDictionary.TryAdd((article.NewsPortalId, article.Summary), article.Id);
+                _ = uniqueArticles.TryAdd(article.Id, article);
+                _ = articleIdArticleDictionary.TryAdd((article.NewsPortalId, article.Url), article.Id);
+                _ = titleArticleDictionary.TryAdd((article.NewsPortalId, article.Title), article.Id);
+                _ = summaryArticleDictionary.TryAdd((article.NewsPortalId, article.Summary), article.Id);
             }
         }
 

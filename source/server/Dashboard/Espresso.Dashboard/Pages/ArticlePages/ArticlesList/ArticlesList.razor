@@ -2,8 +2,8 @@
 @inherits ArticlesListBase
 @using Espresso.Dashboard.Application.Articles.Queries.GetArticles
 
-<MudTable @ref="Table" ServerData="@GetTableData" Dense="@false" Hover="@false" Bordered="@false" FixedHeader="@true"
-    FixedFooter="@true" Height="600px" Striped="@true">
+<MudTable @ref="Table" T=@(GetArticlesArticle) ServerData="@(GetTableData)" Dense="@false" Hover="@false"
+    Bordered="@false" FixedHeader="@true" FixedFooter="@true" Height="600px" Striped="@true">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Articles</MudText>
         <MudSpacer />

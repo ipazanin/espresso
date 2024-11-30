@@ -2,7 +2,7 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
-namespace Espresso.Common.Services.Contracts;
+namespace Espresso.Common.Services.Contacts;
 
 /// <summary>
 /// Email service.

@@ -14,7 +14,7 @@ public record GetConfigurationRegion
 
     public string Subtitle { get; private set; } = string.Empty;
 
-    public IEnumerable<GetConfigurationNewsPortal> NewsPortals { get; private set; } = new List<GetConfigurationNewsPortal>();
+    public IEnumerable<GetConfigurationNewsPortal> NewsPortals { get; private set; } = [];
 
     private GetConfigurationRegion()
     {

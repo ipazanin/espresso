@@ -48,7 +48,7 @@ public record GetLatestArticlesArticle_1_4
     /// <summary>
     /// Gets list Of Categories article belongs to.
     /// </summary>
-    public IEnumerable<GetLatestArticlesCategory_1_4> Categories { get; private set; } = new List<GetLatestArticlesCategory_1_4>();
+    public IEnumerable<GetLatestArticlesCategory_1_4> Categories { get; private set; } = [];
 
     private GetLatestArticlesArticle_1_4()
     {

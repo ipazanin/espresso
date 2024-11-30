@@ -2,12 +2,13 @@
 //
 // © 2022 Espresso News. All rights reserved.
 
+using System.Diagnostics;
 using Espresso.Application.DataTransferObjects;
 using Espresso.Application.Extensions;
+using Espresso.Common.Constants;
 using Espresso.Common.Enums;
 using Espresso.Common.Extensions;
-using Espresso.Common.Services.Contracts;
-using Espresso.Dashboard.Application.Constants;
+using Espresso.Common.Services.Contacts;
 using Espresso.Dashboard.Application.IServices;
 using Espresso.Domain.Entities;
 using Espresso.Domain.Enums.RssFeedEnums;
@@ -88,7 +89,8 @@ public class ScrapeWebService : IScrapeWebService
                 elementTags: elementTags,
                 propertyNames: rssFeed.ImageUrlParseConfiguration.GetPropertyNames(),
                 cancellationToken: cancellationToken),
-            _ => _parseHtmlService.GetImageUrlFromAttribute(
+            ImageUrlWebScrapeType.None or
+            ImageUrlWebScrapeType.Attribute or _ => _parseHtmlService.GetImageUrlFromAttribute(
                 elementTags: elementTags,
                 attributeName: rssFeed.ImageUrlParseConfiguration.AttributeName),
         };
@@ -135,11 +137,11 @@ public class ScrapeWebService : IScrapeWebService
                 eventName: "GetImageUrlFromJsonObjectFromScriptTag Error while parsing JSON",
                 exception: exception,
                 logLevel: LogLevel.Warning,
-                namedArguments: new (string, object)[]
-                {
+                namedArguments:
+                [
                         (nameof(jsonText), jsonText),
                         (nameof(propertyNames), string.Join(", ", propertyNames)),
-                });
+                ]);
             return null;
         }
     }
@@ -155,25 +157,29 @@ public class ScrapeWebService : IScrapeWebService
             using var request = new HttpRequestMessage(HttpMethod.Get, articleUrl);
             switch (requestType)
             {
-                default:
+                case RequestType.None:
+                case RequestType.Normal:
                     {
                         using var response = await _httpClient.SendAsync(request: request, cancellationToken: cancellationToken);
-                        response.EnsureSuccessStatusCode();
+                        _ = response.EnsureSuccessStatusCode();
                         var pageContent = await response.Content.ReadAsStringAsync(cancellationToken);
                         return pageContent;
                     }
 
                 case RequestType.Browser:
                     {
-                        request.AddBrowserHeadersToHttpRequestMessage();
+                        _ = request.AddBrowserHeadersToHttpRequestMessage();
                         using var response = await _httpClient.SendAsync(request: request, cancellationToken: cancellationToken);
-                        response.EnsureSuccessStatusCode();
+                        _ = response.EnsureSuccessStatusCode();
                         using var responseStream = await response.Content.ReadAsStreamAsync(cancellationToken);
                         using var decompressedStream = new GZipStream(responseStream, CompressionMode.Decompress);
                         using var streamReader = new StreamReader(decompressedStream);
                         var pageContent = await streamReader.ReadToEndAsync(cancellationToken);
                         return pageContent;
                     }
+
+                default:
+                    throw new UnreachableException($"RequestType {requestType} is not supported.");
             }
         }
         catch (Exception exception)

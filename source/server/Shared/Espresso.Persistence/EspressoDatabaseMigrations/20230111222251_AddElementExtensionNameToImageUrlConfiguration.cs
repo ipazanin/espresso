@@ -14,15 +14,15 @@ public partial class AddElementExtensionNameToImageUrlConfiguration : Migration
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder.DropColumn(
+        _ = migrationBuilder.DropColumn(
             name: "ImageUrlParseConfiguration_ElementExtensionIndex",
             table: "RssFeeds");
 
-        migrationBuilder.DropColumn(
+        _ = migrationBuilder.DropColumn(
             name: "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute",
             table: "RssFeeds");
 
-        migrationBuilder.AddColumn<string>(
+        _ = migrationBuilder.AddColumn<string>(
             name: "ImageUrlParseConfiguration_ElementExtensionAttributeName",
             table: "RssFeeds",
             type: "character varying(100)",
@@ -30,7 +30,7 @@ public partial class AddElementExtensionNameToImageUrlConfiguration : Migration
             nullable: false,
             defaultValue: string.Empty);
 
-        migrationBuilder.AddColumn<string>(
+        _ = migrationBuilder.AddColumn<string>(
             name: "ImageUrlParseConfiguration_ElementExtensionName",
             table: "RssFeeds",
             type: "character varying(100)",
@@ -42,21 +42,21 @@ public partial class AddElementExtensionNameToImageUrlConfiguration : Migration
     /// <inheritdoc />
     protected override void Down(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder.DropColumn(
+        _ = migrationBuilder.DropColumn(
             name: "ImageUrlParseConfiguration_ElementExtensionAttributeName",
             table: "RssFeeds");
 
-        migrationBuilder.DropColumn(
+        _ = migrationBuilder.DropColumn(
             name: "ImageUrlParseConfiguration_ElementExtensionName",
             table: "RssFeeds");
 
-        migrationBuilder.AddColumn<int>(
+        _ = migrationBuilder.AddColumn<int>(
             name: "ImageUrlParseConfiguration_ElementExtensionIndex",
             table: "RssFeeds",
             type: "integer",
             nullable: true);
 
-        migrationBuilder.AddColumn<bool>(
+        _ = migrationBuilder.AddColumn<bool>(
             name: "ImageUrlParseConfiguration_IsSavedInHtmlElementWithSrcAttribute",
             table: "RssFeeds",
             type: "boolean",

@@ -24,7 +24,7 @@ public record SendArticlesNotificationsCommand : IRequest
     /// </summary>
     public DeviceType DeviceType { get; init; }
 
-    public IEnumerable<Guid> CreatedArticleIds { get; init; } = new List<Guid>();
+    public IEnumerable<Guid> CreatedArticleIds { get; init; } = [];
 
-    public IEnumerable<Guid> UpdatedArticleIds { get; init; } = new List<Guid>();
+    public IEnumerable<Guid> UpdatedArticleIds { get; init; } = [];
 }

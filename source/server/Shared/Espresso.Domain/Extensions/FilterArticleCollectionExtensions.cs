@@ -11,8 +11,8 @@ namespace Espresso.Domain.Extensions;
 
 public static class FilterArticleCollectionExtensions
 {
-    public static IEnumerable<string> BannedKeywords => new List<string>
-            {
+    public static IEnumerable<string> BannedKeywords =>
+            [
                 "virus",
                 "pandemij",
                 "koron",
@@ -44,7 +44,7 @@ public static class FilterArticleCollectionExtensions
                 "respirator",
                 "bolest",
                 "ambulant",
-            };
+            ];
 
     public static IEnumerable<Article> FilterArticlesWithCoronaVirusContentForIosRelease(
         this IEnumerable<Article> articles,
@@ -201,7 +201,7 @@ public static class FilterArticleCollectionExtensions
                 }
 
                 articles.Add(firstArticle);
-                filteredArticlesDictionary.Remove(firstArticleId);
+                _ = filteredArticlesDictionary.Remove(firstArticleId);
             }
 
             var secondArticleIds = article.SecondSimilarArticles.Select(secondSimilarArticle => secondSimilarArticle.SecondArticleId);
@@ -213,7 +213,7 @@ public static class FilterArticleCollectionExtensions
                 }
 
                 articles.Add(secondArticle);
-                filteredArticlesDictionary.Remove(secondArticleId);
+                _ = filteredArticlesDictionary.Remove(secondArticleId);
             }
 
             groupedArticles.Add(articles);

@@ -4,7 +4,7 @@
 
 using Espresso.Application.DataTransferObjects.CategoryDataTransferObjects;
 using Espresso.Application.DataTransferObjects.PagingDataTransferObjects;
-using Espresso.Dashboard.Application.Categories.Commands.UpdateCategory;
+using Espresso.Dashboard.Application.Categories.Commands.DeleteCategory;
 using Espresso.Dashboard.Application.Categories.Queries.GetCategories;
 using MediatR;
 using Microsoft.AspNetCore.Components;
@@ -25,7 +25,7 @@ public class CategoriesListBase : ComponentBase
     [Inject]
     private IDialogService DialogService { get; init; } = null!;
 
-    protected async Task<TableData<CategoryDto>> GetTableData(TableState tableState)
+    protected async Task<TableData<CategoryDto>> GetTableData(TableState tableState, CancellationToken cancellationToken)
     {
         var pagingParameters = new PagingParameters
         {
@@ -34,7 +34,7 @@ public class CategoriesListBase : ComponentBase
         };
 
         var request = new GetCategoriesQuery(pagingParameters: pagingParameters);
-        var getArticlesResponse = await Sender.Send(request);
+        var getArticlesResponse = await Sender.Send(request, cancellationToken);
 
         var tableData = new TableData<CategoryDto>
         {

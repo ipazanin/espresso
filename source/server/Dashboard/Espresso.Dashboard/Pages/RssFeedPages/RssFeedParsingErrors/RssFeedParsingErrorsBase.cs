@@ -15,7 +15,7 @@ public class RssFeedParsingErrorsBase : ComponentBase, IDisposable
 {
     private bool _disposedValue;
 
-    protected IEnumerable<ParsingErrorMessageDto> ParsingMessages { get; private set; } = Enumerable.Empty<ParsingErrorMessageDto>();
+    protected IEnumerable<ParsingErrorMessageDto> ParsingMessages { get; private set; } = [];
 
     protected string SearchString { get; set; } = string.Empty;
 
@@ -26,6 +26,20 @@ public class RssFeedParsingErrorsBase : ComponentBase, IDisposable
     {
         Dispose(disposing: true);
         GC.SuppressFinalize(this);
+    }
+
+    protected static Color GetColorFromLogLevel(LogLevel logLevel)
+    {
+        return logLevel switch
+        {
+            LogLevel.Error or LogLevel.Critical => Color.Error,
+            LogLevel.Warning => Color.Warning,
+            LogLevel.Trace or
+            LogLevel.Debug or
+            LogLevel.Information or
+            LogLevel.None or
+            _ => Color.Info,
+        };
     }
 
     protected virtual void Dispose(bool disposing)
@@ -51,20 +65,9 @@ public class RssFeedParsingErrorsBase : ComponentBase, IDisposable
     /// <inheritdoc/>
     protected override void OnInitialized()
     {
-        ParsingMessages = ParsingMessagesService
+        ParsingMessages = [.. ParsingMessagesService
             .GetMessages()
-            .OrderByDescending(message => message.Created)
-            .ToArray();
-    }
-
-    protected Color GetColorFromLogLevel(LogLevel logLevel)
-    {
-        return logLevel switch
-        {
-            LogLevel.Error or LogLevel.Critical => Color.Error,
-            LogLevel.Warning => Color.Warning,
-            _ => Color.Info,
-        };
+            .OrderByDescending(message => message.Created)];
     }
 
     protected void OnSearch(string searchValue)

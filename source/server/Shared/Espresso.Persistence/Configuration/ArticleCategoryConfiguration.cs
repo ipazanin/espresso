@@ -16,12 +16,12 @@ public class ArticleCategoryConfiguration : IEntityTypeConfiguration<ArticleCate
     /// <inheritdoc/>
     public void Configure(EntityTypeBuilder<ArticleCategory> builder)
     {
-        builder.HasOne(articleCategory => articleCategory.Article)
+        _ = builder.HasOne(articleCategory => articleCategory.Article)
             .WithMany(article => article!.ArticleCategories)
             .OnDelete(DeleteBehavior.Cascade)
             .HasForeignKey(articleCategory => articleCategory.ArticleId);
 
-        builder.HasOne(articleCategory => articleCategory.Category)
+        _ = builder.HasOne(articleCategory => articleCategory.Category)
             .WithMany(category => category!.ArticleCategories)
             .OnDelete(DeleteBehavior.Cascade)
             .HasForeignKey(articleCategory => articleCategory.CategoryId);

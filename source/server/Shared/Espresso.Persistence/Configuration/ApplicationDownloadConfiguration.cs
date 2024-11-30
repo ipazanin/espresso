@@ -16,14 +16,14 @@ public class ApplicationDownloadConfiguration : IEntityTypeConfiguration<Applica
     /// <inheritdoc/>
     public void Configure(EntityTypeBuilder<ApplicationDownload> builder)
     {
-        builder.Property(applicationDownload => applicationDownload.WebApiVersion)
+        _ = builder.Property(applicationDownload => applicationDownload.WebApiVersion)
             .HasMaxLength(ApplicationDownload.WebApiVersionMaxLenght);
 
-        builder.Property(applicationDownload => applicationDownload.MobileAppVersion)
+        _ = builder.Property(applicationDownload => applicationDownload.MobileAppVersion)
             .HasMaxLength(ApplicationDownload.MobileAppVersionMaxLenght);
 
-        builder.Property(applicationDownload => applicationDownload.MobileDeviceType);
+        _ = builder.Property(applicationDownload => applicationDownload.MobileDeviceType);
 
-        builder.Property(applicationDownload => applicationDownload.DownloadedTime);
+        _ = builder.Property(applicationDownload => applicationDownload.DownloadedTime);
     }
 }

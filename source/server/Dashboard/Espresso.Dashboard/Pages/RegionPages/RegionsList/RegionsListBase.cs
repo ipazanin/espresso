@@ -25,7 +25,7 @@ public class RegionsListBase : ComponentBase
     [Inject]
     private IDialogService DialogService { get; init; } = null!;
 
-    protected async Task<TableData<RegionDto>> GetTableData(TableState tableState)
+    protected async Task<TableData<RegionDto>> GetTableData(TableState tableState, CancellationToken cancellationToken)
     {
         var pagingParameters = new PagingParameters
         {
@@ -34,7 +34,7 @@ public class RegionsListBase : ComponentBase
         };
 
         var request = new GetRegionsQuery(pagingParameters: pagingParameters);
-        var response = await Sender.Send(request);
+        var response = await Sender.Send(request, cancellationToken);
 
         var tableData = new TableData<RegionDto>
         {

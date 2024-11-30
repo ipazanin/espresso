@@ -84,7 +84,7 @@ public class GroupSimilarArticlesService : IGroupSimilarArticlesService
             foreach (var similarArticle in articlesSimilarArticles)
             {
                 similarArticles.Enqueue(similarArticle);
-                groupedArticleIds.Add((similarArticle.FirstArticleId, similarArticle.SecondArticleId));
+                _ = groupedArticleIds.Add((similarArticle.FirstArticleId, similarArticle.SecondArticleId));
             }
 
             var namedArguments = new (string argumentName, object argumentValue)[]
@@ -138,7 +138,7 @@ public class GroupSimilarArticlesService : IGroupSimilarArticlesService
             foreach (var secondArticleWord in secondArticleWords)
             {
                 var currentArticleTitleSimilarityScore = CalculateSimilarityScoreBetweenTwoWords(firstArticleWord, secondArticleWord);
-                if (currentArticleTitleSimilarityScore == MaxSimilarityScore)
+                if (Math.Abs(currentArticleTitleSimilarityScore - MaxSimilarityScore) < double.Epsilon)
                 {
                     bestSecondArticleTitleMatchScore = MaxSimilarityScore;
                     break;

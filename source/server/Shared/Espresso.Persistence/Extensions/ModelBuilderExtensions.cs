@@ -47,7 +47,7 @@ public static class ModelBuilderExtensions
                 genericArgumentAndConfigurationObject =>
                     applyConfigurationMethodInfo
                         .MakeGenericMethod(genericArgumentAndConfigurationObject.genericArgument)
-                        .Invoke(modelBuilder, new[] { genericArgumentAndConfigurationObject.configurationObject }))
+                        .Invoke(modelBuilder, [genericArgumentAndConfigurationObject.configurationObject]))
             .ToList();
     }
 }

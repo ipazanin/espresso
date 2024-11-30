@@ -26,23 +26,25 @@ public class RssFeedsListBase : ComponentBase
     [Inject]
     private IDialogService DialogService { get; init; } = null!;
 
-    protected async Task<TableData<GetRssFeedsQueryRssFeed>> GetTableData(TableState tableState)
+    protected async Task<TableData<GetRssFeedsQueryRssFeed>> GetTableData(TableState tableState, CancellationToken cancellationToken)
     {
         var pagingParameters = new PagingParameters
         {
             CurrentPage = tableState.Page + 1,
             PageSize = tableState.PageSize,
             SearchString = SearchString,
-            SortColumn = tableState.SortLabel,
+            SortColumn = tableState.SortLabel ?? string.Empty,
             OrderType = tableState.SortDirection switch
             {
                 SortDirection.Ascending => OrderType.Ascending,
+                SortDirection.None => OrderType.Descending,
+                SortDirection.Descending => OrderType.Descending,
                 _ => OrderType.Descending,
             },
         };
 
         var request = new GetRssFeedsQuery(pagingParameters: pagingParameters);
-        var response = await Sender.Send(request);
+        var response = await Sender.Send(request, cancellationToken);
 
         var tableData = new TableData<GetRssFeedsQueryRssFeed>
         {

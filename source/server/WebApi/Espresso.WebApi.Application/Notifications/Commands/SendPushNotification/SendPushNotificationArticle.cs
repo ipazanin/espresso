@@ -47,7 +47,7 @@ public record SendPushNotificationArticle
     /// <summary>
     /// Gets list Of Categories article belongs to.
     /// </summary>
-    public IEnumerable<SendPushNotificationCategory> Categories { get; private set; } = new List<SendPushNotificationCategory>();
+    public IEnumerable<SendPushNotificationCategory> Categories { get; private set; } = [];
 
     private SendPushNotificationArticle()
     {

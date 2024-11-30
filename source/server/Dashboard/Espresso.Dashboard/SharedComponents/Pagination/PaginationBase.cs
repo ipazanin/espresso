@@ -19,7 +19,13 @@ public class PaginationBase : ComponentBase
     [Parameter]
     public EventCallback<int> SelectedPage { get; set; }
 
-    protected IReadOnlyList<PaginationLink> PagingLinks { get; set; } = Array.Empty<PaginationLink>();
+    protected IReadOnlyList<PaginationLink> PagingLinks { get; set; } = [];
+
+    protected static string GetClass(PaginationLink link)
+    {
+        var cssClass = "page-item " + (link.Enabled ? " " : "disabled ") + (link.Active ? "active" : string.Empty);
+        return cssClass;
+    }
 
     protected override void OnInitialized()
     {
@@ -50,17 +56,11 @@ public class PaginationBase : ComponentBase
         CreatePaginationLinks();
     }
 
-    protected string GetClass(PaginationLink link)
-    {
-        var cssClass = "page-item " + (link.Enabled ? " " : "disabled ") + (link.Active ? "active" : string.Empty);
-        return cssClass;
-    }
-
     private void CreatePaginationLinks()
     {
         var pagingLinks = new List<PaginationLink>
             {
-                new PaginationLink(
+                new(
                     page: PagingMetadata!.CurrentPage - 1,
                     enabled: PagingMetadata.HasPrevious(),
                     text: "Previous",

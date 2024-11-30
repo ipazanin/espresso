@@ -7,9 +7,9 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetLatestArticles_1_4;
 public record GetLatestArticlesQueryResponse_1_4
 #pragma warning restore S101 // Types should be named in PascalCase
 {
-    public IEnumerable<GetLatestArticlesArticle_1_4> Articles { get; init; } = new List<GetLatestArticlesArticle_1_4>();
+    public IEnumerable<GetLatestArticlesArticle_1_4> Articles { get; init; } = [];
 
-    public IEnumerable<GetLatestArticlesNewsPortal_1_4> NewNewsPortals { get; init; } = new List<GetLatestArticlesNewsPortal_1_4>();
+    public IEnumerable<GetLatestArticlesNewsPortal_1_4> NewNewsPortals { get; init; } = [];
 
     public int NewNewsPortalsPosition { get; init; }
 }
