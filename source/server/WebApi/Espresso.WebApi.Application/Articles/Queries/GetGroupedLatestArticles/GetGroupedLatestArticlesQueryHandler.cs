@@ -148,7 +148,8 @@ public class GetGroupedLatestArticlesQueryHandler : IRequestHandler<GetGroupedLa
             .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
             .FilterTrendingArticles(
                 maxAgeOfTrendingArticle: _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfTrendingArticle,
-                articleCreateDateTime: null)
+                articleCreateDateTime: null,
+                categoryId: null)
             .OrderArticlesByTrendingScore()
             .Take(trendingArticlesTake)
             .OrderArticlesByCategory(categoryIds);

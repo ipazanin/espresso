@@ -468,12 +468,14 @@ public class ArticlesController : ApiController
     /// </remarks>
     /// <param name="basicInformationsHeaderParameters"></param>
     /// <param name="articlePaginationParameters">Parameters used for pagination.</param>
+    /// <param name="categoryId">Category to filter, leave empty if all categories are allowed.</param>
+    /// <param name="maxAgeOfTrendingArticleInHours">Max age of article that will be served in hours.</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Response object containing articles.</returns>
     /// <response code="200">Response object containing articles.</response>
     /// <response code="400">If validation fails.</response>
     /// <response code="401">If API Key is invalid or missing.</response>
-    /// <response code="403">If API Key is forbiden from requested resource.</response>
+    /// <response code="403">If API Key is forbidden from requested resource.</response>
     /// <response code="500">If unhandled exception occurred.</response>
     [Produces(MimeTypeConstants.Json)]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetTrendingArticlesQueryResponse))]
@@ -481,6 +483,7 @@ public class ArticlesController : ApiController
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ExceptionDto))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionDto))]
+    [ApiVersion("2.4")]
     [ApiVersion("1.4")]
     [ApiVersion("1.3")]
     [ApiVersion("1.2")]
@@ -490,6 +493,8 @@ public class ArticlesController : ApiController
     public async Task<IActionResult> GetTrendingArticles(
         [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,
         [FromQuery] ArticlePaginationParameters articlePaginationParameters,
+        [FromQuery] int? categoryId,
+        [FromQuery] int? maxAgeOfTrendingArticleInHours,
         CancellationToken cancellationToken)
     {
         var response = await Sender.Send(
@@ -501,6 +506,8 @@ public class ArticlesController : ApiController
                 TargetedApiVersion = basicInformationsHeaderParameters.EspressoWebApiVersion,
                 ConsumerVersion = basicInformationsHeaderParameters.Version,
                 DeviceType = basicInformationsHeaderParameters.DeviceType,
+                CategoryId = categoryId,
+                MaxAgeOfTrendingArticleInHours = maxAgeOfTrendingArticleInHours,
             },
             cancellationToken: cancellationToken);
 

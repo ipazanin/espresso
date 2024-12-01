@@ -119,7 +119,7 @@ public class ConfigurationController : ApiController
         Duration = 12 * 60 * 60,
         Location = ResponseCacheLocation.Any)]
     [HttpGet]
-    [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole)]
+    [Authorize(Roles = ApiKey.DevMobileAppRole + "," + ApiKey.MobileAppRole + "," + ApiKey.WebAppRole)]
     [Route("api/configuration")]
     public async Task<IActionResult> GetConfiguration(
         [FromHeader] BasicInformationsHeaderParameters basicInformationsHeaderParameters,

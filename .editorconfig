@@ -700,6 +700,9 @@ dotnet_diagnostic.S6934.severity = none
 # S6964
 dotnet_diagnostic.S6964.severity = none
 
+# SA1206
+dotnet_diagnostic.SA1206.severity = none
+
 ######################################################
 #           Code Documentation Analysers End
 ######################################################

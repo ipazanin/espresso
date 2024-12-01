@@ -175,7 +175,8 @@ public class GetArticlesQueryHandler_2_0 : IRequestHandler<GetLatestArticlesQuer
             .FilterArticlesContainingKeyWords(keyWordsToFilterOut)
             .FilterTrendingArticles(
                 maxAgeOfTrendingArticle: _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfTrendingArticle,
-                articleCreateDateTime: null)
+                articleCreateDateTime: null,
+                categoryId: null)
             .OrderArticlesByTrendingScore()
             .Take(trendingArticlesTake)
             .OrderArticlesByCategory(categoryIds);

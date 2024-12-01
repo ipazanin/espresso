@@ -145,7 +145,8 @@ public static class FilterArticleCollectionExtensions
     public static IEnumerable<Article> FilterTrendingArticles(
         this IEnumerable<Article> articles,
         TimeSpan maxAgeOfTrendingArticle,
-        DateTimeOffset? articleCreateDateTime)
+        DateTimeOffset? articleCreateDateTime,
+        int? categoryId)
     {
         var maxTrendingDateTime = DateTimeOffset.UtcNow - maxAgeOfTrendingArticle;
 
@@ -154,11 +155,47 @@ public static class FilterArticleCollectionExtensions
         var filteredArticles = articles
             .Where(
                 article =>
-                    article.EditorConfiguration?.IsHidden == false &&
-                    article.EditorConfiguration?.IsFeatured != false &&
-                    article.CreateDateTime <= articleMinimumAge &&
-                    article.PublishDateTime > maxTrendingDateTime &&
-                    !article.ArticleCategories.Any(articleCategory => articleCategory.Category!.CategoryType == CategoryType.Local));
+                {
+                    var isArticleHidden = article.EditorConfiguration?.IsHidden == false;
+                    if (!isArticleHidden)
+                    {
+                        return false;
+                    }
+
+                    var isArticleFeatured = article.EditorConfiguration?.IsFeatured != false;
+                    if (!isArticleFeatured)
+                    {
+                        return false;
+                    }
+
+                    var isArticleOldEnough = article.CreateDateTime <= articleMinimumAge;
+                    if (!isArticleOldEnough)
+                    {
+                        return false;
+                    }
+
+                    var isArticlePublished = article.PublishDateTime > maxTrendingDateTime;
+                    if (!isArticlePublished)
+                    {
+                        return false;
+                    }
+
+                    var isCategoryIdSpecified = categoryId is not null;
+
+                    if (isCategoryIdSpecified)
+                    {
+                        return article.ArticleCategories.Any(articleCategory => articleCategory.CategoryId == categoryId);
+                    }
+
+                    var isArticleLocal = !article.ArticleCategories.Any(articleCategory => articleCategory.Category!.CategoryType == CategoryType.Local);
+
+                    if (!isArticleLocal)
+                    {
+                        return false;
+                    }
+
+                    return true;
+                });
 
         return filteredArticles;
     }

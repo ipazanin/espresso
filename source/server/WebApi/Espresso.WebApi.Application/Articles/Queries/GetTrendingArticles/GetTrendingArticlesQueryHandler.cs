@@ -35,11 +35,18 @@ public class GetTrendingArticlesQueryHandler : IRequestHandler<GetTrendingArticl
         var firstArticle = articles.FirstOrDefault(
             article => article.Id.Equals(request.FirstArticleId));
 
+        var maxAgeOfTrendingArticle = request.MaxAgeOfTrendingArticleInHours switch
+        {
+            not null => TimeSpan.FromHours(request.MaxAgeOfTrendingArticleInHours.Value),
+            _ => _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfTrendingArticle
+        };
+
         var articleDtos = articles
             .FilterTrendingArticles(
-                maxAgeOfTrendingArticle: _settingProvider.LatestSetting.ArticleSetting.MaxAgeOfTrendingArticle,
-                articleCreateDateTime: firstArticle?.CreateDateTime)
-            .OrderArticlesByTrendingScore()
+                maxAgeOfTrendingArticle: maxAgeOfTrendingArticle,
+                articleCreateDateTime: firstArticle?.CreateDateTime,
+                categoryId: request.CategoryId)
+            .OrderArticlesByNumberOfClicks()
             .Skip(request.Skip)
             .Take(request.Take)
             .Select(GetTrendingArticlesArticle.GetProjection().Compile());

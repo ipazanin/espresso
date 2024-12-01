@@ -8,7 +8,9 @@ namespace Espresso.WebApi.Application.Articles.Queries.GetTrendingArticles;
 
 public record GetTrendingArticlesQuery : Request<GetTrendingArticlesQueryResponse>
 {
-    public int Take { get; init; }
-    public int Skip { get; init; }
-    public Guid? FirstArticleId { get; init; }
+    public required int Take { get; init; }
+    public required int Skip { get; init; }
+    public required Guid? FirstArticleId { get; init; }
+    public required int? CategoryId { get; init; }
+    public required int? MaxAgeOfTrendingArticleInHours { get; init; }
 }

@@ -106,4 +106,12 @@ public static class OrderArticleCollectionExtensions
 
         return orderedArticles;
     }
+
+    public static IOrderedEnumerable<Article> OrderArticlesByNumberOfClicks(
+    this IEnumerable<Article> articles)
+    {
+        var orderedArticles = articles.OrderByDescending(article => article.NumberOfClicks);
+
+        return orderedArticles;
+    }
 }
