@@ -9,11 +9,11 @@
 # newline). Without it, terraform plan would show perpetual drift.
 
 resource "google_compute_instance_template" "webapi" {
-  # TODO: same name_prefix + create_before_destroy hardening as the dashboard
-  # template below. Today the fragility is masked by the MIG's SUBSTITUTE
-  # update policy (max_surge_fixed = 1), but the underlying immutable-template
-  # rename collision still exists on any future env-var bump or image change.
-  name         = "espresso-web-api-vm-instance-template"
+  # name_prefix + create_before_destroy (see lifecycle block at the bottom)
+  # so future template changes (image bumps, env var updates, metadata
+  # changes) roll forward without name collisions. Instance templates are
+  # immutable in GCP — any change forces recreation.
+  name_prefix  = "espresso-web-api-vm-instance-template-"
   machine_type = "e2-micro"
 
   tags = ["http-server", "https-server", "lb-health-check"]
@@ -44,6 +44,7 @@ resource "google_compute_instance_template" "webapi" {
   metadata = {
     google-logging-enabled = "true"
     gce-container-declaration = trimsuffix(templatefile("${path.module}/templates/webapi-container-declaration.yaml.tpl", {
+      webapi_image_tag                  = var.webapi_image_tag
       api_key_android                   = var.api_key_android
       api_key_ios                       = var.api_key_ios
       api_key_web                       = var.api_key_web
@@ -85,6 +86,10 @@ resource "google_compute_instance_template" "webapi" {
   reservation_affinity {
     type = "ANY_RESERVATION"
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "google_compute_instance_template" "dashboard" {
@@ -123,6 +128,7 @@ resource "google_compute_instance_template" "dashboard" {
   metadata = {
     google-logging-enabled = "true"
     gce-container-declaration = trimsuffix(templatefile("${path.module}/templates/dashboard-container-declaration.yaml.tpl", {
+      dashboard_image_tag                    = var.dashboard_image_tag
       api_key_parser                         = var.api_key_parser
       espresso_db_connection_string          = var.espresso_db_connection_string
       espresso_identity_db_connection_string = var.espresso_identity_db_connection_string

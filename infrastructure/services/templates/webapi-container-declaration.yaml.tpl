@@ -1,7 +1,7 @@
 spec:
   containers:
   - name: espresso-web-api-vm-instance-template
-    image: europe-docker.pkg.dev/espresso-8c4ac/espresso/espresso-webapi:latest
+    image: europe-docker.pkg.dev/espresso-8c4ac/espresso/espresso-webapi:${webapi_image_tag}
     env:
     - name: ASPNETCORE_ENVIRONMENT
       value: production

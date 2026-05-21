@@ -1,7 +1,7 @@
 spec:
   containers:
   - name: espresso-dashboard-instance-template
-    image: europe-docker.pkg.dev/espresso-8c4ac/espresso/espresso-dashboard
+    image: europe-docker.pkg.dev/espresso-8c4ac/espresso/espresso-dashboard:${dashboard_image_tag}
     env:
     - name: ASPNETCORE_ENVIRONMENT
       value: production

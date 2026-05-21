@@ -25,6 +25,16 @@ variable "dashboard_zone" {
   type        = string
 }
 
+variable "webapi_image_tag" {
+  description = "Artifact Registry image tag for the webapi container (e.g. \"2.4.5\"). Bumped per release for rollback-capable deploys."
+  type        = string
+}
+
+variable "dashboard_image_tag" {
+  description = "Artifact Registry image tag for the dashboard container (e.g. \"2.4.5\"). Bumped per release for rollback-capable deploys."
+  type        = string
+}
+
 # -----------------------------------------------------------------------------
 # Sensitive configuration.
 #
