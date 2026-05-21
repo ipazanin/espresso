@@ -31,4 +31,8 @@ resource "google_compute_health_check" "liveness" {
     port         = 80
     request_path = "/health/liveness"
   }
+
+  log_config {
+    enable = false
+  }
 }

@@ -39,6 +39,36 @@ gcloud compute instance-templates describe espresso-dashboard-instance-template
 
 A future hardening pass will migrate these to Secret Manager and remove the gitignored file. Tracked as Phase 2 work — requires .NET app changes to use `Google.Cloud.SecretManager.V1` since COS does not natively inject SM values into container env vars.
 
+### Secret exposure surface beyond git
+
+Keeping `secrets.auto.tfvars` out of git is **not** the whole story. As long as secrets are values in Terraform state, they are also accessible via:
+
+- **`terraform show` / `terraform output`** — prints the GCS state file contents in cleartext. IAM on the state bucket `espresso-8c4ac-tfstate` is therefore equivalent to access to these secrets. Treat that bucket's grants the same way you'd treat Secret Manager grants.
+- **`plan.out` files** — `terraform plan -out plan.out` embeds the secret values in the binary plan. `plan.out` is gitignored, but do not attach it to issues, share over Slack, or upload as a CI artifact.
+- **New outputs** — if you add a `google_*` resource that surfaces a secret, the output block must be declared `sensitive = true` or the value will print to terminals and CI logs.
+- **Literal `$` in secret values** — passes through `templatefile()`, so a `$` in a rotated password must be doubled to `$$`. See note in `secrets.auto.tfvars.example`.
+
+## Rolling out template changes — what to expect
+
+Updating an instance template (image bump, env-var change) triggers a MIG-driven instance replacement. The two MIGs behave differently:
+
+- **webapi** — `update_policy.replacement_method = SUBSTITUTE` with `max_surge_fixed = 1`. A second instance comes up alongside the old one and traffic shifts when health checks pass. Effectively zero-downtime.
+- **dashboard** — `update_policy.replacement_method = RECREATE` with `max_surge_fixed = 0` and `max_unavailable_fixed = 1`. The existing instance is destroyed *before* the replacement boots. Combined with `auto_healing_policies.initial_delay_sec = 180` on the liveness check, the dashboard is dark for **2–3 minutes** during any template change. This is faithful to live config — recreating in place is constrained by the single static external IP attached to the dashboard VM. Do dashboard rollouts in low-traffic windows.
+
+## Adding or changing SSL-cert domains
+
+`google_compute_managed_ssl_certificate.espressonews` carries both `prevent_destroy = true` and `create_before_destroy = true`. Adding a domain (e.g. a second subdomain) is non-trivial because managed certificates are immutable on `managed.domains` — the resource must be replaced.
+
+Procedure:
+
+1. Drop `prevent_destroy = true` on the resource (commit, then `terraform plan` to verify the replacement is what you expect).
+2. Update `managed.domains`. `create_before_destroy` ensures the new cert is provisioned first.
+3. **Critical**: managed cert provisioning blocks on DNS validation; the new cert won't go ACTIVE until DNS records resolve for all listed domains. The old cert keeps serving until then.
+4. After the new cert is ACTIVE, `terraform apply` removes the old one. The `target_https_proxy.espresso.ssl_certificates` list is automatically updated by TF as part of the same apply.
+5. Restore `prevent_destroy = true`.
+
+DNS for `espressonews.co` lives outside GCP (no Cloud DNS zones in this project), so add records there before applying.
+
 ## Known cosmetic diff
 
 `terraform plan` will permanently report `0 to add, 2 to change, 0 to destroy` against the two instance templates with the warning:
