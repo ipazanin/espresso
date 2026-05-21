@@ -42,16 +42,18 @@ bq query --project_id=espresso-8c4ac --use_legacy_sql=false --format=pretty \
 
 ## Artifact Registry cleanup policies
 
-Defined in `artifact_registry.tf` and staged in **dry-run** mode (`cleanup_policy_dry_run = true`). GCP evaluates them and logs decisions to Cloud Logging without acting. Inspect 48h of dry-run output to confirm only stale untagged blobs are targeted:
+Defined in `artifact_registry.tf`. Active (not dry-run) — GCP runs the rules automatically on a daily-ish schedule. Released semver tags and `:latest` are protected forever; untagged blobs older than 30 days are reaped. No manual upkeep needed.
+
+To audit what the policy has acted on:
 
 ```sh
 gcloud logging read \
   'resource.type="artifactregistry.googleapis.com/Repository" AND logName:"cleanup-policy"' \
-  --project=espresso-8c4ac --limit=100 --freshness=2d \
+  --project=espresso-8c4ac --limit=100 --freshness=7d \
   --format='value(timestamp,jsonPayload.message)'
 ```
 
-When clean, flip `cleanup_policy_dry_run = false` in a follow-up apply.
+To temporarily pause cleanup (e.g. before a forensic investigation of dangling images), flip `cleanup_policy_dry_run = true` and apply.
 
 ## Cloud SQL backups
 

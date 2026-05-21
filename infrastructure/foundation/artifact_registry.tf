@@ -3,17 +3,17 @@
 # Hosts the espresso-webapi and espresso-dashboard Docker images consumed by
 # the COS instance templates in the services stack.
 #
-# Cleanup policies are staged in dry-run mode: GCP evaluates them and logs
-# decisions to Cloud Logging without acting. Inspect 48h of dry-run logs, then
-# flip `cleanup_policy_dry_run = false` in a follow-up apply to make deletes
-# active. See `gcloud logging read` query in README.
+# Cleanup policies run automatically on a GCP-managed schedule (roughly daily).
+# Released semver tags and `:latest` are protected forever; untagged blobs
+# older than 30 days are reaped. To pause cleanup (e.g. before a risky
+# investigation), flip `cleanup_policy_dry_run = true` and apply.
 
 resource "google_artifact_registry_repository" "espresso" {
   location      = "europe"
   repository_id = "espresso"
   format        = "DOCKER"
 
-  cleanup_policy_dry_run = true
+  cleanup_policy_dry_run = false
 
   docker_config {
     immutable_tags = false
