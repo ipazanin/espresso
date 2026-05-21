@@ -8,5 +8,5 @@
 # (zones, project IDs, server URLs) easy to review without bot-commit noise
 # polluting the file's blame history.
 
-webapi_image_tag    = "2.4.5"
-dashboard_image_tag = "2.4.5"
+webapi_image_tag    = "2.4.8"
+dashboard_image_tag = "2.4.8"
