@@ -9,6 +9,10 @@
 # newline). Without it, terraform plan would show perpetual drift.
 
 resource "google_compute_instance_template" "webapi" {
+  # TODO: same name_prefix + create_before_destroy hardening as the dashboard
+  # template below. Today the fragility is masked by the MIG's SUBSTITUTE
+  # update policy (max_surge_fixed = 1), but the underlying immutable-template
+  # rename collision still exists on any future env-var bump or image change.
   name         = "espresso-web-api-vm-instance-template"
   machine_type = "e2-micro"
 
@@ -84,7 +88,11 @@ resource "google_compute_instance_template" "webapi" {
 }
 
 resource "google_compute_instance_template" "dashboard" {
-  name         = "espresso-dashboard-instance-template"
+  # Using name_prefix (not fixed name) + create_before_destroy in the lifecycle
+  # block below so future template changes (image bumps, env var updates,
+  # metadata changes) can roll forward without name collisions. Instance
+  # templates are immutable in GCP — any change forces recreation.
+  name_prefix  = "espresso-dashboard-instance-template-"
   machine_type = "e2-micro"
 
   tags = ["http-server", "https-server", "lb-health-check"]
@@ -113,7 +121,7 @@ resource "google_compute_instance_template" "dashboard" {
   }
 
   metadata = {
-    google-logging-enabled = "false"
+    google-logging-enabled = "true"
     gce-container-declaration = trimsuffix(templatefile("${path.module}/templates/dashboard-container-declaration.yaml.tpl", {
       api_key_parser                         = var.api_key_parser
       espresso_db_connection_string          = var.espresso_db_connection_string
@@ -150,6 +158,10 @@ resource "google_compute_instance_template" "dashboard" {
     enable_integrity_monitoring = true
     enable_secure_boot          = false
     enable_vtpm                 = true
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 
   reservation_affinity {

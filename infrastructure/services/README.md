@@ -6,7 +6,7 @@ Workload-facing infrastructure that changes with each deploy cycle: instance tem
 
 | File | Resources |
 |---|---|
-| `instance_templates.tf` | `espresso-web-api-vm-instance-template`, `espresso-dashboard-instance-template` |
+| `instance_templates.tf` | `espresso-web-api-vm-instance-template`, `espresso-dashboard-instance-template-*` (timestamp-suffixed via `name_prefix`) |
 | `managed_instance_groups.tf` | `espresso-web-api-instance-group`, `espresso-dashboard-instance-group` |
 | `load_balancer.tf` | Backend services, URL map `espresso`, HTTP + HTTPS target proxies, both forwarding rules, managed SSL certificate |
 
@@ -34,8 +34,12 @@ To populate `secrets.auto.tfvars` on a fresh checkout, read live values out of t
 
 ```sh
 gcloud compute instance-templates describe espresso-web-api-vm-instance-template
-gcloud compute instance-templates describe espresso-dashboard-instance-template
+gcloud compute instance-templates list \
+  --filter="name~'espresso-dashboard-instance-template-'" \
+  --sort-by=~creationTimestamp --limit=1
 ```
+
+The dashboard template uses `name_prefix`, so its current name has a generated suffix — list and sort by creation time to find the live one before describing it.
 
 A future hardening pass will migrate these to Secret Manager and remove the gitignored file. Tracked as Phase 2 work — requires .NET app changes to use `Google.Cloud.SecretManager.V1` since COS does not natively inject SM values into container env vars.
 
@@ -53,7 +57,7 @@ Keeping `secrets.auto.tfvars` out of git is **not** the whole story. As long as 
 Updating an instance template (image bump, env-var change) triggers a MIG-driven instance replacement. The two MIGs behave differently:
 
 - **webapi** — `update_policy.replacement_method = SUBSTITUTE` with `max_surge_fixed = 1`. A second instance comes up alongside the old one and traffic shifts when health checks pass. Effectively zero-downtime.
-- **dashboard** — `update_policy.replacement_method = RECREATE` with `max_surge_fixed = 0` and `max_unavailable_fixed = 1`. The existing instance is destroyed *before* the replacement boots. Combined with `auto_healing_policies.initial_delay_sec = 180` on the liveness check, the dashboard is dark for **2–3 minutes** during any template change. This is faithful to live config — recreating in place is constrained by the single static external IP attached to the dashboard VM. Do dashboard rollouts in low-traffic windows.
+- **dashboard** — `update_policy.replacement_method = RECREATE` with `max_surge_fixed = 0` and `max_unavailable_fixed = 1`. The existing instance is destroyed *before* the replacement boots. Combined with `auto_healing_policies.initial_delay_sec = 180` on the liveness check plus COS image pull and .NET cold-start, the dashboard is dark for **5–10 minutes** during any template change (observed). This is faithful to live config — recreating in place is constrained by the single static external IP attached to the dashboard VM. Do dashboard rollouts in low-traffic windows. The instance template itself rolls forward safely via `name_prefix` + `create_before_destroy`; the downtime is purely a MIG update-policy property, not a template-rename property.
 
 ## Adding or changing SSL-cert domains
 
