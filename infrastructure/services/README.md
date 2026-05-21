@@ -28,19 +28,27 @@ Foundation resources are looked up by name via data sources in `data.tf`:
 
 ## Image tags and deploys
 
-Both instance templates pin their container image to a specific tag in Artifact Registry, sourced from TF variables `webapi_image_tag` and `dashboard_image_tag` in `terraform.tfvars`. The CI workflow at `.github/workflows/ci-cd-workflow.yml` tags every release image with both `:${git_tag}` and `:latest` so the pinned reference always exists in AR.
+Both instance templates pin their container image to a specific tag in Artifact Registry. The pinned values live in `deploy.auto.tfvars` (bot-managed), separated from human-edited config in `terraform.tfvars` so release commits don't pollute the blame history of the latter.
 
-### Deploying a new release
+### Deploying a new release (fully automated)
 
-1. Push a new git tag (e.g. `2.4.6`) — CI builds and pushes the dual-tagged images.
-2. Update `terraform.tfvars` — bump `webapi_image_tag` and `dashboard_image_tag` to `"2.4.6"`. Keep them in sync; bumping only one is allowed but untested.
-3. `terraform apply` — webapi rolls SUBSTITUTE (zero-downtime), dashboard rolls RECREATE (5-10 min outage, see [Rolling out template changes](#rolling-out-template-changes--what-to-expect)).
+1. Push a new git tag in `X.Y.Z` format (e.g. `2.4.9`). That's it.
+
+The CI workflow's `deploy` job (`.github/workflows/ci-cd-workflow.yml`):
+1. Waits for both image-build jobs to finish (dual-tagged push of `:X.Y.Z` and `:latest` to AR).
+2. Updates `infrastructure/services/deploy.auto.tfvars` to the new tag via `sed`.
+3. Runs `terraform init` + `terraform apply -auto-approve` against the services stack.
+4. webapi MIG rolls SUBSTITUTE (zero-downtime). Dashboard MIG rolls RECREATE (5–10 min outage, see [Rolling out template changes](#rolling-out-template-changes--what-to-expect)).
+5. Commits the updated `deploy.auto.tfvars` back to `master` with a `chore(deploy): pin services to X.Y.Z [skip ci]` message, signed by `github-actions[bot]`. The `[skip ci]` prevents the commit from re-triggering the workflow.
+6. Waits for both MIGs to be stable (timeouts: 1500s webapi, 1800s dashboard) before declaring success.
+
+Concurrency `deploy-services` serializes deploys so two tags pushed close together cannot race.
 
 ### Rolling back
 
-Same procedure with a previous tag (e.g. `2.4.5` after `2.4.6` ships). **Bootstrap floor: `2.4.5`** — older git tags (`2.4.4`, `2.4.3`, the `v2.x` series) do NOT have corresponding Docker image tags in AR; only `:latest` was pushed before the dual-tag CI workflow. Rolling back below `2.4.5` would require either rebuilding the image at the old tag or pulling a digest manually.
+Use a forward-only version bump: revert the bad commits, tag a fresh `X.Y.(Z+1)`, push. The strict semver regex on the image_tag variables (`variables.tf`) rejects reuse-with-suffix patterns like `2.4.8-rollback`, which is intentional — linear semver history is easier to reason about than ambiguous rollback tags. **Bootstrap floor: `2.4.5`** — older git tags do not have corresponding Docker images in AR; rolling back below `2.4.5` requires rebuilding from old source first.
 
-A future #6 work item automates the tfvars bump on git-tag push so step 2 above goes away.
+If CI is broken and you need to deploy manually: edit `deploy.auto.tfvars` locally, `terraform apply` from `infrastructure/services/`. State and code stay aligned.
 
 ## Secrets
 
