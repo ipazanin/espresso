@@ -12,12 +12,9 @@
 #                 └── SSL certificate mcrt-13b82757-...
 #                 └── URL map        espresso (same as HTTP side)
 #
-# espresso-dashboard-backend-service exists but is orphaned (the URL map's
-# default_service is webapi-backend-service and there are no path matchers).
-# Codified here for parity with live state. Future decision: either wire it
-# into the URL map via host_rule + path_matcher, or retire it. The dashboard
-# subdomain currently resolves to the LB IP (DNS at Namecheap) but the LB
-# routes that traffic to webapi, not here.
+# The URL map routes:
+#   dashboard.espressonews.co/* → espresso-dashboard-backend-service → dashboard MIG (us-east1-b)
+#   everything else             → espresso-webapi-backend-service    → webapi MIG (europe-west3-c)
 #
 # Note: both backend services use the LIVENESS health check for LB health probes,
 # even though the webapi MIG uses the READINESS check for auto-heal. Faithful
@@ -78,6 +75,16 @@ resource "google_compute_backend_service" "dashboard" {
 resource "google_compute_url_map" "espresso" {
   name            = "espresso"
   default_service = google_compute_backend_service.webapi.id
+
+  host_rule {
+    hosts        = ["dashboard.espressonews.co"]
+    path_matcher = "dashboard"
+  }
+
+  path_matcher {
+    name            = "dashboard"
+    default_service = google_compute_backend_service.dashboard.id
+  }
 }
 
 resource "google_compute_managed_ssl_certificate" "espressonews" {

@@ -8,7 +8,7 @@ Long-lived infrastructure that rarely changes: networking primitives, IAM, the A
 |---|---|
 | `artifact_registry.tf` | `espresso` Docker repository in `europe` |
 | `iam.tf` | Service accounts: `espresso-google-analytics`, `espresso-registry-account` |
-| `network.tf` | Static IP `espresso-premium-static-ip-address`, firewall rule `allow-3000` |
+| `network.tf` | Static IP `espresso-premium-static-ip-address` |
 | `cloud_sql.tf` | Postgres 13 instance `espresso-database`, databases `EspressoDb` and `EspressoIdentity` |
 
 ## Cross-stack outputs
