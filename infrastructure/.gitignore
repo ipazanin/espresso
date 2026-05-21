@@ -1,0 +1,28 @@
+# Terraform working directories
+**/.terraform/*
+
+# Terraform state files (state lives in remote GCS backend)
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Auto-loaded tfvars (intended for local overrides, not source control)
+*.auto.tfvars
+*.auto.tfvars.json
+
+# Override files (Terraform auto-loads these; should not be committed)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# CLI configuration
+.terraformrc
+terraform.rc
+
+# Plan output
+*.tfplan
+plan.out

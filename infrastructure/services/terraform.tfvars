@@ -1,0 +1,5 @@
+project_id     = "espresso-8c4ac"
+region         = "europe-west3"
+server_url     = "https://espressonews.co"
+webapi_zone    = "europe-west3-c"
+dashboard_zone = "us-east1-b"
