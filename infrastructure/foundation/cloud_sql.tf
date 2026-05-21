@@ -5,7 +5,6 @@
 # code change.
 #
 # WARNING — known weaknesses preserved from current production:
-#   - settings.backup_configuration.enabled = false  (no backups, per user choice)
 #   - settings.ip_configuration.authorized_networks includes 0.0.0.0/0
 #   - settings.ip_configuration.ssl_mode = ALLOW_UNENCRYPTED_AND_ENCRYPTED
 # These are tracked for a separate hardening pass.
@@ -29,8 +28,8 @@ resource "google_sql_database_instance" "espresso_database" {
     }
 
     backup_configuration {
-      enabled                        = false
-      point_in_time_recovery_enabled = false
+      enabled                        = true
+      point_in_time_recovery_enabled = true
       start_time                     = "04:00"
       transaction_log_retention_days = 7
 
