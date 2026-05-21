@@ -2,19 +2,21 @@
 #
 # Topology:
 #   Static IP (espresso-premium-static-ip-address, foundation stack)
-#     ├── HTTP  forwarding rule espresso-premium-static-ip-address-http-frontend
-#     │     └── target HTTP proxy  espresso-target-proxy-2
-#     │           └── URL map      espresso
-#     │                 └── default backend service espresso-webapi-backend-service
-#     │                       └── MIG espresso-web-api-instance-group
 #     └── HTTPS forwarding rule espresso-premium-static-ip-address-https-frontend
 #           └── target HTTPS proxy espresso-target-proxy
 #                 └── SSL certificate mcrt-13b82757-...
-#                 └── URL map        espresso (same as HTTP side)
+#                 └── URL map        espresso
 #
 # The URL map routes:
 #   dashboard.espressonews.co/* → espresso-dashboard-backend-service → dashboard MIG (us-east1-b)
 #   everything else             → espresso-webapi-backend-service    → webapi MIG (europe-west3-c)
+#
+# Port 80 is intentionally not bound. The HTTP forwarding rule + target proxy
+# previously existed and routed identically to HTTPS (no LB-level redirect),
+# but Monitoring data showed port-80 traffic was 100% bots (0% Croatia vs 72%
+# Croatia on HTTPS) so the rule was dropped to save the ~$0.025/hr forwarding-rule
+# fee. HSTS on HTTPS protects returning real-user clients from any cached
+# `http://` references.
 #
 # Note: both backend services use the LIVENESS health check for LB health probes,
 # even though the webapi MIG uses the READINESS check for auto-heal. Faithful
@@ -103,26 +105,12 @@ resource "google_compute_managed_ssl_certificate" "espressonews" {
   }
 }
 
-resource "google_compute_target_http_proxy" "espresso" {
-  name    = "espresso-target-proxy-2"
-  url_map = google_compute_url_map.espresso.id
-}
-
 resource "google_compute_target_https_proxy" "espresso" {
   name             = "espresso-target-proxy"
   url_map          = google_compute_url_map.espresso.id
   ssl_certificates = [google_compute_managed_ssl_certificate.espressonews.id]
   quic_override    = "NONE"
   tls_early_data   = "DISABLED"
-}
-
-resource "google_compute_global_forwarding_rule" "http" {
-  name                  = "espresso-premium-static-ip-address-http-frontend"
-  ip_address            = data.google_compute_global_address.premium_static_ip.address
-  ip_protocol           = "TCP"
-  port_range            = "80-80"
-  target                = google_compute_target_http_proxy.espresso.id
-  load_balancing_scheme = "EXTERNAL"
 }
 
 resource "google_compute_global_forwarding_rule" "https" {

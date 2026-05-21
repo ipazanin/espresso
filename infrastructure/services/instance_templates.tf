@@ -120,8 +120,11 @@ resource "google_compute_instance_template" "dashboard" {
   network_interface {
     network = "default"
 
+    # STANDARD tier matches the webapi template. PREMIUM is unnecessary for
+    # an admin-only dashboard accessed by one user; the small egress savings
+    # are secondary to the consistency win.
     access_config {
-      network_tier = "PREMIUM"
+      network_tier = "STANDARD"
     }
   }
 
