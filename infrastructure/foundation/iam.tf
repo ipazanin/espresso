@@ -85,6 +85,17 @@ resource "google_project_iam_member" "registry_compute_network_viewer" {
   member  = "serviceAccount:${google_service_account.registry.email}"
 }
 
+# Needed so TF can `secrets.get` each google_secret_manager_secret during
+# state refresh. The per-secret secretAccessor bindings (services/secrets.tf)
+# grant secrets.versions.access for reading values, but the secretAccessor
+# role does NOT include secrets.get — only secretmanager.viewer (or admin)
+# does. Without this, plan/apply fails with 403 on the resource refresh.
+resource "google_project_iam_member" "registry_secretmanager_viewer" {
+  project = var.project_id
+  role    = "roles/secretmanager.viewer"
+  member  = "serviceAccount:${google_service_account.registry.email}"
+}
+
 # Read/write/lock the Terraform state bucket. Bucket-scoped (not project-wide)
 # so the blast radius is just this bucket — sibling buckets in the project
 # are unaffected.
