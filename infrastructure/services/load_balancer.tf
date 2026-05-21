@@ -14,7 +14,10 @@
 #
 # espresso-dashboard-backend-service exists but is orphaned (the URL map's
 # default_service is webapi-backend-service and there are no path matchers).
-# Codified here for parity with live state.
+# Codified here for parity with live state. Future decision: either wire it
+# into the URL map via host_rule + path_matcher, or retire it. The dashboard
+# subdomain currently resolves to the LB IP (DNS at Namecheap) but the LB
+# routes that traffic to webapi, not here.
 #
 # Note: both backend services use the LIVENESS health check for LB health probes,
 # even though the webapi MIG uses the READINESS check for auto-heal. Faithful

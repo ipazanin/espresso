@@ -67,8 +67,6 @@ These resources exist in GCP but Terraform does not manage them, because they ar
 - The `default` VPC and its default firewall rules (`default-allow-http`, `default-allow-https`, `default-allow-icmp`, `default-allow-internal`, `default-allow-rdp`, `default-allow-ssh`) — auto-created by GCP, referenced via `data` lookup.
 - Default service accounts (App Engine, Compute Engine) — auto-created by GCP.
 - `firebase-adminsdk-*` service account — managed by Firebase.
-- `espresso-app-*` resources (MIG, instance template, AR image) — legacy infrastructure, scheduled for decommissioning. See `memory/` notes.
-- Zombie `k8s-fw-*` firewall rules and `espresso-cluster-service-accou` service account — leftover from a previous GKE deployment. Will be cleaned up out-of-band after the import is complete.
 
 ## Resource naming
 

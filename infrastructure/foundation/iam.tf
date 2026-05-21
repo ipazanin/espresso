@@ -4,7 +4,6 @@
 #   - App Engine default SA
 #   - Compute Engine default SA
 #   - firebase-adminsdk-* (Firebase-managed)
-#   - espresso-cluster-service-accou (zombie from GKE, scheduled for cleanup)
 
 resource "google_service_account" "google_analytics" {
   account_id   = "espresso-google-analytics"

@@ -1,4 +1,8 @@
 # Managed instance groups backing each workload.
+#
+# Two MIGs: webapi (autoscaled, europe-west3-c) and dashboard (single instance,
+# us-east1-b — pinned to the GCP always-free zone). The legacy espresso-app MIG
+# was decommissioned out-of-band.
 
 resource "google_compute_instance_group_manager" "webapi" {
   name               = "espresso-web-api-instance-group"

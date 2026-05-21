@@ -4,9 +4,9 @@
 # via templatefile(). Secrets in those declarations come from sensitive
 # variables (see secrets.auto.tfvars).
 #
-# trimsuffix removes the trailing newline that <<-EOT / templatefile() append,
-# so the rendered metadata exactly matches what GCP stores (which has no
-# trailing newline). Without it, terraform plan would show perpetual drift.
+# trimsuffix removes the trailing newline that templatefile() appends so the
+# rendered metadata exactly matches what GCP stores (which has no trailing
+# newline). Without it, terraform plan would show perpetual drift.
 
 resource "google_compute_instance_template" "webapi" {
   name         = "espresso-web-api-vm-instance-template"
