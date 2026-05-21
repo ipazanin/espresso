@@ -44,29 +44,40 @@ A future #6 work item automates the tfvars bump on git-tag push so step 2 above 
 
 ## Secrets
 
-Sensitive container-declaration env vars (DB connection strings, API keys, Slack webhooks, SendGrid key, admin password) are sourced from `secrets.auto.tfvars` (gitignored). The committed `secrets.auto.tfvars.example` shows the expected shape with `REPLACE_ME` placeholders.
+The 13 sensitive container env vars (API keys, DB connection strings, Slack webhooks, SendGrid key, admin password) live in **GCP Secret Manager** under project `espresso-8c4ac`. The `secrets.tf` file in this stack declares one `google_secret_manager_secret` container per value, plus accessor IAM bindings for the developer and the VMs' default Compute Engine SA. Values themselves are NOT managed by Terraform — they're populated and rotated via `gcloud`.
 
-To populate `secrets.auto.tfvars` on a fresh checkout, read live values out of the GCP instance template metadata:
+### Rotating a secret
 
 ```sh
-gcloud compute instance-templates describe espresso-web-api-vm-instance-template
-gcloud compute instance-templates list \
-  --filter="name~'espresso-dashboard-instance-template-'" \
-  --sort-by=~creationTimestamp --limit=1
+printf 'new-value' | gcloud secrets versions add <secret_name> --data-file=- --project=espresso-8c4ac
+terraform apply   # in infrastructure/services/ — picks up "latest" and rolls both MIGs
 ```
 
-The dashboard template uses `name_prefix`, so its current name has a generated suffix — list and sort by creation time to find the live one before describing it.
+The data source defaults to `latest`, so any new version triggers a TF diff on the rendered container declaration → MIG rolling replacement (webapi zero-downtime SUBSTITUTE, dashboard 5-10 min RECREATE outage). Rotating during a low-traffic window is recommended.
 
-A future hardening pass will migrate these to Secret Manager and remove the gitignored file. Tracked as Phase 2 work — requires .NET app changes to use `Google.Cloud.SecretManager.V1` since COS does not natively inject SM values into container env vars.
+To pin a specific version (avoid roll-on-rotation), add `version = "<n>"` to the data source in `secrets.tf` and bump deliberately.
 
-### Secret exposure surface beyond git
+### What this does NOT yet protect against
 
-Keeping `secrets.auto.tfvars` out of git is **not** the whole story. As long as secrets are values in Terraform state, they are also accessible via:
+`#9-light` puts secrets in their proper canonical home but the VMs still **receive** them as plaintext env vars in the `gce-container-declaration` instance template metadata. Anyone with `compute.instances.get` can read them. The same plaintext is also stored in the Terraform state file in GCS (encrypted at rest, accessible to anyone with `storage.objectViewer` on `espresso-8c4ac-tfstate`).
 
-- **`terraform show` / `terraform output`** — prints the GCS state file contents in cleartext. IAM on the state bucket `espresso-8c4ac-tfstate` is therefore equivalent to access to these secrets. Treat that bucket's grants the same way you'd treat Secret Manager grants.
-- **`plan.out` files** — `terraform plan -out plan.out` embeds the secret values in the binary plan. `plan.out` is gitignored, but do not attach it to issues, share over Slack, or upload as a CI artifact.
-- **New outputs** — if you add a `google_*` resource that surfaces a secret, the output block must be declared `sensitive = true` or the value will print to terminals and CI logs.
-- **Literal `$` in secret values** — passes through `templatefile()`, so a `$` in a rotated password must be doubled to `$$`. See note in `secrets.auto.tfvars.example`.
+The full security win comes from **`#9-full`** (deferred): switch the .NET apps in `Espresso.WebApi` and `Espresso.Dashboard` to fetch secrets from Secret Manager directly at startup (via `Google.Cloud.SecretManager.V1` + an `IConfigurationProvider`). Once that lands, env vars come out of instance template metadata entirely and the only place secret values exist outside SM is in process memory.
+
+### State and plan output still contain plaintext
+
+- `terraform show` / `terraform output` print state contents in cleartext. IAM on `espresso-8c4ac-tfstate` is therefore secret-equivalent.
+- `terraform plan -out plan.out` embeds secret values in the binary plan. `plan.out` is gitignored; do not share over CI artifacts/Slack/etc.
+- Any future `output` block referencing a secret must be `sensitive = true` or the value prints to terminals and CI logs.
+- Literal `$` in secret values passes through `templatefile()` and must be doubled to `$$` to escape template interpolation. If a rotation introduces a `$`, double it in the value pushed to SM.
+
+### Bootstrapping secrets in a fresh project
+
+If recreating the project from scratch:
+
+1. `gcloud services enable secretmanager.googleapis.com --project=espresso-8c4ac`
+2. `terraform apply` — creates the 13 empty secret containers + IAM bindings (the `data` blocks in `secrets.tf` will fail at plan time on the first run; comment them out + the references in `instance_templates.tf` first, apply, then uncomment).
+3. `gcloud secrets versions add <name> --data-file=- --project=espresso-8c4ac` for each of the 13 secrets with the actual values.
+4. Uncomment the `data` blocks + `instance_templates.tf` references, `terraform apply` again — should be a no-op on the rendered metadata if values match.
 
 ## Rolling out template changes — what to expect
 

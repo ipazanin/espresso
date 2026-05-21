@@ -1,8 +1,8 @@
 # Compute Engine instance templates running Container-Optimized OS.
 #
 # Each template renders a YAML container declaration into instance metadata
-# via templatefile(). Secrets in those declarations come from sensitive
-# variables (see secrets.auto.tfvars).
+# via templatefile(). Secrets in those declarations come from GCP Secret
+# Manager via data sources (see secrets.tf).
 #
 # trimsuffix removes the trailing newline that templatefile() appends so the
 # rendered metadata exactly matches what GCP stores (which has no trailing
@@ -45,16 +45,16 @@ resource "google_compute_instance_template" "webapi" {
     google-logging-enabled = "true"
     gce-container-declaration = trimsuffix(templatefile("${path.module}/templates/webapi-container-declaration.yaml.tpl", {
       webapi_image_tag                  = var.webapi_image_tag
-      api_key_android                   = var.api_key_android
-      api_key_ios                       = var.api_key_ios
-      api_key_web                       = var.api_key_web
-      api_key_parser                    = var.api_key_parser
-      api_key_dev_ios                   = var.api_key_dev_ios
-      api_key_dev_android               = var.api_key_dev_android
-      espresso_db_connection_string     = var.espresso_db_connection_string
-      slack_analytics_webhook           = var.slack_analytics_webhook
-      slack_crash_report_webhook        = var.slack_crash_report_webhook
-      slack_news_source_request_webhook = var.slack_news_source_request_webhook
+      api_key_android                   = data.google_secret_manager_secret_version.this["api_key_android"].secret_data
+      api_key_ios                       = data.google_secret_manager_secret_version.this["api_key_ios"].secret_data
+      api_key_web                       = data.google_secret_manager_secret_version.this["api_key_web"].secret_data
+      api_key_parser                    = data.google_secret_manager_secret_version.this["api_key_parser"].secret_data
+      api_key_dev_ios                   = data.google_secret_manager_secret_version.this["api_key_dev_ios"].secret_data
+      api_key_dev_android               = data.google_secret_manager_secret_version.this["api_key_dev_android"].secret_data
+      espresso_db_connection_string     = data.google_secret_manager_secret_version.this["espresso_db_connection_string"].secret_data
+      slack_analytics_webhook           = data.google_secret_manager_secret_version.this["slack_analytics_webhook"].secret_data
+      slack_crash_report_webhook        = data.google_secret_manager_secret_version.this["slack_crash_report_webhook"].secret_data
+      slack_news_source_request_webhook = data.google_secret_manager_secret_version.this["slack_news_source_request_webhook"].secret_data
     }), "\n")
   }
 
@@ -129,15 +129,15 @@ resource "google_compute_instance_template" "dashboard" {
     google-logging-enabled = "true"
     gce-container-declaration = trimsuffix(templatefile("${path.module}/templates/dashboard-container-declaration.yaml.tpl", {
       dashboard_image_tag                    = var.dashboard_image_tag
-      api_key_parser                         = var.api_key_parser
-      espresso_db_connection_string          = var.espresso_db_connection_string
-      espresso_identity_db_connection_string = var.espresso_identity_db_connection_string
-      sendgrid_api_key                       = var.sendgrid_api_key
-      admin_user_password                    = var.admin_user_password
+      api_key_parser                         = data.google_secret_manager_secret_version.this["api_key_parser"].secret_data
+      espresso_db_connection_string          = data.google_secret_manager_secret_version.this["espresso_db_connection_string"].secret_data
+      espresso_identity_db_connection_string = data.google_secret_manager_secret_version.this["espresso_identity_db_connection_string"].secret_data
+      sendgrid_api_key                       = data.google_secret_manager_secret_version.this["sendgrid_api_key"].secret_data
+      admin_user_password                    = data.google_secret_manager_secret_version.this["admin_user_password"].secret_data
       server_url                             = var.server_url
-      slack_analytics_webhook                = var.slack_analytics_webhook
-      slack_crash_report_webhook             = var.slack_crash_report_webhook
-      slack_news_source_request_webhook      = var.slack_news_source_request_webhook
+      slack_analytics_webhook                = data.google_secret_manager_secret_version.this["slack_analytics_webhook"].secret_data
+      slack_crash_report_webhook             = data.google_secret_manager_secret_version.this["slack_crash_report_webhook"].secret_data
+      slack_news_source_request_webhook      = data.google_secret_manager_secret_version.this["slack_news_source_request_webhook"].secret_data
     }), "\n")
   }
 
