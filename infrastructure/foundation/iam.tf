@@ -96,6 +96,17 @@ resource "google_project_iam_member" "registry_secretmanager_viewer" {
   member  = "serviceAccount:${google_service_account.registry.email}"
 }
 
+# Updating a MIG version that references a health check requires
+# `compute.healthChecks.use` on the referenced HC. Not in instanceAdmin.v1.
+# loadBalancerAdmin covers HC use plus the LB chain resources (backend
+# services, URL maps, target proxies, forwarding rules, managed SSL certs)
+# that the deploy job may also need to update in the future.
+resource "google_project_iam_member" "registry_load_balancer_admin" {
+  project = var.project_id
+  role    = "roles/compute.loadBalancerAdmin"
+  member  = "serviceAccount:${google_service_account.registry.email}"
+}
+
 # Read/write/lock the Terraform state bucket. Bucket-scoped (not project-wide)
 # so the blast radius is just this bucket — sibling buckets in the project
 # are unaffected.
