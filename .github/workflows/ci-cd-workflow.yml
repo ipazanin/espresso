@@ -163,17 +163,22 @@ jobs:
           git commit -m "chore(deploy): pin services to ${{ github.ref_name }} [skip ci]"
           git push origin HEAD:master
 
+      # Timeouts tuned to observed rollout durations + safety margin:
+      #   - webapi SUBSTITUTE typically completes in 12–15 min when the
+      #     autoscaler also surges the MIG during the update. 25 min cap.
+      #   - dashboard RECREATE takes 5–10 min with the 180s liveness
+      #     initial delay. 30 min cap (generous) to cover slow image pulls.
       - name: Wait for webapi MIG stable
         run: |
           gcloud compute instance-groups managed wait-until espresso-web-api-instance-group \
             --zone=europe-west3-c \
             --stable \
-            --timeout=900
+            --timeout=1500
 
       - name: Wait for dashboard MIG stable
         run: |
           gcloud compute instance-groups managed wait-until espresso-dashboard-instance-group \
             --zone=us-east1-b \
             --stable \
-            --timeout=1500
+            --timeout=1800
 
