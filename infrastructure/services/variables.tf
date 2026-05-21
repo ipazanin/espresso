@@ -28,11 +28,21 @@ variable "dashboard_zone" {
 variable "webapi_image_tag" {
   description = "Artifact Registry image tag for the webapi container (e.g. \"2.4.5\"). Bumped per release for rollback-capable deploys."
   type        = string
+
+  validation {
+    condition     = can(regex("^[0-9]+\\.[0-9]+\\.[0-9]+$", var.webapi_image_tag))
+    error_message = "webapi_image_tag must be X.Y.Z (no v prefix, no suffix). The CI workflow tags images with the bare git tag string."
+  }
 }
 
 variable "dashboard_image_tag" {
   description = "Artifact Registry image tag for the dashboard container (e.g. \"2.4.5\"). Bumped per release for rollback-capable deploys."
   type        = string
+
+  validation {
+    condition     = can(regex("^[0-9]+\\.[0-9]+\\.[0-9]+$", var.dashboard_image_tag))
+    error_message = "dashboard_image_tag must be X.Y.Z (no v prefix, no suffix). The CI workflow tags images with the bare git tag string."
+  }
 }
 
 # -----------------------------------------------------------------------------

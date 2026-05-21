@@ -26,6 +26,22 @@ Foundation resources are looked up by name via data sources in `data.tf`:
 
 `gs://espresso-8c4ac-tfstate/services/default.tfstate`
 
+## Image tags and deploys
+
+Both instance templates pin their container image to a specific tag in Artifact Registry, sourced from TF variables `webapi_image_tag` and `dashboard_image_tag` in `terraform.tfvars`. The CI workflow at `.github/workflows/ci-cd-workflow.yml` tags every release image with both `:${git_tag}` and `:latest` so the pinned reference always exists in AR.
+
+### Deploying a new release
+
+1. Push a new git tag (e.g. `2.4.6`) — CI builds and pushes the dual-tagged images.
+2. Update `terraform.tfvars` — bump `webapi_image_tag` and `dashboard_image_tag` to `"2.4.6"`. Keep them in sync; bumping only one is allowed but untested.
+3. `terraform apply` — webapi rolls SUBSTITUTE (zero-downtime), dashboard rolls RECREATE (5-10 min outage, see [Rolling out template changes](#rolling-out-template-changes--what-to-expect)).
+
+### Rolling back
+
+Same procedure with a previous tag (e.g. `2.4.5` after `2.4.6` ships). **Bootstrap floor: `2.4.5`** — older git tags (`2.4.4`, `2.4.3`, the `v2.x` series) do NOT have corresponding Docker image tags in AR; only `:latest` was pushed before the dual-tag CI workflow. Rolling back below `2.4.5` would require either rebuilding the image at the old tag or pulling a digest manually.
+
+A future #6 work item automates the tfvars bump on git-tag push so step 2 above goes away.
+
 ## Secrets
 
 Sensitive container-declaration env vars (DB connection strings, API keys, Slack webhooks, SendGrid key, admin password) are sourced from `secrets.auto.tfvars` (gitignored). The committed `secrets.auto.tfvars.example` shows the expected shape with `REPLACE_ME` placeholders.
