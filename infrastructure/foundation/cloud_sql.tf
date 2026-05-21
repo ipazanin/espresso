@@ -8,12 +8,11 @@
 #   - settings.backup_configuration.enabled = false  (no backups, per user choice)
 #   - settings.ip_configuration.authorized_networks includes 0.0.0.0/0
 #   - settings.ip_configuration.ssl_mode = ALLOW_UNENCRYPTED_AND_ENCRYPTED
-#   - Postgres 13 reached EOL in November 2025
 # These are tracked for a separate hardening pass.
 
 resource "google_sql_database_instance" "espresso_database" {
   name             = "espresso-database"
-  database_version = "POSTGRES_13"
+  database_version = "POSTGRES_16"
   region           = var.region
 
   settings {
