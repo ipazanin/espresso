@@ -50,18 +50,6 @@ resource "google_sql_database_instance" "espresso_database" {
         value = "0.0.0.0/0"
       }
       authorized_networks {
-        name  = "espresso-webapi-static-ip-address"
-        value = "35.234.117.10"
-      }
-      authorized_networks {
-        name  = "espresso-webapi-loadballancer"
-        value = "35.246.191.17"
-      }
-      authorized_networks {
-        name  = "espresso-cluster"
-        value = "34.89.137.63"
-      }
-      authorized_networks {
         name  = "Home"
         value = "213.149.51.250"
       }
