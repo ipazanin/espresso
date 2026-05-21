@@ -14,7 +14,6 @@ env:
   PROJECT_ID: espresso-8c4ac
   ESPRESSO_DASHBOARD_IMAGE: europe-docker.pkg.dev/espresso-8c4ac/espresso/espresso-dashboard
   ESPRESSO_WEBAPI_IMAGE: europe-docker.pkg.dev/espresso-8c4ac/espresso/espresso-webapi
-  IMAGE_VERSION: latest
   FIREBASE_KEY_JSON: ${{ secrets.FIREBASE_KEY_JSON }}
   GOOGLE_ANALYTICS_KEY_JSON: ${{ secrets.GOOGLE_ANALYTICS_KEY_JSON }}
 jobs:
@@ -66,10 +65,15 @@ jobs:
           gcloud auth configure-docker europe-docker.pkg.dev --quiet
 
       - name: Build webapi image
-        run: docker build . --file source/server/WebApi/Espresso.WebApi/Dockerfile --tag ${{ env.ESPRESSO_WEBAPI_IMAGE }}:${{ env.IMAGE_VERSION }} --build-arg REACT_APP_ENVIRONMENT=production
+        run: |
+          docker build . \
+            --file source/server/WebApi/Espresso.WebApi/Dockerfile \
+            --tag ${{ env.ESPRESSO_WEBAPI_IMAGE }}:${{ github.ref_name }} \
+            --tag ${{ env.ESPRESSO_WEBAPI_IMAGE }}:latest \
+            --build-arg REACT_APP_ENVIRONMENT=production
 
       - name: Push webapi image
-        run: docker push ${{ env.ESPRESSO_WEBAPI_IMAGE }}:${{ env.IMAGE_VERSION }}
+        run: docker push --all-tags ${{ env.ESPRESSO_WEBAPI_IMAGE }}
 
   docker-build-push-dashboard:
     runs-on: ubuntu-latest
@@ -94,8 +98,12 @@ jobs:
           gcloud auth configure-docker europe-docker.pkg.dev --quiet
 
       - name: Build dashboard image
-        run: docker build . --file source/server/Dashboard/Espresso.Dashboard/Dockerfile --tag ${{ env.ESPRESSO_DASHBOARD_IMAGE }}:${{ env.IMAGE_VERSION }}
+        run: |
+          docker build . \
+            --file source/server/Dashboard/Espresso.Dashboard/Dockerfile \
+            --tag ${{ env.ESPRESSO_DASHBOARD_IMAGE }}:${{ github.ref_name }} \
+            --tag ${{ env.ESPRESSO_DASHBOARD_IMAGE }}:latest
 
       - name: Push dashboard image
-        run: docker push ${{ env.ESPRESSO_DASHBOARD_IMAGE }}:${{ env.IMAGE_VERSION }}
+        run: docker push --all-tags ${{ env.ESPRESSO_DASHBOARD_IMAGE }}
 
