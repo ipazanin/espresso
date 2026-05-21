@@ -32,6 +32,7 @@ locals {
 
   developer_principal = "user:ivan.pazanin1996@gmail.com"
   compute_default_sa  = "${data.google_project.this.number}-compute@developer.gserviceaccount.com"
+  ci_service_account  = "espresso-registry-account@espresso-8c4ac.iam.gserviceaccount.com"
 }
 
 resource "google_project_service" "secretmanager" {
@@ -78,6 +79,16 @@ resource "google_secret_manager_secret_iam_member" "compute_sa_accessor" {
   secret_id = each.value.id
   role      = "roles/secretmanager.secretAccessor"
   member    = "serviceAccount:${local.compute_default_sa}"
+}
+
+# CI service account (espresso-registry-account) — needed for the GitHub
+# Actions deploy job to read secrets during `terraform apply`.
+resource "google_secret_manager_secret_iam_member" "ci_sa_accessor" {
+  for_each = google_secret_manager_secret.this
+
+  secret_id = each.value.id
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:${local.ci_service_account}"
 }
 
 data "google_secret_manager_secret_version" "this" {

@@ -107,3 +107,72 @@ jobs:
       - name: Push dashboard image
         run: docker push --all-tags ${{ env.ESPRESSO_DASHBOARD_IMAGE }}
 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [docker-build-push-webapi, docker-build-push-dashboard]
+    if: startsWith(github.event.ref, 'refs/tags/')
+    concurrency:
+      group: deploy-services
+      cancel-in-progress: false
+    defaults:
+      run:
+        working-directory: infrastructure/services
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+          token: ${{ secrets.DEPLOY_BOT_PAT }}
+
+      - id: "auth"
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.GC_SERVICE_ACCOUNT_KEY }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v1"
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.15.4
+          terraform_wrapper: false
+
+      - name: Update deploy.auto.tfvars to new tag
+        run: |
+          sed -i 's/^webapi_image_tag.*/webapi_image_tag    = "${{ github.ref_name }}"/' deploy.auto.tfvars
+          sed -i 's/^dashboard_image_tag.*/dashboard_image_tag = "${{ github.ref_name }}"/' deploy.auto.tfvars
+          echo "--- Updated deploy.auto.tfvars ---"
+          cat deploy.auto.tfvars
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Terraform apply
+        run: terraform apply -auto-approve -input=false
+
+      - name: Commit deploy.auto.tfvars back to master
+        run: |
+          if git diff --quiet deploy.auto.tfvars; then
+            echo "No changes to deploy.auto.tfvars — already at ${{ github.ref_name }}."
+            exit 0
+          fi
+          git config user.name  "espresso-deploy-bot"
+          git config user.email "deploy-bot@users.noreply.github.com"
+          git add deploy.auto.tfvars
+          git commit -m "chore(deploy): pin services to ${{ github.ref_name }} [skip ci]"
+          git push origin HEAD:master
+
+      - name: Wait for webapi MIG stable
+        run: |
+          gcloud compute instance-groups managed wait-until espresso-web-api-instance-group \
+            --zone=europe-west3-c \
+            --stable \
+            --timeout=900
+
+      - name: Wait for dashboard MIG stable
+        run: |
+          gcloud compute instance-groups managed wait-until espresso-dashboard-instance-group \
+            --zone=us-east1-b \
+            --stable \
+            --timeout=1500
+

@@ -55,3 +55,45 @@ resource "google_project_iam_member" "registry_artifactregistry_service_agent" {
   role    = "roles/artifactregistry.serviceAgent"
   member  = "serviceAccount:${google_service_account.registry.email}"
 }
+
+# -----------------------------------------------------------------------------
+# Roles granted to espresso-registry-account for its dual purpose as the CI
+# deploy SA (in addition to its original Artifact Registry duties above).
+# These power the .github/workflows/ci-cd-workflow.yml `deploy` job that runs
+# `terraform apply` against the services stack on tag push.
+# -----------------------------------------------------------------------------
+
+resource "google_project_iam_member" "registry_compute_instance_admin" {
+  project = var.project_id
+  role    = "roles/compute.instanceAdmin.v1"
+  member  = "serviceAccount:${google_service_account.registry.email}"
+}
+
+# Needed so Terraform's services-stack apply can assign the default Compute
+# Engine SA (the one VMs use) as the instance template's service_account.
+resource "google_project_iam_member" "registry_service_account_user" {
+  project = var.project_id
+  role    = "roles/iam.serviceAccountUser"
+  member  = "serviceAccount:${google_service_account.registry.email}"
+}
+
+# Needed for the services stack's `data "google_compute_network" "default"`
+# read at plan time.
+resource "google_project_iam_member" "registry_compute_network_viewer" {
+  project = var.project_id
+  role    = "roles/compute.networkViewer"
+  member  = "serviceAccount:${google_service_account.registry.email}"
+}
+
+# Read/write/lock the Terraform state bucket. Bucket-scoped (not project-wide)
+# so the blast radius is just this bucket — sibling buckets in the project
+# are unaffected.
+data "google_storage_bucket" "tfstate" {
+  name = "espresso-8c4ac-tfstate"
+}
+
+resource "google_storage_bucket_iam_member" "registry_tfstate_object_admin" {
+  bucket = data.google_storage_bucket.tfstate.name
+  role   = "roles/storage.objectAdmin"
+  member = "serviceAccount:${google_service_account.registry.email}"
+}

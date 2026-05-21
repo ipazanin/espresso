@@ -13,6 +13,10 @@ crash.*.log
 *.auto.tfvars
 *.auto.tfvars.json
 
+# Exception: deploy.auto.tfvars is committed — it carries the bot-managed
+# image tag values updated by the CI deploy job on tag push.
+!deploy.auto.tfvars
+
 # Override files (Terraform auto-loads these; should not be committed)
 override.tf
 override.tf.json
