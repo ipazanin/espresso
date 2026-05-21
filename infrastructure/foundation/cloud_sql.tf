@@ -5,13 +5,11 @@
 # code change.
 #
 # WARNING — known weaknesses preserved from current production:
-#   - settings.backup_configuration.enabled = false  (no backups)
+#   - settings.backup_configuration.enabled = false  (no backups, per user choice)
 #   - settings.ip_configuration.authorized_networks includes 0.0.0.0/0
 #   - settings.ip_configuration.ssl_mode = ALLOW_UNENCRYPTED_AND_ENCRYPTED
-#   - settings.deletion_protection_enabled is not enabled at the GCP level
 #   - Postgres 13 reached EOL in November 2025
-# These are tracked for a separate hardening pass. Codifying as-is per
-# "match reality first" decision.
+# These are tracked for a separate hardening pass.
 
 resource "google_sql_database_instance" "espresso_database" {
   name             = "espresso-database"
@@ -21,6 +19,8 @@ resource "google_sql_database_instance" "espresso_database" {
   settings {
     tier              = "db-f1-micro"
     availability_type = "ZONAL"
+
+    deletion_protection_enabled = true
 
     disk_size = 10
     disk_type = "PD_SSD"
