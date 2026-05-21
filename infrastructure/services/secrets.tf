@@ -34,6 +34,11 @@ locals {
   compute_default_sa  = "${data.google_project.this.number}-compute@developer.gserviceaccount.com"
 }
 
+resource "google_project_service" "secretmanager" {
+  service            = "secretmanager.googleapis.com"
+  disable_on_destroy = false
+}
+
 resource "google_secret_manager_secret" "this" {
   for_each = toset(local.secret_ids)
 
@@ -47,6 +52,8 @@ resource "google_secret_manager_secret" "this" {
     managed-by = "terraform"
     stack      = "services"
   }
+
+  depends_on = [google_project_service.secretmanager]
 
   lifecycle {
     prevent_destroy = true

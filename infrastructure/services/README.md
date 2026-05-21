@@ -72,12 +72,30 @@ The full security win comes from **`#9-full`** (deferred): switch the .NET apps 
 
 ### Bootstrapping secrets in a fresh project
 
-If recreating the project from scratch:
+If recreating the project from scratch, the data sources in `secrets.tf` will fail at plan time until each secret has at least one version. Two clean paths:
 
-1. `gcloud services enable secretmanager.googleapis.com --project=espresso-8c4ac`
-2. `terraform apply` — creates the 13 empty secret containers + IAM bindings (the `data` blocks in `secrets.tf` will fail at plan time on the first run; comment them out + the references in `instance_templates.tf` first, apply, then uncomment).
-3. `gcloud secrets versions add <name> --data-file=- --project=espresso-8c4ac` for each of the 13 secrets with the actual values.
-4. Uncomment the `data` blocks + `instance_templates.tf` references, `terraform apply` again — should be a no-op on the rendered metadata if values match.
+**Option 1 — placeholder bootstrap** (recommended, single `terraform apply`):
+
+1. Before running TF, push a placeholder version for each of the 13 secrets:
+   ```sh
+   for name in api_key_android api_key_ios api_key_web api_key_parser \
+               api_key_dev_ios api_key_dev_android \
+               espresso_db_connection_string espresso_identity_db_connection_string \
+               slack_analytics_webhook slack_crash_report_webhook \
+               slack_news_source_request_webhook sendgrid_api_key admin_user_password; do
+     gcloud secrets create "$name" --replication-policy=automatic --project=espresso-8c4ac
+     printf 'PLACEHOLDER' | gcloud secrets versions add "$name" --data-file=- --project=espresso-8c4ac
+   done
+   ```
+2. `terraform apply` — adopts the existing secrets (`prevent_destroy` + import not needed since they were created with the same names TF expects). Renders placeholder values into instance templates.
+3. Replace each placeholder with the real value: `printf 'REAL_VALUE' | gcloud secrets versions add <name> --data-file=- --project=espresso-8c4ac`.
+4. `terraform apply` — picks up `latest`, rolls both MIGs (webapi zero-downtime, dashboard 5–10 min).
+
+**Option 2 — two-phase apply** (cleaner TF, more steps):
+
+1. Comment out the `data "google_secret_manager_secret_version"` block in `secrets.tf` AND the data-source references in `instance_templates.tf`. `terraform apply` to create the 13 empty secret containers + IAM bindings.
+2. Push real values via `gcloud secrets versions add` (no placeholder).
+3. Uncomment the data blocks + references. `terraform apply` again — renders real values, rolls both MIGs once.
 
 ## Rolling out template changes — what to expect
 
@@ -100,10 +118,3 @@ Procedure:
 
 DNS for `espressonews.co` lives outside GCP (no Cloud DNS zones in this project), so add records there before applying.
 
-## Known cosmetic diff
-
-`terraform plan` will permanently report `0 to add, 2 to change, 0 to destroy` against the two instance templates with the warning:
-
-> this attribute value will be marked as sensitive and will not display in UI output after applying this change. **The value is unchanged.**
-
-Source: TF tags the `metadata.gce-container-declaration` value as sensitive because it's interpolated from sensitive variables, but the underlying string is identical to live. Instance templates are immutable in GCP, so applying this carries replacement risk for no real benefit. The diff will clean itself up the next time we make a legitimate change to either template (env var update, image bump, etc.). Until then, ignore the noise — do not blindly `apply` it.
